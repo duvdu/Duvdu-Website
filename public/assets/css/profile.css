@@ -1,0 +1,292 @@
+.cover {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    border-bottom-left-radius: 55px;
+    border-bottom-right-radius: 55px;
+}
+
+.left-side {
+    background-color: white;
+    border-radius: 55px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    height: min-content;
+}
+
+.left-side-container {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.right-side {
+    flex: 2;
+}
+
+.profile-pic-holder {
+    position: relative;
+    flex: 1;
+    height: 114px
+}
+
+.profile-frame,
+.profile-picture {
+    position: absolute;
+    border-radius: 104px;
+    width: 104px;
+    height: 104px;
+    fill: #6A6A6A;
+    stroke-width: 10.286px;
+    stroke: #F7D678;
+}
+
+.profile-frame {
+    padding: 10px;
+}
+
+.profile-picture>* {
+    top: 50%;
+    left: 50%;
+}
+
+.flex-profile {
+    display: flex;
+    margin-top: 25px;
+    gap: 20px;
+    width: 100%;
+}
+
+
+
+.flex-profile>.col1>.row1 {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+
+
+.flex-profile>.col1>.row1>.col2>span {
+    padding-top: 15px;
+}
+
+.flex-profile>.col1>.row2 {
+    flex: 2;
+}
+
+.flex-profile>.col2 {
+    flex: 2;
+}
+
+.flex-profile>.col1,
+.flex-profile>.col2 {
+    height: 500px;
+}
+
+
+.bronzer {
+    text-align: center;
+    font-family: Urbanist;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    background: linear-gradient(90deg, #DA8D3D 11.8%, #F6D377 76.94%, #DC9241 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#photographer {
+    padding: 5px 20px;
+    border-radius: 17.543px;
+    border: 1.3px solid rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4.385797023773193px);
+    color: #000;
+    font-family: Urbanist;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+    opacity: 0.8;
+}
+
+#rating {
+    padding: 5px 20px;
+    border-radius: 17.543px;
+    border: 1.3px solid rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4.385797023773193px);
+    color: #000;
+    font-family: Urbanist;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+    opacity: 0.8;
+}
+
+#rating>p {
+    color: #000;
+    font-family: Urbanist;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.v-divider {
+    width: 1px;
+    height: 40px;
+    opacity: 0.1;
+    background: #000;
+    margin: 0 10px;
+}
+
+.h-divider {
+    height: 1px;
+    opacity: 0.1;
+    background: #000;
+
+}
+
+.popularity {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.popularity>.unit {
+    color: #000;
+    text-align: center;
+    font-family: Urbanist;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: capitalize;
+    opacity: 0.4;
+}
+
+.popularity>.number {
+    color: #000;
+    text-align: center;
+    font-family: Urbanist;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: capitalize;
+    opacity: 0.8;
+}
+
+#about-header {
+    color: #000;
+    font-family: Urbanist;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+    opacity: 0.5;
+}
+
+#about-paragraph {
+    color: #000;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    text-transform: capitalize;
+}
+
+.comment .name {
+    color: #000;
+    font-family: Urbanist;
+    font-size: 18.325px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: capitalize;
+    opacity: 0.8;
+}
+
+.comment .date {
+    color: #000;
+    font-family: Urbanist;
+    font-size: 15.271px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    opacity: 0.5;
+}
+
+.comment {
+    padding: 20px;
+    margin: 30px 0;
+}
+
+
+.profile-project>.title {
+    position: absolute;
+    bottom: 24.7px;
+    left: 37.31px;
+    color: #FFF;
+    text-align: center;
+    font-family: Urbanist;
+    font-size: 22.131px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.profile-project>.creatives {
+    position: absolute;
+    top: 35.41px;
+    left: 35.41px;
+    padding: 9px 21.388px;
+    border-radius: 15.53px;
+    border: 0.388px solid rgba(255, 255, 255, 0.20);
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(3.8825089931488037px);
+    color: #FFF;
+    font-family: Urbanist;
+    font-size: 10.871px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.profile-project {
+    position: relative;
+    height: 450px;
+    border-radius: 50px;
+    flex-shrink: 0;
+    background-color: white;
+    overflow: hidden;
+}
+
+
+.profile-project.small {
+    aspect-ratio: calc(2/3);
+}
+
+.profile-project.big {
+    aspect-ratio: calc(4/3);
+}
+
+.project-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    justify-content: end;
+    gap: 20px;
+}

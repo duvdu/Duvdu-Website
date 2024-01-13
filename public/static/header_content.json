@@ -1,0 +1,125 @@
+[
+  {
+    "category": "Alawi",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Bottoms",
+    "subcategories": [
+      {
+        "title": "Trousers",
+        "items": [
+          "Trousers",
+          "Pajama Pants",
+          "Leggings",
+          "Jeans",
+          "Casual Pants"
+        ]
+      },
+      {
+        "title": "Shorts",
+        "items": [
+          "Swim Shorts",
+          "Denim Shorts",
+          "Sports Shorts"
+        ]
+      },
+      {
+        "title": "Footwear",
+        "items": [
+          "Sneakers",
+          "Boots",
+          "Shoes",
+          "Slippers",
+          "Sandals"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Full Set",
+    "subcategories": [
+      {
+        "title": "Tracksuits",
+        "items": [
+          "Sporty Tracksuit",
+          "Casual Tracksuit",
+          "Outing Tracksuit"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Accessories",
+    "subcategories": [
+      {
+        "title": "Bags",
+        "items": [
+          "Handbag",
+          "Backpack",
+          "Small Bag"
+        ]
+      },
+      {
+        "title": "Glasses",
+        "items": [
+          "Sunglasses",
+          "Prescription Glasses"
+        ]
+      },
+      {
+        "title": "Watches",
+        "items": []
+      },
+      {
+        "title": "Rings",
+        "items": []
+      }
+    ]
+  }
+]
