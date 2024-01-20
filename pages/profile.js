@@ -1,6 +1,7 @@
 
 import Layout from '../components/layout/Layout';
 import Comment from '../components/elements/comment';
+import Controller from '../components/elements/controllers';
 
 function formatNumber(number) {
     if (number >= 1000) {
@@ -139,8 +140,9 @@ function Profile() {
         <Layout>
             <div className='container'>
                 <div className='cover' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} ></div>
-                <div className='flex gap-3 pt-7'>
-                    <div className='left-side flex-1'>
+                <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
+                    <div className='left-side flex-1 relative'>
+                    
                         <div className='left-side-container'>
                             <div className='flex items-center'>
                                 <div className='profile-pic-holder'>
@@ -156,7 +158,7 @@ function Profile() {
                                 </div>
                             </div>
                             <div className='flex justify-between pt-25 items-center'>
-                                <p className='bronzer'>{profile['rank']}</p>
+                                <p className='rank'>{profile['rank']}</p>
                                 <p id='photographer'>{profile['occupation']}</p>
                                 <div id='rating' className='flex items-center gap-1'>
                                     <p>{profile['value']}</p>
@@ -165,15 +167,15 @@ function Profile() {
                             </div>
                             <div className='flex justify-center pt-7 items-center'>
 
-                            <div className='flex justify-between w-64'>
-                                {Object.entries(profile.popularity).map(([key, value]) => (
-                                    <div className='popularity' key={key}>
-                                        <p className='number'>{formatNumber(value)}</p>
-                                        <p className='unit'>{key}</p>
-                                    </div>
-                                ))}
+                                <div className='flex justify-between w-64'>
+                                    {Object.entries(profile.popularity).map(([key, value]) => (
+                                        <div className='popularity' key={key}>
+                                            <p className='number'>{formatNumber(value)}</p>
+                                            <p className='unit'>{key}</p>
+                                        </div>
+                                    ))}
 
-                            </div>
+                                </div>
                             </div>
                         </div>
                         <div className='h-divider mt-7'></div>
@@ -187,6 +189,12 @@ function Profile() {
                                 <Comment key={comment.id} comment={comment} />
                             ))}
                         </div>
+                        <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
+                            <Controller>
+                            <div className="w-20 h-20 rounded-full cursor-pointer" style={{background:"#1A73EB"}}></div>
+                            <div className="w-20 h-20 rounded-full cursor-pointer" style={{background:"#0000001A"}}></div>
+                            </Controller>
+                        </div>
                     </div>
                     <div className='right-side'>
                         {
@@ -197,7 +205,7 @@ function Profile() {
                         {profile.projects.length > 0 && (
                             <div className='project-grid'>
                                 {profile.projects.map((data, index) => (
-                                    <Project key={index} data={data} isbig={(index+1)%4 < 2} />
+                                    <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
                                 ))}
                             </div>
                         )}
@@ -210,9 +218,9 @@ function Profile() {
 }
 
 
-const Project = ({ data , isbig}) => (
+const Project = ({ data, isbig }) => (
 
-    <div className={isbig?'profile-project big':'profile-project small'}>
+    <div className={isbig ? 'profile-project big' : 'profile-project small'}>
         <img className='cardimg' src={data.show} alt='show' />
         <div className='creatives'>
             {data.creatives} creatives

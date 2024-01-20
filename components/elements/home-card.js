@@ -5,7 +5,7 @@ const Card = ({ cardData }) => {
 
   return (
     <>
-      <div className='home-card'>
+      <div className='home-card' onClick={()=>{ console.log("hello world") }} >
         <div className='project'>
           <img className='cardimg' src={cardData.backgroundImage} alt="projects" />
           {cardData.showLove && <img className='love' src='/assets/imgs/theme/icons/love-react.svg' width={44} height={44} alt='love icon' />}

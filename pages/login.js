@@ -8,26 +8,34 @@ function Login() {
   const [emailError, setEmailError] = useState({ isError: false, message: '' });
   const [passwordError, setPasswordError] = useState({ isError: false, message: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setIsloading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    var eError = true , pError = true
     if (email.trim() === '') {
       setEmailError({ isError: true, message: 'Email is required.' });
     } else {
+      eError = false
       setEmailError({ isError: false, message: '' });
     }
 
     if (password.length < 8) {
       setPasswordError({ isError: true, message: 'Password must be at least 8 characters long.' });
     } else {
+      pError = false
       setPasswordError({ isError: false, message: '' });
     }
 
-    if (!emailError.isError && !passwordError.isError) {
+    if (!eError && !pError) {
       console.log('Form submitted');
-      // Continue with form submission or other actions
-    }
+      setIsloading(true)
+      setTimeout(() => {
+        setIsloading(false);
+      }, 2000);
+    
+}
   };
 
   const toggleShowPassword = () => {
@@ -36,6 +44,8 @@ function Login() {
 
   return (
     <>
+    <div className={`w-full h-full bg-black transition-opacity ${ (loading) ? 'opacity-60 visible':'opacity-0 invisible' } 
+            left-0 right-0 fixed z-20`}/>
       <Auth>
         <form method="post" onSubmit={handleSubmit}>
           <div className="heading_s1 mb-11">
@@ -54,15 +64,15 @@ function Login() {
                 placeholder="Password *"
                 className={passwordError.isError ? "auth-field error" : "auth-field"}
               />
-                {
-                  !showPassword &&
-                  <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-closed.svg" alt="" />
-                }
-                {
-                  showPassword &&
-                  <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-open.svg" alt="" />
-                }
-              
+              {
+                !showPassword &&
+                <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-closed.svg" alt="" />
+              }
+              {
+                showPassword &&
+                <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-open.svg" alt="" />
+              }
+
             </div>
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
             <Link href="/forget_password">
@@ -82,9 +92,25 @@ function Login() {
               <a> Register now</a>
             </Link>
           </div>
+        <div className="flex items-center">
+          <div className="border-t border-black opacity-20 w-full my-4"></div>
+          <p className="px-4 font-bold my-10 ">OR</p>
+          <div className="border-t border-black opacity-20 w-full my-4"></div>
+
+        </div>
+        <div className="flex justify-center gap-8">
+          <div className="rounded-full border border-solid border-DS_gray_1 py-4 w-64 flex justify-center gap-4 items-center cursor-pointer">
+            <img src="/assets/imgs/theme/icons/google-icon.svg" />
+            <p className="text-lg font-bold"> Google </p>
+          </div>
+          <div className="rounded-full border border-solid border-DS_gray_1 py-4 flex justify-center gap-4 items-center w-64 cursor-pointer">
+            <img src="/assets/imgs/theme/icons/apple-logo.png" className="w-9"/>
+            <p className="text-lg font-bold"> Apple </p>
+          </div>
+        </div>
         </form>
       </Auth>
-    </>
+    </> 
   );
 }
 

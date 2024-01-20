@@ -100,6 +100,23 @@
     -webkit-text-fill-color: transparent;
 }
 
+.rank {
+    display: flex;
+    height: 35px;
+    padding: 6px 13px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 100px;
+    border: 1.5px solid #1A73EB;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(7.5px);
+    color: #1A73EB;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
 #photographer {
     padding: 5px 20px;
     border-radius: 17.543px;

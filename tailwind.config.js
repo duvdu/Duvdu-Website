@@ -9,6 +9,7 @@ module.exports = {
 
       },
       colors: {
+        DS_gray_1: 'var(--gray-1)',
         
       },
       container: {

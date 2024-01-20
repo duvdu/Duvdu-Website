@@ -10,13 +10,13 @@ function resetPassword() {
             <div className="flex w-full justify-center">
             <img src="/assets/imgs/theme/done.svg" className="mb-9" alt="logo" />
             </div>
-            <h1 className="auth-title">Password changed</h1>
-            <p>Your password has been changed successfully</p>
+            <h1 className="auth-title">Account Created</h1>
+            <p>Now choose a category to view the best creatives in this field</p>
           </div>
           <div className="form-group relative mb-24">
-            <Link href={"/login"}>
+            <Link href={"/"}>
               <a className="btn btn-heading btn-block hover-up submit">
-                Back to Login
+              home screen
               </a>
             </Link>
           </div>
