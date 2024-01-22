@@ -5022,13 +5022,6 @@ table .project-thumbnail img {
   margin-top: 1rem;
 }
 
-.progress span {
-  line-height: 16px;
-  background: #fff;
-  padding-right: 10px;
-  width: 45px;
-}
-
 .progress-bar {
   background-color: #1A73EB;
 }
@@ -10742,6 +10735,7 @@ footer .hotline img {
   background: rgba(0, 0, 0, 0.10);
   backdrop-filter: blur(6.204545497894287px);
 }
+
 
 /***********/
 

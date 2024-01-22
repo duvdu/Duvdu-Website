@@ -1,0 +1,61 @@
+.card {
+  border-radius: 45px;
+}
+
+.green-gradient {
+  background: linear-gradient(180deg, #FFF 0%, #41DC5A 131.9%);
+}
+
+.blue-gradient {
+  background: linear-gradient(85deg, #1A73EB 2.44%, #711AEB 93.27%);
+}
+
+.red-gradient {
+  background: linear-gradient(180deg, #FFF 0%, #FB7491 122.59%);
+}
+
+.white-gradient {
+  background: #FFF;
+}
+
+.cardborder-1 {
+  border: 1px solid rgba(0, 0, 0, 0.20);
+}
+
+.cardborder-2 {
+  border: 1.76px solid rgba(0, 0, 0, 0.20);
+  
+}
+
+.cardborder-3 {
+  border: 1.198px solid rgba(0, 0, 0, 0.20);
+}
+
+.text-border{
+  border: 1px solid rgba(255, 255, 255, 0.50);
+}
+
+.spliter:not(:last-child)::after {
+  content: '';
+  display: block;
+  height: 1px;
+  opacity: 0.15;
+  background: #000;
+  margin: 20px 0;
+}
+
+.progress-bar {
+  border-radius: 90px;
+  border: 1px solid rgba(255, 255, 255, 0.50);
+  background: rgba(255, 255, 255, 0.40);
+  height: 16px;
+}
+
+.progress {
+  height: 100%;
+  background: white;
+  border-radius: 90px;
+}
+.blur-12px{
+  filter: blur(12.5px);
+}
