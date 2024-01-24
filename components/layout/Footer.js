@@ -33,25 +33,39 @@ const Footer = () => {
                                 <h4 className="widget-title">Company</h4>
                                 <ul className="footer-list  mb-sm-5 mb-md-0">
                                     <li>
-                                        <a href="#">About Us</a>
+                                        <Link href="#">
+                                            <a>About Us</a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="#">Delivery Information</a>
+                                        <Link href="#">
+                                            <a>Delivery Information</a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="#">Privacy Policy</a>
+                                        <Link href="#">
+                                            <a>Privacy Policy</a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="#">Terms &amp; Conditions</a>
+                                        <Link href="#">
+                                            <a>Terms &amp; Conditions</a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="#">Contact Us</a>
+                                        <Link href="#">
+                                            <a>Contact Us</a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="#">Support Center</a>
+                                        <Link href="#">
+                                            <a>Support Center</a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="#">Careers</a>
+                                        <Link href="#">
+                                            <a>Careers</a>
+                                        </Link>
                                     </li>
                                 </ul>
 

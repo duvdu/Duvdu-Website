@@ -68,7 +68,7 @@ function Register() {
                     <div className="heading_s1 mb-42">
                         <h1 className="auth-title">Create an Account</h1>
                     </div>
-                    <div className={`form-group ${nameError.isError && 'error'}`}>
+                    <div className={`mb-4 ${nameError.isError && 'error'}`}>
                         <input
                             type="text"
                             value={name}
@@ -79,7 +79,7 @@ function Register() {
                         />
                         {nameError.isError && <p className="error-msg">{nameError.message}</p>}
                     </div>
-                    <div className={`form-group ${phoneError.isError && 'error'}`}>
+                    <div className={`mb-4 ${phoneError.isError && 'error'}`}>
                         <input
                             type="phone"
                             value={phone}
@@ -90,7 +90,7 @@ function Register() {
                         />
                         {phoneError.isError && <p className="error-msg">{phoneError.message}</p>}
                     </div>
-                    <div className={`form-group ${emailError.isError && 'error'}`}>
+                    <div className={`mb-4 ${emailError.isError && 'error'}`}>
                         <input
                             type="text"
                             value={email}
@@ -101,7 +101,7 @@ function Register() {
                         />
                         {emailError.isError && <p className="error-msg">{emailError.message}</p>}
                     </div>
-                    <div className={`form-group mb-42 ${passwordError.isError && 'error'}`}>
+                    <div className={`mb-4 mb-42 ${passwordError.isError && 'error'}`}>
                         <div className="password-container">
                             <input
                                 type={showPassword ? 'text' : 'password'}
@@ -122,7 +122,7 @@ function Register() {
                         </div>
                         {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
                     </div>
-                    <div className="login_footer form-group mb-42">
+                    <div className="login_footer mb-4 mb-42">
                         <div className="chek-form">
                             <div className="custome-checkbox">
                                 <input
@@ -142,7 +142,7 @@ function Register() {
                             </div>
                         </div>
                     </div>
-                    <div className="form-group relative mb-30">
+                    <div className="mb-4 relative mb-30">
                         <button type="submit" className="btn btn-heading btn-block hover-up" name="Create">
                             Create Account
                         </button>

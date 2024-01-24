@@ -13,7 +13,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    var eError = true , pError = true
+    var eError = true, pError = true
     if (email.trim() === '') {
       setEmailError({ isError: true, message: 'Email is required.' });
     } else {
@@ -34,8 +34,8 @@ function Login() {
       setTimeout(() => {
         setIsloading(false);
       }, 2000);
-    
-}
+
+    }
   };
 
   const toggleShowPassword = () => {
@@ -44,18 +44,18 @@ function Login() {
 
   return (
     <>
-    <div className={`w-full h-full bg-black transition-opacity ${ (loading) ? 'opacity-60 visible':'opacity-0 invisible' } 
-            left-0 right-0 fixed z-20`}/>
+      <div className={`w-full h-full bg-black transition-opacity ${(loading) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
+            left-0 right-0 fixed z-20`} />
       <Auth>
         <form method="post" onSubmit={handleSubmit}>
           <div className="heading_s1 mb-11">
             <h1 className="auth-title">Welcome Back !!</h1>
           </div>
-          <div className={`form-group ${emailError.isError && 'error'}`}>
+          <div className={`mb-4 ${emailError.isError && 'error'}`}>
             <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email *" className={emailError.isError ? "auth-field error" : "auth-field"} />
             {emailError.isError && <p className="error-msg">{emailError.message}</p>}
           </div>
-          <div className={`form-group mb-11 ${passwordError.isError && 'error'}`}>
+          <div className={`mb-4 mb-11 ${passwordError.isError && 'error'}`}>
             <div className="password-container">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -79,8 +79,8 @@ function Login() {
               <a className="forgot-password">Forgot password ?</a>
             </Link>
           </div>
-          <div className="login_footer form-group mb-11"></div>
-          <div className="form-group relative mb-7">
+          <div className="login_footer mb-4 mb-11"></div>
+          <div className="mb-4 relative mb-7">
             <button type="submit" className="btn btn-heading btn-block hover-up" name="login">
               Login
             </button>
@@ -92,25 +92,25 @@ function Login() {
               <a> Register now</a>
             </Link>
           </div>
-        <div className="flex items-center">
-          <div className="border-t border-black opacity-20 w-full my-4"></div>
-          <p className="px-4 font-bold my-10 ">OR</p>
-          <div className="border-t border-black opacity-20 w-full my-4"></div>
+          <div className="flex items-center">
+            <div className="border-t border-black opacity-20 w-full my-4"></div>
+            <p className="px-4 font-bold my-10 ">OR</p>
+            <div className="border-t border-black opacity-20 w-full my-4"></div>
 
-        </div>
-        <div className="flex justify-center gap-8">
-          <div className="rounded-full border border-solid border-DS_gray_1 py-4 w-64 flex justify-center gap-4 items-center cursor-pointer">
-            <img src="/assets/imgs/theme/icons/google-icon.svg" />
-            <p className="text-lg font-bold"> Google </p>
           </div>
-          <div className="rounded-full border border-solid border-DS_gray_1 py-4 flex justify-center gap-4 items-center w-64 cursor-pointer">
-            <img src="/assets/imgs/theme/icons/apple-logo.png" className="w-9"/>
-            <p className="text-lg font-bold"> Apple </p>
+          <div className="flex justify-center gap-8">
+            <div className="rounded-full border border-solid border-DS_gray_1 py-4 w-64 flex justify-center gap-4 items-center cursor-pointer">
+              <img src="/assets/imgs/theme/icons/google-icon.svg" />
+              <p className="text-lg font-bold"> Google </p>
+            </div>
+            <div className="rounded-full border border-solid border-DS_gray_1 py-4 flex justify-center gap-4 items-center w-64 cursor-pointer">
+              <img src="/assets/imgs/theme/icons/apple-logo.png" className="w-9" />
+              <p className="text-lg font-bold"> Apple </p>
+            </div>
           </div>
-        </div>
         </form>
       </Auth>
-    </> 
+    </>
   );
 }
 

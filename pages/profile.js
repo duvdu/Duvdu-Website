@@ -2,22 +2,27 @@
 import Layout from '../components/layout/Layout';
 import Comment from '../components/elements/comment';
 import Controller from '../components/elements/controllers';
-
-function formatNumber(number) {
-    if (number >= 1000) {
-        return (number / 1000).toFixed(0) + 'K';
-    } else {
-        return number.toString();
-    }
-}
-
+import Icon from '../components/Icons';
+import { convertToK } from '../util/util';
+import Popup from '../components/elements/popup';
+import EditPopUp from '../components/layout/EditProfile';
+import React, { useState } from 'react';
 
 function Profile() {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const openPopup = () => {
+        setIsPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setIsPopupOpen(false);
+    };
     var profile = {
         "cover-pic": "/assets/imgs/projects/cover.jpeg",
-        "profile-pic": "/assets/imgs/theme/profile-frame.svg",
+        "profile-pic": "/assets/imgs/profile/contact-2.png",
         "personal-name": "youseff abdulla",
         "value": 3.7,
+        "price": '30',
         "location": "5th settlement",
         "occupation": "photographer",
         "rank": "professional",
@@ -138,16 +143,18 @@ function Profile() {
 
     return (
         <Layout>
+            <Popup className={'mt-14'} isOpen={isPopupOpen} onClose={closePopup} header={'Edit Details'}>
+                <EditPopUp profile={profile}/>
+            </Popup>
             <div className='container'>
                 <div className='cover' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} ></div>
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='left-side flex-1 relative'>
-                    
                         <div className='left-side-container'>
                             <div className='flex items-center'>
-                                <div className='profile-pic-holder'>
-                                    <img className='profile-picture' src={profile['profile-pic']} alt="profile frame" />
-                                    <img className='profile-frame' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
+                                <div className='w-32 h-32 relative'>
+                                    <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
+                                    <img className='profile-picture absolute rounded-full' src={profile['profile-pic']} alt="profile picture" />
                                 </div>
                                 <div className='flex-2 flex-col gap-1'>
                                     <h3>{profile['personal-name']}</h3>
@@ -157,20 +164,19 @@ function Profile() {
                                     </span>
                                 </div>
                             </div>
-                            <div className='flex justify-between pt-25 items-center'>
+                            <div className='flex justify-center pt-25 items-center gap-3'>
                                 <p className='rank'>{profile['rank']}</p>
                                 <p id='photographer'>{profile['occupation']}</p>
-                                <div id='rating' className='flex items-center gap-1'>
+                                <div id='rating' className='flex items-center gap-1 w-20'>
                                     <p>{profile['value']}</p>
                                     <img src='/assets/imgs/theme/icons/rating.svg' width={18} height={18} />
                                 </div>
                             </div>
                             <div className='flex justify-center pt-7 items-center'>
-
-                                <div className='flex justify-between w-64'>
+                                <div className='flex justify-center'>
                                     {Object.entries(profile.popularity).map(([key, value]) => (
-                                        <div className='popularity' key={key}>
-                                            <p className='number'>{formatNumber(value)}</p>
+                                        <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
+                                            <p className='number'>{convertToK(value, 0)}</p>
                                             <p className='unit'>{key}</p>
                                         </div>
                                     ))}
@@ -191,8 +197,12 @@ function Profile() {
                         </div>
                         <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
                             <Controller>
-                            <div className="w-20 h-20 rounded-full cursor-pointer" style={{background:"#1A73EB"}}></div>
-                            <div className="w-20 h-20 rounded-full cursor-pointer" style={{background:"#0000001A"}}></div>
+                                <div className="w-20 h-20 rounded-full cursor-pointer flex justify-center items-center" style={{ background: "#1A73EB" }}>
+                                    <Icon name={'add'} />
+                                </div>
+                                <div onClick={openPopup} className="w-20 h-20 rounded-full cursor-pointer  flex justify-center items-center" style={{ background: "#0000001A" }}>
+                                    <Icon name={'edit'} />
+                                </div>
                             </Controller>
                         </div>
                     </div>
@@ -212,7 +222,6 @@ function Profile() {
                     </div>
                 </div>
             </div>
-
         </Layout>
     );
 }
@@ -220,7 +229,7 @@ function Profile() {
 
 const Project = ({ data, isbig }) => (
 
-    <div className={isbig ? 'profile-project big' : 'profile-project small'}>
+    <div className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28% '}>
         <img className='cardimg' src={data.show} alt='show' />
         <div className='creatives'>
             {data.creatives} creatives

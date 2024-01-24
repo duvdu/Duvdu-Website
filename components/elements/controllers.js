@@ -1,10 +1,10 @@
 import React from "react";
 
 
-const controllers = ({ children }) => {
+const controllers = ({ children,className }) => {
     return (
         <>
-        <div className="controller-holder w-min flex gap-2 p-2">
+        <div className={`controller-holder flex gap-2 p-2 ${className}`}>
             {children}
         </div>
         </>

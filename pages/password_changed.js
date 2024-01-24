@@ -13,7 +13,7 @@ function resetPassword() {
             <h1 className="auth-title">Password changed</h1>
             <p>Your password has been changed successfully</p>
           </div>
-          <div className="form-group relative mb-24">
+          <div className="mb-4 relative">
             <Link href={"/login"}>
               <a className="btn btn-heading btn-block hover-up submit">
                 Back to Login

@@ -1232,12 +1232,6 @@ textarea:focus {
   background-color: #1A73EB !important;
 }
 
-.form-group {
-  margin-bottom: 1rem;
-}
-
-
-
 label {
   margin-bottom: 5px;
 }
@@ -1484,9 +1478,7 @@ label {
   margin-bottom: 20px;
 }
 
-.comment-form .form-group {
-  margin-bottom: 20px;
-}
+
 
 .comment-form textarea {
   min-height: 200px;
@@ -10736,6 +10728,9 @@ footer .hotline img {
   backdrop-filter: blur(6.204545497894287px);
 }
 
+.card {
+  border-radius: 45px;
+}
 
 /***********/
 

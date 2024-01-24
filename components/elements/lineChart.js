@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import Icon from '../Icons';
 
 const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     const DATA_COUNT = 11;
@@ -108,7 +109,8 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
         const updateGradient = () => {
             if (gradientRef.current && chartInstance) {
                 const canvas = document.getElementById('chart');
-                const updatedGradientFill = gradientRef.current.createLinearGradient(0, 0, 0, canvas.height * .44);
+
+                const updatedGradientFill = gradientRef.current.createLinearGradient(0, 0, 0, canvas.height*.9);
                 updatedGradientFill.addColorStop(0, '#2074ec');
                 updatedGradientFill.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
@@ -140,12 +142,10 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                     
                     <span >
                         {
-                            !isUp &&
-                            <img src='/assets/imgs/theme/icons/downArrow.svg' />
+                            !isUp && <Icon name={'downArrow'} />
                         }
                         {
-                            isUp &&
-                            <img src='/assets/imgs/theme/icons/upArrow.svg' />
+                            isUp &&<Icon name={'upArrow'} />
                         }
 
                     </span>

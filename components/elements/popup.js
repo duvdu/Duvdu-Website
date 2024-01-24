@@ -1,108 +1,25 @@
-import Link from "next/link";
-import { useState } from "react";
-import Timer from "./Timer";
+import React, { useState } from 'react';
+import Icon from '../Icons';
 
-const IntroPopup = () => {
-    const [openClass, setOpenClass] = useState(0);
-
-    const handleRemove = () => {
-        setOpenClass(!openClass);
-    };
-    const fixDate = new Date();
+const Popup = ({ isOpen, onClose, children, header,className }) => {
+    
     return (
-        <>
-            <div
-                className={
-                    openClass
-                        ? "modal fade custom-modal d-none"
-                        : "modal fade custom-modal  show d-block"
-                }
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <button
-                            type="button"
-                            className="btn-close"
-                            onClick={handleRemove}
-                        ></button>
-                        <div className="modal-body">
-                            <div
-                                className="deal"
-                                style={{
-                                    backgroundImage:
-                                        "url('assets/imgs/banner/popup-1.png')",
-                                }}
-                            >
-                                <div className="deal-top">
-                                    <h2 className="text-brand">
-                                        Deal of the Day
-                                    </h2>
-                                    <h5>Limited quantities.</h5>
-                                </div>
-                                <div className="deal-content  detail-info">
-                                    <h6 className="project-title">
-                                        <Link href="/shop-project-right">
-                                            <a className="text-heading">
-                                                Organic fruit for your family's
-                                                health
-                                            </a>
-                                        </Link>
-                                    </h6>
-                                    <div className="clearfix project-price-cover">
-                                        <div className="project-price primary-color float-left">
-                                            <span className="current-price text-brand">
-                                                $38
-                                            </span>
-                                            <span>
-                                                <span className="save-price font-md color3 ml-15">
-                                                    26% Off
-                                                </span>
-                                                <span className="old-price font-md ml-15">
-                                                    $52
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="deal-bottom">
-                                    <p className="mb-20">Hurry Up! Offer End In:</p>
-                                    {/* <Timer endDateTime="2022-11-27 00:00:00" /> */}
-                                    <Timer
-                                        endDateTime={fixDate.setDate(
-                                            fixDate.getDate() + 2
-                                        )}
-                                    />
-                                    <div className="project-detail-rating">
-									<div className="project-rate-cover text-end">
-										<div className="project-rate d-inline-block">
-											<div className="project-rating" style={{"width": "90%"}}></div>
-										</div>
-										<span className="font-small ml-5 text-muted"> (32 rates)</span>
-									</div>
-								</div>
-
-                                    <Link href="/shop-grid-right">
-                                        <a className="btn hover-up">
-                                            Shop Now{" "}
-                                            <i className="fi-rs-arrow-right"></i>
-                                        </a>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
+        <div className={`popup ${isOpen ? 'open' : ''} ${className}`}>
+            <div className="overlay blur" onClick={onClose}></div>
+            <div className='card content py-3 mx-10 '>
+                <div className='flex gap-3'>
+                    <div onClick={onClose} className='flex rounded-full header-border p-4 cursor-pointer'>
+                        <Icon name={'x'} />
                     </div>
+                    <span className='flex rounded-full header-border px-7 py-4 text-lg font-medium'>
+                        {header}
+                    </span>
                 </div>
+                {children}
             </div>
 
-            <div
-                className={
-                    openClass
-                        ? "modal-backdrop fade d-none"
-                        : "modal-backdrop fade show"
-                }
-            ></div>
-        </>
+        </div>
     );
 };
 
-export default IntroPopup;
+export default Popup;

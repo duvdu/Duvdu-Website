@@ -3,9 +3,22 @@ import Layout from '../components/layout/Layout';
 import { convertToK } from '../util/util';
 import NextBadgeCard from '../components/elements/NextBadgeCard';
 import ProjectViewsCard from '../components/elements/ProjectViewsCard';
+import Popup from '../components/elements/popup';
 import TopProjects from '../components/elements/topProjects';
+import AppButton from '../components/elements/button';
+import React, { useState } from 'react';
 
 const Dashboard = () => {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const openPopup = () => {
+        setIsPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setIsPopupOpen(false);
+    };
+
     const chart = {
         initialDatapoints: [100, 40, 20, 60, 60, 120, 180, 120, 125, 105, 110, 170],
         viewRate: 5.3,
@@ -78,19 +91,27 @@ const Dashboard = () => {
         <>
 
             <Layout>
+                <button onClick={openPopup}>Open Popup</button>
+                <Popup isOpen={isPopupOpen} onClose={closePopup} header={'registration required'}>
+                    <div className='flex h-full flex-col mt-24 items-center'>
+                            <span className='mb-12 text-center text-xl font-semibold'>
+                                Register or Sign-in
+                                <br/>
+                                to access this feature
+                            </span>
+                        <AppButton href={"/register"} text={"register"} className={"mb-40 mx-16 md:mx-32"} />
+                    </div>
+                </Popup>
                 <div className='container flex gap-6 flex-col lg:flex-row'>
                     <div className='w-full'>
-
                         <NextBadgeCard badge={badge} />
                         <ProjectViewsCard recieved={recieved} />
                         <Chart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
-
-
                     </div>
                     <div className='w-full mt-6'>
                         <div className='flex gap-6'>
                             <div className='flex flex-col w-full gap-6'>
-                                <div className='card cardborder-3 white-gradient w-full h-full cardborder p-7 pt-16'>
+                                <div className='card cardborder-3 bg-white w-full h-full cardborder p-7 pt-16'>
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
                                     <br />
                                     <br />
@@ -137,7 +158,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className='w-full'>
-                                <div className='card cardborder-3 white-gradient p-6 pt-16'>
+                                <div className='card cardborder-3 bg-white p-6 pt-16'>
                                     <div className='flex justify-between'>
                                         <p className='capitalize text-lg font-bold mb-5'>activity</p>
                                         <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>

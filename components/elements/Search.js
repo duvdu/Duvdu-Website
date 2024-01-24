@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import Link from 'next/link';
 
 const Search = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -58,7 +59,11 @@ const Search = () => {
                         "fashion model"
                     ].map((item, index) => (
                             <li className="padge" key={index}>
-                                <a href="/">{item}</a>
+          <Link  href="/">
+
+                                <a>{item}</a>
+          </Link>
+
                             </li>
                         ))}
                 </ul>

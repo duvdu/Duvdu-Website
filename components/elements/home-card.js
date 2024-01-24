@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Icon from '../Icons';
 
 const Card = ({ cardData }) => {
 
@@ -8,8 +9,9 @@ const Card = ({ cardData }) => {
       <div className='home-card' onClick={()=>{ console.log("hello world") }} >
         <div className='project'>
           <img className='cardimg' src={cardData.backgroundImage} alt="projects" />
-          {cardData.showLove && <img className='love' src='/assets/imgs/theme/icons/love-react.svg' width={44} height={44} alt='love icon' />}
-          {cardData.showSound && <img className='sound' src='/assets/imgs/theme/icons/sound-icon.svg' width={44} height={44} alt='sound icon' />}
+          {cardData.showLove && <Icon className='love' name={'love-react'} width={44} height={44}/>}
+          {cardData.showSound && 
+          <Icon className='sound' name={'sound-icon'} width={44} height={44}/>}
         </div>
         <div className='details'>
           <div className='creator-info'>
@@ -17,7 +19,7 @@ const Card = ({ cardData }) => {
             <p className='name'>{cardData.name}</p>
             <div className='w-100x'></div>
             <p className='value'>{cardData.rating}</p>
-            <img src='/assets/imgs/theme/icons/rating.svg' width={18} height={16.424} />
+             <Icon name={'rating'} width={18} height={16.424}/>
           </div>
           <p className='film-name'>{cardData.filmName}</p>
           <div className='price'>{cardData.price}</div>

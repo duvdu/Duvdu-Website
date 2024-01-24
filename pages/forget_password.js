@@ -58,7 +58,7 @@ function register() {
 
                         </div>
                     </div>
-                    <div className="form-group relative mb-30 mt-55">
+                    <div className="mb-4 relative mb-30 mt-55">
                         <button type="submit" className="btn btn-heading btn-block hover-up" name="Reset">Reset</button>
                         <div className="submit-btn"></div>
                     </div>

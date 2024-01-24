@@ -11,7 +11,7 @@ const Header = ({
     const [isToggled, setToggled] = useState(false);
     const [scroll, setScroll] = useState(0);
     const [islogin, setIslogin] = useState(false);
-    
+
     const [notificationDropdownVisible, setNotificationDropdownVisible] = useState(false);
     const [profileDropdownVisible, setProfileDropdownVisible] = useState(false);
     const [settingvisible, setSettingvisible] = useState(false);
@@ -62,11 +62,11 @@ const Header = ({
     }
 
     // const handleToggle = () => setToggled(!isToggled);
-    return (    
+    return (
         <>
 
-            <div className={`w-full h-full bg-black transition-opacity ${ (notificationDropdownVisible || profileDropdownVisible || settingvisible ) ? 'opacity-60 visible':'opacity-0 invisible' } 
-            left-0 right-0 fixed z-10`}/>
+            <div className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
+            left-0 right-0 fixed z-10`} />
             <header className={scroll ? "header-area header-style-1 header-height-2 sticky-bar stick" : "header-area header-style-1 header-height-2 sticky-bar"}>
                 <div className="header-middle header-middle-ptb-1 hidden lg:block">
                     <div className="container">
@@ -80,18 +80,24 @@ const Header = ({
                             </div>
                             <div className="header-right">
                                 <div className="header-tabs">
-                                    <a href="/">
-                                        <img src="/assets/imgs/theme/icons/dashboard.svg" alt="logo" />
-                                        Dashboard
-                                    </a>
-                                    <a className="ml-5" href="/">
-                                        <img src="/assets/imgs/theme/icons/contracts.svg" alt="logo" />
-                                        contracts
-                                    </a>
-                                    <a className="ml-5" href="/saved">
-                                        <img src="/assets/imgs/theme/icons/saved.svg" alt="logo" />
-                                        saved
-                                    </a>
+                                    <Link href="/dashboard">
+                                        <a>
+                                            <img src="/assets/imgs/theme/icons/dashboard.svg" alt="logo" />
+                                            Dashboard
+                                        </a>
+                                    </Link>
+                                    <Link href="/">
+                                        <a className="ml-5">
+                                            <img src="/assets/imgs/theme/icons/contracts.svg" alt="logo" />
+                                            contracts
+                                        </a>
+                                    </Link>
+                                    <Link href="/saved">
+                                        <a className="ml-5">
+                                            <img src="/assets/imgs/theme/icons/saved.svg" alt="logo" />
+                                            saved
+                                        </a>
+                                    </Link>
                                 </div>
 
                                 <div className="search-style-2 flex justify-end">
@@ -163,23 +169,25 @@ const Header = ({
                                                                     </span>
                                                                 </p>
                                                             </div>
-                                                            <a href="/profile" id="profile-btn">
-                                                                view profile
-                                                            </a>
+                                                            <Link href="/profile">
+                                                                <a id="profile-btn">
+                                                                    view profile
+                                                                </a>
+                                                            </Link>
                                                         </div>
                                                         <div className="card bottom-section">
                                                             <h4 className="opacity-70 text-lg mb-2">
-                                                            saved projects
+                                                                saved projects
                                                             </h4>
                                                             <div className="flex justify-between">
                                                                 <div className="project">
-                                                                    <img src="/assets/imgs/projects/1.jpeg"/>
+                                                                    <img src="/assets/imgs/projects/1.jpeg" />
                                                                 </div>
                                                                 <div className="project">
-                                                                    <img src="/assets/imgs/projects/3.jpeg"/>
+                                                                    <img src="/assets/imgs/projects/3.jpeg" />
                                                                 </div>
 
-                                                                
+
                                                             </div>
                                                         </div>
 
@@ -263,9 +271,13 @@ const Header = ({
                                     }
                                     {
                                         !islogin &&
-                                        <div className="header-action-2 flex gap-3 items-center pl-5">  
-                                            <a onClick={()=>{ setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
-                                            <div href="/register"  className="px-5 py-2 rounded-full border border-solid bg-blue-500 p-4 text-white">register</div>
+                                        <div className="header-action-2 flex gap-3 items-center pl-5">
+                                            <Link href="#">
+                                            <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
+                                            </Link>
+                                            <Link href="/register">
+                                            <a className="px-5 py-2 rounded-full border border-solid bg-blue-500 p-4 text-white">register</a>
+                                            </Link>
                                         </div>
                                     }
 

@@ -8,6 +8,11 @@ module.exports = {
       fontSize: {
 
       },
+      width: {
+        '68%': '68%',
+        '28%': '28%',
+        '48%': '48%',
+        },
       colors: {
         DS_gray_1: 'var(--gray-1)',
         

@@ -26,29 +26,30 @@
 }
 
 .profile-pic-holder {
-    position: relative;
-    flex: 1;
-    height: 114px
+    width: 120px;
+    height: 120px;
+}
+
+.edit.auth-field{
+    width: 700px;
 }
 
 .profile-frame,
 .profile-picture {
-    position: absolute;
-    border-radius: 104px;
     width: 104px;
     height: 104px;
-    fill: #6A6A6A;
-    stroke-width: 10.286px;
-    stroke: #F7D678;
 }
 
-.profile-frame {
-    padding: 10px;
-}
-
-.profile-picture>* {
+.profile-frame>* {
     top: 50%;
     left: 50%;
+}
+
+.profile-picture {
+    padding: 10px;
+}
+.edit-profile-picture {
+    bottom: 0;
 }
 
 .flex-profile {
@@ -175,8 +176,12 @@
 .popularity {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    border-right: 1px solid #ccc;
 }
+
+.popularity:last-child {
+    border-right: none; 
+  }
 
 .popularity>.unit {
     color: #000;
@@ -294,10 +299,12 @@
 
 .profile-project.small {
     aspect-ratio: calc(2/3);
+    
 }
 
 .profile-project.big {
     aspect-ratio: calc(4/3);
+    
 }
 
 .project-grid {
@@ -306,4 +313,32 @@
     margin-bottom: 30px;
     justify-content: end;
     gap: 20px;
+}
+
+.edit-pop::-webkit-scrollbar {
+    width: 0.5em; 
+}
+
+.edit-pop::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Hide the scrollbar handle */
+}
+
+.edit-pop::-webkit-scrollbar-button {
+    display: none; /* Hide the scrollbar arrows */
+}
+
+/* Show the scrollbar handle and arrows when the user starts scrolling for .edit class */
+.edit-pop:hover::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* Set the color for the scrollbar handle */
+    border-radius: 300px;
+  }
+  
+  .edit-pop:hover::-webkit-scrollbar-button {
+    display: block; /* Show the scrollbar arrows */
+  }
+
+  
+.edit-pop{
+    height: calc(85vh - var(--header-height));
+  
 }

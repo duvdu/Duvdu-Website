@@ -9,13 +9,17 @@ import headerMen from '../../public/static/header_content.json';
 
 const MenuItem = ({ title, items }) => (
   <li className="sub-mega-menu sub-mega-menu-width-22">
-    <a className="menu-title" href="#">
+    <Link  href="#">
+    <a className="menu-title">
       {title}
     </a>
+    </Link>
     <ul>
       {items.map((item, index) => (
         <li className='padge' key={index}>
-          <a href="/">{item}</a>
+          <Link  href="/">
+          <a>{item}</a>
+          </Link>
         </li>
       ))}
     </ul>

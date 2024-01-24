@@ -24,11 +24,11 @@ const ProjectViewsCard = ({ recieved }) => (
             </div>
 
         </div>
-        <div className='flex justify-between'>
+        <div className='flex justify-between items-center'>
             {
                 recieved.data.map((e, index) => (
-                    <div key={index}>
-                        <span className='text-6xl'>{convertToK(e.number)}</span>
+                    <div className='text-center' key={index}>
+                        <span className='text-6xl'>{convertToK(e.number,2)}</span>
                         <br />
                         <span>{e.title}</span>
                     </div>

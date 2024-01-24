@@ -49,16 +49,16 @@ function ResetPassword() {
             <h1 className="auth-title">Reset Password</h1>
             <p>Please type something you’ll remember</p>
           </div>
-          <div className={`form-group mb-20 ${passwordError.isError && 'error'}`}>
+          <div className={`mb-4 mb-20 ${passwordError.isError && 'error'}`}>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New Password *" className={passwordError.isError?"auth-field error":"auth-field"} />
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
           </div>
-          <div className={`form-group mb-42 ${confirmPasswordError.isError && 'error'}`}>
+          <div className={`mb-4 mb-42 ${confirmPasswordError.isError && 'error'}`}>
             <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password *" className={confirmPasswordError.isError?"auth-field error":"auth-field"} />
             {confirmPasswordError.isError && <p className="error-msg">{confirmPasswordError.message}</p>}
           </div>
-          <div className="login_footer form-group mb-42"></div>
-          <div className="form-group relative mb-30">
+          <div className="login_footer mb-4 mb-42"></div>
+          <div className="mb-4 relative mb-30">
             <button type="submit" className="btn btn-heading btn-block hover-up" name="reset-password">
               Reset Password
             </button>
