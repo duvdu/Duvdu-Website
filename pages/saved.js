@@ -53,7 +53,7 @@ const Saved = () => {
             <Layout >
                 <section className="mt-12 mb-12">
                     <div className="container mb-7">
-                        <div className="flex alignCenter mb-7">
+                        <div className="flex alignCenter mb-7 items-center">
                             <h1 className="mood-boards-header">mood boards</h1>
                             <div className="mr-6"></div>
                             <div className="new_board">

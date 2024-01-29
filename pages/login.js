@@ -55,7 +55,7 @@ function Login() {
             <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email *" className={emailError.isError ? "auth-field error" : "auth-field"} />
             {emailError.isError && <p className="error-msg">{emailError.message}</p>}
           </div>
-          <div className={`mb-4 mb-11 ${passwordError.isError && 'error'}`}>
+          <div className={`mb-4 ${passwordError.isError && 'error'}`}>
             <div className="password-container">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -79,8 +79,8 @@ function Login() {
               <a className="forgot-password">Forgot password ?</a>
             </Link>
           </div>
-          <div className="login_footer mb-4 mb-11"></div>
-          <div className="mb-4 relative mb-7">
+          <div className="login_footer mb-4"></div>
+          <div className="mb-4 relative">
             <button type="submit" className="btn btn-heading btn-block hover-up" name="login">
               Login
             </button>

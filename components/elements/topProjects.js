@@ -7,13 +7,13 @@ const TopProjects = ({ projects }) => (
         <div key={index} className='spliter'>
             <div className='flex gap-4 items-center'>
                 <span className='opacity-30'>
-                    #{index+1}
+                    #{e.rank}
                 </span>
                 <div className='bg-black rounded-lg w-14 h-14'></div>
                 <div>
-                    <span className='text-base font-bold uppercase opacity-80'>project name</span>
+                    <span className='text-base font-bold uppercase opacity-80 text-black'>{e.name}</span>
                     <br/>
-                    <span className='text-sm font-semibold opacity-30'>7556 views</span>
+                    <span className='text-sm font-semibold opacity-30'>{e.views} views</span>
                 </div>
             </div>
         </div>

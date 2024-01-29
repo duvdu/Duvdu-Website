@@ -138,7 +138,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                 <div className='text-lg opacity-70 capitalize font-semibold'>
                     project views
                 </div>
-                <div className={`gap-1 rounded-full px-4 flex items-center bg-gray-300 ${isUp ? 'text-green-700' : 'text-red-700'}`}>
+                <div className={`gap-1 rounded-full px-4 flex items-center ${isUp ? 'text-green-700' : 'text-red-700'} dashboard_padge`}>
                     
                     <span >
                         {

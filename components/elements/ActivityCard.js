@@ -17,7 +17,7 @@ const ActivityCard = ({ activity }) => (
                         <span className='text-3xl capitalize font-medium'>{e.title}</span>
                     </div>
                     <div className='flex'>
-                        <div className='bg-gray-200 text-sm mx-1 px-2 rounded-2xl'> {e.state} </div>
+                        <div className='dashboard_padge text-sm mx-1 px-2 text-black'> {e.state} </div>
                     </div>
                 </div>
             ))

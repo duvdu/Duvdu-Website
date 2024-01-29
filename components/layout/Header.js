@@ -9,7 +9,7 @@ const Header = ({
     fromlayout
 }) => {
     const [isToggled, setToggled] = useState(false);
-    const [scroll, setScroll] = useState(0);
+    const [scroll, setScroll] = useState(1);
     const [islogin, setIslogin] = useState(false);
 
     const [notificationDropdownVisible, setNotificationDropdownVisible] = useState(false);
@@ -20,15 +20,15 @@ const Header = ({
         document.addEventListener("scroll", () => {
             const scrollCheck = window.scrollY >= 100;
             if (scrollCheck !== scroll) {
-                setScroll(scrollCheck);
+                // setScroll(scrollCheck);
             }
         });
 
         function getHeaderHeight() {
             var root = document.documentElement;
             var header = document.getElementsByTagName('header')[0];
-            var headerHeight = header.offsetHeight;
-
+            var headerHeight = header.offsetHeight+ (!fromlayout.shortlayout ? 44 : 0);
+            
             root.style.setProperty('--header-height', headerHeight + 'px');
         }
 
@@ -36,7 +36,7 @@ const Header = ({
 
         window.addEventListener('resize', getHeaderHeight);
 
-    });
+    }, []);
 
 
     const toggleNotificationDropdown = () => {
@@ -273,10 +273,10 @@ const Header = ({
                                         !islogin &&
                                         <div className="header-action-2 flex gap-3 items-center pl-5">
                                             <Link href="#">
-                                            <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
+                                                <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
                                             </Link>
                                             <Link href="/register">
-                                            <a className="px-5 py-2 rounded-full border border-solid bg-blue-500 p-4 text-white">register</a>
+                                                <a className="px-5 py-2 rounded-full border border-solid bg-blue-500 p-4 text-white">register</a>
                                             </Link>
                                         </div>
                                     }

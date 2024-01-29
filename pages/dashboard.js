@@ -115,10 +115,10 @@ const Dashboard = () => {
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
                                     <br />
                                     <br />
-                                    <span className='text-[47.907px] font-medium capitalize'>1530</span>
+                                    <span className='text-[47.907px] text-black font-medium capitalize'>1530</span>
                                     <br />
                                     <div className='flex mt-2'>
-                                        <div className='bg-gray-200 rounded-xl px-2 py-1'>
+                                        <div className='dashboard_padge px-2 py-1'>
                                             <span className='text-sm font-medium opacity-70'>videography</span>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@ const Dashboard = () => {
                                 <div className='card cardborder-3 green-gradient w-full h-full cardborder p-7 pt-16'>
                                     <div className='flex items-center'>
                                         <span className='text-lg font-semibold capitalize opacity-70'>rank</span>
-                                        <div className={`gap-1 rounded-full px-4 flex items-center bg-gray-300 ml-6 mr-2 ${isUp ? 'text-green-700' : 'text-red-700'}`}>
+                                        <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-green-700' : 'text-red-700'}`}>
                                             <span >
                                                 {
                                                     !isUp &&
@@ -147,10 +147,10 @@ const Dashboard = () => {
 
                                     <br />
                                     <br />
-                                    <span className='text-[47.907px] font-medium capitalize'>1530</span>
+                                    <span className='text-[47.907px]  text-black font-medium capitalize'>1530</span>
                                     <br />
                                     <div className='flex mt-2'>
-                                        <div className='bg-gray-200 rounded-xl px-2 py-1'>
+                                        <div className='dashboard_padge px-2 py-1'>
                                             <span className='text-sm font-medium opacity-70'>top 30%</span>
                                         </div>
 
@@ -158,7 +158,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className='w-full'>
-                                <div className='card cardborder-3 bg-white p-6 pt-16'>
+                                <div className='card cardborder-3 bg-white p-6 pt-16 h-full'>
                                     <div className='flex justify-between'>
                                         <p className='capitalize text-lg font-bold mb-5'>activity</p>
                                         <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
@@ -169,11 +169,11 @@ const Dashboard = () => {
                                         activity.map((e, index) => (
                                             <div className='spliter' key={index}>
                                                 <div className='mb-2'>
-                                                    <span className='text-5xl font-medium'>{convertToK(e.count)} </span>
+                                                    <span className='text-5xl font-medium text-black'>{convertToK(e.count)} </span>
                                                     <span className='text-3xl capitalize font-medium'>{e.title}</span>
                                                 </div>
                                                 <div className='flex'>
-                                                    <div className='bg-gray-200 text-sm mx-1 px-2 rounded-2xl'> {e.state} </div>
+                                                    <div className='dashboard_padge text-sm mx-1 px-2 rounded-2xl'> {e.state} </div>
                                                 </div>
                                             </div>
                                         ))

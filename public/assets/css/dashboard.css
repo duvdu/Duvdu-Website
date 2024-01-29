@@ -127,3 +127,8 @@
   font-weight: 700;
   text-transform: capitalize;
 }
+
+.dashboard_padge{
+  border-radius: 20px;
+  background: #CEE3FF;
+}

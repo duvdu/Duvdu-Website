@@ -34,7 +34,7 @@ TABLE CONTENT
 /*RESET*/
 
 @font-face {
-  font-family: 'Urbanist';
+  
   src: url('/assets/fonts/Urbanist/Urbanist.ttf') format('truetype');
 
 }
@@ -6139,7 +6139,7 @@ h6.post-title {
 
 .header-tabs {
   display: flex;
-  font-family: Urbanist;
+  
   width: fit-content;
   font-size: 15px;
   font-weight: 800;
@@ -6646,7 +6646,7 @@ h6.post-title {
 }
 
 .dialog-history .menu-title {
-  font-family: Urbanist;
+  
   font-size: 17px;
   line-height: 20px;
   letter-spacing: 0em;
@@ -6755,7 +6755,7 @@ h6.post-title {
 }
 
 .fake-height {
-  height: 200px;
+  height: var(--header-height);
   width: 100%;
   display: none;
 }
@@ -7585,7 +7585,7 @@ span.fi-rs-apps {
 }
 
 .main-menu>nav>ul>li>a {
-  font-family: Urbanist;
+  
   font-size: 16px;
   font-weight: 500;
   line-height: 19px;
@@ -7711,17 +7711,12 @@ span.fi-rs-apps {
   padding-right: 10px;
 }
 
-.main-menu>nav>ul>li ul.mega-menu li:last-child {
-  margin-bottom: 0;
-}
-
-
 .main-menu>nav>ul>li ul.mega-menu li.sub-mega-menu-width-34 {
   width: 34%;
 }
 
 .main-menu>nav>ul>li ul.mega-menu li a.menu-title {
-  font-family: Urbanist;
+  
   font-size: 17px;
   font-weight: 700;
   line-height: 20px;
@@ -7742,13 +7737,16 @@ span.fi-rs-apps {
 .padge:hover {
   border: 1.5px solid #1A73EB;
 }
+.padge:hover a{
+  color: #1A73EB;
+}
 
 .padge {
   line-height: 1;
   display: block;
   margin-bottom: 14px;
   float: none;
-  border: 1.5px solid #00000080;
+  border: 1.5px solid rgba(0, 0, 0, 0.30);
   margin-bottom: 5px;
   margin-right: 5px;
   padding: 6px 13px;
@@ -7756,18 +7754,13 @@ span.fi-rs-apps {
 }
 
 .padge a {
-  color: black;
-  display: block;
-  font-family: Urbanist;
+  color: rgba(0, 0, 0, 0.75);
+  
   font-size: 17px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0em;
   text-align: center;
-}
-
-.padge a:hover {
-  color: #1A73EB;
 }
 
 
@@ -10132,7 +10125,7 @@ footer .hotline img {
 }
 
 .dialog-1 {
-  font-family: Urbanist;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10155,7 +10148,7 @@ footer .hotline img {
 }
 
 .dialog .header>h2 {
-  font-family: Urbanist;
+  
   margin: 0;
   font-size: 1.5em;
 }
@@ -10235,7 +10228,7 @@ footer .hotline img {
 }
 
 .dialog-2 .info p .name {
-  font-family: Urbanist;
+  
   font-size: 20px;
   font-weight: 700;
   line-height: 24px;
@@ -10243,7 +10236,7 @@ footer .hotline img {
 }
 
 .dialog-2 .info p .location {
-  font-family: Urbanist;
+  
   font-size: 15px;
   font-weight: 600;
   line-height: 18px;
@@ -10253,7 +10246,7 @@ footer .hotline img {
 }
 
 .dialog-2 #settings {
-  font-family: Urbanist;
+  
   /* height: 83px; */
   background-color: #F7F9FB;
   padding: 25px 30px;
@@ -10276,7 +10269,7 @@ footer .hotline img {
 }
 
 .dialog-2 #profile-btn {
-  font-family: Urbanist;
+  
   top: 192px;
   left: 26px;
   border-radius: 90px;
@@ -10348,7 +10341,6 @@ footer .hotline img {
 }
 
 .text-content h1 {
-  font-family: 'Urbanist';
   font-style: normal;
   font-size: 70px;
   line-height: 84px;
@@ -10359,7 +10351,7 @@ footer .hotline img {
 }
 
 .text-content p {
-  font-family: 'Urbanist';
+  
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -10441,7 +10433,7 @@ footer .hotline img {
 }
 
 .auth-title {
-  font-family: 'Urbanist';
+  
   font-style: normal;
   font-weight: 700;
   font-size: 35.8221px;
@@ -10470,7 +10462,7 @@ footer .hotline img {
   letter-spacing: 0.35px;
   text-transform: capitalize;
   color: #FFFFFF;
-  font-family: 'Urbanist';
+  
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -10485,7 +10477,7 @@ footer .hotline img {
 .error-msg {
   color: #EB1A40;
   padding: 5px;
-  font-family: Urbanist;
+  
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -10577,7 +10569,7 @@ footer .hotline img {
 
 .resendMSG {
   color: rgba(0, 0, 0, 0.70);
-  font-family: Urbanist;
+  
   font-size: 16px;
   font-style: normal;
   line-height: normal;
@@ -10586,7 +10578,7 @@ footer .hotline img {
 
 .resendMSG2 {
   color: #1A73EB;
-  font-family: Urbanist;
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 600;

@@ -5,10 +5,10 @@ import {convertToK} from '../../util/util';
 const ProjectViewsCard = ({ recieved }) => (
     <div className='card green-gradient recieved w-full p-8 cardborder-1 mt-6'>
         <div className='flex items-center gap-5'>
-            <div className='text-lg opacity-70 capitalize font-semibold'>
-                project views
+            <div className='text-lg capitalize font-semibold'>
+                you have recieved
             </div>
-            <div className={`gap-1 rounded-full px-4 flex items-center bg-gray-300 ${recieved.rate.isUp ? 'text-green-700' : 'text-red-700'}`}>
+            <div className={`gap-1 rounded-full px-4 flex items-center dashboard_padge ${recieved.rate.isUp ? 'text-green-700' : 'text-red-700'}`}>
                 <span >
                     {
                         !(recieved.rate.isUp) &&
@@ -24,13 +24,13 @@ const ProjectViewsCard = ({ recieved }) => (
             </div>
 
         </div>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center pt-5 '>
             {
                 recieved.data.map((e, index) => (
                     <div className='text-center' key={index}>
-                        <span className='text-6xl'>{convertToK(e.number,2)}</span>
+                        <span className='text-6xl text-black'>{convertToK(e.number,2)}</span>   
                         <br />
-                        <span>{e.title}</span>
+                        <span className='text-black'>{e.title}</span>
                     </div>
 
                 ))}
