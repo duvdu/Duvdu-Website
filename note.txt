@@ -1,25 +1,21 @@
 # Account Created
 # search
 # view profile drop down
-#dropdown hover color border and text
-loading 
+# dropdown hover color border and text
+# edit profile
+# dashboard
+# routing in profile
 
-dropdown don't show when empty
-dropdown color border and text
-routing in profile
-autoplay error
-slider in profile
+
+swiper fotter
+switch in profile
 dark mode
-header move
-dashboard fouce on spaces
-dashboard padge background color
+icon fav and love 
 button shadow
 success component
-icon fav and love 
+autoplay error
 
-
+loading 
 icon class
 profile css
 profile
-edit profile
-dashboard

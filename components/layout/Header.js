@@ -169,11 +169,11 @@ const Header = ({
                                                                     </span>
                                                                 </p>
                                                             </div>
-                                                            <Link href="/profile">
-                                                                <a id="profile-btn">
+                                                            
+                                                                <a href="/profile" id="profile-btn">
                                                                     view profile
                                                                 </a>
-                                                            </Link>
+                                                            
                                                         </div>
                                                         <div className="card bottom-section">
                                                             <h4 className="opacity-70 text-lg mb-2">

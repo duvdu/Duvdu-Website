@@ -6,11 +6,11 @@ function resetPassword() {
     <>
       <Auth>
         <form>
-          <div className="heading_s1 mb-42 text-center mb-24">
+          <div className="heading_s1 mb-[88px] text-center">
             <div className="flex w-full justify-center">
             <img src="/assets/imgs/theme/done.svg" className="mb-9" alt="logo" />
             </div>
-            <h1 className="auth-title">Password changed</h1>
+            <h1 className="auth-title mb-2">Password changed</h1>
             <p>Your password has been changed successfully</p>
           </div>
           <div className="mb-4 relative">

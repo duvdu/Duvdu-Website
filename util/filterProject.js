@@ -20,7 +20,6 @@ export default (projectList, filters) => {
                     ];
                 } else {
                     if (filters[key] === "highToLow") {
-                        console.log("hi");
                         filteredList = [
                             ...filteredList.sort((a, b) => {
                                 if (b.price < a.price) return -1;
@@ -28,7 +27,6 @@ export default (projectList, filters) => {
                             }),
                         ];
                     } else {
-                        console.log("hi1");
                         filteredList = filteredList.filter(
                             (item) => item[filters[key]]
                         );

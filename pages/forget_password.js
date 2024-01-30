@@ -23,7 +23,7 @@ function register() {
                 <form>
                     <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
                         <div style={{ width: "353px" }}>
-                            <div className="heading_s1 mb-42 text-center">
+                            <div className="heading_s1 mb-11 text-center">
                                 <h1 className="auth-title">Enter code</h1>
                                 <p className="otpnews" >Enter the verification code we just sent to your phone +20 12* **** *74</p>
                             </div>

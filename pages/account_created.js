@@ -6,7 +6,7 @@ function resetPassword() {
     <>
       <Auth>
         <form>
-          <div className="heading_s1 mb-42 text-center mb-24">
+          <div className="heading_s1 mb-11 text-center">
             <div className="flex w-full justify-center">
             <img src="/assets/imgs/theme/done.svg" className="mb-9" alt="logo" />
             </div>

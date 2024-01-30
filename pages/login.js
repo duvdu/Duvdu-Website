@@ -48,14 +48,14 @@ function Login() {
             left-0 right-0 fixed z-20`} />
       <Auth>
         <form method="post" onSubmit={handleSubmit}>
-          <div className="heading_s1 mb-11">
+          <div className="heading_s1 mb-8">
             <h1 className="auth-title">Welcome Back !!</h1>
           </div>
           <div className={`mb-4 ${emailError.isError && 'error'}`}>
             <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email *" className={emailError.isError ? "auth-field error" : "auth-field"} />
             {emailError.isError && <p className="error-msg">{emailError.message}</p>}
           </div>
-          <div className={`mb-4 ${passwordError.isError && 'error'}`}>
+          <div className={`mb-8 ${passwordError.isError && 'error'}`}>
             <div className="password-container">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -99,11 +99,11 @@ function Login() {
 
           </div>
           <div className="flex justify-center gap-8">
-            <div className="rounded-full border border-solid border-DS_gray_1 py-4 w-64 flex justify-center gap-4 items-center cursor-pointer">
+            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-64 flex justify-center gap-4 items-center cursor-pointer">
               <img src="/assets/imgs/theme/icons/google-icon.svg" />
               <p className="text-lg font-bold"> Google </p>
             </div>
-            <div className="rounded-full border border-solid border-DS_gray_1 py-4 flex justify-center gap-4 items-center w-64 cursor-pointer">
+            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 flex justify-center gap-4 items-center w-64 cursor-pointer">
               <img src="/assets/imgs/theme/icons/apple-logo.png" className="w-9" />
               <p className="text-lg font-bold"> Apple </p>
             </div>
@@ -115,3 +115,4 @@ function Login() {
 }
 
 export default Login;
+  

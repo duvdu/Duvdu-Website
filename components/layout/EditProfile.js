@@ -29,8 +29,9 @@ function EditPopUp({ profile }) {
                             <input
                                 type='text'
                                 value={profile['personal-name']}
+                                onChange={()=>{}}
                                 className="edit auth-field"
-                            />
+                                />
                         </div>
                         <div className='mb-4'>
                             <span className='text-base font-medium opacity-50 leading-10 capitalize'>
@@ -39,8 +40,9 @@ function EditPopUp({ profile }) {
                             <input
                                 type='text'
                                 value={profile['occupation']}
+                                onChange={()=>{}}
                                 className="edit auth-field"
-                            />
+                                />
                         </div>
                         <div className='mb-4'>
                             <span className='text-base font-medium opacity-50 leading-10 capitalize'>
@@ -49,8 +51,9 @@ function EditPopUp({ profile }) {
                             <input
                                 type='text'
                                 value={profile['location']}
+                                onChange={()=>{}}
                                 className="edit auth-field"
-                            />
+                                />
                         </div>
                         <div className='mb-4'>
                             <span className='text-base font-medium opacity-50 leading-10 capitalize'>
@@ -59,8 +62,9 @@ function EditPopUp({ profile }) {
                             <input
                                 type='text'
                                 value={profile['price']}
+                                onChange={()=>{}}
                                 className="edit auth-field"
-                            />
+                                />
                         </div>
                         <div className='mb-4'>
                             <span className='text-base font-medium opacity-50 leading-10 capitalize'>
@@ -69,8 +73,9 @@ function EditPopUp({ profile }) {
                             <textarea
                                 type='text'
                                 value={profile['about']}
+                                onChange={()=>{}}
                                 className="edit auth-field"
-                            />
+                                />
                         </div>
                         <AppButton text={'Done'} className={'mt-28'}/>
                 </form>

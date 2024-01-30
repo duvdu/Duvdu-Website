@@ -65,7 +65,7 @@ function Register() {
         <>
             <Auth>
                 <form method="post" onSubmit={handleSubmit}>
-                    <div className="heading_s1 mb-42">
+                    <div className="heading_s1 mb-11">
                         <h1 className="auth-title">Create an Account</h1>
                     </div>
                     <div className={`mb-4 ${nameError.isError && 'error'}`}>
@@ -101,7 +101,7 @@ function Register() {
                         />
                         {emailError.isError && <p className="error-msg">{emailError.message}</p>}
                     </div>
-                    <div className={`mb-4 mb-42 ${passwordError.isError && 'error'}`}>
+                    <div className={`mb-11 ${passwordError.isError && 'error'}`}>
                         <div className="password-container">
                             <input
                                 type={showPassword ? 'text' : 'password'}
@@ -122,7 +122,7 @@ function Register() {
                         </div>
                         {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
                     </div>
-                    <div className="login_footer mb-4 mb-42">
+                    <div className="login_footer mb-11">
                         <div className="chek-form">
                             <div className="custome-checkbox">
                                 <input
@@ -133,7 +133,7 @@ function Register() {
                                     checked={termsAgreed}
                                     onChange={() => setTermsAgreed(!termsAgreed)}
                                 />
-                                <label className="form-check-label terms-submit" htmlFor="exampleCheckbox1">
+                                <label className="form-check-label terms-submit flex gap-1 items-center " htmlFor="exampleCheckbox1">
                                     <span className="terms-agree">I agree to </span>
                                     <Link href="/terms">
                                         <a>terms and conditions</a>
