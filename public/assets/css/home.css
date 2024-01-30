@@ -58,7 +58,7 @@
   }
   
   .home-card .creator-info .name {
-    font-family: Urbanist;
+    
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -76,7 +76,7 @@
   .home-card .creator-info .name {
     width: fit-content;
     width: -webkit-fill-available;
-    font-family: Urbanist;
+    
     font-size: 15px;
     font-style: normal;
     font-weight: 600;
@@ -86,7 +86,7 @@
   
   .home-card .creator-info .value {
     padding-right: 7px;
-    font-family: Urbanist;
+    
     font-size: 17px;
     font-weight: 500;
     opacity: 0.8;
@@ -98,7 +98,7 @@
   
   .home-card .film-name {
     margin: 10px 0;
-    font-family: Urbanist;
+    
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -110,7 +110,7 @@
   .home-card .price {
     margin: 10px 0;
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -119,7 +119,7 @@
   }
   
   .page-header {
-    font-family: Urbanist;
+    
     font-size: 25px;
     font-style: normal;
     font-weight: 700;
@@ -130,7 +130,7 @@
   
   .mood-boards-header{
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 25px;
     font-style: normal;
     font-weight: 600;

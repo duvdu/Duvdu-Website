@@ -24,7 +24,7 @@
     backdrop-filter: blur(7.638689994812012px);
     padding: 15px 21.388px;
     color: #FFF;
-    font-family: Urbanist;
+    
     font-size: 21.388px;
     font-weight: 500;
 }
@@ -34,7 +34,7 @@
     left: 30px;
     color: #FFF;
     text-shadow: 0px 3.483px 10.45px rgba(0, 0, 0, 0.50);
-    font-family: Urbanist;
+    
     font-size: 43.542px;
     font-style: normal;
     font-weight: 500;
@@ -60,7 +60,7 @@
     border: 1.5px solid #1A73EB;
     background: #1A73EB;
     text-align: center;
-    font-family: Urbanist;
+    
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
