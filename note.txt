@@ -8,7 +8,6 @@
 # swiper fotter
 
 
-switch in profile
 dark mode
 - icon fav and love 
 - button shadow

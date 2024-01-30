@@ -211,13 +211,13 @@ const Header = ({
                                                                     {
                                                                         img: 'mode-icon.svg',
                                                                         name: 'Dark mode',
-                                                                        action: <Switch />,
+                                                                        action: <Switch onSwitchChange={()=>{}} />,
                                                                     },
                                                                     {
                                                                         img: 'power-icon.svg',
                                                                         name: 'Instant projects',
                                                                         subName: 'short delivery time, More money',
-                                                                        action: <Switch />,
+                                                                        action: <Switch onSwitchChange={()=>{}} />,
                                                                     },
                                                                     {
                                                                         img: 'notification-icon.svg',

@@ -197,7 +197,7 @@ function Profile() {
                         <div>
                             <div className='flex items-center justify-center my-7 gap-2'>
                                 <Switch onSwitchChange={handleSwitchChange} />
-                                <span>
+                                <span className={isable?"":"opacity-70"}>
                                     Instant Projects is {isable?"open":"disabled"}
                                 </span>
                             </div>
