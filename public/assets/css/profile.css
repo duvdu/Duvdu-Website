@@ -89,7 +89,7 @@
 
 .bronzer {
     text-align: center;
-    font-family: Urbanist;
+    
     font-size: 17px;
     font-style: normal;
     font-weight: 700;
@@ -124,7 +124,7 @@
     border: 1.3px solid rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(4.385797023773193px);
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -139,7 +139,7 @@
     border: 1.3px solid rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(4.385797023773193px);
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -150,7 +150,7 @@
 
 #rating>p {
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -186,7 +186,7 @@
 .popularity>.unit {
     color: #000;
     text-align: center;
-    font-family: Urbanist;
+    
     font-size: 13px;
     font-style: normal;
     font-weight: 600;
@@ -198,7 +198,6 @@
 .popularity>.number {
     color: #000;
     text-align: center;
-    font-family: Urbanist;
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -209,7 +208,7 @@
 
 #about-header {
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
@@ -220,7 +219,7 @@
 
 #about-paragraph {
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -230,7 +229,7 @@
 
 .comment .name {
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 18.325px;
     font-style: normal;
     font-weight: 600;
@@ -241,7 +240,7 @@
 
 .comment .date {
     color: #000;
-    font-family: Urbanist;
+    
     font-size: 15.271px;
     font-style: normal;
     font-weight: 500;
@@ -261,7 +260,7 @@
     left: 37.31px;
     color: #FFF;
     text-align: center;
-    font-family: Urbanist;
+    
     font-size: 22.131px;
     font-style: normal;
     font-weight: 500;
@@ -279,7 +278,7 @@
     background: rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(3.8825089931488037px);
     color: #FFF;
-    font-family: Urbanist;
+    
     font-size: 10.871px;
     font-style: normal;
     font-weight: 500;

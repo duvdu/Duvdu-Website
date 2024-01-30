@@ -7,9 +7,17 @@ import { convertToK } from '../util/util';
 import Popup from '../components/elements/popup';
 import EditPopUp from '../components/layout/EditProfile';
 import React, { useState } from 'react';
+import Switch from '../components/elements/switcher'
 
 function Profile() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const [isable, setIsDisabled] = useState(false);
+
+    const handleSwitchChange = (newState) => {
+        setIsDisabled(newState);
+      };
+
     const openPopup = () => {
         setIsPopupOpen(true);
     };
@@ -17,6 +25,7 @@ function Profile() {
     const closePopup = () => {
         setIsPopupOpen(false);
     };
+
     var profile = {
         "cover-pic": "/assets/imgs/projects/cover.jpeg",
         "profile-pic": "/assets/imgs/profile/contact-2.png",
@@ -184,7 +193,18 @@ function Profile() {
                                 </div>
                             </div>
                         </div>
-                        <div className='h-divider mt-7'></div>
+
+                        <div>
+                            <div className='flex items-center justify-center my-7 gap-2'>
+                                <Switch onSwitchChange={handleSwitchChange} />
+                                <span>
+                                    Instant Projects is {isable?"open":"disabled"}
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div className='h-divider'></div>
                         <div className='left-side-container'>
                             <h3 className='pt-6' id='about-header'>about</h3>
                             <p className='pt-6' id='about-paragraph'>{profile['about']}</p>

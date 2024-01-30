@@ -5,15 +5,15 @@
 # edit profile
 # dashboard
 # routing in profile
+# swiper fotter
 
 
-swiper fotter
 switch in profile
 dark mode
-icon fav and love 
-button shadow
-success component
-autoplay error
+- icon fav and love 
+- button shadow
+- success component
+- autoplay error
 
 loading 
 icon class

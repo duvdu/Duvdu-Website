@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
-const Switch = () => {
+const Switch = ({ onSwitchChange }) => {
   const [isFreedom, setIsFreedom] = useState(false);
 
   const handleSwitchClick = () => {
-    setIsFreedom(prevIsFreedom => !prevIsFreedom);
+    const newState = !isFreedom;
+    setIsFreedom(newState);
+
+    // Call the callback function with the new state
+    onSwitchChange(newState);
   };
 
   return (
