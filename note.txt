@@ -6,10 +6,8 @@
 # dashboard
 # routing in profile
 # swiper fotter
+# button with shadow
 
-
-button with shadow
-dark mode
 - icon fav and love 
 - button shadow
 - success component
