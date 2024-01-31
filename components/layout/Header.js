@@ -57,6 +57,7 @@ const Header = ({ fromlayout }) => {
         const body = document.body;
         body.classList.toggle('dark-mode');
         const isDarkMode = body.classList.contains('dark-mode');
+        setisDarkMode(isDarkMode)
         localStorage.setItem('darkMode', isDarkMode);
     }
 
@@ -82,7 +83,7 @@ const Header = ({ fromlayout }) => {
         setSettingvisible(false);
 
     }
-
+    console.log('state')
     // const handleToggle = () => setToggled(!isToggled);
     return (
         <>
@@ -93,18 +94,20 @@ const Header = ({ fromlayout }) => {
                 <div className="header-middle header-middle-ptb-1 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
-                            <div className="logo logo-width-1 mr-16">
-                                {
-                                    <Link href="/">
-                                        <a>
-                                            <img key={isDarkMode}
-                                                src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                                alt="main logo"
-                                            />
-                                        </a>
-                                    </Link>
-                                }
-                            </div>
+                            
+                                <div className="logo logo-width-1 mr-16">
+                                    {
+                                        <Link href="/">
+                                            <a>
+                                                <img key={isDarkMode}
+                                                    src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                                    alt="main logo"
+                                                />
+                                            </a>
+                                        </Link>
+                                    }
+                                </div>
+                            
                             <div className="header-right">
                                 <div className="header-tabs">
                                     <Link href="/dashboard">
