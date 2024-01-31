@@ -9,7 +9,7 @@
 }
 
 .left-side {
-    background-color: white;
+    background-color: var(--white);
     border-radius: 55px;
     padding-top: 40px;
     padding-bottom: 40px;
@@ -110,7 +110,7 @@
     gap: 10px;
     border-radius: 100px;
     border: 1.5px solid #1A73EB;
-    background: rgba(255, 255, 255, 0.20);
+    background: rgba(var(--white-rgb), 0.20);
     backdrop-filter: blur(7.5px);
     color: #1A73EB;
     font-size: 17px;
@@ -121,9 +121,9 @@
 #photographer {
     padding: 5px 20px;
     border-radius: 17.543px;
-    border: 1.3px solid rgba(0, 0, 0, 0.25);
+    border: 1.3px solid rgba(var(--black-rgb),.25);
     backdrop-filter: blur(4.385797023773193px);
-    color: #000;
+    color: var(--black);
     
     font-size: 17px;
     font-style: normal;
@@ -136,9 +136,9 @@
 #rating {
     padding: 5px 20px;
     border-radius: 17.543px;
-    border: 1.3px solid rgba(0, 0, 0, 0.25);
+    border: 1.3px solid rgba(var(--black-rgb),.25);
     backdrop-filter: blur(4.385797023773193px);
-    color: #000;
+    color: var(--black);
     
     font-size: 17px;
     font-style: normal;
@@ -149,7 +149,7 @@
 }
 
 #rating>p {
-    color: #000;
+    color: var(--black);
     
     font-size: 17px;
     font-style: normal;
@@ -162,14 +162,14 @@
     width: 1px;
     height: 40px;
     opacity: 0.1;
-    background: #000;
+    background: var(--black);
     margin: 0 10px;
 }
 
 .h-divider {
     height: 1px;
     opacity: 0.1;
-    background: #000;
+    background: var(--black);
 
 }
 
@@ -184,7 +184,7 @@
   }
 
 .popularity>.unit {
-    color: #000;
+    color: var(--black);
     text-align: center;
     
     font-size: 13px;
@@ -196,7 +196,7 @@
 }
 
 .popularity>.number {
-    color: #000;
+    color: var(--black);
     text-align: center;
     font-size: 20px;
     font-style: normal;
@@ -207,7 +207,7 @@
 }
 
 #about-header {
-    color: #000;
+    color: var(--black);
     
     font-size: 15px;
     font-style: normal;
@@ -218,7 +218,7 @@
 }
 
 #about-paragraph {
-    color: #000;
+    color: var(--black);
     
     font-size: 16px;
     font-style: normal;
@@ -228,7 +228,7 @@
 }
 
 .comment .name {
-    color: #000;
+    color: var(--black);
     
     font-size: 18.325px;
     font-style: normal;
@@ -239,7 +239,7 @@
 }
 
 .comment .date {
-    color: #000;
+    color: var(--black);
     
     font-size: 15.271px;
     font-style: normal;
@@ -274,8 +274,8 @@
     left: 35.41px;
     padding: 9px 21.388px;
     border-radius: 15.53px;
-    border: 0.388px solid rgba(255, 255, 255, 0.20);
-    background: rgba(0, 0, 0, 0.25);
+    border: 0.388px solid rgba(var(--white-rgb), 0.20);
+    background: rgba(var(--black-rgb),.25);
     backdrop-filter: blur(3.8825089931488037px);
     color: #FFF;
     
@@ -291,7 +291,7 @@
     height: 450px;
     border-radius: 50px;
     flex-shrink: 0;
-    background-color: white;
+    background-color: var(--white);
     overflow: hidden;
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Switch = ({ onSwitchChange }) => {
-  const [isFreedom, setIsFreedom] = useState(false);
+const Switch = ({ onSwitchChange,defaultValue }) => {
+  const [isFreedom, setIsFreedom] = useState(defaultValue !== null ? defaultValue : false);
 
   const handleSwitchClick = () => {
     const newState = !isFreedom;

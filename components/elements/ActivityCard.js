@@ -2,7 +2,7 @@
 import React from 'react';
 
 const ActivityCard = ({ activity }) => (
-    <div className='card cardborder-3 bg-white p-6 pt-16'>
+    <div className='card cardborder-3 bg-DS_white p-6 pt-16'>
         <div className='flex justify-between'>
             <p className='capitalize text-lg font-bold mb-5'>activity</p>
             <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
@@ -17,7 +17,7 @@ const ActivityCard = ({ activity }) => (
                         <span className='text-3xl capitalize font-medium'>{e.title}</span>
                     </div>
                     <div className='flex'>
-                        <div className='dashboard_padge text-sm mx-1 px-2 text-black'> {e.state} </div>
+                        <div className='dashboard_padge text-sm mx-1 px-2 text-DS_black'> {e.state} </div>
                     </div>
                 </div>
             ))

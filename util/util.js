@@ -9,12 +9,9 @@
   };
   
   export const convertToK = (number,afterpoint) => {
-    // Check if the number is greater than or equal to 1000
     if (number >= 1000) {
-        // If yes, divide the number by 1000 and append 'K'
         return (number / 1000).toFixed(afterpoint) + 'K';
     } else {
-        // If no, return the original number
         return number;
     }
 }

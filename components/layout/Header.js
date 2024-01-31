@@ -4,19 +4,33 @@ import { connect } from "react-redux";
 import Search from "../elements/Search";
 import Menu from '../elements/menu'
 import Switch from '../elements/switcher'
+import { DarkModeToggle } from "../../redux/action/DarkModeToggle";
+import Icon from "../Icons";
 
-const Header = ({
-    fromlayout
-}) => {
+const Header = ({ fromlayout }) => {
     const [isToggled, setToggled] = useState(false);
     const [scroll, setScroll] = useState(1);
     const [islogin, setIslogin] = useState(false);
+    const [isDarkMode, setisDarkMode] = useState(false);
 
     const [notificationDropdownVisible, setNotificationDropdownVisible] = useState(false);
     const [profileDropdownVisible, setProfileDropdownVisible] = useState(false);
     const [settingvisible, setSettingvisible] = useState(false);
 
+
+
     useEffect(() => {
+
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        setisDarkMode(isDarkMode)
+        const body = document.body;
+
+        if (isDarkMode) {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
+
         document.addEventListener("scroll", () => {
             const scrollCheck = window.scrollY >= 100;
             if (scrollCheck !== scroll) {
@@ -27,8 +41,8 @@ const Header = ({
         function getHeaderHeight() {
             var root = document.documentElement;
             var header = document.getElementsByTagName('header')[0];
-            var headerHeight = header.offsetHeight+ (!fromlayout.shortlayout ? 44 : 0);
-            
+            var headerHeight = header.offsetHeight + (!fromlayout.shortlayout ? 44 : 0);
+
             root.style.setProperty('--header-height', headerHeight + 'px');
         }
 
@@ -36,7 +50,15 @@ const Header = ({
 
         window.addEventListener('resize', getHeaderHeight);
 
+
     }, []);
+
+    function toggle() {
+        const body = document.body;
+        body.classList.toggle('dark-mode');
+        const isDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+    }
 
 
     const toggleNotificationDropdown = () => {
@@ -67,34 +89,39 @@ const Header = ({
 
             <div className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
-            <header className={scroll ? "header-area header-style-1 header-height-2 sticky-bar stick" : "header-area header-style-1 header-height-2 sticky-bar"}>
+            <header className={`${scroll ? "header-area header-style-1 header-height-2 sticky-bar stick" : "header-area header-style-1 header-height-2 sticky-bar"}`}>
                 <div className="header-middle header-middle-ptb-1 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
                             <div className="logo logo-width-1 mr-16">
-                                <Link href="/">
-                                    <a>
-                                        <img src="/assets/imgs/theme/logo.svg" alt="logo" />
-                                    </a>
-                                </Link>
+                                {
+                                    <Link href="/">
+                                        <a>
+                                            <img key={isDarkMode}
+                                                src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                                alt="main logo"
+                                            />
+                                        </a>
+                                    </Link>
+                                }
                             </div>
                             <div className="header-right">
                                 <div className="header-tabs">
                                     <Link href="/dashboard">
                                         <a>
-                                            <img src="/assets/imgs/theme/icons/dashboard.svg" alt="logo" />
+                                            <Icon name={"dashboard"} useinvert={true} />
                                             Dashboard
                                         </a>
                                     </Link>
                                     <Link href="/">
                                         <a className="ml-5">
-                                            <img src="/assets/imgs/theme/icons/contracts.svg" alt="logo" />
+                                            <Icon name={"contracts"} useinvert={true} />
                                             contracts
                                         </a>
                                     </Link>
                                     <Link href="/saved">
                                         <a className="ml-5">
-                                            <img src="/assets/imgs/theme/icons/saved.svg" alt="logo" />
+                                            <Icon name={"saved"} useinvert={true} />
                                             saved
                                         </a>
                                     </Link>
@@ -109,7 +136,7 @@ const Header = ({
                                         <div className="header-action-2 flex items-center ">
                                             <div className="header-action-icon-2 ml-2" >
                                                 <div className="icon-holder" onClick={toggleNotificationDropdown}>
-                                                    <img className="svgInject" alt="notofication-icon" src="/assets/imgs/theme/icons/notofication-icon.svg" />
+                                                    <Icon className="svgInject" name={"notofication-icon"} useinvert={true} />
                                                     <span className="pro-count blue">3</span>
                                                 </div>
                                                 <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (notificationDropdownVisible ? " active" : "")}>
@@ -150,7 +177,7 @@ const Header = ({
                                             </div>
                                             <div className="header-action-icon-2 mx-8"  >
                                                 <div className="icon-holder" onClick={toggleProfileDropdown}>
-                                                    <img className="svgInject" alt="user" src="/assets/imgs/theme/icons/icon-user.svg" />
+                                                    <Icon className="svgInject" name={"icon-user"} useinvert={true} />
                                                 </div>
                                                 <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (profileDropdownVisible ? " active" : "")}  >
                                                     <div className="dialog dialog-2">
@@ -169,11 +196,11 @@ const Header = ({
                                                                     </span>
                                                                 </p>
                                                             </div>
-                                                            
-                                                                <a href="/profile" id="profile-btn">
-                                                                    view profile
-                                                                </a>
-                                                            
+
+                                                            <a href="/profile" id="profile-btn">
+                                                                view profile
+                                                            </a>
+
                                                         </div>
                                                         <div className="card bottom-section">
                                                             <h4 className="opacity-70 text-lg mb-2">
@@ -201,7 +228,7 @@ const Header = ({
                                             </div>
                                             <div className="header-action-icon-2"  >
                                                 <div className="icon-holder" onClick={toggleSettingDropdown}>
-                                                    <img className="svgInject" alt="setting" src="/assets/imgs/theme/icons/icon-setting.svg" />
+                                                    <Icon className="svgInject" name={"icon-setting"} useinvert={true} />
                                                 </div>
                                                 <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (settingvisible ? " active" : "")}  >
                                                     <div className="dialog dialog-3">
@@ -211,13 +238,13 @@ const Header = ({
                                                                     {
                                                                         img: 'mode-icon.svg',
                                                                         name: 'Dark mode',
-                                                                        action: <Switch onSwitchChange={()=>{}} />,
+                                                                        action: <Switch defaultValue={isDarkMode} onSwitchChange={() => { toggle() }} />,
                                                                     },
                                                                     {
                                                                         img: 'power-icon.svg',
                                                                         name: 'Instant projects',
                                                                         subName: 'short delivery time, More money',
-                                                                        action: <Switch onSwitchChange={()=>{}} />,
+                                                                        action: <Switch onSwitchChange={() => { }} />,
                                                                     },
                                                                     {
                                                                         img: 'notification-icon.svg',
@@ -276,7 +303,7 @@ const Header = ({
                                                 <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
                                             </Link>
                                             <Link href="/register">
-                                                <a className="px-5 py-2 rounded-full border border-solid bg-blue-500 p-4 text-white">register</a>
+                                                <a className="px-5 py-2 rounded-full border border-solid bg-blue-500 p-4 text-DS_white">register</a>
                                             </Link>
                                         </div>
                                     }
@@ -308,7 +335,7 @@ const Header = ({
                             }
 
                             <div className="header-action-icon-2 block lg:hidden">
-                                <div className="burger-icon burger-icon-white" >
+                                <div className="burger-icon burger-icon-DS_white" >
                                     {/* onClick={toggleClick}>    OPEN MOBILE MENU  */}
                                     <span className="burger-icon-top"></span>
                                     <span className="burger-icon-mid"></span>

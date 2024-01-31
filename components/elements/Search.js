@@ -7,7 +7,7 @@ const Search = () => {
     const router = useRouter();
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
     const handleSearch = () => {
-        console.log("click");
+        
         router.push({
             pathname: "/projects",
             query: {
@@ -31,7 +31,7 @@ const Search = () => {
     return (
         <>
             <input
-                className="searchInput w-48 focus:w-full"
+                className="searchInput w-48 focus:w-full mr-3"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => handleFocus(true)}

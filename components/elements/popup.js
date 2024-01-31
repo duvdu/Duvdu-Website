@@ -9,7 +9,7 @@ const Popup = ({ isOpen, onClose, children, header,className }) => {
             <div className='card content py-3 mx-10 '>
                 <div className='flex gap-3'>
                     <div onClick={onClose} className='flex rounded-full header-border p-4 cursor-pointer'>
-                        <Icon name={'x'} />
+                        <Icon name={'x'} useinvert={true}/>
                     </div>
                     <span className='flex rounded-full header-border px-7 py-4 text-lg font-medium'>
                         {header}

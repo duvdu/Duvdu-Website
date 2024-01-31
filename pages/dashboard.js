@@ -111,11 +111,11 @@ const Dashboard = () => {
                     <div className='w-full mt-6'>
                         <div className='flex gap-6'>
                             <div className='flex flex-col w-full gap-6'>
-                                <div className='card cardborder-3 bg-white w-full h-full cardborder p-7 pt-16'>
+                                <div className='card cardborder-3 bg-DS_white w-full h-full cardborder p-7 pt-16'>
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
                                     <br />
                                     <br />
-                                    <span className='text-[47.907px] text-black font-medium capitalize'>1530</span>
+                                    <span className='text-[47.907px] text-DS_black font-medium capitalize'>1530</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
@@ -147,7 +147,7 @@ const Dashboard = () => {
 
                                     <br />
                                     <br />
-                                    <span className='text-[47.907px]  text-black font-medium capitalize'>1530</span>
+                                    <span className='text-[47.907px]  text-DS_black font-medium capitalize'>1530</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
@@ -158,18 +158,18 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className='w-full'>
-                                <div className='card cardborder-3 bg-white p-6 pt-16 h-full'>
+                                <div className='card cardborder-3 bg-DS_white p-6 pt-16 h-full'>
                                     <div className='flex justify-between'>
                                         <p className='capitalize text-lg font-bold mb-5'>activity</p>
-                                        <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
-                                            <p>?</p>
+                                        <div className='bg-DS_black opacity-50 text-DS_white rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
+                                            ?
                                         </div>
                                     </div>
                                     {
                                         activity.map((e, index) => (
                                             <div className='spliter' key={index}>
                                                 <div className='mb-2'>
-                                                    <span className='text-5xl font-medium text-black'>{convertToK(e.count)} </span>
+                                                    <span className='text-5xl font-medium text-DS_black'>{convertToK(e.count)} </span>
                                                     <span className='text-3xl capitalize font-medium'>{e.title}</span>
                                                 </div>
                                                 <div className='flex'>

@@ -92,7 +92,7 @@ function Auth({ children }) {
                                 </div>
                             </div>
                             <div className="lg:w-7/12 right-content">
-                                <div className="padding_eight_all bg-white auth-card">
+                                <div className="padding_eight_all bg-DS_white auth-card">
                                     <Link href="/"><a className="as-Guest flex items-center">
                                         Continue as a Guest
                                         <img className="h-3" src="/assets/imgs/theme/icons/left-arrow.svg" alt="arrow" />

@@ -6,7 +6,7 @@ import OtpInput from 'react-otp-input';
 function register() {
     const [otp, setOtp] = useState('');
     const [counter, setcount] = useState(59);
-    const [error, seterror] = useState(true);
+    const [error, seterror] = useState(false);
     useEffect(() => {
         if (counter > 0) {
             const intervalId = setInterval(() => {
@@ -32,42 +32,38 @@ function register() {
                                 onChange={setOtp}
                                 numInputs={5}
                                 renderSeparator={<span style={{ width: "100%" }} > </span>}
-                                renderInput={(props) => <input {...props} className={ error? "OTP error":"OTP"} style={{ width: "63px", height: "72px" }} />}
+                                renderInput={(props) => <input {...props} className={error ? "OTP error" : "OTP"} style={{ width: "63px", height: "72px" }} />}
                             />
 
                             {
                                 error &&
                                 <p className="error-msg mt-10" >Wrong code, please try again</p>
                             }
-                            {
-                                counter > 0 ?
-                                    <p className="resendMSG mt-55">
-                                        <span className="msg"> Send code again </span><span className="counter"> 00:{counter}</span>
-                                    </p> :
-                                    <p className="resendMSG2 mt-55 text-center">
-                                        Send code again
-                                    </p>
-                            }
+                            <div className="mt-14 mb-28">
 
+                                {
 
-
-
-
-
-
-
+                                    counter > 0 ?
+                                        <p className="resendMSG">
+                                            <span className="msg"> Send code again </span><span className="counter"> 00:{counter}</span>
+                                        </p> :
+                                        <p className="resendMSG2 text-center cursor-pointer" onClick={()=>{setcount(59)}}>
+                                            Send code again
+                                        </p>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="mb-4 relative mb-30 mt-55">
                         <button type="submit" className="btn btn-heading btn-block hover-up" name="Reset">Reset</button>
                         <div className="submit-btn"></div>
                     </div>
-                    <div className="have-account">
+                    {/* <div className="have-account">
                         <span>Don't have an account ?</span>
                         <Link href="/register">
                             <a> Register now</a>
                         </Link>
-                    </div>
+                    </div> */}
                 </form>
 
             </Auth>

@@ -28,9 +28,9 @@ const ProjectViewsCard = ({ recieved }) => (
             {
                 recieved.data.map((e, index) => (
                     <div className='text-center' key={index}>
-                        <span className='text-6xl text-black'>{convertToK(e.number,2)}</span>   
+                        <span className='text-6xl text-DS_black'>{convertToK(e.number,2)}</span>   
                         <br />
-                        <span className='text-black'>{e.title}</span>
+                        <span className='text-DS_black'>{e.title}</span>
                     </div>
 
                 ))}

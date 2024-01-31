@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
+import Button from '../components/elements/submitButton';
 import { useState } from 'react';
 
 function Login() {
@@ -81,9 +82,9 @@ function Login() {
           </div>
           <div className="login_footer mb-4"></div>
           <div className="mb-4 relative">
-            <button type="submit" className="btn btn-heading btn-block hover-up" name="login">
+            <Button type="submit" className="btn btn-heading btn-block hover-up" name="login">
               Login
-            </button>
+            </Button>
             <div className="submit-btn"></div>
           </div>
           <div className="have-account">
@@ -115,4 +116,3 @@ function Login() {
 }
 
 export default Login;
-  

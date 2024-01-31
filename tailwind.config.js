@@ -8,9 +8,6 @@ module.exports = {
       fontSize: {
 
       },
-      margin :{
-        "mb-21":"margin-bottom: 5.5rem"
-      },
       width: {
         '68%': '68%',
         '28%': '28%',
@@ -18,7 +15,9 @@ module.exports = {
         },
       colors: {
         DS_gray_1: 'var(--gray-1)',
-        primary: "#1A73EB"
+        DS_white: "var(--white)",
+        DS_black: "var(--black)",
+        primary: "var(--primary)",
       },
       container: {
         center: true,
