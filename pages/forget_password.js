@@ -2,6 +2,7 @@ import Link from "next/link";
 import Auth from '../components/layout/Auth'
 import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
+import Button from '../components/elements/submitButton';
 
 function register() {
     const [otp, setOtp] = useState('');
@@ -55,7 +56,9 @@ function register() {
                         </div>
                     </div>
                     <div className="mb-4 relative mb-30 mt-55">
-                        <button type="submit" className="btn btn-heading btn-block hover-up" name="Reset">Reset</button>
+                        <Button type="submit" name="reset-password">
+                            Reset
+                        </Button>
                         <div className="submit-btn"></div>
                     </div>
                     {/* <div className="have-account">

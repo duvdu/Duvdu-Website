@@ -73,7 +73,7 @@ function Auth({ children }) {
                                                         <p>{source.p}</p>
                                                     </div>
                                                     <div className="bg-cover border-top swipper-img">
-                                                        <img className="bg-cover min-h-full h-auto min-w-full w-auto" src={source.img} alt="swiper img" />
+                                                        <img className="bg-cover w-screen" src={source.img} alt="swiper img" />
                                                     </div>
                                                 </div>
 

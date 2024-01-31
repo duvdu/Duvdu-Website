@@ -82,7 +82,7 @@ function Login() {
           </div>
           <div className="login_footer mb-4"></div>
           <div className="mb-4 relative">
-            <Button type="submit" className="btn btn-heading btn-block hover-up" name="login">
+            <Button type="submit" name="login">
               Login
             </Button>
             <div className="submit-btn"></div>

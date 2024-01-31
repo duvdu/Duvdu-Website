@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import { useState } from 'react';
+import Button from '../components/elements/submitButton';
 
 function Register() {
     const [name, setName] = useState('');
@@ -143,9 +144,9 @@ function Register() {
                         </div>
                     </div>
                     <div className="mb-4 relative mb-30">
-                        <button type="submit" className="btn btn-heading btn-block hover-up" name="Create">
-                            Create Account
-                        </button>
+                    <Button type="submit" name="login">
+                        Create Account
+                    </Button>
                         <div className="submit-btn"></div>
                     </div>
                     <div className="have-account">

@@ -8,6 +8,7 @@
 # swiper fotter
 
 
+button with shadow
 dark mode
 - icon fav and love 
 - button shadow
