@@ -67,7 +67,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
             observer.disconnect();
         };
     }, [limit]);
-
+    
 
     const getPaginatedProjects = projects.items.slice(0, limit);
 

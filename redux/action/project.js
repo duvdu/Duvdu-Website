@@ -1,5 +1,5 @@
 // import fetch from 'isomorphic-unfetch'
-import filterProductList from '../../util/filterProduct'
+import filterProductList from '../../util/filterProject'
 import searchItemsByText from '../../util/searchItemsByText'
 import * as Types from '../constants/actionTypes'
 
@@ -10,14 +10,14 @@ export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
         const sendRequest = await fetch(url)
         const data = await sendRequest.json()
 
-        window.products = data
+        window.projects = data
 
         const searchedItems = searchItemsByText(searchTerm, data)
         const filteredList = filterProductList(searchedItems, filters)
 
         dispatch({
-            type: Types.FETCHED_PRODUCT,
-            payload: { products: filteredList }
+            type: Types.FETCHED_PROJECT,
+            payload: { projects: filteredList }
         })
 
     } catch (error) {
@@ -38,8 +38,8 @@ export const fetchMoreProduct = (url, total) => async dispatch => {
         // const filteredList  = filterProductList(searchedItems,filters)
 
         dispatch({
-            type: Types.FETCHED_MORE_PRODUCT,
-            payload: { products: data, total }
+            type: Types.FETCHED_MORE_PROJECT,
+            payload: { projects: data, total }
         })
 
     } catch (error) {

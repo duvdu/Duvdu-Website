@@ -10,7 +10,7 @@ export default (state = [], action) => {
             return [...action.payload.cart];
 
         case Types.ADD_TO_CART:
-            index = findProductIndexById(state, action.payload.product.id);
+            index = findProductIndexById(state, action.payload.project.id);
 
             if (index !== -1) {
                 state[index].quantity += 1;
@@ -18,22 +18,22 @@ export default (state = [], action) => {
 
                 return [...state];
             } else {
-                if (!action.payload.product.quantity) {
-                    action.payload.product.quantity = 1;
+                if (!action.payload.project.quantity) {
+                    action.payload.project.quantity = 1;
                 }
-                storage.set("dokani_cart", [...state, action.payload.product]);
+                storage.set("dokani_cart", [...state, action.payload.project]);
 
-                return [...state, action.payload.product];
+                return [...state, action.payload.project];
             }
 
         case Types.DELETE_FROM_CART:
-            const newCartItems = deleteProduct(state, action.payload.productId);
+            const newCartItems = deleteProduct(state, action.payload.projectId);
             storage.set("dokani_cart", newCartItems);
 
             return [...newCartItems];
 
         case Types.INCREASE_QUANTITY:
-            index = findProductIndexById(state, action.payload.productId);
+            index = findProductIndexById(state, action.payload.projectId);
             if (index === -1) return state;
 
             state[index].quantity += 1;
@@ -42,7 +42,7 @@ export default (state = [], action) => {
             return [...state];
 
         case Types.DECREASE_QUANTITY:
-            index = findProductIndexById(state, action.payload.productId);
+            index = findProductIndexById(state, action.payload.projectId);
             if (index === -1) return state;
 
             const quantity = state[index].quantity;

@@ -5,16 +5,16 @@ import * as Types from "../constants/actionTypes";
 
 export default (state = { items: [] }, action) => {
     switch (action.type) {
-        case Types.FETCHED_PRODUCT:
+        case Types.FETCHED_PROJECT:
             return {
                 ...state,
-                items: [...action.payload.products],
+                items: [...action.payload.projects],
             };
 
-        case Types.FETCHED_MORE_PRODUCT:
+        case Types.FETCHED_MORE_PROJECT:
             const mergeAllProducts = [
                 ...state.items,
-                ...action.payload.products,
+                ...action.payload.projects,
             ];
             // console.log(mergeAllProducts);
             const limit =
@@ -28,18 +28,18 @@ export default (state = { items: [] }, action) => {
                 items: [...limit],
             };
 
-        case Types.ADD_PRODUCT:
+        case Types.ADD_PROJECT:
             return {
                 ...state,
                 items: [...state.items, action.payload],
             };
 
-        case Types.DELETE_PRODUCT:
+        case Types.DELETE_PROJECT:
             return deleteProduct(state, action.payload.id);
 
-        case Types.UPDATE_PRODUCT:
-            const index = findProductIndexById(state, action.payload.product.id);
-            state[index] = action.payload.product;
+        case Types.UPDATE_PROJECT:
+            const index = findProductIndexById(state, action.payload.project.id);
+            state[index] = action.payload.project;
 
             return { ...state };
 

@@ -13,18 +13,18 @@ export const closeCompareModal = e => dispatch => {
     })
 }
 
-export const addToCompare = product => dispatch => {
+export const addToCompare = project => dispatch => {
     dispatch({
         type: Types.ADD_TO_COMPARE,
-        payload: { product }
+        payload: { project }
     })
 }
 
 
-export const deleteFromCompare = productId => dispatch => {
+export const deleteFromCompare = projectId => dispatch => {
     dispatch({
         type: Types.DELETE_FROM_COMPARE,
-        payload: { productId }
+        payload: { projectId }
     })
 }
 

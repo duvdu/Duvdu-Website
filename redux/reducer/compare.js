@@ -30,10 +30,10 @@ export default (state = initialState, action) => {
             };
 
         case Types.ADD_TO_COMPARE:
-            index = findProductIndexById(state.items, action.payload.product.id);
+            index = findProductIndexById(state.items, action.payload.project.id);
             if (index !== -1) return state;
 
-            const items = [...state.items, action.payload.product];
+            const items = [...state.items, action.payload.project];
 
             storage.set("dokani_compare", items);
 
@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
             };
 
         case Types.DELETE_FROM_COMPARE:
-            const list = deleteProduct(state.items, action.payload.productId);
+            const list = deleteProduct(state.items, action.payload.projectId);
             storage.set("dokani_compare", list);
 
             return {

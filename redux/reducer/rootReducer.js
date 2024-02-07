@@ -1,18 +1,18 @@
 import { combineReducers } from 'redux'
-import products from './product'
+import projects from './project'
 import cart from './cart'
 import wishlist from './wishlist'
 import quickView from './quickView'
 import compare from './compare'
-import productFilters from './productFilters'
+import projectFilters from './projectFilters'
 
 const rootReducer = combineReducers({
-    products,
+    projects,
     cart,
     wishlist,
     quickView,
     compare,
-    productFilters
+    projectFilters
 })
 
 export default rootReducer

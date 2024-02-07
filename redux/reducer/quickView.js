@@ -6,7 +6,7 @@ export default (state = null , action)=>{
         case Types.OPEN_QUICK_VIEW :
             console.log("quickview active")
             return {
-                ...action.payload.product
+                ...action.payload.project
             }
         
         case Types.CLOSE_QUICK_VIEW :

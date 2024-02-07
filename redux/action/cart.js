@@ -1,33 +1,33 @@
 import * as Types from '../constants/actionTypes'
 import storage from '../../util/localStorage';
 
-export const addToCart = product => dispatch => {
+export const addToCart = project => dispatch => {
     dispatch({
         type: Types.ADD_TO_CART,
-        payload: { product } 
+        payload: { project } 
     })
 }
 
 
-export const deleteFromCart = productId => dispatch => {
+export const deleteFromCart = projectId => dispatch => {
     dispatch({
         type: Types.DELETE_FROM_CART,
-        payload: { productId }
+        payload: { projectId }
     })
 }
 
-export const increaseQuantity = productId => dispatch => {
+export const increaseQuantity = projectId => dispatch => {
     dispatch({
         type: Types.INCREASE_QUANTITY,
-        payload: { productId }
+        payload: { projectId }
     })
 }
 
 
-export const decreaseQuantity = productId => dispatch => {
+export const decreaseQuantity = projectId => dispatch => {
     dispatch({
         type: Types.DECREASE_QUANTITY,
-        payload: { productId }
+        payload: { projectId }
     })
 }
 
