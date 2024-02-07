@@ -60,7 +60,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     return (
         <>
             <Layout noBreadcrumb="d-none">
-                <section className="mt-50 mb-50">
+                {/* <section className="mt-50 mb-50">
                     <div className="container mb-30">
                         <div className="row flex-row-reverse">
                             <div className="col-lg-4-5">
@@ -79,10 +79,10 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                                             {/* <ShowSelect
                                                 selectChange={selectChange}
                                                 showLimit={showLimit}
-                                            /> */}
+                                            /> 
                                         </div>
                                         <div className="sort-by-cover">
-                                            <SortSelect />
+                                            {/* <SortSelect /> 
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                                             key={i}
                                         >
                                             <Singleproject project={item} />
-                                            {/* <SingleprojectList project={item}/> */}
+                                            {/* <SingleprojectList project={item}/> 
                                         </div>
                                     ))}
                                 </div>
@@ -242,38 +242,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                             </div>
                         </div>
                     </div>
-                </section>
-                {/* <WishlistModal /> */}
-                {/* <CompareModal /> */}
-                {/* <CartSidebar /> */}
-                <QuickView />
-                {/* <div className="container">
-                    <div className="row">
-                        <div className="col-xl-6">
-                            <Search />
-                        </div>
-                        <div className="col-xl-6">
-                            <SideBarIcons />
-                        </div>
-                    </div>
-                    <div className="row justify-content-center text-center">
-                        <div className="col-xl-6">
-                            <Categoryproject />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-xl-3">
-                            
-                        </div>
-                        <div className="col-md-9">
-                            
-
-                            
-
-                            
-                        </div>
-                    </div>
-                </div> */}
+                </section> */}
             </Layout>
         </>
     );
