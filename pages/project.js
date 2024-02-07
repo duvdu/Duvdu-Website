@@ -60,7 +60,6 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     return (
         <>
             <Layout noBreadcrumb="d-none">
-            <Breadcrumb2/>
                 <section className="mt-50 mb-50">
                     <div className="container mb-30">
                         <div className="row flex-row-reverse">

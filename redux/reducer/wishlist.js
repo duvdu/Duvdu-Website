@@ -1,5 +1,5 @@
 import * as Types from '../constants/actionTypes'
-import { deleteProduct, findProductIndexById } from '../../util/util'
+import { deleteProject, findProjectIndexById } from '../../util/util'
 import storage from '../../util/localStorage'
 
 
@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
 
         case Types.ADD_TO_WISHLIST:
 
-            index = findProductIndexById(state.items, action.payload.project.id)
+            index = findProjectIndexById(state.items, action.payload.project.id)
             if (index !== -1) return state
 
             const items = [...state.items, action.payload.project]
@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
 
         case Types.DELETE_FROM_WISHLIST:
 
-            const list = deleteProduct(state.items, action.payload.projectId)
+            const list = deleteProject(state.items, action.payload.projectId)
             storage.set("dokani_wishlist", list)
 
             return {

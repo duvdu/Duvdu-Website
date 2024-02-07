@@ -1,9 +1,9 @@
 // import fetch from 'isomorphic-unfetch'
-import filterProductList from '../../util/filterProject'
+import filterProjectList from '../../util/filterProject'
 import searchItemsByText from '../../util/searchItemsByText'
 import * as Types from '../constants/actionTypes'
 
-// Fetch Product fetchProjects
+// Fetch Project fetchProjects
 export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
     try {
 
@@ -13,7 +13,7 @@ export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
         window.projects = data
 
         const searchedItems = searchItemsByText(searchTerm, data)
-        const filteredList = filterProductList(searchedItems, filters)
+        const filteredList = filterProjectList(searchedItems, filters)
 
         dispatch({
             type: Types.FETCHED_PROJECT,
@@ -27,15 +27,15 @@ export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
 }
 
 
-// Fetch More Product 
-export const fetchMoreProduct = (url, total) => async dispatch => {
+// Fetch More Project 
+export const fetchMoreProject = (url, total) => async dispatch => {
     try {
 
         const sendRequest = await fetch(url)
         const data = await sendRequest.json()
 
         // const searchedItems = searchItemsByText(searchTerm,data)
-        // const filteredList  = filterProductList(searchedItems,filters)
+        // const filteredList  = filterProjectList(searchedItems,filters)
 
         dispatch({
             type: Types.FETCHED_MORE_PROJECT,
@@ -49,14 +49,14 @@ export const fetchMoreProduct = (url, total) => async dispatch => {
 }
 
 
-// Fetch Product By Catagory
+// Fetch Project By Catagory
 
 export const fetchByCatagory = async (url, filters) => {
     try {
 
         const sendRequest = await fetch(url)
         const data = await sendRequest.json()
-        const filteredList = filterProductList(data, filters)
+        const filteredList = filterProjectList(data, filters)
 
         return filteredList
 

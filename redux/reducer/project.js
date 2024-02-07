@@ -1,4 +1,4 @@
-import { deleteProduct, findProductIndexById } from "../../util/util";
+import { deleteProject, findProjectIndexById } from "../../util/util";
 import * as Types from "../constants/actionTypes";
 
 // {items:[],filteredList:[]}
@@ -12,16 +12,16 @@ export default (state = { items: [] }, action) => {
             };
 
         case Types.FETCHED_MORE_PROJECT:
-            const mergeAllProducts = [
+            const mergeAllProjects = [
                 ...state.items,
                 ...action.payload.projects,
             ];
-            // console.log(mergeAllProducts);
+            // console.log(mergeAllProjects);
             const limit =
                 action.payload.total &&
-                mergeAllProducts.length > action.payload.total
-                    ? mergeAllProducts.splice(0, action.payload.total)
-                    : mergeAllProducts;
+                mergeAllProjects.length > action.payload.total
+                    ? mergeAllProjects.splice(0, action.payload.total)
+                    : mergeAllProjects;
 
             return {
                 ...state,
@@ -35,10 +35,10 @@ export default (state = { items: [] }, action) => {
             };
 
         case Types.DELETE_PROJECT:
-            return deleteProduct(state, action.payload.id);
+            return deleteProject(state, action.payload.id);
 
         case Types.UPDATE_PROJECT:
-            const index = findProductIndexById(state, action.payload.project.id);
+            const index = findProjectIndexById(state, action.payload.project.id);
             state[index] = action.payload.project;
 
             return { ...state };

@@ -10,8 +10,17 @@
   
   export const convertToK = (number,afterpoint) => {
     if (number >= 1000) {
-        return (number / 1000).toFixed(afterpoint) + 'K';
+      return (number / 1000).toFixed(afterpoint) + 'K';
     } else {
-        return number;
+      return number;
     }
-}
+  }
+
+
+  export const deleteProduct = (list, slug) => {
+    return null;
+  };
+  export const findProductIndexById = (list, slug) => {
+    return null;
+  };
+  
