@@ -30,7 +30,7 @@
     height: 120px;
 }
 
-.edit.auth-field{
+.edit.auth-field {
     width: 700px;
 }
 
@@ -48,6 +48,7 @@
 .profile-picture {
     padding: 10px;
 }
+
 .edit-profile-picture {
     bottom: 0;
 }
@@ -89,7 +90,7 @@
 
 .bronzer {
     text-align: center;
-    
+
     font-size: 17px;
     font-style: normal;
     font-weight: 700;
@@ -121,10 +122,10 @@
 #photographer {
     padding: 5px 20px;
     border-radius: 17.543px;
-    border: 1.3px solid rgba(var(--black-rgb),.25);
+    border: 1.3px solid rgba(var(--black-rgb), .25);
     backdrop-filter: blur(4.385797023773193px);
     color: var(--black);
-    
+
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -136,10 +137,10 @@
 #rating {
     padding: 5px 20px;
     border-radius: 17.543px;
-    border: 1.3px solid rgba(var(--black-rgb),.25);
+    border: 1.3px solid rgba(var(--black-rgb), .25);
     backdrop-filter: blur(4.385797023773193px);
     color: var(--black);
-    
+
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -150,7 +151,7 @@
 
 #rating>p {
     color: var(--black);
-    
+
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -180,13 +181,13 @@
 }
 
 .popularity:last-child {
-    border-right: none; 
-  }
+    border-right: none;
+}
 
 .popularity>.unit {
     color: var(--black);
     text-align: center;
-    
+
     font-size: 13px;
     font-style: normal;
     font-weight: 600;
@@ -208,7 +209,7 @@
 
 #about-header {
     color: var(--black);
-    
+
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
@@ -219,7 +220,7 @@
 
 #about-paragraph {
     color: var(--black);
-    
+
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -229,7 +230,7 @@
 
 .comment .name {
     color: var(--black);
-    
+
     font-size: 18.325px;
     font-style: normal;
     font-weight: 600;
@@ -240,7 +241,7 @@
 
 .comment .date {
     color: var(--black);
-    
+
     font-size: 15.271px;
     font-style: normal;
     font-weight: 500;
@@ -260,7 +261,7 @@
     left: 37.31px;
     color: #FFF;
     text-align: center;
-    
+
     font-size: 22.131px;
     font-style: normal;
     font-weight: 500;
@@ -275,10 +276,10 @@
     padding: 9px 21.388px;
     border-radius: 15.53px;
     border: 0.388px solid rgba(var(--white-rgb), 0.20);
-    background: rgba(var(--black-rgb),.25);
+    background: rgba(var(--black-rgb), .25);
     backdrop-filter: blur(3.8825089931488037px);
     color: #FFF;
-    
+
     font-size: 10.871px;
     font-style: normal;
     font-weight: 500;
@@ -298,12 +299,12 @@
 
 .profile-project.small {
     aspect-ratio: calc(2/3);
-    
+
 }
 
 .profile-project.big {
     aspect-ratio: calc(4/3);
-    
+
 }
 
 .project-grid {
@@ -315,29 +316,26 @@
 }
 
 .edit-pop::-webkit-scrollbar {
-    width: 0.5em; 
+    width: 0.5em;
 }
 
 .edit-pop::-webkit-scrollbar-thumb {
-    background-color: transparent; /* Hide the scrollbar handle */
+    background-color: transparent;
 }
 
 .edit-pop::-webkit-scrollbar-button {
-    display: none; /* Hide the scrollbar arrows */
+    display: none;
 }
 
-/* Show the scrollbar handle and arrows when the user starts scrolling for .edit class */
 .edit-pop:hover::-webkit-scrollbar-thumb {
-    background-color: #ccc; /* Set the color for the scrollbar handle */
+    background-color: #ccc;
     border-radius: 300px;
-  }
-  
-  .edit-pop:hover::-webkit-scrollbar-button {
-    display: block; /* Show the scrollbar arrows */
-  }
+}
 
-  
-.edit-pop{
+.edit-pop:hover::-webkit-scrollbar-button {
+    display: block;
+}
+
+.edit-pop {
     height: calc(85vh - var(--header-height));
-  
 }

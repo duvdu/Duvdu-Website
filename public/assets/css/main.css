@@ -10619,6 +10619,7 @@ footer .hotline img {
   text-transform: capitalize;
   color: #989898;
   width: 100%;
+  border: none
 }
 
 
@@ -10711,6 +10712,28 @@ footer .hotline img {
 
 /***********/
 
+::-webkit-scrollbar {
+  width: 1em; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent; 
+}
+
+::-webkit-scrollbar-button {
+  display: none; 
+}
+
+:hover::-webkit-scrollbar-thumb {
+  background-color: #ccc; 
+  border-radius: 300px;
+}
+
+:hover::-webkit-scrollbar-button {
+  display: block; 
+}
+
+
 :root {
   --gray-1: #C1CACF;
   --header-background: #fff;
@@ -10726,6 +10749,7 @@ footer .hotline img {
   --indigo: #253D4E;
   --Alabaster: #EAEEF0;
   --water:#CEE3FF;
+  
 }
 
 .dark-mode {
@@ -10734,10 +10758,11 @@ footer .hotline img {
   --invert: invert(100%);
   --border-color: #333;
   --white: #000;
-  --white-rgb: 0 , 0 , 0;
+  --white-rgb: 0, 0, 0;
   --black: #fff;
   --black-rgb: 255 , 255 , 255;
   --indigo: var(--black);
   --Alabaster: #1A2024;
   --water:#001F4A;
+  
 }

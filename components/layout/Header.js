@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import Search from "../elements/Search";
 import Menu from '../elements/menu'
 import Switch from '../elements/switcher'
-import { DarkModeToggle } from "../../redux/action/DarkModeToggle";
 import Icon from "../Icons";
 
 const Header = ({ fromlayout }) => {
@@ -83,31 +82,29 @@ const Header = ({ fromlayout }) => {
         setSettingvisible(false);
 
     }
-    console.log('state')
     // const handleToggle = () => setToggled(!isToggled);
     return (
         <>
-
-            <div className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
+           <div className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
             <header className={`${scroll ? "header-area header-style-1 header-height-2 sticky-bar stick" : "header-area header-style-1 header-height-2 sticky-bar"}`}>
                 <div className="header-middle header-middle-ptb-1 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
-                            
-                                <div className="logo logo-width-1 mr-16">
-                                    {
-                                        <Link href="/">
-                                            <a>
-                                                <img key={isDarkMode}
-                                                    src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                                    alt="main logo"
-                                                />
-                                            </a>
-                                        </Link>
-                                    }
-                                </div>
-                            
+
+                            <div className="logo logo-width-1 mr-16">
+                                {
+                                    <Link href="/">
+                                        <a>
+                                            <img key={isDarkMode}
+                                                src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                                alt="main logo"
+                                            />
+                                        </a>
+                                    </Link>
+                                }
+                            </div>
+
                             <div className="header-right">
                                 <div className="header-tabs">
                                     <Link href="/dashboard">
