@@ -1,9 +1,9 @@
 import * as Types from '../constants/actionTypes'
 
-export const openQuickView = project => dispatch =>{
+export const openQuickView = product => dispatch =>{
     dispatch({
         type: Types.OPEN_QUICK_VIEW,
-        payload: { project }
+        payload: { product }
     })
 }
 

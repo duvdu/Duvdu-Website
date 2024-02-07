@@ -1,20 +1,21 @@
 import * as Types from '../constants/actionTypes'
 
-export const updateprojectFilters = projectFilters => dispatch => {
+export const updateProductFilters = productFilters => dispatch => {
     dispatch({
-        type: Types.UPDATE_PROJECT_FILTERS,
-        payload:{ projectFilters }
+        type: Types.UPDATE_PRODUCT_FILTERS,
+        payload:{ productFilters }
     })
 }
 
-export const updateprojectCategory = category => dispatch => {
+export const updateProductCategory = category => dispatch => {
     dispatch({
-        type: Types.UPDATE_PROJECT_CATEGORY,
+        type: Types.UPDATE_PRODUCT_CATEGORY,
         payload:{ category }
     })
 }
 
-export const updateprojectRating = rating => dispatch => {
+export const updateProductRating = rating => dispatch => {
+    console.log(rating);
     dispatch({
         type: Types.UPDATE_RATING,
         payload: rating 

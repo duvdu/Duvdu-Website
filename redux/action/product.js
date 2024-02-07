@@ -1,23 +1,23 @@
 // import fetch from 'isomorphic-unfetch'
-import filterprojectList from '../../util/filterproject'
+import filterProductList from '../../util/filterProduct'
 import searchItemsByText from '../../util/searchItemsByText'
 import * as Types from '../constants/actionTypes'
 
-// Fetch project fetchProjects
+// Fetch Product fetchProjects
 export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
     try {
 
         const sendRequest = await fetch(url)
         const data = await sendRequest.json()
 
-        window.projects = data
+        window.products = data
 
         const searchedItems = searchItemsByText(searchTerm, data)
-        const filteredList = filterprojectList(searchedItems, filters)
+        const filteredList = filterProductList(searchedItems, filters)
 
         dispatch({
-            type: Types.FETCHED_PROJECT,
-            payload: { projects: filteredList }
+            type: Types.FETCHED_PRODUCT,
+            payload: { products: filteredList }
         })
 
     } catch (error) {
@@ -27,19 +27,19 @@ export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
 }
 
 
-// Fetch More project 
-export const fetchMoreproject = (url, total) => async dispatch => {
+// Fetch More Product 
+export const fetchMoreProduct = (url, total) => async dispatch => {
     try {
 
         const sendRequest = await fetch(url)
         const data = await sendRequest.json()
 
         // const searchedItems = searchItemsByText(searchTerm,data)
-        // const filteredList  = filterprojectList(searchedItems,filters)
+        // const filteredList  = filterProductList(searchedItems,filters)
 
         dispatch({
-            type: Types.FETCHED_MORE_PROJECT,
-            payload: { projects: data, total }
+            type: Types.FETCHED_MORE_PRODUCT,
+            payload: { products: data, total }
         })
 
     } catch (error) {
@@ -49,14 +49,14 @@ export const fetchMoreproject = (url, total) => async dispatch => {
 }
 
 
-// Fetch project By Catagory
+// Fetch Product By Catagory
 
 export const fetchByCatagory = async (url, filters) => {
     try {
 
         const sendRequest = await fetch(url)
         const data = await sendRequest.json()
-        const filteredList = filterprojectList(data, filters)
+        const filteredList = filterProductList(data, filters)
 
         return filteredList
 

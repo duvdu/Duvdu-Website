@@ -14,18 +14,18 @@ export const closeWishlistModal = e => dispatch => {
     })
 }
 
-export const addToWishlist = project => dispatch => {
+export const addToWishlist = product => dispatch => {
     dispatch({
         type: Types.ADD_TO_WISHLIST,
-        payload: { project }
+        payload: { product }
     })
 }
 
 
-export const deleteFromWishlist = projectId => dispatch => {
+export const deleteFromWishlist = productId => dispatch => {
     dispatch({
         type: Types.DELETE_FROM_WISHLIST,
-        payload: { projectId }
+        payload: { productId }
     })
 }
 
