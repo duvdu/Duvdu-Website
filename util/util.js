@@ -16,11 +16,9 @@
     }
   }
 
-
   export const deleteProduct = (list, slug) => {
     return null;
   };
   export const findProductIndexById = (list, slug) => {
     return null;
   };
-  

@@ -76,10 +76,10 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                                     </div>
                                     <div className="sort-by-project-area">
                                         <div className="sort-by-cover mr-10">
-                                            <ShowSelect
+                                            {/* <ShowSelect
                                                 selectChange={selectChange}
                                                 showLimit={showLimit}
-                                            />
+                                            /> */}
                                         </div>
                                         <div className="sort-by-cover">
                                             <SortSelect />
