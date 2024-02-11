@@ -7,13 +7,23 @@
 # routing in profile
 # swiper fotter
 # button with shadow
+# icon cl#ass
 
+profile message , chat , controller
+
+
+
+- loading 
 - icon fav and love 
 - button shadow
 - success component
 - autoplay error
 
-loading 
-icon class
-profile css
-profile
+
+
+hint 
+    profile other + home + remain project 
+    book
+    send files + payment
+    permits & producers
+    other screens

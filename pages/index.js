@@ -49,9 +49,9 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                 }
                 else {
                     if (targetRef.current) {
-                    targetRef.current.classList.remove('active');
+                        targetRef.current.classList.remove('active');
                     }
-                    
+
                 }
 
             });
@@ -67,7 +67,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
             observer.disconnect();
         };
     }, [limit]);
-    
+
 
     const getPaginatedProjects = projects.items.slice(0, limit);
 
@@ -82,17 +82,15 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                         )}
                         <div className="project-grid">
                             {getPaginatedProjects.map((item, i) => (
-                                <Card key={i} cardData={item} />
+                                <Card className='cursor-pointer' href="/project" key={i} cardData={item} />
                             ))}
                         </div>
-
                         {
                             getPaginatedProjects.length === limit &&
                             <div className="load-parent">
                                 <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                             </div>
                         }
-
                     </div>
                 </section>
             </Layout>

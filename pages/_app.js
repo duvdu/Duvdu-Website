@@ -14,8 +14,10 @@ import "swiper/css/navigation";
 import store from "../redux/store";
 import Preloader from "./../components/elements/Preloader";
 import "../public/assets/css/main.css";
+import "../public/assets/css/project-card.css";
 import "../public/assets/css/profile.css";
 import "../public/assets/css/dashboard.css";
+import "../public/assets/css/project.css";
 
 // const HomeCSS = dynamic(() => import('../public/assets/css/home.css'));
 // const MoodBoardsCSS = dynamic(() => import('../public/assets/css/mood_boards.css'));

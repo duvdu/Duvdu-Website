@@ -217,10 +217,10 @@ function Profile() {
                         </div>
                         <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
                             <Controller>
-                                <div className="w-20 h-20 rounded-full cursor-pointer flex justify-center items-center" style={{ background: "#1A73EB" }}>
+                                <div className="controller-1 primary" >
                                     <Icon name={'add'} />
                                 </div>
-                                <div onClick={openPopup} className="w-20 h-20 rounded-full cursor-pointer  flex justify-center items-center" style={{ background: "#0000001A" }}>
+                                <div onClick={openPopup} className="controller-1">
                                     <Icon name={'edit'} />
                                 </div>
                             </Controller>
@@ -249,7 +249,7 @@ function Profile() {
 
 const Project = ({ data, isbig }) => (
 
-    <div className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28% '}>
+    <a href='/project' className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28% '}>
         <img className='cardimg' src={data.show} alt='show' />
         <div className='creatives'>
             {data.creatives} creatives
@@ -257,7 +257,8 @@ const Project = ({ data, isbig }) => (
         <div className='title'>
             {data.title}
         </div>
-    </div>
+    </a>
+    
 
 );
 
