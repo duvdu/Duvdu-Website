@@ -10,6 +10,7 @@ import { convertHoursTo__ } from '../util/util';
 import Comment from '../components/elements/comment';
 import Controller from '../components/elements/controllers';
 import ArrowBtn from '../components/elements/arrowBtn';
+import Chat from '../components/elements/chat';
 
 
 
@@ -19,6 +20,14 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     }, []);
     const getPaginatedProjects = projects.items.slice(0, 4);
     const [loveIconName, setLoveIconName] = useState('love-react-off');
+    const [showChat, setShowChat] = useState(false);
+
+    const handleCloseChat = () => {
+        setShowChat(false);
+    };
+    const handleOpenChat = () => {
+        setShowChat(true);
+    };
     const handleLoveIconClick = () => {
         setLoveIconName(loveIconName === 'love-react-off' ? 'love-react-on' : 'love-react-off');
     };
@@ -119,9 +128,42 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
             },
         ],
     }
+    const messages = [
+        {
+            "type": "time",
+            "data": "Today at 11:41"
+        },
+        {
+            "type": "me",
+            "data": "Hey, man! What's up, Mr other? 👋"
+        },
+        {
+            "type": "other",
+            "data": "Kid, where'd you come from?"
+        },
+        {
+            "type": "me",
+            "data": "Field trip! 🤣"
+        },
+        {
+            "type": "me",
+            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
+        },
+        {
+            "type": "other",
+            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
+        },
+        {
+            "type": "typing other",
+            "data": ""
+        },
+    ];
     return (
         <>
             <Layout>
+                <div className="fixed left-8 bottom-0 z-20">
+                    {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
+                </div>
                 <div className="container mt-6">
                     <section>
                         <h1 className="text-xl capitalize opacity-80"> {data.title} </h1>
@@ -248,7 +290,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                     </section>
                 </div>
                 <div className='sticky h-32 bottom-0 flex justify-between items-end p-10'>
-                    <div className="message-shadow flex rounded-full p-2 h-16 bg-DS_white cursor-pointer">
+                    <div onClick={handleOpenChat} className="message-shadow flex rounded-full p-2 h-16 bg-DS_white cursor-pointer">
                         <div className="relative">
                             <img className="h-full" src={data.user.img} />
 
@@ -261,14 +303,11 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
 
                         </div>
                         <div className="px-3">
-                            <div>
-                                <span className="capitalize font-bold">
-                                    {data.user.name}
-                                </span>
-                            </div>
-                            <div>
-                                <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
-                            </div>
+                            <span className="capitalize font-bold">
+                                {data.user.name}
+                            </span>
+                            <div />
+                            <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
                         </div>
                     </div>
                     <Controller>

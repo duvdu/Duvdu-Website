@@ -18,12 +18,13 @@ import "../public/assets/css/project-card.css";
 import "../public/assets/css/profile.css";
 import "../public/assets/css/dashboard.css";
 import "../public/assets/css/project.css";
+import "../public/assets/css/chat.css";
 
 // const HomeCSS = dynamic(() => import('../public/assets/css/home.css'));
 // const MoodBoardsCSS = dynamic(() => import('../public/assets/css/mood_boards.css'));
 // const ProfileCSS = dynamic(() => import('../public/assets/css/profile.css'));
 
-
+    
 function MyApp({ Component, pageProps }) {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
