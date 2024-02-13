@@ -985,7 +985,7 @@ textarea:-ms-input-placeholder {
   opacity: 1;
 }
 
-input {
+/* auth-field {
   border: 1px solid rgba(var(--black-rgb), .35);
   border-radius: 10px;
   height: 64px;
@@ -993,7 +993,7 @@ input {
   box-shadow: none;
   padding-left: 20px;
   font-size: 16px;
-}
+} */
 
 
 
@@ -7640,7 +7640,7 @@ span.fi-rs-apps {
   margin-top: 20px;
   border-radius: 0 0 10px 10px;
   z-index: 999;
-  border: 1px solid rgba(var(--black-rgb), .35);
+  /* border: 1px solid rgba(var(--black-rgb), .35); */
   -webkit-box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
   box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
 }
@@ -10400,12 +10400,11 @@ footer .hotline img {
 
 .submit-parent {
   line-height: 40px;
-  width: 100%;
   padding: 15px 40px;
 }
 
 .auth-card>form .submit,
-.auth-card>form button[type="submit"] {
+.app-btn {
   z-index: 10;
   width: 100%;
   background: var(--primary);
@@ -10566,7 +10565,6 @@ footer .hotline img {
 
 .auth-field {
   background-color: gray;
-  border-radius: 200px;
   background: var(--Alabaster);
   border-radius: 33.5px;
   font-style: normal;
@@ -10579,7 +10577,10 @@ footer .hotline img {
   text-transform: capitalize;
   color: #989898;
   width: 100%;
-  border: none
+  border: none;
+  height: 64px;
+  padding-left: 20px;
+  font-size: 16px;
 }
 
 

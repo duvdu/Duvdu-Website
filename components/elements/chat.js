@@ -5,7 +5,7 @@ import Icon from '../Icons';
 const Chat = ({ messages, data, online ,Close}) => {
     return (
         <>
-        <div className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0'/>
+        <div onClick={Close} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0'/>
         <div className="chat relative flex flex-col justify-between p-4 rounded-lg bg-white shadow-xl">
             <a href='/profile' className="flex p-2 h-16 bg-DS_white cursor-pointer border-b">
                 <div className="relative">

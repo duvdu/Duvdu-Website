@@ -6,7 +6,7 @@ const appbutton = ({text,onClick,href="",className, ...rest}) => {
         <>
         <Link href={href}>
              <a onClick={onClick} className={`system-buttom cursor-pointer px-36 py-7 ${className}`} {...rest}>
-                <span>{text}</span>
+                <span className='whitespace-nowrap'>{text}</span>
             </a>
         </Link>
         </>

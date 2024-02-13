@@ -85,7 +85,7 @@ const Header = ({ fromlayout }) => {
     // const handleToggle = () => setToggled(!isToggled);
     return (
         <>
-           <div className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
+           <div onClick={falseall} className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
             <header className={`${scroll ? "header-area header-style-1 header-height-2 sticky-bar stick" : "header-area header-style-1 header-height-2 sticky-bar"}`}>
                 <div className="header-middle header-middle-ptb-1 hidden lg:block">

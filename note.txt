@@ -9,9 +9,9 @@
 # button with shadow
 # icon cl#ass
 
-profile message , chat , controller
 
-
+add team popup
+payment successful
 
 - loading 
 - icon fav and love 

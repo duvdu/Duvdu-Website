@@ -1,0 +1,30 @@
+
+import React from 'react';
+import Icon from '../Icons';
+import { useState } from 'react';
+
+const Drawer = ({ isOpen, toggleDrawer, data, children, className }) => {
+
+    return (
+        <>
+            {isOpen && <div onClick={toggleDrawer} className='z-10 fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />}
+            <div className={`z-20 fixed top-0 right-0 h-full bg-white shadow-lg transform transition-transform ease-in-out duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'} ${className}`}>
+                <div className="p-8">
+                    <div className='flex gap-3'>
+                        <div className='flex rounded-full border px-5 cursor-pointer aspect-square' onClick={toggleDrawer}>
+                            <Icon name={'leftArrow'} useinvert={true} />
+                        </div>
+                        <div className='flex rounded-full border font-medium items-center'>
+                            <img className="h-11 m-1" src={data.user.img} />
+                            <span className='capitalize mx-5 text-lg'>{data.user.name}</span>
+                        </div>
+                        <div className='w-96' />
+                    </div>
+                    {children}
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Drawer;
