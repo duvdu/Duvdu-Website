@@ -82,7 +82,7 @@ function Login() {
           </div>
           <div className="login_footer mb-4"></div>
           <div className="mb-4 relative">
-            <Button type="submit" name="login">
+            <Button type="submit" name="login" shadow={true}>
               Login
             </Button>
             <div className="submit-btn"></div>

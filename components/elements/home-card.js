@@ -17,20 +17,20 @@ const Card = ({ cardData , className, href }) => {
 
   return (
     <>
-      <div className={`home-card ${className}`} onClick={() => { console.log("hello world") }} >
+      <div className={`select-none home-card ${className}`} onClick={() => { console.log("hello world") }} >
         <div className='project'>
           <a href={href}>
           <img className='cardimg' src={cardData.backgroundImage} alt="projects" />
           </a>
           {cardData.showLove &&
-            <div className="blur-container love">
-              <Icon className='cursor-pointer' name={loveIconName} onClick={handleLoveIconClick} />
+            <div onClick={handleLoveIconClick}  className="blur-container love">
+              <Icon className='cursor-pointer' name={loveIconName} />
             </div>
           }
 
           {cardData.showSound &&
-            <div className="blur-container sound">
-               <Icon className='cursor-pointer' name={soundIconName} onClick={handleSoundIconClick} />
+            <div onClick={handleSoundIconClick}  className="blur-container sound">
+               <Icon className='cursor-pointer' name={soundIconName} />
             </div>
           }
         </div>

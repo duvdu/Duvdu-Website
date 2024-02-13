@@ -8,17 +8,18 @@
 # swiper fotter
 # button with shadow
 # icon cl#ass
+# add team popup
+# payment successful
 
 
-add team popup
-payment successful
 
 - loading 
 - icon fav and love 
 - button shadow
 - success component
 - autoplay error
-
+- send files
+- home section 2
 
 
 hint 

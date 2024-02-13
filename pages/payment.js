@@ -4,8 +4,9 @@ import Icon from '../components/Icons';
 import ArrowBtn from '../components/elements/arrowBtn';
 import Popup from '../components/elements/popup';
 import AppButton from '../components/elements/button';
+import AddNewCard from '../components/payment/AddNewCard';
 
-const DrawerExample = () => {
+const Payment = () => {
 
 
     return (
@@ -22,6 +23,80 @@ const DrawerExample = () => {
 };
 
 const LeftSide = () => {
+    const [showAddCard, setShowAddCard] = useState(false);
+
+    const handleAddCardClick = () => {
+        setShowAddCard(true);
+    };
+
+
+    const cardData = [
+        {
+            isSelected: true,
+            data: [
+                {
+                    label: 'Banka',
+                    value: 'Ziraat Bankası'
+                },
+                {
+                    label: 'Son dört hane',
+                    value: '1234'
+                },
+                {
+                    label: 'Kartın üzerindeki ad',
+                    value: 'Hızır Kocaman'
+                },
+                {
+                    label: 'Son kullanma tarihi',
+                    value: '12/34'
+                }
+            ]
+        },
+        {
+            isSelected: false,
+            data: [
+                {
+                    label: 'Banka',
+                    value: 'Ziraat Bankası'
+                },
+                {
+                    label: 'Son dört hane',
+                    value: '1234'
+                },
+                {
+                    label: 'Kartın üzerindeki ad',
+                    value: 'Hızır Kocaman'
+                },
+                {
+                    label: 'Son kullanma tarihi',
+                    value: '12/34'
+                }
+            ]
+        },
+        {
+            isSelected: false,
+            data: [
+                {
+                    label: 'Banka',
+                    value: 'Ziraat Bankası'
+                },
+                {
+                    label: 'Son dört hane',
+                    value: '1234'
+                },
+                {
+                    label: 'Kartın üzerindeki ad',
+                    value: 'Hızır Kocaman'
+                },
+                {
+                    label: 'Son kullanma tarihi',
+                    value: '12/34'
+                }
+            ]
+        },
+    ];
+
+
     return (
         <>
             <div className='my-12 w-full h-full'>
@@ -31,66 +106,22 @@ const LeftSide = () => {
                         <p className='font-medium text-base'>Registered cards</p>
                     </div>
                     <div className='border-b-2' />
-                    <div className='mx-6 my-4'>
-                        <div className='flex rounded-xl gap-4 justify-between'>
-                            <div className='mb-2'>
-                                <div className='flex items-center justify-center rounded-full bg-green-600 w-6 h-6  mb-2'>
-                                    <Icon name={"whiteCheck"} />
-                                </div>
-                                <Icon name={"card"} />
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Banka</p>
-                                <p className='font-bold text-base'>Ziraat Bankası</p>
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Son dört hane</p>
-                                <p className='font-bold text-base'>1234</p>
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Kartın üzerindeki ad</p>
-                                <p className='font-bold text-base'>Hızır Kocaman</p>
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Son kullanma tarihi</p>
-                                <p className='font-bold text-base'>12/34</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='border-b-2' />
-                    <div className='mx-6 my-4'>
-                        <div className='flex rounded-xl gap-4 justify-between'>
-                            <div className='mb-2'>
-                                <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px] mb-2'>
-                                    <Icon name={"blackCheck"} />
-                                </div>
-                                <Icon name={"card"} />
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Banka</p>
-                                <p className='text-sm text-[#5E5E5E]'>Ziraat Bankası</p>
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Son dört hane</p>
-                                <p className='text-sm text-[#5E5E5E]'>1234</p>
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Kartın üzerindeki ad</p>
-                                <p className='text-sm text-[#5E5E5E]'>Hızır Kocaman</p>
-                            </div>
-                            <div className='text-center'>
-                                <p className='text-sm text-[#5E5E5E] mb-2'>Son kullanma tarihi</p>
-                                <p className='text-sm text-[#5E5E5E]'>12/34</p>
-                            </div>
-                        </div>
-                    </div>
+                    {cardData.map((card, index) => (
+                        <Card key={index} isSelected={card.isSelected} data={card.data} isLast={cardData.length-1 == index}/>
+                    ))}
                 </div>
-                <div className='flex gap-4 rounded-2xl w-full border px-7 py-6 cursor-pointer'>
-                    <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px]'>
-                        <Icon name={"blackCheck"} />
+                {!showAddCard && (
+                    <div className='flex gap-4 rounded-2xl w-full border px-7 py-6 cursor-pointer' onClick={handleAddCardClick}>
+                        <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px]'>
+                            <Icon name={"blackCheck"} />
+                        </div>
+                        <span>Add new card</span>
                     </div>
-                    <span>Add new card</span>
-                </div>
+                )}
+                {showAddCard && (
+                    <AddNewCard/>
+                )}
+                
             </div>
         </>
     );
@@ -192,7 +223,33 @@ const RightSide = () => {
 };
 
 
+const Card = ({ isSelected, data , isLast }) => {
+    
+    return (
+        <div className={`mx-6 my-4 pb-4 ${isLast ? "" : "border-b-2"}`}>
+            <div className={`flex rounded-xl gap-4 justify-between `}>
+                <div className='mb-2'>
+                    {isSelected ? (
+                        <div className='flex items-center justify-center rounded-full bg-green-600 w-6 h-6  mb-2'>
+                            <Icon name={"whiteCheck"} />
+                        </div>
+                    ) : (
+                        <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px] mb-2'>
+                            <Icon name={"blackCheck"} />
+                        </div>
+                    )}
+                    <Icon name={"card"} />
+                </div>
+                {data.map((item, index) => (
+                    <div key={index} className='text-center'>
+                        <p className='text-sm text-[#5E5E5E] mb-2'>{item.label}</p>
+                        <p className={isSelected ? 'font-bold text-base' :'text-sm text-[#5E5E5E]'}>{item.value}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 
-
-export default DrawerExample;
+export default Payment;

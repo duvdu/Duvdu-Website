@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Layout from "../components/layout/Layout";
 import AppButton from '../components/elements/button';
 
-const DrawerExample = () => {
+const payment_success = () => {
 
 
     return (
@@ -30,4 +30,4 @@ const DrawerExample = () => {
 
 
 
-export default DrawerExample;
+export default payment_success;

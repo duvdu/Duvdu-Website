@@ -77,7 +77,7 @@ function EditPopUp({ profile }) {
                                 className="edit auth-field"
                                 />
                         </div>
-                        <AppButton text={'Done'} className={'mt-28'}/>
+                        <AppButton text={'Done'} />
                 </form>
                 
             </div>

@@ -113,7 +113,6 @@
   width: min-content;
   flex-shrink: 0;
   border-radius: 41.5px;
-  background: #1A73EB;
   color: var(--white);
   text-align: center;
   cursor: pointer;

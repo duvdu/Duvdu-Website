@@ -39,7 +39,7 @@ function AddToTeam({ isPopupOpen, setIsPopupOpen }) {
                     ))}
                     <div className="h-[334px]" />
                     <div className='px-24'>
-                        <Button name="reset-password" className="w-full">
+                        <Button name="reset-password" className="w-full" shadow={true}>
                             Next
                         </Button>
                     </div>

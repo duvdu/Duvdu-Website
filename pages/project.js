@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
-import Drawer from "../components/layout/projectDrawer";
+import Drawer from "../components/popsup/projectDrawer";
 import { fetchProjects } from "../redux/action/project";
 import Icon from '../components/Icons';
 import { convertToK } from "../../util/util";
@@ -12,16 +12,20 @@ import Comment from '../components/elements/comment';
 import Controller from '../components/elements/controllers';
 import ArrowBtn from '../components/elements/arrowBtn';
 import Chat from '../components/elements/chat';
-import AddToTeam from '../components/layout/AddToTeam';
+import AddToTeam from '../components/popsup/AddToTeam';
+import Report from '../components/popsup/report';
+import ThanksMSG from '../components/popsup/thanksMSG';
 
 
 
 const projects = ({ projects, projectFilters, fetchProjects }) => {
 
-    const [isPopupOpen, setIsPopupOpen] = useState(true);
+    const [isTeamOpen, setIsTeamOpen] = useState(false);
+    const [isReportOpen, setisReportOpen] = useState(false);
+    const [isthankMSG, setisthankMSG] = useState(true);
 
-    const openPopup = () => {
-        setIsPopupOpen(true);
+    const openReport = () => {
+        setIsTeamOpen(true);
     };
 
     
@@ -177,7 +181,9 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     return (
         <>
             <Layout>
-                <AddToTeam isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen}/>
+                <AddToTeam isPopupOpen={isTeamOpen} setIsPopupOpen={setIsTeamOpen}/>
+                <Report isPopupOpen={isReportOpen} setIsPopupOpen={setisReportOpen}/>
+                <ThanksMSG isPopupOpen={isthankMSG} setIsPopupOpen={setisthankMSG}/>
                 <div className="fixed left-8 bottom-0 z-20">
                     {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
                 </div>
@@ -331,7 +337,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                         <div className="controller-1" >
                             <Icon name={'share'} />
                         </div>
-                        <div onClick={openPopup} className="controller-1">
+                        <div onClick={ ()=> setIsTeamOpen(true)} className="controller-1">
                             <Icon name={'add'} />
                         </div>
                         <div onClick={handleLoveIconClick} className="controller-1">

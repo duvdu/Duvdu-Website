@@ -803,7 +803,7 @@ h5.widget-title {
   border-color: var(--primary);
 }
 
-.btn-heading,
+/* .btn-heading,
 button.btn-heading[type="submit"] {
   background-color: var(--indigo);
   border-color: var(--indigo);
@@ -825,7 +825,7 @@ button[type='submit'] {
 button.submit:hover,
 button[type='submit']:hover {
   background-color: #29A56C !important;
-}
+} */
 
 .btn-brand:hover {
   background-color: #29A56C !important;
