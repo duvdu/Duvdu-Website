@@ -5,7 +5,7 @@ import Controller from '../components/elements/controllers';
 import Icon from '../components/Icons';
 import { convertToK } from '../util/util';
 import Popup from '../components/elements/popup';
-import EditPopUp from '../components/layout/EditProfile';
+import EditPopUp from '../components/popsup/EditProfile';
 import React, { useState } from 'react';
 import Switch from '../components/elements/switcher'
 
