@@ -8,7 +8,7 @@ function resetPassword() {
         <form>
           <div className="heading_s1 mb-11 text-center">
             <div className="flex w-full justify-center">
-            <img src="/assets/imgs/theme/done.svg" className="mb-9" alt="logo" />
+            <Icon name={"done"} className="mb-9"/>
             </div>
             <h1 className="auth-title">Account Created</h1>
             <p>Now choose a category to view the best creatives in this field</p>

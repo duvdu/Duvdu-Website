@@ -16,7 +16,7 @@ function Profile() {
 
     const handleSwitchChange = (newState) => {
         setIsDisabled(newState);
-      };
+    };
 
     const openPopup = () => {
         setIsPopupOpen(true);
@@ -153,7 +153,7 @@ function Profile() {
     return (
         <Layout>
             <Popup className={'mt-14'} isOpen={isPopupOpen} onClose={closePopup} header={'Edit Details'}>
-                <EditPopUp profile={profile}/>
+                <EditPopUp profile={profile} />
             </Popup>
             <div className='container'>
                 <div className='cover' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} ></div>
@@ -197,11 +197,10 @@ function Profile() {
                         <div>
                             <div className='flex items-center justify-center my-7 gap-2'>
                                 <Switch onSwitchChange={handleSwitchChange} />
-                                <span className={isable?"":"opacity-70"}>
-                                    Instant Projects is {isable?"open":"disabled"}
+                                <span className={isable ? "" : "opacity-70"}>
+                                    Instant Projects is {isable ? "open" : "disabled"}
                                 </span>
                             </div>
-
                         </div>
 
                         <div className='h-divider'></div>
@@ -258,7 +257,7 @@ const Project = ({ data, isbig }) => (
             {data.title}
         </div>
     </a>
-    
+
 
 );
 

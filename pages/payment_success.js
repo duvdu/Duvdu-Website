@@ -3,14 +3,12 @@ import Layout from "../components/layout/Layout";
 import AppButton from '../components/elements/button';
 
 const payment_success = () => {
-
-
     return (
         <>
             <Layout>
                 <div className='container flex flex-col justify-center items-center w-min text-center'>
                     <div className='w-[540px] h-[450]px bg-gray-600 mt-10' />
-                    <img src='/assets/imgs/payment_successful.png' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' />
+                    <img src='/assets/imgs/theme/paymentSuccessful.svg' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' />
                     <h3 className='text-2xl font-bold mt-8 mb-4'>
                         payment successful
                     </h3>
@@ -24,7 +22,6 @@ const payment_success = () => {
                 </div>
             </Layout>
         </>
-
     );
 };
 

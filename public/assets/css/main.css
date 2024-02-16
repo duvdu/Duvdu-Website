@@ -1031,7 +1031,6 @@ textarea {
   padding: 10px 10px 10px 20px;
   font-size: 16px;
   width: 100%;
-  min-height: 200px;
 }
 
 textarea:focus {
@@ -4963,6 +4962,17 @@ table .project-thumbnail img {
   margin-top: 1rem;
 }
 
+.header-progress-bar {
+  border-radius: 90px;
+  background: #1A73EB80;
+  height: 16px;
+}
+
+.header-progress {
+  height: 100%;
+  border-radius: 90px;
+}
+
 .progress-bar {
   background-color: var(--primary);
 }
@@ -6419,7 +6429,7 @@ h6.post-title {
 .cart-dropdown-wrap.account-dropdown a {
 
   cursor: pointer;
-  text-decoration: underline;
+ 
 }
 
 .cart-dropdown-wrap ul li:last-child {
@@ -10712,8 +10722,10 @@ footer .hotline img {
   @apply bg-primary
 }
 
-.controller-2 {
-  
+.bottomeffect{
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(247, 249, 251, 0.00) 0%, #F7F9FB 91.04%);
 }
 
 :root {

@@ -75,8 +75,8 @@ export default function AddNewCard() {
                         value={cardOwner}
                         onChange={(e) => setCardOwner(e.target.value)}
                         required
-                        />
-                        <div className='w-10'></div>
+                    />
+                    <div className='w-10'></div>
                 </div>
 
                 <div className='flex items-center gap-4 mb-6'>
@@ -93,7 +93,7 @@ export default function AddNewCard() {
                         onChange={(e) => setExpiryDate(e.target.value)}
                         required
                     />
-                        <div className='w-10'></div>
+                    <div className='w-10'></div>
                 </div>
 
 

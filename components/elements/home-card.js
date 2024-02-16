@@ -17,7 +17,7 @@ const Card = ({ cardData , className, href }) => {
 
   return (
     <>
-      <div className={`select-none home-card ${className}`} onClick={() => { console.log("hello world") }} >
+      <div className={`select-none home-card ${className}`} onClick={() => {  }} >
         <div className='project'>
           <a href={href}>
           <img className='cardimg' src={cardData.backgroundImage} alt="projects" />

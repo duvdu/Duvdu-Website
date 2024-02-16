@@ -6,7 +6,7 @@ const Popup = ({ isOpen, onClose, children, header,className }) => {
     return (
         <div className={`popup ${isOpen ? 'open' : ''} ${className}`}>
             <div className="overlay blur" onClick={onClose}></div>
-            <div className='card content py-3 mx-10 '>
+            <div className='card content bg-[#F7F9FB] dark:bg-[#131313] py-3 mx-10 '>
                 <div className='flex gap-3'>
                     <div onClick={onClose} className='flex rounded-full header-border p-4 cursor-pointer'>
                         <Icon name={'x'} useinvert={true}/>

@@ -70,7 +70,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
     };
 
     return (
-        <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} className="overflow-scroll">
+        <Drawer name={data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={toggleDrawer} className="overflow-scroll">
             <section className="flex gap-3 items-center mt-11">
                 <Switch onSwitchChange={handleSwitchChange} />
                 <span>price is inclusive</span>
@@ -118,7 +118,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
             <section className="my-11 flex justify-between gap-7">
                 <div className="w-full">
                     <p className="capitalize opacity-60 mb-4">location</p>
-                    <div className="flex items-center rounded-2xl border border-gray-300 bg-white h-16 p-2">
+                    <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                             <Icon name={"blue-location"} />
                         </div>
@@ -129,7 +129,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
 
                 <div className="w-full">
                     <p className="capitalize opacity-60 mb-4">upload alike project</p>
-                    <div className="flex items-center rounded-2xl border border-gray-300 bg-white h-16 p-2">
+                    <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                             <Icon name={"gallery"} />
                         </div>
@@ -141,7 +141,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
             <section>
                 <div className="w-full">
                     <p className="capitalize opacity-60 mb-4">shooting days</p>
-                    <div className="flex flex-col justify-end rounded-2xl border border-gray-300 bg-white py-5 p-2 px-4">
+                    <div className="flex flex-col justify-end rounded-2xl border border-gray-300 bg-DS_white py-5 p-2 px-4">
                         <input onChange={handleChangeDays} type="range" min="0" max="20" value={Daysvalue} id="myRange" className="range-input days-value" />
                         <Ruler />
                     </div>
@@ -151,7 +151,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
             <section>
                 <div className="w-full mt-11">
                     <p className="capitalize opacity-60 mb-4">custom requirements</p>
-                    <div className="flex flex-col justify-end rounded-2xl border border-gray-300 bg-white py-5 p-2 px-4">
+                    <div className="flex flex-col justify-end rounded-2xl border border-gray-300 bg-DS_white py-5 p-2 px-4">
                         <input onChange={handleChangRequirementsvalue} type="range" min="0" max="20" value={Requirementsvalue} id="myRange" className="range-input requirements-value" />
                         <Ruler />
                     </div>
@@ -161,7 +161,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
             <section>
                 <div className="w-full mt-11">
                     <p className="capitalize opacity-60 mb-4">number of hours</p>
-                    <div className="flex flex-col justify-end rounded-2xl border border-gray-300 bg-white py-5 p-2 px-4">
+                    <div className="flex flex-col justify-end rounded-2xl border border-gray-300 bg-DS_white py-5 p-2 px-4">
                         <input onChange={handleChangHours} type="range" min="0" max="20" value={Requirementsvalue} id="myRange" className="range-input requirements-value" />
                         <Ruler />
                     </div>
@@ -172,7 +172,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
                     {/* <p className="capitalize opacity-60 mb-4">select date</p> */}
             </section>
 
-            <section>
+            <section className="sticky bottom-0">
                 <div className="flex justify-center mt-11">
                     <a href="/payment">
                         <ArrowBtn className="cursor-pointer w-96" text='continue' />

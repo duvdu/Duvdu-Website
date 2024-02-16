@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Layout from "./../components/layout/Layout";
 import { fetchProjects } from "./../redux/action/project";
 import Card from "./../components/elements/home-card";
+import Filter from "../components/elements/filter";
 
 const Projects = ({ projects, projectFilters, fetchProjects }) => {
     const Router = useRouter();
@@ -33,18 +34,13 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
         const handleIntersection = (entries, observer) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-
                     setTimeout(() => {
                         setLimit((prevLimit) => prevLimit + showLimit);
                     }, 2000);
-
                     if (targetRef.current) {
                         targetRef.current.classList.add('active');
                     }
-
                     hasBeenVisible = true;
-
-
                     observer.unobserve(entry.target);
                 }
                 else {
@@ -76,6 +72,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
             <Layout>
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
+                        <Filter />
                         <h1 className="page-header">most popular on duvdu</h1>
                         {getPaginatedProjects.length === 0 && (
                             <h3>No projects Found </h3>
@@ -97,6 +94,8 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
         </>
     );
 };
+
+
 
 const mapStateToProps = (state) => ({
     projects: state.projects,

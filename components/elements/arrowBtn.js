@@ -2,10 +2,10 @@ import React from "react";
 import Icon from '../Icons';
 
 
-const arrowBtn = ({className,children,text, ...rest}) => {
+const arrowBtn = ({className,children,text,Click, ...rest}) => {
     return (
         <>
-        <div className={`bg-primary flex rounded-full p-1 ${className}`} {...rest}>
+        <div onClick={Click} className={`bg-primary flex rounded-full p-1 ${className}`} {...rest}>
             <div className="w-full flex justify-center items-center">
             <span className="capitalize flex mx-5 items-center text-lg font-bold text-DS_white text-center">{text}</span>
             </div>

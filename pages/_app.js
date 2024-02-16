@@ -19,6 +19,8 @@ import "../public/assets/css/profile.css";
 import "../public/assets/css/dashboard.css";
 import "../public/assets/css/project.css";
 import "../public/assets/css/chat.css";
+import "../public/assets/css/home.css";
+import "../public/assets/css/mood_boards.css";
 
 // const HomeCSS = dynamic(() => import('../public/assets/css/home.css'));
 // const MoodBoardsCSS = dynamic(() => import('../public/assets/css/mood_boards.css'));
@@ -38,27 +40,27 @@ function MyApp({ Component, pageProps }) {
         //   }).init()
     }, []);
 
-    try {
+//     try {
         
-    switch (location.pathname.slice(1)) {
-        case "":
-            import('../public/assets/css/home.css');
-            break;
-        case 'saved':
-            import('../public/assets/css/mood_boards.css');
-            break;
-        case 'profile':
-            import('../public/assets/css/profile.css');
-            break;
-        case 'dashboard':
-            import('../public/assets/css/dashboard.css');
-            break;
-        default:
+//     switch (location.pathname.slice(1)) {
+//         case "":
+//             import('../public/assets/css/home.css');
+//             break;
+//         case 'saved':
+//             import('../public/assets/css/mood_boards.css');
+//             break;
+//         case 'profile':
+//             import('../public/assets/css/profile.css');
+//             break;
+//         case 'dashboard':
+//             import('../public/assets/css/dashboard.css');
+//             break;
+//         default:
     
-    }
-}catch{
+//     }
+// }catch{
     
-}
+// }
 
     return (
         <>

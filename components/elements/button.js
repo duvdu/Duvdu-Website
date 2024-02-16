@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const appbutton = ({ text, color, onClick, href = "", className, ...rest }) => {
+const appbutton = ({ text, color, onClick, className, ...rest }) => {
 
     let buttonClass;
 
@@ -11,6 +11,9 @@ const appbutton = ({ text, color, onClick, href = "", className, ...rest }) => {
         case 'bg-[#D30000]':
             buttonClass = 'bg-[#D30000]';
             break;
+        case 'bg-[#5666F7]':
+            buttonClass = 'bg-[#5666F7]';
+            break;
         default:
             buttonClass = `bg-[${color}]`;
             break;
@@ -18,13 +21,13 @@ const appbutton = ({ text, color, onClick, href = "", className, ...rest }) => {
 
     return (
         <>
-            
+
             <div onClick={onClick} className={`${buttonClass} system-buttom cursor-pointer px-36 py-7 ${className}`} {...rest}>
-                <a href={href}>
-                    <span className='whitespace-nowrap'>{text}</span>
-                </a>
+
+                <span className='whitespace-nowrap'>{text}</span>
+
             </div>
-            
+
         </>
     );
 };

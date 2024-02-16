@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Button from '../components/elements/submitButton';
 import Auth from '../components/layout/Auth';
+import Icon from '../components/Icons';
+
 
 function resetPassword() {
   return (
@@ -9,7 +11,7 @@ function resetPassword() {
         <div className="flex flex-col justify-center h-full">
           <div className="heading_s1 mb-[88px] text-center">
             <div className="flex w-full justify-center">
-              <img src="/assets/imgs/theme/done.svg" className="mb-9" alt="logo" />
+              <Icon name={"done"} className="mb-9" />
             </div>
             <h1 className="auth-title mb-2">Password changed</h1>
             <p>Your password has been changed successfully</p>

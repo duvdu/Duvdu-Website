@@ -3,7 +3,7 @@ import Layout from '../components/layout/Layout';
 import { convertToK } from '../util/util';
 import NextBadgeCard from '../components/elements/NextBadgeCard';
 import ProjectViewsCard from '../components/elements/ProjectViewsCard';
-import Popup from '../components/elements/popup';
+import DashboardPopup from '../components/popsup/dashboard';
 import TopProjects from '../components/elements/topProjects';
 import AppButton from '../components/elements/button';
 import React, { useState } from 'react';
@@ -13,10 +13,6 @@ const Dashboard = () => {
 
     const openPopup = () => {
         setIsPopupOpen(true);
-    };
-
-    const closePopup = () => {
-        setIsPopupOpen(false);
     };
 
     const chart = {
@@ -92,16 +88,7 @@ const Dashboard = () => {
 
             <Layout>
                 <button onClick={openPopup}>Open Popup</button>
-                <Popup isOpen={isPopupOpen} onClose={closePopup} header={'registration required'}>
-                    <div className='flex h-full flex-col mt-24 items-center'>
-                            <span className='mb-12 text-center text-xl font-semibold'>
-                                Register or Sign-in
-                                <br/>
-                                to access this feature
-                            </span>
-                        <AppButton href={"/register"} text={"register"} className={"mb-40 mx-16 md:mx-32"} />
-                    </div>
-                </Popup>
+                <DashboardPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
                 <div className='container flex gap-6 flex-col lg:flex-row'>
                     <div className='w-full'>
                         <NextBadgeCard badge={badge} />

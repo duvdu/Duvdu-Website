@@ -21,15 +21,10 @@ import ThanksMSG from '../components/popsup/thanksMSG';
 const projects = ({ projects, projectFilters, fetchProjects }) => {
 
     const [isTeamOpen, setIsTeamOpen] = useState(false);
-    const [isReportOpen, setisReportOpen] = useState(false);
-    const [isthankMSG, setisthankMSG] = useState(true);
-
-    const openReport = () => {
-        setIsTeamOpen(true);
-    };
+    const [isReportOpen, setisReportOpen] = useState(true);
+    const [isthankMSG, setisthankMSG] = useState(false);
 
     
-
     useEffect(() => {
         fetchProjects("", "/static/projects.json");
     }, []);
@@ -280,7 +275,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11959.068670575894!2d31.490976074291662!3d30.0300984916351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14582260dce33277%3A0xcee8c262752427a3!2sMaxim%20Mall!5e0!3m2!1sar!2seg!4v1707588511211!5m2!1sar!2seg"
                                         className="w-full border-primary border-solid border-2 rounded-3xl h-40 "
                                         loading="lazy"
-                                        referrerpolicy="no-referrer-when-downgrade">
+                                        >
                                     </iframe>
                                 </div>
 
