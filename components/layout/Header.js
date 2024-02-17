@@ -5,6 +5,7 @@ import Search from "../elements/Search";
 import Menu from '../elements/menu'
 import Switch from '../elements/switcher'
 import Icon from "../Icons";
+import Button from '../elements/submitButton';
 
 const Header = ({ fromlayout }) => {
     const [isToggled, setToggled] = useState(false);
@@ -129,7 +130,7 @@ const Header = ({ fromlayout }) => {
                                                 <div className="icon-holder" onClick={toggleSettingDropdown}>
                                                     <Icon className="svgInject" name={"icon-setting"} useinvert={true} />
                                                 </div>
-                                                <Setting useState={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode }} />
+                                                <Setting data={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode }} />
                                             </div>
                                         </div>
                                     }
@@ -305,7 +306,7 @@ function Profile({ useState }) {
                                 ) : (
                                     <a className="no-underline text-lg font-semibold">{item.text}</a>
                                 )}
-                                {index !== states.length - 1 && <hr className="border-gray-300" />} 
+                                {index !== states.length - 1 && <hr className="border-gray-300" />}
                             </React.Fragment>
                         ))}
                     </div>
@@ -337,8 +338,9 @@ function Profile({ useState }) {
         </div>
     )
 }
-function Setting({ useState: data }) {
+function Setting({ data }) {
 
+    const [contactUs, setcontactUs] = useState(false);
 
     useEffect(() => {
         const isDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -373,71 +375,102 @@ function Setting({ useState: data }) {
         localStorage.setItem('darkMode', isDarkMode);
     }
 
+    const ContactUs = () => (
+        <>
+            <div className='flex gap-3'>
+                <div onClick={() => setcontactUs(false)} className='flex rounded-full header-border p-4 cursor-pointer'>
+                    <Icon name={'x'} useinvert={true} />
+                </div>
+                <span className='flex rounded-full header-border px-7 py-4 text-lg font-medium'>
+                    contact us
+                </span>
+            </div>
+            <div className="capitalize opacity-60 mt-8">your message</div>
+            <textarea placeholder="start typing..." className="bg-[#9999991A] rounded-3xl h-48 border-none mt-5" />
+            <Button className="w-full" shadow={true}>
+                Send
+            </Button>
+        </>
+    )
+    const Main = () => (
+        <>
+            {
+                [
+                    {
+                        img: 'mode-icon.svg',
+                        name: 'Dark mode',
+                        action: <Switch defaultValue={data.isDarkMode} onSwitchChange={() => { toggle() }} />,
+                    },
+                    {
+                        img: 'power-icon.svg',
+                        name: 'Instant projects',
+                        subName: 'short delivery time, More money',
+                        action: <Switch onSwitchChange={() => { }} />,
+                    },
+                    {
+                        img: 'notification-icon.svg',
+                        name: 'Notification',
+                        action: <Icon name={"right-arrow"} invert={true} />,
+                    },
+                    {
+                        img: 'world-icon.svg',
+                        name: 'Language',
+                        action: <Icon name={"right-arrow"} invert={true} />,
+                    },
+                    {
+                        img: 'number-icon.svg',
+                        name: 'Change number',
+                        action: <a href="/changePhoneNumber"> <Icon name={"right-arrow"} invert={true} /></a>,
+                    },
+                    {
+                        img: 'lock-icon.svg',
+                        name: 'Terms & Conditions',
+                        action: <Icon name={"right-arrow"} invert={true} />,
+                    },
+                    {
+                        img: 'chat-icon.svg',
+                        name: 'Contact Us',
+                        action: <Icon name={"right-arrow"} invert={true} />,
+                        onClick: () => setcontactUs(true)
+                    },
+                    {
+                        img: 'about-icon.svg',
+                        name: 'About',
+                        action: <Icon name={"right-arrow"} invert={true} />,
+                    },
+
+                ].map((e, i) => (
+                    <div onClick={e.onClick} className="flex p-4 cursor-pointer" key={i}>
+                        <img icon='icon' className="icon w-6 h-6 mr-4" src={`/assets/imgs/theme/${e.img}`} />
+                        <p className="text w-full font-semibold">{e.name}</p>
+                        <div className="action"> {e.action} </div>
+                    </div>
+                ))
+            }
+            <div className="flex p-4 text-red-950">
+                <img icon='icon' className="icon w-6 h-6 mr-4" src={`/assets/imgs/theme/logout-icon.svg`} />
+                <p className="text w-full font-semibold text-red-500"> Logout </p>
+                <div className="action"> <div /> </div>
+            </div>
+        </>
+    )
+
+
     return (
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (data.settingvisible ? " active" : "")}  >
             <div className="dialog dialog-3">
                 <div className="card w-80" >
-                    {
-                        [
-                            {
-                                img: 'mode-icon.svg',
-                                name: 'Dark mode',
-                                action: <Switch defaultValue={data.isDarkMode} onSwitchChange={() => { toggle() }} />,
-                            },
-                            {
-                                img: 'power-icon.svg',
-                                name: 'Instant projects',
-                                subName: 'short delivery time, More money',
-                                action: <Switch onSwitchChange={() => { }} />,
-                            },
-                            {
-                                img: 'notification-icon.svg',
-                                name: 'Notification',
-                                action: <Icon name={"right-arrow"} invert={true} />,
-                            },
-                            {
-                                img: 'world-icon.svg',
-                                name: 'Language',
-                                action: <Icon name={"right-arrow"} invert={true} />,
-                            },
-                            {
-                                img: 'number-icon.svg',
-                                name: 'Change number',
-                                action: <a href="/changePhoneNumber"> <Icon name={"right-arrow"} invert={true} /></a>,
-                            },
-                            {
-                                img: 'lock-icon.svg',
-                                name: 'Terms & Conditions',
-                                action: <Icon name={"right-arrow"} invert={true} />,
-                            },
-                            {
-                                img: 'chat-icon.svg',
-                                name: 'Contact Us',
-                                action: <Icon name={"right-arrow"} invert={true} />,
-                            },
-                            {
-                                img: 'about-icon.svg',
-                                name: 'About',
-                                action: <Icon name={"right-arrow"} invert={true} />,
-                            },
-
-                        ].map((e, i) => (
-                            <div className="flex p-4" key={i}>
-                                <img icon='icon' className="icon w-6 h-6 mr-4" src={`/assets/imgs/theme/${e.img}`} />
-                                <p className="text w-full font-semibold">{e.name}</p>
-                                <div className="action"> {e.action} </div>
-                            </div>
-                        ))
-                    }
-                    <div className="flex p-4 text-red-950">
-                        <img icon='icon' className="icon w-6 h-6 mr-4" src={`/assets/imgs/theme/logout-icon.svg`} />
-                        <p className="text w-full font-semibold text-red-500"> Logout </p>
-                        <div className="action"> <div /> </div>
-                    </div>
+                    {contactUs && <ContactUs />}
+                    {!contactUs && <Main />}
+                    {/* <Main /> */}
                 </div>
             </div>
         </div>
     )
+
+
+
+
 }
 
 

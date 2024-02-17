@@ -2,7 +2,7 @@
 import Button from '../elements/submitButton';
 import Popup from '../elements/popup';
 
-function AddToTeam({ isPopupOpen, setIsPopupOpen }) {
+function PostAlarm({ isPopupOpen, setIsPopupOpen }) {
     const projects = [
         {
             img: '/assets/imgs/projects/2.jpeg',
@@ -49,4 +49,4 @@ function AddToTeam({ isPopupOpen, setIsPopupOpen }) {
     );
 }
 
-export default AddToTeam;
+export default PostAlarm;

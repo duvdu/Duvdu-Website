@@ -6,7 +6,7 @@ import { convertHoursTo__ } from '../../util/util';
 
 const Card = ({ cardData, className = "", onClick }) => {
 
-  return (
+  return ( 
     <>
       <div className={`border border-50 border-solid border-gray-300 p-10 ${className}`}>
         <div className='flex flex-col items-center justify-center text-center pb-6'>
