@@ -102,7 +102,7 @@ const Filter = () => {
                 {data.map((selectOptions, index) => (
                     <select
                         key={index}
-                        className="shadow-sm border bg-DS_white border-[#E6E6E6] rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:ring-width-2 text-DS_black opacity-50"
+                        className="shadow-sm border border-[#E6E6E6] rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:ring-width-2 text-DS_black opacity-50"
                         required
                     >
                         {selectOptions.map(option => (

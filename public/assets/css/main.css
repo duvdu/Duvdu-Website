@@ -6429,7 +6429,7 @@ h6.post-title {
 .cart-dropdown-wrap.account-dropdown a {
 
   cursor: pointer;
- 
+
 }
 
 .cart-dropdown-wrap ul li:last-child {
@@ -10604,8 +10604,8 @@ footer .hotline img {
 /* //////////////////// comment ////////////////////// */
 
 .comment {
+  @apply border border-solid border-gray-300;
   border-radius: 25.451px;
-  border: 1.018px solid rgba(var(--black-rgb), 0.25);
   padding: 24;
 }
 
@@ -10718,14 +10718,19 @@ footer .hotline img {
   @apply w-20 h-20 rounded-full cursor-pointer flex justify-center items-center;
   background-color: #0000001A;
 }
+
 .controller-1.primary {
   @apply bg-primary
 }
 
-.bottomeffect{
+.bottomeffect {
   position: absolute;
   bottom: 0;
   background: linear-gradient(180deg, rgba(247, 249, 251, 0.00) 0%, #F7F9FB 91.04%);
+}
+
+.appblur {
+  backdrop-filter: blur(7.638689994812012px);
 }
 
 :root {

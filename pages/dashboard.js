@@ -6,10 +6,12 @@ import ProjectViewsCard from '../components/elements/ProjectViewsCard';
 import DashboardPopup from '../components/popsup/dashboard';
 import TopProjects from '../components/elements/topProjects';
 import AppButton from '../components/elements/button';
+import Icon from '../components/Icons';
+
 import React, { useState } from 'react';
 
 const Dashboard = () => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState(true);
 
     const openPopup = () => {
         setIsPopupOpen(true);
@@ -87,7 +89,6 @@ const Dashboard = () => {
         <>
 
             <Layout>
-                <button onClick={openPopup}>Open Popup</button>
                 <DashboardPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
                 <div className='container flex gap-6 flex-col lg:flex-row'>
                     <div className='w-full'>
@@ -116,16 +117,15 @@ const Dashboard = () => {
                                         <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-green-700' : 'text-red-700'}`}>
                                             <span >
                                                 {
-                                                    !isUp &&
-                                                    <img src='/assets/imgs/theme/icons/downArrow.svg' />
+                                                    !isUp && <Icon name={'downArrow'} />
                                                 }
                                                 {
-                                                    isUp &&
-                                                    <img src='/assets/imgs/theme/icons/upArrow.svg' />
+                                                    isUp && <Icon name={'upArrow'} />
                                                 }
 
                                             </span>
-                                            <span> {viewRate}%</span>
+                                            <span  className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
+
                                         </div>
                                         <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
                                             <p>?</p>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const NextBadgeCard = ({ badge }) => (
     <div className='card blue-gradient w-full mt-6 text-DS_white text-lg p-6'>
-        <div className='capitalize text-lg opacity-70 pb-9'>
+        <div className='capitalize text-lg opacity-70 pb-9 text-white'>
             next badge
         </div>
         <div className='flex items-center'>

@@ -15,6 +15,7 @@ import Chat from '../components/elements/chat';
 import AddToTeam from '../components/popsup/AddToTeam';
 import Report from '../components/popsup/report';
 import ThanksMSG from '../components/popsup/thanksMSG';
+import Selector from "../components/elements/CustomSelector";
 
 
 
@@ -24,11 +25,9 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     const [isReportOpen, setisReportOpen] = useState(true);
     const [isthankMSG, setisthankMSG] = useState(false);
 
-    
     useEffect(() => {
         fetchProjects("", "/static/projects.json");
     }, []);
-    const getPaginatedProjects = projects.items.slice(0, 4);
     const [loveIconName, setLoveIconName] = useState('love-react-off');
     const [showChat, setShowChat] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +45,8 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
-    const online = false
+
+
     const data = {
         title: 'short film 2024 - 4k ft. lisa',
         user: {
@@ -173,179 +173,252 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
             "data": ""
         },
     ];
+
     return (
         <>
             <Layout>
-                <AddToTeam isPopupOpen={isTeamOpen} setIsPopupOpen={setIsTeamOpen}/>
-                <Report isPopupOpen={isReportOpen} setIsPopupOpen={setisReportOpen}/>
-                <ThanksMSG isPopupOpen={isthankMSG} setIsPopupOpen={setisthankMSG}/>
+                <AddToTeam isPopupOpen={isTeamOpen} setIsPopupOpen={setIsTeamOpen} />
+                {/* <Report isPopupOpen={isReportOpen} setIsPopupOpen={setisReportOpen}/> */}
+                <ThanksMSG isPopupOpen={isthankMSG} setIsPopupOpen={setisthankMSG} />
                 <div className="fixed left-8 bottom-0 z-20">
                     {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
                 </div>
 
                 <div className="container mt-6">
                     <section>
-                        <h1 className="text-xl capitalize opacity-80"> {data.title} </h1>
-                        <div className='creator-info flex mt-8 mb-12'>
-                            <a className='flex items-center gap-3 cursor-pointer' href='/profile/Anna-Youseff'>
-                                <img alt='user' className="w-16" src={data.user.img} />
-                                <div>
-                                    <span className="capitalize font-semibold text-lg">{data.user.name}</span>
-                                    <div className="flex gap-1">
-                                        <p className='value'>{data.user.rate}</p>
-                                        <Icon name={'rating'} width={18} height={16.424} />
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <Header data={data} />
                     </section>
-                    <div className="flex gap-6">
-                        <section className="w-2/3">
-                            <img className="border-50 w-full" src={data.projectImg} />
-                            <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">about the creative</h2>
-                            <div className="border border-50 border-solid border-gray-300 p-10">
-                                <div className='flex items-center justify-center'>
-                                    <div className='w-32 h-32 relative'>
-                                        <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                                        <img className='profile-picture absolute rounded-full' src={data.creative.img} alt="profile picture" />
-                                    </div>
-                                    <div className='flex-2 flex-col gap-1'>
-                                        <h3>{data.creative.name}</h3>
-                                        <span className='flex items-center'>
-                                            <img className='h-3' alt="profile cover" src="/assets/imgs/theme/icons/location.svg" />
-                                            <span className="location">{data.creative.location}</span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className='flex justify-center pt-25 items-center gap-3'>
-                                    <p className='rank'>{data.creative.rank}</p>
-                                    <p id='photographer'>{data.creative.occupation}</p>
-                                    <div id='rating' className='flex items-center gap-1 w-20'>
-                                        <p>{data.creative.rate}</p>
-                                        <img src='/assets/imgs/theme/icons/rating.svg' width={18} height={18} />
-                                    </div>
-                                </div>
-                                <div className='flex justify-center pt-7 items-center'>
-                                    <div className='flex justify-center'>
-                                        {Object.entries(data.creative.popularity).map(([key, value]) => (
-                                            <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
-                                                <p className='number'>{convertToK(value, 0)}</p>
-                                                <p className='unit'>{key}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className='left-side-container border-gray-300 border-t mt-6 pt-6'>
-                                    <p id='about-header'>about</p>
-                                    <p className='pt-2' id='about-paragraph'>{data.creative.about}</p>
-                                </div>
-                            </div>
+                    <div className="lg:flex gap-6">
+                        <section className="lg:w-2/3">
+                            <ProjectShow data={data} />
                         </section>
-                        <section className="w-1/3">
-                            <div className="grad-card w-full border-50">
-                                <div className="w-full flex justify-center my-10">
-                                    <span className="text-center">april 5 - 2023</span>
-                                </div>
-
-                                {data.tools.map((item, i) => (
-                                    <div key={i} className="flex">
-                                        {
-                                            item.v1 &&
-                                            <div className={`details-padge ${item.v1.isActive ? 'active' : ''}`}>{item.v1.value}</div>
-                                        }
-                                        {
-                                            item.v2 &&
-                                            <div className={`details-padge ${item.v2.isActive ? 'active' : ''}`}>{item.v2.value}</div>
-                                        }
-                                        {
-                                            item.v3 &&
-                                            <div className={`details-padge ${item.v3.isActive ? 'active' : ''}`}>{item.v3.value}</div>
-                                        }
-                                    </div>
-                                ))}
-                                <div className="mt-9">
-                                    <span className="capitalize opacity-50">description</span>
-                                </div>
-                                <span className="capitalize mt-4">{data.description}</span>
-                                <div className="mt-9">
-                                    <span className="capitalize opacity-50">location</span>
-                                </div>
-                                <div className="capitalize mt-4">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11959.068670575894!2d31.490976074291662!3d30.0300984916351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14582260dce33277%3A0xcee8c262752427a3!2sMaxim%20Mall!5e0!3m2!1sar!2seg!4v1707588511211!5m2!1sar!2seg"
-                                        className="w-full border-primary border-solid border-2 rounded-3xl h-40 "
-                                        loading="lazy"
-                                        >
-                                    </iframe>
-                                </div>
-
-                                <div className="mt-9">
-                                    <span className="capitalize opacity-50">shooting time</span>
-                                </div>
-                                <div>
-                                    <span className="capitalize font-semibold">{convertHoursTo__(data.shooting_time)}</span>
-                                </div>
-                                <div className="mt-9">
-                                    <span className="capitalize opacity-50">delivery time</span>
-                                </div>
-                                <div>
-                                    <span className="capitalize font-semibold">{convertHoursTo__(data.delivery_time)}</span>
-                                </div>
-                            </div>
-                            <h2>Reviews</h2>
-                            {data.comments.map((comment) => (
-                                <Comment key={comment.id} comment={comment} />
-                            ))}
+                        <section className="lg:w-1/3 mt-10 lg:mt-0">
+                            <Details data={data} />
+                        </section>
+                    </div>
+                    <div className="lg:flex gap-6">
+                        <section className="lg:w-2/3">
+                            <About data={data} />
+                        </section>
+                        <section className="lg:w-1/3 mt-10 lg:mt-0">
+                            <Reviews data={data} />
                         </section>
                     </div>
                     <section>
-                        <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">recommended for you</h2>
-                        <div className="flex gap-6 mt-4">
-                            {getPaginatedProjects.map((item, i) => (
-                                <Card key={i} className='cursor-pointer' href="/project" cardData={item} />
-                            ))}
-                        </div>
+                        <Recommended projects={projects} />
                     </section>
                 </div>
-                <div className='sticky h-32 bottom-0 flex justify-between items-end p-10'>
-                    <div onClick={handleOpenChat} className="message-shadow flex rounded-full p-2 h-16 bg-DS_white cursor-pointer">
-                        <div className="relative">
-                            <img className="h-full" src={data.user.img} />
 
-                            {online && (
-                                <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                            )}
-                            {!online && (
-                                <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                            )}
+                <Control data={data} handleOpenChat={handleOpenChat} setIsTeamOpen={setIsTeamOpen} handleLoveIconClick={handleLoveIconClick} loveIconName={loveIconName} toggleDrawer={toggleDrawer} />
 
-                        </div>
-                        <div className="px-3">
-                            <span className="capitalize font-bold">
-                                {data.user.name}
-                            </span>
-                            <div />
-                            <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
-                        </div>
-                    </div>
-                    <Controller>
-                        <div className="controller-1" >
-                            <Icon name={'share'} />
-                        </div>
-                        <div onClick={ ()=> setIsTeamOpen(true)} className="controller-1">
-                            <Icon name={'add'} />
-                        </div>
-                        <div onClick={handleLoveIconClick} className="controller-1">
-                            <Icon name={loveIconName} />
-                        </div>
-                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
-                    </Controller>
-                </div>
                 <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
             </Layout>
         </>
     );
 };
+
+const Header = ({ data }) => (
+    <>
+        <h1 className="text-xl capitalize opacity-80"> {data.title} </h1>
+        <div className='creator-info flex mt-3 mb-12 justify-between'>
+            <a className='flex items-center gap-3 cursor-pointer' href='/profile/Anna-Youseff'>
+                <img alt='user' className="w-16" src={data.user.img} />
+                <div>
+                    <span className="capitalize font-semibold text-lg">{data.user.name}</span>
+                    <div className="flex items-center gap-1 mt-1">
+                        <p>{data.user.rate}</p>
+                        <Icon name={'rating'} />
+                    </div>
+                </div>
+            </a>
+            <Selector options={[
+                {
+                    value: "oprion 1",
+                    onclick: () => { },
+                },
+                {
+                    value: "oprion 2",
+                    onclick: () => { },
+                },
+                {
+                    value: "oprion 3",
+                    onclick: () => { },
+                }
+            ]} className="relative border rounded-full border-[#00000033] flex justify-center items-center w-14 h-14 cursor-pointer" />
+        </div>
+    </>
+)
+const ProjectShow = ({ data }) => (
+    <img className="border-50 w-full" src={data.projectImg} />
+)
+
+const About = ({ data }) => (
+    <>
+        <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">about the creative</h2>
+        <div className="border border-50 border-solid border-gray-300 p-10">
+            <div className='flex items-center justify-center'>
+                <div className='w-32 h-32 relative'>
+                    <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
+                    <img className='profile-picture absolute rounded-full' src={data.creative.img} alt="profile picture" />
+                </div>
+                <div className='flex-2 flex-col gap-1'>
+                    <h3>{data.creative.name}</h3>
+                    <span className='flex items-center'>
+                        <img className='h-3' alt="profile cover" src="/assets/imgs/theme/icons/location.svg" />
+                        <span className="location">{data.creative.location}</span>
+                    </span>
+                </div>
+            </div>
+            <div className='flex justify-center pt-25 items-center gap-3'>
+                <p className='rank'>{data.creative.rank}</p>
+                <p id='photographer'>{data.creative.occupation}</p>
+                <div id='rating' className='flex items-center gap-1 w-20'>
+                    <p>{data.creative.rate}</p>
+                    <img src='/assets/imgs/theme/icons/rating.svg' width={18} height={18} />
+                </div>
+            </div>
+            <div className='flex justify-center pt-7 items-center'>
+                <div className='flex justify-center'>
+                    {Object.entries(data.creative.popularity).map(([key, value]) => (
+                        <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
+                            <p className='number'>{convertToK(value, 0)}</p>
+                            <p className='unit'>{key}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className='left-side-container border-gray-300 border-t mt-6 pt-6'>
+                <p id='about-header'>about</p>
+                <p className='pt-2' id='about-paragraph'>{data.creative.about}</p>
+            </div>
+        </div>
+    </>
+)
+const Details = ({ data }) => (
+    <div className="grad-card w-full border-50">
+        <div className="w-full flex justify-center my-10">
+            <span className="text-center">april 5 - 2023</span>
+        </div>
+
+        {data.tools.map((item, i) => (
+            <div key={i} className="flex">
+                {
+                    item.v1 &&
+                    <div className={`details-padge ${item.v1.isActive ? 'active' : ''}`}>{item.v1.value}</div>
+                }
+                {
+                    item.v2 &&
+                    <div className={`details-padge ${item.v2.isActive ? 'active' : ''}`}>{item.v2.value}</div>
+                }
+                {
+                    item.v3 &&
+                    <div className={`details-padge ${item.v3.isActive ? 'active' : ''}`}>{item.v3.value}</div>
+                }
+            </div>
+        ))}
+        <div className="mt-9">
+            <span className="capitalize opacity-50">description</span>
+        </div>
+        <span className="capitalize mt-4">{data.description}</span>
+        <div className="mt-9">
+            <span className="capitalize opacity-50">location</span>
+        </div>
+        <div className="capitalize mt-4">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11959.068670575894!2d31.490976074291662!3d30.0300984916351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14582260dce33277%3A0xcee8c262752427a3!2sMaxim%20Mall!5e0!3m2!1sar!2seg!4v1707588511211!5m2!1sar!2seg"
+                className="w-full border-primary border-solid border-2 rounded-3xl h-40 "
+                loading="lazy"
+            >
+            </iframe>
+        </div>
+
+        <div className="mt-9">
+            <span className="capitalize opacity-50">shooting time</span>
+        </div>
+        <div>
+            <span className="capitalize font-semibold">{convertHoursTo__(data.shooting_time)}</span>
+        </div>
+        <div className="mt-9">
+            <span className="capitalize opacity-50">delivery time</span>
+        </div>
+        <div>
+            <span className="capitalize font-semibold">{convertHoursTo__(data.delivery_time)}</span>
+        </div>
+    </div>
+)
+
+
+
+const Reviews = ({ data }) => (
+    <>
+        <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">Reviews</h2>
+        {data.comments.map((comment) => (
+            <Comment key={comment.id} comment={comment} />
+        ))}
+    </>
+);
+
+
+const Recommended = ({ projects }) => {
+    const getPaginatedProjects = projects.items.slice(0, 4);
+
+    return (
+        <>
+            <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">recommended for you</h2>
+            <div className="flex gap-6 mt-4">
+                {getPaginatedProjects.map((item, i) => (
+                    <Card key={i} className='cursor-pointer' href="/project" cardData={item} />
+                ))}
+            </div>
+        </>
+    );
+};
+
+const Control = ({ data, handleOpenChat, setIsTeamOpen, handleLoveIconClick, loveIconName, toggleDrawer }) => {
+    const online = false
+    
+    return (
+        <>
+            <div className='sticky h-32 bottom-0 flex justify-between items-end p-10'>
+                <div onClick={handleOpenChat} className="message-shadow flex rounded-full p-2 h-16 bg-DS_white cursor-pointer">
+                    <div className="relative">
+                        <img className="h-full" src={data.user.img} />
+
+                        {online && (
+                            <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                        )}
+                        {!online && (
+                            <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                        )}
+
+                    </div>
+                    <div className="px-3">
+                        <span className="capitalize font-bold">
+                            {data.user.name}
+                        </span>
+                        <div />
+                        <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
+                    </div>
+                </div>
+                <Controller>
+                    <div className="controller-1" >
+                        <Icon name={'share'} />
+                    </div>
+                    <div onClick={() => setIsTeamOpen(true)} className="controller-1">
+                        <Icon name={'add'} />
+                    </div>
+                    <div onClick={handleLoveIconClick} className="controller-1">
+                        <Icon name={loveIconName} />
+                    </div>
+                    <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
+                </Controller>
+            </div>
+        </>
+    );
+};
+
+
+
 
 const mapStateToProps = (state) => ({
     projects: state.projects,

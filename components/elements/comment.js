@@ -2,7 +2,7 @@ const comment = ({comment}) => {
     
     return (
         <>
-            <div className="comment">
+            <div className="comment p-5 mb-7">
                 <div className="flex">
                     <div className="flex profile">
                         <img src={comment.avatar} alt={comment.userName} width="45" height="45" />

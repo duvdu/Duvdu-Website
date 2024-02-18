@@ -1,4 +1,10 @@
+import Icon from "../components/Icons";
 import Layout from "../components/layout/Layout";
+import DeleteBoard from "../components/popsup/DeleteBoard";
+import CreateBoard from "../components/popsup/createnewBoard";
+import Selector from "../components/elements/CustomSelector";
+import React, { useState } from 'react';
+
 const data = [
     {
         img1: '/assets/imgs/projects/1.jpeg',
@@ -23,42 +29,60 @@ const data = [
     },
 
 ];
+
 const Boards = ({ data }) => {
+    const [deleteState, setDeleteState] = useState(false);
+
     const { img1, img2, img3, projectsNum, name, favorite } = data;
 
+    const dropdown = [
+        {
+            value: "Delete",
+            onclick: () => setDeleteState(true),
+        },
+    ]
+
     return (
-        <div className="boards-card">
-            <div className="projects">
-                <div className="col1 img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div>
-                <div className="col2">
-                    <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
-                    <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
+        <>
+
+
+            <DeleteBoard isPopupOpen={deleteState} setIsPopupOpen={setDeleteState} />
+            <div className="boards-card">
+                <div className="projects">
+                    <div className="col1 img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div>
+                    <div className="col2">
+                        <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
+                        <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
+                    </div>
+                </div>
+                <div className="boards-info projects-num">{projectsNum} projects</div>
+
+                <Selector options={dropdown} className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center" invert={true} />
+
+                <div className="boards-info projects-name flex">
+                    {name == "favorites" && <Icon name={"favorites"} />}
+                    {name}
                 </div>
             </div>
-            <div className="boards-info projects-num">{projectsNum} projects</div>
-            <div className="boards-info projects-name flex">
-                {name == "favorites" && <img src='/assets/imgs/theme/icons/favorites.svg' alt="favorites" />}
-                {name}
-            </div>
-        </div>
+        </>
     );
 
 };
 
 const Saved = () => {
-
-
+    const [ceateApp, setCeateApp] = useState(false);
     return (
         <>
+            <CreateBoard isPopupOpen={ceateApp} setIsPopupOpen={setCeateApp} />
             <Layout >
                 <section className="mt-12 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
                             <h1 className="mood-boards-header">mood boards</h1>
                             <div className="mr-6"></div>
-                            <div className="new_board">
+                            <div onClick={() => setCeateApp(true)} className="new_board">
                                 new board
-                                <img src="/assets/imgs/theme/icons/+.svg" alt="star"/>
+                                <Icon name={"+"} />
                             </div>
                         </div>
                         {false && (

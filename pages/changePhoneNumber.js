@@ -28,30 +28,13 @@ function Step1() {
 
 
     const handleSubmit = (e) => {
-        //   e.preventDefault();
-
-        //   var eError = true, pError = true
-        //   if (email.trim() === '') {
-        //     setEmailError({ isError: true, message: 'Email is required.' });
-        //   } else {
-        //     eError = false
-        //     setEmailError({ isError: false, message: '' });
-        //   }
-
+       
         if (PhoneNumber.length < 8) {
             setNumberError({ isError: true, message: 'Password must be at least 8 characters long.' });
         } else {
             setNumberError({ isError: false, message: '' });
         }
 
-        //   if (!eError && !pError) {
-        //     console.log('Form submitted');
-        //     setIsloading(true)
-        //     setTimeout(() => {
-        //       setIsloading(false);
-        //     }, 2000);
-
-        //   }
     };
     return (
         <form method="post" onSubmit={handleSubmit} className="w-full px-[114px]">

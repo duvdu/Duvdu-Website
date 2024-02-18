@@ -110,8 +110,6 @@
 }
 
 .system-buttom {
-  width: min-content;
-  flex-shrink: 0;
   border-radius: 41.5px;
   color: var(--white);
   text-align: center;

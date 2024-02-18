@@ -149,7 +149,8 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                         }
 
                     </span>
-                    <span> {viewRate}%</span>
+                    
+                    <span  className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
                 </div>
             </div>
             <canvas className='card red-gradient cardborder-2' id="chart" ref={chartRef} />

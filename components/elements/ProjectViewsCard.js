@@ -1,6 +1,7 @@
 // ProjectViewsCard.js
 import React from 'react';
 import {convertToK} from '../../util/util';
+import Icon from '../Icons';
 
 const ProjectViewsCard = ({ recieved }) => (
     <div className='card green-gradient recieved w-full p-8 cardborder-1 mt-6'>
@@ -8,19 +9,20 @@ const ProjectViewsCard = ({ recieved }) => (
             <div className='text-lg capitalize font-semibold'>
                 you have recieved
             </div>
-            <div className={`gap-1 rounded-full px-4 flex items-center dashboard_padge ${recieved.rate.isUp ? 'text-green-700' : 'text-red-700'}`}>
+            <div className="gap-1 rounded-full px-4 flex items-center dashboard_padge">
                 <span >
                     {
                         !(recieved.rate.isUp) &&
-                        <img src='/assets/imgs/theme/icons/downArrow.svg' />
+                        <Icon name={'downArrow'}/>
                     }
                     {
                         recieved.rate.isUp &&
-                        <img src='/assets/imgs/theme/icons/upArrow.svg' />
+                        <Icon name={'upArrow'}/>
                     }
 
                 </span>
-                <span> {recieved.rate.number}%</span>
+                <span className={`${recieved.rate.isUp ? 'text-green-700' : 'text-red-700'}`} > {recieved.rate.number}%</span>
+                
             </div>
 
         </div>
