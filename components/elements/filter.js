@@ -98,7 +98,7 @@ const Filter = () => {
     ]
     
     return (
-        <div className="flex justify-between items-center pb-6">
+        <div className="hidden lg:flex justify-between items-center pb-6 ">
             <div className="flex gap-6 items-end">
                 {data.map((selectOptions, index) => (
                     <select
