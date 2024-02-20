@@ -74,8 +74,8 @@ const Saved = () => {
     return (
         <>
             <CreateBoard isPopupOpen={ceateApp} setIsPopupOpen={setCeateApp} />
-            <Layout >
-                <section className="mt-12 mb-12">
+            <Layout shortlayout={true} isbodyWhite={true}>
+                <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
                             <h1 className="mood-boards-header">mood boards</h1>

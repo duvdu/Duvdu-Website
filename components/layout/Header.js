@@ -41,13 +41,14 @@ const Header = ({ fromlayout }) => {
 
 
     useEffect(() => {
+        var root = document.documentElement;
 
         function getHeaderHeight() {
             try {
-                var root = document.documentElement;
                 var header = document.getElementsByTagName('header')[0];
-                var headerHeight = header.offsetHeight + (fromlayout.shortlayout ? 44 : 0);
+                var headerHeight = header.offsetHeight;
                 root.style.setProperty('--header-height', headerHeight + 'px');
+                root.style.setProperty('--body-height', (window.innerHeight - headerHeight) + 'px');
             }
             catch (err) {
             }
@@ -58,15 +59,23 @@ const Header = ({ fromlayout }) => {
         }, 50);
 
         window.addEventListener('resize', getHeaderHeight);
+
+
+        if (fromlayout.iswhite)
+            root.style.setProperty('--body-background', 'white');
+        else
+            root.style.setProperty('--body-background', '#f8f4f4');
     }, []);
+
+
 
     // const handleToggle = () => setToggled(!isToggled);
     return (
         <>
             <div onClick={falseall} className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
-            <header className={`${scroll ? "header-area header-style-1 header-height-2 sticky-bar stick" : "header-area header-style-1 header-height-2 sticky-bar"}`}>
-                <div className="header-middle header-middle-ptb-1 hidden lg:block">
+            <header className={`bg-DS_white fixed w-full z-50 ${scroll ? " stick" : ""}`}>
+                <div className="py-4 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
 
@@ -98,9 +107,9 @@ const Header = ({ fromlayout }) => {
                                         </a>
                                     </Link>
                                     <Link href="/saved">
-                                        <a className="ml-5">
+                                        <a className="ml-5 capitalize whitespace-nowrap">
                                             <Icon name={"saved"} useinvert={true} />
-                                            saved
+                                            team projects
                                         </a>
                                     </Link>
                                 </div>
@@ -151,18 +160,18 @@ const Header = ({ fromlayout }) => {
                         </div>
                     </div>
                 </div>
-                <div className="header-bottom header-bottom-bg-color">
-                    <div className="container">
-                        <div className="header-wrap header-space-between relative">
-                            <div className="logo logo-width-1 block lg:hidden">
-                                <Link href="/">
-                                    <a>
-                                        <img src="/assets/imgs/theme/logo.svg" alt="logo" />
-                                    </a>
-                                </Link>
-                            </div>
-                            {
-                                !fromlayout.shortlayout &&
+                {
+                    !fromlayout.shortlayout &&
+                    <div className="border-y border-borderColor header-bottom header-bottom-bg-color">
+                        <div className="container">
+                            <div className="header-wrap header-space-between relative">
+                                <div className="logo logo-width-1 block lg:hidden">
+                                    <Link href="/">
+                                        <a>
+                                            <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                                        </a>
+                                    </Link>
+                                </div>
                                 <div className="header-nav">
                                     <div className="main-menu main-menu-padding-1 main-menu-lh-2 font-heading hidden lg:block">
                                         <nav>
@@ -170,19 +179,19 @@ const Header = ({ fromlayout }) => {
                                         </nav>
                                     </div>
                                 </div>
-                            }
 
-                            <div className="header-action-icon-2 block lg:hidden">
-                                <div className="burger-icon burger-icon-DS_white" >
-                                    {/* onClick={toggleClick}>    OPEN MOBILE MENU  */}
-                                    <span className="burger-icon-top"></span>
-                                    <span className="burger-icon-mid"></span>
-                                    <span className="burger-icon-bottom"></span>
+                                <div className="header-action-icon-2 block lg:hidden">
+                                    <div className="burger-icon burger-icon-DS_white" >
+                                        {/* onClick={toggleClick}>    OPEN MOBILE MENU  */}
+                                        <span className="burger-icon-top"></span>
+                                        <span className="burger-icon-mid"></span>
+                                        <span className="burger-icon-bottom"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </header>
             <div className={scroll ? "fake-height active" : "fake-height"} />
         </>
@@ -284,9 +293,9 @@ function Profile({ useState }) {
                         {/* progress bar  */}
 
                         <div className="header-progress-bar relative w-full">
-                            <div class="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
-                            <div class="relative h-full overflow-hidden">
-                                <div class="absolute inset-0 rounded-lg bg-blue-500" style={{ width: `${badge}%` }}></div>
+                            <div className="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
+                            <div className="relative h-full overflow-hidden">
+                                <div className="absolute inset-0 rounded-lg bg-blue-500" style={{ width: `${badge}%` }}></div>
                             </div>
                         </div>
 

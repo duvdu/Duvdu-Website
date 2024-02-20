@@ -6,12 +6,12 @@ import MobileMenu from "./MobileMenu";
 
 const Layout = ({
     children,
-    subChild,
+    shortlayout,
+    isbodyWhite,
     headerStyle,
 }) => {
     const [isToggled, setToggled] = useState(false);
 
-    var shortlayout = subChild == "Auth"
 
     const toggleClick = () => {
         setToggled(!isToggled);
@@ -34,7 +34,7 @@ const Layout = ({
 
             {isToggled && <div className="body-overlay-1" onClick={toggleClick}></div>}
 
-            <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ "shortlayout": shortlayout }} />
+            <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortlayout: shortlayout, iswhite: isbodyWhite }} />
 
             <MobileMenu isToggled={isToggled} toggleClick={toggleClick} />
 

@@ -18,7 +18,9 @@ module.exports = {
         DS_gray_1: 'var(--gray-1)',
         DS_white: "var(--white)",
         DS_black: "var(--black)",
+        DS_borderColor: "var(--border-color)",
         primary: "var(--primary)",
+        borderColor: "var(--border-color)",
       },
       container: {
         center: true,

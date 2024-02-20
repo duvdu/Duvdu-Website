@@ -9,7 +9,7 @@ import Icon from '../components/Icons';
 function ChangePassword() {
     return (
         <>
-            <Layout>
+            <Layout shortlayout={true}>
                 <div className="container flex justify-center items-center text-center w-1/2 bg-DS_white mt-9 h-[878px]">
                     {/* <Step1 />
                     <Step2 /> */}

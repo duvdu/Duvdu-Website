@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Switch from "./switcher";
+import Switch from "./switcher2";
 
 
 const Filter = () => {
@@ -96,13 +96,14 @@ const Filter = () => {
         ],
 
     ]
+    
     return (
         <div className="flex justify-between items-center pb-6">
             <div className="flex gap-6 items-end">
                 {data.map((selectOptions, index) => (
                     <select
                         key={index}
-                        className="shadow-sm border border-[#E6E6E6] rounded-md py-2 px-3 focus:outline-none focus:ring-primary focus:ring-width-2 text-DS_black opacity-50"
+                        className="shadow-sm border border-rgba(230, 230, 230, 0.5) rounded-md py-2 px-3 text-DS_black appearance-none w-min select-custom pr-8"
                         required
                     >
                         {selectOptions.map(option => (

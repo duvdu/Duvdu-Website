@@ -69,8 +69,8 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
 
     return (
         <>
-            <Layout>
-                <section className="mt-12 mb-12">
+            <Layout isbodyWhite={true}>
+                <section className="mt-6 mb-12">
                     <div className="container mb-30">
                         <Filter />
                         <h1 className="page-header">most popular on duvdu</h1>

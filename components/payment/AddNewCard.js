@@ -4,7 +4,9 @@ import Icon from '../Icons';
 export default function AddNewCard() {
     const [cardNumber, setCardNumber] = useState('');
     const [cardOwner, setCardOwner] = useState('');
-    const [expiryDate, setExpiryDate] = useState('');
+    const [expiryDate0, setExpiryDate0] = useState('');
+    const [expiryDate1, setExpiryDate1] = useState('23');
+    const [expiryDate2, setExpiryDate2] = useState('012');
     const [cvv2, setCvv2] = useState('');
     const [promocode, setPromocode] = useState('');
 
@@ -85,14 +87,38 @@ export default function AddNewCard() {
                         <br />
                         <span className={`text-xs ${expiryDateError ? 'text-red-500' : 'text-[#5E5E5E]'}`}>Enter the expiration date of the card</span>
                     </label>
-                    <input
-                        type="text"
-                        id="expiryDate"
-                        className={`border border-gray-300 rounded-xl w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
-                        value={expiryDate}
-                        onChange={(e) => setExpiryDate(e.target.value)}
-                        required
-                    />
+                    <div className='w-full flex justify-between items-center'>
+                        <input
+                            type="text"
+                            id="expiryDate"
+                            className={`w-14 border border-gray-300 rounded-xl py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
+                            value={expiryDate0}
+                            onChange={(e) => setExpiryDate0(e.target.value)}
+                            required
+                        />
+                        <span className='text-2xl'> / </span>
+                        <input
+                            type="text"
+                            id="expiryDate"
+                            className={`w-14 border border-gray-300 rounded-xl py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
+                            value={expiryDate1}
+                            onChange={(e) => setExpiryDate1(e.target.value)}
+                            required
+                        />
+                        <label htmlFor="expiryDate" className={`text-base flex-2  whitespace-nowrap  ${expiryDateError ? 'text-red-500' : ']'}`}>
+                            CVV2
+                            <br />
+                            <span className={`text-xs ${expiryDateError ? 'text-red-500' : 'text-[#5E5E5E]'}`}>Security code</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="expiryDate"
+                            className={`w-14 border border-gray-300 rounded-xl py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
+                            value={expiryDate2}
+                            onChange={(e) => setExpiryDate2(e.target.value)}
+                            required
+                        />
+                    </div>
                     <div className='w-10'></div>
                 </div>
 

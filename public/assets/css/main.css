@@ -1964,10 +1964,6 @@ label {
   height: 15px !important;
 }
 
-.swiper-pagination-bullet-active {
-  background-color: var(--primary) !important;
-}
-
 /*COMPONENTS -> CARD*/
 .card-1 {
   position: relative;
@@ -6569,7 +6565,7 @@ h6.post-title {
   -webkit-animation: 700ms ease-in-out 0s normal none 1 running fadeInDown;
   animation: 700ms ease-in-out 0s normal none 1 running fadeInDown;
   -webkit-box-shadow: 0 8px 20px 0 rgba(var(--black-rgb), 0.05);
-  box-shadow: 0 8px 20px 0 rgba(var(--black-rgb), 0.05);
+  /* box-shadow: 0 8px 20px 0 rgba(var(--black-rgb), 0.05); */
   position: fixed;
   top: 0;
   width: 100%;
@@ -7292,7 +7288,8 @@ h6.post-title {
 }
 
 .header-style-1.header-height-2 {
-  border-bottom: 0;
+  border-bottom: none;
+  box-shadow: none;
   background-color: var(--header-background);
   z-index: 10;
 }
@@ -7642,7 +7639,7 @@ span.fi-rs-apps {
   width: fit-content;
   top: 100%;
   background-color: var(--white);
-  padding: 79px 44px 10px 44px;
+  padding: 40px 44px 40px 44px;
   -webkit-transition: all .25s ease 0s;
   transition: all .25s ease 0s;
   opacity: 0;
@@ -10600,6 +10597,12 @@ footer .hotline img {
   object-fit: cover;
 }
 
+.cardvideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 /* //////////////////// comment ////////////////////// */
 
@@ -10629,6 +10632,16 @@ footer .hotline img {
   height: 50px;
 }
 
+/* selector */
+
+.select-custom {
+  background-image: var(--drop-white-arrow);
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+}
+
+/***********/
+
 /* switch */
 
 .switch {
@@ -10648,7 +10661,6 @@ footer .hotline img {
 
 .switch.on .switch-ball {
   background-color: #4195ff;
-
 }
 
 .switch .switch-ball {
@@ -10666,6 +10678,13 @@ footer .hotline img {
   transform: translateX(20px);
 }
 
+.switch-transition {
+  transition: all 0.3s ease 0s;
+}
+
+.switch-box-shadow {
+  transition: all 0.3s ease 0s;
+}
 
 .card {
   border-radius: 45px;
@@ -10748,7 +10767,10 @@ footer .hotline img {
   --indigo: #253D4E;
   --Alabaster: #EAEEF0;
   --water: #CEE3FF;
-
+  --drop-white-arrow:url('../imgs/theme/icons/drop-arrow.svg');
+  --swiper-pagination-bullet-inactive-color:#fff;
+  --swiper-pagination-color:#fff;
+  --swiper-pagination-bullet-inactive-opacity:.4
 }
 
 .dark-mode {
@@ -10763,4 +10785,5 @@ footer .hotline img {
   --indigo: var(--black);
   --Alabaster: #1A2024;
   --water: #001F4A;
+  --drop-white-arrow:url('../imgs/theme/icons/drop-white-arrow.svg')
 }

@@ -226,7 +226,7 @@ const RightSide = () => {
 const Card = ({ isSelected, data , isLast }) => {
     
     return (
-        <div className={`mx-6 my-4 pb-4 ${isLast ? "" : "border-b-2"}`}>
+        <div className={`mx-6 my-4 pb-4 ${isLast ? "" : "   "}`}>
             <div className={`flex rounded-xl gap-4 justify-between `}>
                 <div className='mb-2'>
                     {isSelected ? (

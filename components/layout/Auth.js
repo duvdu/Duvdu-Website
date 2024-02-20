@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Layout from "./Layout";
 import React, { useEffect, useState } from "react";
-import SwiperCore, { Autoplay, Navigation, EffectFade } from 'swiper';
 import { useRouter } from 'next/router';
+import SwiperCore, { Autoplay, Navigation, EffectFade } from 'swiper';
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -48,7 +48,7 @@ function Auth({ children }) {
 
     return (
         <>
-            <Layout subChild="Auth">
+            <Layout shortlayout={true}>
                 <div className="page-content">
                     <div className="container">
                         <div className="lg:flex gap-6">
