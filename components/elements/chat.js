@@ -1,12 +1,21 @@
-import React from 'react';
 import Icon from '../Icons';
-
+import React, { useEffect, useRef } from 'react';
 
 const Chat = ({ messages, data, online ,Close}) => {
+
+    const chatRef = useRef(null);
+
+    useEffect(() => {
+      // Scroll to the bottom of the chat when component updates
+      if (chatRef.current) {
+        chatRef.current.scrollTop = chatRef.current.scrollHeight;
+      }
+    }, [messages]);
+
     return (
         <>
         <div onClick={Close} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0'/>
-        <div className="chat relative flex flex-col justify-between p-4 rounded-lg bg-DS_white shadow-xl">
+        <div className="chat w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between p-4 rounded-lg bg-DS_white shadow-xl sm:left-8">
             <a href='/profile' className="flex p-2 h-16 bg-DS_white cursor-pointer border-b">
                 <div className="relative">
                     <img className="h-full" src={data.user.img} />
@@ -29,7 +38,7 @@ const Chat = ({ messages, data, online ,Close}) => {
             <div onClick={Close} className='absolute right-4 top-4 cursor-pointer'>
                 <Icon name={'x'} />
             </div>
-            <div className="messages-chat" id="chat">
+            <div className="messages-chat" id="chat" ref={chatRef}>
                 {messages.map((message, index) => {
                     if (message.type === 'time') {
                         return (

@@ -21,7 +21,7 @@ function Report({ isPopupOpen, setIsPopupOpen }) {
     return (
         <>
             {isPopupOpen && (
-                <Popup isOpen={isPopupOpen} onClose={closePopup} className={'mt-14 w-[942px]'} header={'Report Project'}>
+                <Popup isOpen={isPopupOpen} onClose={closePopup} className={'mt-14 w-full lg:w-[942px]'} header={'Report Project'}>
                     <section className='mt-6'>
                         <span className='font-semibold text-2xl capitalize'>what happened?</span>
                         <br />

@@ -23,7 +23,7 @@ function FormSubmitted({ isPopupOpen, setIsPopupOpen }) {
 
 function SuccessBody({ toggleDirectorConfirmed }) {
     return (
-        <div className="flex flex-col items-center justify-center w-[604px] h-full my-14">
+        <div className="flex flex-col items-center justify-center w-full sm:w-[604px] h-full my-14">
             <div className="heading_s1 mb-[88px] text-center">
                 <div className="flex w-full items-center justify-center">
                     <Icon name={"done"} className="m-3 w-9" />
@@ -43,7 +43,7 @@ function SuccessBody({ toggleDirectorConfirmed }) {
 
 function Directorconfirmed() {
     return (
-        <div className="flex flex-col items-center justify-center w-[604px] h-full my-14">
+        <div className="flex flex-col items-center justify-center w-full sm:w-[604px] h-full my-14">
             <div className="heading_s1 mb-[88px] text-center">
                 <div className="flex w-full items-center justify-center">
                     <Icon name={"done"} className="m-3 w-9" />

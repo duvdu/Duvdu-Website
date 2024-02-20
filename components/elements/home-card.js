@@ -84,13 +84,13 @@ const Card = ({ cardData, className, href }) => {
             }
           </a>
           {cardData.showLove &&
-            <div onClick={handleLoveIconClick} className="blur-container love z-10">
+            <div onClick={handleLoveIconClick} className="blur-container love z-[1]">
               <Icon className='cursor-pointer' name={loveIconName} />
             </div>
           }
 
           {cardData.showSound &&
-            <div onClick={handleSoundIconClick} className="blur-container sound z-10">
+            <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
               <Icon className='cursor-pointer' name={soundIconName} />
             </div>
           }

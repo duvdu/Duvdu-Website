@@ -12,7 +12,7 @@ const Payment = () => {
     return (
         <>
             <Layout>
-                <div className='flex gap-6 container'>
+                <div className='lg:flex gap-6 container'>
                     <LeftSide />
                     <RightSide />
                 </div>
@@ -24,13 +24,7 @@ const Payment = () => {
 
 const LeftSide = () => {
     const [showAddCard, setShowAddCard] = useState(false);
-
-    const handleAddCardClick = () => {
-        setShowAddCard(true);
-    };
-
-
-    const cardData = [
+    const [cardData, setCardData] = useState([
         {
             isSelected: true,
             data: [
@@ -94,8 +88,22 @@ const LeftSide = () => {
                 }
             ]
         },
-    ];
+    ]);
 
+    const handleAddCardClick = () => {
+        setShowAddCard(true);
+    };
+
+    const handleCardClick = (index) => {
+        console.log(index)
+        const updatedCardData = cardData.map((card, i) => {
+            return {
+                ...card,
+                isSelected: i === index
+            };
+        });
+        setCardData(updatedCardData);
+    };
 
     return (
         <>
@@ -107,7 +115,7 @@ const LeftSide = () => {
                     </div>
                     <div className='border-b-2' />
                     {cardData.map((card, index) => (
-                        <Card key={index} isSelected={card.isSelected} data={card.data} isLast={cardData.length-1 == index}/>
+                        <Card key={index} isSelected={card.isSelected} data={card.data} isLast={cardData.length - 1 === index} onClick={() => handleCardClick(index)} />
                     ))}
                 </div>
                 {!showAddCard && (
@@ -119,13 +127,14 @@ const LeftSide = () => {
                     </div>
                 )}
                 {showAddCard && (
-                    <AddNewCard/>
+                    <AddNewCard />
                 )}
-                
+
             </div>
         </>
     );
 };
+
 
 const RightSide = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -212,7 +221,7 @@ const RightSide = () => {
                 <section>
                     <div className="flex justify-center mt-11">
                         <div onClick={openPopup}>
-                            <ArrowBtn className="cursor-pointer w-96" text='check-out' />
+                            <ArrowBtn className="cursor-pointer sm:w-96" text='check-out' />
                         </div>
                     </div>
                 </section>
@@ -223,10 +232,10 @@ const RightSide = () => {
 };
 
 
-const Card = ({ isSelected, data , isLast }) => {
-    
+const Card = ({ isSelected, data, isLast , onClick }) => {
+
     return (
-        <div className={`mx-6 my-4 pb-4 ${isLast ? "" : "   "}`}>
+        <div onClick={onClick} className={`mx-6 my-4 pb-4 ${isLast ? "" : "   "}`}>
             <div className={`flex rounded-xl gap-4 justify-between `}>
                 <div className='mb-2'>
                     {isSelected ? (
@@ -243,7 +252,7 @@ const Card = ({ isSelected, data , isLast }) => {
                 {data.map((item, index) => (
                     <div key={index} className='text-center'>
                         <p className='text-sm text-[#5E5E5E] mb-2'>{item.label}</p>
-                        <p className={isSelected ? 'font-bold text-base' :'text-sm text-[#5E5E5E]'}>{item.value}</p>
+                        <p className={isSelected ? 'font-bold text-base' : 'text-sm text-[#5E5E5E]'}>{item.value}</p>
                     </div>
                 ))}
             </div>

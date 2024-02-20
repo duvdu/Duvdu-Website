@@ -8,7 +8,7 @@ function Thanks({ isPopupOpen, setIsPopupOpen }) {
         <>
             {isPopupOpen && (
                 <Popup isOpen={isPopupOpen} onClose={()=> setIsPopupOpen(false)} header={'Thanks Meesage'}>
-                    <div className="flex flex-col justify-center w-[604px] h-full my-14">
+                    <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
                         <div className="heading_s1 mb-[88px] text-center">
                             <div className="flex w-full justify-center">
                                <Icon name={"done"} className="mb-9"/>

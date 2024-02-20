@@ -97,7 +97,7 @@ const Dashboard = () => {
                         <Chart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
                     </div>
                     <div className='w-full mt-6'>
-                        <div className='flex gap-6'>
+                        <div className='flex flex-col sm:flex-row gap-6'>
                             <div className='flex flex-col w-full gap-6'>
                                 <div className='card cardborder-3 bg-DS_white w-full h-full cardborder p-7 pt-16'>
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>

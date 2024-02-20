@@ -7,7 +7,7 @@ import Switch from '../elements/switcher'
 import Icon from "../Icons";
 import Button from '../elements/submitButton';
 
-const Header = ({ fromlayout }) => {
+const Header = ({ fromlayout, toggleClick }) => {
     const [isToggled, setToggled] = useState(false);
     const [scroll, setScroll] = useState(1);
     const [islogin, setIslogin] = useState(false);
@@ -160,10 +160,11 @@ const Header = ({ fromlayout }) => {
                         </div>
                     </div>
                 </div>
-                {
-                    !fromlayout.shortlayout &&
-                    <div className="border-y border-borderColor header-bottom header-bottom-bg-color">
-                        <div className="container">
+                <div className={"border-borderColor header-bottom header-bottom-bg-color" + (!fromlayout.shortlayout ? " border-y" : "")}>
+
+                    <div className="container">
+                        {
+                            !fromlayout.shortlayout &&
                             <div className="header-wrap header-space-between relative">
                                 <div className="logo logo-width-1 block lg:hidden">
                                     <Link href="/">
@@ -181,17 +182,16 @@ const Header = ({ fromlayout }) => {
                                 </div>
 
                                 <div className="header-action-icon-2 block lg:hidden">
-                                    <div className="burger-icon burger-icon-DS_white" >
-                                        {/* onClick={toggleClick}>    OPEN MOBILE MENU  */}
+                                    <div className="burger-icon burger-icon-DS_white" onClick={toggleClick}>
                                         <span className="burger-icon-top"></span>
                                         <span className="burger-icon-mid"></span>
                                         <span className="burger-icon-bottom"></span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
-                }
+                </div>
             </header>
             <div className={scroll ? "fake-height active" : "fake-height"} />
         </>

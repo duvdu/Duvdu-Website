@@ -25,7 +25,7 @@ function AddToTeam({ isPopupOpen, setIsPopupOpen }) {
             {isPopupOpen && (
                 <Popup isOpen={isPopupOpen} onClose={closePopup} className={'mt-14'} header={'Add To Team'}>
                     {projects.map((project, index) => (
-                        <div key={index} className="h-20 w-[565px] rounded-full mt-9 relative overflow-hidden">
+                        <div key={index} className="h-20 w-full sm:w-[565px] rounded-full mt-9 relative overflow-hidden">
                             <img className="absolute -translate-y-1/2 blur-sm" src={project.img} />
                             <div className="absolute z-20 flex items-center w-full h-full p-7">
                                 <div>

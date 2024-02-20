@@ -4,7 +4,7 @@ import Icon from '../Icons';
 const Popup = ({ isOpen, onClose, children, header, className }) => {
 
     return (
-        <div className={`popup ${isOpen ? 'open' : ''} ${className}`}>
+        <div className={`popup z-30 ${isOpen ? 'open' : ''} ${className}`}>
             <div className="overlay blur" onClick={onClose}></div>
             <div className='card content bg-[#F7F9FB] dark:bg-[#131313] py-3 mx-10 '>
                 <div className='flex gap-3'>

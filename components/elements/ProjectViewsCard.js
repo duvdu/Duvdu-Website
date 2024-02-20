@@ -26,7 +26,7 @@ const ProjectViewsCard = ({ recieved }) => (
             </div>
 
         </div>
-        <div className='flex justify-between items-center pt-5 '>
+        <div className='flex flex-col lg:flex-row justify-between items-center pt-5 '>
             {
                 recieved.data.map((e, index) => (
                     <div className='text-center' key={index}>

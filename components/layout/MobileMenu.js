@@ -70,7 +70,12 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                                 </button>
                             </form>
                         </div>
-                        <div className="mobile-menu-wrap mobile-header-border">
+                        <a href="/saved">saved</a>
+                        <br/>
+                        <a href="/payment">payment</a>
+                        <br/>
+                        <a href="/dashboard">dashboard</a>
+                        <div className="mobile-menu-wrap mobile-header-border hidden">
                             <div className="main-categori-wrap mobile-header-border">
                                 <Link href="#">
                                     <a className="categori-button-active-2">
@@ -600,7 +605,7 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                                 </ul>
                             </nav>
                         </div>
-                        <div className="mobile-header-info-wrap mobile-header-border">
+                        <div className="mobile-header-info-wrap mobile-header-border hidden">
                             <div className="single-mobile-header-info mt-30">
                                 <Link href="/page-contact">
                                     <a> Our location </a>
@@ -617,7 +622,7 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                                 </Link>
                             </div>
                         </div>
-                        <div className="mobile-social-icon">
+                        <div className="mobile-social-icon hidden">
                             <h5 className="mb-15 text-grey-4">Follow Us</h5>
                             <Link href="#">
                                 <a>

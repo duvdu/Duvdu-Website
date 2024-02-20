@@ -24,7 +24,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     const [isTeamOpen, setIsTeamOpen] = useState(false);
     const [isReportOpen, setisReportOpen] = useState(true);
     const [isthankMSG, setisthankMSG] = useState(false);
-
+    const online = false
     useEffect(() => {
         fetchProjects("", "/static/projects.json");
     }, []);
@@ -146,6 +146,34 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
     const messages = [
         {
             "type": "time",
+            "data": "yesterday at 11:41"
+        },
+        {
+            "type": "me",
+            "data": "Hey, man! What's up, Mr other? 👋"
+        },
+        {
+            "type": "other",
+            "data": "Kid, where'd you come from?"
+        },
+        {
+            "type": "me",
+            "data": "Field trip! 🤣"
+        },
+        {
+            "type": "me",
+            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
+        },
+        {
+            "type": "other",
+            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
+        },
+        {
+            "type": "typing other",
+            "data": ""
+        },
+        {
+            "type": "time",
             "data": "Today at 11:41"
         },
         {
@@ -180,7 +208,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                 <AddToTeam isPopupOpen={isTeamOpen} setIsPopupOpen={setIsTeamOpen} />
                 {/* <Report isPopupOpen={isReportOpen} setIsPopupOpen={setisReportOpen}/> */}
                 <ThanksMSG isPopupOpen={isthankMSG} setIsPopupOpen={setisthankMSG} />
-                <div className="fixed left-8 bottom-0 z-20">
+                <div className="fixed bottom-0 z-20">
                     {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
                 </div>
 
@@ -209,7 +237,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                     </section>
                 </div>
 
-                <Control data={data} handleOpenChat={handleOpenChat} setIsTeamOpen={setIsTeamOpen} handleLoveIconClick={handleLoveIconClick} loveIconName={loveIconName} toggleDrawer={toggleDrawer} />
+                <Control data={data} showChat={showChat} handleOpenChat={handleOpenChat} setIsTeamOpen={setIsTeamOpen} handleLoveIconClick={handleLoveIconClick} loveIconName={loveIconName} toggleDrawer={toggleDrawer} />
 
                 <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
             </Layout>
@@ -365,7 +393,8 @@ const Recommended = ({ projects }) => {
     return (
         <>
             <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">recommended for you</h2>
-            <div className="flex gap-6 mt-4">
+
+            <div className="grid minmax-280 gap-5">
                 {getPaginatedProjects.map((item, i) => (
                     <Card key={i} className='cursor-pointer' href="/project" cardData={item} />
                 ))}
@@ -374,44 +403,52 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, handleOpenChat, setIsTeamOpen, handleLoveIconClick, loveIconName, toggleDrawer }) => {
+const Control = ({ data, handleOpenChat, showChat, setIsTeamOpen, handleLoveIconClick, loveIconName, toggleDrawer }) => {
     const online = false
-    
+
     return (
         <>
-            <div className='sticky h-32 bottom-0 flex justify-between items-end p-10'>
-                <div onClick={handleOpenChat} className="message-shadow flex rounded-full p-2 h-16 bg-DS_white cursor-pointer">
-                    <div className="relative">
-                        <img className="h-full" src={data.user.img} />
+            <div className='sticky h-32 bottom-0 flex justify-between items-end p-10 z-20'>
+                {
+                    !showChat &&
+                    <div onClick={handleOpenChat} className="message-shadow flex rounded-full p-2 h-16 bg-DS_white cursor-pointer ">
+                        <div className="relative">
+                            <img className="h-full" src={data.user.img} />
+                            {online && (
+                                <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                            )}
+                            {!online && (
+                                <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                            )}
 
-                        {online && (
-                            <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                        )}
-                        {!online && (
-                            <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                        )}
-
+                        </div>
+                        <div className="px-3">
+                            <span className="capitalize font-bold">
+                                {data.user.name}
+                            </span>
+                            <div />
+                            <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
+                        </div>
                     </div>
-                    <div className="px-3">
-                        <span className="capitalize font-bold">
-                            {data.user.name}
-                        </span>
-                        <div />
-                        <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
-                    </div>
+                }
+                {
+                    showChat &&
+                    <div/>
+                }
+                <div className="hidden lg:block">
+                    <Controller>
+                        <div className="controller-1" >
+                            <Icon name={'share'} />
+                        </div>
+                        <div onClick={() => setIsTeamOpen(true)} className="controller-1">
+                            <Icon name={'add'} />
+                        </div>
+                        <div onClick={handleLoveIconClick} className="controller-1">
+                            <Icon name={loveIconName} />
+                        </div>
+                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
+                    </Controller>
                 </div>
-                <Controller>
-                    <div className="controller-1" >
-                        <Icon name={'share'} />
-                    </div>
-                    <div onClick={() => setIsTeamOpen(true)} className="controller-1">
-                        <Icon name={'add'} />
-                    </div>
-                    <div onClick={handleLoveIconClick} className="controller-1">
-                        <Icon name={loveIconName} />
-                    </div>
-                    <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
-                </Controller>
             </div>
         </>
     );

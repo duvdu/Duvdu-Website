@@ -49,7 +49,7 @@ function Auth({ children }) {
     return (
         <>
             <Layout shortlayout={true}>
-                <div className="page-content">
+                <div className="h-body">
                     <div className="container">
                         <div className="lg:flex gap-6">
                             <div className="lg:w-5/12 left-content">

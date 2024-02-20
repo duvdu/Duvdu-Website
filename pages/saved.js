@@ -44,17 +44,15 @@ const Boards = ({ data }) => {
 
     return (
         <>
-
-
             <DeleteBoard isPopupOpen={deleteState} setIsPopupOpen={setDeleteState} />
             <div className="boards-card">
-                <div className="projects">
+                <a href="/save" className="projects cursor-pointer">
                     <div className="col1 img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div>
                     <div className="col2">
                         <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
                         <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
                     </div>
-                </div>
+                </a>
                 <div className="boards-info projects-num">{projectsNum} projects</div>
 
                 <Selector options={dropdown} className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center" invert={true} />
@@ -66,7 +64,6 @@ const Boards = ({ data }) => {
             </div>
         </>
     );
-
 };
 
 const Saved = () => {
