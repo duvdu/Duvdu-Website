@@ -79,7 +79,7 @@ const producersDrawer = ({ data, isOpen, toggleDrawer , submitt }) => {
             </section>
             <section>
                 <p className="capitalize opacity-60 mt-11">plarform</p>
-                <input placeholder="enter platform..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-96 mt-4 p-4" />
+                <input placeholder="enter platform..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 sm:w-96 mt-4 p-4" />
             </section>
             <section>
                 <p className="capitalize opacity-60 mt-11">project Details</p>
@@ -106,7 +106,7 @@ const producersDrawer = ({ data, isOpen, toggleDrawer , submitt }) => {
                 </div>
             </section>
             <section className="my-11 flex justify-between gap-7">
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                     <div>
                         <p className="capitalize opacity-60 mt-11">expected budget</p>
                         <input className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 mt-4 p-4" />
@@ -121,7 +121,7 @@ const producersDrawer = ({ data, isOpen, toggleDrawer , submitt }) => {
           
             <section className="my-11 gap-7">
                 <p className="capitalize opacity-60 mt-11">upload alike project</p>
-                    <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 w-96 p-2 mt-4">
+                    <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4">
                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                             <Icon name={"gallery"} />
                         </div>

@@ -99,12 +99,12 @@ function Login() {
             <div className="border-t border-black opacity-20 w-full my-4"></div>
 
           </div>
-          <div className="flex justify-center gap-8">
-            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-64 flex justify-center gap-4 items-center cursor-pointer">
+          <div className="flex flex-col sm:flex-row justify-center gap-8">
+            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full sm:w-64 flex justify-center gap-4 items-center cursor-pointer">
               <img src="/assets/imgs/theme/icons/google-icon.svg" />
               <p className="text-lg font-bold"> Google </p>
             </div>
-            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 flex justify-center gap-4 items-center w-64 cursor-pointer">
+            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full sm:w-64 flex justify-center gap-4 items-center cursor-pointer">
               <img src="/assets/imgs/theme/icons/apple-logo.png" className="w-9" />
               <p className="text-lg font-bold"> Apple </p>
             </div>

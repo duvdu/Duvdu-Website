@@ -6,7 +6,7 @@ import MobileMenu from "./MobileMenu";
 
 const Layout = ({
     children,
-    shortlayout,
+    shortheader,
     isbodyWhite,
     headerStyle,
 }) => {
@@ -34,7 +34,7 @@ const Layout = ({
 
             {isToggled && <div className="body-overlay-1" onClick={toggleClick}></div>}
 
-            <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortlayout: shortlayout, iswhite: isbodyWhite }} />
+            <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite }} />
 
             <MobileMenu isToggled={isToggled} toggleClick={toggleClick} />
 

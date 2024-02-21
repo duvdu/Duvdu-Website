@@ -48,7 +48,7 @@ function Auth({ children }) {
 
     return (
         <>
-            <Layout shortlayout={true}>
+            <Layout shortheader={true}>
                 <div className="h-body">
                     <div className="container">
                         <div className="lg:flex gap-6">
@@ -92,13 +92,15 @@ function Auth({ children }) {
                                 </div>
                             </div>
                             <div className="lg:w-7/12 right-content">
-                                <div className="padding_eight_all bg-DS_white auth-card">
+                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center p-5 border rounded-lg h-full">
                                     <Link href="/"><a className="as-Guest flex items-center">
                                         Continue as a Guest
                                         <img className="h-3" src="/assets/imgs/theme/icons/left-arrow.svg" alt="arrow" />
                                     </a>
                                     </Link>
+                                    <div className="my-20 px-0 md:px-28">
                                     {children}
+                                    </div>
                                 </div>
                             </div>
                         </div>

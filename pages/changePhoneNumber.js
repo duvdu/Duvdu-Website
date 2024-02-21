@@ -7,13 +7,22 @@ import OtpInput from 'react-otp-input';
 import Icon from '../components/Icons';
 
 function ChangePassword() {
+    const [currentStep, setCurrentStep] = useState(1);
+
+    const handleNextStep = () => {
+        setCurrentStep(currentStep + 1);
+    };
+
+    const handlePreviousStep = () => {
+        setCurrentStep(currentStep - 1);
+    };
     return (
         <>
-            <Layout shortlayout={true}>
-                <div className="container flex justify-center items-center text-center w-1/2 bg-DS_white mt-9 h-[878px]">
-                    {/* <Step1 />
-                    <Step2 /> */}
-                    <Step3 />
+            <Layout shortheader={true}>
+                <div className="container flex justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
+                    {currentStep === 1 && <Step1 onNextStep={handleNextStep} />}
+                    {currentStep === 2 && <Step2 onNextStep={handleNextStep} />}
+                    {currentStep === 3 && <Step3 />}
                 </div>
             </Layout>
         </>
@@ -21,14 +30,14 @@ function ChangePassword() {
 }
 
 
-function Step1() {
+function Step1({onNextStep}) {
     const [PhoneNumber, setPhoneNumber] = useState('');
     const [numberError, setNumberError] = useState({ isError: false, message: '' });
 
 
 
     const handleSubmit = (e) => {
-       
+
         if (PhoneNumber.length < 8) {
             setNumberError({ isError: true, message: 'Password must be at least 8 characters long.' });
         } else {
@@ -37,7 +46,7 @@ function Step1() {
 
     };
     return (
-        <form method="post" onSubmit={handleSubmit} className="w-full px-[114px]">
+        <form method="post" onSubmit={handleSubmit}>
             <div className="heading_s1 mb-8">
                 <h1 className="auth-title">change phone number</h1>
             </div>
@@ -51,13 +60,13 @@ function Step1() {
                 />
                 {numberError.isError && <p className="error-msg">{numberError.message}</p>}
             </div>
-            <Button type="submit" name="login" shadow={true} className="w-full">
+            <Button name="login" shadow={true} className="w-full " onClick={onNextStep}>
                 confirm
             </Button>
         </form>
     )
 }
-function Step2() {
+function Step2({onNextStep}) {
     const [otp, setOtp] = useState('');
     const [counter, setcount] = useState(59);
     const [error, seterror] = useState(false);
@@ -74,9 +83,9 @@ function Step2() {
     }, [counter]);
 
     return (
-        <form>
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ width: "353px" }}>
+        <form className="flex flex-col items-center">
+            <div class="max-w-96 flex flex-col items-center justify-center">
+                <div class="w-353">
                     <div className="heading_s1 mb-11 text-center">
                         <h1 className="auth-title">Enter code</h1>
                         <p className="otpnews" >Enter the verification code we just sent to your phone +20 12* **** *74</p>
@@ -107,8 +116,8 @@ function Step2() {
                     </div>
                 </div>
             </div>
-            <div className="mb-4 relative mb-30 mt-55">
-                <Button type="submit" name="reset-password">
+            <div className="mb-4 relative mb-30 mt-55 w-full">
+                <Button name="reset-password" onClick={onNextStep}>
                     Reset
                 </Button>
                 <div className="submit-btn"></div>
@@ -150,7 +159,7 @@ function Step3() {
         //   }
     };
     return (
-        <div className="flex flex-col justify-center h-full w-full">
+        <div className="flex flex-col justify-center h-full">
             <div className="heading_s1 mb-[88px] text-center">
                 <div className="flex w-full justify-center">
                     <Icon name={"done"} className="mb-9" />
@@ -158,7 +167,7 @@ function Step3() {
                 <h1 className="auth-title mb-2">number changed</h1>
                 <p>Your phone number has been changed successfully</p>
             </div>
-            <div className="mb-4 relative mx-[114px]">
+            <div className="mb-4 relative">
                 <a href={"/login"}>
                     <Button type="submit" name="login" shadow={true}>
                         done

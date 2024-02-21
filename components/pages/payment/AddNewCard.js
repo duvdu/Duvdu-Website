@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Icon from '../Icons';
+import Icon from '../../Icons';
 
 export default function AddNewCard() {
     const [cardNumber, setCardNumber] = useState('');

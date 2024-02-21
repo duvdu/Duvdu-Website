@@ -88,7 +88,7 @@ const Dashboard = () => {
     return (
         <>
 
-            <Layout>
+            <Layout shortheader={true}>
                 <DashboardPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
                 <div className='container flex gap-6 flex-col lg:flex-row'>
                     <div className='w-full'>

@@ -7,7 +7,7 @@ const Search = () => {
     const router = useRouter();
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
     const handleSearch = () => {
-        
+
         router.push({
             pathname: "/projects",
             query: {
@@ -58,14 +58,14 @@ const Search = () => {
                         "director",
                         "fashion model"
                     ].map((item, index) => (
-                            <li className="padge" key={index}>
-          <Link  href="/">
+                        <li className="padge" key={index}>
+                            <Link href="/">
 
                                 <a>{item}</a>
-          </Link>
+                            </Link>
 
-                            </li>
-                        ))}
+                        </li>
+                    ))}
                 </ul>
             </div>
         </>

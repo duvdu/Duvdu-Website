@@ -10275,6 +10275,10 @@ footer .hotline img {
   height: calc(var(--body-height) - 180px);
 }
 
+.h-changePhoneNumber {
+  height: calc(var(--body-height) - 72px);
+}
+
 @media (min-width: 991px) {
   .h-body>div {
     position: relative;
@@ -10381,21 +10385,7 @@ footer .hotline img {
   height: 100%;
 }
 
-.auth-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0px;
-  border-radius: 5px;
-  height: 100%;
-}
-
-.auth-card {
-  padding: 20px 114px;
-}
-
 .auth-title {
-
   font-style: normal;
   font-weight: 700;
   font-size: 35.8221px;
@@ -10458,6 +10448,7 @@ footer .hotline img {
 
 .as-Guest {
   position: absolute;
+  top: 30px;
   right: 0px;
   text-align: end;
   font-style: normal;

@@ -20,7 +20,7 @@ function dashboard({ isPopupOpen, setIsPopupOpen }) {
                         </span>
                         <a href="/register">
 
-                        <AppButton text={"register"} className={"mb-40 mx-16 md:mx-32"} />
+                        <AppButton text={"register"} className={"mb-40 mx-16 md:mx-32 px-20 sm:px-36"} />
                         </a>
                     </div>
                 </Popup>

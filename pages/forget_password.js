@@ -21,9 +21,9 @@ function register() {
     return (
         <>
             <Auth>
-                <form>
-                    <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <div style={{ width: "353px" }}>
+                <form className="flex flex-col items-center">
+                    <div class="max-w-96 flex flex-col items-center justify-center">
+                        <div class="w-353">
                             <div className="heading_s1 mb-11 text-center">
                                 <h1 className="auth-title">Enter code</h1>
                                 <p className="otpnews" >Enter the verification code we just sent to your phone +20 12* **** *74</p>
@@ -33,7 +33,7 @@ function register() {
                                 onChange={setOtp}
                                 numInputs={5}
                                 renderSeparator={<span style={{ width: "100%" }} > </span>}
-                                renderInput={(props) => <input {...props} className={error ? "OTP error" : "OTP"} style={{ width: "63px", height: "72px" }} />}
+                                renderInput={(props) => <input {...props} className={"w-16 h-20 " + (error ? "OTP error" : "OTP")} style={{ width: "63px", height: "72px" }} />}
                             />
 
                             {
@@ -48,14 +48,14 @@ function register() {
                                         <p className="resendMSG">
                                             <span className="msg"> Send code again </span><span className="counter"> 00:{counter}</span>
                                         </p> :
-                                        <p className="resendMSG2 text-center cursor-pointer" onClick={()=>{setcount(59)}}>
+                                        <p className="resendMSG2 text-center cursor-pointer" onClick={() => { setcount(59) }}>
                                             Send code again
                                         </p>
                                 }
                             </div>
                         </div>
                     </div>
-                    <div className="mb-4 relative mb-30 mt-55">
+                    <div className="mb-4 relative mb-30 mt-55 w-full">
                         <Button type="submit" name="reset-password">
                             Reset
                         </Button>

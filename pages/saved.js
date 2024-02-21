@@ -71,7 +71,7 @@ const Saved = () => {
     return (
         <>
             <CreateBoard isPopupOpen={ceateApp} setIsPopupOpen={setCeateApp} />
-            <Layout shortlayout={true} isbodyWhite={true}>
+            <Layout shortheader={true} isbodyWhite={true}>
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">

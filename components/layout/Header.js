@@ -74,7 +74,7 @@ const Header = ({ fromlayout, toggleClick }) => {
         <>
             <div onClick={falseall} className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
-            <header className={`bg-DS_white fixed w-full z-50 ${scroll ? " stick" : ""}`}>
+            <header className={`bg-DS_white fixed w-full z-10 ${scroll ? "stick" : ""}`}>
                 <div className="py-4 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
@@ -160,19 +160,18 @@ const Header = ({ fromlayout, toggleClick }) => {
                         </div>
                     </div>
                 </div>
-                <div className={"border-borderColor header-bottom header-bottom-bg-color" + (!fromlayout.shortlayout ? " border-y" : "")}>
-
+                <div className={"border-borderColor header-bottom header-bottom-bg-color" + (!fromlayout.shortheader ? " border-y" : "")}>
                     <div className="container">
-                        {
-                            !fromlayout.shortlayout &&
-                            <div className="header-wrap header-space-between relative">
-                                <div className="logo logo-width-1 block lg:hidden">
-                                    <Link href="/">
-                                        <a>
-                                            <img src="/assets/imgs/theme/logo.svg" alt="logo" />
-                                        </a>
-                                    </Link>
-                                </div>
+                        <div className="header-wrap header-space-between relative">
+                            <div className="logo logo-width-1 block lg:hidden">
+                                <Link href="/">
+                                    <a>
+                                        <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                                    </a>
+                                </Link>
+                            </div>
+                            {
+                                !fromlayout.shortheader &&
                                 <div className="header-nav">
                                     <div className="main-menu main-menu-padding-1 main-menu-lh-2 font-heading hidden lg:block">
                                         <nav>
@@ -180,16 +179,16 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         </nav>
                                     </div>
                                 </div>
+                            }
 
-                                <div className="header-action-icon-2 block lg:hidden">
-                                    <div className="burger-icon burger-icon-DS_white" onClick={toggleClick}>
-                                        <span className="burger-icon-top"></span>
-                                        <span className="burger-icon-mid"></span>
-                                        <span className="burger-icon-bottom"></span>
-                                    </div>
+                            <div className="header-action-icon-2 block lg:hidden">
+                                <div className="burger-icon burger-icon-DS_white" onClick={toggleClick}>
+                                    <span className="burger-icon-top"></span>
+                                    <span className="burger-icon-mid"></span>
+                                    <span className="burger-icon-bottom"></span>
                                 </div>
                             </div>
-                        }
+                        </div>
                     </div>
                 </div>
             </header>
@@ -476,10 +475,6 @@ function Setting({ data }) {
             </div>
         </div>
     )
-
-
-
-
 }
 
 

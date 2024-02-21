@@ -8,7 +8,7 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className }) => {
     return (
         <>
             {isOpen && <div onClick={toggleDrawer} className='z-10 fixed w-screen h-screen bg-DS_black opacity-60 top-0 left-0' />}
-            <div className={`z-20 fixed top-0 right-0 h-full bg-DS_white shadow-lg transform transition-transform ease-in-out duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'} ${className}`}>
+            <div className={`z-20 fixed top-0 right-0 h-full bg-DS_white shadow-lg transform transition-transform ease-in-out duration-300  ${isOpen ? 'translate-x-0' : 'translate-x-full'} ${className} w-full md:w-2/3 lg:w-1/2 xl:w-1/3`}>
                 <div className="p-8">
                     <div className='flex gap-3'>
                         <div className='flex rounded-full border px-5 cursor-pointer aspect-square' onClick={toggleDrawer}>
@@ -20,7 +20,6 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className }) => {
                             {name &&
                                 <span className='capitalize mx-5 text-lg'>{name}</span>}
                         </div>
-                        <div className='w-96' />
                     </div>
                     {children}
                 </div>

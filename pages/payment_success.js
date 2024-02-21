@@ -5,7 +5,7 @@ import AppButton from '../components/elements/button';
 const payment_success = () => {
     return (
         <>
-            <Layout shortlayout={true}>
+            <Layout shortheader={true}>
                 <div className='container flex flex-col justify-center items-center w-min text-center'>
                     <div className='w-[540px] h-[450]px bg-gray-600 mt-10' />
                     <img src='/assets/imgs/theme/paymentSuccessful.svg' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' />

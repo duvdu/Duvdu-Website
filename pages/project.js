@@ -206,7 +206,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
         <>
             <Layout>
                 <AddToTeam isPopupOpen={isTeamOpen} setIsPopupOpen={setIsTeamOpen} />
-                {/* <Report isPopupOpen={isReportOpen} setIsPopupOpen={setisReportOpen}/> */}
+                <Report isPopupOpen={isReportOpen} setIsPopupOpen={setisReportOpen}/>
                 <ThanksMSG isPopupOpen={isthankMSG} setIsPopupOpen={setisthankMSG} />
                 <div className="fixed bottom-0 z-20">
                     {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
