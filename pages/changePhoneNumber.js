@@ -133,15 +133,6 @@ function Step3() {
 
 
     const handleSubmit = (e) => {
-        //   e.preventDefault();
-
-        //   var eError = true, pError = true
-        //   if (email.trim() === '') {
-        //     setEmailError({ isError: true, message: 'Email is required.' });
-        //   } else {
-        //     eError = false
-        //     setEmailError({ isError: false, message: '' });
-        //   }
 
         if (PhoneNumber.length < 8) {
             setNumberError({ isError: true, message: 'Password must be at least 8 characters long.' });
@@ -149,14 +140,6 @@ function Step3() {
             setNumberError({ isError: false, message: '' });
         }
 
-        //   if (!eError && !pError) {
-        //     console.log('Form submitted');
-        //     setIsloading(true)
-        //     setTimeout(() => {
-        //       setIsloading(false);
-        //     }, 2000);
-
-        //   }
     };
     return (
         <div className="flex flex-col justify-center h-full">

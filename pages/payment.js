@@ -4,7 +4,7 @@ import Icon from '../components/Icons';
 import ArrowBtn from '../components/elements/arrowBtn';
 import Popup from '../components/elements/popup';
 import AppButton from '../components/elements/button';
-import AddNewCard from '../components/payment/AddNewCard';
+import AddNewCard from '../components/pages/payment/AddNewCard';
 
 const Payment = () => {
 
