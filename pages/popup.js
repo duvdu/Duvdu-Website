@@ -14,8 +14,10 @@ import Receive from '../components/popsup/receive_project_files';
 import QrCode from '../components/popsup/QR_code';
 import Rating from '../components/popsup/rating';
 import Share from '../components/popsup/Share';
+import React, { useState } from 'react';
 
 function Test() {
+    const [openShare, setIsopenShare] = useState(false);
 
     return (
         <>
@@ -35,7 +37,7 @@ function Test() {
                         <BTN target='receive_project_files'> Receive Project Files </BTN>
                         <BTN target='QR-code'> QR code </BTN>
                         <BTN target='Rating'> Rating </BTN>
-                        <BTN target='Share'> Share </BTN>
+                        <BTN onClick={()=>{setIsopenShare(true)}} target='Share'> Share </BTN>
                     </div>
 
 
@@ -53,14 +55,18 @@ function Test() {
                     <Receive />
                     <QrCode />
                     <Rating />
+                    {
+                    openShare &&
                     <Share />
+                    }
+                    
                 </div>
             </Layout>
         </>
     );
 }
 
-const BTN = ({target , children}) => <button className='bg-green-700 p-3 mt-1 rounded-xl text-white' data-popup-toggle="popup" data-popup-target={target}> {children} </button>
+const BTN = ({target , children,...rest}) => <button {...rest} className='bg-green-700 p-3 mt-1 rounded-xl text-white' data-popup-toggle="popup" data-popup-target={target}> {children} </button>
 
 
 export default Test;

@@ -1,4 +1,4 @@
-import { deleteProject, findProjectIndexById } from "../../util/util";
+import { deleteProduct, findProductIndexById } from "../../util/util";
 import * as Types from "../constants/actionTypes";
 
 // {items:[],filteredList:[]}
@@ -35,10 +35,10 @@ export default (state = { items: [] }, action) => {
             };
 
         case Types.DELETE_PROJECT:
-            return deleteProject(state, action.payload.id);
+            return deleteProduct(state, action.payload.id);
 
         case Types.UPDATE_PROJECT:
-            const index = findProjectIndexById(state, action.payload.project.id);
+            const index = findProductIndexById(state, action.payload.project.id);
             state[index] = action.payload.project;
 
             return { ...state };

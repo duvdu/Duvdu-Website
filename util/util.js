@@ -3,7 +3,7 @@ export const findprojectIndex = (list, slug) => {
   const index = list.findIndex((item) => item.slug === slug);
   return index;
 };
-export const findprojectIndexById = (list, id) => {
+export const findProductIndexById = (list, id) => {
   const index = list.findIndex((item) => item.id === id);
   return index;
 };
@@ -19,10 +19,6 @@ export const convertToK = (number, afterpoint) => {
 export const deleteProduct = (list, slug) => {
   return null;
 };
-export const findProductIndexById = (list, slug) => {
-  return null;
-};
-
 
 export function convertHoursTo__(hours) {
   // Define constants for conversion rates

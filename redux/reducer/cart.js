@@ -1,5 +1,5 @@
 import storage from "../../util/localStorage";
-import { deleteProject, findProjectIndexById } from "../../util/util";
+import { deleteProduct, findProductIndexById } from "../../util/util";
 import * as Types from "../constants/actionTypes";
 
 export default (state = [], action) => {
@@ -10,7 +10,7 @@ export default (state = [], action) => {
             return [...action.payload.cart];
 
         case Types.ADD_TO_CART:
-            index = findProjectIndexById(state, action.payload.project.id);
+            index = findProductIndexById(state, action.payload.project.id);
 
             if (index !== -1) {
                 state[index].quantity += 1;
@@ -27,13 +27,13 @@ export default (state = [], action) => {
             }
 
         case Types.DELETE_FROM_CART:
-            const newCartItems = deleteProject(state, action.payload.projectId);
+            const newCartItems = deleteProduct(state, action.payload.projectId);
             storage.set("dokani_cart", newCartItems);
 
             return [...newCartItems];
 
         case Types.INCREASE_QUANTITY:
-            index = findProjectIndexById(state, action.payload.projectId);
+            index = findProductIndexById(state, action.payload.projectId);
             if (index === -1) return state;
 
             state[index].quantity += 1;
@@ -42,7 +42,7 @@ export default (state = [], action) => {
             return [...state];
 
         case Types.DECREASE_QUANTITY:
-            index = findProjectIndexById(state, action.payload.projectId);
+            index = findProductIndexById(state, action.payload.projectId);
             if (index === -1) return state;
 
             const quantity = state[index].quantity;
