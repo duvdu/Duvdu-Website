@@ -13,6 +13,7 @@ import Uploading from '../components/popsup/uploading_project_files';
 import Receive from '../components/popsup/receive_project_files';
 import QrCode from '../components/popsup/QR_code';
 import Rating from '../components/popsup/rating';
+// import Share from '../components/popsup/Share';
 import React, { useState } from 'react';
 
 function Test() {
@@ -36,6 +37,7 @@ function Test() {
                         <BTN target='receive_project_files'> Receive Project Files </BTN>
                         <BTN target='QR-code'> QR code </BTN>
                         <BTN target='Rating'> Rating </BTN>
+                        {/* <BTN onClick={()=>{setIsopenShare(true)}} target='Share'> Share </BTN> */}
                     </div>
 
 
@@ -53,7 +55,10 @@ function Test() {
                     <Receive />
                     <QrCode />
                     <Rating />
-            
+                    {/* {
+                    openShare &&
+                    <Share />
+                    } */}
                     
                 </div>
             </Layout>
