@@ -1,4 +1,3 @@
-import { Popup } from "react-leaflet";
 import {
     EmailShareButton,
     FacebookShareButton,
@@ -8,19 +7,8 @@ import {
     WhatsappShareButton,
     TelegramShareButton,
     FacebookMessengerShareButton,
-    GabShareButton,
-    HatenaShareButton,
-    InstapaperShareButton,
-    LineShareButton,
-    LivejournalShareButton,
-    MailruShareButton,
-    OKShareButton,
-    PocketShareButton,
     RedditShareButton,
-    TumblrShareButton,
-    ViberShareButton,
-    VKShareButton,
-    WorkplaceShareButton,
+   
 } from "react-share";
 
 import {
@@ -32,21 +20,8 @@ import {
     TelegramIcon,
     WhatsappIcon,
     TwitterIcon,
-    GabIcon,
-    HatenaIcon,
-    InstapaperIcon,
-    LineIcon,
-    LivejournalIcon,
-    MailruIcon,
-    OKIcon,
-    PocketIcon,
-    RedditIcon,
-    TumblrIcon,
-    ViberIcon,
-    VKIcon,
-    WeiboIcon,
-    WorkplaceIcon,
-    XIcon
+    RedditIcon
+    
 } from "react-share";
 
 const Share = () => {
@@ -57,7 +32,7 @@ const Share = () => {
         <div id="Share" className="popup z-30 ">
             <div data-popup-dismiss="popup" className="flex overlay blur" ></div>
             <div className='card content overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] mx-10 bg-no-repeat relative'>
-
+{/* 
                 <div className="flex bg-white m-6 gap-3">
                     <EmailShareButton url={shareUrl}>
                         <EmailIcon size={32} round={true} />
@@ -95,10 +70,7 @@ const Share = () => {
                     <RedditShareButton url={shareUrl}>
                         <RedditIcon size={32} round={true} />
                     </RedditShareButton>
-
-
-
-                </div>
+                </div> */}
 
             </div>
         </div>
