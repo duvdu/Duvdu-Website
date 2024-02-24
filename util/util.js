@@ -102,3 +102,7 @@ function formatFileSize(bytes) {
   }
   return `${bytes.toFixed(2)}${units[i]}`;
 }
+
+export const Goback = () => {
+  window.history.back()
+};

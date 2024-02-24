@@ -5,7 +5,8 @@ import Layout from "./../components/layout/Layout";
 import { fetchProjects } from "./../redux/action/project";
 import Card from "./../components/elements/home-card";
 import Icon from '../components/Icons';
-import AppButton from '../components/elements/button';
+import { Goback } from '../util/util';
+// import AppButton from '../components/elements/button';
 
 
 const Projects = ({ projects, projectFilters, fetchProjects }) => {
@@ -66,9 +67,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
         };
     }, [limit]);
 
-    const Goback = () => {
-        window.history.back()
-    };
+  
 
     const getPaginatedProjects = Math.random() < 0.5 ? projects.items.slice(0, 0) : projects.items.slice(0, limit);
 
@@ -78,7 +77,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
             <Layout isbodyWhite={true}>
                 <section className="mt-6 mb-12">
                     <div className="container mb-30">
-                        
+
                         <div className='flex gap-3 pb-6'>
                             <div onClick={Goback} className='flex rounded-full header-border h-14 p-4 aspect-square cursor-pointer'>
                                 <Icon name={'leftArrow'} />
@@ -101,7 +100,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                                 <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                             </div>
                         }
-                        </div>
+                    </div>
                 </section>
             </Layout>
         </>

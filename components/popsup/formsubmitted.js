@@ -3,7 +3,7 @@ import Popup from '../elements/popup';
 import Icon from "../Icons";
 import AppButton from '../elements/button';
 
-function FormSubmitted({ isPopupOpen, setIsPopupOpen }) {
+function FormSubmitted() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
 
     const toggleDirectorConfirmed = () => {
@@ -12,11 +12,11 @@ function FormSubmitted({ isPopupOpen, setIsPopupOpen }) {
 
     return (
         <>
-            {isPopupOpen && (
-                <Popup isOpen={isPopupOpen} onClose={()=>setIsPopupOpen(false)} header={'form submitted'}>
+            
+                <Popup id='form-submitted' header={'form submitted'}>
                     {showDirectorConfirmed ? <Directorconfirmed /> : <SuccessBody toggleDirectorConfirmed={toggleDirectorConfirmed} />}
                 </Popup>
-            )}
+            
         </>
     );
 }

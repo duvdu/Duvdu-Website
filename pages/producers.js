@@ -11,8 +11,7 @@ const Projects = () => {
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState(null);
-    const [popup, setpopup] = useState(false);
-
+    
     const targetRef = useRef(null);
 
     useEffect(() => {
@@ -112,7 +111,6 @@ const Projects = () => {
     };
     const submitt = () => {
         toggleDrawer();
-        setpopup(true)
     };
 
     return (
@@ -142,10 +140,9 @@ const Projects = () => {
                                 <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                             </div>
                         }
-                        {
-                            popup &&
-                            <Formsubmitted isPopupOpen={popup} setIsPopupOpen={setpopup} />
-                        }
+                        
+                        <Formsubmitted  />
+                        
                     </div>
                 </section>
                 {

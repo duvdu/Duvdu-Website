@@ -132,7 +132,7 @@ const producersDrawer = ({ data, isOpen, toggleDrawer , submitt }) => {
 
             <section className="sticky bottom-0">
                 <div className="flex justify-center mt-11">
-                    <ArrowBtn Click={submitt} className="cursor-pointer w-96" text='continue' />
+                    <ArrowBtn data-popup-toggle="popup" data-popup-target="form-submitted" Click={submitt} className="cursor-pointer w-96" text='continue' />
                 </div>
             </section>
         </Drawer >

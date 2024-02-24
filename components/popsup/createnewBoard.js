@@ -3,7 +3,7 @@ import Popup from '../elements/popup';
 import Icon from "../Icons";
 import AppButton from '../elements/button';
 
-function createnewBoard({ isPopupOpen, setIsPopupOpen }) {
+function createnewBoard() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
     const [PhoneNumber, setPhoneNumber] = useState('');
     const [numberError, setNumberError] = useState({ isError: false, message: '' });
@@ -20,25 +20,23 @@ function createnewBoard({ isPopupOpen, setIsPopupOpen }) {
 
     return (
         <>
-            {isPopupOpen && (
-                <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} header={"create new Board"} >
-                    <div method="post" onSubmit={handleSubmit} className='mt-12 mx-5'>
-                        <div className={`mb-8 ${numberError.isError && 'error'}`}>
-                            <input
-                                type="text"
-                                value={PhoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                                placeholder="Board name"
-                                className={numberError.isError ? "auth-field error" : "auth-field"}
-                            />
-                            {numberError.isError && <p className="error-msg">{numberError.message}</p>}
-                        </div>
-                        <AppButton onClick={toggleDirectorConfirmed} text={'Create'} className={'mt-12 w-full'} color={"#5666F7"} />
+            <Popup id="create-new-board" header={"create new Board"} >
+                <div method="post" onSubmit={handleSubmit} className='mt-12 mx-5'>
+                    <div className={`mb-8 ${numberError.isError && 'error'}`}>
+                        <input
+                            type="text"
+                            value={PhoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            placeholder="Board name"
+                            className={numberError.isError ? "auth-field error" : "auth-field"}
+                        />
+                        {numberError.isError && <p className="error-msg">{numberError.message}</p>}
                     </div>
+                    <AppButton onClick={toggleDirectorConfirmed} text={'Create'} className={'mt-12 w-full'} color={"#5666F7"} />
+                </div>
 
 
-                </Popup>
-            )}
+            </Popup>
         </>
     );
 }

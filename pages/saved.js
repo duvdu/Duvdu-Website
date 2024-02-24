@@ -31,23 +31,23 @@ const data = [
 ];
 
 const Boards = ({ data }) => {
-    const [deleteState, setDeleteState] = useState(false);
+
 
     const { img1, img2, img3, projectsNum, name, favorite } = data;
 
     const dropdown = [
         {
             value: "Delete",
-            onclick: () => setDeleteState(true),
+            id: 'delete-board',
         },
     ]
 
     return (
         <>
-            <DeleteBoard isPopupOpen={deleteState} setIsPopupOpen={setDeleteState} />
+            <DeleteBoard />
             <div className="boards-card">
                 <a href="/save" className="projects cursor-pointer">
-                    <div className="col1 img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div>
+                    <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
                     <div className="col2">
                         <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
                         <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
@@ -67,17 +67,17 @@ const Boards = ({ data }) => {
 };
 
 const Saved = () => {
-    const [ceateApp, setCeateApp] = useState(false);
+    
     return (
         <>
-            <CreateBoard isPopupOpen={ceateApp} setIsPopupOpen={setCeateApp} />
+            <CreateBoard  />
             <Layout shortheader={true} isbodyWhite={true}>
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
                             <h1 className="mood-boards-header">mood boards</h1>
                             <div className="mr-6"></div>
-                            <div onClick={() => setCeateApp(true)} className="new_board">
+                            <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board">
                                 new board
                                 <Icon name={"+"} />
                             </div>

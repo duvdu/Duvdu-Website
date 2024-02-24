@@ -1,0 +1,36 @@
+
+
+import Popup from '../elements/popup';
+import Button from '../elements/submitButton';
+import Icon from '../Icons'
+
+
+function Uploading_project_files() {
+    return (
+        <>
+            <Popup id="uploading_project_files" header={"Uploading Project Files"}>
+                <div className='flex flex-col justify-center items-center px-52 '>
+                    <div className='max-w-[400px]'>
+                        <section>
+                            <p className="capitalize opacity-60 mt-11">add project link</p>
+                            <input placeholder="example: google drive link..." className="google-drive-link bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 sm:w-96 mt-4 p-4 placeholder:capitalize placeholder:opacity-30 placeholder:text-black" />
+                        </section>
+                        <section>
+                            <p className="capitalize opacity-60 mt-11">Note <span className='opacity-30 text-xs '> “optional” </span></p>
+                            <textarea placeholder="start typing..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-44 placeholder:capitalize placeholder:opacity-30 placeholder:text-black" />
+                        </section>
+                        <p className="capitalize opacity-50 mx-14 text-center">if you are uploading before deadling loriem aplusim</p>
+                        <Button className="w-full mb-7 mt-11" shadow={true} shadowHeight={"14"}>
+                            <span className='text-white font-bold capitalize text-lg'>
+                                submit
+                            </span>
+                        </Button>
+                    </div>
+                </div>
+            </Popup>
+
+        </>
+    );
+}
+
+export default Uploading_project_files;

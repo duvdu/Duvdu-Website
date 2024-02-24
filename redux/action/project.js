@@ -64,3 +64,4 @@ export const fetchByCatagory = async (url, filters) => {
         console.log(error)
     }
 }
+

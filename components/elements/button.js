@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const appbutton = ({ text, color, onClick, className, ...rest }) => {
+const appbutton = ({ text, color, onClick, className = "", ...rest }) => {
 
     let buttonClass;
 

@@ -1,8 +1,9 @@
 // ActivityCard.js
+import { convertToK } from '../../../util/util';
 import React from 'react';
 
 const ActivityCard = ({ activity }) => (
-    <div className='card cardborder-3 bg-DS_white p-6 pt-16'>
+    <div className='rounded-[45px] flex flex-col justify-around cardborder-3 bg-DS_white p-6 pt-16 h-full'>
         <div className='flex justify-between'>
             <p className='capitalize text-lg font-bold mb-5'>activity</p>
             <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>

@@ -1,7 +1,7 @@
 // ProjectViewsCard.js
 import React from 'react';
-import {convertToK} from '../../util/util';
-import Icon from '../Icons';
+import {convertToK} from '../../../util/util';
+import Icon from '../../Icons';
 
 const ProjectViewsCard = ({ recieved }) => (
     <div className='card green-gradient recieved w-full p-8 cardborder-1 mt-6'>

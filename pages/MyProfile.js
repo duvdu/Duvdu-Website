@@ -4,13 +4,12 @@ import Comment from '../components/elements/comment';
 import Controller from '../components/elements/controllers';
 import Icon from '../components/Icons';
 import { convertToK } from '../util/util';
-import Popup from '../components/elements/popup';
 import EditPopUp from '../components/popsup/EditProfile';
 import React, { useState } from 'react';
 import Switch from '../components/elements/switcher'
 
 function Profile() {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
 
     const [isable, setIsDisabled] = useState(false);
 
@@ -18,13 +17,6 @@ function Profile() {
         setIsDisabled(newState);
     };
 
-    const openPopup = () => {
-        setIsPopupOpen(true);
-    };
-
-    const closePopup = () => {
-        setIsPopupOpen(false);
-    };
 
     var profile = {
         "cover-pic": "/assets/imgs/projects/cover.jpeg",
@@ -152,18 +144,17 @@ function Profile() {
 
     return (
         <Layout>
-            <Popup className={'mt-14'} isOpen={isPopupOpen} onClose={closePopup} header={'Edit Details'}>
-                <EditPopUp profile={profile} />
-            </Popup>
+            <EditPopUp profile={profile} />
             <div className='container'>
-                <div className='cover' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} ></div>
+                <div className='cover relative' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} >
+                    <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6'/>
+                </div>
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='left-side flex-1 relative'>
                         <div className='left-side-container'>
                             <div className='flex items-center'>
-                                <div className='w-32 h-32 relative'>
-                                    <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                                    <img className='profile-picture absolute rounded-full' src={profile['profile-pic']} alt="profile picture" />
+                                <div className='w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame'>
+                                    <img className='w-full h-full rounded-full' src={"/assets/imgs/profile/contact-2.png"} alt="profile picture" />
                                 </div>
                                 <div className='flex-2 flex-col gap-1'>
                                     <h3>{profile['personal-name']}</h3>
@@ -219,7 +210,7 @@ function Profile() {
                                 <div className="controller-1 primary" >
                                     <Icon name={'add'} />
                                 </div>
-                                <div onClick={openPopup} className="controller-1">
+                                <div data-popup-toggle="popup" data-popup-target="edit-details" className="controller-1">
                                     <Icon name={'edit'} />
                                 </div>
                             </Controller>

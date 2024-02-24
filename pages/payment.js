@@ -137,18 +137,10 @@ const LeftSide = () => {
 
 
 const RightSide = () => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-    const openPopup = () => {
-        setIsPopupOpen(true);
-    };
-
-    const closePopup = () => {
-        setIsPopupOpen(false);
-    };
+    
     return (
         <>
-            <Popup isOpen={isPopupOpen} onClose={closePopup} header={'Error Message'}>
+            <Popup id='error-message' header={'Error Message'}>
                 <div className='flex h-full flex-col mt-24 items-center'>
                     <div className='flex gap-2 items-center justify-center mb-4'>
                         <div className='bg-[#EB1A40] p-2 rounded-full h-min'>
@@ -158,7 +150,7 @@ const RightSide = () => {
                     </div>
 
                     <span className='mb-24 text-center text-lg font-medium opacity-80'>Invalid payment data</span>
-                    <AppButton onClick={closePopup} text={"Try Again"} className={"mb-40 mx-16 md:mx-32"} />
+                    <AppButton data-popup-dismiss="popup" text={"Try Again"} className={"mb-40 mx-16 md:mx-32"} />
                 </div>
             </Popup>
             <div className='rounded-2xl bg-DS_white border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>
@@ -220,7 +212,7 @@ const RightSide = () => {
                 </div>
                 <section>
                     <div className="flex justify-center mt-11">
-                        <div onClick={openPopup}>
+                        <div data-popup-toggle="popup" data-popup-target="error-message">
                             <ArrowBtn className="cursor-pointer sm:w-96" text='check-out' />
                         </div>
                     </div>

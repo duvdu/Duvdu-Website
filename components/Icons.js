@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Icon = ({ name, useinvert , invert, className, ...rest }) => {
+const Icon = ({ name, useinvert , invert, className = "", ...rest }) => {
   let svgClassName = useinvert ? `my-invert ${className || ''}` : className || '';
   svgClassName += (invert ? " invert" : "");
   return (

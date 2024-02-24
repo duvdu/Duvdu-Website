@@ -62,17 +62,20 @@ function Auth({ children }) {
                                         onSwiper={(swiper) => setSwiper(swiper)}
                                         onSlideChange={() => setActive((active + 1) % imageSources.length)}
                                         loop={true}
-                                        autoplay={{ delay: 4000 }}
+                                        // autoplay={{ delay: 4000 }}
                                         speed={1500}
                                     >
                                         {imageSources.map((source, index) => (
                                             <SwiperSlide key={index}>
                                                 <div className="relative">
-                                                    <div className="text-content">
-                                                        <h1>{source.h1}</h1>
-                                                        <p>{source.p}</p>
+                                                    <div className="absolute flex flex-col justify-end auth-gradient h-full px-16 py-28">
+                                                        <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
+                                                        <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
                                                     </div>
                                                     <div className="bg-cover border-top swipper-img">
+                                                        {/* <div className="w-full h-full">
+
+                                                        </div> */}
                                                         <img className="bg-cover w-screen" src={source.img} alt="swiper img" />
                                                     </div>
                                                 </div>
@@ -82,7 +85,7 @@ function Auth({ children }) {
                                     </Swiper>
                                     <div className="front-part">
                                         <div className="footer">
-                                            <div className="dots">
+                                            <div className="dots flex px-16">
                                                 {imageSources.map((source, index) => (
                                                     <div key={index} className={index == active ? "dot-active" : "dot"}></div>
                                                 ))}

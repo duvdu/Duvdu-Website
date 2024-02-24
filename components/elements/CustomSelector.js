@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Icon from "../Icons";
 import { useState } from "react";
 
-const Selector = ({ options, type, className, invert = false }) => {
+const Selector = ({ options, type, className = "", invert = false }) => {
     const [dropdown, setDropdown] = useState(false);
 
     return (
@@ -13,7 +13,7 @@ const Selector = ({ options, type, className, invert = false }) => {
                     <div className="absolute top-14 right-0">
                         <ul className="bg-white border border-gray-200 rounded-sm shadow-md whitespace-nowrap">
                             {options.map((option, index) => (
-                                <li key={index} className="py-2 px-4 hover:bg-gray-100 cursor-pointer" onClick={option.onclick}>{option.value}</li>
+                                <li key={index} data-popup-toggle="popup" data-popup-target={option.id} className="py-2 px-4 hover:bg-gray-100 cursor-pointer" >{option.value}</li>
                             ))}
                         </ul>
                     </div>

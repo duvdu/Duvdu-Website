@@ -103,7 +103,7 @@ function Register() {
                         {emailError.isError && <p className="error-msg">{emailError.message}</p>}
                     </div>
                     <div className={`mb-11 ${passwordError.isError && 'error'}`}>
-                        <div className="password-container">
+                        <div className="relative password-container">
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 value={password}

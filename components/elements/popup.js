@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import Icon from '../Icons';
 
-const Popup = ({ isOpen, onClose, children, header, className }) => {
+const Popup = ({ id, children, header, className = "" ,img}) => {
 
     return (
-        <div className={`popup z-30 ${isOpen ? 'open' : ''} ${className}`}>
-            <div className="overlay blur" onClick={onClose}></div>
-            <div className='card content bg-[#F7F9FB] dark:bg-[#131313] py-3 mx-10 '>
+        <div id={id} className={`popup z-30 ${className}`}>
+            <div data-popup-dismiss="popup" className="flex overlay blur" ></div>
+            <div className='card content p-5 bg-[#F7F9FB] dark:bg-[#131313] mx-10 ' style={img ? { backgroundImage: `url(${img})` } : {}}>
                 <div className='flex gap-3'>
-                    <div onClick={onClose} className='flex rounded-full header-border p-4 cursor-pointer'>
-                        <Icon name={'x'} useinvert={true} />
+                    <div data-popup-dismiss="popup" className='flex rounded-full header-border p-4 cursor-pointer justify-center items-center'>
+                        <Icon name={'x'} useinvert={true} className='w-6 h-6' />
                     </div>
                     {
                         header &&
@@ -20,7 +20,6 @@ const Popup = ({ isOpen, onClose, children, header, className }) => {
                 </div>
                 {children}
             </div>
-
         </div>
     );
 };

@@ -7,7 +7,7 @@ import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
-const Card = ({ cardData, className, href }) => {
+const Card = ({ cardData, className = "", href }) => {
   const [soundIconName, setSoundIconName] = useState('sound-icon-off');
   const [loveIconName, setLoveIconName] = useState('love-react-off');
   const [isMuted, setIsMuted] = useState(false);
@@ -97,10 +97,10 @@ const Card = ({ cardData, className, href }) => {
         </div>
         <div className='details'>
           <div className='creator-info'>
-            <a href='/profile/Anna-Youseff' className='profile cursor-pointer'>
+            <a href='/MyProfile' className='profile cursor-pointer'>
               <img src={cardData.profileImage} alt='user' />
             </a>
-            <a href='/profile/Anna-Youseff' className='name cursor-pointer' >
+            <a href='/MyProfile' className='name cursor-pointer' >
               <p>{cardData.name}</p>
             </a>
             <div className='w-100x'></div>

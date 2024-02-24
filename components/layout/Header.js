@@ -96,20 +96,26 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 <div className="header-tabs">
                                     <Link href="/dashboard">
                                         <a>
-                                            <Icon name={"dashboard"} useinvert={true} />
-                                            Dashboard
+                                            <Icon name={"dashboard"} useinvert={true} className="mx-2"/>
+                                            <span>
+                                                Dashboard
+                                            </span>
                                         </a>
                                     </Link>
                                     <Link href="/">
                                         <a className="ml-5">
-                                            <Icon name={"contracts"} useinvert={true} />
-                                            contracts
+                                            <Icon name={"contracts"} useinvert={true} className="mx-2"/>
+                                            <span>
+                                                contracts
+                                            </span>
                                         </a>
                                     </Link>
                                     <Link href="/saved">
                                         <a className="ml-5 capitalize whitespace-nowrap">
-                                            <Icon name={"saved"} useinvert={true} />
-                                            team projects
+                                            <Icon name={"saved"} useinvert={true} className="mx-2"/>
+                                            <span>
+                                                team projects
+                                            </span>
                                         </a>
                                     </Link>
                                 </div>
@@ -139,7 +145,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                                 <div className="icon-holder" onClick={toggleSettingDropdown}>
                                                     <Icon className="svgInject" name={"icon-setting"} useinvert={true} />
                                                 </div>
-                                                <Setting data={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode }} />
+                                                <Setting data={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode, setIslogin: setIslogin }} />
                                             </div>
                                         </div>
                                     }
@@ -275,7 +281,7 @@ function Profile({ useState }) {
                         </p>
                     </div>
 
-                    <a href="/profile" id="profile-btn">
+                    <a href='/MyProfile' id="profile-btn">
                         view profile
                     </a>
 
@@ -395,12 +401,12 @@ function Setting({ data }) {
             </div>
             <div className="capitalize opacity-60 mt-8">your message</div>
             <textarea placeholder="start typing..." className="bg-[#9999991A] rounded-3xl h-48 border-none mt-5" />
-            <Button className="w-full" shadow={true}>
+            <Button className="w-full mb-7 mt-7" shadow={true}>
                 Send
             </Button>
         </>
     )
-    const Main = () => (
+    const Main = ({ setIslogin }) => (
         <>
             {
                 [
@@ -455,7 +461,7 @@ function Setting({ data }) {
                     </div>
                 ))
             }
-            <div className="flex p-4 text-red-950">
+            <div onClick={() => setIslogin(false)} className="flex p-4 text-red-950 cursor-pointer">
                 <img icon='icon' className="icon w-6 h-6 mr-4" src={`/assets/imgs/theme/logout-icon.svg`} />
                 <p className="text w-full font-semibold text-red-500"> Logout </p>
                 <div className="action"> <div /> </div>
@@ -469,7 +475,7 @@ function Setting({ data }) {
             <div className="dialog dialog-3">
                 <div className="card w-80" >
                     {contactUs && <ContactUs />}
-                    {!contactUs && <Main />}
+                    {!contactUs && <Main setIslogin={data.setIslogin} />}
                     {/* <Main /> */}
                 </div>
             </div>

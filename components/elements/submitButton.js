@@ -1,12 +1,12 @@
 
-function button({ children, className, shadow, ...rest }) {
+function button({ children, className = "", shadow = false, shadowHeight, ...rest }) {
   return (
-    <div className={`relative submit-parent ${className}`}>
-      <button {...rest} className="app-btn btn btn-heading btn-block hover-up">
+    <div className={`relative submit-parent cursor-pointer ${className}`}>
+      <button {...rest} className="app-btn btn btn-heading btn-block hover-up leading-10">
         {children}
       </button>
       {
-        shadow && <div className="submit-shadow w-full h-10 top-1/2 -translate-y-1/2"></div>
+        false && <div className={`submit-shadow absolute top-1/2 w-full ${shadowHeight==14 ? ` h-14`:' h-full'}`}></div>
       }
     </div>
   );

@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from '../Icons';
 import { useState } from 'react';
 
-const Drawer = ({ isOpen, toggleDrawer, img, name, children, className }) => {
+const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "" }) => {
 
     return (
         <>

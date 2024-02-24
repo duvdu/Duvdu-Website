@@ -5,6 +5,7 @@ import wishlist from './wishlist'
 import quickView from './quickView'
 import compare from './compare'
 import projectFilters from './projectFilters'
+import counter from './test'
 
 const rootReducer = combineReducers({
     projects,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     wishlist,
     quickView,
     compare,
-    projectFilters
+    projectFilters,
+    counter,
 })
 
 export default rootReducer

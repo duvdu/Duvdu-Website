@@ -1,0 +1,40 @@
+(☓)
+(✓)
+[HOME_SCREEN]
+	Filter bar not same figma                                                       (☓)        switch and background drp[dowm]
+	Spaces between cards is large not same figma                                    (✓)
+	Related categories your forget it                                               (☓)        explan
+	In mobilescreen navbar bottom not work                                          (☓)        menu
+
+[PROJECT]
+	When i click on project open send report pop up [this_is_bug]                   (!)        
+	layout not same figma                                                           (!)         
+	Handle titles size                                                              (!)
+
+[POP_UP]
+	solve in responisve                                                             (!)
+	
+[SAVED_PROJECTS]
+	Add, edit and delete board not found                                            (!)
+	Board content projects not found                                                (!)
+
+[PROFILE_DASHBOARD]
+	Please handle colors and sizes in this screen
+	Pop up for (Register or Sign-in to access this feature)                         (!)
+
+[AUTH_SCREENS]
+	in auth screens spaces between inputs and bottoms not same figma please check it again
+
+All notifications screen 
+all messages screen
+terms and coditions screen
+Verify your account now 
+Contact us pop up
+change phone number screen                                                          (!)
+no internet connection screen                                                       (!)
+Handle responsive in all screens you make it                                        
+handle language                 
+Handle dark and light mode in all screens   
+Handle sizes and colors and spaces in all cards in all screens
+
+Complete your Profile in pop up in navbar shadow not smae figma

@@ -1,21 +1,15 @@
 import Chart from '../components/elements/lineChart';
 import Layout from '../components/layout/Layout';
-import { convertToK } from '../util/util';
-import NextBadgeCard from '../components/elements/NextBadgeCard';
-import ProjectViewsCard from '../components/elements/ProjectViewsCard';
 import DashboardPopup from '../components/popsup/dashboard';
-import TopProjects from '../components/elements/topProjects';
-import AppButton from '../components/elements/button';
+import NextBadgeCard from '../components/pages/dashboard/NextBadgeCard';
+import ProjectViewsCard from '../components/pages/dashboard/ProjectViewsCard';
+import TopProjects from '../components/pages/dashboard/topProjects';
+import ActivityCard from '../components/pages/dashboard/ActivityCard';
 import Icon from '../components/Icons';
 
 import React, { useState } from 'react';
 
 const Dashboard = () => {
-    const [isPopupOpen, setIsPopupOpen] = useState(true);
-
-    const openPopup = () => {
-        setIsPopupOpen(true);
-    };
 
     const chart = {
         initialDatapoints: [100, 40, 20, 60, 60, 120, 180, 120, 125, 105, 110, 170],
@@ -89,7 +83,7 @@ const Dashboard = () => {
         <>
 
             <Layout shortheader={true}>
-                <DashboardPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
+                <DashboardPopup />
                 <div className='container flex gap-6 flex-col lg:flex-row'>
                     <div className='w-full'>
                         <NextBadgeCard badge={badge} />
@@ -124,12 +118,13 @@ const Dashboard = () => {
                                                 }
 
                                             </span>
-                                            <span  className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
+                                            <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
 
                                         </div>
-                                        <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
-                                            <p>?</p>
-                                        </div>
+                                        <div className='w-full'/>
+                                            <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
+                                                <p>?</p>
+                                            </div>
                                     </div>
 
                                     <br />
@@ -145,27 +140,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className='w-full'>
-                                <div className='card cardborder-3 bg-DS_white p-6 pt-16 h-full'>
-                                    <div className='flex justify-between'>
-                                        <p className='capitalize text-lg font-bold mb-5'>activity</p>
-                                        <div className='bg-DS_black opacity-50 text-DS_white rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
-                                            ?
-                                        </div>
-                                    </div>
-                                    {
-                                        activity.map((e, index) => (
-                                            <div className='spliter' key={index}>
-                                                <div className='mb-2'>
-                                                    <span className='text-5xl font-medium text-DS_black'>{convertToK(e.count)} </span>
-                                                    <span className='text-3xl capitalize font-medium'>{e.title}</span>
-                                                </div>
-                                                <div className='flex'>
-                                                    <div className='dashboard_padge text-sm mx-1 px-2 rounded-2xl'> {e.state} </div>
-                                                </div>
-                                            </div>
-                                        ))
-                                    }
-                                </div>
+                                <ActivityCard activity={activity} />
                             </div>
                         </div>
                         <TopProjects projects={projects} />

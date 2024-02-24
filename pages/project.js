@@ -21,26 +21,11 @@ import Selector from "../components/elements/CustomSelector";
 
 const projects = ({ projects, projectFilters, fetchProjects }) => {
 
-    const [isTeamOpen, setIsTeamOpen] = useState(false);
-    const [isReportOpen, setisReportOpen] = useState(true);
-    const [isthankMSG, setisthankMSG] = useState(false);
-    const online = false
+
     useEffect(() => {
         fetchProjects("", "/static/projects.json");
     }, []);
-    const [loveIconName, setLoveIconName] = useState('love-react-off');
-    const [showChat, setShowChat] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-
-    const handleCloseChat = () => {
-        setShowChat(false);
-    };
-    const handleOpenChat = () => {
-        setShowChat(true);
-    };
-    const handleLoveIconClick = () => {
-        setLoveIconName(loveIconName === 'love-react-off' ? 'love-react-on' : 'love-react-off');
-    };
 
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
@@ -143,74 +128,14 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
             },
         ],
     }
-    const messages = [
-        {
-            "type": "time",
-            "data": "yesterday at 11:41"
-        },
-        {
-            "type": "me",
-            "data": "Hey, man! What's up, Mr other? 👋"
-        },
-        {
-            "type": "other",
-            "data": "Kid, where'd you come from?"
-        },
-        {
-            "type": "me",
-            "data": "Field trip! 🤣"
-        },
-        {
-            "type": "me",
-            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
-        },
-        {
-            "type": "other",
-            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
-        },
-        {
-            "type": "typing other",
-            "data": ""
-        },
-        {
-            "type": "time",
-            "data": "Today at 11:41"
-        },
-        {
-            "type": "me",
-            "data": "Hey, man! What's up, Mr other? 👋"
-        },
-        {
-            "type": "other",
-            "data": "Kid, where'd you come from?"
-        },
-        {
-            "type": "me",
-            "data": "Field trip! 🤣"
-        },
-        {
-            "type": "me",
-            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
-        },
-        {
-            "type": "other",
-            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
-        },
-        {
-            "type": "typing other",
-            "data": ""
-        },
-    ];
+
 
     return (
         <>
             <Layout>
-                <AddToTeam isPopupOpen={isTeamOpen} setIsPopupOpen={setIsTeamOpen} />
-                <Report isPopupOpen={isReportOpen} setIsPopupOpen={setisReportOpen}/>
-                <ThanksMSG isPopupOpen={isthankMSG} setIsPopupOpen={setisthankMSG} />
-                <div className="fixed bottom-0 z-20">
-                    {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
-                </div>
+                <AddToTeam />
+                <Report />
+                <ThanksMSG />
 
                 <div className="container mt-6">
                     <section>
@@ -237,7 +162,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                     </section>
                 </div>
 
-                <Control data={data} showChat={showChat} handleOpenChat={handleOpenChat} setIsTeamOpen={setIsTeamOpen} handleLoveIconClick={handleLoveIconClick} loveIconName={loveIconName} toggleDrawer={toggleDrawer} />
+                <Control data={data} toggleDrawer={toggleDrawer} />
 
                 <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
             </Layout>
@@ -249,7 +174,7 @@ const Header = ({ data }) => (
     <>
         <h1 className="text-xl capitalize opacity-80"> {data.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
-            <a className='flex items-center gap-3 cursor-pointer' href='/profile/Anna-Youseff'>
+            <a className='flex items-center gap-3 cursor-pointer' href='/MyProfile'>
                 <img alt='user' className="w-16" src={data.user.img} />
                 <div>
                     <span className="capitalize font-semibold text-lg">{data.user.name}</span>
@@ -403,11 +328,88 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, handleOpenChat, showChat, setIsTeamOpen, handleLoveIconClick, loveIconName, toggleDrawer }) => {
+const Control = ({ data, toggleDrawer }) => {
+
+    const [loveIconName, setLoveIconName] = useState('love-react-off');
+    const [showChat, setShowChat] = useState(false);
+
     const online = false
 
+    const handleLoveIconClick = () => {
+        setLoveIconName(loveIconName === 'love-react-off' ? 'love-react-on' : 'love-react-off');
+    };
+
+    const handleCloseChat = () => {
+        setShowChat(false);
+    };
+
+    const handleOpenChat = () => {
+        setShowChat(true);
+    };
+
+    const messages = [
+        {
+            "type": "time",
+            "data": "yesterday at 11:41"
+        },
+        {
+            "type": "me",
+            "data": "Hey, man! What's up, Mr other? 👋"
+        },
+        {
+            "type": "other",
+            "data": "Kid, where'd you come from?"
+        },
+        {
+            "type": "me",
+            "data": "Field trip! 🤣"
+        },
+        {
+            "type": "me",
+            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
+        },
+        {
+            "type": "other",
+            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
+        },
+        {
+            "type": "typing other",
+            "data": ""
+        },
+        {
+            "type": "time",
+            "data": "Today at 11:41"
+        },
+        {
+            "type": "me",
+            "data": "Hey, man! What's up, Mr other? 👋"
+        },
+        {
+            "type": "other",
+            "data": "Kid, where'd you come from?"
+        },
+        {
+            "type": "me",
+            "data": "Field trip! 🤣"
+        },
+        {
+            "type": "me",
+            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
+        },
+        {
+            "type": "other",
+            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
+        },
+        {
+            "type": "typing other",
+            "data": ""
+        },
+    ];
     return (
         <>
+            <div className="fixed bottom-0 z-20">
+                {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
+            </div>
             <div className='sticky h-32 bottom-0 flex justify-between items-end p-10 z-20'>
                 {
                     !showChat &&
@@ -433,14 +435,14 @@ const Control = ({ data, handleOpenChat, showChat, setIsTeamOpen, handleLoveIcon
                 }
                 {
                     showChat &&
-                    <div/>
+                    <div />
                 }
                 <div className="hidden lg:block">
                     <Controller>
                         <div className="controller-1" >
                             <Icon name={'share'} />
                         </div>
-                        <div onClick={() => setIsTeamOpen(true)} className="controller-1">
+                        <div data-popup-toggle="popup" data-popup-target="add-to-team" className="controller-1">
                             <Icon name={'add'} />
                         </div>
                         <div onClick={handleLoveIconClick} className="controller-1">
