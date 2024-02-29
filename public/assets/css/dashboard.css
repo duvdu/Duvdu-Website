@@ -3,7 +3,7 @@
 }
 
 .blue-gradient {
-  background: linear-gradient(85deg, #1A73EB 2.44%, #711AEB 93.27%);
+  background: linear-gradient(85deg, var(--primary) 2.44%, #711AEB 93.27%);
 }
 
 .red-gradient {

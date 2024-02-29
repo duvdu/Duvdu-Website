@@ -40,7 +40,7 @@ const Card = ({ cardData, className = "", href }) => {
   };
   return (
     <>
-      <div className={`select-none home-card ${className}`} onClick={() => { }} >
+      <div className={`select-none project-card ${className}`} onClick={() => { }} >
         <div 
         onMouseEnter={handleHover}
         onMouseLeave={handleLeave}

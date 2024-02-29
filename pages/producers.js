@@ -123,7 +123,7 @@ const Projects = () => {
                         {getPaginatedProjects.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
-                        <div className="producer-grid">
+                        <div className="minmax-360">
                             {getPaginatedProjects.map((item, i) => {
                                 if (item.type == 1) {
                                     return <Card onClick={() => handlesetdata(item)} key={i} cardData={item} />;

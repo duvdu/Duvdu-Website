@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "./../components/layout/Layout";
 import { fetchProjects } from "./../redux/action/project";
-import Card from "./../components/elements/home-card";
+import Card from "./../components/elements/project-card";
 import Icon from '../components/Icons';
 import { Goback } from '../util/util';
 // import AppButton from '../components/elements/button';
@@ -107,7 +107,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
     );
 };
 
-const EmptyComponent = ({ }) => {
+const EmptyComponent = () => {
     return (
         <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet'>
             <div className='w-[540px] h-[450]px bg-gray-600 mt-10' />

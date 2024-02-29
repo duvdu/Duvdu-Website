@@ -1,8 +1,11 @@
 .minmax-280 {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
+.minmax-280 {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
 
-.producer-grid {
+.minmax-360 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 20px;
@@ -21,9 +24,7 @@
 .mood-boards-header {
   color: var(--black);
   font-size: 25px;
-  font-style: normal;
   font-weight: 600;
   line-height: normal;
-  text-transform: capitalize;
   opacity: .8;
 }

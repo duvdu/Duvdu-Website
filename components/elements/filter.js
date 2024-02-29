@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Switch from "./switcher2";
 
 
-const Filter = () => {
+const Filter = ({ hideSwitch = false }) => {
     const data = [
         [
             {
@@ -96,7 +96,7 @@ const Filter = () => {
         ],
 
     ]
-    
+
     return (
         <div className="hidden lg:flex justify-between items-center pb-6 ">
             <div className="flex gap-6 items-end">
@@ -112,13 +112,16 @@ const Filter = () => {
                     </select>
                 ))}
             </div>
-            <div className="flex items-center justify-end gap-2">
-                <Switch defaultValue={() => { }} onSwitchChange={() => { }} />
-                <span className="opacity-70 mr-6">instant project</span>
-                <Switch defaultValue={() => { }} onSwitchChange={() => { }} />
-                <span className="opacity-70">price is inclusive</span>
-            </div>
-            
+
+            {
+                !hideSwitch &&
+                <div className="flex items-center justify-end gap-2">
+                    <Switch defaultValue={() => { }} onSwitchChange={() => { }} />
+                    <span className="opacity-70 mr-6">instant project</span>
+                    <Switch defaultValue={() => { }} onSwitchChange={() => { }} />
+                    <span className="opacity-70">price is inclusive</span>
+                </div>
+            }
         </div>
     );
 }

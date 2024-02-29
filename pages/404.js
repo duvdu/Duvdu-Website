@@ -10,7 +10,7 @@ function Custom404() {
                
             >
                 <main className="main page-404">
-                    <div className="h-body pt-150 pb-150">
+                    <div className="h-body center-div pt-150 pb-150">
                         <div className="container">
                             <div className="row">
                                 <div className="col-xl-8 col-lg-10 col-md-12 m-auto text-center">

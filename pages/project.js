@@ -6,7 +6,7 @@ import Drawer from "../components/popsup/projectDrawer";
 import { fetchProjects } from "../redux/action/project";
 import Icon from '../components/Icons';
 import { convertToK } from "../util/util";
-import Card from "./../components/elements/home-card";
+import Card from "./../components/elements/project-card";
 import { convertHoursTo__ } from '../util/util';
 import Comment from '../components/elements/comment';
 import Controller from '../components/elements/controllers';

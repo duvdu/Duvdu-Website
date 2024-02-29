@@ -1,8 +1,6 @@
 
 import Popup from '../elements/popup';
-import AppButton from '../elements/button';
 import Icon from '../Icons';
-import { handleFileUpload } from '../../util/util';
 import React, { useState } from "react";
 
 function Client() {

@@ -10,7 +10,7 @@ const Selector = ({ options, type, className = "", invert = false }) => {
             <div onClick={() => setDropdown(!dropdown)} className={className}>
                 <Icon name={'___'} invert={invert} />
                 {dropdown && (
-                    <div className="absolute top-14 right-0">
+                    <div className="absolute top-14 right-0 z-10">
                         <ul className="bg-white border border-gray-200 rounded-sm shadow-md whitespace-nowrap">
                             {options.map((option, index) => (
                                 <li key={index} data-popup-toggle="popup" data-popup-target={option.id} className="py-2 px-4 hover:bg-gray-100 cursor-pointer" >{option.value}</li>

@@ -14,6 +14,11 @@ import Receive from '../components/popsup/receive_project_files';
 import QrCode from '../components/popsup/QR_code';
 import Rating from '../components/popsup/rating';
 import Share from '../components/popsup/Share';
+import ProjectDetils from '../components/popsup/project-details';
+import UploadFilesTeam from '../components/popsup/uploadFilesTeam';
+import HourWorks from '../components/popsup/hourWorks';
+import AddPost from '../components/popsup/addpost';
+import ChooseCategory from '../components/popsup/chooseCategory';
 
 function Test() {
 
@@ -21,7 +26,7 @@ function Test() {
         <>
             <Layout>
                 <div className='container'>
-                    <div className='flex flex-col w-80'>
+                    <div className='flex flex-wrap w-full gap-1 mt-4'>
                         <BTN target='subscribe-notfree'> Subscribe </BTN>
                         <BTN target='subscribe-free'> free Subscribe </BTN>
                         <BTN target='alarm'> PostAlarm </BTN>
@@ -31,11 +36,17 @@ function Test() {
                         <BTN target='report-project2'> Report 2 </BTN>
                         <BTN target='thanks-meesage'> ThanksMSG </BTN>
                         <BTN target='Report-sent-successfully'> Report sent successfully </BTN>
+                        <BTN target='clients'> clients </BTN>
                         <BTN target='uploading_project_files'> Uploading Project Files </BTN>
                         <BTN target='receive_project_files'> Receive Project Files </BTN>
                         <BTN target='QR-code'> QR code </BTN>
                         <BTN target='Rating'> Rating </BTN>
                         <BTN target='Share'> Share </BTN>
+                        <BTN target='project-details'> Project Details </BTN>
+                        <BTN target='team_uploading_files'> upload files </BTN>
+                        <BTN target='work-hour'> hours work </BTN>
+                        <BTN target='add-post'> Add Post </BTN>
+                        <BTN target='choose_category'> Choose category </BTN>
                     </div>
 
 
@@ -53,16 +64,19 @@ function Test() {
                     <Receive />
                     <QrCode />
                     <Rating />
-
                     <Share />
-                    
+                    <ProjectDetils />
+                    <UploadFilesTeam />
+                    <HourWorks />
+                    <AddPost />
+                    <ChooseCategory />
                 </div>
             </Layout>
         </>
     );
 }
 
-const BTN = ({target , children,...rest}) => <button {...rest} className='bg-green-700 p-3 mt-1 rounded-xl text-white' data-popup-toggle="popup" data-popup-target={target}> {children} </button>
+const BTN = ({target , children,...rest}) => <button {...rest} className='bg-green-700 p-3 rounded-xl text-white' data-popup-toggle="popup" data-popup-target={target}> {children} </button>
 
 
 export default Test;

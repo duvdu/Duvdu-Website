@@ -8,7 +8,8 @@ import {
     TelegramShareButton,
     FacebookMessengerShareButton,
     RedditShareButton,
-   
+
+
 } from "react-share";
 
 import {
@@ -20,8 +21,9 @@ import {
     TelegramIcon,
     WhatsappIcon,
     TwitterIcon,
-    RedditIcon
-    
+    RedditIcon,
+    XIcon
+
 } from "react-share";
 
 const Share = () => {
@@ -31,47 +33,52 @@ const Share = () => {
     return (
         <div id="Share" className="popup z-30 ">
             <div data-popup-dismiss="popup" className="flex overlay blur" ></div>
-            <div className='card content overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] mx-10 bg-no-repeat relative'>
+            <div className='card z-[2] overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] mx-10 bg-no-repeat relative'>
+                <div className="m-6">
+                    <h1 className="my-6 text-xl">
+                        share via
+                    </h1>
 
-                <div className="flex bg-white m-6 gap-3">
-                    <EmailShareButton url={shareUrl}>
-                        <EmailIcon size={32} round={true} />
-                    </EmailShareButton>
+                    <div className="grid grid-cols-3 bg-white gap-5">
+                        <EmailShareButton url={shareUrl}>
+                            <EmailIcon size={size} round={true} />
+                        </EmailShareButton>
 
-                    <TelegramShareButton url={shareUrl}>
-                        <TelegramIcon size={32} round={true} />
-                    </TelegramShareButton>
+                        <TelegramShareButton url={shareUrl}>
+                            <TelegramIcon size={size} round={true} />
+                        </TelegramShareButton>
 
-                    <WhatsappShareButton url={shareUrl} title={title}>
-                        <WhatsappIcon size={32} round={true} />
-                    </WhatsappShareButton>
+                        <WhatsappShareButton url={shareUrl} title={title}>
+                            <WhatsappIcon size={size} round={true} />
+                        </WhatsappShareButton>
 
-                    <FacebookMessengerShareButton url={shareUrl}>
-                        <FacebookMessengerIcon size={32} round={true} />
-                    </FacebookMessengerShareButton>
+                        <FacebookMessengerShareButton url={shareUrl}>
+                            <FacebookMessengerIcon size={size} round={true} />
+                        </FacebookMessengerShareButton>
 
-                    <FacebookShareButton url={shareUrl} quote={title}>
-                        <FacebookIcon size={32} round={true} />
-                    </FacebookShareButton>
+                        <FacebookShareButton url={shareUrl} quote={title}>
+                            <FacebookIcon size={size} round={true} />
+                        </FacebookShareButton>
 
-                    <TwitterShareButton url={shareUrl} title={title}>
-                        <TwitterIcon size={32} round={true} />
-                    </TwitterShareButton>
+                        <TwitterShareButton url={shareUrl} title={title}>
+                            <XIcon size={size} round={true} />
+                        </TwitterShareButton>
 
-                    <LinkedinShareButton url={shareUrl} title={title}>
-                        <LinkedinIcon size={32} round={true} />
-                    </LinkedinShareButton>
+                        <LinkedinShareButton url={shareUrl} title={title}>
+                            <LinkedinIcon size={size} round={true} />
+                        </LinkedinShareButton>
 
 
-                    <PinterestShareButton url={shareUrl}>
-                        <PinterestIcon size={32} round={true} />
-                    </PinterestShareButton>
+                        <PinterestShareButton url={shareUrl}>
+                            <PinterestIcon size={size} round={true} />
+                        </PinterestShareButton>
 
-                    <RedditShareButton url={shareUrl}>
-                        <RedditIcon size={32} round={true} />
-                    </RedditShareButton>
+                        <RedditShareButton url={shareUrl}>
+                            <RedditIcon size={size} round={true} />
+                        </RedditShareButton>
+                    </div>
+
                 </div>
-
             </div>
         </div>
 

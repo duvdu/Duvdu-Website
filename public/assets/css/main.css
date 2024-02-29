@@ -99,9 +99,15 @@ li.hr span {
 }
 
 
-h1,h2,h3,h4,h5,h6{
-line-height: 1;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1;
 }
+
 /*--- Common Classes---------------------*/
 ::-moz-selection {
   background: var(--primary);
@@ -1813,6 +1819,7 @@ label {
   -ms-flex-pack: end;
   justify-content: end;
 }
+
 /*COMPONENTS -> MISC*/
 /*Countdown*/
 .deals-countdown .countdown-section {
@@ -9348,7 +9355,7 @@ footer .hotline img {
 }
 
 @media (min-width: 991px) {
-  .h-body>div {
+  .center-div>div {
     position: relative;
     transform: translateY(-50%);
     top: 50%;
@@ -9829,6 +9836,29 @@ footer .hotline img {
   z-index: 10;
 }
 
+.addpost-shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.addpost {
+  padding: 45px 15px ;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  transform: translateY(60px);
+  margin-bottom: 35px;
+  /* margin-bottom: 5px; */
+}
+
+
 .overlay {
   position: fixed;
   top: 0;
@@ -9855,7 +9885,41 @@ footer .hotline img {
   background: linear-gradient(0deg, #F7F9FB 0%, #f7f9fb00 100%);
 }
 
-/********/
+/**** Contact ****/
+.contact-toggle {
+  display: flex;
+  padding: 20px 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  color: #A5A5A5;
+  border: 1.5px solid #D9D9D9;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.contact-toggle.active {
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.bronz-type {
+  border-radius: 100px;
+  border: 1.5px solid #F4D074;
+  background: rgba(237, 197, 157, 0.20);
+  backdrop-filter: blur(7.5px);
+  background: linear-gradient(90deg, #DA8D3D 11.8%, #F6D377 76.94%, #DC9241 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+/****************/
 
 :root {
   --gray-1: #C1CACF;

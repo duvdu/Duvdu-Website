@@ -102,7 +102,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                             </span>
                                         </a>
                                     </Link>
-                                    <Link href="/">
+                                    <Link href="/contracts">
                                         <a className="ml-5">
                                             <Icon name={"contracts"} useinvert={true} className="mx-2"/>
                                             <span>
@@ -110,7 +110,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                             </span>
                                         </a>
                                     </Link>
-                                    <Link href="/saved">
+                                    <Link href="/teams">
                                         <a className="ml-5 capitalize whitespace-nowrap">
                                             <Icon name={"saved"} useinvert={true} className="mx-2"/>
                                             <span>
@@ -119,7 +119,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         </a>
                                     </Link>
                                 </div>
-
+                                
                                 <div className="search-style-2 flex justify-end">
                                     <Search />
                                 </div>
@@ -156,7 +156,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                                 <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
                                             </Link>
                                             <Link href="/register">
-                                                <a className="px-5 py-2 rounded-full border border-solid bg-blue-500 p-4 text-DS_white">register</a>
+                                                <a className="px-5 py-2 rounded-full border border-solid bg-primary p-4 text-DS_white">register</a>
                                             </Link>
                                         </div>
                                     }
@@ -300,7 +300,7 @@ function Profile({ useState }) {
                         <div className="header-progress-bar relative w-full">
                             <div className="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
                             <div className="relative h-full overflow-hidden">
-                                <div className="absolute inset-0 rounded-lg bg-blue-500" style={{ width: `${badge}%` }}></div>
+                                <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
                             </div>
                         </div>
 

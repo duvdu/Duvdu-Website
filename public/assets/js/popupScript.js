@@ -19,7 +19,7 @@ const renderAfterDelay = () => {
         const dismissButtons = document.querySelectorAll('[data-popup-dismiss="popup"]');
         dismissButtons.forEach(dismissButton => {
             dismissButton.addEventListener('click', () => {
-                const popup = dismissButton.closest('.popup');
+                const popup = dismissButton.closest('.popup, .addpost-shadow');
                 if (popup) {
                     popup.classList.remove('show');
                     // popup.setAttribute('aria-hidden', 'true');

@@ -7,11 +7,18 @@ import { convertToK } from '../util/util';
 import EditPopUp from '../components/popsup/EditProfile';
 import React, { useState } from 'react';
 import Switch from '../components/elements/switcher'
+import AddMyprofile from '../components/elements/addMyprofile';
+import AddPost from '../components/popsup/addpost';
 
 function Profile() {
 
 
     const [isable, setIsDisabled] = useState(false);
+    const [showAddPanal, setShowAddPanal] = useState(false);
+
+    const handleCloseChat = () => {
+        setShowChat(false);
+    };
 
     const handleSwitchChange = (newState) => {
         setIsDisabled(newState);
@@ -147,7 +154,7 @@ function Profile() {
             <EditPopUp profile={profile} />
             <div className='container'>
                 <div className='cover relative' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} >
-                    <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6'/>
+                    <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6' />
                 </div>
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='left-side flex-1 relative'>
@@ -157,7 +164,7 @@ function Profile() {
                                     <img className='w-full h-full rounded-full' src={"/assets/imgs/profile/contact-2.png"} alt="profile picture" />
                                 </div>
                                 <div className='flex-2 flex-col gap-1'>
-                                    <h3>{profile['personal-name']}</h3>
+                                    <span className='text-3xl font-bold capitalize'>{profile['personal-name']}</span>
                                     <span className='flex items-center'>
                                         <img className='h-3' alt="profile cover" src="/assets/imgs/theme/icons/location.svg" />
                                         <span className="location">{profile['location']}</span>
@@ -205,16 +212,26 @@ function Profile() {
                                 <Comment key={comment.id} comment={comment} />
                             ))}
                         </div>
-                        <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
-                            <Controller>
-                                <div className="controller-1 primary" >
-                                    <Icon name={'add'} />
-                                </div>
-                                <div data-popup-toggle="popup" data-popup-target="edit-details" className="controller-1">
-                                    <Icon name={'edit'} />
-                                </div>
-                            </Controller>
-                        </div>
+                        <AddPost />
+
+                        {
+                            showAddPanal &&
+                            <AddMyprofile setShowAddPanal={setShowAddPanal} />
+                        }
+
+                        {
+                            !showAddPanal &&
+                            <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
+                                <Controller>
+                                    <div onClick={() => setShowAddPanal(true)} className="controller-1 primary" >
+                                        <Icon name={'add'} />
+                                    </div>
+                                    <div data-popup-toggle="popup" data-popup-target="edit-details" className="controller-1">
+                                        <Icon name={'edit'} />
+                                    </div>
+                                </Controller>
+                            </div>
+                        }
                     </div>
                     <div className='right-side'>
                         {

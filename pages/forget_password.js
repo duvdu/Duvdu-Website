@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 import Button from '../components/elements/submitButton';
 
-function register() {
+function Register() {
     const [otp, setOtp] = useState('');
     const [counter, setcount] = useState(59);
     const [error, seterror] = useState(false);
@@ -75,4 +75,4 @@ function register() {
     );
 }
 
-export default register;
+export default Register;

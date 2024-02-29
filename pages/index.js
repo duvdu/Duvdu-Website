@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "./../components/layout/Layout";
 import { fetchProjects } from "./../redux/action/project";
-import Card from "./../components/elements/home-card";
+import Card from "./../components/elements/project-card";
 import Filter from "../components/elements/filter";
 
 const Projects = ({ projects, projectFilters, fetchProjects }) => {
