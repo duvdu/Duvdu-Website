@@ -36,7 +36,7 @@ const Chat = ({ messages, data, online ,Close}) => {
 
             </a>
             <div onClick={Close} className='absolute right-4 top-4 cursor-pointer'>
-                <Icon name={'xmark'} />
+                <Icon name={'xmark'} className='text-xl opacity-50' />
             </div>
             <div className="messages-chat" id="chat" ref={chatRef}>
                 {messages.map((message, index) => {
@@ -80,7 +80,6 @@ const Chat = ({ messages, data, online ,Close}) => {
             </div>
             <div className="flex items-center">
                 {/* <i className="fas fa-camera"></i>*/}
-                <Icon className="cursor-pointer" name={'face-smile'} useinvert={true}/>
                 <input className='border-none w-full h-min bg-DS_white' placeholder="Write a message..." type="text" />
                 <Icon className="cursor-pointer" name={'attachment'} useinvert={true}/>
                 <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' useinvert={true}>

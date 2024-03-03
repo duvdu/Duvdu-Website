@@ -18,7 +18,7 @@ function button({ children, color, conentclassName = "", className = "", shadow 
   }
 
   return (
-    <div className={`relative submit-parent cursor-pointer ${className}`}>
+    <div className={`relative cursor-pointer ${className}`}>
       <div {...rest} className={`${buttonClass} app-btn btn btn-heading btn-block hover-up leading-10 relative`}>
         {
           shadow &&
@@ -27,7 +27,7 @@ function button({ children, color, conentclassName = "", className = "", shadow 
             <div className={`absolute left-1/2 top-0 w-1/2 h-full rounded-full button-shadow-2`} />
           </div>
         }
-        <div className={`flex justify-center items-center h-16`}>
+        <div className={`flex justify-center items-center h-16 text-white`}>
           {children}
         </div>
       </div>

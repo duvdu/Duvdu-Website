@@ -54,7 +54,7 @@ function Login() {
             <h1 className="auth-title">Welcome Back !!</h1>
           </div>
           <div className={`mb-4 ${emailError.isError && 'error'}`}>
-            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email *" className={emailError.isError ? "auth-field error" : "auth-field"} />
+            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="@username" className={emailError.isError ? "auth-field error" : "auth-field"} />
             {emailError.isError && <p className="error-msg">{emailError.message}</p>}
           </div>
           <div className={`mb-8 ${passwordError.isError && 'error'}`}>
@@ -63,7 +63,7 @@ function Login() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password *"
+                placeholder="Password"
                 className={passwordError.isError ? "auth-field error" : "auth-field"}
               />
               {

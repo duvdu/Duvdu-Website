@@ -74,7 +74,7 @@ function Auth({ children }) {
                                                         <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
                                                         <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
                                                     </div>
-                                                    <div className="bg-cover border-top swipper-img" style={{ backgroundImage: `url(${source.img})`  }}/>
+                                                    <div className="bg-cover border-top swipper-img" style={{ backgroundImage: `url(${source.img})` }} />
                                                 </div>
 
                                             </SwiperSlide>
@@ -95,11 +95,11 @@ function Auth({ children }) {
                                 <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center p-5 rounded-lg h-full">
                                     <Link href="/"><a className="as-Guest flex items-center">
                                         Continue as a Guest
-                                        <Icon name="arrow-right-long" className="ml-3 text-xl w-6"/>
+                                        <Icon name="arrow-right-long" className="ml-3 text-xl w-6" />
                                     </a>
                                     </Link>
                                     <div className="my-20 px-0 md:px-28">
-                                    {children}
+                                        {children}
                                     </div>
                                 </div>
                             </div>

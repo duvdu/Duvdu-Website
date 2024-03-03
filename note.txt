@@ -34,3 +34,5 @@
 - handle darkmode
 - handle responsive
 ----------------------------------- day task -----------------------------------
+Auth responsive
+header out of slider

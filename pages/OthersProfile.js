@@ -1,22 +1,20 @@
 
 import Layout from '../components/layout/Layout';
 import Comment from '../components/elements/comment';
-import Controller from '../components/elements/controllers';
 import Icon from '../components/Icons';
 import { convertToK } from '../util/util';
 import EditPopUp from '../components/popsup/EditProfile';
 import React, { useState } from 'react';
-import Switch from '../components/elements/switcher'
-import AddMyprofile from '../components/elements/addMyprofile';
-import AddPost from '../components/popsup/addpost';
 import Button from '../components/elements/submitButton';
+import Chat from '../components/elements/chat';
 
 
 function Profile() {
-
-
     const [isable, setIsDisabled] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
+    const [showChat, setShowChat] = useState(true);
+
+    const online = false
 
     const handleCloseChat = () => {
         setShowChat(false);
@@ -150,9 +148,77 @@ function Profile() {
 
     };
 
+    const messages = [
+        {
+            "type": "time",
+            "data": "yesterday at 11:41"
+        },
+        {
+            "type": "me",
+            "data": "Hey, man! What's up, Mr other? 👋"
+        },
+        {
+            "type": "other",
+            "data": "Kid, where'd you come from?"
+        },
+        {
+            "type": "me",
+            "data": "Field trip! 🤣"
+        },
+        {
+            "type": "me",
+            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
+        },
+        {
+            "type": "other",
+            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
+        },
+        {
+            "type": "typing other",
+            "data": ""
+        },
+        {
+            "type": "time",
+            "data": "Today at 11:41"
+        },
+        {
+            "type": "me",
+            "data": "Hey, man! What's up, Mr other? 👋"
+        },
+        {
+            "type": "other",
+            "data": "Kid, where'd you come from?"
+        },
+        {
+            "type": "me",
+            "data": "Field trip! 🤣"
+        },
+        {
+            "type": "me",
+            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
+        },
+        {
+            "type": "other",
+            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
+        },
+        {
+            "type": "typing other",
+            "data": ""
+        },
+    ];
+    const data = {
+        user: {
+            img: '/assets/imgs/profile/author-2.png',
+            name: 'anna youseff',
+            rate: 3.7
+        }
+    }
     return (
         <Layout>
             <EditPopUp profile={profile} />
+            <div className="fixed bottom-0 z-20">
+                {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
+            </div>
             <div className='container'>
                 <div className='cover relative' style={{ backgroundImage: `url('${profile['coverImg']}')` }} >
                     <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6' />
@@ -193,8 +259,8 @@ function Profile() {
                             </div>
                             <div className='flex gap-3 items-center'>
                                 <Button className="w-full mb-7 mt-7" >Follow</Button>
-                                <div className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center'>
-                                    <Icon type='far' name="chat"/>
+                                <div onClick={()=>{setShowChat(true)}} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
+                                    <Icon type='far' name="chat" />
                                 </div>
                             </div>
                         </div>
