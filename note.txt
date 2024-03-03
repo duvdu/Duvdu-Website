@@ -8,7 +8,7 @@
 # swiper fotter
 # button with shadow
 # icon cl#ass
-# add team popup
+# add team popup    
 # payment successful
 # popup
 # other screen
@@ -19,18 +19,18 @@
 
 
 
-- loading 
+- loading
 - autoplay error
 - home section 2
 - edit profile img
 - suggest strong password
 - button shadow
-- mohamed ashraf
-- abdelhamed
 - mohamed FOX
-------------------------------------- day task -----------------------------------
-- contact
-- drawers
-- put all data in static store
-- dark mode
-------------------------------------- day task -----------------------------------
+----------------------------------- day task -----------------------------------
+- handle Icon                       (popup)
+- enable , disable ArrowBtn
+- enable file drag drop
+- handle button shadow
+- handle darkmode
+- handle responsive
+----------------------------------- day task -----------------------------------

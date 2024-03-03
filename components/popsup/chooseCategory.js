@@ -21,7 +21,7 @@ function PopUp() {
             <Popup id='choose_category' className='w-full lg:w-[942px] flex flex-col gap-9' header={'Choose Category'}>
                 <div className='lg:w-[600px] flex flex-col gap-7 mx-12'>
                     <section>
-                        <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-white'>
+                        <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
                             <label htmlFor="file-upload" className='rounded-full p-4 bg-[#F5F5F5]'>
                                 <Icon name={"add-file"} className='w-6 h-6' />
                             </label>
@@ -60,11 +60,11 @@ function PopUp() {
                                 required
                             >
                                 {[
-                                    
+
                                     'second',
                                     'minutes',
                                     'Hours',
-                                ].map((value,index) => <option key={index} value={value}>{value}</option>)}
+                                ].map((value, index) => <option key={index} value={value}>{value}</option>)}
                             </select>
                         </div>
                     </section>
@@ -75,7 +75,7 @@ function PopUp() {
 
                     <Button className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
                         <span className='text-white font-bold capitalize text-lg'>
-                        publish
+                            publish
                         </span>
                     </Button>
                 </div>

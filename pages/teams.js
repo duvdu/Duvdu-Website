@@ -40,8 +40,9 @@ const Card = ({ data }) => {
                     <div className="w-full h-full rounded-[50px] img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img})` }} />
                 </a>
                 <div className="boards-info projects-num">{projectsNum} projects</div>
-
-                <Selector options={dropdown} className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center" invert={true} />
+                <div className="absolute top-0 right-0 p-12">
+                    <Icon className="text-[#50C878] rounded-full -translate-y-1/2 translate-x-1/2 border border-[#50C878] p-3 text-2xl w-6" name="circle-check"/>
+                </div>
 
                 <div className="boards-info projects-name flex">
                     {name}
@@ -63,7 +64,7 @@ const CreateBoard = () => {
                             <div className="mr-6"></div>
                             <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full border-[1.5px] bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize">
                                 new team project
-                                <Icon name={"+"} />
+                                <Icon name={"plus"} />
                             </div>
                         </div>
                         {false && (

@@ -624,46 +624,6 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                         </div>
                         <div className="mobile-social-icon hidden">
                             <h5 className="mb-15 text-grey-4">Follow Us</h5>
-                            <Link href="#">
-                                <a>
-                                    <img
-                                        src="/assets/imgs/theme/icons/icon-facebook.svg"
-                                        alt=""
-                                    />
-                                </a>
-                            </Link>
-                            <Link href="#">
-                                <a>
-                                    <img
-                                        src="/assets/imgs/theme/icons/icon-twitter.svg"
-                                        alt=""
-                                    />
-                                </a>
-                            </Link>
-                            <Link href="#">
-                                <a>
-                                    <img
-                                        src="/assets/imgs/theme/icons/icon-instagram.svg"
-                                        alt=""
-                                    />
-                                </a>
-                            </Link>
-                            <Link href="#">
-                                <a>
-                                    <img
-                                        src="/assets/imgs/theme/icons/icon-pinterest.svg"
-                                        alt=""
-                                    />
-                                </a>
-                            </Link>
-                            <Link href="#">
-                                <a>
-                                    <img
-                                        src="/assets/imgs/theme/icons/icon-youtube.svg"
-                                        alt=""
-                                    />
-                                </a>
-                            </Link>
                         </div>
                     </div>
                 </div>

@@ -31,7 +31,7 @@ const Search = () => {
     return (
         <>
             <input
-                className="searchInput w-48 focus:w-full mr-3"
+                className="searchInput w-48 focus:w-full mx-3"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => handleFocus(true)}

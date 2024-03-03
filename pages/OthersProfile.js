@@ -9,6 +9,8 @@ import React, { useState } from 'react';
 import Switch from '../components/elements/switcher'
 import AddMyprofile from '../components/elements/addMyprofile';
 import AddPost from '../components/popsup/addpost';
+import Button from '../components/elements/submitButton';
+
 
 function Profile() {
 
@@ -26,8 +28,8 @@ function Profile() {
 
 
     var profile = {
-        "cover-pic": "/assets/imgs/projects/cover.jpeg",
-        "profile-pic": "/assets/imgs/profile/contact-2.png",
+        "coverImg": "/assets/imgs/projects/cover.jpeg",
+        "profileImg": "/assets/imgs/profile/contact-2.png",
         "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
@@ -148,12 +150,11 @@ function Profile() {
 
     };
 
-
     return (
         <Layout>
-            <EditPopUp />
+            <EditPopUp profile={profile} />
             <div className='container'>
-                <div className='cover relative' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} >
+                <div className='cover relative' style={{ backgroundImage: `url('${profile['coverImg']}')` }} >
                     <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6' />
                 </div>
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
@@ -166,7 +167,7 @@ function Profile() {
                                 <div className='flex-2 flex-col gap-1'>
                                     <span className='text-3xl font-bold capitalize'>{profile['personalName']}</span>
                                     <span className='flex items-center'>
-                                        <Icon className='opacity-50 mr-2' name='location-dot'/>
+                                        <Icon className='opacity-50 mr-2' name='location-dot' />
                                         <span className="opacity-50 capitalize text-lg">{profile['location']}</span>
                                     </span>
                                 </div>
@@ -190,48 +191,27 @@ function Profile() {
 
                                 </div>
                             </div>
-                        </div>
-
-                        <div>
-                            <div className='flex items-center justify-center my-7 gap-2'>
-                                <Switch onSwitchChange={handleSwitchChange} />
-                                <span className={isable ? "" : "opacity-70"}>
-                                    Instant Projects is {isable ? "open" : "disabled"}
-                                </span>
+                            <div className='flex gap-3 items-center'>
+                                <Button className="w-full mb-7 mt-7" >Follow</Button>
+                                <div className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center'>
+                                    <Icon type='far' name="chat"/>
+                                </div>
                             </div>
                         </div>
+
 
                         <div className='h-divider'></div>
                         <div className='left-side-container'>
                             <h3 className='pt-6' id='about-header'>about</h3>
                             <p className='pt-6' id='about-paragraph'>{profile['about']}</p>
                         </div>
-                        <div className='h-divider mt-7'></div>
+                        <div className='h-divider my-7'></div>
                         <div className='left-side-container'>
                             {profile.comments.map((comment) => (
                                 <Comment key={comment.id} comment={comment} />
                             ))}
                         </div>
-                        <AddPost />
 
-                        {
-                            showAddPanal &&
-                            <AddMyprofile setShowAddPanal={setShowAddPanal} />
-                        }
-
-                        {
-                            !showAddPanal &&
-                            <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
-                                <Controller>
-                                    <div onClick={() => setShowAddPanal(true)} className="controller-1 primary" >
-                                        <Icon className='text-white text-2xl' name={'plus'} />
-                                    </div>
-                                    <div data-popup-toggle="popup" data-popup-target="edit-details" className="controller-1">
-                                        <Icon  className='text-white text-2xl' name={'pen'} />
-                                    </div>
-                                </Controller>
-                            </div>
-                        }
                     </div>
                     <div className='right-side'>
                         {

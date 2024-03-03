@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import Icon from '../components/Icons';
+import Button from '../components/elements/submitButton';
 
 function ResetPassword() {
   return (
@@ -9,17 +10,17 @@ function ResetPassword() {
         <form>
           <div className="heading_s1 mb-11 text-center">
             <div className="flex w-full justify-center">
-            <Icon name={"done"} className="mb-9"/>
+              <Icon name={"done"} className="mb-9" />
             </div>
             <h1 className="auth-title">Account Created</h1>
             <p>Now choose a category to view the best creatives in this field</p>
           </div>
           <div className="mb-4 relative">
-            <Link href={"/"}>
-              <a className="btn btn-heading btn-block hover-up submit">
+            <a href="/">
+            <Button name="login" shadow={true}>
               home screen
-              </a>
-            </Link>
+            </Button>
+            </a>
           </div>
         </form>
       </Auth>

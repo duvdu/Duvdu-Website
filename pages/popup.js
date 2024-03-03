@@ -19,6 +19,14 @@ import UploadFilesTeam from '../components/popsup/uploadFilesTeam';
 import HourWorks from '../components/popsup/hourWorks';
 import AddPost from '../components/popsup/addpost';
 import ChooseCategory from '../components/popsup/chooseCategory';
+import Dashboard from '../components/popsup/dashboard';
+import DeleteBoard from '../components/popsup/DeleteBoard';
+import EditProfile from '../components/popsup/EditProfile';
+import CreatenewBoard from '../components/popsup/createnewBoard';
+import Formsubmitted from '../components/popsup/formsubmitted';
+import Reportproject from '../components/popsup/report-project';
+
+
 
 function Test() {
 
@@ -27,6 +35,12 @@ function Test() {
             <Layout>
                 <div className='container'>
                     <div className='flex flex-wrap w-full gap-1 mt-4'>
+                        <BTN target='registration-required'> Dashboard </BTN>
+                        <BTN target='delete-board'> DeleteBoard </BTN>
+                        <BTN target='edit-details'> EditProfile </BTN>
+                        <BTN target='create-new-board'> CreatenewBoard </BTN>
+                        <BTN target='form-submitted'> Formsubmitted </BTN>
+                        <BTN target='report-project2'> Reportproject </BTN>
                         <BTN target='subscribe-notfree'> Subscribe </BTN>
                         <BTN target='subscribe-free'> free Subscribe </BTN>
                         <BTN target='alarm'> PostAlarm </BTN>
@@ -50,7 +64,13 @@ function Test() {
                     </div>
 
 
-                    <Subscribe  />
+                    {/* <Dashboard /> */}
+                    <DeleteBoard />
+                    <EditProfile />
+                    <CreatenewBoard />
+                    <Formsubmitted />
+                    <Reportproject />
+                    <Subscribe />
                     <Subscribe isfree={true} />
                     <PostAlarm />
                     <Popup />
@@ -71,12 +91,13 @@ function Test() {
                     <AddPost />
                     <ChooseCategory />
                 </div>
+              
             </Layout>
         </>
     );
 }
 
-const BTN = ({target , children,...rest}) => <button {...rest} className='bg-green-700 p-3 rounded-xl text-white' data-popup-toggle="popup" data-popup-target={target}> {children} </button>
+const BTN = ({ target, children, ...rest }) => <button {...rest} className='bg-green-700 p-3 rounded-xl text-white' data-popup-toggle="popup" data-popup-target={target}> {children} </button>
 
 
 export default Test;

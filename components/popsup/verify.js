@@ -26,7 +26,7 @@ function Verify() {
                             'Increased account trust',
                         ].map((feature, index) => (
                             <div key={index} className='flex gap-3 items-center justify-center'>
-                                <Icon name={"check-1"} />
+                                <Icon name={"check"} />
                                 <span className='capitalize text-lg font-semibold opacity-60'>{feature}</span>
                             </div>
                         ))}

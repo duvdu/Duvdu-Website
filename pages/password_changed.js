@@ -17,7 +17,7 @@ function ResetPassword() {
             <p>Your password has been changed successfully</p>
           </div>
           <div className="mb-4 relative">
-            <a href={"/login"}>
+            <a href={"/"}>
               <Button type="submit" name="login" shadow={true}>
                 Back to Login
               </Button>

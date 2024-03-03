@@ -15,8 +15,8 @@ function UploadFile() {
     };
     return (
         <>
-            <Popup id='team_uploading_files' className='w-full lg:w-[942px] flex flex-col gap-9' header={'upload files'}>
-                <div className='lg:w-[942px]'>
+            <Popup id='team_uploading_files' className='w-full lg:w-[600px] flex flex-col gap-9' header={'upload files'}>
+                <div className='lg:w-[600px]'>
                     <section>
                         <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5'>
                             <label htmlFor="file-upload" className='rounded-full p-4 bg-[#F5F5F5]'>
@@ -58,10 +58,10 @@ function UploadFile() {
                             <p className="capitalize opacity-60 mb-4">location</p>
                             <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                                 <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                                    <Icon name={"blue-location"} />
+                                <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
                                 </div>
                                 <span className="pl-5 w-full">New Yourk, USA</span>
-                                <Icon name={"left-arrow-blue"} className={"mr-4"} />
+                                <Icon name={"angle-right"} className={"mr-4 text-primary"} />
                             </div>
                         </div>
 
@@ -69,10 +69,10 @@ function UploadFile() {
                             <p className="capitalize opacity-60 mb-4">upload alike project</p>
                             <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                                 <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                                    <Icon name={"gallery"} />
+                                <Icon className="text-primary text-2xl" name={"image"} />
                                 </div>
                                 <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                                <Icon name={"left-arrow-blue"} className={"mr-4"} />
+                                <Icon name={"angle-right"} className={"mr-4 text-primary"} />
                             </div>
                         </div>
                     </section>
@@ -80,7 +80,7 @@ function UploadFile() {
                     <section className="sticky bottom-0">
                         <div className="flex justify-center mt-11">
                             <a>
-                                <ArrowBtn className="cursor-pointer w-96" text='continue' />
+                                <ArrowBtn className="cursor-pointer w-96" text='continue' isEnable={true} />
                             </a>
                         </div>
                     </section>

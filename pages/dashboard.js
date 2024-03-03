@@ -111,7 +111,7 @@ const Dashboard = () => {
                                         <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-green-700' : 'text-red-700'}`}>
                                             <span >
                                                 {
-                                                    !isUp && <Icon name={'downArrow'} />
+                                                    !isUp && <Icon name={'arrow-down-long'} />
                                                 }
                                                 {
                                                     isUp && <Icon name={'upArrow'} />

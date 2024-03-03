@@ -15,11 +15,12 @@ function Rating() {
 
     // Render stars based on the current rating
     const renderStars = () => {
+        const className = "text-primary text-3xl"
         const stars = [];
         for (let i = 1; i <= 5; i++) {
             stars.push(
                 <div key={i} onClick={() => handleStarClick(i)}>
-                    {i <= rate ? <Icon name="fill-star" /> : <Icon name="star" />}
+                    {i <= rate ? <Icon className={className} name="star" /> : <Icon className={className} type='far' name="star" />}
                 </div>
             );
         }
@@ -42,7 +43,9 @@ function Rating() {
                         <textarea placeholder="Rating will show on creative’s profile..." className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-[464px]" />
                     </div>
                     <Button className="mb-7 mx-16 font-bold text-lg w-[345px] mt-20" shadow={true}>
-                        Done
+                        <span className='text-white font-bold capitalize text-lg'>
+                            Done
+                        </span>
                     </Button>
                 </div>
             </Popup>

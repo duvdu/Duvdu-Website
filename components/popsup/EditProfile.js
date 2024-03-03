@@ -1,37 +1,186 @@
-import AppButton from '../elements/button';
+import AppButton from '../elements/submitButton';
 import Comment from '../elements/comment';
 import Controller from '../elements/controllers';
 import Icon from '../Icons';
 import Popup from '../elements/popup';
+import React, { useState } from 'react';
 
-function EditPopUp({ profile }) {
+var profile = {
+    "coverImg": "/assets/imgs/projects/cover.jpeg",
+    "profileImg": "/assets/imgs/profile/contact-2.png",
+    "personalName": "youseff abdulla",
+    "value": 3.7,
+    "price": '30',
+    "location": "5th settlement",
+    "occupation": "photographer",
+    "rank": "professional",
+    "about": "hello i’m Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+    "popularity": {
+        "likes": 28000,
+        "followers": 514,
+        "views": 258000
+    },
+    "comments": [
+        {
+            "id": 1,
+            "userName": "jonathan donrew",
+            "date": "Sun - Aug 3",
+            "avatar": "/assets/imgs/projects/1.jpeg",
+            "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
+        },
+        {
+            "id": 2,
+            "userName": "jonathan donrew",
+            "date": "Sun - Aug 3",
+            "avatar": "/assets/imgs/projects/1.jpeg",
+            "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
+        },
+        {
+            "id": 3,
+            "userName": "jonathan donrew",
+            "date": "Sun - Aug 3",
+            "avatar": "/assets/imgs/projects/1.jpeg",
+            "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
+        },
+    ],
+    "projects": [
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/1.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/2.jpeg"
+        },
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/3.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/4.gif"
+        },
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/1.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/2.jpeg"
+        },
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/3.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/4.gif"
+        },
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/1.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/2.jpeg"
+        },
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/3.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/4.gif"
+        },
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/1.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/2.jpeg"
+        },
+        {
+            "creatives": 23247,
+            "title": "models & performing artists",
+            "show": "/assets/imgs/projects/3.jpeg"
+        },
+        {
+            "creatives": 1687,
+            "title": "videography",
+            "show": "/assets/imgs/projects/4.gif"
+        },
+    ]
 
+};
+
+function EditPopUp({ }) {
+    const [formData, setformData] = useState({
+        'personalName': profile['personalName'],
+        'occupation': profile['occupation'],
+        'location': profile['location'],
+        'price': profile['price'],
+        'about': profile['about'],
+        "coverImg": profile['coverImg'],
+        "profileImg": profile['profileImg'],
+    });
+
+    // Handle input change for each field
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        // Update profile state with new value for the input field
+        setformData(prevProfile => ({
+            ...prevProfile,
+            [name]: value
+        }));
+    };
+
+    // Handle form submission
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log("Submitted profile:", formData);
+    };
     return (
         <>
             <Popup id='edit-details' header={'Edit Details'}>
                 <div className='container edit-pop overflow-y-scroll'>
                     <div className='relative'>
                         <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer p-4">
-                            <Icon name={'edit'} />
+                            <Icon name={'pen'} />
                         </Controller>
-                        <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={`${profile['cover-pic']}`} alt="cover pic" />
+                        <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={`${formData['coverImg']}`} alt="cover pic" />
                         <div className='absolute bottom-0 edit w-28 h-28 transform translate-y-1/2 translate-x-1/2'>
-                            <img className='rounded-full w-full h-full' src={profile['profile-pic']} alt="profile picture" />
+                            <img className='rounded-full w-full h-full' src={formData['profileImg']} alt="profile picture" />
                             <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer p-4">
-                                <Icon name={'edit'} />
+                                <Icon name={'pen'} />
                             </Controller>
                         </div>
                     </div>
 
-                    <form className='p-20 flex flex-col items-center'>
+                    <form className='p-20 flex flex-col items-center' onSubmit={handleSubmit}>
                         <div className='mb-4'>
                             <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                                 name
                             </span>
                             <input
                                 type='text'
-                                value={profile['personal-name']}
-                                onChange={() => { }}
+                                name='personalName'
+                                value={formData['personalName']}
+                                onChange={handleInputChange}
                                 className="edit auth-field"
                             />
                         </div>
@@ -41,8 +190,9 @@ function EditPopUp({ profile }) {
                             </span>
                             <input
                                 type='text'
-                                value={profile['occupation']}
-                                onChange={() => { }}
+                                name='occupation'
+                                value={formData['occupation']}
+                                onChange={handleInputChange}
                                 className="edit auth-field"
                             />
                         </div>
@@ -52,8 +202,9 @@ function EditPopUp({ profile }) {
                             </span>
                             <input
                                 type='text'
-                                value={profile['location']}
-                                onChange={() => { }}
+                                name='location'
+                                value={formData['location']}
+                                onChange={handleInputChange}
                                 className="edit auth-field"
                             />
                         </div>
@@ -63,8 +214,9 @@ function EditPopUp({ profile }) {
                             </span>
                             <input
                                 type='text'
-                                value={profile['price']}
-                                onChange={() => { }}
+                                name='price'
+                                value={formData['price']}
+                                onChange={handleInputChange}
                                 className="edit auth-field"
                             />
                         </div>
@@ -73,13 +225,17 @@ function EditPopUp({ profile }) {
                                 about
                             </span>
                             <textarea
-                                type='text'
-                                value={profile['about']}
-                                onChange={() => { }}
-                                className="edit auth-field"
+                                name='about'
+                                value={formData['about']}
+                                onChange={handleInputChange}
+                                className="edit auth-field h-[400px]"
+                                style={{ height: '120px' }}
                             />
                         </div>
-                        <AppButton text={'Done'} />
+                        <AppButton type="submit" className='mt-28 w-full px-40' >
+                            Done
+                            
+                        </AppButton>
                     </form>
 
                 </div>

@@ -8,21 +8,21 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
 const Card = ({ cardData, className = "", href }) => {
-  const [soundIconName, setSoundIconName] = useState('sound-icon-off');
-  const [loveIconName, setLoveIconName] = useState('love-react-off');
+  const [soundIconName, setSoundIconName] = useState('volume-xmark');
+  const [loveIconName, setLoveIconName] = useState('far');
   const [isMuted, setIsMuted] = useState(false);
   const videoRef = useRef(null);
 
   const handleSoundIconClick = () => {
-    setSoundIconName(soundIconName === 'sound-icon-off' ? 'sound-icon-on' : 'sound-icon-off');
-    setIsMuted(soundIconName === 'sound-icon-off' ? true : false)
+    setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark');
+    setIsMuted(soundIconName === 'volume-xmark' ? true : false)
     if(videoRef.current)
-    videoRef.current.muted = soundIconName === 'sound-icon-on';
+    videoRef.current.muted = soundIconName === 'volume-high';
 
   };
 
   const handleLoveIconClick = () => {
-    setLoveIconName(loveIconName === 'love-react-off' ? 'love-react-on' : 'love-react-off');
+    setLoveIconName(loveIconName === 'far' ? 'fas' : 'far');
   };
 
   const handleHover = () => {
@@ -85,13 +85,13 @@ const Card = ({ cardData, className = "", href }) => {
           </a>
           {cardData.showLove &&
             <div onClick={handleLoveIconClick} className="blur-container love z-[1]">
-              <Icon className='cursor-pointer' name={loveIconName} />
+              <Icon className={`cursor-pointer w-6 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
             </div>
           }
 
           {cardData.showSound &&
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
-              <Icon className='cursor-pointer' name={soundIconName} />
+              <Icon className={`cursor-pointer w-6 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
           }
         </div>
@@ -105,7 +105,7 @@ const Card = ({ cardData, className = "", href }) => {
             </a>
             <div className='w-100x'></div>
             <p className='value'>{cardData.rating}</p>
-            <Icon name={'rating'} width={18} height={16.424} />
+            <Icon className='text-primary w-7' name={'star'} />
           </div>
           <p className='film-name'>{cardData.filmName}</p>
           <div className='price'>{cardData.price}</div>

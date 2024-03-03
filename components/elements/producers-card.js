@@ -9,11 +9,11 @@ const Card = ({ cardData, className = "", onClick }) => {
     <>
       <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
         <div className='flex flex-col items-center justify-center text-center pb-6'>
-          <img className='profile-picture rounded-full' src={cardData.img} alt="profile picture" />
+          <img className='profileImgture rounded-full' src={cardData.img} alt="profile picture" />
           <div className='flex-2 flex-col gap-1'>
             <h3 className='opacity-80 text-lg font-bold'>{cardData.name}</h3>
             <span className='flex items-center justify-center opacity-40'>
-              <img className='h-3' alt="profile cover" src="/assets/imgs/theme/icons/location.svg" />
+            <Icon className='opacity-50 mr-2' name='location-dot'/>
               <span className="location">{cardData.location}</span>
             </span>
           </div>
@@ -25,7 +25,7 @@ const Card = ({ cardData, className = "", onClick }) => {
           </p>
           <div id='rating' className='flex items-center gap-1'>
             <p>{cardData.rating}</p>
-            <Icon name={"rating"} />
+            <Icon className='text-primary w-7' name={'star'} />
           </div>
         </div>
         <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12">

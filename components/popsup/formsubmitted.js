@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import AppButton from '../elements/button';
+import AppButton from '../elements/submitButton';
 
 function FormSubmitted() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
@@ -12,11 +12,11 @@ function FormSubmitted() {
 
     return (
         <>
-            
-                <Popup id='form-submitted' header={'form submitted'}>
-                    {showDirectorConfirmed ? <Directorconfirmed /> : <SuccessBody toggleDirectorConfirmed={toggleDirectorConfirmed} />}
-                </Popup>
-            
+
+            <Popup id='form-submitted' header={'form submitted'}>
+                {showDirectorConfirmed ? <Directorconfirmed /> : <SuccessBody toggleDirectorConfirmed={toggleDirectorConfirmed} />}
+            </Popup>
+
         </>
     );
 }
@@ -29,14 +29,18 @@ function SuccessBody({ toggleDirectorConfirmed }) {
                     <Icon name={"done"} className="m-3 w-9" />
                     <span className="text-[#43A047] text-lg font-semibold capitalize">form submitted</span>
                 </div>
-                <h2 className="text-lg w-96">The director will confirm in 72 hours. If approved you’ll book an appointment</h2>
+                <h2 className="text-lg font-medium w-96 mt-9">The director will confirm in 72 hours. If approved you’ll book an appointment</h2>
             </div>
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
-                    <AppButton onClick={toggleDirectorConfirmed} text={'Done'} className={'mt-9 w-full'} color={"#5666F7"} />
+                    <AppButton onClick={toggleDirectorConfirmed} className={'mt-9 w-full'} color={"#5666F7"} >
+                        <div className='mx-36 my-5 text-white'>
+                            Done
+                        </div>
+                    </AppButton>
                 </div>
             </div>
-            <a className="text-DS_black text-sm underline font-semibold opacity-70" href="/terms_conditions">terms & conditions</a>
+            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">terms & conditions</a>
         </div>
     );
 }
@@ -54,11 +58,15 @@ function Directorconfirmed() {
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
                     <a href='/payment'>
-                        <AppButton text={'Done'} className={'mt-9 w-full'} color={"#5666F7"} />
+                        <AppButton className={'mt-9 w-full'} color={"#5666F7"} >
+                        <div className='mx-36 my-5 text-white'>
+                            Done
+                        </div>
+                    </AppButton>
                     </a>
                 </div>
             </div>
-            <a className="text-DS_black text-sm underline font-semibold opacity-70" href="/terms_conditions">book appointment</a>
+            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">book appointment</a>
         </div>
     );
 }

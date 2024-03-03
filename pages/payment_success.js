@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Layout from "../components/layout/Layout";
-import AppButton from '../components/elements/button';
+import AppButton from '../components/elements/submitButton';
 
-const payment_success = () => {
+const Payment_success = () => {
     return (
         <>
             <Layout shortheader={true}>
@@ -15,8 +15,10 @@ const payment_success = () => {
                     <p className='text-lg font-medium opacity-90'>
                         The creative will confirm in 24 hours. & if not, fees will be refunded immediately
                     </p>
-                    <AppButton text={"Done"} className={"mt-16 mb-3"} />
-                    <a className='opacity-70 font-semibold underline capitalize text-sm text-black'>
+                    <AppButton className={"mt-16 mb-3 w-full"} >
+                        Done
+                    </AppButton>
+                    <a className='opacity-70 font-semibold underline capitalize text-sm'>
                         terms & conditions
                     </a>
                 </div>
@@ -27,4 +29,4 @@ const payment_success = () => {
 
 
 
-export default payment_success;
+export default Payment_success;

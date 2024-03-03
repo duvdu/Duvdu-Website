@@ -227,7 +227,7 @@ const Ongoing = ({ type }) => {
             <div className='flex flex-col gap-11 items-end justify-between'>
                 {/* dropdown */}
                 <Selector
-                    invert={true}
+                    iconclassName='text-white'
                     options={[
                         {
                             value: "oprion 1",
@@ -297,7 +297,7 @@ const Ongoing2 = ({ type }) => {
             <div className='flex flex-col gap-11 items-end justify-between'>
                 {/* dropdown */}
                 <Selector
-                    invert={true}
+                    iconclassName={'text-white'}
                     options={[
                         {
                             value: "oprion 1",

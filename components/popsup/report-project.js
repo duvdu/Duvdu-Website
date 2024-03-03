@@ -1,6 +1,6 @@
 
 import Popup from '../elements/popup';
-import AppButton from '../elements/button';
+import AppButton from '../elements/submitButton';
 import Icon from '../Icons';
 import React, { useState } from "react";
 
@@ -17,7 +17,9 @@ function Report() {
                 </section>
                <div className='h-[250px]'/>
                 <div className='flex justify-center w-full '>
-                    <AppButton text={'Send Report'} className={'mt-9 w-full'} color={"#D30000"} />
+                    <AppButton className={'mt-9 mb-3 w-full'} color={"#D30000"} >
+                        Send Report
+                    </AppButton>
                 </div>
             </Popup>
         </>

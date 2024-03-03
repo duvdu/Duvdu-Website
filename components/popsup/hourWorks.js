@@ -1,8 +1,7 @@
 import Link from "next/link";
-import Button from '../elements/submitButton';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import AppButton from '../elements/button';
+import AppButton from '../elements/submitButton';
 
 function WorkHour() {
 
@@ -17,7 +16,11 @@ function WorkHour() {
                         </span>
                     </div>
                     <a>
-                        <AppButton text={"Confirm"} className={"mb-40 mx-16 md:mx-32 px-20 sm:px-36"} />
+                        <AppButton className={"mb-20 mt-10 mx-16 px-20"} >
+                            <div className='mx-36 my-5 text-white'>
+                                Confirm
+                            </div>
+                        </AppButton>
                     </a>
                 </div>
             </Popup>

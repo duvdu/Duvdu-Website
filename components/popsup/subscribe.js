@@ -6,15 +6,17 @@ import Icon from '../Icons'
 function Popup({ isfree = false }) {
     return (
         <>
-            <div id={`subscribe-${isfree ? 'free':'notfree'}`} className="popup z-30 ">
+            <div id={`subscribe-${isfree ? 'free' : 'notfree'}`} className="popup z-30 ">
                 <div data-popup-dismiss="popup" className="flex overlay blur" ></div>
-                <div className='card content overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] mx-10 bg-no-repeat relative ' style={{ backgroundImage: "url(assets/imgs/authswiper/login-3.png)" }}>
-                    <div data-popup-dismiss="popup" className='flex gap-3 cursor-pointer absolute left-4 top-4'>
-                        <Icon name={'x-blur'} />
+                <div className='card overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] mx-10 bg-no-repeat relative ' style={{ backgroundImage: "url(assets/imgs/authswiper/login-3.png)" }}>
+                    <div className='flex gap-3 absolute top-5 left-5'>
+                        <div data-popup-dismiss="popup" className='flex rounded-full border p-3 border-white border-opacity-50 bg-[#FFFFFF1A] blur-4px cursor-pointer justify-center items-center'>
+                            <Icon name={'xmark'} useinvert={true} className='w-6 h-6 text-white' />
+                        </div>
                     </div>
                     {/* <div className='lg:w-[670px] h-[213px] verify-linear'></div> */}
 
-                    <div className='lg:w-[670px] bg-[#F7F9FB] mt-[400px]'>
+                    <div className='lg:w-[670px] bg-[#F7F9FB] dark:bg-[#131313] mt-[400px]'>
                         <div className='w-full h-[213px] absolute -translate-y-full verify-linear' />
                         {isfree ? <StartFree /> : <Subscribe />}
                     </div>
@@ -65,7 +67,7 @@ const Subscribe = () => {
                 </span>
                 <Button className="w-full mb-7" shadow={true} shadowHeight={"14"}>
                     <span className='text-white font-bold capitalize text-lg'>
-                    subscribe now
+                        subscribe now
                     </span>
                 </Button>
             </div>

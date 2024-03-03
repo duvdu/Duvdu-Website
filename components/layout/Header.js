@@ -67,7 +67,25 @@ const Header = ({ fromlayout, toggleClick }) => {
             root.style.setProperty('--body-background', '#f8f4f4');
     }, []);
 
+    useEffect(() => {
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        setisDarkMode(isDarkMode)
+        const body = document.body;
 
+        if (isDarkMode) {
+            body.classList.add('dark');
+        } else {
+            body.classList.remove('dark');
+        }
+
+        document.addEventListener("scroll", () => {
+            const scrollCheck = window.scrollY >= 100;
+            if (scrollCheck !== scroll) {
+                // setScroll(scrollCheck);
+            }
+        });
+
+    }, []);
 
     // const handleToggle = () => setToggled(!isToggled);
     return (
@@ -96,7 +114,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 <div className="header-tabs">
                                     <Link href="/dashboard">
                                         <a>
-                                            <Icon name={"dashboard"} useinvert={true} className="mx-2"/>
+                                            <Icon name={"dashboard"} useinvert={true} className="mx-2" />
                                             <span>
                                                 Dashboard
                                             </span>
@@ -104,7 +122,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     </Link>
                                     <Link href="/contracts">
                                         <a className="ml-5">
-                                            <Icon name={"contracts"} useinvert={true} className="mx-2"/>
+                                            <Icon name={"contracts"} useinvert={true} className="mx-2" />
                                             <span>
                                                 contracts
                                             </span>
@@ -112,14 +130,14 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     </Link>
                                     <Link href="/teams">
                                         <a className="ml-5 capitalize whitespace-nowrap">
-                                            <Icon name={"saved"} useinvert={true} className="mx-2"/>
+                                            <Icon name={"saved"} useinvert={true} className="mx-2" />
                                             <span>
                                                 team projects
                                             </span>
                                         </a>
                                     </Link>
                                 </div>
-                                
+
                                 <div className="search-style-2 flex justify-end">
                                     <Search />
                                 </div>
@@ -129,21 +147,21 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         <div className="header-action-2 flex items-center ">
                                             <div className="header-action-icon-2 ml-2" >
                                                 <div className="icon-holder" onClick={toggleNotificationDropdown}>
-                                                    <Icon className="svgInject" name={"notofication-icon"} useinvert={true} />
+                                                    <Icon className={notificationDropdownVisible ? " text-DS_black" : ""} name={"bell"} type="far" />
                                                     <span className="pro-count blue">3</span>
                                                 </div>
                                                 <MessageAndNotofication useState={{ notificationDropdownVisible, setNotificationDropdownVisible }} />
                                             </div>
                                             <div className="header-action-icon-2 mx-8"  >
                                                 <div className="icon-holder" onClick={toggleProfileDropdown}>
-                                                    <Icon className="svgInject" name={"icon-user"} useinvert={true} />
+                                                    <Icon className={profileDropdownVisible ? " text-DS_black" : ""} name={"user"} type="far" />
                                                 </div>
                                                 <Profile useState={{ profileDropdownVisible, setProfileDropdownVisible }} />
 
                                             </div>
                                             <div className="header-action-icon-2"  >
                                                 <div className="icon-holder" onClick={toggleSettingDropdown}>
-                                                    <Icon className="svgInject" name={"icon-setting"} useinvert={true} />
+                                                    <Icon className={settingvisible ? " text-DS_black" : ""} name={"gear"} useinvert={true} />
                                                 </div>
                                                 <Setting data={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode, setIslogin: setIslogin }} />
                                             </div>
@@ -151,7 +169,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     }
                                     {
                                         !islogin &&
-                                        <div className="header-action-2 flex gap-3 items-center pl-5">
+                                        <div className="header-action-2 flex gap-3 items-center">
                                             <Link href="#">
                                                 <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
                                             </Link>
@@ -356,30 +374,12 @@ function Setting({ data }) {
 
     const [contactUs, setcontactUs] = useState(false);
 
-    useEffect(() => {
-        const isDarkMode = localStorage.getItem('darkMode') === 'true';
-        data.setisDarkMode(isDarkMode)
-        const body = document.body;
 
-        if (isDarkMode) {
-            body.classList.add('dark-mode');
-        } else {
-            body.classList.remove('dark-mode');
-        }
-
-        document.addEventListener("scroll", () => {
-            const scrollCheck = window.scrollY >= 100;
-            if (scrollCheck !== scroll) {
-                // setScroll(scrollCheck);
-            }
-        });
-
-    }, []);
 
     function toggle() {
         const body = document.body;
-        body.classList.toggle('dark-mode');
-        const isDarkMode = body.classList.contains('dark-mode');
+        body.classList.toggle('dark');
+        const isDarkMode = body.classList.contains('dark');
         data.setisDarkMode(isDarkMode)
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
@@ -393,7 +393,7 @@ function Setting({ data }) {
         <>
             <div className='flex gap-3'>
                 <div onClick={() => setcontactUs(false)} className='flex rounded-full header-border p-4 cursor-pointer'>
-                    <Icon name={'x'} useinvert={true} />
+                    <Icon name={'xmark'} useinvert={true} />
                 </div>
                 <span className='flex rounded-full header-border px-7 py-4 text-lg font-medium'>
                     contact us
@@ -424,33 +424,33 @@ function Setting({ data }) {
                     {
                         img: 'notification-icon.svg',
                         name: 'Notification',
-                        action: <Icon name={"right-arrow"} invert={true} />,
+                        action: <Icon name={"angle-right"} invert={true} />,
                     },
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
-                        action: <Icon name={"right-arrow"} invert={true} />,
+                        action: <Icon name={"angle-right"} invert={true} />,
                     },
                     {
                         img: 'number-icon.svg',
                         name: 'Change number',
-                        action: <a href="/changePhoneNumber"> <Icon name={"right-arrow"} invert={true} /></a>,
+                        action: <a href="/changePhoneNumber"> <Icon name={"angle-right"} invert={true} /></a>,
                     },
                     {
                         img: 'lock-icon.svg',
                         name: 'Terms & Conditions',
-                        action: <Icon name={"right-arrow"} invert={true} />,
+                        action: <Icon name={"angle-right"} invert={true} />,
                     },
                     {
                         img: 'chat-icon.svg',
                         name: 'Contact Us',
-                        action: <Icon name={"right-arrow"} invert={true} />,
+                        action: <Icon name={"angle-right"} invert={true} />,
                         onClick: () => setcontactUs(true)
                     },
                     {
                         img: 'about-icon.svg',
                         name: 'About',
-                        action: <Icon name={"right-arrow"} invert={true} />,
+                        action: <Icon name={"angle-right"} invert={true} />,
                     },
 
                 ].map((e, i) => (

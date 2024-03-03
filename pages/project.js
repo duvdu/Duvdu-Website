@@ -180,7 +180,7 @@ const Header = ({ data }) => (
                     <span className="capitalize font-semibold text-lg">{data.user.name}</span>
                     <div className="flex items-center gap-1 mt-1">
                         <p>{data.user.rate}</p>
-                        <Icon name={'rating'} />
+                        <Icon  className='text-primary' name={'star'} />
                     </div>
                 </div>
             </a>
@@ -212,12 +212,12 @@ const About = ({ data }) => (
             <div className='flex items-center justify-center'>
                 <div className='w-32 h-32 relative'>
                     <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                    <img className='profile-picture absolute rounded-full' src={data.creative.img} alt="profile picture" />
+                    <img className='profileImgture absolute rounded-full' src={data.creative.img} alt="profile picture" />
                 </div>
                 <div className='flex-2 flex-col gap-1'>
                     <h3>{data.creative.name}</h3>
                     <span className='flex items-center'>
-                        <img className='h-3' alt="profile cover" src="/assets/imgs/theme/icons/location.svg" />
+                    <Icon className='opacity-50 mr-2' name='location-dot'/>
                         <span className="location">{data.creative.location}</span>
                     </span>
                 </div>

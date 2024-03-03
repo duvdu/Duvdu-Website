@@ -6,6 +6,7 @@ import ArrowBtn from '../components/elements/arrowBtn';
 import Filter from "../components/elements/filter";
 import { convertToK } from '../util/util';
 
+
 var users = [
     {
         "images": [
@@ -14,8 +15,8 @@ var users = [
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profile-pic": "/assets/imgs/profile/contact-2.png",
-        "personal-name": "youseff abdulla",
+        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
         "location": "5th settlement",
@@ -35,8 +36,8 @@ var users = [
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profile-pic": "/assets/imgs/profile/contact-2.png",
-        "personal-name": "youseff abdulla",
+        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
         "location": "5th settlement",
@@ -56,8 +57,8 @@ var users = [
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profile-pic": "/assets/imgs/profile/contact-2.png",
-        "personal-name": "youseff abdulla",
+        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
         "location": "5th settlement",
@@ -77,8 +78,8 @@ var users = [
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profile-pic": "/assets/imgs/profile/contact-2.png",
-        "personal-name": "youseff abdulla",
+        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
         "location": "5th settlement",
@@ -149,7 +150,8 @@ const data = [
 ]
 
 const TheTeam = () => {
-    const State = 2;
+    const [State, setState] = useState(1);
+
     return (
         <>
             <Layout shortheader={true} >
@@ -163,13 +165,13 @@ const TheTeam = () => {
                         State == 1 &&
                         <div className="flex gap-7">
                             <LeftSide />
-                            <RightSide />
+                            <RightSide onClick={() => setState(2)} />
                         </div>
                     }
                     {
                         State == 2 &&
                         <div className="flex gap-7">
-                            <LeftSide isSolid={true} />
+                            <LeftSide isSolid={true}  />
                             <RightSide isSolid={true} />
                         </div>
                     }
@@ -197,8 +199,8 @@ function Person({ person }) {
             </div>
             {/* action */}
 
-            {person.state === 'wating' && <Icon name="wating" className=" w-14 h-14" />}
-            {person.state === 'bug' && <Icon name="bug" className=" w-14 h-14" />}
+            {person.state === 'wating' && <Icon name="wating" className="w-14 h-14" />}
+            {person.state === 'bug' && <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 w-7 h-7" />}
             {person.state === 'avalible' && (
                 <Selector
                     options={[
@@ -206,7 +208,7 @@ function Person({ person }) {
                         { value: "option 2", onClick: () => { } },
                         { value: "option 3", onClick: () => { } }
                     ]}
-                    className="relative border rounded-full border-[#00000033] flex justify-center items-center w-14 h-14 cursor-pointer"
+                    className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF40] flex justify-center items-center w-14 h-14 cursor-pointer"
                 />
             )}
 
@@ -227,8 +229,8 @@ const Sections = ({ section, AddTeam, isSolid }) => {
                 </span>
                 {
                     !isSolid &&
-                    <div className="flex gap-2 cursor-pointer">
-                        <Icon className="w-4" name="X" />
+                    <div className="flex gap-2 cursor-pointer items-center">
+                        <Icon className="text-[#FF4646]" name="xmark" />
                         <span className="text-[#FF4646]">Remove </span>
                     </div>
                 }
@@ -266,7 +268,7 @@ const LeftSide = ({ isSolid }) => {
                         {data.map((section, index) => (
                             <div key={index} >
                                 <Sections isSolid={isSolid} AddTeam={togglePage} section={section} />
-                                {index !== data.length - 1 && <div className="bg-[#00000033] h-1 w-full"></div>}
+                                {index !== data.length - 1 && <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>}
                             </div>
                         ))}
                     </>
@@ -279,10 +281,10 @@ const LeftSide = ({ isSolid }) => {
     )
 }
 
-const RightSide = ({ isSolid }) => {
+const RightSide = ({ isSolid, onClick }) => {
     return (
         <div className="w-1/3 h-body py-14">
-            <div className="flex gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] relative">
+            <div className="flex gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
                 <div className="p-12">
                     <h2 className="opacity-80 text-2xl font-semibold capitalize"> project details </h2>
                 </div>
@@ -293,16 +295,22 @@ const RightSide = ({ isSolid }) => {
                             <span className="font-bold">Total Amount</span>
                             <span className="font-bold">$6,699.0</span>
                         </div>
-                        <div className="w-full px-6">
+
+                        <ArrowBtn onClick={onClick} className="cursor-pointer w-full" text='Check-Out' isEnable={false} IconName="check" />
+
+                        {/* <div onClick={onClick} className="w-full px-6 cursor-pointer">
                             <div className="bg-[#677A93] flex rounded-full p-1" >
                                 <div className="w-full flex justify-center items-center">
                                     <span className="capitalize flex mx-5 items-center text-lg font-bold text-DS_white text-center">Check-Out</span>
                                 </div>
-                                <div className="flex aspect-square items-center justify-center rounded-full bg-DS_white bg-opacity-25 h-20 w-20">
-                                    <Icon name={'check-1'} />
+                                <div className="flex aspect-square items-center justify-center rounded-full bg-white bg-opacity-25 h-20 w-20">
+                                    <Icon className="text-3xl text-white" name={'check'} />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+
+
+
                     </div>
                 }
             </div>
@@ -314,7 +322,7 @@ const AddCreative = ({ onClick }) => {
     return (
         <div onClick={onClick} className="flex items-center rounded-full border border-primary p-1 w-min cursor-pointer">
             <div className="w-11 h-11 flex items-center justify-center border rounded-full border-primary">
-                <Icon name='+' />
+                <Icon className="text-xl text-primary" name='plus' />
             </div>
             <div className=" text-center text-primary font-semibold mx-6 capitalize whitespace-nowrap">
                 add creative
@@ -338,7 +346,7 @@ const Empty = () =>
 
 
 const AddToTeamCard = ({ info, goback }) =>
-    <div className="bg-DS_white border rounded-[45px] overflow-hidden">
+    <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden">
         <div className="flex w-full overflow-hidden h-32">
             {info.images.map((image, index) => (
                 <img key={index} className="w-1/4" src={image} alt={`Image ${index}`} />
@@ -347,12 +355,12 @@ const AddToTeamCard = ({ info, goback }) =>
         <div className='p-5'>
             <div className='flex items-start gap-4 -translate-y-4 h-11'>
                 <div className='w-[85px] h-[85px] bg-cover relative bg-no-repeat'>
-                    <img className='w-full h-full rounded-full border-2 border-white shadow -translate-y-8' src={info["profile-pic"]} alt="profile picture" />
+                    <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={info["profileImg"]} alt="profile picture" />
                 </div>
                 <div className='flex-2 flex-col gap-1'>
-                    <span className='text-2xl font-bold capitalize'>{info['personal-name']}</span>
-                    <span className='flex items-center'>
-                        <img className='h-3' alt="profile cover" src="/assets/imgs/theme/icons/location.svg" />
+                    <span className='text-2xl font-bold capitalize'>{info['personalName']}</span>
+                    <span className='flex items-center gap-2 opacity-40'>
+                        <Icon name="location-dot" />
                         <span className="location">{info['location']}</span>
                     </span>
                 </div>
@@ -382,7 +390,7 @@ const AddToTeamCard = ({ info, goback }) =>
                 </span>
 
                 <div onClick={goback} className="flex items-center justify-center capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
-                    <span className="text-primary font-bold text-lg ">
+                    <span className="text-primary font-bold text-lg my-5 ">
                         add to team
                     </span>
                 </div>

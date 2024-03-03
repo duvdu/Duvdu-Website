@@ -1,6 +1,6 @@
 
 import Popup from '../elements/popup';
-import AppButton from '../elements/button';
+import AppButton from '../elements/submitButton';
 import Icon from '../Icons';
 import { handleFileUpload } from '../../util/util';
 import React, { useState } from "react";
@@ -47,7 +47,7 @@ function Report() {
                     }
                     {
                         file &&
-                        <div className='flex bg-[#EEF1F7] rounded-3xl items-center gap-4 p-9 mt-5'>
+                        <div className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-9 mt-5'>
                             <Icon name={'file'} className="w-20 h-20" />
                             <div>
                                 <span className='text-3xl'> {file.fileName} </span>
@@ -58,7 +58,9 @@ function Report() {
                     }
                 </section>
                 <div className='flex justify-center w-full '>
-                    <AppButton text={'Done'} className={'mt-9 w-full'} color={"#D30000"} />
+                    <AppButton className={'mt-9 mb-3 w-full'} color={"#D30000"} >
+                        Done
+                    </AppButton>
                 </div>
             </Popup>
         </>

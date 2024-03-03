@@ -12,7 +12,7 @@ function Report_sent_successfully() {
                         <div className="flex w-full justify-center">
                             <Icon name={"done"} className="mb-9" />
                         </div>
-                        <h1 className="auth-title mb-2">Report sent successfully</h1>
+                        <h1 className="text-3xl font-semibold my-5">Report sent successfully</h1>
                         <p className='mx-24'>Your report will be revised manually by one
                             of our team & we’ll get back to you soon.</p>
                     </div>

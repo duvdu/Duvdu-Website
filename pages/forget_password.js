@@ -22,8 +22,8 @@ function Register() {
         <>
             <Auth>
                 <form className="flex flex-col items-center">
-                    <div class="max-w-96 flex flex-col items-center justify-center">
-                        <div class="w-353">
+                    <div classNames="max-w-96 flex flex-col items-center justify-center">
+                        <div className="w-353">
                             <div className="heading_s1 mb-11 text-center">
                                 <h1 className="auth-title">Enter code</h1>
                                 <p className="otpnews" >Enter the verification code we just sent to your phone +20 12* **** *74</p>
@@ -33,7 +33,7 @@ function Register() {
                                 onChange={setOtp}
                                 numInputs={5}
                                 renderSeparator={<span style={{ width: "100%" }} > </span>}
-                                renderInput={(props) => <input {...props} className={"w-16 h-20 " + (error ? "OTP error" : "OTP")} style={{ width: "63px", height: "72px" }} />}
+                                renderInput={(props) => <input {...props} className={`${error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "63px", height: "72px"}} />}
                             />
 
                             {

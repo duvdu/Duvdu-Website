@@ -13,7 +13,7 @@ const ProjectViewsCard = ({ recieved }) => (
                 <span >
                     {
                         !(recieved.rate.isUp) &&
-                        <Icon name={'downArrow'}/>
+                        <Icon name={'arrow-down-long'}/>
                     }
                     {
                         recieved.rate.isUp &&

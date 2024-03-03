@@ -32,10 +32,10 @@ function AddToTeam() {
                         </div>
                     </div>
                 ))}
-                <div className="h-[334px]" />
+                <div className="h-[300px]" />
                 <div className='px-24'>
-                    <Button name="reset-password" className="w-full" shadow={true}>
-                        Next
+                    <Button name="reset-password" className="w-full mb-9" shadow={true}>
+                            Next
                     </Button>
                 </div>
             </Popup>

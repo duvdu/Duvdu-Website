@@ -26,6 +26,18 @@ const renderAfterDelay = () => {
                 }
             });
         });
+
+        const dismissPopupOnEsc = (event) => {
+            if (event.key === 'Escape') {
+                const visiblePopup = document.querySelector('.popup.show, .addpost-shadow.show');
+                if (visiblePopup) {
+                    visiblePopup.classList.remove('show');
+                    // visiblePopup.setAttribute('aria-hidden', 'true');
+                }
+            }
+        };
+
+        document.addEventListener('keydown', dismissPopupOnEsc);
     } catch (error) {
 
     }
@@ -33,7 +45,7 @@ const renderAfterDelay = () => {
 
 setTimeout(() => {
     renderAfterDelay()
-}, 100); 
+}, 100);
 
 const observeDomChanges = () => {
     const observer = new MutationObserver(() => {

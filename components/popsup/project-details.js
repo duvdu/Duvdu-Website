@@ -84,7 +84,7 @@ function Receive_project_files() {
                             <h2 className='opacity-60 capitalize mb-3'> shooting days </h2>
                             <div className='flex gap-4'>
                                 <div className='bg-[#e8f1fd] rounded-xl p-3 mb-4'>
-                                    <Icon name={"blue-location-2"} />
+                                <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
                                 </div>
                                 <div>
                                     <div>

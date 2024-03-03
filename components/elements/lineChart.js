@@ -142,7 +142,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                     
                     <span >
                         {
-                            !isUp && <Icon name={'downArrow'} />
+                            !isUp && <Icon name={'arrow-down-long'} />
                         }
                         {
                             isUp &&<Icon name={'upArrow'} />

@@ -39,7 +39,7 @@ const Share = () => {
                         share via
                     </h1>
 
-                    <div className="grid grid-cols-3 bg-white gap-5">
+                    <div className="grid grid-cols-3 gap-5">
                         <EmailShareButton url={shareUrl}>
                             <EmailIcon size={size} round={true} />
                         </EmailShareButton>

@@ -79,9 +79,9 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                     <div className="container mb-30">
 
                         <div className='flex gap-3 pb-6'>
-                            <div onClick={Goback} className='flex rounded-full header-border h-14 p-4 aspect-square cursor-pointer'>
-                                <Icon name={'leftArrow'} />
-                            </div>
+                        <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={Goback}>
+                            <Icon className='text-xl' name={'angle-left'} />
+                        </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
                                 Favorites
                             </span>

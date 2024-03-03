@@ -55,7 +55,7 @@ const Boards = ({ data }) => {
                 </a>
                 <div className="boards-info projects-num">{projectsNum} projects</div>
 
-                <Selector options={dropdown} className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center" invert={true} />
+                <Selector options={dropdown} iconclassName="text-white" className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center" invert={true} />
 
                 <div className="boards-info projects-name flex">
                     {name == "favorites" && <Icon name={"favorites"} />}
@@ -79,7 +79,7 @@ const Saved = () => {
                             <div className="mr-6"></div>
                             <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board">
                                 new board
-                                <Icon name={"+"} />
+                                <Icon name={"plus"} />
                             </div>
                         </div>
                         {false && (

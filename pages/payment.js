@@ -121,7 +121,7 @@ const LeftSide = () => {
                 {!showAddCard && (
                     <div className='flex gap-4 rounded-2xl w-full border px-7 py-6 cursor-pointer' onClick={handleAddCardClick}>
                         <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px]'>
-                            <Icon name={"blackCheck"} />
+                            <Icon name={"check"} />
                         </div>
                         <span>Add new card</span>
                     </div>
@@ -144,7 +144,7 @@ const RightSide = () => {
                 <div className='flex h-full flex-col mt-24 items-center'>
                     <div className='flex gap-2 items-center justify-center mb-4'>
                         <div className='bg-[#EB1A40] p-2 rounded-full h-min'>
-                            <Icon name={'x'} invert={true} />
+                            <Icon name={'xmark'} invert={true} />
                         </div>
                         <span className='text-center text-lg font-medium opacity-80 text-[#EB1A40]'>payment failed</span>
                     </div>
@@ -189,7 +189,7 @@ const RightSide = () => {
                     </div>
                     <div className='flex gap-4'>
                         <div className='bg-[#e8f1fd] rounded-xl p-3 mb-4'>
-                            <Icon name={"blue-location-2"} />
+                            <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
                         </div>
                         <div>
                             <div>
@@ -236,7 +236,7 @@ const Card = ({ isSelected, data, isLast , onClick }) => {
                         </div>
                     ) : (
                         <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px] mb-2'>
-                            <Icon name={"blackCheck"} />
+                            <Icon name={"check"} />
                         </div>
                     )}
                     <Icon name={"card"} />

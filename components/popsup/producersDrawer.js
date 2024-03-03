@@ -123,10 +123,10 @@ const producersDrawer = ({ data, isOpen, toggleDrawer , submitt }) => {
                 <p className="capitalize opacity-60 mt-11">upload alike project</p>
                     <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4">
                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                            <Icon name={"gallery"} />
+                            <Icon className="text-primary text-2xl" name={"image"} />
                         </div>
                         <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                        <Icon name={"left-arrow-blue"} className={"mr-4"} />
+                        <Icon name={"angle-right"} className={"mr-4 text-primary"} />
                     </div>
             </section>
 

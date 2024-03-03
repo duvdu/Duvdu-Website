@@ -95,7 +95,7 @@ function Step2({onNextStep}) {
                         onChange={setOtp}
                         numInputs={5}
                         renderSeparator={<span style={{ width: "100%" }} > </span>}
-                        renderInput={(props) => <input {...props} className={error ? "OTP error" : "OTP"} style={{ width: "63px", height: "72px" }} />}
+                        renderInput={(props) => <input {...props} className={`${error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "63px", height: "72px"}} />}
                     />
 
                     {

@@ -11,8 +11,8 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "" }) =
             <div className={`z-20 fixed top-0 right-0 h-full bg-DS_white shadow-lg transform transition-transform ease-in-out duration-300  ${isOpen ? 'translate-x-0' : 'translate-x-full'} ${className} w-full md:w-2/3 lg:w-1/2 xl:w-1/3`}>
                 <div className="p-8">
                     <div className='flex gap-3'>
-                        <div className='flex rounded-full border px-5 cursor-pointer aspect-square' onClick={toggleDrawer}>
-                            <Icon name={'leftArrow'} useinvert={true} />
+                        <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={toggleDrawer}>
+                            <Icon className='text-xl' name={'angle-left'} />
                         </div>
                         <div className='flex rounded-full border font-medium items-center'>
                             {img &&

@@ -120,10 +120,10 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
                     <p className="capitalize opacity-60 mb-4">location</p>
                     <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                            <Icon name={"blue-location"} />
+                            <Icon name={"location-dot"} />
                         </div>
                         <span className="pl-5 w-full">New Yourk, USA</span>
-                        <Icon name={"left-arrow-blue"} className={"mr-4"} />
+                        <Icon name={"angle-right"} className={"mr-4 text-primary"} />
                     </div>
                 </div>
 
@@ -134,7 +134,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
                             <Icon name={"gallery"} />
                         </div>
                         <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                        <Icon name={"left-arrow-blue"} className={"mr-4"} />
+                        <Icon name={"angle-right"} className={"mr-4 text-primary"} />
                     </div>
                 </div>
             </section>

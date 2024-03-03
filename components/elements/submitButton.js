@@ -1,13 +1,36 @@
 
-function button({ children, className = "", shadow = false, shadowHeight, ...rest }) {
+function button({ children, color, conentclassName = "", className = "", shadow = false, shadowHeight, ...rest }) {
+  let buttonClass;
+
+  switch (color) {
+    case undefined:
+      buttonClass = 'bg-primary';
+      break;
+    case 'bg-[#D30000]':
+      buttonClass = 'bg-[#D30000]';
+      break;
+    case 'bg-[#5666F7]':
+      buttonClass = 'bg-[#5666F7]';
+      break;
+    default:
+      buttonClass = `bg-[${color}]`;
+      break;
+  }
+
   return (
     <div className={`relative submit-parent cursor-pointer ${className}`}>
-      <button {...rest} className="app-btn btn btn-heading btn-block hover-up leading-10">
-        {children}
-      </button>
-      {
-        false && <div className={`submit-shadow absolute top-1/2 w-full ${shadowHeight==14 ? ` h-14`:' h-full'}`}></div>
-      }
+      <div {...rest} className={`${buttonClass} app-btn btn btn-heading btn-block hover-up leading-10 relative`}>
+        {
+          shadow &&
+          <div>
+            <div className={`absolute left-0 top-0 w-1/2 h-full rounded-full button-shadow-1`} />
+            <div className={`absolute left-1/2 top-0 w-1/2 h-full rounded-full button-shadow-2`} />
+          </div>
+        }
+        <div className={`flex justify-center items-center h-16`}>
+          {children}
+        </div>
+      </div>
     </div>
   );
 }

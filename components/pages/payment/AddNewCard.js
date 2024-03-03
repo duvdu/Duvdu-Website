@@ -51,7 +51,7 @@ export default function AddNewCard() {
                         {
                             true &&
                             <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px] aspect-square'>
-                                <Icon name={"blackCheck"} />
+                                <Icon name={"check"} />
                             </div>
                         }
                         {
