@@ -374,7 +374,7 @@ const RightSide = () => {
 
 
     const Recents = ({ img, name, address }) =>
-        <a href='/Myprofile'>
+        <a href='/creative/youseff_abdulla'>
             <div className='w-40 h-14 gap-3 rounded-full border border-[#00000040] flex' >
                 <img src={img} alt='user' className='rounded-full m-1' />
                 <div className='flex flex-col items-start justify-center w-full'>
@@ -405,7 +405,7 @@ const RightSide = () => {
                 ]} className="absolute right-6 border rounded-full border-[#00000033] flex justify-center items-center w-14 h-14 cursor-pointer" />
                 {/*********/}
                 {/* profile */}
-                <a href='/Myprofile'>
+                <a href='/creative/youseff_abdulla'>
                     <div className='flex gap-3 items-center'>
                         <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
                         <div className='flex flex-col items-start justify-start'>

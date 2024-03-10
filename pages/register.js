@@ -2,6 +2,7 @@ import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import { useState } from 'react';
 import Button from '../components/elements/submitButton';
+import Icon from '../components/Icons';
 
 function Register() {
     const [name, setName] = useState('');
@@ -58,6 +59,7 @@ function Register() {
 
 
     const toggleShowPassword = () => {
+        console.log('toggle')
         setShowPassword(!showPassword);
     };
 
@@ -65,7 +67,7 @@ function Register() {
     return (
         <>
             <Auth>
-                <form method="post" onSubmit={handleSubmit}>
+            <form method="post" onSubmit={handleSubmit}>
                     <div className="heading_s1 mb-11">
                         <h1 className="auth-title">Create an Account</h1>
                     </div>
@@ -75,7 +77,7 @@ function Register() {
                             value={name}
                             name="name"
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="Name *"
+                            placeholder="Name"
                             className={nameError.isError ? "auth-field error" : "auth-field"}
                         />
                         {nameError.isError && <p className="error-msg">{nameError.message}</p>}
@@ -86,7 +88,7 @@ function Register() {
                             value={phone}
                             name="phone"
                             onChange={(e) => setPhone(e.target.value)}
-                            placeholder="Phone *"
+                            placeholder="Phone"
                             className={phoneError.isError ? "auth-field error" : "auth-field"}
                         />
                         {phoneError.isError && <p className="error-msg">{phoneError.message}</p>}
@@ -97,7 +99,7 @@ function Register() {
                             value={email}
                             name="email"
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Email *"
+                            placeholder="@username"
                             className={emailError.isError ? "auth-field error" : "auth-field"}
                         />
                         {emailError.isError && <p className="error-msg">{emailError.message}</p>}
@@ -109,25 +111,30 @@ function Register() {
                                 value={password}
                                 name="password"
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Password *"
+                                placeholder="Create Password"
                                 className={passwordError.isError ? "auth-field error" : "auth-field"}
                             />
                             {
                                 !showPassword &&
-                                <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-closed.svg" alt="" />
+                                <div className="w-5 icon" onClick={toggleShowPassword} >
+                                    <Icon className="opacity-40" name={"eye"}/>
+                                </div>
                             }
                             {
                                 showPassword &&
-                                <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-open.svg" alt="" />
+                                <div className="w-5 icon" onClick={toggleShowPassword}>
+                                    <Icon className="opacity-40" name={"eye-slash"}/>
+                                </div>
                             }
                         </div>
                         {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
                     </div>
+
                     <div className="login_footer mb-11">
                         <div className="chek-form">
-                            <div className="custome-checkbox">
+                            <div className="flex gap-2 ">
                                 <input
-                                    className="form-check-input"
+                                    className="w-4 h-4 opacity-40"
                                     type="checkbox"
                                     name="termsAgreed"
                                     id="exampleCheckbox1"
@@ -135,18 +142,21 @@ function Register() {
                                     onChange={() => setTermsAgreed(!termsAgreed)}
                                 />
                                 <label className="form-check-label terms-submit flex gap-1 items-center " htmlFor="exampleCheckbox1">
-                                    <span className="terms-agree">I agree to </span>
-                                    <Link href="/terms">
-                                        <a>terms and conditions</a>
-                                    </Link>
+                                    <span className="capitalize text-xs">
+                                        <span>I agree to </span>
+                                        <Link href="/terms">
+                                            <a className="font-bold text-primary">terms and conditions</a>
+                                        </Link>
+                                    </span>
                                 </label>
                             </div>
                         </div>
                     </div>
+                    
                     <div className="mb-4 relative mb-30">
-                    <Button type="submit" name="login">
-                        Create Account
-                    </Button>
+                        <Button type="submit" name="login" shadow={true}>
+                            Create Account
+                        </Button>
                         <div className="submit-btn"></div>
                     </div>
                     <div className="have-account">

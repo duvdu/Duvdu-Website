@@ -54,7 +54,7 @@ function Auth({ children }) {
                 <div className="h-body center-div">
                     <div className="container">
                         <div className="lg:flex gap-6">
-                            <div className="lg:w-5/12 left-content">
+                            <div className="lg:w-5/12 xl:w-5/12 2xl:w-4/12 left-content">
                                 <div className="left-side-auth mt-7 lg:mt-0">
                                     <Swiper
                                         modules={[Autoplay, Navigation, EffectFade]}
@@ -80,7 +80,7 @@ function Auth({ children }) {
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>
-                                    <div className="front-part">
+                                    <div className="front-part absolute bottom-10">
                                         <div className="footer">
                                             <div className="dots flex px-16">
                                                 {imageSources.map((source, index) => (
@@ -91,14 +91,14 @@ function Auth({ children }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="lg:w-7/12 right-content">
-                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center p-5 rounded-lg h-full">
+                            <div className="lg:w-7/12 xl:w-7/12 2xl:w-8/12 right-content">
+                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center p-5 rounded-lg h-auto sm:h-full">
                                     <Link href="/"><a className="as-Guest flex items-center">
                                         Continue as a Guest
                                         <Icon name="arrow-right-long" className="ml-3 text-xl w-6" />
                                     </a>
                                     </Link>
-                                    <div className="my-20 px-0 md:px-28">
+                                    <div className="my-20 px-0 md:px-28 w-full max-w-[650px]">
                                         {children}
                                     </div>
                                 </div>

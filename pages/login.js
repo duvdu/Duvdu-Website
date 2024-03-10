@@ -68,11 +68,15 @@ function Login() {
               />
               {
                 !showPassword &&
-                <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-closed.svg" alt="" />
+                <div className="w-5 icon" onClick={toggleShowPassword} >
+                  <Icon className="opacity-40"  name={"eye"} />
+                </div>
               }
               {
                 showPassword &&
-                <img className="icon" onClick={toggleShowPassword} src="/assets/imgs/theme/icons/eye-open.svg" alt="" />
+                <div className="w-5 icon" onClick={toggleShowPassword}>
+                  <Icon className="opacity-40"  name={"eye-slash"} />
+                </div>
               }
 
             </div>
@@ -106,7 +110,7 @@ function Login() {
               <p className="text-lg font-bold"> Google </p>
             </div>
             <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full sm:w-64 flex justify-center gap-4 items-center cursor-pointer">
-              <img src="/assets/imgs/theme/apple-logo.png" className="w-9" />
+              <img src="/assets/imgs/theme/apple-logo.png" className="w-9 dark:invert" />
               <p className="text-lg font-bold"> Apple </p>
             </div>
           </div>

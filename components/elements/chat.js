@@ -16,7 +16,7 @@ const Chat = ({ messages, data, online ,Close}) => {
         <>
         <div onClick={Close} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0'/>
         <div className="chat w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between p-4 rounded-lg bg-DS_white shadow-xl sm:left-8">
-            <a href='/MyProfile' className="flex p-2 h-16 bg-DS_white cursor-pointer border-b">
+            <a href='/creative/anaa_youseff' className="flex p-2 h-16 bg-DS_white cursor-pointer border-b">
                 <div className="relative">
                     <img className="h-full" src={data.user.img} />
                     {online && (

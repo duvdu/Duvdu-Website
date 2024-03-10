@@ -121,7 +121,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         </a>
                                     </Link>
                                     <Link href="/contracts">
-                                        <a className="ml-5">
+                                        <a className="">
                                             <Icon name={"contracts"} useinvert={true} className="mx-2" />
                                             <span>
                                                 contracts
@@ -129,8 +129,8 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         </a>
                                     </Link>
                                     <Link href="/teams">
-                                        <a className="ml-5 capitalize whitespace-nowrap">
-                                            <Icon name={"saved"} useinvert={true} className="mx-2" />
+                                        <a className="capitalize whitespace-nowrap">
+                                            <Icon name={"saved"} useinvert={true} className="" />
                                             <span>
                                                 team projects
                                             </span>
@@ -148,7 +148,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                             <div className="header-action-icon-2 ml-2" >
                                                 <div className="icon-holder" onClick={toggleNotificationDropdown}>
                                                     <Icon className={notificationDropdownVisible ? " text-DS_black" : ""} name={"bell"} type="far" />
-                                                    <span className="pro-count blue">3</span>
+                                                    <span className="pro-count text-primary">3</span>
                                                 </div>
                                                 <MessageAndNotofication useState={{ notificationDropdownVisible, setNotificationDropdownVisible }} />
                                             </div>
@@ -171,10 +171,10 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         !islogin &&
                                         <div className="header-action-2 flex gap-3 items-center">
                                             <Link href="#">
-                                                <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm">log-in</a>
+                                                <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm font-semibold capitalize">log-in</a>
                                             </Link>
                                             <Link href="/register">
-                                                <a className="px-5 py-2 rounded-full border border-solid bg-primary p-4 text-DS_white">register</a>
+                                                <a className="px-5 py-2 rounded-full bg-primary p-4 text-DS_white font-semibold capitalize">register</a>
                                             </Link>
                                         </div>
                                     }
@@ -197,7 +197,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                             {
                                 !fromlayout.shortheader &&
                                 <div className="header-nav">
-                                    <div className="main-menu main-menu-padding-1 main-menu-lh-2 font-heading hidden lg:block">
+                                    <div className="main-menu main-menu-lh-2 font-heading hidden lg:block">
                                         <nav>
                                             <Menu />
                                         </nav>
@@ -223,6 +223,52 @@ const Header = ({ fromlayout, toggleClick }) => {
 
 
 function MessageAndNotofication({ useState }) {
+    var notification = [
+        {
+            "img_url": "/assets/imgs/profile/contact-2.png",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        },
+        {
+            "img_url": "/assets/imgs/profile/contact-2.png",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        },
+        {
+            "img_url": "/assets/imgs/profile/contact-2.png",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        },
+        {
+            "img_url": "/assets/imgs/profile/contact-2.png",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        },
+    ]
+
+    var messages = [
+        {
+            "img_url": "/assets/imgs/profile/1.jpg",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        },
+        {
+            "img_url": "/assets/imgs/profile/2.jpg",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        },
+        {
+            "img_url": "/assets/imgs/profile/3.jpg",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        },
+        {
+            "img_url": "/assets/imgs/profile/4.jpg",
+            "name": "Ali Haider",
+            "event": "saved your project to the moodboard “the good mode..."
+        }
+    ]
+
     return (
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (useState.notificationDropdownVisible ? " active" : "")}>
             <div className="dialog dialog-1">
@@ -231,15 +277,16 @@ function MessageAndNotofication({ useState }) {
                         <h2>notifications</h2>
                         <a href="">view all</a>
                     </div>
-                    <div className="list">
-                        <div className="profile">
-                            <img src="/assets/imgs/profile/contact-2.png" alt="user" width="45" height="45" />
-                            <p>
-                                <span className="name">Ali Haider</span>
-                                <span className="event">saved your project to the moodboard “the good mode...</span>
-                            </p>
-
-                        </div>
+                    <div className="flex flex-col gap-4 mt-10 overflow-y-scroll">
+                        {notification.map((profile, index) => (
+                            <div key={index} className="profile">
+                                <img src={profile.img_url} alt="user" width="45" height="45" />
+                                <p>
+                                    <span className="name">{profile.name} </span>
+                                    <span className="event">{profile.event}</span>
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <div className="messages">
@@ -247,14 +294,16 @@ function MessageAndNotofication({ useState }) {
                         <h2>messages</h2>
                         <a href="">view all</a>
                     </div>
-                    <div className="list">
-                        <div className="profile">
-                            <img src="/assets/imgs/profile/contact-2.png" alt="user" width="45" height="45" />
-                            <p>
-                                <span className="name">Ali Haider</span>
-                                <span className="event">saved your project to the moodboard “the good mode...</span>
-                            </p>
-                        </div>
+                    <div className="flex flex-col gap-4 mt-10 overflow-y-scroll">
+                        {messages.map((profile, index) => (
+                            <div key={index} className="profile">
+                                <img src={profile.img_url} alt="user" width="45" height="45" />
+                                <p>
+                                    <span className="name">{profile.name} </span>
+                                    <span className="event">{profile.event}</span>
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -286,12 +335,12 @@ function Profile({ useState }) {
                 <div className="card h-72 flex flex-col" style={{ backgroundImage: "url(/assets/imgs/profile/about-9.png)" }}>
                     <div />
                     <div className="info">
-                        <img className="img" src="/assets/imgs/profile/contact-2.png" alt="profile picture"></img>
+                        <img className="img" src="/assets/imgs/profile/1.jpg" alt="profile picture"></img>
                         <p >
                             <span className="name"> youseff abdulla </span>
                             <br />
                             <span className="flex items-center">
-                                <img className="h-3" alt="profile cover" src="/assets/imgs/theme/icons/location.svg" />
+                                <Icon className='opacity-50 mr-2 text-sm' name='location-dot' />
                                 <span className="location">
                                     5th settlement
                                 </span>
@@ -347,20 +396,21 @@ function Profile({ useState }) {
                 </div>
 
                 {/* end card  */}
-
-                <div className="card bottom-section">
-                    <h4 className="opacity-70 text-lg mb-2">
-                        saved projects
-                    </h4>
-                    <div className="flex justify-between">
-                        <div className="project">
-                            <img src="/assets/imgs/projects/1.jpeg" />
-                        </div>
-                        <div className="project">
-                            <img src="/assets/imgs/projects/3.jpeg" />
+                <a href="/saved">
+                    <div className="card bottom-section">
+                        <h4 className="opacity-70 text-lg mb-2">
+                            saved projects
+                        </h4>
+                        <div className="flex justify-between">
+                            <div className="project">
+                                <img src="/assets/imgs/projects/1.jpeg" />
+                            </div>
+                            <div className="project">
+                                <img src="/assets/imgs/projects/3.jpeg" />
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 {/*
                 <div id="settings"> <div></div>

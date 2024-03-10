@@ -156,89 +156,85 @@ function EditPopUp({ }) {
     };
     return (
         <>
-            <Popup id='edit-details' header={'Edit Details'}>
-                <div className='container edit-pop overflow-y-scroll'>
-                    <div className='relative'>
-                        <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer p-4">
-                            <Icon name={'pen'} />
+            <Popup id='edit-details' header={'Edit Details'} addsticky={true}>
+                <div className='relative'>
+                    <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center  border-[#0000001A]">
+                        <Icon className='text-white' name={'pen'} />
+                    </Controller>
+                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={`${formData['coverImg']}`} alt="cover pic" />
+                    <div className='absolute bottom-0 edit w-28 h-28 transform translate-y-1/2 translate-x-1/2'>
+                        <img className='rounded-full w-full h-full' src={formData['profileImg']} alt="profile picture" />
+                        <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center border-[#0000001A]">
+                            <Icon className='text-white' name={'pen'} />
                         </Controller>
-                        <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={`${formData['coverImg']}`} alt="cover pic" />
-                        <div className='absolute bottom-0 edit w-28 h-28 transform translate-y-1/2 translate-x-1/2'>
-                            <img className='rounded-full w-full h-full' src={formData['profileImg']} alt="profile picture" />
-                            <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer p-4">
-                                <Icon name={'pen'} />
-                            </Controller>
-                        </div>
                     </div>
-
-                    <form className='p-20 flex flex-col items-center' onSubmit={handleSubmit}>
-                        <div className='mb-4'>
-                            <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                                name
-                            </span>
-                            <input
-                                type='text'
-                                name='personalName'
-                                value={formData['personalName']}
-                                onChange={handleInputChange}
-                                className="edit auth-field"
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                                services
-                            </span>
-                            <input
-                                type='text'
-                                name='occupation'
-                                value={formData['occupation']}
-                                onChange={handleInputChange}
-                                className="edit auth-field"
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                                location
-                            </span>
-                            <input
-                                type='text'
-                                name='location'
-                                value={formData['location']}
-                                onChange={handleInputChange}
-                                className="edit auth-field"
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                                price per hour
-                            </span>
-                            <input
-                                type='text'
-                                name='price'
-                                value={formData['price']}
-                                onChange={handleInputChange}
-                                className="edit auth-field"
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                                about
-                            </span>
-                            <textarea
-                                name='about'
-                                value={formData['about']}
-                                onChange={handleInputChange}
-                                className="edit auth-field h-[400px]"
-                                style={{ height: '120px' }}
-                            />
-                        </div>
-                        <AppButton type="submit" className='mt-28 w-full px-40' >
-                            Done
-                            
-                        </AppButton>
-                    </form>
-
                 </div>
+
+                <form className='p-20 pb-0 flex flex-col items-center w-[700px]' onSubmit={handleSubmit}>
+                    <div className='mb-4 w-full'>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
+                            name
+                        </span>
+                        <input
+                            type='text'
+                            name='personalName'
+                            value={formData['personalName']}
+                            onChange={handleInputChange}
+                            className="edit auth-field"
+                        />
+                    </div>
+                    <div className='mb-4 w-full'>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
+                            services
+                        </span>
+                        <input
+                            type='text w-full'
+                            name='occupation'
+                            value={formData['occupation']}
+                            onChange={handleInputChange}
+                            className="edit auth-field"
+                        />
+                    </div>
+                    <div className='mb-4 w-full'>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
+                            location
+                        </span>
+                        <input
+                            type='text'
+                            name='location'
+                            value={formData['location']}
+                            onChange={handleInputChange}
+                            className="edit auth-field"
+                        />
+                    </div>
+                    <div className='mb-4 w-full'>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
+                            price per hour
+                        </span>
+                        <input
+                            type='text'
+                            name='price'
+                            value={formData['price']}
+                            onChange={handleInputChange}
+                            className="edit auth-field"
+                        />
+                    </div>
+                    <div className='mb-4 w-full'>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
+                            about
+                        </span>
+                        <textarea
+                            name='about'
+                            value={formData['about']}
+                            onChange={handleInputChange}
+                            className="edit auth-field h-[400px]"
+                            style={{ height: '120px' }}
+                        />
+                    </div>
+                    <AppButton type="submit" className='sticky bottom-10 w-96 max-w-96 mt-12 z-10' shadow={true}>
+                        Done
+                    </AppButton>
+                </form>
             </Popup>
         </>
     );

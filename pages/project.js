@@ -144,17 +144,12 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                     <div className="lg:flex gap-6">
                         <section className="lg:w-2/3">
                             <ProjectShow data={data} />
-                        </section>
-                        <section className="lg:w-1/3 mt-10 lg:mt-0">
-                            <Details data={data} />
-                        </section>
-                    </div>
-                    <div className="lg:flex gap-6">
-                        <section className="lg:w-2/3">
                             <About data={data} />
                         </section>
                         <section className="lg:w-1/3 mt-10 lg:mt-0">
+                            <Details data={data} />
                             <Reviews data={data} />
+
                         </section>
                     </div>
                     <section>
@@ -174,13 +169,13 @@ const Header = ({ data }) => (
     <>
         <h1 className="text-xl capitalize opacity-80"> {data.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
-            <a className='flex items-center gap-3 cursor-pointer' href='/MyProfile'>
+            <a className='flex items-center gap-3 cursor-pointer' href='/OthersProfile'>
                 <img alt='user' className="w-16" src={data.user.img} />
                 <div>
                     <span className="capitalize font-semibold text-lg">{data.user.name}</span>
                     <div className="flex items-center gap-1 mt-1">
                         <p>{data.user.rate}</p>
-                        <Icon  className='text-primary' name={'star'} />
+                        <Icon className='text-primary' name={'star'} />
                     </div>
                 </div>
             </a>
@@ -206,8 +201,9 @@ const ProjectShow = ({ data }) => (
 )
 
 const About = ({ data }) => (
-    <>
-        <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">about the creative</h2>
+    <div className="sticky top-header">
+        <div className="h-16" />
+        <h2 className="font-bold text-lg capitalize opacity-80 mb-4">about the creative</h2>
         <div className="border border-50 border-solid border-gray-300 p-10">
             <div className='flex items-center justify-center'>
                 <div className='w-32 h-32 relative'>
@@ -215,9 +211,9 @@ const About = ({ data }) => (
                     <img className='profileImgture absolute rounded-full' src={data.creative.img} alt="profile picture" />
                 </div>
                 <div className='flex-2 flex-col gap-1'>
-                    <h3>{data.creative.name}</h3>
+                    <h3 className="capitalize font-semibold text-lg">{data.creative.name}</h3>
                     <span className='flex items-center'>
-                    <Icon className='opacity-50 mr-2' name='location-dot'/>
+                        <Icon className='opacity-50 mr-2' name='location-dot' />
                         <span className="location">{data.creative.location}</span>
                     </span>
                 </div>
@@ -227,7 +223,7 @@ const About = ({ data }) => (
                 <p id='photographer'>{data.creative.occupation}</p>
                 <div id='rating' className='flex items-center gap-1 w-20'>
                     <p>{data.creative.rate}</p>
-                    <img src='/assets/imgs/theme/icons/rating.svg' width={18} height={18} />
+                    <Icon className='text-primary w-7' name={'star'} />
                 </div>
             </div>
             <div className='flex justify-center pt-7 items-center'>
@@ -240,12 +236,12 @@ const About = ({ data }) => (
                     ))}
                 </div>
             </div>
-            <div className='left-side-container border-gray-300 border-t mt-6 pt-6'>
+            <div className='px-10 border-gray-300 border-t mt-6 pt-6'>
                 <p id='about-header'>about</p>
                 <p className='pt-2' id='about-paragraph'>{data.creative.about}</p>
             </div>
         </div>
-    </>
+    </div>
 )
 const Details = ({ data }) => (
     <div className="grad-card w-full border-50">
@@ -305,9 +301,14 @@ const Details = ({ data }) => (
 const Reviews = ({ data }) => (
     <>
         <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">Reviews</h2>
-        {data.comments.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
-        ))}
+        <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-4'>
+
+                {data.comments.map((comment) => (
+                    <Comment key={comment.id} comment={comment} />
+                ))}
+            </div>
+        </div>
     </>
 );
 
@@ -330,13 +331,13 @@ const Recommended = ({ projects }) => {
 
 const Control = ({ data, toggleDrawer }) => {
 
-    const [loveIconName, setLoveIconName] = useState('love-react-off');
+    const [loveIconName, setLoveIconName] = useState('far');
     const [showChat, setShowChat] = useState(false);
 
     const online = false
 
     const handleLoveIconClick = () => {
-        setLoveIconName(loveIconName === 'love-react-off' ? 'love-react-on' : 'love-react-off');
+        setLoveIconName(loveIconName === 'fas' ? 'far' : 'fas');
     };
 
     const handleCloseChat = () => {
@@ -443,10 +444,10 @@ const Control = ({ data, toggleDrawer }) => {
                             <Icon name={'share'} />
                         </div>
                         <div data-popup-toggle="popup" data-popup-target="add-to-team" className="controller-1">
-                            <Icon name={'add'} />
+                            <Icon className="text-white text-xl" name={'plus'} />
                         </div>
                         <div onClick={handleLoveIconClick} className="controller-1">
-                            <Icon name={loveIconName} />
+                            <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} text-2xl`} name={'heart'} type={loveIconName} />
                         </div>
                         <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
                     </Controller>

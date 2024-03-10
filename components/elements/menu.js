@@ -9,9 +9,9 @@ import headerMen from '../../public/static/header_content.json';
 
 const MenuItem = ({ title, items }) => (
   items.length > 0 &&
-  <li className="sub-mega-menu sub-mega-menu-width-22">
+  <li className="">
     <Link href="#">
-      <a className="menu-title">
+      <a className="">
         {title}
       </a>
     </Link>
@@ -42,12 +42,10 @@ const MegaMenu = () => {
         categories &&
         categories.map((category, index) => (
           <li className="position-static" key={index}>
-            <Link href="/#">
-              <a>
-                {category.category}
-                {/* <i className="fi-rs-angle-down"></i> */}
-              </a>
-            </Link>
+            <div className='cursor-pointer hover:text-primary mr-7 opacity-70 text-lg my-2 capitalize'>
+              {category.category}
+              {/* <i className="fi-rs-angle-down"></i> */}
+            </div>
             <ul className="mega-menu">
               <div className='mega-column'>
                 {
@@ -62,10 +60,10 @@ const MegaMenu = () => {
                 category.subcategories.length > 1 &&
                 <div className='mega-column'>
                   {
-                  category.subcategories.map((subcategory, subIndex) => (
-                    subIndex / category.subcategories.length >= 0.5 &&
-                    <MenuItem key={subIndex} title={subcategory.title} items={subcategory.items} />
-                  ))}
+                    category.subcategories.map((subcategory, subIndex) => (
+                      subIndex / category.subcategories.length >= 0.5 &&
+                      <MenuItem key={subIndex} title={subcategory.title} items={subcategory.items} />
+                    ))}
                 </div>
               }
             </ul>

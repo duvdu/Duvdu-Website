@@ -97,10 +97,10 @@ const Card = ({ cardData, className = "", href }) => {
         </div>
         <div className='details'>
           <div className='creator-info'>
-            <a href='/MyProfile' className='profile cursor-pointer'>
+            <a href='/creative/anaa_youseff' className='profile cursor-pointer'>
               <img src={cardData.profileImage} alt='user' />
             </a>
-            <a href='/MyProfile' className='name cursor-pointer' >
+            <a href='/creative/anaa_youseff' className='name cursor-pointer' >
               <p>{cardData.name}</p>
             </a>
             <div className='w-100x'></div>

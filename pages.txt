@@ -7,7 +7,7 @@
 /forget_password
 /internetConection
 /login
-/MyProfile
+/OthersProfile
 /password_changed
 /payment
 /payment_success

@@ -27,7 +27,7 @@ function Profile() {
 
     var profile = {
         "cover-pic": "/assets/imgs/projects/cover.jpeg",
-        "profile-pic": "/assets/imgs/profile/contact-2.png",
+        "profile-pic": "/assets/imgs/profile/1.jpg",
         "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
@@ -49,14 +49,14 @@ function Profile() {
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
             {
-                "id": 2,
+                "id": 1,
                 "userName": "jonathan donrew",
                 "date": "Sun - Aug 3",
                 "avatar": "/assets/imgs/projects/1.jpeg",
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
             {
-                "id": 3,
+                "id": 1,
                 "userName": "jonathan donrew",
                 "date": "Sun - Aug 3",
                 "avatar": "/assets/imgs/projects/1.jpeg",
@@ -157,16 +157,17 @@ function Profile() {
                     <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6' />
                 </div>
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
-                    <div className='left-side flex-1 relative'>
-                        <div className='left-side-container'>
+                    <div className='left-side flex-1'>
+
+                        <div className='relative px-10'>
                             <div className='flex items-center'>
                                 <div className='w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame'>
-                                    <img className='w-full h-full rounded-full' src={"/assets/imgs/profile/contact-2.png"} alt="profile picture" />
+                                    <img className='w-full h-full rounded-full' src={profile['profile-pic']} alt="profile picture" />
                                 </div>
                                 <div className='flex-2 flex-col gap-1'>
                                     <span className='text-3xl font-bold capitalize'>{profile['personalName']}</span>
                                     <span className='flex items-center'>
-                                        <Icon className='opacity-50 mr-2' name='location-dot'/>
+                                        <Icon className='opacity-50 mr-2' name='location-dot' />
                                         <span className="opacity-50 capitalize text-lg">{profile['location']}</span>
                                     </span>
                                 </div>
@@ -202,37 +203,39 @@ function Profile() {
                         </div>
 
                         <div className='h-divider'></div>
-                        <div className='left-side-container'>
+                        <div className='px-10'>
                             <h3 className='pt-6' id='about-header'>about</h3>
                             <p className='pt-6' id='about-paragraph'>{profile['about']}</p>
                         </div>
-                        <div className='h-divider mt-7'></div>
-                        <div className='left-side-container'>
-                            {profile.comments.map((comment) => (
-                                <Comment key={comment.id} comment={comment} />
-                            ))}
+                        <div className='h-divider my-7'></div>
+                        <div className='px-10'>
+                            <div className='flex flex-col gap-4'>
+
+                                {profile.comments.map((comment) => (
+                                    <Comment key={comment.id} comment={comment} />
+                                ))}
+                            </div>
                         </div>
                         <AddPost />
-
                         {
                             showAddPanal &&
                             <AddMyprofile setShowAddPanal={setShowAddPanal} />
                         }
-
                         {
                             !showAddPanal &&
-                            <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
+                            <div className='static lg:sticky h-32 left-10 bottom-0 flex justify-center items-center'>
                                 <Controller>
                                     <div onClick={() => setShowAddPanal(true)} className="controller-1 primary" >
                                         <Icon className='text-white text-2xl' name={'plus'} />
                                     </div>
                                     <div data-popup-toggle="popup" data-popup-target="edit-details" className="controller-1">
-                                        <Icon  className='text-white text-2xl' name={'pen'} />
+                                        <Icon className='text-white text-2xl' name={'pen'} />
                                     </div>
                                 </Controller>
                             </div>
                         }
                     </div>
+
                     <div className='right-side'>
                         {
                             profile.projects.length == 0 &&

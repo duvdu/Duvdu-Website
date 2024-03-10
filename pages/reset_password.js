@@ -60,7 +60,7 @@ function ResetPassword() {
           </div>
           <div className="login_footer mb-11"></div>
           <div className="mb-4 relative mb-30">
-            <Button type="submit" name="reset-password">
+            <Button type="submit" name="reset-password" shadow={true} >
               Login
             </Button>
             <div className="submit-btn"></div>

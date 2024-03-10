@@ -67,7 +67,6 @@ function MyApp({ Component, pageProps }) {
         <>
             {!loading ? (
                 <Provider store={store}>
-
                         <Component {...pageProps} />
                         <ToastContainer />
                 </Provider>

@@ -10,9 +10,8 @@ import Chat from '../components/elements/chat';
 
 
 function Profile() {
-    const [isable, setIsDisabled] = useState(false);
-    const [showAddPanal, setShowAddPanal] = useState(false);
-    const [showChat, setShowChat] = useState(true);
+
+    const [showChat, setShowChat] = useState(false);
 
     const online = false
 
@@ -20,14 +19,11 @@ function Profile() {
         setShowChat(false);
     };
 
-    const handleSwitchChange = (newState) => {
-        setIsDisabled(newState);
-    };
 
 
     var profile = {
         "coverImg": "/assets/imgs/projects/cover.jpeg",
-        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "profileImg": "/assets/imgs/profile/contact-3.png",
         "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
@@ -225,9 +221,9 @@ function Profile() {
                 </div>
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='left-side flex-1 relative'>
-                        <div className='left-side-container'>
+                        <div className='px-10'>
                             <div className='flex items-center'>
-                                <div className='w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame'>
+                                <div className='w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat'>
                                     <img className='w-full h-full rounded-full' src={"/assets/imgs/profile/contact-2.png"} alt="profile picture" />
                                 </div>
                                 <div className='flex-2 flex-col gap-1'>
@@ -258,24 +254,25 @@ function Profile() {
                                 </div>
                             </div>
                             <div className='flex gap-3 items-center'>
-                                <Button className="w-full mb-7 mt-7" >Follow</Button>
-                                <div onClick={()=>{setShowChat(true)}} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
+                                <Button className="w-full mb-7 mt-7 z-0" >Follow</Button>
+                                <div onClick={() => { setShowChat(true) }} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
                                     <Icon type='far' name="chat" />
                                 </div>
                             </div>
                         </div>
-
-
                         <div className='h-divider'></div>
-                        <div className='left-side-container'>
+                        <div className='px-10'>
                             <h3 className='pt-6' id='about-header'>about</h3>
                             <p className='pt-6' id='about-paragraph'>{profile['about']}</p>
                         </div>
                         <div className='h-divider my-7'></div>
-                        <div className='left-side-container'>
-                            {profile.comments.map((comment) => (
-                                <Comment key={comment.id} comment={comment} />
-                            ))}
+                        <div className='px-10'>
+                            <div className='flex flex-col gap-4'>
+
+                                {profile.comments.map((comment) => (
+                                    <Comment key={comment.id} comment={comment} />
+                                ))}
+                            </div>
                         </div>
 
                     </div>

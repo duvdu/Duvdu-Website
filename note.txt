@@ -16,23 +16,26 @@
 # button shadow
 # success component
 # send files
+# enable , disable ArrowBtn
+
+# Auth responsive
+# apple logo
+# x circle in popups
+# stop sticky in myProfile mobile and fixed comment 
+# header out of slider
+# layer and sticy of popups
+# handle Icon                       (popup)
 
 
 
+- handle darkmode
+- handle responsive
 - loading
 - autoplay error
 - home section 2
 - edit profile img
 - suggest strong password
-- button shadow
-- mohamed FOX
 ----------------------------------- day task -----------------------------------
-- handle Icon                       (popup)
-- enable , disable ArrowBtn
 - enable file drag drop
-- handle button shadow
-- handle darkmode
-- handle responsive
+- what is next-auth
 ----------------------------------- day task -----------------------------------
-Auth responsive
-header out of slider
