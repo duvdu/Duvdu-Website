@@ -11,10 +11,10 @@ const Icon = ({ name, type = "fas", useinvert, invert, className = "", ...rest }
 
   const isincludes = Icons.includes(name)
   if (!isincludes) {
-    return <FontAswome name={name} type={type} className={className} rest={rest} />;
+    return <FontAswome name={name} type={type} className={className} {...rest} />;
   }
   else {
-    return <LocalIcon name={name} type={type} className={className} rest={rest} />;
+    return <LocalIcon name={name} type={type} className={className} {...rest} />;
   }
 }
 

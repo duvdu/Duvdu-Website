@@ -6,7 +6,6 @@ import { fetchProjects } from "./../redux/action/project";
 import Card from "./../components/elements/project-card";
 import Icon from '../components/Icons';
 import { Goback } from '../util/util';
-// import AppButton from '../components/elements/button';
 
 
 const Projects = ({ projects, projectFilters, fetchProjects }) => {

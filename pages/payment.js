@@ -3,7 +3,7 @@ import Layout from "../components/layout/Layout";
 import Icon from '../components/Icons';
 import ArrowBtn from '../components/elements/arrowBtn';
 import Popup from '../components/elements/popup';
-import AppButton from '../components/elements/button';
+import AppButton from '../components/elements/submitButton';
 import AddNewCard from '../components/pages/payment/AddNewCard';
 
 const Payment = () => {
@@ -143,14 +143,16 @@ const RightSide = () => {
             <Popup id='error-message' header={'Error Message'}>
                 <div className='flex h-full flex-col mt-24 items-center'>
                     <div className='flex gap-2 items-center justify-center mb-4'>
-                        <div className='bg-[#EB1A40] p-2 rounded-full h-min'>
-                            <Icon name={'xmark'} invert={true} />
+                        <div className='bg-[#EB1A40] rounded-full h-min  w-7 flex justify-center items-center aspect-square'>
+                            <Icon className='text-white' name={'xmark'} invert={true} />
                         </div>
                         <span className='text-center text-lg font-medium opacity-80 text-[#EB1A40]'>payment failed</span>
                     </div>
 
                     <span className='mb-24 text-center text-lg font-medium opacity-80'>Invalid payment data</span>
-                    <AppButton data-popup-dismiss="popup" text={"Try Again"} className={"mb-40 mx-16 md:mx-32"} />
+                    <AppButton data-popup-dismiss="popup" className={"mb-40 mx-16 md:mx-32 w-52"} >
+                    Try Again
+                    </AppButton>
                 </div>
             </Popup>
             <div className='rounded-2xl bg-DS_white border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>

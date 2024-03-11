@@ -119,6 +119,9 @@
 .requirements-value::-webkit-slider-runnable-track {
     background: linear-gradient(to right, #32A6F9 0%, #32A6F9 var(--requirements-value), #32A6F933 var(--requirements-value), #32A6F933 100%);
 }
+.hours-value::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #32A6F9 0%, #32A6F9 var(--hours-value), #32A6F933 var(--hours-value), #32A6F933 100%);
+}
 
 .range-input::-webkit-slider-thumb {
     -webkit-appearance: none;

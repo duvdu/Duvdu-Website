@@ -1,11 +1,16 @@
 
 import Layout from '../components/layout/Layout';
+import Slider from "../components/elements/customSlider";
+import React, { useState } from 'react';
 
 function Test() {
+
     return (
         <>
             <Layout shortheader={false} isbodyWhite={false}>
-                
+                <div className='container'>
+                    
+                </div>
             </Layout>
         </>
     );
