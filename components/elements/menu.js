@@ -11,7 +11,7 @@ const MenuItem = ({ title, items }) => (
   items.length > 0 &&
   <li className="">
     <Link href="#">
-      <a className="">
+      <a className="text-black font-bold text-lg">
         {title}
       </a>
     </Link>
@@ -37,17 +37,17 @@ const MegaMenu = () => {
   }, []);
 
   return (
-    <ul>
+    <ul className='flex justify-between'>
       {
         categories &&
         categories.map((category, index) => (
           <li className="position-static" key={index}>
-            <div className='cursor-pointer hover:text-primary mr-7 opacity-70 text-lg my-2 capitalize'>
+            <div className='cursor-pointer hover:border-b-2 border-primary opacity-70 text-base py-2 capitalize'>
               {category.category}
               {/* <i className="fi-rs-angle-down"></i> */}
             </div>
             <ul className="mega-menu">
-              <div className='mega-column'>
+              <div className=''>
                 {
                   category.subcategories.map((subcategory, subIndex) => (
                     subIndex / category.subcategories.length < 0.5 &&

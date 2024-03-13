@@ -169,7 +169,7 @@ function EditPopUp({ }) {
                         </Controller>
                     </div>
                 </div>
-
+        
                 <form className='p-20 pb-0 flex flex-col items-center w-[700px]' onSubmit={handleSubmit}>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>

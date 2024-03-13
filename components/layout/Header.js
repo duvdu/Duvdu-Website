@@ -196,7 +196,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                             </div>
                             {
                                 !fromlayout.shortheader &&
-                                <div className="header-nav">
+                                <div className="header-nav w-full">
                                     <div className="main-menu main-menu-lh-2 font-heading hidden lg:block">
                                         <nav>
                                             <Menu />

@@ -1,6 +1,6 @@
 [
   {
-    "category": "Alawi",
+    "category": "Videography",
     "subcategories": [
       {
         "title": "Shirts",
@@ -49,7 +49,7 @@
     ]
   },
   {
-    "category": "Bottoms",
+    "category": "Models & Performers",
     "subcategories": [
       {
         "title": "Trousers",
@@ -82,7 +82,7 @@
     ]
   },
   {
-    "category": "Full Set",
+    "category": "Studios",
     "subcategories": [
       {
         "title": "Tracksuits",
@@ -95,7 +95,7 @@
     ]
   },
   {
-    "category": "Accessories",
+    "category": "Photography",
     "subcategories": [
       {
         "title": "Bags",
@@ -119,6 +119,349 @@
       {
         "title": "Rings",
         "items": []
+      }
+    ]
+  },
+  {
+    "category": "Equipment",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Post Production",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Graphics",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Personal Branding",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Music & Audio",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Permits",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Executive Producer",
+    "subcategories": [
+      {
+        "title": "Shirts",
+        "items": [
+          "Casual",
+          "Formal",
+          "Suit",
+          "Beach"
+        ]
+      },
+      {
+        "title": "Blazers",
+        "items": [
+          "Bridegroom",
+          "Plain",
+          "Patterned"
+        ]
+      },
+      {
+        "title": "Sportswear",
+        "items": [
+          "Swimwear",
+          "Football",
+          "Gym",
+          "Diving"
+        ]
+      },
+      {
+        "title": "T-shirts",
+        "items": [
+          "Long Sleeve T-shirt",
+          "Hoodies with Zipper",
+          "Hoodies without Zipper",
+          "Innerwear"
+        ]
+      },
+      {
+        "title": "Jackets",
+        "items": [
+          "Bomber",
+          "Natural Leather",
+          "Leather",
+          "Wool and Linen"
+        ]
       }
     ]
   }

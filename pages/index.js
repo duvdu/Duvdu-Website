@@ -83,17 +83,17 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                                 <>
                                     {
                                         i == 0 &&
-                                        <RelatedCategories className="block lg:hidden xl:hidden col-span-full" />
+                                        <RelatedCategories key={i} className="block lg:hidden xl:hidden col-span-full" />
                                     }
                                     {
                                         i == 3 &&
-                                        <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />
+                                        <RelatedCategories key={i} className="hidden lg:block xl:hidden col-span-full" />
                                     }
                                     {
                                         i == 4 &&
-                                        <RelatedCategories className="hidden xl:block col-span-full" />
+                                        <RelatedCategories key={i} className="hidden xl:block col-span-full" />
                                     }
-                                    <Card className='cursor-pointer' href="/project" key={i} cardData={item} />
+                                    <Card className='cursor-pointer' href="/project" key={i+1} cardData={item} />
 
                                 </>
 
