@@ -64,7 +64,7 @@ const CreateBoard = () => {
                             <div className="mr-6"></div>
                             <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full border-[1.5px] bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize">
                                 new team project
-                                <Icon name={"plus"} />
+                                <Icon className="w-10" name={"plus"} />
                             </div>
                         </div>
                         {false && (

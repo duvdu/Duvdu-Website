@@ -243,7 +243,7 @@ function Profile() {
                         }
 
                         {profile.projects.length > 0 && (
-                            <div className='project-grid'>
+                            <div className='project-grid gap-4'>
                                 {profile.projects.map((data, index) => (
                                     <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
                                 ))}

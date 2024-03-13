@@ -265,7 +265,7 @@ function MyProfile() {
                         }
 
                         {profile.projects.length > 0 && (
-                            <div className='project-grid gap-3 sm:gap-5'>
+                            <div className='project-grid gap-4'>
                                 {profile.projects.map((data, index) => (
                                     <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
                                 ))}
@@ -553,7 +553,7 @@ function OtherProfile() {
                         }
 
                         {profile.projects.length > 0 && (
-                            <div className='project-grid gap-3 sm:gap-5'>
+                            <div className='project-grid gap-3'>
                                 {profile.projects.map((data, index) => (
                                     <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
                                 ))}
@@ -569,7 +569,7 @@ function OtherProfile() {
 
 const Project = ({ data, isbig }) => (
 
-    <a href='/project' className={isbig ? 'profile-project w-full' : 'profile-project w-48% '}>
+    <a href='/project' className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28%'}>
         <img className='cardimg' src={data.show} alt='show' />
         <div className='creatives'>
             {data.creatives} creatives
