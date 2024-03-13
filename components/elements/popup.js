@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import Icon from '../Icons';
 
-const Popup = ({ id, children, header, className = "", img, addsticky = false }) => {
+const Popup = ({ id, children, onCancel, header, className = "", img, addsticky = false }) => {
 
     return (
         <div id={id} className={`popup z-30 ${className}`}>
-            <div data-popup-dismiss="popup" className="flex overlay blur" ></div>
+            <div onClick={onCancel} data-popup-dismiss="popup" className="flex overlay blur" />
             <div className='card content bg-[#F7F9FB] dark:bg-[#131313]' style={img ? { backgroundImage: `url(${img})` } : {}}>
                 <div className='p-5 pl-10'>
-                    <div className='flex gap-3 sticky top-0 -translate-x-4'>
-                        <div data-popup-dismiss="popup" className='flex rounded-full header-border p-4 cursor-pointer justify-center items-center'>
+                    <div className='flex gap-3 top-0 -translate-x-4'>
+                        <div onClick={onCancel} data-popup-dismiss="popup" className='flex rounded-full header-border p-4 cursor-pointer justify-center items-center'>
                             <Icon name={'xmark'} useinvert={true} className='w-7 h-6' />
                         </div>
                         {

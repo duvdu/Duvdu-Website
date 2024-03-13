@@ -17,7 +17,6 @@ import Share from '../components/popsup/Share';
 import ProjectDetils from '../components/popsup/project-details';
 import UploadFilesTeam from '../components/popsup/uploadFilesTeam';
 import HourWorks from '../components/popsup/hourWorks';
-import AddPost from '../components/popsup/addpost';
 import ChooseCategory from '../components/popsup/chooseCategory';
 import Dashboard from '../components/popsup/dashboard';
 import DeleteBoard from '../components/popsup/DeleteBoard';
@@ -59,8 +58,7 @@ function Test() {
                         <BTN target='project-details'> Project Details </BTN>
                         <BTN target='team_uploading_files'> upload files </BTN>
                         <BTN target='work-hour'> hours work </BTN>
-                        <BTN target='add-post'> Add Post </BTN>
-                        <BTN target='choose_category'> Choose category </BTN>
+                        <BTN target='add-post'> add post </BTN>
                     </div>
 
 
@@ -88,7 +86,6 @@ function Test() {
                     <ProjectDetils />
                     <UploadFilesTeam />
                     <HourWorks />
-                    <AddPost />
                     <ChooseCategory />
                 </div>
               

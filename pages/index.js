@@ -79,25 +79,14 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                             <h3>No projects Found </h3>
                         )}
                         <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects.map((item, i) =>
-                                <>
-                                    {
-                                        i == 0 &&
-                                        <RelatedCategories key={i} className="block lg:hidden xl:hidden col-span-full" />
-                                    }
-                                    {
-                                        i == 3 &&
-                                        <RelatedCategories key={i} className="hidden lg:block xl:hidden col-span-full" />
-                                    }
-                                    {
-                                        i == 4 &&
-                                        <RelatedCategories key={i} className="hidden xl:block col-span-full" />
-                                    }
-                                    <Card className='cursor-pointer' href="/project" key={i+1} cardData={item} />
-
-                                </>
-
-                            )}
+                            {getPaginatedProjects.map((item, i) => (
+                                <React.Fragment key={item.id || i}>
+                                    {i === 0 && <RelatedCategories className="block lg:hidden xl:hidden col-span-full" />}
+                                    {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
+                                    {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
+                                    <Card className='cursor-pointer' href="/project" cardData={item} />
+                                </React.Fragment>
+                            ))}
                         </div>
                         {
                             getPaginatedProjects.length === limit &&
