@@ -1180,10 +1180,6 @@ table p {
 
 /*LAYOUT -> NAVIGATION STYLE*/
 
-.main-menu>nav>ul>li.position-static {
-  position: static;
-}
-
 .main-menu>nav>ul>li>a {
   font-size: 16px;
   font-weight: 500;
@@ -1271,10 +1267,9 @@ table p {
 .hover-menu {
   position: absolute;
   display: flex;
-  max-width: 880px;
   gap: 15px;
   width: fit-content;
-  top: 100%;
+  top: 102%;
   background-color: var(--white);
   padding: 40px 44px 40px 44px;
   -webkit-transition: all .25s ease 0s;
@@ -1299,25 +1294,6 @@ table p {
   flex-wrap: wrap;
 }
 
-
-
-.hover-menu li .menu-banner-wrap {
-  overflow: hidden;
-  position: relative;
-}
-
-.hover-menu li .menu-banner-wrap a {
-  display: block;
-}
-
-.hover-menu li .menu-banner-wrap a img {
-  width: 100%;
-}
-
-.hover-menu li .menu-banner-wrap:hover .menu-banner-btn a {
-  background-color: #FD6E6E;
-}
-
 .main-menu>nav>ul>li:hover>a {
   color: var(--primary);
 }
@@ -1327,6 +1303,27 @@ table p {
   visibility: visible;
   margin-top: 12px;
 }
+
+
+.ahmed-title,
+.ahmed-title2 {
+    width: 50px;
+    height: 50px;
+}
+
+.ahmed-title {
+    
+}
+
+.ahmed-title2 {
+    
+}
+
+.header-category:hover .category-name {
+    /* Change the style of div2 here */
+    border-bottom-color :var(--primary)
+}
+
 
 .main-menu>nav>ul>li:hover .hover-menu {
   opacity: 1;
@@ -1378,11 +1375,6 @@ table p {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
-}
-
-.main-menu>nav>ul>li {
-  display: inline-block;
-  position: relative;
 }
 
 .main-menu>nav>ul>li ul.sub-menu li a {
@@ -1521,7 +1513,7 @@ table p {
   display: block;
   margin-bottom: 14px;
   float: none;
-  border: 1.5px solid rgba(var(--black-rgb), 0.30);
+  border: 1px solid #E6E6E6;
   margin-bottom: 5px;
   margin-right: 5px;
   padding: 6px 13px;
@@ -1529,9 +1521,9 @@ table p {
 }
 
 .padge a {
-  color: rgba(var(--black-rgb), 0.75);
-
-  font-size: 17px;
+  color: #595959;
+  opacity: .8;
+  font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: 0em;

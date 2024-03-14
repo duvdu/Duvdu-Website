@@ -6,7 +6,7 @@ const MenuItem = ({ title, items }) => (
   items.length > 0 &&
   <li>
     <Link legacyBehavior href="#">
-      <a className="text-black font-bold text-lg">
+      <a className="text-[#3E3E3E] font-semibold text-sm">
         {title}
       </a>
     </Link>
@@ -33,7 +33,7 @@ const MegaMenu = () => {
 
   return (
     <ul className='flex justify-between'>
-      {categories &&
+    {categories &&
         categories.map((category, index) => (
           <Category key={index} category={category} />
           ))}
@@ -49,14 +49,15 @@ const Category = ({category}) => {
     if (megaMenuRef.current) {
       const computedStyle = window.getComputedStyle(megaMenuRef.current);
       const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
+      console.log(megaMenuRef , megaMenuRef.current ,computedStyle.getPropertyValue('right') , rightPosition)
       if (rightPosition < 0) {
         megaMenuRef.current.style.right = '0px';
       }
     }
-  }, []);
+  }, [category]);
   return (
-    <li className="position-static" >
-      <div className='cursor-pointer border-b-2 border-t-2 border-transparent hover:border-b-primary opacity-70 text-base py-2 capitalize'>
+    <li className='header-category'>
+      <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 text-base py-2 capitalize'>
         {category.category}
       </div>
       <ul className="hover-menu" ref={megaMenuRef}>
