@@ -31,14 +31,14 @@ const Search = () => {
     return (
         <>
             <input
-                className="searchInput w-48 focus:w-full mx-3"
+                className="searchInput border border-[#00000040] hover:border-transparent hover:bg-[#EAEEF0] focus:border-2 focus:border-primary focus:bg-transparent w-48 focus:w-full mx-6"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => handleFocus(true)}
                 onBlur={() => handleFocus(false)}
                 onKeyDown={handleInput}
                 type="text"
-                placeholder="Search"
+                placeholder="Search..."
             />
             <div className={"dialog-history " + (searchDropdownVisible ? "active" : "")}>
                 <h4 className="menu-title" href="#">
@@ -60,7 +60,6 @@ const Search = () => {
                     ].map((item, index) => (
                         <li className="padge" key={index}>
                             <Link href="/">
-
                                 <a>{item}</a>
                             </Link>
 

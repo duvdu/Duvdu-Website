@@ -20,6 +20,7 @@ module.exports = {
         DS_black: "var(--black)",
         DS_borderColor: "var(--border-color)",
         primary: "var(--primary)",
+        hover_primary: "var(--hover_primary)",
         borderColor: "var(--border-color)",
       },
       container: {

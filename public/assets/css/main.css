@@ -1142,12 +1142,11 @@ table p {
   padding: 0 2rem 0 3rem;
   border-radius: 2rem;
   background-repeat: no-repeat;
-  background-color: var(--Alabaster);
   background-position: center left;
   background-image: url(../imgs/theme/icons/search.svg);
   background-repeat: no-repeat;
   background-position: center left;
-  border: none;
+  
 }
 
 ::placeholder {
@@ -1272,10 +1271,6 @@ table p {
   position: relative;
 }
 
-.main-menu>nav>ul>li ul.sub-menu li:last-child {
-  margin-bottom: 0;
-}
-
 .main-menu>nav>ul>li ul.sub-menu li ul.level-menu {
   position: absolute;
   left: 100%;
@@ -1312,11 +1307,11 @@ table p {
   margin-top: 0px;
 }
 
-.main-menu>nav>ul>li ul.mega-menu {
+.hover-menu {
   position: absolute;
   display: flex;
-  flex-wrap: wrap;
   max-width: 880px;
+  gap: 15px;
   width: fit-content;
   top: 100%;
   background-color: var(--white);
@@ -1328,59 +1323,37 @@ table p {
   margin-top: 20px;
   border-radius: 0 0 10px 10px;
   z-index: 999;
-  /* border: 1px solid rgba(var(--black-rgb), .35); */
   -webkit-box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
   box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
 }
 
 
-.main-menu>nav>ul>li ul.mega-menu li {
-  line-height: 1;
-  display: block;
-  position: relative;
-  float: left;
-  padding-right: 10px;
-}
-
-.main-menu>nav>ul>li ul.mega-menu li.sub-mega-menu-width-34 {
-  width: 34%;
-}
-
-.main-menu>nav>ul>li ul.mega-menu li a.menu-title {
-
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 20px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: var(--black);
-}
-
-.main-menu>nav>ul>li ul.mega-menu li ul {
+.hover-menu li ul {
   margin-bottom: 28px;
   margin-top: 10px;
-  width: 325px;
-  display: inline-flex;
+  width: auto;
+  max-width: 400px;
+  min-width: 300px;
   display: flex;
   flex-wrap: wrap;
 }
 
 
 
-.main-menu>nav>ul>li ul.mega-menu li .menu-banner-wrap {
+.hover-menu li .menu-banner-wrap {
   overflow: hidden;
   position: relative;
 }
 
-.main-menu>nav>ul>li ul.mega-menu li .menu-banner-wrap a {
+.hover-menu li .menu-banner-wrap a {
   display: block;
 }
 
-.main-menu>nav>ul>li ul.mega-menu li .menu-banner-wrap a img {
+.hover-menu li .menu-banner-wrap a img {
   width: 100%;
 }
 
-.main-menu>nav>ul>li ul.mega-menu li .menu-banner-wrap:hover .menu-banner-btn a {
+.hover-menu li .menu-banner-wrap:hover .menu-banner-btn a {
   background-color: #FD6E6E;
 }
 
@@ -1394,7 +1367,7 @@ table p {
   margin-top: 12px;
 }
 
-.main-menu>nav>ul>li:hover ul.mega-menu {
+.main-menu>nav>ul>li:hover .hover-menu {
   opacity: 1;
   visibility: visible;
   margin-top: 0;
@@ -2379,6 +2352,7 @@ table p {
   --invert: invert(0%);
   --border-color: #D9D9D9;
   --primary: #1A73EB;
+  --hover_primary: #0E4EA4;
   --white: #fff;
   --white-rgb: 255, 255, 255;
   --black: #000;

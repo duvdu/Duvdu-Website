@@ -87,12 +87,11 @@ const Header = ({ fromlayout, toggleClick }) => {
 
     }, []);
 
-    // const handleToggle = () => setToggled(!isToggled);
     return (
         <>
             <div onClick={falseall} className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
-            <header className={`bg-DS_white fixed w-full z-10 ${scroll ? "stick" : ""}`}>
+            <header className={`bg-DS_white sticky top-0 w-full z-10 ${scroll ? "stick" : ""}`}>
                 <div className="py-4 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
@@ -169,12 +168,12 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     }
                                     {
                                         !islogin &&
-                                        <div className="header-action-2 flex gap-3 items-center">
+                                        <div className="header-action-2 flex gap-6 items-center">
                                             <Link href="#">
-                                                <a onClick={() => { setIslogin(true) }} className="px-5 py-2 rounded-full border border-solid border-blue-500 p-4 text-sm font-semibold capitalize">log-in</a>
+                                                <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">log-in</a>
                                             </Link>
                                             <Link href="/register">
-                                                <a className="px-5 py-2 rounded-full bg-primary p-4 text-DS_white font-semibold capitalize">register</a>
+                                                <a className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary p-4 text-DS_white font-semibold capitalize">register</a>
                                             </Link>
                                         </div>
                                     }
@@ -216,7 +215,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                     </div>
                 </div>
             </header>
-            <div className={scroll ? "fake-height active" : "fake-height"} />
+            
         </>
     );
 };
@@ -340,7 +339,7 @@ function Profile({ useState }) {
                             <span className="name"> youseff abdulla </span>
                             <br />
                             <span className="flex items-center">
-                                <Icon className='opacity-50 mr-2 text-sm' name='location-dot' />
+                                <Icon className='opacity-50 mr-2 text-sm w-3' name='location-dot' />
                                 <span className="location">
                                     5th settlement
                                 </span>
@@ -442,10 +441,12 @@ function Setting({ data }) {
     const ContactUs = () => (
         <>
             <div className='flex gap-3'>
-                <div onClick={() => setcontactUs(false)} className='flex rounded-full header-border p-4 cursor-pointer'>
-                    <Icon name={'xmark'} useinvert={true} />
+                <div onClick={() => setcontactUs(false)} className='rounded-full header-border h-14 w-14 flex justify-center items-center cursor-pointer'>
+                    
+                    <Icon className="text-xl" name={'xmark'} useinvert={true} />
+                    
                 </div>
-                <span className='flex rounded-full header-border px-7 py-4 text-lg font-medium'>
+                <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
                     contact us
                 </span>
             </div>

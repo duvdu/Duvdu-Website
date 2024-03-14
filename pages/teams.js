@@ -60,11 +60,11 @@ const CreateBoard = () => {
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
-                            <h1 className="mood-boards-header">team projects</h1>
+                            <h1 className="text-2xl opacity-80 font-semibold capitalize">team projects</h1>
                             <div className="mr-6"></div>
                             <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full border-[1.5px] bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize">
                                 new team project
-                                <Icon className="w-10" name={"plus"} />
+                                <Icon className="w-4" name={"plus"} />
                             </div>
                         </div>
                         {false && (

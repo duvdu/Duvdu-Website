@@ -26,8 +26,6 @@
 # layer and sticy of popups
 # handle Icon                       (popup)
 
-
-
 - handle darkmode
 - handle responsive
 - loading
@@ -39,3 +37,5 @@
 - enable file drag drop
 - what is next-auth
 ----------------------------------- day task -----------------------------------
+- header search , icons , log in , register
+- index filter sticky , filter border , 
