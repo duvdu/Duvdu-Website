@@ -5,9 +5,10 @@ import Layout from "./../components/layout/Layout";
 import { fetchProjects } from "./../redux/action/project";
 import Card from "./../components/elements/project-card";
 import Filter from "../components/elements/filter";
-import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
+// import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const Projects = ({ projects, projectFilters, fetchProjects }) => {
     const Router = useRouter();
@@ -71,9 +72,11 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
     return (
         <>
             <Layout isbodyWhite={true}>
-                <section className="mt-6 mb-12">
+                <section className="mb-12">
                     <div className="container mb-30">
-                        <Filter />
+                        <div className="sticky top-header bg-DS_white z-[5] py-6 ">
+                            <Filter />
+                        </div>
                         <h1 className="page-header">most popular on duvdu</h1>
                         {getPaginatedProjects.length === 0 && (
                             <h3>No projects Found </h3>
@@ -81,7 +84,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
-                                    {i === 0 && <RelatedCategories className="block lg:hidden xl:hidden col-span-full" />}
+                                    {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                                     {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
                                     <Card className='cursor-pointer' href="/project" cardData={item} />
@@ -105,9 +108,10 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
 
 
 
-const RelatedCategories = ({ className }) => {
+const RelatedCategories = ({ className , NeedTranslate = true }) => {
+
     return (
-        <div className={className}>
+        <div className={className + (NeedTranslate? " h-26 -translate-y-8" :"")}>
             <h2 className="opacity-70 font-semibold text-lg">
                 related categories
             </h2>

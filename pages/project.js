@@ -169,7 +169,7 @@ const Header = ({ data }) => (
     <>
         <h1 className="text-xl capitalize opacity-80"> {data.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
-            <a className='flex items-center gap-3 cursor-pointer' href='/OthersProfile'>
+            <a className='flex items-center gap-3 cursor-pointer' href='/creative/Anna'>
                 <img alt='user' className="w-16" src={data.user.img} />
                 <div>
                     <span className="capitalize font-semibold text-lg">{data.user.name}</span>

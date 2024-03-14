@@ -98,12 +98,12 @@ const Filter = ({ hideSwitch = false }) => {
     ]
 
     return (
-        <div className="hidden lg:flex justify-between items-center pb-6 ">
+        <div className="hidden lg:flex justify-between items-center">
             <div className="flex gap-6 items-end">
                 {data.map((selectOptions, index) => (
                     <select
                         key={index}
-                        className="shadow-sm border border-rgba(230, 230, 230, 0.5) rounded-md py-2 px-3 text-DS_black appearance-none w-min select-custom pr-8"
+                        className="border border-[#E6E6E6] rounded-xl py-2 px-3 text-DS_black appearance-none w-min select-custom pr-8"
                         required
                     >
                         {selectOptions.map(option => (

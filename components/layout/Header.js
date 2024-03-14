@@ -146,8 +146,8 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         <div className="header-action-2 flex items-center ">
                                             <div className="header-action-icon-2 ml-2" >
                                                 <div className="icon-holder" onClick={toggleNotificationDropdown}>
+                                                    <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span>
                                                     <Icon className={notificationDropdownVisible ? " text-DS_black" : ""} name={"bell"} type="far" />
-                                                    <span className="pro-count text-primary">3</span>
                                                 </div>
                                                 <MessageAndNotofication useState={{ notificationDropdownVisible, setNotificationDropdownVisible }} />
                                             </div>

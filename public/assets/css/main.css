@@ -698,19 +698,7 @@ table p {
   margin-right: 0;
 }
 
-.header-action .header-action-icon>a span.pro-count {
-  position: absolute;
-  right: -5px;
-  bottom: -4px;
-  color: var(--white);
-  height: 20px;
-  width: 20px;
-  border-radius: 100%;
-  font-weight: 700;
-  font-size: 12px;
-  text-align: center;
-  line-height: 20px;
-}
+
 
 .header-action-2 {
   display: -webkit-box;
@@ -734,24 +722,6 @@ table p {
   position: relative;
 }
 
-.header-action-2 .header-action-icon-2>.icon-holder span {
-  font-size: 14px;
-  color: #7E7E7E;
-}
-
-.header-action-2 .header-action-icon-2>.icon-holder span.pro-count {
-  position: absolute;
-  right: -7px;
-  top: -5px;
-  color: white;
-  height: 20px;
-  width: 20px;
-  border-radius: 100%;
-  font-weight: 500;
-  font-size: 12px;
-  text-align: center;
-  line-height: 20px;
-}
 
 .cart-dropdown-wrap ul li {
   display: -webkit-box;
@@ -833,9 +803,6 @@ table p {
   height: 1em;
 }
 
-.header-action-2 .header-action-icon-2>.icon-holder span.pro-count.blue {
-  background-color: var(--primary);
-}
 
 .header-action-2 .header-action-icon-2:hover>a {
   color: var(--primary);
@@ -908,12 +875,6 @@ table p {
   background-color: #3286e0;
 }
 
-
-
-.header-bottom .header-action-right a span.pro-count {
-  background-color: var(--primary);
-  color: var(--white);
-}
 
 
 .burger-icon {
