@@ -50,7 +50,7 @@ function Auth({ children }) {
 
     return (
         <>
-            <Layout shortheader={true}>
+            <Layout shortheader={true} showTabs={false}>
                 <div className="h-body center-div">
                     <div className="container">
                         <div className="lg:flex gap-6">

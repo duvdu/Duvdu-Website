@@ -175,7 +175,7 @@ const Header = ({ data }) => (
                     <span className="capitalize font-semibold text-lg">{data.user.name}</span>
                     <div className="flex items-center gap-1 mt-1">
                         <p>{data.user.rate}</p>
-                        <Icon className='text-primary' name={'star'} />
+                        <Icon className='text-primary' name={'rate-star'} />
                     </div>
                 </div>
             </a>
@@ -223,7 +223,7 @@ const About = ({ data }) => (
                 <p id='photographer'>{data.creative.occupation}</p>
                 <div id='rating' className='flex items-center gap-1 w-20'>
                     <p>{data.creative.rate}</p>
-                    <Icon className='text-primary w-7' name={'star'} />
+                    <Icon className='text-primary w-7' name={'rate-star'} />
                 </div>
             </div>
             <div className='flex justify-center pt-7 items-center'>

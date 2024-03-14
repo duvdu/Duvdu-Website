@@ -37,5 +37,13 @@
 - enable file drag drop
 - what is next-auth
 ----------------------------------- day task -----------------------------------
-- header search , icons , log in , register
 - index filter sticky , filter border , 
+
+
+- icons : index icon star
+- create App 
+- button hover
+- dashboard chart line
+- switch
+- header sticky in
+- control in profile 

@@ -85,13 +85,13 @@ const Card = ({ cardData, className = "", href }) => {
           </a>
           {cardData.showLove &&
             <div onClick={handleLoveIconClick} className="blur-container love z-[1]">
-              <Icon className={`cursor-pointer w-6 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
+              <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
             </div>
           }
 
           {cardData.showSound &&
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
-              <Icon className={`cursor-pointer w-6 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
+              <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
           }
         </div>
@@ -105,7 +105,7 @@ const Card = ({ cardData, className = "", href }) => {
             </a>
             <div className='w-100x'></div>
             <p className='value'>{cardData.rating}</p>
-            <Icon className='text-primary w-7' name={'star'} />
+            <Icon className='text-primary w-7' name={'rate-star'} />
           </div>
           <p className='film-name'>{cardData.filmName}</p>
           <div className='price'>{cardData.price}</div>

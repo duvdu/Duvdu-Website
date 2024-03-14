@@ -31,7 +31,7 @@ const Search = () => {
     return (
         <>
             <input
-                className="searchInput border border-[#00000040] hover:border-transparent hover:bg-[#EAEEF0] focus:border-2 focus:border-primary focus:bg-transparent w-48 focus:w-full mx-6"
+                className="searchInput border border-[#00000040] hover:border-transparent hover:bg-[#EAEEF0] focus:border-2 focus:border-primary focus:bg-transparent w-60 mx-6"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => handleFocus(true)}

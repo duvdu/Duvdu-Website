@@ -26,7 +26,7 @@ const Card = ({ cardData, className = "", onClick }) => {
           </p>
           <div id='rating' className='flex items-center gap-1'>
             <p>{cardData.rating}</p>
-            <Icon className='text-primary w-7' name={'star'} />
+            <Icon className='text-primary w-7' name={'rate-star'} />
           </div>
         </div>
         <div className='flex justify-between mt-7'>

@@ -685,14 +685,6 @@ table p {
   display: block;
 }
 
-.logo.logo-width-1 {
-  margin-right: 70px;
-}
-
-.logo.logo-width-1 a img {
-  width: 180px;
-  min-width: 180px;
-}
 
 .header-action .header-action-icon:last-child {
   margin-right: 0;
@@ -1261,7 +1253,6 @@ table p {
 .main-menu>nav>ul>li ul.sub-menu li:hover ul.level-menu {
   opacity: 1;
   visibility: visible;
-  margin-top: 0px;
 }
 
 .hover-menu {
@@ -1272,8 +1263,6 @@ table p {
   top: 102%;
   background-color: var(--white);
   padding: 40px 44px 40px 44px;
-  -webkit-transition: all .25s ease 0s;
-  transition: all .25s ease 0s;
   opacity: 0;
   visibility: hidden;
   margin-top: 20px;
@@ -1392,23 +1381,10 @@ table p {
   line-height: 70px;
 }
 
-
-
 @media only screen and (max-width: 768px) {
 
+  
 
-  .logo.logo-width-1 {
-    margin-right: 0;
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-  }
-
-  .logo.logo-width-1 a img {
-    width: 150px;
-    min-width: 150px;
-  }
 
   .header-bottom {
     padding: 20px 0;
@@ -1852,7 +1828,7 @@ table p {
 }
 
 .app-btn:hover {
-  background-color: #0F53AE;
+  background-color: var(--hover_primary);
 }
 
 .error-msg {

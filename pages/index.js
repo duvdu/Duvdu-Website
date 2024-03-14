@@ -71,10 +71,10 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
 
     return (
         <>
-            <Layout isbodyWhite={true}>
+            <Layout isbodyWhite={true} iSsticky={false}>
                 <section className="mb-12">
                     <div className="container mb-30">
-                        <div className="sticky top-header bg-DS_white z-[5] py-6 ">
+                        <div className="sticky top-0 bg-DS_white z-[5] py-6 ">
                             <Filter />
                         </div>
                         <h1 className="page-header">most popular on duvdu</h1>
@@ -85,8 +85,8 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                             {getPaginatedProjects.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
-                                    {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
-                                    {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
+                                    {i === 9 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
+                                    {i === 12 && <RelatedCategories className="hidden xl:block col-span-full" />}
                                     <Card className='cursor-pointer' href="/project" cardData={item} />
                                 </React.Fragment>
                             ))}
@@ -128,17 +128,14 @@ const RelatedCategories = ({ className , NeedTranslate = true }) => {
                             slidesPerView: 2,
                             spaceBetween: 10
                         },
-                        // When window width is >= 640px
                         768: {
                             slidesPerView: 3,
                             spaceBetween: 10
                         },
-                        // When window width is >= 768px
                         1100: {
                             slidesPerView: 4,
                             spaceBetween: 10
                         },
-                        // When window width is >= 1024px
                         1280: {
                             slidesPerView: 5,
                             spaceBetween: 10

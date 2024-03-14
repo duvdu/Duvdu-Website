@@ -91,7 +91,7 @@ const Header = ({ fromlayout, toggleClick }) => {
         <>
             <div onClick={falseall} className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
-            <header className={`bg-DS_white sticky top-0 w-full z-10 ${scroll ? "stick" : ""}`}>
+            <header className={`bg-DS_white w-full z-10 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
                 <div className="py-4 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
@@ -110,6 +110,8 @@ const Header = ({ fromlayout, toggleClick }) => {
                             </div>
 
                             <div className="header-right">
+                            {fromlayout.showTabs
+                            &&
                                 <div className="header-tabs">
                                     <Link href="/dashboard">
                                         <a>
@@ -136,6 +138,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         </a>
                                     </Link>
                                 </div>
+                                }
 
                                 <div className="search-style-2 flex justify-end">
                                     <Search />
@@ -144,7 +147,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     {
                                         islogin &&
                                         <div className="header-action-2 flex items-center ">
-                                            <div className="header-action-icon-2 ml-2" >
+                                            <div className="header-action-icon-2" >
                                                 <div className="icon-holder" onClick={toggleNotificationDropdown}>
                                                     <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span>
                                                     <Icon className={notificationDropdownVisible ? " text-DS_black" : ""} name={"bell"} type="far" />
@@ -152,17 +155,17 @@ const Header = ({ fromlayout, toggleClick }) => {
                                                 <MessageAndNotofication useState={{ notificationDropdownVisible, setNotificationDropdownVisible }} />
                                             </div>
                                             <div className="header-action-icon-2 mx-8"  >
+                                                <div className="icon-holder" onClick={toggleSettingDropdown}>
+                                                    <Icon className={settingvisible ? " text-DS_black" : ""} name={"gear"} useinvert={true} />
+                                                </div>
+                                                <Setting data={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode, setIslogin: setIslogin }} />
+                                            </div>
+                                            <div className="header-action-icon-2"  >
                                                 <div className="icon-holder" onClick={toggleProfileDropdown}>
                                                     <Icon className={profileDropdownVisible ? " text-DS_black" : ""} name={"user"} type="far" />
                                                 </div>
                                                 <Profile useState={{ profileDropdownVisible, setProfileDropdownVisible }} />
 
-                                            </div>
-                                            <div className="header-action-icon-2"  >
-                                                <div className="icon-holder" onClick={toggleSettingDropdown}>
-                                                    <Icon className={settingvisible ? " text-DS_black" : ""} name={"gear"} useinvert={true} />
-                                                </div>
-                                                <Setting data={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode, setIslogin: setIslogin }} />
                                             </div>
                                         </div>
                                     }
@@ -347,7 +350,7 @@ function Profile({ useState }) {
                         </p>
                     </div>
 
-                    <a href='/MyProfile' id="profile-btn">
+                    <a href='/creative/youseff_abdulla' id="profile-btn">
                         view profile
                     </a>
 

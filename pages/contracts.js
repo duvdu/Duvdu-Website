@@ -48,7 +48,7 @@ const LeftSide = () => {
         setActiveIndex(index);
     };
     const Clients = () =>
-        <section className='h-full overflow-y-scroll'>
+        <section className='h-full'>
             <section className='mt-11 flex flex-col gap-4'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending />
@@ -62,7 +62,7 @@ const LeftSide = () => {
         </section>
 
     const Creatives = () =>
-        <section className='h-full overflow-y-scroll'>
+        <section className='h-full'>
             <section className='mt-11 flex flex-col gap-4'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending2 />
@@ -371,7 +371,6 @@ const Loadingcomponent = () => {
 const RightSide = () => {
 
     const Title = ({ title }) => <h2 className="font-bold text-start text-lg capitalize opacity-80 mt-3">{title}</h2>
-
 
     const Recents = ({ img, name, address }) =>
         <a href='/creative/youseff_abdulla'>
