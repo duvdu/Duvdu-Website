@@ -2,7 +2,7 @@
 
 export default (searchTerm,projects) => {
 
-    if(!searchTerm) return projects
+    return projects
 
     let list = []
     const words = searchTerm.toLowerCase().split(" ")

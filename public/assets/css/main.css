@@ -1293,21 +1293,6 @@ table p {
   margin-top: 12px;
 }
 
-
-.ahmed-title,
-.ahmed-title2 {
-    width: 50px;
-    height: 50px;
-}
-
-.ahmed-title {
-    
-}
-
-.ahmed-title2 {
-    
-}
-
 .header-category:hover .category-name {
     /* Change the style of div2 here */
     border-bottom-color :var(--primary)
@@ -1814,7 +1799,6 @@ table p {
 
 
 .app-btn {
-  z-index: 10;
   width: 100%;
   border-radius: 41.5px;
   align-items: center;

@@ -18,19 +18,19 @@ function button({ children, color, conentclassName = "", className = "", shadow 
   }
 
   return (
-    <div className={`relative cursor-pointer ${className}`}>
-      <div {...rest} className={`${buttonClass} app-btn btn leading-10 relative`}>
-        {
-          shadow &&
-          <div>
-            <div className={`absolute left-0 top-0 w-1/2 h-full rounded-full button-shadow-1`} />
-            <div className={`absolute left-1/2 top-0 w-1/2 h-full rounded-full button-shadow-2`} />
-          </div>
-        }
-        <div className={`flex justify-center items-center h-20 text-white`}>
+    <div className={`relative cursor-pointer h-[75px] ${className}`}>
+      <div {...rest} className={`${buttonClass} absolute app-btn h-full btn leading-10 z-10`}>
+        <div className={`flex justify-center items-center h-full text-white`}>
           {children}
         </div>
       </div>
+      {
+        shadow &&
+        <div className="btn-shadows">
+          <div className={`absolute bg-white left-0 top-0 w-1/2 h-full rounded-full button-shadow-1 z-0`} />
+          <div className={`absolute left-1/2 top-0 w-1/2 h-full rounded-full button-shadow-2`} />
+        </div>
+      }
     </div>
   );
 }

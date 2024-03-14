@@ -1,14 +1,13 @@
 import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
-import Layout from "./../components/layout/Layout";
-import { fetchProjects } from "./../redux/action/project";
-import Card from "./../components/elements/project-card";
+import Layout from "../components/layout/Layout";
+import { fetchProjects } from "../redux/action/project";
+import Card from "../components/elements/project-card";
 import Filter from "../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const Projects = ({ projects, projectFilters, fetchProjects }) => {
     const Router = useRouter();
@@ -71,12 +70,19 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
 
     return (
         <>
-            <Layout isbodyWhite={true} iSsticky={false}>
+            <Layout isbodyWhite={true} iSsticky={!searchTerm}>
                 <section className="mb-12">
                     <div className="container mb-30">
-                        <div className="sticky top-0 bg-DS_white z-[5] py-6 ">
-                            <Filter />
-                        </div>
+                        {
+                            searchTerm &&
+                            <div className="sticky top-0 bg-DS_white z-[5] py-6 ">
+                                <Filter />
+                            </div>
+                        }
+                        {
+                            !searchTerm &&
+                            <div className="h-7" />
+                        }
                         <h1 className="page-header">most popular on duvdu</h1>
                         {getPaginatedProjects.length === 0 && (
                             <h3>No projects Found </h3>
@@ -108,10 +114,10 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
 
 
 
-const RelatedCategories = ({ className , NeedTranslate = true }) => {
+const RelatedCategories = ({ className, NeedTranslate = true }) => {
 
     return (
-        <div className={className + (NeedTranslate? " h-26 -translate-y-8" :"")}>
+        <div className={className + (NeedTranslate ? " h-26 -translate-y-8" : "")}>
             <h2 className="opacity-70 font-semibold text-lg">
                 related categories
             </h2>

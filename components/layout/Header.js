@@ -86,13 +86,13 @@ const Header = ({ fromlayout, toggleClick }) => {
         });
 
     }, []);
-
+console.log(fromlayout.iSsticky)
     return (
         <>
             <div onClick={falseall} className={`w-full h-full bg-black transition-opacity ${(notificationDropdownVisible || profileDropdownVisible || settingvisible) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
             <header className={`bg-DS_white w-full z-10 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
-                <div className="py-4 hidden lg:block">
+                <div className="py-3 hidden lg:block">
                     <div className="container">
                         <div className="header-wrap">
 
@@ -176,7 +176,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                                 <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">log-in</a>
                                             </Link>
                                             <Link href="/register">
-                                                <a className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary p-4 text-DS_white font-semibold capitalize">register</a>
+                                                <a className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-DS_white font-semibold capitalize">register</a>
                                             </Link>
                                         </div>
                                     }
@@ -446,7 +446,7 @@ function Setting({ data }) {
             <div className='flex gap-3'>
                 <div onClick={() => setcontactUs(false)} className='rounded-full header-border h-14 w-14 flex justify-center items-center cursor-pointer'>
                     
-                    <Icon className="text-xl" name={'xmark'} useinvert={true} />
+                    <Icon className="text-xl size-5" name={'xmark'} useinvert={true} />
                     
                 </div>
                 <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
@@ -498,7 +498,7 @@ function Setting({ data }) {
                     {
                         img: 'chat-icon.svg',
                         name: 'Contact Us',
-                        action: <Icon name={"angle-right"} invert={true} />,
+                        action: <Icon name={"angle-right"}  />,
                         onClick: () => setcontactUs(true)
                     },
                     {
@@ -510,14 +510,14 @@ function Setting({ data }) {
                 ].map((e, i) => (
                     <div onClick={e.onClick} className="flex p-4 cursor-pointer" key={i}>
                         <img icon='icon' className="icon w-6 h-6 mr-4" src={`/assets/imgs/theme/${e.img}`} />
-                        <p className="text w-full font-semibold">{e.name}</p>
+                        <span className=" text-[12px] text -[#4F5E7B] w-full font-semibold">{e.name}</span>
                         <div className="action"> {e.action} </div>
                     </div>
                 ))
             }
             <div onClick={() => setIslogin(false)} className="flex p-4 text-red-950 cursor-pointer">
                 <img icon='icon' className="icon w-6 h-6 mr-4" src={`/assets/imgs/theme/logout-icon.svg`} />
-                <p className="text w-full font-semibold text-red-500"> Logout </p>
+                <p className="text-[12px] w-full font-semibold text-red-500"> Logout </p>
                 <div className="action"> <div /> </div>
             </div>
         </>

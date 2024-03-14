@@ -25,6 +25,10 @@
 # header out of slider
 # layer and sticy of popups
 # handle Icon                       (popup)
+# switch
+# icons : index icon star
+# button hover
+# create App 
 
 - handle darkmode
 - handle responsive
@@ -40,10 +44,5 @@
 - index filter sticky , filter border , 
 
 
-- icons : index icon star
-- create App 
-- button hover
 - dashboard chart line
-- switch
-- header sticky in
-- control in profile 
+- fixed control in profile in mobile

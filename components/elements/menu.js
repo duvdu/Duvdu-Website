@@ -49,7 +49,6 @@ const Category = ({category}) => {
     if (megaMenuRef.current) {
       const computedStyle = window.getComputedStyle(megaMenuRef.current);
       const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
-      console.log(megaMenuRef , megaMenuRef.current ,computedStyle.getPropertyValue('right') , rightPosition)
       if (rightPosition < 0) {
         megaMenuRef.current.style.right = '0px';
       }
@@ -57,7 +56,7 @@ const Category = ({category}) => {
   }, [category]);
   return (
     <li className='header-category'>
-      <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 text-base py-2 capitalize'>
+      <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 text-base capitalize py-1'>
         {category.category}
       </div>
       <ul className="hover-menu" ref={megaMenuRef}>

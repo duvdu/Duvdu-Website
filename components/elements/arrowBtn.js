@@ -4,7 +4,6 @@ import Icon from '../Icons';
 const ArrowBtn = ({ className, children, text, Click, isEnable = true, IconName = "angle-right", ...rest }) => {
 
     const handleClick = () => {
-        console.log(isEnable , Click)
         if (isEnable && Click) {
             Click();
         }

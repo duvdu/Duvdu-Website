@@ -98,8 +98,11 @@ function Auth({ children }) {
                                         <Icon name="arrow-right-long" className="ml-3 text-xl w-6" />
                                     </a>
                                     </Link>
-                                    <div className="my-20 px-0 md:px-28 w-full max-w-[650px]">
+                                    <div className="overflow-y-scroll w-full max-w-[650px]">
+
+                                    <div className="my-20 px-0 md:px-28">
                                         {children}
+                                    </div>
                                     </div>
                                 </div>
                             </div>

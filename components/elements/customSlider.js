@@ -31,7 +31,6 @@ function CustomSlider({ initValue = 0, values, onValueChange }) {
             if (initValue !== undefined) {
                 const sliderRect = slider.getBoundingClientRect();
                 const value = (sliderRect.width / values) * initValue;
-                console.log(value)
                 updateSlider(value);
             }
 
