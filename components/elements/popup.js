@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '../Icons';
 
-const Popup = ({ id, children, onCancel, header, className = "", img, addsticky = false }) => {
+const Popup = ({ id, children, onCancel, header, className = "", img, addWhiteShadow = false }) => {
 
     return (
         <div id={id} className={`popup z-30 ${className}`}>
@@ -22,7 +22,7 @@ const Popup = ({ id, children, onCancel, header, className = "", img, addsticky 
                     {children}
                 </div>
                 {
-                    addsticky &&
+                    addWhiteShadow &&
                     <div className='h-0 w-full sticky bottom-0 -translate-y-32' > 
                         <div className='bottomeffect h-32'/>
                     </div>

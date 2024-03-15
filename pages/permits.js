@@ -56,28 +56,30 @@ const Projects = () => {
         };
     }, [limit]);
 
-    const producers = [
+ 
+    const permits = [
         {
-            "type": 1,
             "img": "/assets/imgs/profile/author-2.png",
             "name": "Youseff Sayed",
             "location": "5th Settlement",
             "rank": "Professional",
             "projects": 267,
             "rating": 3.7,
+            "pricing":170,
+            "duration":72,
         },
         {
-            "type": 1,
             "img": "/assets/imgs/profile/author-1.png",
             "name": "Joseph Adel",
             "location": "5th Settlement",
             "rank": "Professional",
             "projects": 85,
-            "rating": 4.2
+            "rating": 4.2,
+            "pricing":170,
+            "duration":72,
         }
     ]
-
-    const getPaginatedProjects = producers;
+    const getPaginatedProjects = permits;
 
     const handlesetdata = (item) => {
         setdata(item)
@@ -102,8 +104,8 @@ const Projects = () => {
                         )}
                         <div className="minmax-360">
                             {getPaginatedProjects.map((item, i) => {
-                                return <Card onClick={() => handlesetdata(item)} key={i} cardData={item} />;
-                               
+                                return <Card2 onClick={() => handlesetdata(item)} key={i} cardData={item} />;
+                                
                             })}
                         </div>
                         {

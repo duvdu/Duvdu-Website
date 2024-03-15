@@ -19,7 +19,7 @@ function button({ children, color, conentclassName = "", className = "", shadow 
 
   return (
     <div className={`relative cursor-pointer h-[75px] ${className}`}>
-      <div {...rest} className={`${buttonClass} absolute app-btn h-full btn leading-10 z-10`}>
+      <div {...rest} className={`${buttonClass} absolute left-0 app-btn h-full btn leading-10 z-10 min-w-min`}>
         <div className={`flex justify-center items-center h-full text-white`}>
           {children}
         </div>

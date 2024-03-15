@@ -370,7 +370,7 @@ const AddToTeamCard = ({ info, goback }) =>
                 <p id='photographer'>{info['occupation']}</p>
                 <div id='rating' className='flex items-center gap-1 w-20'>
                     <p>{info['value']}</p>
-                    <img src='/assets/imgs/theme/icons/rating.svg' width={18} height={18} />
+                    <Icon className='text-primary mr-2' name={'rate-star'} />
                 </div>
             </div>
             <div className='flex justify-center pt-7 items-center'>
@@ -384,7 +384,7 @@ const AddToTeamCard = ({ info, goback }) =>
 
                 </div>
             </div>
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-3 mt-6 justify-center items-center">
                 <span className="text-5xl">$25
                     <span className="text-2xl opacity-50">/hr</span>
                 </span>
@@ -401,7 +401,7 @@ const AddToTeamCard = ({ info, goback }) =>
 
 const AddToTeamPage = ({ goback }) => <>
     <Filter hideSwitch={true} />
-    <div className="grid minmax-360 gap-5">
+    <div className="grid minmax-360 gap-5 mt-6">
         {
             users.map((value, index) =>
                 <AddToTeamCard goback={goback} info={value} key={index} className='cursor-pointer' href="/project" />

@@ -156,7 +156,7 @@ function EditPopUp({ }) {
     };
     return (
         <>
-            <Popup id='edit-details' header={'Edit Details'} addsticky={true}>
+            <Popup id='edit-details' header={'Edit Details'} addWhiteShadow={true}>
                 <div className='relative'>
                     <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center  border-[#0000001A]">
                         <Icon className='text-white' name={'pen'} />

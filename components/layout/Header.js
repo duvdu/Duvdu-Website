@@ -466,10 +466,7 @@ function Profile({ PathuseState }) {
                     </div>
                 </a>
 
-                {/*
-                <div id="settings"> <div></div>
-                <span>settings</span>
-                <img alt="profile cover" src="/assets/imgs/theme/icons/setting.svg" /> </div> */}
+              
             </div>
         </div>
     )

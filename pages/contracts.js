@@ -48,7 +48,7 @@ const LeftSide = () => {
         setActiveIndex(index);
     };
     const Clients = () =>
-        <section className='h-full'>
+        <section className='h-full overflow-y-scroll'>
             <section className='mt-11 flex flex-col gap-4'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending />
@@ -62,7 +62,7 @@ const LeftSide = () => {
         </section>
 
     const Creatives = () =>
-        <section className='h-full'>
+        <section className='h-full overflow-y-scroll'>
             <section className='mt-11 flex flex-col gap-4'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending2 />
@@ -448,7 +448,7 @@ const RightSide = () => {
 
     return (
         <>
-            <Clients />
+            {/* <Clients /> */}
             <div className='h-body overflow-y-scroll'>
                 <div className='flex flex-col gap-[15px] text-center w-full mt-9 '>
                     <Title title="recent clients" />
@@ -460,6 +460,10 @@ const RightSide = () => {
                         </div>
                     </div>
                     <Title title='history' />
+                    <HisTory />
+                    <HisTory isCanceled={true}/>
+                    <HisTory />
+                    <HisTory isCanceled={true}/>
                     <HisTory />
                     <HisTory isCanceled={true}/>
                     
