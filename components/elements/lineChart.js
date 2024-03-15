@@ -107,16 +107,22 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
 
 
         const updateGradient = () => {
-            if (gradientRef.current && chartInstance) {
-                const canvas = document.getElementById('chart');
+            try {
+                if (gradientRef.current && chartInstance) {
+                    const canvas = document.getElementById('chart');
 
-                const updatedGradientFill = gradientRef.current.createLinearGradient(0, 0, 0, canvas.height*.9);
-                updatedGradientFill.addColorStop(0, '#2074ec');
-                updatedGradientFill.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    const updatedGradientFill = gradientRef.current.createLinearGradient(0, 0, 0, canvas.height * .9);
+                    updatedGradientFill.addColorStop(0, '#2074ec');
+                    updatedGradientFill.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
-                chartInstance.data.datasets[0].backgroundColor = updatedGradientFill;
-                chartInstance.update();
+                    chartInstance.data.datasets[0].backgroundColor = updatedGradientFill;
+                    chartInstance.update();
+                }
             }
+            catch (ex) {
+                console.error(ex)
+            }
+
         };
 
         const delay = 0;
@@ -132,28 +138,27 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     }, [labels, initialDatapoints]);
 
     return (
-        <div className='relative'>
-            .
+        <div className='relative mt-10'>
             <div className='absolute h-24 w-full flex items-center mx-10 gap-5'>
                 <div className='text-lg opacity-70 capitalize font-semibold'>
                     project views
                 </div>
                 <div className={`gap-1 rounded-full px-4 flex items-center ${isUp ? 'text-green-700' : 'text-red-700'} dashboard_padge`}>
-                    
+
                     <span >
                         {
                             !isUp && <Icon name={'arrow-down-long'} />
                         }
                         {
-                            isUp &&<Icon name={'upArrow'} />
+                            isUp && <Icon name={'upArrow'} />
                         }
 
                     </span>
-                    
-                    <span  className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
+
+                    <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
                 </div>
             </div>
-            <canvas className='card red-gradient cardborder-2' id="chart" ref={chartRef} />
+            <canvas className='card red-gradient border-2 border-[#00000033]' id="chart" ref={chartRef} />
         </div>
     );
 };

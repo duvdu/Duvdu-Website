@@ -804,7 +804,6 @@ table p {
 .cart-dropdown-wrap.active {
   opacity: 1;
   visibility: visible;
-  top: calc(100% + 10px);
 }
 
 .header-middle-ptb-1 {
@@ -1078,7 +1077,7 @@ table p {
 .header-progress-bar {
   border-radius: 90px;
   background: #1A73EB80;
-  height: 16px;
+  height: 13px;
 }
 
 .header-progress {
@@ -1099,7 +1098,7 @@ table p {
   background-image: url(../imgs/theme/icons/search.svg);
   background-repeat: no-repeat;
   background-position: center left;
-  
+
 }
 
 ::placeholder {
@@ -1294,8 +1293,8 @@ table p {
 }
 
 .header-category:hover .category-name {
-    /* Change the style of div2 here */
-    border-bottom-color :var(--primary)
+  /* Change the style of div2 here */
+  border-bottom-color: var(--primary)
 }
 
 
@@ -1368,7 +1367,7 @@ table p {
 
 @media only screen and (max-width: 768px) {
 
-  
+
 
 
   .header-bottom {
@@ -1497,26 +1496,13 @@ table p {
 .messages {
   height: 376px;
   border-radius: 45px;
-  border: 1px;
   box-shadow: 0px 6px 15px -5px #00000026;
   border: 1px solid #00000026;
   background-color: var(--white);
-  margin: 20px;
+  /* margin: 20px; */
   padding: 35px 40px;
 
 }
-
-.notifications {
-  margin-bottom: 10px;
-
-}
-
-.messages {
-  margin-top: 10px;
-}
-
-
-
 
 .profile {
   display: flex;
@@ -1546,30 +1532,20 @@ table p {
   font-weight: 700;
 }
 
-.dialog>* {
-  transform: translateX(.4rem);
+.dialog::-webkit-scrollbar {
+  width: 0;
 }
 
 .dialog {
-  border-radius: 60px;
-  border: 1px solid rgba(var(--black-rgb), 0.25);
-  background: rgba(var(--black-rgb), 0.15);
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
+  border: 1px solid rgba(var(--white-rgb), 0.25);
+  background: rgba(var(--white-rgb), 0.15);
   backdrop-filter: blur(10px);
   z-index: 30;
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 90vh;
-}
-
-.dialog .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.dialog .header>h2 {
-  margin: 0;
-  font-size: 1.5em;
+  max-height: min(calc(100vh - 150px), 800px);
 }
 
 .dialog .card {
@@ -1579,26 +1555,26 @@ table p {
   border: 1px solid #00000026;
   background-size: 100% 33%;
   background-repeat: no-repeat;
-  margin: 20px;
   padding: 25px;
   background-color: var(--white);
+  /* margin: 12.5px; */
+}
 
+.dialog-2 {
+  margin: 0;
+  padding: 12px;
+  /* margin-bottom: 12px; */
 }
 
 .dialog-1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 428px;
-  height: 815px;
+  gap: 8px;
+  height: auto;
+  padding: 12px;
 }
 
-.dialog-2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 428px;
-}
 
 .dialog-2 .card {
   justify-content: space-between;
@@ -1622,11 +1598,11 @@ table p {
   justify-items: left;
 }
 
-.dialog-2 .info p {
+.dialog-2 .info div {
   text-align: center;
 }
 
-.dialog-2 .info p .name {
+.dialog-2 .info div .name {
 
   font-size: 20px;
   font-weight: 700;
@@ -1634,7 +1610,7 @@ table p {
   opacity: 80%
 }
 
-.dialog-2 .info p .location {
+.dialog-2 .info div .location {
 
   font-size: 15px;
   font-weight: 600;
@@ -1668,7 +1644,6 @@ table p {
 }
 
 .dialog-2 #profile-btn {
-
   top: 192px;
   left: 26px;
   border-radius: 90px;
@@ -1681,19 +1656,6 @@ table p {
   color: var(--primary);
   text-decoration: none;
 }
-
-.dialog-2 .bottom-section .project {
-  aspect-ratio: 1 / 1;
-  border-radius: 30px;
-  width: 48%;
-  overflow: hidden;
-
-}
-
-.dialog-2 .bottom-section .project img {
-  width: 100%;
-}
-
 
 .border-NoProjectYet {
   border-radius: 45px;

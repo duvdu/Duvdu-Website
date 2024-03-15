@@ -414,7 +414,7 @@ const Control = ({ data, toggleDrawer }) => {
             <div className='sticky h-32 bottom-0 flex justify-between items-end p-10 z-20'>
                 {
                     !showChat &&
-                    <div onClick={handleOpenChat} className="message-shadow flex rounded-full p-2 h-16 bg-DS_white cursor-pointer ">
+                    <div onClick={handleOpenChat} className="hidden  message-shadow lg:flex rounded-full p-2 h-16 bg-DS_white cursor-pointer ">
                         <div className="relative">
                             <img className="h-full" src={data.user.img} />
                             {online && (
@@ -438,7 +438,6 @@ const Control = ({ data, toggleDrawer }) => {
                     showChat &&
                     <div />
                 }
-                <div className="hidden lg:block">
                     <Controller>
                         <div className="controller-1" >
                             <Icon name={'share'} />
@@ -451,7 +450,7 @@ const Control = ({ data, toggleDrawer }) => {
                         </div>
                         <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
                     </Controller>
-                </div>
+                
             </div>
         </>
     );

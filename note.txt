@@ -41,8 +41,5 @@
 - enable file drag drop
 - what is next-auth
 ----------------------------------- day task -----------------------------------
-- index filter sticky , filter border , 
-
-
 - dashboard chart line
 - fixed control in profile in mobile
