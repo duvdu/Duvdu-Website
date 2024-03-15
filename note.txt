@@ -43,4 +43,4 @@
 ----------------------------------- day task -----------------------------------
 - dashboard chart line
 - fixed control in profile in mobile
-- popup note
+- popups btn

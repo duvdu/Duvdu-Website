@@ -85,7 +85,7 @@ const Dashboard = () => {
             <Layout shortheader={true}>
                 <DashboardPopup />
                 <div className='container flex gap-6 flex-col lg:flex-row'>
-                    <div className='w-full'>
+                    <div className='w-full h-body'>
                         <NextBadgeCard badge={badge} />
                         <ProjectViewsCard recieved={recieved} />
                         <Chart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />

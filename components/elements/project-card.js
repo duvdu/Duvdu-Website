@@ -101,14 +101,13 @@ const Card = ({ cardData, className = "", href }) => {
               <img src={cardData.profileImage} alt='user' />
             </a>
             <a href='/creative/anaa_youseff' className='name cursor-pointer' >
-              <p>{cardData.name}</p>
+              <span className='text-sm font-semibold'>{cardData.name}</span>
             </a>
-            <div className='w-100x'></div>
-            <p className='value'>{cardData.rating}</p>
+            <span className='mr-2 text-base opacity-80 font-medium'>{cardData.rating}</span>
             <Icon className='text-primary w-7' name={'rate-star'} />
           </div>
-          <p className='film-name'>{cardData.filmName}</p>
-          <div className='price'>{cardData.price}</div>
+          <p className='text-xl opacity-70 font-medium'>{cardData.filmName}</p>
+          <div className='text-xl font-bold mt-3'>{cardData.price}</div>
         </div>
       </div>
     </>

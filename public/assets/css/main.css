@@ -1532,7 +1532,7 @@ table p {
   font-weight: 700;
 }
 
-.dialog::-webkit-scrollbar {
+.dialog > div::-webkit-scrollbar {
   width: 0;
 }
 
@@ -1543,8 +1543,8 @@ table p {
   background: rgba(var(--white-rgb), 0.15);
   backdrop-filter: blur(10px);
   z-index: 30;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  /* overflow-y: scroll; */
+  /* overflow-x: hidden; */
   max-height: min(calc(100vh - 150px), 800px);
 }
 

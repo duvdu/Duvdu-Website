@@ -287,56 +287,59 @@ function MessageAndNotofication({ useState }) {
 
     return (
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (useState.notificationDropdownVisible ? " active" : "")}>
-            <div className="dialog dialog-1 flex flex-col justify-between">
-                <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white p-7">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-base font-bold capitalize">messages</h2>
-                        <a className="underline font-semibold capitalize" href="">view all</a>
-                    </div>
-                    <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
-                        {notification.map((profile, index) => (
-                            <div key={index} className="w-64 flex gap-4">
-                                <img className="size-9 rounded-full" src={profile.img_url} alt="user" width="45" height="45" />
-                                <div className="flex flex-col justify-center">
-                                    <span className="leading-[1px]">
-                                        <span className="font-bold">{profile.name} </span>
-                                        <span className="text-xs opacity-60">{profile.event}</span>
-                                    </span>
+            <div className="dialog dialog-1">
+                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2">
+                    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white p-7">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-base font-bold capitalize">messages</h2>
+                            <a className="underline font-semibold capitalize" href="">view all</a>
+                        </div>
+                        <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
+                            {notification.map((profile, index) => (
+                                <div key={index} className="w-64 flex gap-4">
+                                    <img className="size-9 rounded-full" src={profile.img_url} alt="user" width="45" height="45" />
+                                    <div className="flex flex-col justify-center">
+                                        <span className="leading-[1px]">
+                                            <span className="font-bold">{profile.name} </span>
+                                            <span className="text-xs opacity-60">{profile.event}</span>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-                <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white p-7">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-base font-bold capitalize">messages</h2>
-                        <a className="underline font-semibold capitalize" href="">view all</a>
-                    </div>
-                    <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
-                        {messages.map((profile, index) => (
-                            <div key={index} className="w-64 flex gap-4">
-                                <div className="relative">
-                                    <div className="size-9 rounded-full bg-black overflow-hidden">
-                                        <img className="" src={profile.img_url} alt="user" width="37" height="37" />
+                    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white p-7">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-base font-bold capitalize">messages</h2>
+                            <a className="underline font-semibold capitalize" href="">view all</a>
+                        </div>
+                        <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
+                            {messages.map((profile, index) => (
+                                <div key={index} className="w-64 flex gap-4">
+                                    <div className="relative">
+                                        <div className="size-9 rounded-full bg-black overflow-hidden">
+                                            <img className="" src={profile.img_url} alt="user" width="37" height="37" />
+                                        </div>
+
+                                        <div className={`absolute bottom-1 right-[2px] rounded-full size-[10px] border-[1.68px] border-white ${profile.isActive ? 'bg-[#4CE417]' : 'bg-[#BDBDBD]'}`} />
+
                                     </div>
 
-                                    <div className="absolute bottom-1 right-[2px] rounded-full size-[10px] border-[1.68px] border-white bg-[#4CE417]" />
-                                </div>
-
-                                <div className="flex flex-col w-full">
-                                    <div className="flex justify-between">
-                                        <span className="font-semibold text-xs">{profile.name} </span>
-                                        <span className="text-[#333] text-[10px] opacity-60">{profile.date} </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-xs opacity-60">{profile.event}</span>
-                                        {profile.isNew &&
-                                            <span className="text-white bg-primary text-[10px] font-medium rounded-full size-5 flex items-center justify-center">{profile.messagesNum} </span>
-                                        }
+                                    <div className="flex flex-col w-full">
+                                        <div className="flex justify-between">
+                                            <span className="font-semibold text-xs">{profile.name} </span>
+                                            <span className="text-[#333] text-[10px] opacity-60">{profile.date} </span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-xs opacity-60">{profile.event}</span>
+                                            {profile.isNew &&
+                                                <span className="text-white bg-primary text-[10px] font-medium rounded-full size-5 flex items-center justify-center">{profile.messagesNum} </span>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -365,108 +368,109 @@ function Profile({ PathuseState }) {
     ]
     return (
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (PathuseState.profileDropdownVisible ? " active" : "")}  >
-            <div className="dialog dialog-2 flex flex-col justify-between w-[400px] gap-3">
-                <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
-                    <div className="flex w-full overflow-hidden h-20">
-                        {["/assets/imgs/projects/1.jpeg",
-                            "/assets/imgs/projects/6.jpeg",
-                            "/assets/imgs/projects/3.jpeg",
-                            "/assets/imgs/projects/4.jpeg"].map((image, index) => (
-                                <img key={index} className="w-1/4" src={image} alt={`Image ${index}`} />
-                            ))}
-                    </div>
-                    <div className='p-5'>
-                        <div className='flex items-start gap-4 -translate-y-4 h-12'>
-                            <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"/assets/imgs/profile/1.jpg"} alt="profile picture" />
+            <div className="dialog dialog-2 flex flex-col">
+                    <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
+                        <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
+                            <div className="flex w-full overflow-hidden h-20">
+                                {["/assets/imgs/projects/1.jpeg",
+                                    "/assets/imgs/projects/6.jpeg",
+                                    "/assets/imgs/projects/3.jpeg",
+                                    "/assets/imgs/projects/4.jpeg"].map((image, index) => (
+                                        <img key={index} className="w-1/4" src={image} alt={`Image ${index}`} />
+                                    ))}
                             </div>
-                            <div className='flex-2 flex-col'>
-                                <span className='text-base font-bold capitalize'>{'youseff abdulla'}</span>
-                                <span className='flex items-center gap-1 opacity-40'>
-                                    <Icon className="w-2 ml-2" name="location-dot" />
-                                    <span className="text-xs font-semibold capitalize">{'5th settlement'}</span>
-                                </span>
+                            <div className='p-5'>
+                                <div className='flex items-start gap-4 -translate-y-4 h-12'>
+                                    <div className='size-[72px] bg-cover relative bg-no-repeat'>
+                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"/assets/imgs/profile/1.jpg"} alt="profile picture" />
+                                    </div>
+                                    <div className='flex-2 flex-col'>
+                                        <span className='text-base font-bold capitalize'>{'youseff abdulla'}</span>
+                                        <span className='flex items-center gap-1 opacity-40'>
+                                            <Icon className="w-2 ml-2" name="location-dot" />
+                                            <span className="text-xs font-semibold capitalize">{'5th settlement'}</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="flex gap-3 mt-3">
+                                    <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
+                                        <span className="text-primary font-bold text-base">
+                                            view profile
+                                        </span>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
-                        <div className="flex gap-3 mt-3">
-                            <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
-                                <span className="text-primary font-bold text-base">
-                                    view profile
-                                </span>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
+                        {/* middle card  */}
+                        {
+                            showMiddleCard &&
+                            <div className="p-6 bg-DS_white rounded-[45px]">
+                                <div className="flex">
+                                    <div className="w-full">
 
-                {/* middle card  */}
-                {
-                    showMiddleCard &&
-                    <div className="p-6 bg-DS_white rounded-[45px]">
-                        <div className="flex">
-                            <div className="w-full">
-
-                                <h4 className="opacity-82 font-semibold text-sm mb-2">
-                                    Complete your Profile
-                                </h4>
-                                <div className='flex items-center'>
-                                    <div className="flex w-full">
-                                        <div className="header-progress-bar relative w-full">
-                                            <div className="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
-                                            <div className="relative h-full overflow-hidden">
-                                                <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
+                                        <h4 className="opacity-82 font-semibold text-sm mb-2">
+                                            Complete your Profile
+                                        </h4>
+                                        <div className='flex items-center'>
+                                            <div className="flex w-full">
+                                                <div className="header-progress-bar relative w-full">
+                                                    <div className="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
+                                                    <div className="relative h-full overflow-hidden">
+                                                        <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
+                                                    </div>
+                                                </div>
+                                                <span className="text-primary font-semibold text-xs right-0 bottom-full ml-2 whitespace-nowrap">{badge}%</span>
                                             </div>
                                         </div>
-                                        <span className="text-primary font-semibold text-xs right-0 bottom-full ml-2 whitespace-nowrap">{badge}%</span>
+                                    </div>
+                                    <div onClick={handleCloseMiddleCard} className='ml-3 flex justify-center items-center cursor-pointer'>
+                                        <div className="h-min rounded-full header-border p-3">
+                                            <Icon className="size-5 " name={'xmark'} useinvert={true} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-3 mt-4">
+                                    {states.map((item, index) => (
+                                        <React.Fragment key={index}>
+                                            {item.state ? (
+                                                <div className="flex items-center gap-3">
+                                                    <div className="text-[#999999] text-sm font-semibold">
+                                                        {item.text}
+                                                    </div>
+                                                    <Icon name="greenCheck" />
+                                                </div>
+                                            ) : (
+                                                <a className="no-underline text-sm font-semibold">{item.text}</a>
+                                            )}
+                                            {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+
+
+                            </div>}
+
+                        {/* end card  */}
+                        <a href="/saved">
+                            <div className="p-3 bg-DS_white rounded-[45px]">
+                                <h4 className="opacity-70 text-sm font-semibold m-2">
+                                    saved projects
+                                </h4>
+                                <div className="flex justify-between gap-3">
+                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
+                                        <img src="/assets/imgs/projects/1.jpeg" />
+                                    </div>
+                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
+                                        <img src="/assets/imgs/projects/3.jpeg" />
                                     </div>
                                 </div>
                             </div>
-                            <div onClick={handleCloseMiddleCard} className='ml-3 flex justify-center items-center cursor-pointer'>
-                                <div className="h-min rounded-full header-border p-3">
-                                    <Icon className="size-5 " name={'xmark'} useinvert={true} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col gap-3 mt-4">
-                            {states.map((item, index) => (
-                                <React.Fragment key={index}>
-                                    {item.state ? (
-                                        <div className="flex items-center gap-3">
-                                            <div className="text-[#999999] text-sm font-semibold">
-                                                {item.text}
-                                            </div>
-                                            <Icon name="greenCheck" />
-                                        </div>
-                                    ) : (
-                                        <a className="no-underline text-sm font-semibold">{item.text}</a>
-                                    )}
-                                    {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
-                                </React.Fragment>
-                            ))}
-                        </div>
-
-
-                    </div>}
-
-                {/* end card  */}
-                <a href="/saved">
-                    <div className="p-3 bg-DS_white rounded-[45px]">
-                        <h4 className="opacity-70 text-sm font-semibold m-2">
-                            saved projects
-                        </h4>
-                        <div className="flex justify-between gap-3">
-                            <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                <img src="/assets/imgs/projects/1.jpeg" />
-                            </div>
-                            <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                <img src="/assets/imgs/projects/3.jpeg" />
-                            </div>
-                        </div>
+                        </a>
+                   
                     </div>
-                </a>
-
-              
             </div>
         </div>
     )
@@ -571,12 +575,14 @@ function Setting({ data }) {
 
     return (
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (data.settingvisible ? " active" : "")}  >
-            <div className="dialog p-3">
+            <div className="dialog flex flex-col">
+            <div className="overflow-y-scroll rounded-b-[60px] p-3">
                 <div className="card w-72" >
                     {contactUs && <ContactUs />}
                     {!contactUs && <Main setIslogin={data.setIslogin} />}
                     {/* <Main /> */}
                 </div>
+            </div>
             </div>
         </div>
     )
