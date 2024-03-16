@@ -79,7 +79,8 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                         layout: {
                             padding: {
                                 top: 96
-                            }
+                            },
+                            height : 400
                         },
                         scales: {
                             x: {
@@ -138,7 +139,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     }, [labels, initialDatapoints]);
 
     return (
-        <div className='relative mt-10'>
+        <div className='relative'>
             <div className='absolute h-24 w-full flex items-center mx-10 gap-5'>
                 <div className='text-lg opacity-70 capitalize font-semibold'>
                     project views
@@ -158,7 +159,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                     <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
                 </div>
             </div>
-            <canvas className='card h-full red-gradient border-2 border-[#00000033]' id="chart" ref={chartRef} />
+            <canvas className='card red-gradient border-2 border-[#00000033] h-full' id="chart" ref={chartRef}/>
         </div>
     );
 };

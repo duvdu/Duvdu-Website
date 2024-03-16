@@ -208,8 +208,9 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 </div>
                             }
 
-                            <div className="block lg:hidden" onClick={toggleClick}>
-                            <Icon className="size-11" name={'burgerMenu'} />
+                            <div className="flex gap-2 lg:hidden my-4" >
+                                <Icon className="h-9" name={'search-2'} />
+                                <Icon className="h-9" name={'burgerMenu'} onClick={toggleClick}/>
                             </div>
                         </div>
                     </div>

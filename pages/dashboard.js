@@ -10,6 +10,10 @@ import Icon from '../components/Icons';
 import React, { useState } from 'react';
 
 const Dashboard = () => {
+    
+    const isUp = true
+    const badge = 63;
+    const viewRate = 2.6
 
     const chart = {
         initialDatapoints: [100, 40, 20, 60, 60, 120, 180, 120, 125, 105, 110, 170],
@@ -33,7 +37,6 @@ const Dashboard = () => {
             'state': 'portfolio',
         },
     ]
-    const badge = 63;
     const recieved = {
         "data": [
             {
@@ -76,21 +79,20 @@ const Dashboard = () => {
             }
         ]
     }
-    const isUp = true
-    const viewRate = 2.6
+    
 
     return (
         <>
-
             <Layout shortheader={true}>
                 <DashboardPopup />
-                <div className='container flex gap-6 flex-col lg:flex-row'>
-                    <div className='w-full h-body'>
+                <div className='container flex gap-6 flex-col lg:flex-row '>
+                    <div className='w-full flex flex-col gap-6 pt-6 '>
                         <NextBadgeCard badge={badge} />
                         <ProjectViewsCard recieved={recieved} />
                         <Chart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
+                        
                     </div>
-                    <div className='w-full mt-6'>
+                    <div className='w-full pt-6'>
                         <div className='flex flex-col sm:flex-row gap-6'>
                             <div className='flex flex-col w-full gap-6'>
                                 <div className='card cardborder-3 bg-DS_white w-full h-full cardborder p-7 pt-16'>
@@ -116,17 +118,14 @@ const Dashboard = () => {
                                                 {
                                                     isUp && <Icon name={'upArrow'} />
                                                 }
-
                                             </span>
                                             <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
-
                                         </div>
-                                        <div className='w-full'/>
-                                            <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
-                                                <p>?</p>
-                                            </div>
+                                        <div className='w-full' />
+                                        <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
+                                            <p>?</p>
+                                        </div>
                                     </div>
-
                                     <br />
                                     <br />
                                     <span className='text-[47.907px]  text-DS_black font-medium capitalize'>1530</span>
@@ -135,7 +134,6 @@ const Dashboard = () => {
                                         <div className='dashboard_padge px-2 py-1'>
                                             <span className='text-sm font-medium opacity-70'>top 30%</span>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

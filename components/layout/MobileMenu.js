@@ -36,13 +36,10 @@ const Header = ({ onClick }) =>
                 </a>
             </Link>
         </div>
-        <div className="h-10 aspect-square border rounded-full flex items-center">
-            <Icon name={'search'} />
-        </div>
-        <div className="flex items-center justify-center size-10 ml-2" onClick={onClick}>
-            <div className="border rounded-full size-10 flex items-center justify-center">
-                <Icon className="w-3" name={'xmark'} />
-            </div>
+
+        <div className="flex items-center justify-center gap-2" onClick={onClick}>
+            <Icon name={'search-menu'} />
+            <Icon name={'xmark-menu'} />
         </div>
     </div>
 
@@ -117,7 +114,6 @@ const Menu = () => {
                         >
                             {category.subcategories.map((subcategory, subIndex) => {
 
-
                                 const isOurStation = openSubCategories && openSubCategories.title === subcategory.title;
 
                                 return (
@@ -126,7 +122,7 @@ const Menu = () => {
                                             <div className="text-[#4F5E7B] font-semibold text-sm">
                                                 {subcategory.title}
                                             </div>
-                                            <Icon className={`text-[#B4BBC8]  text-xl transform transition-all duration-300 ${isOurStation ? 'rotate-180' : ''}`} name={'angle-down'} />
+                                            <Icon className={`text-[#B4BBC8] text-lg transform transition-all duration-300 ${isOurStation ? 'rotate-180' : ''}`} name={'angle-down-menu'} />
                                         </div>
                                         <ul className="transition-all duration-300 overflow-hidden"
                                             style={{ maxHeight: isOurStation ? subcategory.items.length * 64 : 0 }}
@@ -158,10 +154,12 @@ const Auth = () =>
 const SpeficIcon = ({ name }) => {
     return (
         <div className="size-4 flex justify-center items-center">
-
             <div className="relative">
-                <div className="absolute -top-[9px]     left-0  w-[2px] h-4 bg-[#B4BBC8]"></div>
-                <div className={`absolute bottom-0 -left-[7px]      h-[2px] w-4 transform transition-all duration-300 ${name === 'minus' ? "bg-transparent" : "bg-[#B4BBC8]"}`}></div>
+                <div className="-translate-x-[.85px] absolute top-0 left-0 w-[1.7px] h-[6px] bg-[#B4BBC8]"></div>    {/* top */}
+                <div className={`translate-y-[.85px] absolute bottom-0 left-0 h-[1.7px] w-[6px] transform transition-all duration-300 ${name === 'minus' ? "bg-transparent" : "bg-[#B4BBC8]"}`}></div>     {/* left */}
+
+                <div className="-translate-x-[.85px] absolute bottom-0 left-0 w-[1.7px] h-[6px] bg-[#B4BBC8]"></div> {/* bottom */}
+                <div className={`translate-y-[.85px] absolute bottom-0 right-0 h-[1.7px] w-[6px] transform transition-all duration-300 ${name === 'minus' ? "bg-transparent" : "bg-[#B4BBC8]"}`}></div>     {/* right */}
             </div>
         </div>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
 
 const NextBadgeCard = ({ badge }) => (
-    <div className='card blue-gradient w-full mt-6 text-DS_white text-lg p-6'>
-        <div className='capitalize text-lg opacity-70 pb-9 text-white'>
+    <div className='card flex flex-col justify-around blue-gradient w-full text-DS_white text-lg p-6 min-h-36'>
+        <div className='capitalize text-lg opacity-70 text-white'>
             next badge
         </div>
         <div className='flex items-center'>

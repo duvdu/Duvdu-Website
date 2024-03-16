@@ -1072,7 +1072,7 @@ table p {
 .mobile-header-wrapper-style {
   position: fixed;
   top: 0;
-  width: calc(100% - 50px);
+  width: 100%;
   min-height: 100vh;
   bottom: 0;
   left: 0;
