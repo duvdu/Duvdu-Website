@@ -123,7 +123,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         </Link>
                                         <Link href="/contracts">
                                             <a className="">
-                                                <Icon name={"contracts"} useinvert={true} className="mx-2" />
+                                                <Icon name={"dashboard"} useinvert={true} className="mx-2" />
                                                 <span>
                                                     contracts
                                                 </span>
@@ -187,20 +187,20 @@ const Header = ({ fromlayout, toggleClick }) => {
                         </div>
                     </div>
                 </div>
-                <div className={"border-borderColor header-bottom header-bottom-bg-color" + (!fromlayout.shortheader ? " border-y" : "")}>
+                <div className={"border-borderColor header-bottom-bg-color" + (!fromlayout.shortheader ? " border-y" : "")}>
                     <div className="container">
                         <div className="header-wrap header-space-between relative">
-                            <div className="logo logo-width-1 block lg:hidden">
+                            <div className="logo logo-width-1 block lg:hidden my-4">
                                 <Link href="/">
                                     <a>
-                                        <img src="/assets/imgs/theme/logo.svg" alt="logo" />
+                                        <img className="w-40" src="/assets/imgs/theme/logo.svg" alt="logo" />
                                     </a>
                                 </Link>
                             </div>
                             {
                                 !fromlayout.shortheader &&
                                 <div className="header-nav w-full">
-                                    <div className="main-menu main-menu-lh-2 font-heading hidden lg:block">
+                                    <div className="main-menu main-menu-lh-2 font-heading hidden xl:block">
                                         <nav>
                                             <Menu />
                                         </nav>
@@ -208,12 +208,8 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 </div>
                             }
 
-                            <div className="header-action-icon-2 block lg:hidden">
-                                <div className="burger-icon burger-icon-DS_white" onClick={toggleClick}>
-                                    <span className="burger-icon-top"></span>
-                                    <span className="burger-icon-mid"></span>
-                                    <span className="burger-icon-bottom"></span>
-                                </div>
+                            <div className="block lg:hidden" onClick={toggleClick}>
+                            <Icon className="size-11" name={'burgerMenu'} />
                             </div>
                         </div>
                     </div>
@@ -369,108 +365,108 @@ function Profile({ PathuseState }) {
     return (
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (PathuseState.profileDropdownVisible ? " active" : "")}  >
             <div className="dialog dialog-2 flex flex-col">
-                    <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
-                        <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
-                            <div className="flex w-full overflow-hidden h-20">
-                                {["/assets/imgs/projects/1.jpeg",
-                                    "/assets/imgs/projects/6.jpeg",
-                                    "/assets/imgs/projects/3.jpeg",
-                                    "/assets/imgs/projects/4.jpeg"].map((image, index) => (
-                                        <img key={index} className="w-1/4" src={image} alt={`Image ${index}`} />
-                                    ))}
+                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
+                    <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
+                        <div className="flex w-full overflow-hidden h-20">
+                            {["/assets/imgs/projects/1.jpeg",
+                                "/assets/imgs/projects/6.jpeg",
+                                "/assets/imgs/projects/3.jpeg",
+                                "/assets/imgs/projects/4.jpeg"].map((image, index) => (
+                                    <img key={index} className="w-1/4" src={image} alt={`Image ${index}`} />
+                                ))}
+                        </div>
+                        <div className='p-5'>
+                            <div className='flex items-start gap-4 -translate-y-4 h-12'>
+                                <div className='size-[72px] bg-cover relative bg-no-repeat'>
+                                    <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"/assets/imgs/profile/1.jpg"} alt="profile picture" />
+                                </div>
+                                <div className='flex-2 flex-col'>
+                                    <span className='text-base font-bold capitalize'>{'youseff abdulla'}</span>
+                                    <span className='flex items-center gap-1 opacity-40'>
+                                        <Icon className="w-2 ml-2" name="location-dot" />
+                                        <span className="text-xs font-semibold capitalize">{'5th settlement'}</span>
+                                    </span>
+                                </div>
                             </div>
-                            <div className='p-5'>
-                                <div className='flex items-start gap-4 -translate-y-4 h-12'>
-                                    <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"/assets/imgs/profile/1.jpg"} alt="profile picture" />
-                                    </div>
-                                    <div className='flex-2 flex-col'>
-                                        <span className='text-base font-bold capitalize'>{'youseff abdulla'}</span>
-                                        <span className='flex items-center gap-1 opacity-40'>
-                                            <Icon className="w-2 ml-2" name="location-dot" />
-                                            <span className="text-xs font-semibold capitalize">{'5th settlement'}</span>
-                                        </span>
+                            <div className="flex gap-3 mt-3">
+                                <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
+                                    <span className="text-primary font-bold text-base">
+                                        view profile
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* middle card  */}
+                    {
+                        showMiddleCard &&
+                        <div className="p-6 bg-DS_white rounded-[45px]">
+                            <div className="flex">
+                                <div className="w-full">
+
+                                    <h4 className="opacity-82 font-semibold text-sm mb-2">
+                                        Complete your Profile
+                                    </h4>
+                                    <div className='flex items-center'>
+                                        <div className="flex w-full">
+                                            <div className="header-progress-bar relative w-full">
+                                                <div className="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
+                                                <div className="relative h-full overflow-hidden">
+                                                    <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
+                                                </div>
+                                            </div>
+                                            <span className="text-primary font-semibold text-xs right-0 bottom-full ml-2 whitespace-nowrap">{badge}%</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex gap-3 mt-3">
-                                    <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
-                                        <span className="text-primary font-bold text-base">
-                                            view profile
-                                        </span>
+                                <div onClick={handleCloseMiddleCard} className='ml-3 flex justify-center items-center cursor-pointer'>
+                                    <div className="h-min rounded-full header-border p-3">
+                                        <Icon className="size-5 " name={'xmark'} useinvert={true} />
                                     </div>
+                                </div>
+                            </div>
 
+                            <div className="flex flex-col gap-3 mt-4">
+                                {states.map((item, index) => (
+                                    <React.Fragment key={index}>
+                                        {item.state ? (
+                                            <div className="flex items-center gap-3">
+                                                <div className="text-[#999999] text-sm font-semibold">
+                                                    {item.text}
+                                                </div>
+                                                <Icon name="greenCheck" />
+                                            </div>
+                                        ) : (
+                                            <a className="no-underline text-sm font-semibold">{item.text}</a>
+                                        )}
+                                        {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+
+
+                        </div>}
+
+                    {/* end card  */}
+                    <a href="/saved">
+                        <div className="p-3 bg-DS_white rounded-[45px] mb-2">
+                            <h4 className="opacity-70 text-sm font-semibold m-2">
+                                saved projects
+                            </h4>
+                            <div className="flex justify-between gap-3">
+                                <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
+                                    <img src="/assets/imgs/projects/1.jpeg" />
+                                </div>
+                                <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
+                                    <img src="/assets/imgs/projects/3.jpeg" />
                                 </div>
                             </div>
                         </div>
+                    </a>
 
-                        {/* middle card  */}
-                        {
-                            showMiddleCard &&
-                            <div className="p-6 bg-DS_white rounded-[45px]">
-                                <div className="flex">
-                                    <div className="w-full">
-
-                                        <h4 className="opacity-82 font-semibold text-sm mb-2">
-                                            Complete your Profile
-                                        </h4>
-                                        <div className='flex items-center'>
-                                            <div className="flex w-full">
-                                                <div className="header-progress-bar relative w-full">
-                                                    <div className="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
-                                                    <div className="relative h-full overflow-hidden">
-                                                        <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
-                                                    </div>
-                                                </div>
-                                                <span className="text-primary font-semibold text-xs right-0 bottom-full ml-2 whitespace-nowrap">{badge}%</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div onClick={handleCloseMiddleCard} className='ml-3 flex justify-center items-center cursor-pointer'>
-                                        <div className="h-min rounded-full header-border p-3">
-                                            <Icon className="size-5 " name={'xmark'} useinvert={true} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="flex flex-col gap-3 mt-4">
-                                    {states.map((item, index) => (
-                                        <React.Fragment key={index}>
-                                            {item.state ? (
-                                                <div className="flex items-center gap-3">
-                                                    <div className="text-[#999999] text-sm font-semibold">
-                                                        {item.text}
-                                                    </div>
-                                                    <Icon name="greenCheck" />
-                                                </div>
-                                            ) : (
-                                                <a className="no-underline text-sm font-semibold">{item.text}</a>
-                                            )}
-                                            {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
-                                        </React.Fragment>
-                                    ))}
-                                </div>
-
-
-                            </div>}
-
-                        {/* end card  */}
-                        <a href="/saved">
-                            <div className="p-3 bg-DS_white rounded-[45px]">
-                                <h4 className="opacity-70 text-sm font-semibold m-2">
-                                    saved projects
-                                </h4>
-                                <div className="flex justify-between gap-3">
-                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                        <img src="/assets/imgs/projects/1.jpeg" />
-                                    </div>
-                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                        <img src="/assets/imgs/projects/3.jpeg" />
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                   
-                    </div>
+                </div>
             </div>
         </div>
     )
@@ -576,13 +572,13 @@ function Setting({ data }) {
     return (
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (data.settingvisible ? " active" : "")}  >
             <div className="dialog flex flex-col">
-            <div className="overflow-y-scroll rounded-b-[60px] p-3">
-                <div className="card w-72" >
-                    {contactUs && <ContactUs />}
-                    {!contactUs && <Main setIslogin={data.setIslogin} />}
-                    {/* <Main /> */}
+                <div className="overflow-y-scroll rounded-b-[60px] p-3">
+                    <div className="card w-72" >
+                        {contactUs && <ContactUs />}
+                        {!contactUs && <Main setIslogin={data.setIslogin} />}
+                        {/* <Main /> */}
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     )

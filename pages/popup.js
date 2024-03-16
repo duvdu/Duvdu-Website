@@ -24,6 +24,7 @@ import EditProfile from '../components/popsup/EditProfile';
 import CreatenewBoard from '../components/popsup/createnewBoard';
 import Formsubmitted from '../components/popsup/formsubmitted';
 import Reportproject from '../components/popsup/report-project';
+import QRScanner from '../components/elements/QRScanner';
 
 
 
@@ -87,6 +88,7 @@ function Test() {
                     <UploadFilesTeam />
                     <HourWorks />
                     <ChooseCategory />
+                    {/* <QRScanner /> */}
                 </div>
               
             </Layout>

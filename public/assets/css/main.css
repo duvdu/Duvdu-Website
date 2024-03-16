@@ -731,11 +731,6 @@ table p {
   transform: translate(0, 0);
 }
 
-.mobile-header-wrapper-style .mobile-header-wrapper-inner .mobile-header-top .mobile-header-logo a {
-  display: block;
-}
-
-
 
 .header-action-right {
   display: none;
@@ -867,46 +862,6 @@ table p {
 }
 
 
-
-.burger-icon {
-  position: relative;
-  width: 24px;
-  height: 20px;
-  cursor: pointer;
-  -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
-
-.burger-icon>span {
-  display: block;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 2px;
-}
-
-.burger-icon>span.burger-icon-top {
-  top: 2px;
-}
-
-.burger-icon>span.burger-icon-bottom {
-  bottom: 2px;
-}
-
-.burger-icon>span.burger-icon-mid {
-  top: 9px;
-}
-
-.burger-icon>span::before,
-.burger-icon>span::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  content: "";
-  background-color: #333;
-}
 
 .body-overlay-1 {
   background: rgba(var(--black-rgb), 0.7) none repeat scroll 0 0;
@@ -1117,7 +1072,7 @@ table p {
 .mobile-header-wrapper-style {
   position: fixed;
   top: 0;
-  width: 360px;
+  width: calc(100% - 50px);
   min-height: 100vh;
   bottom: 0;
   left: 0;
@@ -1134,32 +1089,7 @@ table p {
 }
 
 
-.mobile-header-wrapper-style .mobile-header-wrapper-inner {
-  padding: 0px 0px 30px;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
 
-.mobile-header-wrapper-style .mobile-header-wrapper-inner .mobile-header-top {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  padding: 20px 30px;
-  background-color: var(--white);
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.mobile-header-wrapper-style .mobile-header-wrapper-inner .mobile-header-top .mobile-header-logo a img {
-  width: 100px;
-}
 
 
 /* Container */
@@ -2026,6 +1956,14 @@ table p {
 
 ::-webkit-scrollbar {
   width: .75em;
+}
+
+.scroll-m-0::-webkit-scrollbar-track {
+  margin:0;
+}
+
+.scroll-w-0::-webkit-scrollbar {
+  width: 0px;
 }
 
 ::-webkit-scrollbar-thumb {
