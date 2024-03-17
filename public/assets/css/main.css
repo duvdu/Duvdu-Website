@@ -1598,10 +1598,6 @@ table p {
   overflow: hidden;
 }
 
-.right-content,
-.swipper-img {
-  height: calc(var(--body-height) - 10vh);
-}
 
 .h-body {
   height: var(--body-height);
@@ -1641,6 +1637,7 @@ table p {
 
 .auth-gradient {
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  width: 100%;
 }
 
 .shadow1 {
@@ -1649,7 +1646,7 @@ table p {
 
 .front-part {
   z-index: 2;
-  position: relative;
+  
   color: var(--white);
   display: flex;
   flex-direction: column;

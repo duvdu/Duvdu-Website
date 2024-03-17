@@ -4,7 +4,7 @@ import Auth from '../components/layout/Auth';
 import Icon from '../components/Icons';
 
 
-function ResetPassword() {
+function PasswordChanged() {
   return (
     <>
       <Auth>
@@ -29,4 +29,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default PasswordChanged;

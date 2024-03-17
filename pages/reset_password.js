@@ -65,11 +65,6 @@ function ResetPassword() {
             </Button>
             <div className="submit-btn"></div>
           </div>
-          {/* <div className="have-account">
-            <Link href="/login">
-              <a> Back to Login</a>
-            </Link>
-          </div> */}
         </form>
       </Auth>
     </>

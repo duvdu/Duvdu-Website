@@ -36,6 +36,7 @@ function Auth({ children }) {
     useEffect(() => {
         // Function to run when the route changes
         const handleRouteChange = (url) => {
+            console.log(url)
             swiper?.destroy();
         };
 
@@ -53,33 +54,35 @@ function Auth({ children }) {
             <Layout shortheader={true} showTabs={false}>
                 <div className="h-body center-div">
                     <div className="container">
-                        <div className="lg:flex gap-6">
-                            <div className="lg:w-5/12 xl:w-5/12 2xl:w-4/12 left-content">
-                                <div className="left-side-auth mt-7 lg:mt-0">
-                                    <Swiper
-                                        modules={[Autoplay, Navigation, EffectFade]}
-                                        spaceBetween={0}
-                                        slidesPerView={1}
-                                        scrollbar={{ draggable: true }}
-                                        onSwiper={(swiper) => setSwiper(swiper)}
-                                        onSlideChange={() => setActive((active + 1) % imageSources.length)}
-                                        loop={true}
-                                        autoplay={{ delay: 4000 }}
-                                        speed={1500}
-                                    >
-                                        {imageSources.map((source, index) => (
-                                            <SwiperSlide key={index}>
-                                                <div className="relative">
-                                                    <div className="absolute flex flex-col justify-end auth-gradient h-full px-16 py-28">
-                                                        <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
-                                                        <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
+                        <div className="flex flex-col lg:flex-row gap-6 h-body py-9">
+                            <div className="lg:w-5/12 xl:w-5/12 ">
+                                <div className="left-side-auth lg:mt-0 h-full">
+                                    <div className="flex h-full">
+                                        <Swiper
+                                            modules={[Autoplay, Navigation, EffectFade]}
+                                            spaceBetween={0}
+                                            slidesPerView={1}
+                                            scrollbar={{ draggable: true }}
+                                            onSwiper={(swiper) => setSwiper(swiper)}
+                                            onSlideChange={() => setActive((active + 1) % imageSources.length)}
+                                            loop={true}
+                                            autoplay={{ delay: 4000 }}
+                                            speed={1500}
+                                        >
+                                            {imageSources.map((source, index) => (
+                                                <SwiperSlide key={index}>
+                                                    <div className="relative min-h-[790px] min-w-96 size-full">
+                                                        <div className="absolute flex flex-col justify-end auth-gradient h-full px-16 py-28">
+                                                            <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
+                                                            <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
+                                                        </div>
+                                                        <div className="bg-cover border-top swipper-img h-full" style={{ backgroundImage: `url(${source.img})` }} />
                                                     </div>
-                                                    <div className="bg-cover border-top swipper-img" style={{ backgroundImage: `url(${source.img})` }} />
-                                                </div>
-
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
+                                                    {/* <div className="w-full h-full bg-black" /> */}
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
+                                    </div>
                                     <div className="front-part absolute bottom-10">
                                         <div className="footer">
                                             <div className="dots flex px-16">
@@ -91,18 +94,22 @@ function Auth({ children }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="lg:w-7/12 xl:w-7/12 2xl:w-8/12 right-content">
-                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center p-5 rounded-lg h-auto sm:h-full">
-                                    <Link href="/"><a className="as-Guest flex items-center">
+                            <div className="lg:w-7/12 xl:w-7/12 ">
+                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center  rounded-lg h-auto sm:h-full">
+
+                                    <a href="/" className="as-Guest flex items-center">
                                         Continue as a Guest
                                         <Icon name="arrow-right-long" className="ml-3 text-xl w-6" />
                                     </a>
-                                    </Link>
-                                    <div className="overflow-y-scroll w-full max-w-[650px]">
+                                    <div className="size-full max-w-[650px]">
+                                        <div className="h-full scroll-w-0 overflow-y-scroll flex flex-col justify-start">
+                                            <div className="h-full flex flex-col justify-between px-5 md:px-28">
+                                                <div className="h-full min-h-36 lg:min-h-14" />
+                                                {children}
+                                                <div className="h-full  min-h-28 lg:min-h-8" />
 
-                                    <div className="my-20 px-0 md:px-28">
-                                        {children}
-                                    </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

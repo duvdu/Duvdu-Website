@@ -81,9 +81,9 @@ function Login() {
 
             </div>
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
-            <Link href="/forget_password">
-              <a className="forgot-password">Forgot password ?</a>
-            </Link>
+            
+              <a href="/forget_password" className="forgot-password">Forgot password ?</a>
+            
           </div>
           <div className="login_footer mb-4"></div>
           <div className="mb-4 relative">
@@ -94,9 +94,9 @@ function Login() {
           </div>
           <div className="have-account">
             <span>Don't have an account ?</span>
-            <Link href="/register">
-              <a> Register now</a>
-            </Link>
+            
+              <a href="/register"> Register now</a>
+            
           </div>
           <div className="flex items-center">
             <div className="border-t border-black opacity-20 w-full my-4"></div>

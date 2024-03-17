@@ -16,10 +16,8 @@ function WorkHour() {
                         </span>
                     </div>
                     <a>
-                        <AppButton className={"mb-20 mt-10 mx-16 px-20"} >
-                            <div className='mx-36 my-5 text-white'>
+                        <AppButton className={"mb-20 mt-10 mx-16 px-40"} >
                                 Confirm
-                            </div>
                         </AppButton>
                     </a>
                 </div>

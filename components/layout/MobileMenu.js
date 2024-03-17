@@ -5,6 +5,11 @@ import headerMen from '../../public/static/header_content.json';
 
 
 const MobileMenu = ({ isToggled, toggleClick }) => {
+    
+    const [openSearch, setOpenSearch] = useState(false);
+    
+    const toggleOpenSearch = () => setOpenSearch(prev => !prev)
+    
 
     return (
         <>
@@ -16,10 +21,17 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                 }
             >
                 <div className="h-full scroll-w-0 scroll-m-0 overflow-y-scroll">
-                    <Header onClick={toggleClick} />
-                    <Tabs />
-                    <Menu />
-                    <Auth />
+                    <Header onClick={toggleClick} toggleOpenSearch={toggleOpenSearch} />
+                    {openSearch &&
+                        <>
+                            <Tabs />
+                            <Menu />
+                            <Auth />
+                        </>
+                    }
+                    {!openSearch &&
+                        <SearchBody />
+                    }
                 </div>
             </div>
         </>
@@ -27,7 +39,9 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
 };
 
 
-const Header = ({ onClick }) =>
+
+const SearchBody = () => <div className="h-body bg-[#F7F9FB]" />
+const Header = ({ onClick , toggleOpenSearch }) =>
     <div className="flex items-center px-5 py-2 border-b">
         <div className="flex justify-start w-full">
             <Link href="/">
@@ -37,9 +51,9 @@ const Header = ({ onClick }) =>
             </Link>
         </div>
 
-        <div className="flex items-center justify-center gap-2" onClick={onClick}>
-            <Icon name={'search-menu'} />
-            <Icon name={'xmark-menu'} />
+        <div className="flex items-center justify-center gap-2">
+            <Icon className="cursor-pointer" name={'search-menu'} onClick={toggleOpenSearch}/>
+            <Icon className="cursor-pointer" name={'xmark-menu'} onClick={onClick} />
         </div>
     </div>
 

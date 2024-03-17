@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import AppButton from '../elements/submitButton';
+import Button from '../elements/submitButton';
 
 function FormSubmitted() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
@@ -33,11 +33,9 @@ function SuccessBody({ toggleDirectorConfirmed }) {
             </div>
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
-                    <AppButton onClick={toggleDirectorConfirmed} className={'mt-9 w-full'} color={"#5666F7"} >
-                        <div className='mx-36 my-5 text-white'>
-                            Done
-                        </div>
-                    </AppButton>
+                    <Button onClick={toggleDirectorConfirmed} className={'px-36 my-5 max-w-[400px] text-white'} color={"#5666F7"} >
+                        Done
+                    </Button>
                 </div>
             </div>
             <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">terms & conditions</a>
@@ -58,11 +56,9 @@ function Directorconfirmed() {
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
                     <a href='/payment'>
-                        <AppButton className={'mt-9 w-full'} color={"#5666F7"} >
-                        <div className='mx-36 my-5 text-white'>
-                            Done
-                        </div>
-                    </AppButton>
+                    <Button  className={'px-36 my-5 max-w-[400px] text-white'} color={"#5666F7"} >
+                        Done
+                    </Button>
                     </a>
                 </div>
             </div>

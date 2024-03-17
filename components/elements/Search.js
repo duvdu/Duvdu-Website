@@ -40,7 +40,7 @@ const Search = () => {
                 type="text"
                 placeholder="Search..."
             />
-            <div className={"dialog-history " + (searchDropdownVisible ? "active" : "")}>
+            <div className={"dialog-history max-w-[600px] " + (searchDropdownVisible ? "active" : "")}>
                 <h4 className="menu-title" href="#">
                     Search History
                 </h4>

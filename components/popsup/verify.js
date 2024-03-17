@@ -39,10 +39,8 @@ function Verify() {
                     </div>
                     <div className="flex justify-center items-center">
                         <div className='flex justify-center my-2'>
-                            <Button type="submit" name="login" shadow={true} shadowHeight="14">
-                                <div className='w-80 my-2 text-white'>
-                                    Verify Now
-                                </div>
+                            <Button className='my-5 w-[400px] text-white' type="submit" name="login" shadow={true} shadowHeight="14">
+                                Verify Now
                             </Button>
                         </div>
                     </div>

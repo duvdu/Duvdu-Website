@@ -98,14 +98,14 @@ const Header = ({ fromlayout, toggleClick }) => {
 
                             <div className="logo logo-width-1 mr-16">
                                 {
-                                    <Link href="/">
-                                        <a>
+                                    
+                                        <a href="/">
                                             <img key={isDarkMode}
                                                 src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
                                                 alt="main logo"
                                             />
                                         </a>
-                                    </Link>
+                                    
                                 }
                             </div>
 
@@ -113,30 +113,30 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 {fromlayout.showTabs
                                     &&
                                     <div className="header-tabs">
-                                        <Link href="/dashboard">
-                                            <a>
+                                        
+                                            <a href="/dashboard">
                                                 <Icon name={"dashboard"} useinvert={true} className="mx-2" />
                                                 <span>
                                                     Dashboard
                                                 </span>
                                             </a>
-                                        </Link>
-                                        <Link href="/contracts">
-                                            <a className="">
+                                        
+                                        
+                                            <a href="/contracts">
                                                 <Icon name={"dashboard"} useinvert={true} className="mx-2" />
                                                 <span>
                                                     contracts
                                                 </span>
                                             </a>
-                                        </Link>
-                                        <Link href="/teams">
-                                            <a className="capitalize whitespace-nowrap">
+                                        
+                                        
+                                            <a href="/teams" className="capitalize whitespace-nowrap">
                                                 <Icon name={"saved"} useinvert={true} className="" />
                                                 <span>
                                                     team projects
                                                 </span>
                                             </a>
-                                        </Link>
+                                        
                                     </div>
                                 }
 
@@ -173,12 +173,12 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     {
                                         !islogin &&
                                         <div className="header-action-2 flex gap-6 items-center">
-                                            <Link href="#">
+                                            
                                                 <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">log-in</a>
-                                            </Link>
-                                            <Link href="/register">
-                                                <a className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-DS_white font-semibold capitalize">register</a>
-                                            </Link>
+                                            
+                                            
+                                                <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-DS_white font-semibold capitalize">register</a>
+                                            
                                         </div>
                                     }
 
@@ -191,11 +191,9 @@ const Header = ({ fromlayout, toggleClick }) => {
                     <div className="container">
                         <div className="header-wrap header-space-between relative">
                             <div className="logo logo-width-1 block lg:hidden my-4">
-                                <Link href="/">
-                                    <a>
+                                    <a href="/">
                                         <img className="w-40" src="/assets/imgs/theme/logo.svg" alt="logo" />
                                     </a>
-                                </Link>
                             </div>
                             {
                                 !fromlayout.shortheader &&

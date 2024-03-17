@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }) {
         setTimeout(() => {
             setLoading(false);
             import("../public/assets/js/popupScript")
-        }, 2000);
+        }, 1000);
 
         // new WOW.WOW({
         //     live: false

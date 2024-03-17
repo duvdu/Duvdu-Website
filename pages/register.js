@@ -144,9 +144,9 @@ function Register() {
                                 <label className="form-check-label terms-submit flex gap-1 items-center " htmlFor="exampleCheckbox1">
                                     <span className="capitalize text-xs">
                                         <span>I agree to </span>
-                                        <Link href="/terms">
-                                            <a className="font-bold text-primary">terms and conditions</a>
-                                        </Link>
+                                        
+                                            <a href="/terms" className="font-bold text-primary">terms and conditions</a>
+                                        
                                     </span>
                                 </label>
                             </div>
@@ -161,9 +161,9 @@ function Register() {
                     </div>
                     <div className="have-account">
                         <span>Already have an account ? </span>
-                        <Link href="/login">
-                            <a> Log in</a>
-                        </Link>
+                        
+                            <a href="/login"> Log in</a>
+                        
                     </div>
                 </form>
             </Auth>
