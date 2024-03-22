@@ -9,6 +9,9 @@ module.exports = {
       fontSize: {
 
       },
+      height: {
+        'body': 'var(--body-height)',
+      },
       width: {
         '68%': '68%',
         '28%': '28%',

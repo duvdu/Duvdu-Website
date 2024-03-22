@@ -144,14 +144,14 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                 <div className='text-lg opacity-70 capitalize font-semibold'>
                     project views
                 </div>
-                <div className={`gap-1 rounded-full px-4 flex items-center ${isUp ? 'text-green-700' : 'text-red-700'} dashboard_padge`}>
+                <div className={`gap-1 rounded-full px-4 flex items-center dashboard_padge`}>
 
                     <span >
                         {
-                            !isUp && <Icon name={'arrow-down-long'} />
+                            !isUp && <Icon className='text-red-700' name={'arrow-down-long'} />
                         }
                         {
-                            isUp && <Icon name={'upArrow'} />
+                            isUp && <Icon className='text-green-700' name={'arrow-up-long'} />
                         }
 
                     </span>
@@ -159,7 +159,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                     <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
                 </div>
             </div>
-            <canvas className='card red-gradient border-2 border-[#00000033] h-full' id="chart" ref={chartRef}/>
+            <canvas className='card red-gradient border-2 border-[#cccccc] h-full' id="chart" ref={chartRef}/>
         </div>
     );
 };

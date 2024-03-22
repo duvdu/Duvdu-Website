@@ -411,34 +411,36 @@ const Control = ({ data, toggleDrawer }) => {
             <div className="fixed bottom-0 z-20">
                 {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
             </div>
-            <div className='sticky h-32 bottom-0 flex justify-between items-end p-10 z-20'>
-                {
-                    !showChat &&
-                    <div onClick={handleOpenChat} className="hidden  message-shadow lg:flex rounded-full p-2 h-16 bg-DS_white cursor-pointer ">
-                        <div className="relative">
-                            <img className="h-full" src={data.user.img} />
-                            {online && (
-                                <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                            )}
-                            {!online && (
-                                <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                            )}
 
+            <div className='sticky h-32 bottom-0 z-20 max-w-full'>
+                <div className="container flex justify-between items-end">
+                    {
+                        !showChat &&
+                        <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-DS_white cursor-pointer ">
+                            <div className="relative">
+                                <img className="h-full" src={data.user.img} />
+                                {online && (
+                                    <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                                )}
+                                {!online && (
+                                    <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                                )}
+
+                            </div>
+                            <div className="px-3">
+                                <span className="capitalize font-bold">
+                                    {data.user.name}
+                                </span>
+                                <div />
+                                <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
+                            </div>
                         </div>
-                        <div className="px-3">
-                            <span className="capitalize font-bold">
-                                {data.user.name}
-                            </span>
-                            <div />
-                            <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
-                        </div>
-                    </div>
-                }
-                {
-                    showChat &&
-                    <div />
-                }
-                    <Controller>
+                    }
+                    {
+                        showChat &&
+                        <div />
+                    }
+                    <Controller className={"mr-auto ml-auto lg:m-0 "}>
                         <div className="controller-1" >
                             <Icon name={'share'} />
                         </div>
@@ -450,8 +452,9 @@ const Control = ({ data, toggleDrawer }) => {
                         </div>
                         <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
                     </Controller>
-                
+                </div>
             </div>
+
         </>
     );
 };

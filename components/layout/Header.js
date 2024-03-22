@@ -96,12 +96,13 @@ const Header = ({ fromlayout, toggleClick }) => {
                     <div className="container">
                         <div className="header-wrap">
 
-                            <div className="logo logo-width-1 mr-16">
+                            <div className="logo logo-width-1 mr-12">
                                 {
                                     
                                         <a href="/">
                                             <img key={isDarkMode}
                                                 src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                                className="min-h-9"
                                                 alt="main logo"
                                             />
                                         </a>
@@ -115,15 +116,15 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     <div className="header-tabs">
                                         
                                             <a href="/dashboard">
-                                                <Icon name={"dashboard"} useinvert={true} className="mx-2" />
+                                                <Icon name={"dashboard"} useinvert={true} className="mr-1" />
                                                 <span>
-                                                    Dashboard
+                                                     Dashboard
                                                 </span>
                                             </a>
                                         
                                         
                                             <a href="/contracts">
-                                                <Icon name={"dashboard"} useinvert={true} className="mx-2" />
+                                                <Icon name={"contracts"} useinvert={true} className="mx-1" />
                                                 <span>
                                                     contracts
                                                 </span>
@@ -131,7 +132,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         
                                         
                                             <a href="/teams" className="capitalize whitespace-nowrap">
-                                                <Icon name={"saved"} useinvert={true} className="" />
+                                                <Icon name={"teams"} useinvert={true} className="mx-1" />
                                                 <span>
                                                     team projects
                                                 </span>
@@ -143,7 +144,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 <div className="search-style-2 flex justify-end">
                                     <Search />
                                 </div>
-                                <div className="header-action-right">
+                                <div className="hidden lg:flex min-w-max">
                                     {
                                         islogin &&
                                         <div className="header-action-2 flex items-center ">
@@ -173,15 +174,10 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     {
                                         !islogin &&
                                         <div className="header-action-2 flex gap-6 items-center">
-                                            
-                                                <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">log-in</a>
-                                            
-                                            
-                                                <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-DS_white font-semibold capitalize">register</a>
-                                            
+                                            <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">log-in</a>
+                                            <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-DS_white font-semibold capitalize">register</a>
                                         </div>
                                     }
-
                                 </div>
                             </div>
                         </div>
@@ -198,7 +194,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                             {
                                 !fromlayout.shortheader &&
                                 <div className="header-nav w-full">
-                                    <div className="main-menu main-menu-lh-2 font-heading hidden xl:block">
+                                    <div className="main-menu main-menu-lh-2 font-heading hidden lg:block">
                                         <nav>
                                             <Menu />
                                         </nav>
@@ -207,8 +203,13 @@ const Header = ({ fromlayout, toggleClick }) => {
                             }
 
                             <div className="flex gap-2 lg:hidden my-4" >
-                                <Icon className="h-9" name={'search-2'} />
-                                <Icon className="h-9" name={'burgerMenu'} onClick={toggleClick}/>
+                                <div className="h-9 w-9" name={'search-2'} >
+                                <Icon className="size-full" name={'search-2'} />
+                                </div>
+                                <div className="h-9 w-9 " name={'burgerMenu'} onClick={toggleClick}>
+                                <Icon className="size-full" name={'burgerMenu'} onClick={toggleClick}/>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -411,7 +412,12 @@ function Profile({ PathuseState }) {
                                     <div className='flex items-center'>
                                         <div className="flex w-full">
                                             <div className="header-progress-bar relative w-full">
-                                                <div className="absolute h-5 inset-0 rounded-lg bg-gradient-to-l from-purple-700 via-purple-500 to-blue-500 blur" style={{ width: `${badge}%` }}></div>
+                                                <div className="absolute inset-0 rounded-lg h-full" style={{ 
+                                                    width: `${badge}%`, 
+                                                    background: 'linear-gradient(270deg, #711AEB 7.19%, #226BEB 100%)',
+                                                    filter: 'blur(10.547093391418457px)' 
+                                                    }}></div>
+                                                    
                                                 <div className="relative h-full overflow-hidden">
                                                     <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
                                                 </div>

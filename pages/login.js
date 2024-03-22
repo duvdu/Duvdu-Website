@@ -54,7 +54,7 @@ function Login() {
             <h1 className="auth-title">Welcome Back !!</h1>
           </div>
           <div className={`mb-4 ${emailError.isError && 'error'}`}>
-            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="@username" className={emailError.isError ? "auth-field error" : "auth-field"} />
+            <input autoComplete="on" type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="@username" className={emailError.isError ? "auth-field error" : "auth-field"} />
             {emailError.isError && <p className="error-msg">{emailError.message}</p>}
           </div>
           <div className={`mb-8 ${passwordError.isError && 'error'}`}>
@@ -64,6 +64,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
+                autoComplete="on"
                 className={passwordError.isError ? "auth-field error" : "auth-field"}
               />
               {
@@ -102,7 +103,6 @@ function Login() {
             <div className="border-t border-black opacity-20 w-full my-4"></div>
             <p className="px-4 font-bold my-10 ">OR</p>
             <div className="border-t border-black opacity-20 w-full my-4"></div>
-
           </div>
           <div className="flex flex-col sm:flex-row justify-center gap-8">
             <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full sm:w-64 flex justify-center gap-4 items-center cursor-pointer">

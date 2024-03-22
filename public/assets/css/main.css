@@ -666,7 +666,7 @@ table p {
 }
 
 .header-tabs a {
-  font-size: 15px;
+  font-size: 14px;
   display: flex;
   align-items: center;
 }
@@ -729,11 +729,6 @@ table p {
   opacity: 1;
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
-}
-
-
-.header-action-right {
-  display: none;
 }
 
 .header-action {
@@ -1352,25 +1347,6 @@ table p {
 }
 
 
-
-@media only screen and (min-width: 1200px) {
-
-  .header-action-right {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
-}
-
-
 @media only screen and (max-width: 1024px) {
 
   .header-wrap .header-right {
@@ -1599,9 +1575,7 @@ table p {
 }
 
 
-.h-body {
-  height: var(--body-height);
-}
+
 
 .h-NoProjectYet {
   height: calc(var(--body-height) - 180px);
@@ -2004,7 +1978,7 @@ table p {
 }
 
 .controller-1 {
-  @apply w-20 h-20 rounded-full cursor-pointer flex justify-center items-center;
+  @apply w-12 h-12 max-w-20 max-h-20 rounded-full cursor-pointer flex justify-center items-center;
   background-color: #0000001A;
 }
 
@@ -2106,7 +2080,6 @@ table p {
 /**** Contact ****/
 .contact-toggle {
   display: flex;
-  padding: 20px 50px;
   justify-content: center;
   align-items: center;
   border-radius: 50px;

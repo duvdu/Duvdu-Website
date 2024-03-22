@@ -17,7 +17,6 @@
 # success component
 # send files
 # enable , disable ArrowBtn
-
 # Auth responsive
 # apple logo
 # x circle in popups
@@ -29,6 +28,8 @@
 # icons : index icon star
 # button hover
 # create App 
+# popups btn
+# header responsive
 
 - handle darkmode
 - handle responsive
@@ -41,6 +42,12 @@
 - enable file drag drop
 - what is next-auth
 ----------------------------------- day task -----------------------------------
-- dashboard chart line
-- fixed control in profile in mobile
-- popups btn
+- fixed control in profile mobile
+----------------------------------- day task -----------------------------------
+- video time
+
+
+----------------- end tasks -----------------
+- handle project controllers 
+- drawer min width
+- header responsive

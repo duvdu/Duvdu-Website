@@ -10,7 +10,7 @@ import Icon from '../components/Icons';
 import React, { useState } from 'react';
 
 const Dashboard = () => {
-    
+
     const isUp = true
     const badge = 63;
     const viewRate = 2.6
@@ -79,7 +79,7 @@ const Dashboard = () => {
             }
         ]
     }
-    
+
 
     return (
         <>
@@ -90,7 +90,7 @@ const Dashboard = () => {
                         <NextBadgeCard badge={badge} />
                         <ProjectViewsCard recieved={recieved} />
                         <Chart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
-                        
+
                     </div>
                     <div className='w-full pt-6'>
                         <div className='flex flex-col sm:flex-row gap-6'>
@@ -113,10 +113,10 @@ const Dashboard = () => {
                                         <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-green-700' : 'text-red-700'}`}>
                                             <span >
                                                 {
-                                                    !isUp && <Icon name={'arrow-down-long'} />
+                                                    !isUp && <Icon className='text-red-700' name={'arrow-down-long'} />
                                                 }
                                                 {
-                                                    isUp && <Icon name={'upArrow'} />
+                                                    isUp && <Icon className='text-green-700' name={'arrow-up-long'} />
                                                 }
                                             </span>
                                             <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>

@@ -106,6 +106,7 @@ function Register() {
                     </div>
                     <div className={`mb-11 ${passwordError.isError && 'error'}`}>
                         <div className="relative password-container">
+                        {/* https://tintef.github.io/react-google-places-autocomplete/docs/ */}
                             <input
                                 type={showPassword ? 'text' : 'password'}
                                 value={password}

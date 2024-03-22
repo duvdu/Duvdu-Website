@@ -41,7 +41,7 @@ const Card = ({ data }) => {
                 </a>
                 <div className="boards-info projects-num">{projectsNum} projects</div>
                 <div className="absolute top-0 right-0 p-12">
-                    <Icon className="text-[#50C878] rounded-full -translate-y-1/2 translate-x-1/2 border border-[#50C878] p-3 text-2xl w-6" name="circle-check"/>
+                    <Icon className="text-[#50C878] rounded-full -translate-y-1/2 translate-x-1/2 border border-[#50C878] p-3 text-2xl w-6" name="circle-check" />
                 </div>
 
                 <div className="boards-info projects-name flex">
@@ -60,9 +60,9 @@ const CreateBoard = () => {
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
-                            <h1 className="text-2xl opacity-80 font-semibold capitalize">team projects</h1>
+                            <h1 className="text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">team projects</h1>
                             <div className="mr-6"></div>
-                            <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full border-[1.5px] bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize">
+                            <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full border-[1.5px] bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
                                 new team project
                                 <Icon className="w-4" name={"plus"} />
                             </div>
