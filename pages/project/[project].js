@@ -1,26 +1,26 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import Layout from "../components/layout/Layout";
-import Drawer from "../components/popsup/projectDrawer";
-import { fetchProjects } from "../redux/action/project";
-import Icon from '../components/Icons';
-import { convertToK } from "../util/util";
-import Card from "./../components/elements/project-card";
-import { convertHoursTo__ } from '../util/util';
-import Comment from '../components/elements/comment';
-import Controller from '../components/elements/controllers';
-import ArrowBtn from '../components/elements/arrowBtn';
-import Chat from '../components/elements/chat';
-import AddToTeam from '../components/popsup/AddToTeam';
-import Report from '../components/popsup/report';
-import ThanksMSG from '../components/popsup/thanksMSG';
-import Selector from "../components/elements/CustomSelector";
+import Layout from "../../components/layout/Layout";
+import Drawer from "../../components/popsup/projectDrawer";
+import { fetchProjects } from "../../redux/action/project";
+import Icon from '../../components/Icons';
+import { convertToK } from "../../util/util";
+import Card from "../../components/elements/project-card";
+import { convertHoursTo__ } from '../../util/util';
+import Comment from '../../components/elements/comment';
+import Controller from '../../components/elements/controllers';
+import ArrowBtn from '../../components/elements/arrowBtn';
+import Chat from '../../components/elements/chat';
+import AddToTeam from '../../components/popsup/AddToTeam';
+import Report from '../../components/popsup/report';
+import ThanksMSG from '../../components/popsup/thanksMSG';
+import Selector from "../../components/elements/CustomSelector";
 
 
 
 const projects = ({ projects, projectFilters, fetchProjects }) => {
-
+    const router = useRouter()
 
     useEffect(() => {
         fetchProjects("", "/static/projects.json");
@@ -53,7 +53,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                 views: 258000
             },
         },
-        projectImg: '/assets/imgs/projects/2.jpeg',
+        projectImg: '/assets/imgs/projects/18.mp4',
         date: 'april 5 - 2023',
         tools: [
             {
@@ -143,7 +143,16 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                     </section>
                     <div className="lg:flex gap-6">
                         <section className="lg:w-2/3">
-                            <ProjectShow data={data} />
+
+                            {
+                                router.query.project == 1 &&
+                                <ProjectShow1 data={data} />
+                            }
+                            {
+                                router.query.project == 2 &&
+                                <ProjectShow2 data={data} />
+                            }
+
                             <About data={data} />
                         </section>
                         <section className="lg:w-1/3 mt-10 lg:mt-0">
@@ -196,9 +205,78 @@ const Header = ({ data }) => (
         </div>
     </>
 )
-const ProjectShow = ({ data }) => (
-    <img className="border-50 w-full" src={data.projectImg} />
-)
+const ProjectShow1 = ({ data }) => {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const videoRef = useRef(null);
+
+    useEffect(() => {
+        const timerId = setInterval(() => {
+            if (videoRef.current && videoRef.current.duration) {
+                setDuration(videoRef.current.duration);
+                clearInterval(timerId);
+            }
+        }, 10)
+
+    }, [videoRef, duration]);
+
+    const handlePlayPause = () => {
+        if (videoRef.current.paused) {
+            videoRef.current.play();
+            setIsPlaying(true);
+        } else {
+            videoRef.current.pause();
+            setIsPlaying(false);
+        }
+    };
+
+    const updateTime = () => {
+        setCurrentTime(videoRef.current.currentTime);
+    };
+
+    return (
+        <div className="relative">
+            <video
+                className="border-50 w-full"
+                src={data.projectImg}
+                ref={videoRef}
+                onTimeUpdate={updateTime}
+                onEnded={() => setIsPlaying(false)}
+            />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div
+                    className="bg-[#CADED333] w-12 h-12 sm:w-16 sm:h-16 rounded-full cursor-pointer p-5"
+                    onClick={handlePlayPause}
+                >
+                    <Icon
+                        className="size-full text-white"
+                        name={isPlaying ? "pause" : "play"}
+                    />
+                </div>
+            </div>
+            <div className="absolute right-7 bottom-7 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                <span className="text-white">
+                    {currentTime.toFixed(0)}/{duration.toFixed(0)}
+                </span>
+            </div>
+        </div>
+    );
+}
+const ProjectShow2 = ({ data }) => {
+
+    return (
+        <div className="relative">
+            <video
+                className="border-50 w-full"
+                src={data.projectImg}
+                controls
+            />
+
+
+        </div>
+    );
+}
 
 const About = ({ data }) => (
     <div className="sticky top-header">

@@ -1,7 +1,8 @@
 
 import React from 'react';
 import Icon from '../Icons';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { convertDuration } from '../../util/util';
 
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,13 +12,30 @@ const Card = ({ cardData, className = "", href }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [loveIconName, setLoveIconName] = useState('far');
   const [isMuted, setIsMuted] = useState(false);
+  const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
 
+  useEffect(() => {
+    if (videoRef.current) {
+      const timerId = setInterval(() => {
+        if (videoRef.current?.duration) {
+          setDuration(videoRef.current.duration);
+          clearInterval(timerId);
+        }
+      }, 10)
+    }
+  }, [videoRef.current?.duration == NaN]);
+
+
+  const timeUpdate = () => {
+    setDuration(videoRef.current.duration - videoRef.current.currentTime);
+
+  }
   const handleSoundIconClick = () => {
     setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark');
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
-    if(videoRef.current)
-    videoRef.current.muted = soundIconName === 'volume-high';
+    if (videoRef.current)
+      videoRef.current.muted = soundIconName === 'volume-high';
 
   };
 
@@ -36,26 +54,36 @@ const Card = ({ cardData, className = "", href }) => {
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
+      setDuration(videoRef.current.duration);
     }
+
   };
   return (
     <>
       <div className={`select-none project-card ${className}`} onClick={() => { }} >
-        <div 
-        onMouseEnter={handleHover}
-        onMouseLeave={handleLeave}
-        className='project'>
+        <div
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+          className='project'>
           <a href={href}>
             {
               cardData.backgroundImages.length == 1 &&
                 cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
-                <video
-                  className='cardvideo'
-                  loop
-                  ref={videoRef}
-                >
-                  <source src={cardData.backgroundImages[0]} type='video/mp4' />
-                </video>
+                <>
+                  <video
+                    className='cardvideo relative'
+                    loop
+                    ref={videoRef}
+                    onTimeUpdate={timeUpdate}
+                  >
+                    <source src={cardData.backgroundImages[0]} type='video/mp4' />
+                  </video>
+                  <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                    <span className="text-white">
+                      {convertDuration(Duration * 1000)}
+                    </span>
+                  </div>
+                </>
               ) : (
                 cardData.backgroundImages.length == 1 &&
                 <img className='cardimg' src={cardData.backgroundImages[0]} alt="project" />

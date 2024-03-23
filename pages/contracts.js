@@ -156,7 +156,7 @@ const Pending = () => {
 const Pending2 = () => {
     return (
         <div className='flex justify-between items-center border border-[#00000040] rounded-[50px] p-6'>
-        <div className='flex flex-col sm:flex-row justify-center items-center w-full'>
+        <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center w-full'>
             {/* profile */}
             <div className='flex gap-3 items-center'>
                 <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />

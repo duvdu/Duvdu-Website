@@ -34,6 +34,7 @@
     "backgroundImages": [
       "/assets/imgs/projects/18.mp4"
     ],
+    "duration":20000,
     "showLove": true,
     "showSound": true
   },
@@ -46,6 +47,7 @@
     "backgroundImages": [
       "/assets/imgs/projects/17.mp4"
     ],
+    "duration":20000,
     "showLove": true,
     "showSound": true
   },

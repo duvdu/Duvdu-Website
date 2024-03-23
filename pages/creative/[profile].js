@@ -569,7 +569,7 @@ function OtherProfile() {
 
 const Project = ({ data, isbig }) => (
 
-    <a href='/project' className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28%'}>
+    <a href='/project/1' className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28%'}>
         <img className='cardimg' src={data.show} alt='show' />
         <div className='creatives'>
             {data.creatives} creatives

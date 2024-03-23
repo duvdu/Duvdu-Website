@@ -1978,7 +1978,7 @@ table p {
 }
 
 .controller-1 {
-  @apply w-12 h-12 max-w-20 max-h-20 rounded-full cursor-pointer flex justify-center items-center;
+  @apply w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center;
   background-color: #0000001A;
 }
 

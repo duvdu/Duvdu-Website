@@ -31,23 +31,22 @@
 # popups btn
 # header responsive
 
-- handle darkmode
-- handle responsive
+------------------ later tasks ---------------------
+- suggest strong password
+- edit profile img
 - loading
 - autoplay error
-- home section 2
-- edit profile img
-- suggest strong password
+- chat
+- language
+- payment details type
+- last screen UI
+- report Project popUp
 ----------------------------------- day task -----------------------------------
 - enable file drag drop
 - what is next-auth
 ----------------------------------- day task -----------------------------------
-- fixed control in profile mobile
------------------------------------ day task -----------------------------------
 - video time
-
-
------------------ end tasks -----------------
-- handle project controllers 
-- drawer min width
-- header responsive
+- drawer select date
+- handle darkmode
+----------------------------------- end task -----------------------------------
+- project UI of Show

@@ -22,14 +22,14 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
             >
                 <div className="h-full scroll-w-0 scroll-m-0 overflow-y-scroll">
                     <Header onClick={toggleClick} toggleOpenSearch={toggleOpenSearch} />
-                    {openSearch &&
+                    {!openSearch &&
                         <>
                             <Tabs />
                             <Menu />
                             <Auth />
                         </>
                     }
-                    {!openSearch &&
+                    {openSearch &&
                         <SearchBody />
                     }
                 </div>
@@ -77,7 +77,7 @@ const Tabs = () => {
                     },
                     {
                         url: '/teams',
-                        icon: 'saved',
+                        icon: 'teams',
                         name: 'team projects',
                     },
                 ].map((item, index) =>
