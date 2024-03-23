@@ -4,6 +4,7 @@ import Switch from '../elements/switcher'
 import Icon from '../Icons'
 import ArrowBtn from '../elements/arrowBtn';
 import Slider from "../../components/elements/customSlider";
+import SelectDate from "../../components/elements/selectDate";
 
 const initialTeam = [
     {
@@ -164,7 +165,9 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
             </section>
 
             <section>
-                {/* <p className="capitalize opacity-60 mb-4">select date</p> */}
+                <div className="w-full mt-11">
+                    <SelectDate />
+                </div>
             </section>
 
             <section className="sticky bottom-0">

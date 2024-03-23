@@ -90,7 +90,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects.map((item, i) => (
-                                <Card className='cursor-pointer' href="/project" key={i} cardData={item} />
+                                <Card className='cursor-pointer' href="/project/1" key={i} cardData={item} />
                             ))}
                         </div>
                         {

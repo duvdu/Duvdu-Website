@@ -400,7 +400,7 @@ const Recommended = ({ projects }) => {
 
             <div className="grid minmax-280 gap-5">
                 {getPaginatedProjects.map((item, i) => (
-                    <Card key={i} className='cursor-pointer' href="/project" cardData={item} />
+                    <Card key={i} className='cursor-pointer' href="/project/1" cardData={item} />
                 ))}
             </div>
         </>

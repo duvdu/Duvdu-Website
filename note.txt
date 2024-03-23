@@ -30,6 +30,8 @@
 # create App 
 # popups btn
 # header responsive
+# project UI of Show
+# home video time
 
 ------------------ later tasks ---------------------
 - suggest strong password
@@ -45,8 +47,6 @@
 - enable file drag drop
 - what is next-auth
 ----------------------------------- day task -----------------------------------
-- video time
-- drawer select date
 - handle darkmode
+- drawer select date
 ----------------------------------- end task -----------------------------------
-- project UI of Show

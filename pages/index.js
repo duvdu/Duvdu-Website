@@ -93,7 +93,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === 9 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                                     {i === 12 && <RelatedCategories className="hidden xl:block col-span-full" />}
-                                    <Card className='cursor-pointer' href="/project" cardData={item} />
+                                    <Card className='cursor-pointer' href="/project/1" cardData={item} />
                                 </React.Fragment>
                             ))}
                         </div>

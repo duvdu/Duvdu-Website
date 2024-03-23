@@ -404,7 +404,7 @@ const AddToTeamPage = ({ goback }) => <>
     <div className="grid minmax-360 gap-5 mt-6">
         {
             users.map((value, index) =>
-                <AddToTeamCard goback={goback} info={value} key={index} className='cursor-pointer' href="/project" />
+                <AddToTeamCard goback={goback} info={value} key={index} className='cursor-pointer' href="/project/1" />
             )
         }
 
