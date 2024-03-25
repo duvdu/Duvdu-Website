@@ -2,14 +2,16 @@ import Link from "next/link";
 import { useState } from "react";
 import Icon from "../Icons";
 import headerMen from '../../public/static/header_content.json';
+import Search from "../elements/SearchMobile";
 
 
 const MobileMenu = ({ isToggled, toggleClick }) => {
-    
+
     const [openSearch, setOpenSearch] = useState(false);
-    
-    const toggleOpenSearch = () => setOpenSearch(prev => !prev)
-    
+
+    const OpenSearch = () => setOpenSearch(true)
+    const CloseSearch = () => setOpenSearch(false)
+
 
     return (
         <>
@@ -21,16 +23,17 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                 }
             >
                 <div className="h-full scroll-w-0 scroll-m-0 overflow-y-scroll">
-                    <Header onClick={toggleClick} toggleOpenSearch={toggleOpenSearch} />
+                    <Header onClick={toggleClick} toggleOpenSearch={OpenSearch} />
                     {!openSearch &&
                         <>
                             <Tabs />
+                            <Tabs2 />
                             <Menu />
                             <Auth />
                         </>
                     }
                     {openSearch &&
-                        <SearchBody />
+                        <SearchBody toggleOpenSearch={CloseSearch} />
                     }
                 </div>
             </div>
@@ -40,8 +43,7 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
 
 
 
-const SearchBody = () => <div className="h-body bg-[#F7F9FB]" />
-const Header = ({ onClick , toggleOpenSearch }) =>
+const Header = ({ onClick, toggleOpenSearch }) =>
     <div className="flex items-center px-5 py-2 border-b">
         <div className="flex justify-start w-full">
             <Link href="/">
@@ -52,13 +54,49 @@ const Header = ({ onClick , toggleOpenSearch }) =>
         </div>
 
         <div className="flex items-center justify-center gap-2">
-            <Icon className="cursor-pointer" name={'search-menu'} onClick={toggleOpenSearch}/>
+            <Icon className="cursor-pointer" name={'search-menu'} onClick={toggleOpenSearch} />
             <Icon className="cursor-pointer" name={'xmark-menu'} onClick={onClick} />
         </div>
     </div>
 
 
+const SearchBody = ({toggleOpenSearch}) => <div className="h-body bg-[#F7F9FB]" >
+    <div className="p-5">
+        <Search toggleOpenSearch={toggleOpenSearch}/>
+    </div>
+</div>
 
+const Tabs2 = () => {
+    return (
+        <div className="flex flex-col justify-center items-center gap-11 py-10 border-b">
+
+            {
+                [
+                    {
+                        url: '#',
+                        icon: 'user2',
+                        name: 'profile',
+                    },
+                    {
+                        url: '#',
+                        icon: 'gear',
+                        name: 'settings',
+                    },
+                    {
+                        url: '#',
+                        icon: 'bell',
+                        name: 'notifications',
+                    },
+                ].map((item, index) =>
+                    <a key={index} href={item.url} className="flex gap-1">
+                        <Icon name={item.icon} />
+                        <span className="text-base font-bold capitalize text-[#3E3E3E]">{item.name}</span>
+                    </a>
+                )
+            }
+        </div>
+    )
+}
 const Tabs = () => {
     return (
         <div className="flex flex-col justify-center items-center gap-11 py-10 border-b">

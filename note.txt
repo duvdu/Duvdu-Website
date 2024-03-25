@@ -32,6 +32,7 @@
 # header responsive
 # project UI of Show
 # home video time
+# drawer select date
 
 ------------------ later tasks ---------------------
 - suggest strong password
@@ -46,7 +47,6 @@
 ----------------------------------- day task -----------------------------------
 - enable file drag drop
 - what is next-auth
------------------------------------ day task -----------------------------------
 - handle darkmode
-- drawer select date
+----------------------------------- day task -----------------------------------
 ----------------------------------- end task -----------------------------------

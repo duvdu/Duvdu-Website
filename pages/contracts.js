@@ -48,7 +48,7 @@ const LeftSide = () => {
         setActiveIndex(index);
     };
     const Clients = () =>
-        <section className='h-full overflow-y-scroll'>
+        <section className='h-full'>
             <section className='mt-11 flex flex-col gap-4'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending />
@@ -62,7 +62,7 @@ const LeftSide = () => {
         </section>
 
     const Creatives = () =>
-        <section className='h-full overflow-y-scroll'>
+        <section className='h-full '>
             <section className='mt-11 flex flex-col gap-4'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending2 />
@@ -75,17 +75,17 @@ const LeftSide = () => {
         </section>
     return (
         <>
-            <div className='h-auto lg:h-body'>
+            <div className='h-auto lg:h-body overflow-y-scroll'>
                 <div className='flex flex-col h-full'>
-                    <section className='flex gap-3 mt-16 mb-2 sticky py-4 top-16 lg:p-0 lg:static bg-white z-[5]'>
+                    <section className='flex gap-3 mt-6 mb-2 sticky py-4 top-16 lg:p-0 z-[5]'>
                         <div
-                            className={`px-5 lg:px-10 py-2 lg:py-5 contact-toggle  ${activeIndex === 0 ? 'active' : ''}`}
+                            className={`px-5 lg:px-10 py-2 lg:py-5 contact-toggle ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
                         >
                             my clients
                         </div>
                         <div
-                            className={`px-5 lg:px-10 py-2 lg:py-5 contact-toggle  ${activeIndex === 1 ? 'active' : ''}`}
+                            className={`px-5 lg:px-10 py-2 lg:py-5 contact-toggle ${activeIndex === 1 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(1)}
                         >
                             my creatives
