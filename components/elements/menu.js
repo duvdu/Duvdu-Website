@@ -6,15 +6,15 @@ const MenuItem = ({ title, items }) => (
   items.length > 0 &&
   <li>
     <Link legacyBehavior href="#">
-      <a className="text-[#3E3E3E] font-semibold text-sm">
+      <a className="text-[#3E3E3E] dark:text-[#FFFFFFBF] font-semibold text-sm">
         {title}
       </a>
     </Link>
-    <ul>
+    <ul className={"gap-1"}>
       {items.map((item, index) => (
-        <li className='padge' key={index}>
+        <li className='text-[#3E3E3E] dark:text-[#FFFFFFBF] py-1 px-2 border border-[#FFFFFF4D] rounded-full' key={index}>
           <Link legacyBehavior href="/">
-            <a>{item}</a>
+            <a className='text-[#FFFFFFBF]'>{item}</a>
           </Link>
         </li>
       ))}

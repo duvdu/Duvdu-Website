@@ -98,15 +98,15 @@ const Header = ({ fromlayout, toggleClick }) => {
 
                             <div className="logo logo-width-1 mr-12">
                                 {
-                                    
-                                        <a href="/">
-                                            <img key={isDarkMode}
-                                                src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                                className="min-h-9"
-                                                alt="main logo"
-                                            />
-                                        </a>
-                                    
+
+                                    <a href="/">
+                                        <img key={isDarkMode}
+                                            src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                            className="min-h-9"
+                                            alt="main logo"
+                                        />
+                                    </a>
+
                                 }
                             </div>
 
@@ -114,30 +114,30 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 {fromlayout.showTabs
                                     &&
                                     <div className="header-tabs">
-                                        
-                                            <a href="/dashboard">
-                                                <Icon name={"dashboard"} useinvert={true} className="mr-1" />
-                                                <span>
-                                                     Dashboard
-                                                </span>
-                                            </a>
-                                        
-                                        
-                                            <a href="/contracts">
-                                                <Icon name={"contracts"} useinvert={true} className="mx-1" />
-                                                <span>
-                                                    contracts
-                                                </span>
-                                            </a>
-                                        
-                                        
-                                            <a href="/teams" className="capitalize whitespace-nowrap">
-                                                <Icon name={"teams"} useinvert={true} className="mx-1" />
-                                                <span>
-                                                    team projects
-                                                </span>
-                                            </a>
-                                        
+
+                                        <a href="/dashboard">
+                                            <Icon name={"dashboard"} useinvert={true} className="mr-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <span>
+                                                Dashboard
+                                            </span>
+                                        </a>
+
+
+                                        <a href="/contracts">
+                                            <Icon name={"contracts"} useinvert={true} className="mr-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <span>
+                                                contracts
+                                            </span>
+                                        </a>
+
+
+                                        <a href="/teams" className="capitalize whitespace-nowrap">
+                                            <Icon name={"teams"} useinvert={true} className="mr-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <span>
+                                                team projects
+                                            </span>
+                                        </a>
+
                                     </div>
                                 }
 
@@ -151,20 +151,22 @@ const Header = ({ fromlayout, toggleClick }) => {
                                             <div className="header-action-icon-2" >
                                                 <div className="icon-holder cursor-pointer" onClick={toggleNotificationDropdown}>
                                                     <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span>
-                                                    <Icon className={notificationDropdownVisible ? " text-DS_black" : ""} name={"bell"} type="far" />
+                                                    <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                 </div>
                                                 <MessageAndNotofication useState={{ notificationDropdownVisible, setNotificationDropdownVisible }} />
                                             </div>
-                                            <div className="header-action-icon-2 mx-8"  >
+                                            <div className="header-action-icon-2 mx-6"  >
                                                 <div className="icon-holder cursor-pointer" onClick={toggleSettingDropdown}>
-                                                    <Icon className={settingvisible ? " text-DS_black" : ""} name={"gear"} useinvert={true} />
+                                                    <Icon className={"dark:text-[#B3B3B3]"} name={"gear"} useinvert={true} />
                                                 </div>
                                                 <Setting data={{ settingvisible, setSettingvisible, isDarkMode, setisDarkMode, setIslogin: setIslogin }} />
                                             </div>
                                             <div className="header-action-icon-2"  >
                                                 <div className="icon-holder cursor-pointer" onClick={toggleProfileDropdown}>
                                                     <div className="flex justify-center items-center h-[18px]">
-                                                        <Icon className={profileDropdownVisible ? " text-DS_black" : ""} name={"user"} type="far" />
+                                                        <div className="border border-[#B3B3B3] rounded-full p-2">
+                                                        <Icon className={"dark:text-[#B3B3B3] "} name={"user"} type="far" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <Profile PathuseState={{ profileDropdownVisible, setProfileDropdownVisible }} />
@@ -175,7 +177,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                         !islogin &&
                                         <div className="header-action-2 flex gap-6 items-center">
                                             <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">log-in</a>
-                                            <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-DS_white font-semibold capitalize">register</a>
+                                            <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">register</a>
                                         </div>
                                     }
                                 </div>
@@ -187,9 +189,9 @@ const Header = ({ fromlayout, toggleClick }) => {
                     <div className="container">
                         <div className="header-wrap header-space-between relative">
                             <div className="logo logo-width-1 block lg:hidden my-4">
-                                    <a href="/">
-                                        <img className="w-40" src="/assets/imgs/theme/logo.svg" alt="logo" />
-                                    </a>
+                                <a href="/">
+                                    <img className="w-40" src="/assets/imgs/theme/logo.svg" alt="logo" />
+                                </a>
                             </div>
                             {
                                 !fromlayout.shortheader &&
@@ -204,10 +206,10 @@ const Header = ({ fromlayout, toggleClick }) => {
 
                             <div className="flex gap-2 lg:hidden my-4" >
                                 <div className="h-9 w-9" name={'search-2'} >
-                                <Icon className="size-full" name={'search-2'} />
+                                    <Icon className="size-full" name={'search-2'} />
                                 </div>
                                 <div className="h-9 w-9 " name={'burgerMenu'} onClick={toggleClick}>
-                                <Icon className="size-full" name={'burgerMenu'} onClick={toggleClick}/>
+                                    <Icon className="size-full" name={'burgerMenu'} onClick={toggleClick} />
 
                                 </div>
                             </div>
@@ -285,7 +287,7 @@ function MessageAndNotofication({ useState }) {
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (useState.notificationDropdownVisible ? " active" : "")}>
             <div className="dialog dialog-1">
                 <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2">
-                    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white p-7">
+                    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white dark:bg-[#1A2024] p-7">
                         <div className="flex items-center justify-between">
                             <h2 className="text-base font-bold capitalize">messages</h2>
                             <a className="underline font-semibold capitalize" href="">view all</a>
@@ -304,7 +306,7 @@ function MessageAndNotofication({ useState }) {
                             ))}
                         </div>
                     </div>
-                    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white p-7">
+                    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white dark:bg-[#1A2024] p-7">
                         <div className="flex items-center justify-between">
                             <h2 className="text-base font-bold capitalize">messages</h2>
                             <a className="underline font-semibold capitalize" href="">view all</a>
@@ -366,7 +368,7 @@ function Profile({ PathuseState }) {
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (PathuseState.profileDropdownVisible ? " active" : "")}  >
             <div className="dialog dialog-2 flex flex-col">
                 <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
-                    <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
+                    <div className="bg-DS_white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
                         <div className="flex w-full overflow-hidden h-20">
                             {["/assets/imgs/projects/1.jpeg",
                                 "/assets/imgs/projects/6.jpeg",
@@ -402,7 +404,7 @@ function Profile({ PathuseState }) {
                     {/* middle card  */}
                     {
                         showMiddleCard &&
-                        <div className="p-6 bg-DS_white rounded-[45px]">
+                        <div className="p-6 bg-DS_white dark:bg-[#1A2024] rounded-[45px]">
                             <div className="flex">
                                 <div className="w-full">
 
@@ -412,12 +414,12 @@ function Profile({ PathuseState }) {
                                     <div className='flex items-center'>
                                         <div className="flex w-full">
                                             <div className="header-progress-bar relative w-full">
-                                                <div className="absolute inset-0 rounded-lg h-full" style={{ 
-                                                    width: `${badge}%`, 
+                                                <div className="absolute inset-0 rounded-lg h-full" style={{
+                                                    width: `${badge}%`,
                                                     background: 'linear-gradient(270deg, #711AEB 7.19%, #226BEB 100%)',
-                                                    filter: 'blur(10.547093391418457px)' 
-                                                    }}></div>
-                                                    
+                                                    filter: 'blur(10.547093391418457px)'
+                                                }}></div>
+
                                                 <div className="relative h-full overflow-hidden">
                                                     <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
                                                 </div>
@@ -456,7 +458,7 @@ function Profile({ PathuseState }) {
 
                     {/* end card  */}
                     <a href="/saved">
-                        <div className="p-3 bg-DS_white rounded-[45px] mb-2">
+                        <div className="p-3 bg-DS_white dark:bg-[#1A2024] rounded-[45px] mb-2">
                             <h4 className="opacity-70 text-sm font-semibold m-2">
                                 saved projects
                             </h4>
@@ -578,7 +580,7 @@ function Setting({ data }) {
         <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (data.settingvisible ? " active" : "")}  >
             <div className="dialog flex flex-col">
                 <div className="overflow-y-scroll rounded-b-[60px] p-3">
-                    <div className="card w-72" >
+                    <div className="p-6 bg-white dark:bg-[#1A2024] w-72 rounded-[45px]" >
                         {contactUs && <ContactUs />}
                         {!contactUs && <Main setIslogin={data.setIslogin} />}
                         {/* <Main /> */}

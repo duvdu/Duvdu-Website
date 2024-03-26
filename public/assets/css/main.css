@@ -677,9 +677,6 @@ table p {
   text-transform: capitalize;
 }
 
-.header-tabs div {
-  width: 24px;
-}
 
 .logo a {
   display: block;
@@ -779,12 +776,6 @@ table p {
 .icon-holder {
   margin: 0;
 }
-
-.header-action-2 .header-action-icon-2>.icon-holder svg {
-  width: 1em;
-  height: 1em;
-}
-
 
 .header-action-2 .header-action-icon-2:hover>a {
   color: var(--primary);
@@ -1386,7 +1377,7 @@ table p {
 }
 
 .padge a {
-  color: #595959;
+  color: var(--padge);
   opacity: .8;
   font-size: 14px;
   font-weight: 500;
@@ -1445,24 +1436,10 @@ table p {
   border-bottom-left-radius: 60px;
   border-bottom-right-radius: 60px;
   border: 1px solid rgba(var(--white-rgb), 0.25);
-  background: rgba(var(--white-rgb), 0.15);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   z-index: 30;
-  /* overflow-y: scroll; */
-  /* overflow-x: hidden; */
   max-height: min(calc(100vh - 150px), 800px);
-}
-
-.dialog .card {
-  bottom: 0;
-  border-radius: 45px;
-  box-shadow: 0px 6px 15px -5px #00000026;
-  border: 1px solid #00000026;
-  background-size: 100% 33%;
-  background-repeat: no-repeat;
-  padding: 25px;
-  background-color: var(--white);
-  /* margin: 12.5px; */
 }
 
 .dialog-2 {
@@ -1703,7 +1680,7 @@ table p {
 }
 
 .have-account {
-  color: #595959;
+  color: var(--padge);
   text-align: center;
   font-size: 15px;
   font-style: normal;
@@ -1713,7 +1690,7 @@ table p {
 }
 
 .forgot-password {
-  color: #595959;
+  color: var(--padge);
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -2132,6 +2109,7 @@ table p {
   --gray-1: #C1CACF;
   --header-background: #fff;
   --body-background: #f8f4f4;
+  --cart-dropdown-color:#1A2024;
   --auth-raduis: 5px;
   --invert: invert(0%);
   --border-color: #D9D9D9;
@@ -2146,6 +2124,7 @@ table p {
   --Alabaster: #EAEEF0;
   --water: #CEE3FF;
   --drop-white-arrow: url('../imgs/theme/icons/drop-arrow.svg');
+  --padge: #595959;
   --swiper-pagination-bullet-inactive-color: #fff;
   --swiper-pagination-color: #fff;
   --swiper-pagination-bullet-inactive-opacity: .4;
@@ -2154,16 +2133,18 @@ table p {
 
 .dark {
   --header-background: #000;
+  --cart-dropdown-color:#1A2024;
   --body-background: #171717;
   --invert: invert(100%);
   --border-color: #333;
   --white: #000;
   --white-rgb: 0, 0, 0;
   --black: #fff;
-  --header-tab: #3E3E3E;
+  --header-tab: #B3B3B3;
   --black-rgb: 255, 255, 255;
   --indigo: var(--black);
   --Alabaster: #1A2024;
   --water: #001F4A;
   --drop-white-arrow: url('../imgs/theme/icons/drop-white-arrow.svg')
+  --padge: #FFFFFFBF;
 }

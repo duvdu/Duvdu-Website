@@ -31,7 +31,7 @@ const Search = () => {
     return (
         <>
             <input
-                className="searchInput border border-[#00000040] hover:border-transparent hover:bg-[#EAEEF0] focus:border-2 focus:border-primary focus:bg-transparent w-60 mx-6 text-sm h-9"
+                className="searchInput bg-transparent border border-[#00000040] dark:border-[#3E3E3E] hover:border-transparent hover:bg-[#EAEEF0] focus:border-2 focus:border-primary focus:bg-transparent w-60 mx-6 text-sm h-9"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => handleFocus(true)}
@@ -44,7 +44,7 @@ const Search = () => {
                 <h4 className="menu-title" href="#">
                     Search History
                 </h4>
-                <ul>
+                <ul className="gap-1">
                     {[
                         "videographer",
                         "fashion model",
@@ -58,9 +58,9 @@ const Search = () => {
                         "director",
                         "fashion model"
                     ].map((item, index) => (
-                        <li className="padge" key={index}>
+                        <li className="py-1 px-2 border border-[#FFFFFF4D] rounded-full" key={index}>
                             <Link href="/">
-                                <a>{item}</a>
+                                <a className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</a>
                             </Link>
 
                         </li>
