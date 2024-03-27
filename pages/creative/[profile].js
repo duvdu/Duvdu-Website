@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import Switch from '../../components/elements/switcher'
 import AddMyprofile from '../../components/elements/addMyprofile';
 import AddPost from '../../components/popsup/addpost';
-import Button from '../../components/elements/submitButton';
+import Button from '../../components/elements/button';
 import Chat from '../../components/elements/chat';
 
 function Profile() {
@@ -247,10 +247,10 @@ function MyProfile() {
                             !showAddPanal &&
                             <div className='static lg:sticky h-32 left-10 bottom-0 flex justify-center items-center'>
                                 <Controller>
-                                    <div onClick={() => setShowAddPanal(true)} className="controller-1 primary" >
+                                    <div onClick={() => setShowAddPanal(true)} className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
                                         <Icon className='text-white text-2xl' name={'plus'} />
                                     </div>
-                                    <div data-popup-toggle="popup" data-popup-target="edit-details" className="controller-1">
+                                    <div data-popup-toggle="popup" data-popup-target="edit-details" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center">
                                         <Icon className='text-white text-2xl' name={'pen'} />
                                     </div>
                                 </Controller>

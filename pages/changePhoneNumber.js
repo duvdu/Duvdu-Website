@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
-import Button from '../components/elements/submitButton';
+import Button from '../components/elements/button';
 import { useState, useEffect } from 'react';
 import Layout from "../components/layout/Layout";
 import OtpInput from 'react-otp-input';

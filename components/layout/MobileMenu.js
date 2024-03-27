@@ -74,7 +74,7 @@ const Tabs2 = () => {
                 [
                     {
                         url: '#',
-                        icon: 'user2',
+                        icon: 'user',
                         name: 'profile',
                     },
                     {

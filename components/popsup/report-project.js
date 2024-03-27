@@ -1,6 +1,6 @@
 
 import Popup from '../elements/popup';
-import AppButton from '../elements/submitButton';
+import AppButton from '../elements/button';
 import Icon from '../Icons';
 import React, { useState } from "react";
 

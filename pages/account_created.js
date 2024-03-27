@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import Icon from '../components/Icons';
-import Button from '../components/elements/submitButton';
+import Button from '../components/elements/button';
 
 function ResetPassword() {
   return (

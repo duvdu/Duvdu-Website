@@ -1428,7 +1428,7 @@ table p {
   font-weight: 700;
 }
 
-.dialog > div::-webkit-scrollbar {
+.dialog>div::-webkit-scrollbar {
   width: 0;
 }
 
@@ -1596,7 +1596,7 @@ table p {
 
 .front-part {
   z-index: 2;
-  
+
   color: var(--white);
   display: flex;
   flex-direction: column;
@@ -1906,7 +1906,7 @@ table p {
 }
 
 .scroll-m-0::-webkit-scrollbar-track {
-  margin:0;
+  margin: 0;
 }
 
 .scroll-w-0::-webkit-scrollbar {
@@ -1953,17 +1953,9 @@ table p {
   backdrop-filter: blur(6.204545497894287px);
 }
 
-.controller-1 {
-  @apply w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center;
-  background-color: #0000001A;
-}
-
-.controller-1.primary {
-  @apply bg-primary
-}
 
 .bottomeffect {
-  background: linear-gradient(180deg, rgba(247, 249, 251, 0.00) 0%, #F7F9FB 91.04%);
+  background: var(--linear-popup);
 }
 
 .appblur {
@@ -2067,7 +2059,7 @@ table p {
   font-weight: 700;
   text-transform: capitalize;
   cursor: pointer;
-  
+
 }
 
 .contact-toggle.active {
@@ -2109,7 +2101,7 @@ table p {
   --gray-1: #C1CACF;
   --header-background: #fff;
   --body-background: #f8f4f4;
-  --cart-dropdown-color:#1A2024;
+  --cart-dropdown-color: #1A2024;
   --auth-raduis: 5px;
   --invert: invert(0%);
   --border-color: #D9D9D9;
@@ -2123,6 +2115,7 @@ table p {
   --indigo: #253D4E;
   --Alabaster: #EAEEF0;
   --water: #CEE3FF;
+  --linear-popup: linear-gradient(180deg, rgba(247, 249, 251, 0.00) 0%, #F7F9FB 91.04%);
   --drop-white-arrow: url('../imgs/theme/icons/drop-arrow.svg');
   --padge: #595959;
   --swiper-pagination-bullet-inactive-color: #fff;
@@ -2133,7 +2126,7 @@ table p {
 
 .dark {
   --header-background: #000;
-  --cart-dropdown-color:#1A2024;
+  --cart-dropdown-color: #1A2024;
   --body-background: #171717;
   --invert: invert(100%);
   --border-color: #333;
@@ -2145,6 +2138,6 @@ table p {
   --indigo: var(--black);
   --Alabaster: #1A2024;
   --water: #001F4A;
-  --drop-white-arrow: url('../imgs/theme/icons/drop-white-arrow.svg')
-  --padge: #FFFFFFBF;
+  --linear-popup:linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 91.04%);
+  --drop-white-arrow: url('../imgs/theme/icons/drop-white-arrow.svg') --padge: #FFFFFFBF;
 }

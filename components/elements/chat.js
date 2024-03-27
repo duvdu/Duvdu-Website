@@ -15,8 +15,8 @@ const Chat = ({ messages, data, online ,Close}) => {
     return (
         <>
         <div onClick={Close} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0'/>
-        <div className="chat w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between p-4 rounded-lg bg-DS_white shadow-xl sm:left-8">
-            <a href='/creative/anaa_youseff' className="flex p-2 h-16 cursor-pointer border-b">
+        <div className="chat  dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-DS_white shadow-xl sm:left-8">
+            <a href='/creative/anaa_youseff' className="flex p-2 h-16 cursor-pointer border-b border-[#00000040] dark:border-[#FFFFFF40]">
                 <div className="relative">
                     <img className="h-full" src={data.user.img} />
                     {online && (
@@ -38,7 +38,8 @@ const Chat = ({ messages, data, online ,Close}) => {
             <div onClick={Close} className='absolute right-4 top-4 cursor-pointer'>
                 <Icon name={'xmark'} className='text-xl opacity-50' />
             </div>
-            <div className="messages-chat" id="chat" ref={chatRef}>
+            <div className="messages-chat " id="chat" ref={chatRef}>
+
                 {messages.map((message, index) => {
                     if (message.type === 'time') {
                         return (
@@ -78,9 +79,9 @@ const Chat = ({ messages, data, online ,Close}) => {
                     }
                 })}
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center dark:bg-[#4d4c4c] p-3 ">
                 {/* <i className="fas fa-camera"></i>*/}
-                <input className='border-none w-full h-min bg-DS_white' placeholder="Write a message..." type="text" />
+                <input className='border-none bg-transparent w-full h-min' placeholder="Write a message..." type="text" />
                 <Icon className="cursor-pointer" name={'attachment'} useinvert={true}/>
                 <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' useinvert={true}>
                     <Icon name={'microphone'} />

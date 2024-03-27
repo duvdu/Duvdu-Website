@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import Button from '../elements/submitButton';
+import Button from '../elements/button';
 
 function FormSubmitted() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
@@ -38,7 +38,7 @@ function SuccessBody({ toggleDirectorConfirmed }) {
                     </Button>
                 </div>
             </div>
-            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">terms & conditions</a>
+            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms&condations">terms & conditions</a>
         </div>
     );
 }
@@ -62,7 +62,7 @@ function Directorconfirmed() {
                     </a>
                 </div>
             </div>
-            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">book appointment</a>
+            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms&condations">book appointment</a>
         </div>
     );
 }

@@ -12,9 +12,9 @@ const MenuItem = ({ title, items }) => (
     </Link>
     <ul className={"gap-1"}>
       {items.map((item, index) => (
-        <li className='text-[#3E3E3E] dark:text-[#FFFFFFBF] py-1 px-2 border border-[#FFFFFF4D] rounded-full' key={index}>
+        <li className='py-1 px-2 border border-[#00000080] dark:border-[#FFFFFF4D] rounded-full' key={index}>
           <Link legacyBehavior href="/">
-            <a className='text-[#FFFFFFBF]'>{item}</a>
+            <a className='dark:text-[#FFFFFFBF] text-[#3E3E3E]'>{item}</a>
           </Link>
         </li>
       ))}

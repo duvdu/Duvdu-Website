@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import AppButton from '../elements/submitButton';
+import AppButton from '../elements/button';
 
 function WorkHour() {
 

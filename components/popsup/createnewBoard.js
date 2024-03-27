@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import AppButton from '../elements/submitButton';
+import AppButton from '../elements/button';
 
 function createnewBoard() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
@@ -21,7 +21,7 @@ function createnewBoard() {
     return (
         <>
             <Popup id="create-new-board" header={"create new Board"} >
-                <div method="post" onSubmit={handleSubmit} className='mt-12 w-[350px]'>
+                <div method="post" onSubmit={handleSubmit} className='mt-12 '>
                     <div className={`mb-12 ${numberError.isError && 'error'}`}>
                         <input
                             type="text"

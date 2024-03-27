@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Button from '../elements/submitButton';
+import Button from '../elements/button';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import AppButton from '../elements/submitButton';
+import AppButton from '../elements/button';
 
 function dashboard() {
 

@@ -1,7 +1,7 @@
 
-import Button from '../elements/submitButton';
+import Button from '../elements/button';
 import Popup from '../elements/popup';
-import AppButton from '../elements/submitButton';
+import AppButton from '../elements/button';
 import Icon from '../Icons'
 
 function PostAlarm() {

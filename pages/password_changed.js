@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Button from '../components/elements/submitButton';
+import Button from '../components/elements/button';
 import Auth from '../components/layout/Auth';
 import Icon from '../components/Icons';
 

@@ -1,7 +1,7 @@
 
 
 import Popup from '../elements/popup';
-import Button from '../elements/submitButton';
+import Button from '../elements/button';
 import Icon from '../Icons'
 
 

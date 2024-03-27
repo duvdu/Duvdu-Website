@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import { useState } from 'react';
-import Button from '../components/elements/submitButton';
+import Button from '../components/elements/button';
 import Icon from '../components/Icons';
 
 function Register() {

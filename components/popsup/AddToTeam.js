@@ -1,5 +1,5 @@
 
-import Button from '../elements/submitButton';
+import Button from '../elements/button';
 import Popup from '../elements/popup';
 import React, { useState } from 'react';
 

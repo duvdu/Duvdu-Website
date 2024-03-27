@@ -62,7 +62,6 @@ const Search = () => {
                             <Link href="/">
                                 <a className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</a>
                             </Link>
-
                         </li>
                     ))}
                 </ul>

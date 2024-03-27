@@ -5,7 +5,7 @@ import Search from "../elements/Search";
 import Menu from '../elements/menu'
 import Switch from '../elements/switcher'
 import Icon from "../Icons";
-import Button from '../elements/submitButton';
+import Button from '../elements/button';
 
 const Header = ({ fromlayout, toggleClick }) => {
     const [isToggled, setToggled] = useState(false);
@@ -190,7 +190,11 @@ const Header = ({ fromlayout, toggleClick }) => {
                         <div className="header-wrap header-space-between relative">
                             <div className="logo logo-width-1 block lg:hidden my-4">
                                 <a href="/">
-                                    <img className="w-40" src="/assets/imgs/theme/logo.svg" alt="logo" />
+                                <img key={isDarkMode}
+                                            src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                            className="min-h-9"
+                                            alt="main logo"
+                                        />
                                 </a>
                             </div>
                             {

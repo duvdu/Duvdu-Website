@@ -2,7 +2,7 @@ import Link from "next/link";
 import Auth from '../components/layout/Auth'
 import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
-import Button from '../components/elements/submitButton';
+import Button from '../components/elements/button';
 import { useRouter } from 'next/router';
 import Icon from '../components/Icons';
 

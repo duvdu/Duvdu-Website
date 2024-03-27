@@ -1,4 +1,4 @@
-import AppButton from '../elements/submitButton';
+import AppButton from '../elements/button';
 import Comment from '../elements/comment';
 import Controller from '../elements/controllers';
 import Icon from '../Icons';
@@ -128,7 +128,7 @@ var profile = {
 
 };
 
-function EditPopUp({ }) {
+function EditPopUp() {
     const [formData, setformData] = useState({
         'personalName': profile['personalName'],
         'occupation': profile['occupation'],
@@ -157,6 +157,8 @@ function EditPopUp({ }) {
     return (
         <>
             <Popup id='edit-details' header={'Edit Details'} addWhiteShadow={true}>
+                
+
                 <div className='relative'>
                     <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center  border-[#0000001A]">
                         <Icon className='text-white' name={'pen'} />
@@ -170,7 +172,7 @@ function EditPopUp({ }) {
                     </div>
                 </div>
         
-                <form className='p-20 pb-0 flex flex-col items-center w-[700px]' onSubmit={handleSubmit}>
+                <form className='pb-0 flex flex-col items-center max-w-[700px] sm:p-20 py-20' onSubmit={handleSubmit}>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             name
@@ -235,6 +237,7 @@ function EditPopUp({ }) {
                         Done
                     </AppButton>
                 </form>
+                
             </Popup>
         </>
     );

@@ -144,13 +144,10 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                     <div className="lg:flex gap-6">
                         <section className="lg:w-2/3">
 
-                            {
-                                router.query.project == 1 &&
-                                <ProjectShow1 data={data} />
-                            }
+                         
                             {
                                 router.query.project == 2 &&
-                                <ProjectShow2 data={data} />
+                                <ProjectShow data={data} />
                             }
 
                             <About data={data} />
@@ -201,25 +198,15 @@ const Header = ({ data }) => (
                     value: "oprion 3",
                     onclick: () => { },
                 }
-            ]} className="relative border rounded-full border-[#00000033] flex justify-center items-center w-14 h-14 cursor-pointer" />
+            ]} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer" />
         </div>
     </>
 )
-const ProjectShow1 = ({ data }) => {
+
+const ProjectShow = ({ data }) => {
+
     const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
     const videoRef = useRef(null);
-
-    useEffect(() => {
-        const timerId = setInterval(() => {
-            if (videoRef.current && videoRef.current.duration) {
-                setDuration(videoRef.current.duration);
-                clearInterval(timerId);
-            }
-        }, 10)
-
-    }, [videoRef, duration]);
 
     const handlePlayPause = () => {
         if (videoRef.current.paused) {
@@ -230,24 +217,19 @@ const ProjectShow1 = ({ data }) => {
             setIsPlaying(false);
         }
     };
-
-    const updateTime = () => {
-        setCurrentTime(videoRef.current.currentTime);
-    };
-
     return (
         <div className="relative">
             <video
                 className="border-50 w-full"
                 src={data.projectImg}
+                controls
                 ref={videoRef}
-                onTimeUpdate={updateTime}
+                onClick={handlePlayPause}
                 onEnded={() => setIsPlaying(false)}
             />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
                 <div
                     className="bg-[#CADED333] w-12 h-12 sm:w-16 sm:h-16 rounded-full cursor-pointer p-5"
-                    onClick={handlePlayPause}
                 >
                     <Icon
                         className="size-full text-white"
@@ -255,25 +237,6 @@ const ProjectShow1 = ({ data }) => {
                     />
                 </div>
             </div>
-            <div className="absolute right-7 bottom-7 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
-                <span className="text-white">
-                    {currentTime.toFixed(0)}/{duration.toFixed(0)}
-                </span>
-            </div>
-        </div>
-    );
-}
-const ProjectShow2 = ({ data }) => {
-
-    return (
-        <div className="relative">
-            <video
-                className="border-50 w-full"
-                src={data.projectImg}
-                controls
-            />
-
-
         </div>
     );
 }
@@ -282,7 +245,7 @@ const About = ({ data }) => (
     <div className="sticky top-header">
         <div className="h-16" />
         <h2 className="font-bold text-lg capitalize opacity-80 mb-4">about the creative</h2>
-        <div className="border border-50 border-solid border-gray-300 p-10">
+        <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] p-10">
             <div className='flex items-center justify-center'>
                 <div className='w-32 h-32 relative'>
                     <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
@@ -314,7 +277,7 @@ const About = ({ data }) => (
                     ))}
                 </div>
             </div>
-            <div className='px-10 border-gray-300 border-t mt-6 pt-6'>
+            <div className='px-10 border-[#00000040] dark:border-[#FFFFFF40] border-t mt-6 pt-6'>
                 <p id='about-header'>about</p>
                 <p className='pt-2' id='about-paragraph'>{data.creative.about}</p>
             </div>
@@ -452,10 +415,6 @@ const Control = ({ data, toggleDrawer }) => {
             "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
         },
         {
-            "type": "typing other",
-            "data": ""
-        },
-        {
             "type": "time",
             "data": "Today at 11:41"
         },
@@ -489,12 +448,12 @@ const Control = ({ data, toggleDrawer }) => {
             <div className="fixed bottom-0 z-20">
                 {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
             </div>
+            {
+                !showChat &&
+                <div className='sticky h-32 bottom-0 z-20 max-w-full'>
+                    <div className="container flex justify-between items-end">
 
-            <div className='sticky h-32 bottom-0 z-20 max-w-full'>
-                <div className="container flex justify-between items-end">
-                    {
-                        !showChat &&
-                        <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-DS_white cursor-pointer ">
+                        <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
                             <div className="relative">
                                 <img className="h-full" src={data.user.img} />
                                 {online && (
@@ -513,25 +472,23 @@ const Control = ({ data, toggleDrawer }) => {
                                 <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
                             </div>
                         </div>
-                    }
-                    {
-                        showChat &&
-                        <div />
-                    }
-                    <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                        <div className="controller-1" >
-                            <Icon name={'share'} />
-                        </div>
-                        <div data-popup-toggle="popup" data-popup-target="add-to-team" className="controller-1">
-                            <Icon className="text-white text-xl" name={'plus'} />
-                        </div>
-                        <div onClick={handleLoveIconClick} className="controller-1">
-                            <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} text-2xl`} name={'heart'} type={loveIconName} />
-                        </div>
-                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
-                    </Controller>
+
+
+                        <Controller className={"mr-auto ml-auto lg:m-0 "}>
+                            <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center" >
+                                <Icon name={'share'} />
+                            </div>
+                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center">
+                                <Icon className="text-white text-xl" name={'plus'} />
+                            </div>
+                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D]  w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center">
+                                <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} text-2xl`} name={'heart'} type={loveIconName} />
+                            </div>
+                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
+                        </Controller>
+                    </div>
                 </div>
-            </div>
+            }
 
         </>
     );

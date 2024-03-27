@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
-import AppButton from '../elements/submitButton';
+import AppButton from '../elements/button';
 
 function DeleteBoard() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);

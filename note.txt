@@ -49,4 +49,12 @@
 - what is next-auth
 - handle darkmode
 ----------------------------------- day task -----------------------------------
+- project controll
+- mobile menu margin ( icon , list )
+- popUp ( subscribe , alarm )
+----------------------------------- day task -----------------------------------
 ----------------------------------- end task -----------------------------------
+- dark border
+- controller
+- chat color
+- minimun
