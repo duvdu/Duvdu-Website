@@ -9,7 +9,7 @@ function Receive_project_files() {
     return (
         <>
             <Popup id="project-details" header={"project details"}>
-                <div className='flex flex-col justify-center items-center px-40 gap-6'>
+                <div className='flex flex-col justify-center items-center px-0 sm:px-20 lg:px-40 gap-6 mt-10'>
                     <section>
                         <span className='text-4xl my-5'> 18:58
                             <span className='text-lg opacity-40 mx-2'>
@@ -69,61 +69,64 @@ function Receive_project_files() {
                         }
                     </section>
 
-                    <section className='w-full flex justify-between'>
-                        <div className='w-full'>
-                            <h2 className='opacity-60 capitalize mb-3'> custom requirements </h2>
-                            <span className='font-semibold capitalize mt-3'> 12 minutes </span>
-                        </div>
-                        <div className='w-full'>
-                            <h2 className='opacity-60 capitalize mb-3'> shooting days </h2>
-                            <span className='font-semibold capitalize mt-3'> 5 days </span>
-                        </div>
-                    </section>
-                    <section className='w-full flex justify-between'>
-                        <div className='w-full'>
-                            <h2 className='opacity-60 capitalize mb-3'> shooting days </h2>
-                            <div className='flex gap-4'>
-                                <div className='bg-[#e8f1fd] rounded-xl p-3 mb-4'>
-                                <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
-                                </div>
-                                <div>
-                                    <div>
-                                        <span className='opacity-85 text-base'>
-                                            Gala Convention Center
-                                        </span>
+                    <section className='w-full flex flex-col sm:flex-row justify-between items-center gap-10 sm:gap-3'>
+                        <div>
+                            <div className='w-full'>
+                                <h2 className='opacity-60 capitalize mb-3'> custom requirements </h2>
+                                <span className='font-semibold capitalize mt-3'> 12 minutes </span>
+                            </div>
+                            <div className='w-full mt-5'>
+                                <h2 className='opacity-60 capitalize mb-3'> shooting days </h2>
+                                <div className='flex gap-4'>
+                                    <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
+                                        <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
                                     </div>
                                     <div>
-                                        <span className='text-xs text-[#747688]'>
-                                            36 Guild Street London, UK
-                                        </span>
+                                        <div>
+                                            <span className='opacity-85 text-base'>
+                                                Gala Convention Center
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span className='text-xs text-[#747688]'>
+                                                36 Guild Street London, UK
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='w-full'>
-                            <h2 className='opacity-60 capitalize mb-3'> start date </h2>
-                            
-                            <div className='flex gap-4'>
-                                <div className='bg-[#e8f1fd] rounded-xl p-3 mb-4'>
-                                    <Icon name={"bag"} />
-                                </div>
-                                <div>
-                                    <div>
-                                        <span className='opacity-85 text-base'>
-                                            14 December, 2021
-                                        </span>
+                        <div>
+                            <div className='w-full'>
+                                <h2 className='opacity-60 capitalize mb-3'> shooting days </h2>
+                                <span className='font-semibold capitalize mt-3'> 5 days </span>
+                            </div>
+                            <div className='w-full mt-5'>
+                                <h2 className='opacity-60 capitalize mb-3'> start date </h2>
+
+                                <div className='flex gap-4'>
+                                    <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
+                                        <Icon name={"bag"} />
                                     </div>
                                     <div>
-                                        <span className='text-xs text-[#747688]'>
-                                            Tuesday
-                                        </span>
+                                        <div>
+                                            <span className='opacity-85 text-base'>
+                                                14 December, 2021
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span className='text-xs text-[#747688]'>
+                                                Tuesday
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
+
                 </div>
-                <div className='flex mx-20 gap-7 mb-10 mt-16'>
+                <div className='flex mx-5 md:mx-20 gap-7 mb-10 mt-16'>
                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"}>
                         <span className='text-white font-bold capitalize text-lg'>
                             submit

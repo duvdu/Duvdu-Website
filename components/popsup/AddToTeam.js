@@ -27,7 +27,7 @@ function AddToTeam() {
                 <div className='flex flex-col justify-between h-[75vh] w-full sm:w-[565px]'>
                     {currentStep === 'step1' && <Step1 />}
                     {currentStep === 'step2' && <Step2 />}
-                    <div className='px-24'>
+                    <div className='sm:px-24'>
                         <Button name="reset-password" className="w-full mb-9" shadow={true} onClick={handleNextStep}>
                             {steps[currentStep].buttonTxt}
                         </Button>
@@ -53,7 +53,7 @@ function Step1() {
     return (
         <div>
             {projects.map((project, index) => (
-                <div key={index} className="h-20  rounded-full mt-9 relative overflow-hidden">
+                <div key={index} className="h-20 rounded-full mt-9 relative overflow-hidden">
                     <img className="absolute -translate-y-1/2 blur-sm" src={project.img} />
                     <div className="absolute z-20 flex items-center w-full h-full p-7">
                         <div>

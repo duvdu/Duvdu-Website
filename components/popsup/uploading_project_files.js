@@ -9,7 +9,7 @@ function Uploading_project_files() {
     return (
         <>
             <Popup id="uploading_project_files" header={"Uploading Project Files"}>
-                <div className='flex flex-col justify-center items-center px-52 '>
+                <div className='flex flex-col justify-center items-center p-0 sm:px-52 '>
                     <div className='max-w-[400px]'>
                         <section>
                             <p className="capitalize opacity-60 mt-11">add project link</p>

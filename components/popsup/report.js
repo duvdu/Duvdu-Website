@@ -29,7 +29,7 @@ function Report() {
                     <span className='font-medium text-lg'>Behind the scenes shots, raw files, ...etc.</span>
                     {
                         !file &&
-                        <div className='bg-DS_white border-dashed border-4 border-[#CBD0DC] flex flex-col items-center justify-center rounded-3xl py-6 mt-5'>
+                        <div className='bg-DS_white border-dashed border-4 border-[#CBD0DC] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 p-4'>
                             <div className='rounded-full p-4 bg-[#F5F5F5]'>
                                 <Icon name={"add-file"} />
                             </div>

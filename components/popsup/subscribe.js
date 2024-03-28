@@ -8,7 +8,7 @@ function Popup({ isfree = false }) {
         <>
             <div id={`subscribe-${isfree ? 'free' : 'notfree'}`} className="popup z-30 ">
                 <div data-popup-dismiss="popup" className="flex overlay blur" ></div>
-                <div className='card overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] mx-10 bg-no-repeat relative ' style={{ backgroundImage: "url(assets/imgs/authswiper/login-3.png)" }}>
+                <div className='card overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] sm:mx-10 bg-no-repeat relative ' style={{ backgroundImage: "url(assets/imgs/authswiper/login-3.png)" }}>
                     <div className='flex gap-3 absolute top-5 left-5'>
                         <div data-popup-dismiss="popup" className='flex rounded-full border p-3 border-white border-opacity-50 bg-[#FFFFFF1A] blur-4px cursor-pointer justify-center items-center'>
                             <Icon name={'xmark'} useinvert={true} className='w-6 h-6 text-white' />

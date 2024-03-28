@@ -28,7 +28,7 @@ function Receive_project_files() {
                         </section>
                     </div>
                 </div>
-                    <div className='flex mx-20 gap-7 mb-10'>
+                    <div className='flex sm:mx-20 gap-7 mb-10'>
                         <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"}>
                             <span className='text-white font-bold capitalize text-lg'>
                                 submit

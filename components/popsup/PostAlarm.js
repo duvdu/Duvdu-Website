@@ -10,7 +10,7 @@ function PostAlarm() {
     return (
         <>
                 <Popup id='alarm' >
-                    <div className='flex flex-col justify-center items-center max-w-[828px] px-14'>
+                    <div className='flex flex-col justify-center items-center max-w-[828px] md:px-14'>
                         <Icon name={"triangle-exclamation"} className="text-[#EB1A40] w-20 text-9xl"  type='fas'/>
                         <h1 className='text-3xl opacity-80 font-extrabold capitalize max-w-[400px] text-center'> your post goes against our guidelines </h1>
                         <div className='flex w-full gap-7 border-alarm rounded-3xl mt-12 p-2'>

@@ -59,7 +59,7 @@ function Step1() {
     };
     return (
 
-        <div className='mx-28'>
+        
             <div className='flex gap-1 flex-wrap justify-center max-w-96 mt-16'>
                 {
                     [
@@ -81,7 +81,7 @@ function Step1() {
                             </li>
                         ))}
             </div>
-        </div>
+        
     )
 }
 
@@ -127,7 +127,7 @@ function AddPost() {
     const inputstyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50"
     return (
         <>
-            <div className='lg:w-[600px] flex flex-col gap-7 mx-12'>
+            <div className='w-full lg:w-[600px] flex flex-col gap-7 mx-12'>
                 <section>
                     <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
                         <label htmlFor="file-upload" className='rounded-full p-4 bg-[#F5F5F5]'>

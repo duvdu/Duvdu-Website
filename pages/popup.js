@@ -34,7 +34,7 @@ function Test() {
         <>
             <Layout>
                 <div className='container'>
-                    <div className='flex flex-wrap w-full gap-1 mt-4'>
+                    <div className='flex flex-col max-w-[350px] w-full gap-1 mt-4'>
                         <BTN target='registration-required'> Dashboard </BTN>
                         <BTN target='delete-board'> DeleteBoard </BTN>
                         <BTN target='edit-details'> EditProfile </BTN>

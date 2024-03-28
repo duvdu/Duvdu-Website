@@ -7,7 +7,7 @@ function Thanks() {
     return (
         <>
                 <Popup id='thanks-meesage' header={'Thanks Meesage'}>
-                    <div className="flex flex-col justify-center items-center w-full sm:w-[404px] h-full my-14 text-center mx-28">
+                    <div className="flex flex-col justify-center items-center w-full sm:w-[404px] h-full my-14 text-center  sm:mx-28">
                             <div className="flex w-full justify-center">
                                <Icon name={"done"} />
                             </div>

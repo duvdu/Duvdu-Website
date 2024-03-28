@@ -44,7 +44,7 @@
 - payment details type
 - last screen UI
 - report Project popUp
------------------------------------ day task -----------------------------------
+----------------------------------- day task -----------------------------------    
 - enable file drag drop
 - what is next-auth
 - handle darkmode
