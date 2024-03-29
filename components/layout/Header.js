@@ -165,7 +165,7 @@ const Header = ({ fromlayout, toggleClick }) => {
                                                 <div className="icon-holder cursor-pointer" onClick={toggleProfileDropdown}>
                                                     <div className="flex justify-center items-center h-[18px]">
                                                         <div className="border border-[#B3B3B3] rounded-full p-2">
-                                                        <Icon className={"dark:text-[#B3B3B3] "} name={"user"} type="far" />
+                                                            <Icon className={"dark:text-[#B3B3B3] "} name={"user"} type="far" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -190,11 +190,11 @@ const Header = ({ fromlayout, toggleClick }) => {
                         <div className="header-wrap header-space-between relative">
                             <div className="logo logo-width-1 block lg:hidden my-4">
                                 <a href="/">
-                                <img key={isDarkMode}
-                                            src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                            className="min-h-9"
-                                            alt="main logo"
-                                        />
+                                    <img key={isDarkMode}
+                                        src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                        className="min-h-9"
+                                        alt="main logo"
+                                    />
                                 </a>
                             </div>
                             {

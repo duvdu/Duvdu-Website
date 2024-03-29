@@ -114,7 +114,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
 
                     const updatedGradientFill = gradientRef.current.createLinearGradient(0, 0, 0, canvas.height * .9);
                     updatedGradientFill.addColorStop(0, '#2074ec');
-                    updatedGradientFill.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    updatedGradientFill.addColorStop(1, '#1A73EB00');
 
                     chartInstance.data.datasets[0].backgroundColor = updatedGradientFill;
                     chartInstance.update();
@@ -148,18 +148,18 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
 
                     <span >
                         {
-                            !isUp && <Icon className='text-red-700' name={'arrow-down-long'} />
+                            !isUp && <Icon className='text-[#B41D38]' name={'arrow-down-long'} />
                         }
                         {
-                            isUp && <Icon className='text-green-700' name={'arrow-up-long'} />
+                            isUp && <Icon className='text-[#289C34] dark:text-[#2DB03A]' name={'arrow-up-long'} />
                         }
 
                     </span>
 
-                    <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
+                    <span className={`${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {viewRate}%</span>
                 </div>
             </div>
-            <canvas className='card red-gradient border-2 border-[#cccccc] h-full' id="chart" ref={chartRef}/>
+            <canvas className='card red-gradient border-2 border-[#CABEC1] dark:border-[#6B5A61] h-full' id="chart" ref={chartRef}/>
         </div>
     );
 };

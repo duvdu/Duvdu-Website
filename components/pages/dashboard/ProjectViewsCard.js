@@ -4,23 +4,23 @@ import { convertToK } from '../../../util/util';
 import Icon from '../../Icons';
 
 const ProjectViewsCard = ({ recieved }) => (
-    <div className='flex flex-col justify-around card green-gradient recieved w-full p-8 border border-[#cccccc] h-full'>
+    <div className='flex flex-col justify-around card green-gradient recieved w-full p-8 border border-[#97C39E] dark:border-[#577E61] h-full'>
         <div className='flex items-center gap-5'>
-            <div className='text-lg capitalize font-semibold'>
+            <div className='text-lg capitalize font-semibold opacity-70'>
                 you have recieved
             </div>
             <div className="gap-1 rounded-full px-4 flex items-center dashboard_padge">
                 <span >
                     {
                         !(recieved.rate.isUp) &&
-                        <Icon className='text-red-700' name={'arrow-down-long'} />
+                        <Icon className='text-[#B41D38]' name={'arrow-down-long'} />
                     }
                     {
                         recieved.rate.isUp &&
-                        <Icon className='text-green-700' name={'arrow-up-long'} />
+                        <Icon className='text-[#289C34] dark:text-[#2DB03A]' name={'arrow-up-long'} />
                     }
              </span>
-                <span className={`${recieved.rate.isUp ? 'text-green-700' : 'text-red-700'}`} > {recieved.rate.number}%</span>
+                <span className={`${recieved.rate.isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`} > {recieved.rate.number}%</span>
 
             </div>
 

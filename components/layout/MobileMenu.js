@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "../Icons";
 import headerMen from '../../public/static/header_content.json';
 import Search from "../elements/SearchMobile";
@@ -11,7 +11,6 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
 
     const OpenSearch = () => setOpenSearch(true)
     const CloseSearch = () => setOpenSearch(false)
-
 
     return (
         <>
@@ -43,12 +42,20 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
 
 
 
-const Header = ({ onClick, toggleOpenSearch }) =>
-    <div className="flex items-center px-5 py-2 border-b">
+const Header = ({ onClick, toggleOpenSearch }) => {
+    let isDarkMode = true;
+    useEffect(() => {
+        isDarkMode = localStorage.getItem('darkMode') === 'true';
+    })
+    return <div className="flex items-center px-5 py-2 border-b">
         <div className="flex justify-start w-full">
             <Link href="/">
                 <a>
-                    <img className="w-40" src="/assets/imgs/theme/logo.svg" alt="logo" />
+                    <img key={isDarkMode}
+                        src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                        className="min-h-9"
+                        alt="main logo"
+                    />
                 </a>
             </Link>
         </div>
@@ -58,11 +65,12 @@ const Header = ({ onClick, toggleOpenSearch }) =>
             <Icon className="cursor-pointer" name={'xmark-menu'} onClick={onClick} />
         </div>
     </div>
+}
 
 
-const SearchBody = ({toggleOpenSearch}) => <div className="h-body bg-[#F7F9FB]" >
+const SearchBody = ({ toggleOpenSearch }) => <div className="h-body bg-[#F7F9FB]" >
     <div className="p-5">
-        <Search toggleOpenSearch={toggleOpenSearch}/>
+        <Search toggleOpenSearch={toggleOpenSearch} />
     </div>
 </div>
 
@@ -89,8 +97,8 @@ const Tabs2 = () => {
                     },
                 ].map((item, index) =>
                     <a key={index} href={item.url} className="flex gap-1">
-                        <Icon name={item.icon} />
-                        <span className="text-base font-bold capitalize text-[#3E3E3E]">{item.name}</span>
+                        <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
+                        <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
                     </a>
                 )
             }
@@ -120,8 +128,8 @@ const Tabs = () => {
                     },
                 ].map((item, index) =>
                     <a key={index} href={item.url} className="flex gap-1">
-                        <Icon name={item.icon} />
-                        <span className="text-base font-bold capitalize text-[#3E3E3E]">{item.name}</span>
+                        <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
+                        <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
                     </a>
                 )
             }
@@ -170,7 +178,7 @@ const Menu = () => {
 
                                 return (
                                     <li key={subcategory.title} className="cursor-pointer" onClick={(e) => { e.stopPropagation(); toggleSubcategory(subcategory) }}>
-                                        <div className="flex w-full  bg-[#F7F9FB] justify-between items-center p-5">
+                                        <div className="flex w-full bg-[#F7F9FB] justify-between items-center p-5">
                                             <div className="text-[#4F5E7B] font-semibold text-sm">
                                                 {subcategory.title}
                                             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const TopProjects = ({ projects }) => (
-<div className='mt-6 card bg-DS_white w-full p-8 cardborder-3'>
+<div className='mt-6 card bg-DS_white w-full p-8 cardborder-3 bg-white dark:bg-[#1A2024]'>
     {projects.projects.map((e,index)=>(
         <div key={index} className='spliter'>
             <div className='flex gap-4 items-center'>

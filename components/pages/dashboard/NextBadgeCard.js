@@ -9,10 +9,10 @@ const NextBadgeCard = ({ badge }) => (
             <div className="progress-bar w-full">
                 <div className="progress relative" style={{ width: `${badge}%` }}>
                     <div className="progress blur-12px"></div>
-                    <span className="text-DS_white text-sm absolute right-0 bottom-full mb-1">{badge}%</span>
+                    <span className="text-DS_white text-sm absolute right-0 bottom-full mb-1 dark:text-white dark:opacity-70">{badge}%</span>
                 </div>
             </div>
-            <div className='text-yellow-300 text-center text-lg rounded-full min-w-max px-3 mx-3 text-border capitalize'>
+            <div className='text-[#F5D16B] text-center text-lg rounded-full min-w-max px-3 mx-3 border border-white border-opacity-50 capitalize'>
                 mid level
             </div>
         </div>

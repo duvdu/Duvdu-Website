@@ -95,7 +95,7 @@ const Dashboard = () => {
                     <div className='w-full pt-6'>
                         <div className='flex flex-col sm:flex-row gap-6'>
                             <div className='flex flex-col w-full gap-6'>
-                                <div className='card cardborder-3 bg-DS_white w-full h-full cardborder p-7 pt-16'>
+                                <div className='card cardborder-3 bg-white dark:bg-[#1A2024] w-full h-full p-7 pt-16'>
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
                                     <br />
                                     <br />
@@ -107,28 +107,31 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='card cardborder-3 green-gradient w-full h-full cardborder p-7 pt-16'>
+                                <div className='card border border-[#97C39E] dark:border-[#577E61] green-gradient w-full h-full p-7 pt-16'>
                                     <div className='flex items-center'>
                                         <span className='text-lg font-semibold capitalize opacity-70'>rank</span>
-                                        <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-green-700' : 'text-red-700'}`}>
+                                        <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}>
                                             <span >
                                                 {
-                                                    !isUp && <Icon className='text-red-700' name={'arrow-down-long'} />
+                                                    !(recieved.rate.isUp) &&
+                                                    <Icon className='text-[#B41D38]' name={'arrow-down-long'} />
                                                 }
                                                 {
-                                                    isUp && <Icon className='text-green-700' name={'arrow-up-long'} />
+                                                    recieved.rate.isUp &&
+                                                    <Icon className='text-[#289C34] dark:text-[#2DB03A]' name={'arrow-up-long'} />
                                                 }
                                             </span>
-                                            <span className={`${isUp ? 'text-green-700' : 'text-red-700'}`}> {viewRate}%</span>
+                                            <span className={`${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {viewRate}%</span>
                                         </div>
-                                        <div className='w-full' />
-                                        <div className='bg-slate-200 rounded-2xl w-5 h-5 flex justify-center cursor-pointer'>
-                                            <p>?</p>
-                                        </div>
+
+                                        <span className='bg-[#D9D9D9] dark:bg-[#333333] rounded-2xl w-5 h-5 flex justify-center cursor-pointer aspect-square items-center'>
+                                            ?
+                                        </span>
+
                                     </div>
                                     <br />
                                     <br />
-                                    <span className='text-[47.907px]  text-DS_black font-medium capitalize'>1530</span>
+                                    <span className='text-[47.907px] text-DS_black font-medium capitalize'>top 30%</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
