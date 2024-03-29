@@ -4,7 +4,7 @@ import { convertToK } from '../../../util/util';
 import Icon from '../../Icons';
 
 const ProjectViewsCard = ({ recieved }) => (
-    <div className='flex flex-col justify-around card green-gradient recieved w-full p-8 border border-[#97C39E] dark:border-[#577E61] h-full'>
+    <div className='flex flex-col justify-around card green-gradient recieved w-full p-8 border border-[#97C39E] dark:border-[#577E61] '>
         <div className='flex items-center gap-5'>
             <div className='text-lg capitalize font-semibold opacity-70'>
                 you have recieved

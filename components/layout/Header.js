@@ -489,7 +489,13 @@ function Setting({ data }) {
     function toggle() {
         const body = document.body;
         body.classList.toggle('dark');
-        const isDarkMode = body.classList.contains('dark');
+        
+        const event = new CustomEvent('darkModeToggled', {
+            bubbles: true,
+            cancelable: true,
+        });
+        body.dispatchEvent(event);
+        
         data.setisDarkMode(isDarkMode)
         if (isDarkMode) {
             document.documentElement.classList.add('dark');

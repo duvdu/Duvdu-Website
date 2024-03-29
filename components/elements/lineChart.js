@@ -13,8 +13,10 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     const gradientRef = useRef(null);
 
     useEffect(() => {
+        const body = document.body;
+        const isDarkMode = body.classList.contains('dark');
+        const color = isDarkMode ? "255":"0"
         let chartInstance = null;
-
         const createChart = () => {
             const gradient = document.createElement('canvas').getContext('2d');
             gradientRef.current = gradient;
@@ -80,7 +82,6 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                             padding: {
                                 top: 96
                             },
-                            height : 400
                         },
                         scales: {
                             x: {
@@ -88,6 +89,13 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                                 title: {
                                     display: true,
                                 },
+                                grid: {
+                                    color: `rgba(${color}, ${color}, ${color}, 0)`
+                                },
+                                ticks: {
+                                    color: `rgba(${color}, ${color}, ${color}, 0.4)`
+                                }
+                             
                             },
                             y: {
                                 display: true,
@@ -96,6 +104,20 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                                     text: 'Value',
                                 },
                                 beginAtZero: true,
+                                grid: {
+                                    color: function(context) {
+                                        console.log(context)
+                                        if (context.index > 0) {
+                                          return `rgba(${color}, ${color}, ${color}, 0.1)`
+
+                                        } else  {
+                                            return `rgba(${color}, ${color}, ${color}, 1)`
+                                        }
+                                    }
+                                },
+                                ticks: {
+                                    color: `rgba(${color}, ${color}, ${color}, 0.4)`
+                                }
                             },
                         },
 
@@ -139,7 +161,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     }, [labels, initialDatapoints]);
 
     return (
-        <div className='relative'>
+        <div className='relative h-full'>
             <div className='absolute h-24 w-full flex items-center mx-10 gap-5'>
                 <div className='text-lg opacity-70 capitalize font-semibold'>
                     project views
@@ -159,7 +181,7 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                     <span className={`${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {viewRate}%</span>
                 </div>
             </div>
-            <canvas className='card red-gradient border-2 border-[#CABEC1] dark:border-[#6B5A61] h-full' id="chart" ref={chartRef}/>
+            <canvas className='card red-gradient border-2 border-[#CABEC1] dark:border-[#6B5A61]' id="chart" ref={chartRef} style={{ minHeight: '100%', maxWidth: "100%" }} />
         </div>
     );
 };
