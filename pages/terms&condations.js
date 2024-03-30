@@ -1,5 +1,5 @@
 import React from 'react';
-import headerMen from '../../public/static/Terms.json';
+import headerMen from '../public/static/Terms.json';
 
 
 const Page = () => {
