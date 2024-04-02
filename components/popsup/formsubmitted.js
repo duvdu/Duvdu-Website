@@ -33,7 +33,7 @@ function SuccessBody({ toggleDirectorConfirmed }) {
             </div>
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
-                    <Button onClick={toggleDirectorConfirmed} className={'px-36 my-5 max-w-[400px] text-white'} color={"#5666F7"} >
+                    <Button onClick={toggleDirectorConfirmed} className={'px-36 my-5 max-w-[400px] text-white'} >
                         Done
                     </Button>
                 </div>
@@ -56,7 +56,7 @@ function Directorconfirmed() {
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
                     <a href='/payment'>
-                    <Button  className={'px-36 my-5 max-w-[400px] text-white'} color={"#5666F7"} >
+                    <Button  className={'px-36 my-5 max-w-[400px] text-white'} >
                         Done
                     </Button>
                     </a>

@@ -1,11 +1,5 @@
 [
-    "add-file",
     "apple-logo",
-    "attachment",
-    "bag",
-    "card",
-    "chat",
-    "check-verify",
     "contracts",
     "coupon",
     "dashboard",
@@ -46,7 +40,6 @@
     "angle-right-local",
     "burgerMenu",
     "xmark-menu",
-    "search-menu",
     "angle-down-menu",
     "search-2",
     "x-blur"

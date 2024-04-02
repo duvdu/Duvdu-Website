@@ -161,8 +161,8 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     }, [labels, initialDatapoints]);
 
     return (
-        <div className='relative h-full'>
-            <div className='absolute h-24 w-full flex items-center mx-10 gap-5'>
+        <div className='relative h-full '>
+            <div className='absolute h-24 w-full flex items-center px-10 gap-5'>
                 <div className='text-lg opacity-70 capitalize font-semibold'>
                     project views
                 </div>

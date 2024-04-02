@@ -63,7 +63,7 @@ function Test() {
                     </div>
 
 
-                    {/* <Dashboard /> */}
+                    <Dashboard />
                     <DeleteBoard />
                     <EditProfile />
                     <CreatenewBoard />

@@ -40,10 +40,7 @@ const Search = () => {
                 type="text"
                 placeholder="Search..."
             />
-            <div className={"dialog-history max-w-[600px] " + (searchDropdownVisible ? "active" : "")}>
-                <h4 className="menu-title" href="#">
-                    Search History
-                </h4>
+            <div className={"dialog-history max-w-[300px] " + (searchDropdownVisible ? "active" : "")}>
                 <ul className="gap-1">
                     {[
                         "videographer",
@@ -58,7 +55,7 @@ const Search = () => {
                         "director",
                         "fashion model"
                     ].map((item, index) => (
-                        <li className="py-1 px-2 border border-[#FFFFFF4D] rounded-full" key={index}>
+                        <li className="py-1 px-2 border border-[#0000004D] dark:border-[#FFFFFF4D] rounded-full" key={index}>
                             <Link href="/">
                                 <a className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</a>
                             </Link>

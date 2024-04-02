@@ -53,8 +53,9 @@
 - mobile menu margin ( icon , list )
 - popUp ( subscribe , alarm )
 ----------------------------------- day task -----------------------------------
------------------------------------ end task -----------------------------------
 - dark border
 - controller
 - chat color
 - minimun
+----------------------------------- day task -----------------------------------
+- dark mode switch

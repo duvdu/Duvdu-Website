@@ -56,50 +56,51 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
         projectImg: '/assets/imgs/projects/18.mp4',
         date: 'april 5 - 2023',
         tools: [
-            {
-                v1: {
+            [
+
+                {
                     "value": "$800 insurance",
                     "isActive": true,
                 },
-                v2: {
+                {
                     "value": "$50 day",
                     "isActive": true,
                 },
-            },
-            {
-                v1: {
+            ],
+            [
+                {
                     "value": "cannon - 452c",
                     "isActive": false,
                 },
-                v2: {
+                {
                     "value": "camera",
                     "isActive": false,
                 },
-            },
-            {
-                v1: {
+            ],
+            [
+                {
                     "value": "50 mm full-frame",
                     "isActive": false,
                 },
-                v2: {
+                {
                     "value": "lens",
                     "isActive": false,
                 },
-            },
-            {
-                v1: {
+            ],
+            [
+                {
                     "value": "canon m24 45 v",
                     "isActive": false,
                 },
-                v2: {
+                {
                     "value": "flash",
                     "isActive": false,
                 },
-                v3: {
+                {
                     "value": "$25 hour",
                     "isActive": false,
-                },
-            },
+                }
+            ],
         ],
         description: 'this project is Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Iaculis at erat pellentesque adipiscing commodo.',
         shooting_time: 144,
@@ -132,11 +133,11 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
 
     return (
         <>
-            <Layout>
+            <Layout >
                 <AddToTeam />
                 <Report />
                 <ThanksMSG />
-
+                <div className={isOpen ? "h-0 overflow-hidden" : ""}>
                 <div className="container mt-6">
                     <section>
                         <Header data={data} />
@@ -144,9 +145,9 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                     <div className="lg:flex gap-6">
                         <section className="lg:w-2/3">
 
-                         
+
                             {
-                                router.query.project == 2 &&
+                                router.query.project == 1 &&
                                 <ProjectShow data={data} />
                             }
 
@@ -162,6 +163,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                         <Recommended projects={projects} />
                     </section>
                 </div>
+                </div>
 
                 <Control data={data} toggleDrawer={toggleDrawer} />
 
@@ -173,7 +175,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
 
 const Header = ({ data }) => (
     <>
-        <h1 className="text-xl capitalize opacity-80"> {data.title} </h1>
+        <h1 className="text-xl capitalize opacity-80 font-bold"> {data.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
             <a className='flex items-center gap-3 cursor-pointer' href='/creative/Anna'>
                 <img alt='user' className="w-16" src={data.user.img} />
@@ -208,12 +210,19 @@ const ProjectShow = ({ data }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef(null);
 
-    const handlePlayPause = () => {
+    const TogglePlayPause = () => {
         if (videoRef.current.paused) {
             videoRef.current.play();
             setIsPlaying(true);
         } else {
             videoRef.current.pause();
+            setIsPlaying(false);
+        }
+    };
+    const handlePlayPause = () => {
+        if (videoRef.current.paused) {
+            setIsPlaying(true);
+        } else {
             setIsPlaying(false);
         }
     };
@@ -226,15 +235,22 @@ const ProjectShow = ({ data }) => {
                 ref={videoRef}
                 onClick={handlePlayPause}
                 onEnded={() => setIsPlaying(false)}
+
             />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden">
-                <div
-                    className="bg-[#CADED333] w-12 h-12 sm:w-16 sm:h-16 rounded-full cursor-pointer p-5"
-                >
-                    <Icon
-                        className="size-full text-white"
-                        name={isPlaying ? "pause" : "play"}
-                    />
+            <div
+                onClick={TogglePlayPause}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+                <div className="relative">
+                    <div
+                        className={`bg-[#CADED333] w-16 h-16 rounded-full cursor-pointer p-5 appblur ${isPlaying ? "animate-play" : "animate-pause"
+                            }`}
+                    >
+                        <Icon
+                            className="size-full text-white"
+                            name={isPlaying ? "pause" : "play"}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,31 +301,27 @@ const About = ({ data }) => (
     </div>
 )
 const Details = ({ data }) => (
-    <div className="grad-card w-full border-50">
+    <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent w-full border-50 p-6">
         <div className="w-full flex justify-center my-10">
-            <span className="text-center">april 5 - 2023</span>
+            <span className="text-center capitalize opacity-50">april 5 - 2023</span>
         </div>
 
-        {data.tools.map((item, i) => (
-            <div key={i} className="flex">
-                {
-                    item.v1 &&
-                    <div className={`details-padge ${item.v1.isActive ? 'active' : ''}`}>{item.v1.value}</div>
-                }
-                {
-                    item.v2 &&
-                    <div className={`details-padge ${item.v2.isActive ? 'active' : ''}`}>{item.v2.value}</div>
-                }
-                {
-                    item.v3 &&
-                    <div className={`details-padge ${item.v3.isActive ? 'active' : ''}`}>{item.v3.value}</div>
-                }
-            </div>
-        ))}
+        <div className="flex flex-col gap-2">
+            {data.tools.map((toolGroup, i) => (
+                <div key={i} className="flex gap-2">
+                    {toolGroup.map((tool, j) => (
+                        <div key={j} className={`text-white rounded-3xl py-2 px-4 ${tool.isActive ? 'bg-primary' : 'bg-[#00000040]'}`}>
+                            {tool.value}
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
+
         <div className="mt-9">
             <span className="capitalize opacity-50">description</span>
         </div>
-        <span className="capitalize mt-4">{data.description}</span>
+        <span className="capitalize font-semibold mt-4">{data.description}</span>
         <div className="mt-9">
             <span className="capitalize opacity-50">location</span>
         </div>
@@ -475,13 +487,13 @@ const Control = ({ data, toggleDrawer }) => {
 
 
                         <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                            <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center" >
+                            <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D]  w-20 h-20 rounded-full cursor-pointer flex justify-center items-center" >
                                 <Icon name={'share'} />
                             </div>
-                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center">
+                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center ">
                                 <Icon className="text-white text-xl" name={'plus'} />
                             </div>
-                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D]  w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center">
+                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
                                 <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} text-2xl`} name={'heart'} type={loveIconName} />
                             </div>
                             <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />

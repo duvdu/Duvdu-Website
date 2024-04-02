@@ -39,12 +39,12 @@ const Card = ({ data }) => {
                 <a href="/team">
                     <div className="w-full h-full rounded-[50px] img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img})` }} />
                 </a>
-                <div className="boards-info projects-num">{projectsNum} projects</div>
+                <div className="boards-info projects-num capitalize">{projectsNum} creatives</div>
                 <div className="absolute top-0 right-0 p-12">
                     <Icon className="text-[#50C878] rounded-full -translate-y-1/2 translate-x-1/2 border border-[#50C878] p-3 text-2xl w-6" name="circle-check" />
                 </div>
-
-                <div className="boards-info projects-name flex">
+                <div className="absolute bottom-0 w-full h-1/2 rounded-[50px]  gradient1"/>
+                <div className="boards-info projects-name shadow2 flex">
                     {name}
                 </div>
             </div>
@@ -62,7 +62,7 @@ const CreateBoard = () => {
                         <div className="flex alignCenter mb-7 items-center">
                             <h1 className="text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">team projects</h1>
                             <div className="mr-6"></div>
-                            <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full border-[1.5px] bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
+                            <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
                                 new team project
                                 <Icon className="w-4" name={"plus"} />
                             </div>

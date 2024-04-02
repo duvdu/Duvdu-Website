@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from 'next/link';
 import Icon from "../Icons";
 
-const Search = ({ toggleOpenSearch }) => {
+const Search = ({}) => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const handleSearch = () => {
@@ -28,10 +28,7 @@ const Search = ({ toggleOpenSearch }) => {
     return (
         <>
             <div className="flex gap-2 h-14">
-                <div className="h-full aspect-square bg-[#EAEEF0] rounded-full flex justify-center items-center" onClick={toggleOpenSearch}>
-                    <Icon className="text-[#94A6C2] h-5" name={"angle-left"} />
-                </div>
-
+                
                 <input
                     className="searchInput border bg-[#EAEEF0] w-full text-lg placeholder:text-[#94A6C2]"
                     value={searchTerm}

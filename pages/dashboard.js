@@ -85,16 +85,16 @@ const Dashboard = () => {
         <>
             <Layout shortheader={true}>
                 <DashboardPopup />
-                <div className='container flex gap-6 flex-col lg:flex-row '>
-                    <div className='w-full flex flex-col gap-6 pt-6 '>
+                <div className='container flex gap-6 flex-col lg:flex-row py-6 px-3'>
+                    <div className='w-full flex flex-col gap-3 sm:gap-6'>
                         <NextBadgeCard badge={badge} />
                         <ProjectViewsCard recieved={recieved} />
                         <Chart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
 
                     </div>
-                    <div className='w-full pt-6'>
-                        <div className='flex flex-col sm:flex-row gap-6'>
-                            <div className='flex flex-col w-full gap-6'>
+                    <div className='w-full'>
+                        <div className='flex flex-row gap-2'>
+                            <div className='flex flex-col w-full gap-2'>
                                 <div className='card cardborder-3 bg-white dark:bg-[#1A2024] w-full h-full p-7 pt-16'>
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
                                     <br />
@@ -127,15 +127,13 @@ const Dashboard = () => {
                                         <span className='bg-[#D9D9D9] dark:bg-[#333333] rounded-2xl w-5 h-5 flex justify-center cursor-pointer aspect-square items-center'>
                                             ?
                                         </span>
-
                                     </div>
-                                    <br />
                                     <br />
                                     <span className='text-[47.907px] text-DS_black font-medium capitalize'>top 30%</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
-                                            <span className='text-sm font-medium opacity-70'>top 30%</span>
+                                            <span className='text-sm font-medium opacity-70'>videography</span>
                                         </div>
                                     </div>
                                 </div>

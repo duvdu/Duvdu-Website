@@ -12,7 +12,7 @@ const ActivityCard = ({ activity }) => (
         </div>
         {
             activity.map((e, index) => (
-                <div className='activity' key={index}>
+                <div className='activity ' key={index}>
                     <div className='mb-2'>
                         <span className='text-5xl font-medium'>{convertToK(e.count)} </span>
                         <span className='text-3xl capitalize font-medium opacity-50'>{e.title}</span>

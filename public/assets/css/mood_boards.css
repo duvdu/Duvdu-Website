@@ -1,3 +1,5 @@
+
+
 .boards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
@@ -32,7 +34,7 @@
     bottom: 30px;
     left: 30px;
     color: #FFF;
-    text-shadow: 0px 3.483px 10.45px rgba(var(--black-rgb),.50);
+    text-shadow: 0px 3.483px 10.45px rgba(black,.50);
     font-size: 34px;
     font-style: normal;
     font-weight: 500;

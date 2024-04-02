@@ -103,7 +103,7 @@ const LeftSide = () => {
 
 const Pending = () => {
     return (
-        <div className='flex justify-between border border-[#00000040] rounded-[50px] p-6 relative'>
+        <div className='flex justify-between border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative'>
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -155,7 +155,7 @@ const Pending = () => {
 };
 const Pending2 = () => {
     return (
-        <div className='flex justify-between items-center border border-[#00000040] rounded-[50px] p-6'>
+        <div className='flex justify-between items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6'>
         <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center w-full'>
             {/* profile */}
             <div className='flex gap-3 items-center'>
@@ -200,7 +200,7 @@ const Pending2 = () => {
 
 const Ongoing = ({ type }) => {
     return (
-        <div className='flex justify-between border rounded-[50px] bg-primary p-6 relative'>
+        <div className='flex justify-between rounded-[50px] bg-primary p-6 relative'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -383,7 +383,7 @@ const RightSide = () => {
 
     const Recents = ({ img, name, address }) =>
         <a href='/creative/youseff_abdulla'>
-            <div className='w-40 h-14 lg:gap-3 rounded-full border border-[#00000040] flex' >
+            <div className='w-40 h-14 lg:gap-3 rounded-full border border-[#00000033] dark:border-[#FFFFFF33] flex' >
                 <img src={img} alt='user' className='rounded-full m-1' />
                 <div className='flex flex-col items-start justify-center w-full'>
                     <span className='opacity-80 font-semibold'> {name} </span>
@@ -395,7 +395,7 @@ const RightSide = () => {
 
     const HisTory = ({ isCanceled }) =>
         <>
-            <div className='w-full max-w-[388px] p-6 rounded-[50px] border border-[#00000040] relative' >
+            <div className='w-full max-w-[388px] p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
                 {/* dropdown */}
                 <Selector options={[
                     {
@@ -410,7 +410,7 @@ const RightSide = () => {
                         value: "oprion 3",
                         onclick: () => { },
                     }
-                ]} className="absolute right-6 border rounded-full border-[#00000033] flex justify-center items-center w-14 h-14 cursor-pointer" />
+                ]} className="absolute right-6 border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer" />
                 {/*********/}
                 {/* profile */}
                 <a href='/creative/youseff_abdulla'>
@@ -428,7 +428,7 @@ const RightSide = () => {
                 <div className='flex flex-wrap mt-4 gap-3'>
                     {
                         ['wedding', 'party'].map((item, i) =>
-                            <span key={i} className={`flex flex-col h-full border-[1.5px] ${isCanceled ? 'border-[#FF4646]' : 'border-[#000000D9]'} rounded-full px-3 py-[6px] mb-8 text-${isCanceled ? '[#FF4646]' : '[#000000D9]'} capitalize`}>
+                            <span key={i} className={`flex flex-col h-full border-[1.5px] ${isCanceled ? 'border-[#FF4646]' : 'border-[#000000D9] dark:border-[#FFFFFFD9]'} rounded-full px-3 py-[6px] mb-8 ${isCanceled ? 'text-[#FF4646]' : 'text-[#000000D9] dark:text-[#FFFFFFD9]'} capitalize`}>
                                 {item}
                             </span>
                         )

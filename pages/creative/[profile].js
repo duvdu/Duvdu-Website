@@ -87,82 +87,82 @@ function MyProfile() {
         ],
         "projects": [
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
@@ -245,12 +245,12 @@ function MyProfile() {
                         }
                         {
                             !showAddPanal &&
-                            <div className='static lg:sticky h-32 left-10 bottom-0 flex justify-center items-center'>
+                            <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
                                 <Controller>
-                                    <div onClick={() => setShowAddPanal(true)} className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
+                                    <div onClick={() => setShowAddPanal(true)} className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
                                         <Icon className='text-white text-2xl' name={'plus'} />
                                     </div>
-                                    <div data-popup-toggle="popup" data-popup-target="edit-details" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-12 h-12 sm:w-20 sm:h-20 rounded-full cursor-pointer flex justify-center items-center">
+                                    <div data-popup-toggle="popup" data-popup-target="edit-details" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
                                         <Icon className='text-white text-2xl' name={'pen'} />
                                     </div>
                                 </Controller>
@@ -331,82 +331,82 @@ function OtherProfile() {
         ],
         "projects": [
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/1.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/2.jpeg"
             },
             {
-                "creatives": 23247,
+                "price": 23247,
                 "title": "models & performing artists",
                 "show": "/assets/imgs/projects/3.jpeg"
             },
             {
-                "creatives": 1687,
+                "price": 1687,
                 "title": "videography",
                 "show": "/assets/imgs/projects/4.gif"
             },
@@ -572,7 +572,7 @@ const Project = ({ data, isbig }) => (
     <a href='/project/1' className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28%'}>
         <img className='cardimg' src={data.show} alt='show' />
         <div className='creatives'>
-            {data.creatives} creatives
+            {data.price} $
         </div>
         <div className='title'>
             {data.title}

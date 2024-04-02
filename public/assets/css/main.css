@@ -945,7 +945,7 @@ table p {
 .search-style-2 .dialog-history ul {
   display: flex;
   flex-wrap: wrap;
-  padding: 20px 0 0 20px;
+  
 }
 
 .search-style-2 .dialog-history {
@@ -957,7 +957,7 @@ table p {
   width: 100%;
   visibility: hidden;
   opacity: 0;
-  padding: 30px;
+  padding: 15px;
   z-index: 10;
 }
 
@@ -1594,6 +1594,14 @@ table p {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.shadow2{
+  text-shadow: 0px 3.488px 10.465px rgba(0, 0, 0, 0.50);
+}
+
+.gradient1 {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 130.01%);
+}
+
 .front-part {
   z-index: 2;
 
@@ -2093,6 +2101,33 @@ table p {
   -moz-box-shadow: 0px 25px 80px 0px rgba(10, 115, 235, 0.5);
   box-shadow: 0px 25px 80px 0px rgba(10, 115, 235, 0.5);
 }
+
+/* Add this in your CSS file or style tag */
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  1% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(3); }
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+@keyframes scaleOut {
+  0% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Apply these classes to the elements */
+.animate-play {
+  animation: fadeInOut 1s ease forwards;
+}
+
+.animate-pause {
+  animation: scaleIn 0.5s ease forwards, fadeOut 0.5s ease forwards;
+}
+
 
 
 /****************/

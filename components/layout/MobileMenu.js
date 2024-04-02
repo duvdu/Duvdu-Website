@@ -9,8 +9,8 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
 
     const [openSearch, setOpenSearch] = useState(false);
 
-    const OpenSearch = () => setOpenSearch(true)
-    const CloseSearch = () => setOpenSearch(false)
+    const toggleOpenSearch = () => setOpenSearch(prev => !prev)
+
 
     return (
         <>
@@ -22,7 +22,7 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                 }
             >
                 <div className="h-full scroll-w-0 scroll-m-0 overflow-y-scroll">
-                    <Header onClick={toggleClick} toggleOpenSearch={OpenSearch} />
+                    <Header onClick={toggleClick} toggleOpenSearch={toggleOpenSearch} openSearch={openSearch} />
                     {!openSearch &&
                         <>
                             <Tabs />
@@ -32,7 +32,7 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                         </>
                     }
                     {openSearch &&
-                        <SearchBody toggleOpenSearch={CloseSearch} />
+                        <SearchBody />
                     }
                 </div>
             </div>
@@ -42,11 +42,12 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
 
 
 
-const Header = ({ onClick, toggleOpenSearch }) => {
-    let isDarkMode = true;
+const Header = ({ onClick, toggleOpenSearch, openSearch }) => {
+    const [isDarkMode, setIsDarkMode] = useState(true);
     useEffect(() => {
         isDarkMode = localStorage.getItem('darkMode') === 'true';
-    })
+        setIsDarkMode(isDarkMode)
+    }, [])
     return <div className="flex items-center px-5 py-2 border-b">
         <div className="flex justify-start w-full">
             <Link href="/">
@@ -61,23 +62,26 @@ const Header = ({ onClick, toggleOpenSearch }) => {
         </div>
 
         <div className="flex items-center justify-center gap-2">
-            <Icon className="cursor-pointer" name={'search-menu'} onClick={toggleOpenSearch} />
-            <Icon className="cursor-pointer" name={'xmark-menu'} onClick={onClick} />
+            <div className="p-3 rounded-full border border-[#C6C8C9]">
+                <Icon className="cursor-pointer w-6 h-6 flex items-center justify-center" name={openSearch ? 'search-menu' : 'burger-menu'} onClick={toggleOpenSearch} />
+            </div>
+            <div className="p-3 rounded-full border border-[#C6C8C9]">
+                <Icon className="cursor-pointer w-6 h-6 items-center justify-center" name={'x-icon'} onClick={onClick} />
+            </div>
         </div>
     </div>
 }
 
 
-const SearchBody = ({ toggleOpenSearch }) => <div className="h-body bg-[#F7F9FB]" >
+const SearchBody = ({ }) => <div className="h-body bg-[#F7F9FB]" >
     <div className="p-5">
-        <Search toggleOpenSearch={toggleOpenSearch} />
+        <Search />
     </div>
 </div>
 
 const Tabs2 = () => {
     return (
         <div className="flex flex-col justify-center items-center gap-11 py-10 border-b">
-
             {
                 [
                     {
@@ -127,7 +131,7 @@ const Tabs = () => {
                         name: 'team projects',
                     },
                 ].map((item, index) =>
-                    <a key={index} href={item.url} className="flex gap-1">
+                    <a key={index} href={item.url} className="flex justify-center items-center">
                         <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
                         <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
                     </a>

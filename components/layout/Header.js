@@ -486,17 +486,15 @@ function Setting({ data }) {
 
     const [contactUs, setcontactUs] = useState(false);
 
+    function getIsdarkMode() {
+        const body = document.body;
+        return body.classList.contains('dark');
+    }
     function toggle() {
         const body = document.body;
         body.classList.toggle('dark');
+        const isDarkMode = body.classList.contains('dark');
         
-        const event = new CustomEvent('darkModeToggled', {
-            bubbles: true,
-            cancelable: true,
-        });
-        body.dispatchEvent(event);
-        
-        data.setisDarkMode(isDarkMode)
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
         } else {
@@ -529,7 +527,7 @@ function Setting({ data }) {
                     {
                         img: 'mode-icon.svg',
                         name: 'Dark mode',
-                        action: <Switch defaultValue={data.isDarkMode} onSwitchChange={() => { toggle() }} />,
+                        action: <Switch defaultValue={getIsdarkMode()} onSwitchChange={() => { toggle() }} />,
                     },
                     {
                         img: 'power-icon.svg',

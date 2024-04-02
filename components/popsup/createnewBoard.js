@@ -32,7 +32,7 @@ function createnewBoard() {
                         />
                         {numberError.isError && <p className="error-msg">{numberError.message}</p>}
                     </div>
-                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'} color={"#5666F7"} >  
+                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>  
                         Create
                     </AppButton>
                     <div className='mb-4'/>
