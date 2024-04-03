@@ -188,11 +188,11 @@ const Header = ({ fromlayout, toggleClick }) => {
                 <div className={"border-borderColor header-bottom-bg-color" + (!fromlayout.shortheader ? " border-y" : "")}>
                     <div className="container">
                         <div className="header-wrap header-space-between relative">
-                            <div className="logo logo-width-1 block lg:hidden my-4">
+                            <div className="logo logo-width-1 block lg:hidden">
                                 <a href="/">
                                     <img key={isDarkMode}
                                         src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                        className="min-h-9"
+                                        className="min-h-16"
                                         alt="main logo"
                                     />
                                 </a>
@@ -208,13 +208,12 @@ const Header = ({ fromlayout, toggleClick }) => {
                                 </div>
                             }
 
-                            <div className="flex gap-2 lg:hidden my-4" >
-                                <div className="h-9 w-9" name={'search-2'} >
-                                    <Icon className="size-full" name={'search-2'} />
+                            <div className="flex items-center justify-center gap-2">
+                                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={()=>toggleClick(3)}>
+                                    <Icon className="size-6 flex items-center justify-center" name={'search-menu'} />
                                 </div>
-                                <div className="h-9 w-9 " name={'burgerMenu'} onClick={toggleClick}>
-                                    <Icon className="size-full" name={'burgerMenu'} onClick={toggleClick} />
-
+                                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={()=>toggleClick(2)}>
+                                    <Icon className="size-6 flex items-center justify-center" name={'burger-menu'}  />
                                 </div>
                             </div>
                         </div>
@@ -494,7 +493,7 @@ function Setting({ data }) {
         const body = document.body;
         body.classList.toggle('dark');
         const isDarkMode = body.classList.contains('dark');
-        
+
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
         } else {

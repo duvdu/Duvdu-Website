@@ -7,23 +7,27 @@ import Search from "../elements/SearchMobile";
 
 const MobileMenu = ({ isToggled, toggleClick }) => {
 
-    const [openSearch, setOpenSearch] = useState(false);
+    const [page, setpage] = useState(isToggled);
+    useEffect (()=> {
 
-    const toggleOpenSearch = () => setOpenSearch(prev => !prev)
+        if(isToggled != page) setpage(isToggled)
+    } ,[isToggled])
+
+    const togglePage = () => setpage(prev => prev == 2 ? 3 : 2)
 
 
     return (
         <>
             <div
                 className={
-                    isToggled
+                    isToggled > 1
                         ? "mobile-header-active mobile-header-wrapper-style sidebar-visible"
                         : "mobile-header-active mobile-header-wrapper-style"
                 }
             >
                 <div className="h-full scroll-w-0 scroll-m-0 overflow-y-scroll">
-                    <Header onClick={toggleClick} toggleOpenSearch={toggleOpenSearch} openSearch={openSearch} />
-                    {!openSearch &&
+                    <Header onClick={() => toggleClick(1)} toggleOpenSearch={togglePage} openSearch={page} />
+                    {page == 2 &&
                         <>
                             <Tabs />
                             <Tabs2 />
@@ -31,7 +35,7 @@ const MobileMenu = ({ isToggled, toggleClick }) => {
                             <Auth />
                         </>
                     }
-                    {openSearch &&
+                    {page == 3 &&
                         <SearchBody />
                     }
                 </div>
@@ -62,18 +66,18 @@ const Header = ({ onClick, toggleOpenSearch, openSearch }) => {
         </div>
 
         <div className="flex items-center justify-center gap-2">
-            <div className="p-3 rounded-full border border-[#C6C8C9]">
-                <Icon className="cursor-pointer w-6 h-6 flex items-center justify-center" name={openSearch ? 'search-menu' : 'burger-menu'} onClick={toggleOpenSearch} />
+            <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={toggleOpenSearch}>
+                <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'}  />
             </div>
-            <div className="p-3 rounded-full border border-[#C6C8C9]">
-                <Icon className="cursor-pointer w-6 h-6 items-center justify-center" name={'x-icon'} onClick={onClick} />
+            <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={onClick}>
+                <Icon className="size-6 items-center justify-center" name={'x-icon'}  />
             </div>
         </div>
     </div>
 }
 
 
-const SearchBody = ({ }) => <div className="h-body bg-[#F7F9FB]" >
+const SearchBody = () => <div className="h-body bg-[#F7F9FB]" >
     <div className="p-5">
         <Search />
     </div>

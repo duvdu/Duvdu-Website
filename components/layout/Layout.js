@@ -12,11 +12,11 @@ const Layout = ({
     showTabs = true,
     iSsticky = true,
 }) => {
-    const [isToggled, setToggled] = useState(false);
+    const [isToggled, setToggled] = useState(1);
 
 
-    const toggleClick = () => {
-        setToggled(!isToggled);
+    const toggleClick = (type) => {
+        setToggled(type);
         isToggled
             ? document
                 .querySelector("body")

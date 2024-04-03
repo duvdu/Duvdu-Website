@@ -490,7 +490,7 @@ const Control = ({ data, toggleDrawer }) => {
                             <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D]  w-20 h-20 rounded-full cursor-pointer flex justify-center items-center" >
                                 <Icon name={'share'} />
                             </div>
-                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center ">
+                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
                                 <Icon className="text-white text-xl" name={'plus'} />
                             </div>
                             <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
