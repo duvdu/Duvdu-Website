@@ -105,7 +105,7 @@ const Attachment = ({ className , ...rest }) =>
 const AngleٌRight = ({ className , ...rest }) =>
   <div className={className} {...rest}>
     <svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1.29379 1.7959L9.45312 9.50194L1.29379 17.208" stroke="white" strokeWidth="1.81319" strokeLinecap="square" />
+      <path d="M1.29379 1.7959L9.45312 9.50194L1.29379 17.208" stroke="currentColor" strokeWidth="1.81319" strokeLinecap="square" />
     </svg>
   </div>
 

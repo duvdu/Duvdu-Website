@@ -34,12 +34,18 @@ TABLE CONTENT
 /*import plugins*/
 /*RESET*/
 
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
 @font-face {
-  src: url('/assets/fonts/Urbanist/Urbanist.ttf') format('truetype');
+  font-family: 'Urbanist';
+  src: url('../fonts/Urbanist/Urbanist.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('https://fonts.googleapis.com/css2?family=Cairo&display=swap') format('woff2');
 }
 
 * {
-  font-family: 'Urbanist', sans-serif;
+  font-family: "Urbanist",'Cairo', sans-serif;
 }
 
 ol,
@@ -793,7 +799,6 @@ table p {
 
 .cart-dropdown-wrap {
   position: absolute;
-  right: 0;
   top: calc(100% + 20px);
   z-index: 99;
   /* width: 320px; */
@@ -1407,7 +1412,6 @@ table p {
 
 .profile img {
   border-radius: 30px;
-  margin-right: 10px;
   aspect-ratio: 1;
 }
 

@@ -29,28 +29,36 @@ const MegaMenu = () => {
     setCategories(headerMen);
   }, []);
 
- 
+
 
   return (
     <ul className='flex justify-between'>
-    {categories &&
+      {categories &&
         categories.map((category, index) => (
           <Category key={index} category={category} />
-          ))}
+        ))}
     </ul>
   );
 
 }
 
-const Category = ({category}) => {
+const Category = ({ category }) => {
   const megaMenuRef = useRef(null);
 
   useEffect(() => {
     if (megaMenuRef.current) {
       const computedStyle = window.getComputedStyle(megaMenuRef.current);
-      const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
-      if (rightPosition < 0) {
-        megaMenuRef.current.style.right = '0px';
+      if (localStorage.getItem('lang') == 'English') {
+        const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
+        if (rightPosition < 0) {
+          megaMenuRef.current.style.right = '0px';
+        }
+      }
+      else {
+      const rightPosition = parseFloat(computedStyle.getPropertyValue('left'));
+        if (rightPosition < 0) {
+          megaMenuRef.current.style.left = '0px';
+        }
       }
     }
   }, [category]);

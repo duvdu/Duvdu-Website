@@ -65,7 +65,7 @@ const Header = ({ onClick, toggleOpenSearch, openSearch }) => {
             </Link>
         </div>
 
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 ">
             <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={toggleOpenSearch}>
                 <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'}  />
             </div>

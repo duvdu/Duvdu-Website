@@ -6,10 +6,12 @@ import Menu from '../elements/menu'
 import Switch from '../elements/switcher'
 import Icon from "../Icons";
 import Button from '../elements/button';
+import { useTranslation } from 'react-i18next';
 
 const Header = ({ fromlayout, toggleClick }) => {
-    const [isToggled, setToggled] = useState(false);
-    const [scroll, setScroll] = useState(1);
+
+    const { i18n, t} = useTranslation();
+
     const [islogin, setIslogin] = useState(false);
     const [isDarkMode, setisDarkMode] = useState(false);
 
@@ -42,6 +44,8 @@ const Header = ({ fromlayout, toggleClick }) => {
 
     useEffect(() => {
         var root = document.documentElement;
+
+        i18n.changeLanguage(localStorage.getItem('lang') == 'Arabic' ? 'Arabic' : 'English');
 
         function getHeaderHeight() {
             try {
@@ -78,12 +82,7 @@ const Header = ({ fromlayout, toggleClick }) => {
             body.classList.remove('dark');
         }
 
-        document.addEventListener("scroll", () => {
-            const scrollCheck = window.scrollY >= 100;
-            if (scrollCheck !== scroll) {
-                // setScroll(scrollCheck);
-            }
-        });
+        document.documentElement.dir = localStorage.getItem('lang') == 'Arabic' ? 'rtl' : 'ltr';
 
     }, []);
 
@@ -98,7 +97,6 @@ const Header = ({ fromlayout, toggleClick }) => {
 
                             <div className="logo logo-width-1 mr-12">
                                 {
-
                                     <a href="/">
                                         <img key={isDarkMode}
                                             src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
@@ -116,25 +114,27 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     <div className="header-tabs">
 
                                         <a href="/dashboard">
-                                            <Icon name={"dashboard"} useinvert={true} className="mr-1 text-[#666666] dark:text-[#B3B3B3]" />
-                                            <span>
-                                                Dashboard
+                                            <Icon name={"dashboard"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <span className="text-nowrap">
+                                                {t('dashboard')}
                                             </span>
                                         </a>
 
 
                                         <a href="/contracts">
-                                            <Icon name={"contracts"} useinvert={true} className="mr-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <Icon name={"contracts"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
                                             <span>
-                                                contracts
+                                                {t('contracts')}
+                                                
                                             </span>
                                         </a>
 
 
                                         <a href="/teams" className="capitalize whitespace-nowrap">
-                                            <Icon name={"teams"} useinvert={true} className="mr-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <Icon name={"teams"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
                                             <span>
-                                                team projects
+                                                {t('team projects')}
+                                                
                                             </span>
                                         </a>
 
@@ -176,8 +176,8 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     {
                                         !islogin &&
                                         <div className="header-action-2 flex gap-6 items-center">
-                                            <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">log-in</a>
-                                            <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">register</a>
+                                            <a onClick={() => { setIslogin(true) }} className="text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</a>
+                                            <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</a>
                                         </div>
                                     }
                                 </div>
@@ -207,15 +207,15 @@ const Header = ({ fromlayout, toggleClick }) => {
                                     </div>
                                 </div>
                             }
-
-                            <div className="flex items-center justify-center gap-2">
-                                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={()=>toggleClick(3)}>
+                            <div className="flex lg:hidden items-center justify-center gap-2">
+                                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={() => toggleClick(3)}>
                                     <Icon className="size-6 flex items-center justify-center" name={'search-menu'} />
                                 </div>
-                                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={()=>toggleClick(2)}>
-                                    <Icon className="size-6 flex items-center justify-center" name={'burger-menu'}  />
+                                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={() => toggleClick(2)}>
+                                    <Icon className="size-6 flex items-center justify-center" name={'burger-menu'} />
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -227,6 +227,8 @@ const Header = ({ fromlayout, toggleClick }) => {
 
 
 function MessageAndNotofication({ useState }) {
+    const { t} = useTranslation();
+
     var notification = [
         {
             "img_url": "/assets/imgs/profile/contact-2.png",
@@ -287,22 +289,23 @@ function MessageAndNotofication({ useState }) {
     ]
 
     return (
-        <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (useState.notificationDropdownVisible ? " active" : "")}>
+        <div className={"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown" + (useState.notificationDropdownVisible ? " active" : "")}>
             <div className="dialog dialog-1">
                 <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2">
                     <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white dark:bg-[#1A2024] p-7">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-base font-bold capitalize">messages</h2>
-                            <a className="underline font-semibold capitalize" href="">view all</a>
+                            <h2 className="text-base font-bold capitalize">{t('notification')}</h2>
+                            <a className="underline font-semibold capitalize" href="">{t('view all')}</a>
                         </div>
                         <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
                             {notification.map((profile, index) => (
                                 <div key={index} className="w-64 flex gap-4">
                                     <img className="size-9 rounded-full" src={profile.img_url} alt="user" width="45" height="45" />
                                     <div className="flex flex-col justify-center">
-                                        <span className="leading-[1px]">
-                                            <span className="font-bold">{profile.name} </span>
+                                        <span  className="leading-[1px]">
+                                            <span className="rtl:hidden font-bold">{profile.name} </span>
                                             <span className="text-xs opacity-60">{profile.event}</span>
+                                            <span className="ltr:hidden font-bold">{profile.name} </span>
                                         </span>
                                     </div>
                                 </div>
@@ -311,8 +314,8 @@ function MessageAndNotofication({ useState }) {
                     </div>
                     <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white dark:bg-[#1A2024] p-7">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-base font-bold capitalize">messages</h2>
-                            <a className="underline font-semibold capitalize" href="">view all</a>
+                            <h2 className="text-base font-bold capitalize">{t('messages')}</h2>
+                            <a className="underline font-semibold capitalize" href="">{t('view all')}</a>
                         </div>
                         <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
                             {messages.map((profile, index) => (
@@ -348,6 +351,8 @@ function MessageAndNotofication({ useState }) {
     )
 }
 function Profile({ PathuseState }) {
+    const { t} = useTranslation();
+
     const [showMiddleCard, setShowMiddleCard] = useState(true);
     const handleCloseMiddleCard = () => {
         setShowMiddleCard(false);
@@ -368,7 +373,7 @@ function Profile({ PathuseState }) {
         },
     ]
     return (
-        <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (PathuseState.profileDropdownVisible ? " active" : "")}  >
+        <div className={"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown" + (PathuseState.profileDropdownVisible ? " active" : "")}  >
             <div className="dialog dialog-2 flex flex-col">
                 <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
                     <div className="bg-DS_white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
@@ -396,7 +401,7 @@ function Profile({ PathuseState }) {
                             <div className="flex gap-3 mt-3">
                                 <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
                                     <span className="text-primary font-bold text-base">
-                                        view profile
+                                    {t('view profile')}
                                     </span>
                                 </div>
 
@@ -408,14 +413,14 @@ function Profile({ PathuseState }) {
                     {
                         showMiddleCard &&
                         <div className="p-6 bg-DS_white dark:bg-[#1A2024] rounded-[45px]">
-                            <div className="flex">
+                            <div className="flex gap-3">
                                 <div className="w-full">
 
-                                    <h4 className="opacity-82 font-semibold text-sm mb-2">
-                                        Complete your Profile
+                                    <h4 className="opacity-82 font-semibold text-sm mb-2 capitalize">
+                                        {t('Complete your Profile')}
                                     </h4>
                                     <div className='flex items-center'>
-                                        <div className="flex w-full">
+                                        <div className="flex gap-2 w-full">
                                             <div className="header-progress-bar relative w-full">
                                                 <div className="absolute inset-0 rounded-lg h-full" style={{
                                                     width: `${badge}%`,
@@ -427,13 +432,13 @@ function Profile({ PathuseState }) {
                                                     <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
                                                 </div>
                                             </div>
-                                            <span className="text-primary font-semibold text-xs right-0 bottom-full ml-2 whitespace-nowrap">{badge}%</span>
+                                            <span className="text-primary font-semibold text-xs right-0 bottom-full whitespace-nowrap">{badge}%</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div onClick={handleCloseMiddleCard} className='ml-3 flex justify-center items-center cursor-pointer'>
-                                    <div className="h-min rounded-full header-border p-3">
-                                        <Icon className="size-5 " name={'xmark'} useinvert={true} />
+                                <div onClick={handleCloseMiddleCard} className='flex justify-center items-center cursor-pointer'>
+                                    <div className="h-min aspect-square rounded-full header-border p-3">
+                                        <Icon className="size-5" name={'xmark'} useinvert={true} />
                                     </div>
                                 </div>
                             </div>
@@ -444,12 +449,12 @@ function Profile({ PathuseState }) {
                                         {item.state ? (
                                             <div className="flex items-center gap-3">
                                                 <div className="text-[#999999] text-sm font-semibold">
-                                                    {item.text}
+                                                    {t(item.text)}
                                                 </div>
                                                 <Icon name="greenCheck" />
                                             </div>
                                         ) : (
-                                            <a className="no-underline text-sm font-semibold">{item.text}</a>
+                                            <a className="no-underline text-sm font-semibold">{t(item.text)}</a>
                                         )}
                                         {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
                                     </React.Fragment>
@@ -463,7 +468,7 @@ function Profile({ PathuseState }) {
                     <a href="/saved">
                         <div className="p-3 bg-DS_white dark:bg-[#1A2024] rounded-[45px] mb-2">
                             <h4 className="opacity-70 text-sm font-semibold m-2">
-                                saved projects
+                                {t('saved projects')}
                             </h4>
                             <div className="flex justify-between gap-3">
                                 <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
@@ -482,8 +487,10 @@ function Profile({ PathuseState }) {
     )
 }
 function Setting({ data }) {
+    const { t} = useTranslation();
 
-    const [contactUs, setcontactUs] = useState(false);
+    const [open, setOpened] = useState(0);
+
 
     function getIsdarkMode() {
         const body = document.body;
@@ -500,25 +507,85 @@ function Setting({ data }) {
             document.documentElement.classList.remove('dark');
         }
         localStorage.setItem('darkMode', isDarkMode);
+        window.location.reload();
     }
 
     const ContactUs = () => (
         <>
             <div className='flex gap-3'>
-                <div onClick={() => setcontactUs(false)} className='rounded-full header-border h-14 w-14 flex justify-center items-center cursor-pointer'>
+                <div onClick={() => setOpened(0)} className='rounded-full header-border h-14 w-14 flex justify-center items-center cursor-pointer'>
                     <Icon className="text-xl size-5" name={'xmark'} useinvert={true} />
                 </div>
                 <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
-                    contact us
+                {t('contact us')}
                 </span>
             </div>
-            <div className="capitalize opacity-60 mt-8">your message</div>
+            <div className="capitalize opacity-60 mt-8">{t('your message')}</div>
             <textarea placeholder="start typing..." className="bg-[#9999991A] rounded-3xl h-48 border-none mt-5" />
             <Button className="w-full mb-7 mt-7" shadow={true}>
-                Send
+            {t('Send')}
+                
             </Button>
         </>
     )
+    const Language = () => {
+        const { i18n } = useTranslation();
+
+        const [selectedLanguage, setSelectedLanguage] = useState('English');
+
+        const toggleLanguage = (language) => {
+            setSelectedLanguage(language);
+        };
+
+        const Save = () => {
+            localStorage.setItem('lang', selectedLanguage);
+            i18n.changeLanguage(selectedLanguage);
+            
+            document.documentElement.dir = selectedLanguage === 'Arabic' ? 'rtl' : 'ltr';
+            window.location.reload();
+        };
+
+        useEffect(() => {
+            if (localStorage.getItem('lang') == 'Arabic')
+                setSelectedLanguage('Arabic')
+        }, [])
+        return (
+            <>
+                <div className='flex gap-3'>
+                    <div onClick={() => setOpened(0)} className='rounded-full header-border min-w-14 size-14 flex justify-center items-center cursor-pointer'>
+                        <Icon className="text-xl" name={'x-icon'} useinvert={true} />
+                    </div>
+                    <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>{t('Language')}</span>
+                </div>
+                <div className="flex flex-col gap-5 mt-6">
+                    <div className="flex justify-between items-center cursor-pointer " onClick={() => toggleLanguage('Arabic')}>
+                        <span>{t('Arabic')}</span>
+                        {selectedLanguage === 'Arabic' && (
+                            <div className="flex justify-between items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="13" viewBox="0 0 18 13" fill="none">
+                                    <path d="M1 4.63636L7.22222 11L17 1" stroke="#4F5E7B" strokeWidth="2" />
+                                </svg>
+                            </div>
+                        )}
+                    </div>``
+                    <div className="opacity-15 bg-black h-[1px]" />
+                    <div className="flex justify-between items-center cursor-pointer" onClick={() => toggleLanguage('English')}>
+                        <span>{t('English')}</span>
+                        {selectedLanguage === 'English' && (
+                            <div className="flex justify-between items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="13" viewBox="0 0 18 13" fill="none">
+                                    <path d="M1 4.63636L7.22222 11L17 1" stroke="#4F5E7B" strokeWidth="2" />
+                                </svg>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <Button className="w-full mb-7 mt-7" shadow={true} onClick={() => Save()}>
+                {t('Save')}
+                </Button>
+            </>
+        );
+    }
     const Main = ({ setIslogin }) => (
         <>
             {
@@ -537,59 +604,60 @@ function Setting({ data }) {
                     {
                         img: 'notification-icon.svg',
                         name: 'Notification',
-                        action: <Icon name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
                     },
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
-                        action: <Icon name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
+                        onClick: () => setOpened(2)
                     },
                     {
                         img: 'number-icon.svg',
                         name: 'Change number',
-                        action: <a href="/changePhoneNumber"> <Icon name={"angle-right"} invert={true} /></a>,
+                        action: <a href="/changePhoneNumber"> <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} /></a>,
                     },
                     {
                         img: 'lock-icon.svg',
                         name: 'Terms & Conditions',
-                        action: <Icon name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
                     },
                     {
                         img: 'chat-icon.svg',
                         name: 'Contact Us',
-                        action: <Icon name={"angle-right"} />,
-                        onClick: () => setcontactUs(true)
+                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} />,
+                        onClick: () => setOpened(1)
                     },
                     {
                         img: 'about-icon.svg',
                         name: 'About',
-                        action: <Icon name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
                     },
 
                 ].map((e, i) => (
-                    <div onClick={e.onClick} className="flex py-3 cursor-pointer" key={i}>
-                        <img icon='icon' className="icon size-6 mr-4" src={`/assets/imgs/theme/${e.img}`} />
-                        <span className="text-[12px] text-[#4F5E7B] w-full font-semibold">{e.name}</span>
-                        <div className="action"> {e.action} </div>
+                    <div onClick={e.onClick} className="flex py-3 gap-4 cursor-pointer" key={i}>
+                        <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/${e.img}`} />
+                        <span className="text-[12px] text-[#4F5E7B] w-full font-semibold">{t(e.name)}</span>
+                        <div className="action rtl:rotate-180"> {e.action} </div>
                     </div>
                 ))
             }
-            <div onClick={() => setIslogin(false)} className="flex py-4 text-red-950 cursor-pointer">
-                <img icon='icon' className="icon size-6 mr-4" src={`/assets/imgs/theme/logout-icon.svg`} />
-                <p className="text-[12px] w-full font-semibold text-red-500"> Logout </p>
-                <div className="action"> <div /> </div>
+            <div onClick={() => setIslogin(false)} className="flex py-4 gap-4 text-red-950 cursor-pointer">
+                <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/logout-icon.svg`} />
+                <p className="text-[12px] w-full font-semibold text-red-500"> {t('Logout')} </p>
             </div>
         </>
     )
 
 
     return (
-        <div className={"cart-dropdown-wrap cart-dropdown-hm2 account-dropdown" + (data.settingvisible ? " active" : "")}  >
+        <div className={"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown" + (data.settingvisible ? " active" : "")}  >
             <div className="dialog flex flex-col">
                 <div className="overflow-y-scroll rounded-b-[60px] p-3">
                     <div className="p-6 bg-white dark:bg-[#1A2024] w-72 rounded-[45px]" >
-                        {contactUs && <ContactUs />}
-                        {!contactUs && <Main setIslogin={data.setIslogin} />}
+                        {open == 0 && <Main setIslogin={data.setIslogin} />}
+                        {open == 1 && <ContactUs />}
+                        {open == 2 && <Language />}
                         {/* <Main /> */}
                     </div>
                 </div>

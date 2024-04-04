@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Switch = ({ onSwitchChange,defaultValue }) => {
+const Switch = ({ onSwitchChange, defaultValue }) => {
   const [isFreedom, setIsFreedom] = useState(defaultValue !== null ? defaultValue : false);
 
   const handleSwitchClick = () => {
@@ -12,9 +12,9 @@ const Switch = ({ onSwitchChange,defaultValue }) => {
   };
 
   return (
-    <div className={`w-[50px] h-[20px] rounded-full relative cursor-pointer ${isFreedom ? 'bg-[#ADD2E9]' : 'bg-[#e3eaf0]'}`} onClick={handleSwitchClick}>
-    <div className={`switch-transition switch-box-shadow absolute w-7 h-7 rounded-full top-[-20%] ${isFreedom ? 'transform translate-x-6 bg-primary' : 'bg-gray-300'}`}></div>
-  </div>
+    <div dir='ltr' className={`w-[50px] h-[20px] rounded-full relative cursor-pointer ${isFreedom ? 'bg-[#ADD2E9]' : 'bg-[#e3eaf0]'}`} onClick={handleSwitchClick}>
+      <div className={`switch-transition switch-box-shadow absolute w-7 h-7 rounded-full top-[-20%] ${isFreedom ? 'transform translate-x-6 bg-primary' : 'bg-gray-300'}`}></div>
+    </div>
   );
 };
 

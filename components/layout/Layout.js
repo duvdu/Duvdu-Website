@@ -17,7 +17,7 @@ const Layout = ({
 
     const toggleClick = (type) => {
         setToggled(type);
-        isToggled
+        isToggled > 1
             ? document
                 .querySelector("body")
                 .classList.remove("mobile-menu-active")

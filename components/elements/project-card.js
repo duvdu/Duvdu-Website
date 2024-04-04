@@ -124,14 +124,14 @@ const Card = ({ cardData, className = "", href }) => {
           }
         </div>
         <div className='details'>
-          <div className='creator-info'>
+          <div className='creator-info gap-2'>
             <a href='/creative/anaa_youseff' className='profile cursor-pointer'>
               <img src={cardData.profileImage} alt='user' />
             </a>
             <a href='/creative/anaa_youseff' className='name cursor-pointer' >
               <span className='text-sm font-semibold'>{cardData.name}</span>
             </a>
-            <span className='mr-2 text-base opacity-80 font-medium'>{cardData.rating}</span>
+            <span className='text-base opacity-80 font-medium'>{cardData.rating}</span>
             <Icon className='text-primary w-7' name={'rate-star'} />
           </div>
           <p className='text-xl opacity-70 font-medium'>{cardData.filmName}</p>

@@ -47,6 +47,7 @@
     margin-top: 12px;
     display: flex;
     align-items: center;
+    
   }
   
   .project-card .creator-info .name {
@@ -59,7 +60,6 @@
   }
   
   .project-card .creator-info .profile {
-    margin-right: 10px;
     width: 30px;
     height: 30px;
   
