@@ -1,14 +1,16 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 
 const Search = () => {
+    const { t} = useTranslation();
     const [searchTerm, setSearchTerm] = useState("");
     const router = useRouter();
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
     const handleSearch = () => {
 
-        router.push({
+        router.push({   
             pathname: "/projects",
             query: {
                 search: searchTerm,
@@ -38,7 +40,7 @@ const Search = () => {
                 onBlur={() => handleFocus(false)}
                 onKeyDown={handleInput}
                 type="text"
-                placeholder="Search..."
+                placeholder={t("Search")+"..."}
             />
             <div className={"dialog-history max-w-[300px] " + (searchDropdownVisible ? "active" : "")}>
                 <ul className="gap-1">
