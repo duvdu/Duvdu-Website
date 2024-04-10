@@ -34,6 +34,10 @@ const renderAfterDelay = () => {
                     visiblePopup.classList.remove('show');
                     // visiblePopup.setAttribute('aria-hidden', 'true');
                 }
+                const visibledropDown = document.querySelector('.account-dropdown.active');
+                if (visibledropDown) {
+                    visibledropDown.classList.remove('active');
+                }
             }
         };
 
