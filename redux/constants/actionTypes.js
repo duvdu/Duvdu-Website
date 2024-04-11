@@ -22,6 +22,13 @@ export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
 
 
+// SETTING AUTH
+export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
+
+
+
 // LOCAL STORAGE
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';

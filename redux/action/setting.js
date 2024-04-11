@@ -15,7 +15,3 @@ export const toggleLanguage = () => dispatch => {
 export const headerPopUp = (value) => dispatch => {
     dispatch({ type: value })
 };
-
-
-
-

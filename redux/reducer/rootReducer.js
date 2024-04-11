@@ -4,6 +4,7 @@ import projectFilters from './projectFilters'
 import setting from './setting'
 import auth from './auth'
 import counter from './test'
+import api from './api'
 
 const rootReducer = combineReducers({
     projects,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     auth,
     projectFilters,
     counter,
+    api,
 })
 
 export default rootReducer
