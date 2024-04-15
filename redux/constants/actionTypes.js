@@ -21,7 +21,6 @@ export const SHOWPROFILE = "SHOWPROFILE"
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
 
-
 // SETTING AUTH
 export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';

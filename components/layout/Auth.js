@@ -9,28 +9,31 @@ SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-function Auth({ children }) {
+function Auth({ children, isloading, error }) {
+
     const [active, setActive] = useState(-1);
     const [swiper, setSwiper] = useState(null);
+    const [localerror, setLocalerror] = useState(true);
+    const [location, setLocation] = useState(null);
 
     const imageSources = [
         {
-            "img": 'assets/imgs/authswiper/login-1.png',
+            "img": '/assets/imgs/authswiper/login-1.png',
             "h1": "let your project shine",
             "p": "we make it fast, simple, & cost effective to find, hire & pay the best professionals anywhere, any time ."
         },
         {
-            "img": 'assets/imgs/authswiper/login-2.png',
+            "img": '/assets/imgs/authswiper/login-2.png',
             "h1": "let your project shine",
             "p": "we make it fast, simple, & cost effective to find, hire & pay the best professionals anywhere, any time ."
         },
         {
-            "img": 'assets/imgs/authswiper/login-3.png',
+            "img": '/assets/imgs/authswiper/login-3.png',
             "h1": "let your project shine",
             "p": "we make it fast, simple, & cost effective to find, hire & pay the best professionals anywhere, any time ."
         }
     ];
-
+    
     const router = useRouter();
 
     useEffect(() => {
@@ -49,9 +52,30 @@ function Auth({ children }) {
         };
     }, [router]);
 
+    useEffect(() => {
+        setLocalerror(true)
+    }, [isloading]);
+    
+    useEffect(() => {
+        setLocation(window.location.origin)
+    });
     return (
         <>
             <Layout shortheader={true} showTabs={false}>
+                {
+                    isloading &&
+                    <div className="w-screen h-screen absolute top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
+                        <img src="/assets/imgs/theme/loading-icon.png" />
+                    </div>
+                }
+                {
+                    (error && localerror) &&
+                    <div onClick={() => setLocalerror(false)} className="w-screen h-screen absolute top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
+                        <span className="text-red-400 font-bold text-xl">
+                            {error}
+                        </span>
+                    </div>
+                }
                 <div className="h-body center-div">
                     <div className="container">
                         <div className="flex flex-col lg:flex-row gap-6 h-body py-9">
@@ -76,7 +100,12 @@ function Auth({ children }) {
                                                             <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
                                                             <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
                                                         </div>
-                                                        <div className="bg-cover border-top swipper-img h-full" style={{ backgroundImage: `url(${source.img})` }} />
+
+                                                        {
+                                                            location &&
+                                                            <div className="bg-cover border-top swipper-img h-full" style={{ backgroundImage: `url(${location}/${source.img})` }} />
+                                                        }
+
                                                     </div>
                                                     {/* <div className="w-full h-full bg-black" /> */}
                                                 </SwiperSlide>
@@ -117,6 +146,7 @@ function Auth({ children }) {
                     </div>
                 </div>
             </Layout>
+
         </>
     );
 }

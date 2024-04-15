@@ -3,19 +3,24 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { fetchProjects } from "../redux/action/project";
+import { getMyprofile } from "../redux/action/apis/profile";
 import Card from "../components/elements/project-card";
 import Filter from "../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
-const Projects = ({ projects, projectFilters, fetchProjects }) => {
+const Projects = ({ loading, error, data ,projects, projectFilters, fetchProjects , getMyprofile }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const showLimit = 24;
     const [limit, setLimit] = useState(showLimit);
 
     const targetRef = useRef(null);
+    
+    useEffect(() => {
+        getMyprofile()
+    },[data]);
 
     useEffect(() => {
         fetchProjects(searchTerm, "/static/projects.json", projectFilters);
@@ -24,8 +29,8 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
     useEffect(() => {
         fetchProjects(searchTerm, "/static/projects.json", projectFilters, limit);
     }, [limit]);
-
-    useEffect(() => {
+    
+        useEffect(() => {
         const options = {
             root: null,
             rootMargin: '0px',
@@ -208,10 +213,16 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
 const mapStateToProps = (state) => ({
     projects: state.projects,
     projectFilters: state.projectFilters,
+
+    loading: state.api.loading,
+    error: state.api.error,
+    data: state.api.data,
+
 });
 
 const mapDispatchToProps = {
     fetchProjects,
+    getMyprofile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);

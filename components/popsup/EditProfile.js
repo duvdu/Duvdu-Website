@@ -152,7 +152,7 @@ function EditPopUp() {
     // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Submitted profile:", formData);
+        
     };
     return (
         <>

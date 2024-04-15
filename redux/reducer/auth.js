@@ -2,7 +2,7 @@ import * as Types from "../constants/actionTypes";
 // Initial state
 const initstate = {
     login: false,
-  
+    username : null
 };
 
 // Reducer function
@@ -19,8 +19,7 @@ const auth = (state = initstate, action) => {
                 ...state,
                 login: false
             };
-
-           
+            
         default:
             return state;
     }

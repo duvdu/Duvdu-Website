@@ -101,7 +101,7 @@ function EnterYourPhoneNumber({ onNextStep }) {
 
 function OTP({ onNextStep }) {
     const [otp, setOtp] = useState('');
-    const [counter, setcount] = useState(59);
+    const [counter, setcount] = useState(100);
     const [error, seterror] = useState(false);
     useEffect(() => {
         if (counter > 0) {

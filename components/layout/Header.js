@@ -94,7 +94,7 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
                             </div>
 
                             <div className="header-right">
-                                {fromlayout.showTabs
+                                {fromlayout.showTabs && islogin
                                     &&
                                     <div className="header-tabs">
 

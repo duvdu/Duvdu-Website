@@ -68,7 +68,7 @@ function Step1({onNextStep}) {
 }
 function Step2({onNextStep}) {
     const [otp, setOtp] = useState('');
-    const [counter, setcount] = useState(59);
+    const [counter, setcount] = useState(100);
     const [error, seterror] = useState(false);
 
     useEffect(() => {
