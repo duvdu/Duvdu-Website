@@ -61,7 +61,7 @@ const Category = ({ category }) => {
         }
       }
     }
-  }, [category]);
+  });
   return (
     <li className='header-category'>
       <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>

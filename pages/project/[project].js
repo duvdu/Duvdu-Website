@@ -496,7 +496,7 @@ const Control = ({ data, toggleDrawer }) => {
                             <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
                                 <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} text-2xl`} name={'heart'} type={loveIconName} />
                             </div>
-                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer" text='book now' />
+                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer max-w-80" text='book now' />
                         </Controller>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ const comment = ({comment}) => {
         <>
             <div className="rounded-3xl border border-solid border-[#00000040] dark:border-[#FFFFFF40] p-5">
                 <div className="flex">
-                    <div className="flex profile">
+                    <div className="flex profile gap-3">
                         <img src={comment.avatar} alt={comment.userName} width="45" height="45" />
                         <div className='flex-column'>
                             <p className="name">{comment.userName}</p>

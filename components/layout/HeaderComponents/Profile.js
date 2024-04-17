@@ -55,13 +55,11 @@ function Profile({ getheaderpopup }) {
                                 </div>
                             </div>
                             <div className="flex gap-3 mt-3">
-                                <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
+                                <a href='/creative/youseff_abdulla' className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
                                     <span className="text-primary font-bold text-base">
-                                        <a href='/creative/youseff_abdulla'>
                                         {t('view profile')}
-                                        </a>
                                     </span>
-                                </div>
+                                </a>
 
                             </div>
                         </div>
@@ -95,7 +93,7 @@ function Profile({ getheaderpopup }) {
                                     </div>
                                 </div>
                                 <div onClick={handleCloseMiddleCard} className='flex justify-center items-center cursor-pointer'>
-                                    <div className="h-min aspect-square rounded-full header-border p-3">
+                                    <div className="rounded-full header-border h-10 w-10 flex items-center justify-center">
                                         <Icon className="size-5" name={'xmark'} useinvert={true} />
                                     </div>
                                 </div>
