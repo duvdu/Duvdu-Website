@@ -60,7 +60,7 @@ function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPo
 
         const Save = () => {
             localStorage.setItem('lang', selectedLanguage);
-            // i18n.changeLanguage(selectedLanguage);
+            i18n.changeLanguage(selectedLanguage);
 
             document.documentElement.dir = selectedLanguage === 'Arabic' ? 'rtl' : 'ltr';
             // window.location.reload();
