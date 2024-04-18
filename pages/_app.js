@@ -21,7 +21,7 @@ import "../public/assets/css/project.css";
 import "../public/assets/css/chat.css";
 import "../public/assets/css/home.css";
 import "../public/assets/css/mood_boards.css";
-import './../i18n.js'
+import '../util/i18n'
 
 // const HomeCSS = dynamic(() => import('../public/assets/css/home.css'));
 // const MoodBoardsCSS = dynamic(() => import('../public/assets/css/mood_boards.css'));
