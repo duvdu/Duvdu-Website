@@ -22,7 +22,7 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
 
         var root = document.documentElement;
 
-        i18n.changeLanguage(localStorage.getItem('lang') == 'Arabic' ? 'Arabic' : 'English');
+        // i18n.changeLanguage(localStorage.getItem('lang') == 'Arabic' ? 'Arabic' : 'English');
 
         function getHeaderHeight() {
             try {
