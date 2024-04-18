@@ -133,14 +133,14 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
                                     {
                                         islogin &&
                                         <div className="header-action-2 flex items-center ">
-                                            <div className="header-action-icon-2" >
+                                            <div className="header-action-icon-2 z-10" >
                                                 <div className="icon-holder cursor-pointer" onClick={() => headerPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)}>
                                                     <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span>
                                                     <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                 </div>
                                                 <MessageAndNotofication />
                                             </div>
-                                            <div className="header-action-icon-2 mx-6"  >
+                                            <div className="header-action-icon-2 mx-6 z-50"  >
                                                 <div className="icon-holder cursor-pointer" onClick={() => headerPopUp(getheaderpopup != Types.SHOWSETTING ? Types.SHOWSETTING : Types.NONEPOPUP)}>
                                                     <Icon className={"dark:text-[#B3B3B3]"} name={"gear"} useinvert={true} />
                                                 </div>

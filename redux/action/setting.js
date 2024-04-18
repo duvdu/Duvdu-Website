@@ -8,8 +8,8 @@ export const toggleDarkMode = (value) => dispatch => {
         dispatch({ type: Types.LIGHT })
 };
 
-export const toggleLanguage = () => dispatch => {
-    dispatch({ type: Types.LANGUAGE })
+export const toggleLanguage = (value) => dispatch => {
+    dispatch({ type: Types.LANGUAGE, payload:value })
 };
 
 export const headerPopUp = (value) => dispatch => {

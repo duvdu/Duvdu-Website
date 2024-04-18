@@ -2,7 +2,7 @@ import * as Types from "../constants/actionTypes";
 // Initial state
 const initstate = {
     ISDARK: false,
-    LANGUAGE: 'ENGLISH',
+    LANGUAGE: 'English',
     headerpopup: Types.NONEPOPUP
 };
 
@@ -28,7 +28,12 @@ const setting = (state = initstate, action) => {
                 ...state,
                 headerpopup: action.type
             }
-        
+        case Types.LANGUAGE:
+            return {
+                ...state,
+                LANGUAGE: action.payload
+            };
+
 
         default:
             return state;

@@ -2,7 +2,6 @@
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { headerPopUp } from '../../../redux/action/setting';
 import * as Types from '../../../redux/constants/actionTypes'
 import Icon from "../../Icons";
 

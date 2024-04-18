@@ -1186,7 +1186,6 @@ table p {
   visibility: hidden;
   margin-top: 20px;
   border-radius: 0 0 10px 10px;
-  z-index: 999;
   -webkit-box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
   box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
 }

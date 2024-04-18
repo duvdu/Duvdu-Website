@@ -4,13 +4,12 @@ import Switch from '../../elements/switcher'
 import Icon from "../../Icons";
 import Button from '../../elements/button';
 import { useTranslation } from 'react-i18next';
-import { toggleDarkMode } from "../../../redux/action/setting";
+import { toggleDarkMode, toggleLanguage } from "../../../redux/action/setting";
 import { logout } from "../../../redux/action/auth";
-import { headerPopUp } from '../../../redux/action/setting';
 import * as Types from '../../../redux/constants/actionTypes'
 
 
-function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPopUp }) {
+function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopup, language }) {
     const { t } = useTranslation();
 
     const [open, setOpened] = useState(0);
@@ -33,7 +32,7 @@ function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPo
 
     const ContactUs = () => (
         <>
-            <div className='flex gap-3'>
+            <div className='flex gap-3 z-50'>
                 <div onClick={() => setOpened(0)} className='rounded-full header-border h-14 w-14 flex justify-center items-center cursor-pointer'>
                     <Icon className="text-xl size-5" name={'xmark'} useinvert={true} />
                 </div>
@@ -54,14 +53,12 @@ function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPo
 
         const [selectedLanguage, setSelectedLanguage] = useState('English');
 
-        const toggleLanguage = (language) => {
-            setSelectedLanguage(language);
-        };
+
 
         const Save = () => {
             localStorage.setItem('lang', selectedLanguage);
             i18n.changeLanguage(selectedLanguage);
-
+            toggleLanguage(selectedLanguage)
             document.documentElement.dir = selectedLanguage === 'Arabic' ? 'rtl' : 'ltr';
             // window.location.reload();
         };
@@ -79,7 +76,7 @@ function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPo
                     <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>{t('Language')}</span>
                 </div>
                 <div className="flex flex-col gap-5 mt-6">
-                    <div className="flex justify-between items-center cursor-pointer " onClick={() => toggleLanguage('Arabic')}>
+                    <div className="flex justify-between items-center cursor-pointer " onClick={() => setSelectedLanguage('Arabic')}>
                         <span>{t('Arabic')}</span>
                         {selectedLanguage === 'Arabic' && (
                             <div className="flex justify-between items-center">
@@ -90,7 +87,7 @@ function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPo
                         )}
                     </div>
                     <div className="opacity-15 bg-black h-[1px]" />
-                    <div className="flex justify-between items-center cursor-pointer" onClick={() => toggleLanguage('English')}>
+                    <div className="flex justify-between items-center cursor-pointer" onClick={() => setSelectedLanguage('English')}>
                         <span>{t('English')}</span>
                         {selectedLanguage === 'English' && (
                             <div className="flex justify-between items-center">
@@ -107,7 +104,7 @@ function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPo
             </>
         );
     }
-    const Main = ({}) => (
+    const Main = ({ }) => (
         <>
             {
                 [
@@ -190,14 +187,16 @@ function Setting({ isDark, toggleDarkMode,login,logout,getheaderpopup , headerPo
 
 const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
+    language: state.setting.LANGUAGE,
     getheaderpopup: state.setting.headerpopup,
-    
+
 });
 
 const mapDispatchToProps = {
     toggleDarkMode,
+    toggleLanguage,
     logout,
-    headerPopUp
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Setting);

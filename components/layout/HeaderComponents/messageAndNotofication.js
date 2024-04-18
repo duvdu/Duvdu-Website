@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import { useTranslation } from 'react-i18next';
-import { headerPopUp } from '../../../redux/action/setting';
 import * as Types from '../../../redux/constants/actionTypes';
 
 
