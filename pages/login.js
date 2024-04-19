@@ -4,7 +4,7 @@ import Button from '../components/elements/button';
 import { useState, useEffect } from 'react';
 import Icon from '../components/Icons';
 import { connect } from "react-redux";
-import { login } from "../redux/action/apis/auth";
+import { login } from "../redux/action/apis/auth/signin/signin";
 import { useRouter } from 'next/router';
 
 function Login({ loading, error, data, login }) {
