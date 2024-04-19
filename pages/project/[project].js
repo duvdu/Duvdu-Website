@@ -480,16 +480,16 @@ const Control = ({ data, toggleDrawer }) => {
 
 
                         <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                            <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D]  w-20 h-20 rounded-full cursor-pointer flex justify-center items-center" >
+                            <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                                 <Icon name={'share'} />
                             </div>
-                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
+                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
                                 <Icon className="text-white text-xl" name={'plus'} />
                             </div>
-                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
+                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
                                 <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} text-2xl`} name={'heart'} type={loveIconName} />
                             </div>
-                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer max-w-80" text='book now' />
+                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer max-w-[211px]" text='book now' />
                         </Controller>
                     </div>
                 </div>

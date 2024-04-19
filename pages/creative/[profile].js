@@ -567,7 +567,7 @@ const Project = ({ data, isbig }) => (
         <div className='creatives'>
             {data.price} $
         </div>
-        <div className='title'>
+        <div className={`title ${isbig ? 'size-big' : 'size-small'}`}>
             {data.title}
         </div>
     </a>

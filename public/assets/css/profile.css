@@ -236,19 +236,27 @@
     opacity: 0.5;
 }
 
+.size-small {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.size-big {
+    left: 37.31px;
+    
+}
 .profile-project>.title {
     position: absolute;
-    bottom: 24.7px;
-    left: 37.31px;
     color: #FFF;
     text-align: center;
-
+    bottom: 24.7px;
     font-size: 22.131px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     text-transform: capitalize;
 }
+
 
 .profile-project>.creatives {
     position: absolute;
