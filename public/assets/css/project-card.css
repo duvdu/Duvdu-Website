@@ -1,7 +1,7 @@
 .project-card {
     width: 100%;
     max-width: 313px;
-    margin-bottom: 50px;
+    
   }
   
     
@@ -51,12 +51,11 @@
   }
   
   .project-card .creator-info .name {
-    
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    text-transform: capitalize;
+    
   }
   
   .project-card .creator-info .profile {

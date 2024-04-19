@@ -3,7 +3,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { fetchProjects } from "../redux/action/project";
-import { getMyprofile } from "../redux/action/apis/profile";
+import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
+
 import Card from "../components/elements/project-card";
 import Filter from "../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
@@ -88,7 +89,7 @@ const Projects = ({ loading, error, data ,projects, projectFilters, fetchProject
                             !searchTerm &&
                             <div className="h-7" />
                         }
-                        <h1 className="page-header">most popular on duvdu</h1>
+                        <h1 className="page-header pb-9">most popular on duvdu</h1>
                         {getPaginatedProjects.length === 0 && (
                             <h3>No projects Found </h3>
                         )}

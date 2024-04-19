@@ -170,14 +170,13 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
                         </div>
                     </div>
                 </div>
-                <div className={"border-borderColor header-bottom-bg-color" + (!fromlayout.shortheader ? " border-y" : "")}>
+                <div className={"border-borderColor header-bottom-bg-color py-2 " + (!fromlayout.shortheader ? " border-y" : "")}>
                     <div className="container">
                         <div className="header-wrap header-space-between relative">
-                            <div className="logo logo-width-1 block lg:hidden">
+                            <div className="logo block lg:hidden w-full">
                                 <a href="/">
                                     <img
                                         src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                        className="min-h-16"
                                         alt="main logo"
                                     />
                                 </a>

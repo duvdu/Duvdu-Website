@@ -130,7 +130,6 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
         ],
     }
 
-
     return (
         <>
             <Layout >
@@ -148,8 +147,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                                     router.query.project == 1 &&
                                     <ProjectShow data={data} />
                                 }
-                                    <About data={data} />
-                                
+                                <About data={data} />
                             </section>
                             <section className="lg:w-1/3 mt-10 lg:mt-0">
                                 <Details data={data} />
@@ -161,9 +159,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                         </section>
                     </div>
                 </div>
-
                 <Control data={data} toggleDrawer={toggleDrawer} />
-
                 <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
             </Layout>
         </>

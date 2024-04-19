@@ -15,7 +15,7 @@ function Contracts() {
                         <div className='w-full'>
                             {true ? <LeftSide /> :
                                 <div className='mt-16'>
-                                    <h1 className="page-header">ongoing contracts</h1>
+                                    <h1 className="page-header pb-6">ongoing contracts</h1>
                                     <EmptyComponent />
                                 </div>
                             }

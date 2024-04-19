@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from '../../components/elements/button';
 import Icon from '../../components/Icons';
 import { connect } from "react-redux";
-import { signup } from "../../redux/action/apis/auth";
+import { signup } from "../../redux/action/apis/auth/signup/signup";
 import { useRouter } from 'next/router';
 
 function Register({ signup, loading, error, data }) {

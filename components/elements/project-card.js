@@ -60,7 +60,7 @@ const Card = ({ cardData, className = "", href }) => {
   };
   return (
     <>
-      <div className={`select-none project-card ${className}`} onClick={() => { }} >
+      <div className={`select-none project-card  ${className}`} onClick={() => { }} >
         <div
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
@@ -124,20 +124,22 @@ const Card = ({ cardData, className = "", href }) => {
             </div>
           }
         </div>
-        <div className='details'>
-          <div className='creator-info gap-2'>
-            <a href='/creative/anaa_youseff' className='profile cursor-pointer'>
-              <img src={cardData.profileImage} alt='user' />
+        <div className='mt-3 flex justify-between items-center'>
+          <div className='flex items-center gap-3'>
+            <a href='/creative/anaa_youseff' className='cursor-pointer'>
+              <img src={cardData.profileImage} alt='user' className='size-6' />
             </a>
-            <a href='/creative/anaa_youseff' className='name cursor-pointer' >
+            <a href='/creative/anaa_youseff' className='cursor-pointer' >
               <span className='text-sm font-semibold'>{cardData.name}</span>
             </a>
-            <span className='text-base opacity-80 font-medium'>{cardData.rating}</span>
-            <Icon className='text-primary w-7' name={'rate-star'} />
           </div>
-          <p className='text-xl opacity-70 font-medium'>{cardData.filmName}</p>
-          <div className='text-xl font-bold mt-3'>{cardData.price}</div>
+          <div className='flex items-center gap-2'>
+            <span className='text-base opacity-80 font-medium'>{cardData.rating}</span>
+            <Icon className='text-primary size-4' name={'rate-star'} />
+          </div>
         </div>
+        <p className='text-xl opacity-70 font-medium my-4'>{cardData.filmName}</p>
+        <div className='text-xl font-bold'>{cardData.price}</div>
       </div>
     </>
   );

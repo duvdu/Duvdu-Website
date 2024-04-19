@@ -1,6 +1,7 @@
 import OtpInput from 'react-otp-input';
 import React, { useEffect, useState } from 'react';
-import { verify, resendCode } from "../../redux/action/apis/auth";
+import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
+import { verify} from "../../redux/action/apis/auth/OTP/verify";
 import { login } from "../../redux/action/auth";
 import { connect } from "react-redux";
 import Auth from '../../components/layout/Auth';
