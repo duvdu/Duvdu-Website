@@ -138,31 +138,28 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                 <Report />
                 <ThanksMSG />
                 <div className={isOpen ? "h-0 overflow-hidden" : ""}>
-                <div className="container mt-6">
-                    <section>
-                        <Header data={data} />
-                    </section>
-                    <div className="lg:flex gap-6">
-                        <section className="lg:w-2/3">
-
-
-                            {
-                                router.query.project == 1 &&
-                                <ProjectShow data={data} />
-                            }
-
-                            <About data={data} />
+                    <div className="sm:container mt-6">
+                        <section className="mx-7 sm:mx-0" >
+                            <Header data={data} />
                         </section>
-                        <section className="lg:w-1/3 mt-10 lg:mt-0">
-                            <Details data={data} />
-                            <Reviews data={data} />
-
+                        <div className="lg:flex gap-6">
+                            <section className="lg:w-2/3">
+                                {
+                                    router.query.project == 1 &&
+                                    <ProjectShow data={data} />
+                                }
+                                    <About data={data} />
+                                
+                            </section>
+                            <section className="lg:w-1/3 mt-10 lg:mt-0">
+                                <Details data={data} />
+                                <Reviews data={data} />
+                            </section>
+                        </div>
+                        <section className="mx-7 sm:mx-0">
+                            <Recommended projects={projects} />
                         </section>
                     </div>
-                    <section>
-                        <Recommended projects={projects} />
-                    </section>
-                </div>
                 </div>
 
                 <Control data={data} toggleDrawer={toggleDrawer} />
@@ -229,7 +226,7 @@ const ProjectShow = ({ data }) => {
     return (
         <div className="relative">
             <video
-                className="border-50 w-full"
+                className="sm:rounded-[50px] w-full"
                 src={data.projectImg}
                 controls
                 ref={videoRef}
@@ -241,7 +238,7 @@ const ProjectShow = ({ data }) => {
                 onClick={TogglePlayPause}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             >
-                <div className="relative">
+                <div className="hidden sm:block sm:relative">
                     <div
                         className={`bg-[#CADED333] w-16 h-16 rounded-full cursor-pointer p-5 appblur ${isPlaying ? "animate-play" : "animate-pause"
                             }`}
@@ -260,7 +257,7 @@ const ProjectShow = ({ data }) => {
 const About = ({ data }) => (
     <div className="sticky top-header">
         <div className="h-16" />
-        <h2 className="font-bold text-lg capitalize opacity-80 mb-4">about the creative</h2>
+        <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mx-7 sm:mx-0">about the creative</h2>
         <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] p-10">
             <div className='flex items-center justify-center'>
                 <div className='w-32 h-32 relative'>
@@ -275,7 +272,7 @@ const About = ({ data }) => (
                     </span>
                 </div>
             </div>
-            <div className='flex justify-center pt-25 items-center gap-3'>
+            <div className='flex justify-center pt-25 items-center gap-3 '>
                 <p className='rank'>{data.creative.rank}</p>
                 <p id='photographer'>{data.creative.occupation}</p>
                 <div id='rating' className='flex items-center gap-1 w-20'>
@@ -293,7 +290,7 @@ const About = ({ data }) => (
                     ))}
                 </div>
             </div>
-            <div className='px-10 border-[#00000040] dark:border-[#FFFFFF40] border-t mt-6 pt-6'>
+            <div className='sm:px-10 border-[#00000040] dark:border-[#FFFFFF40] border-t mt-6 pt-6'>
                 <p id='about-header'>about</p>
                 <p className='pt-2' id='about-paragraph'>{data.creative.about}</p>
             </div>
@@ -463,7 +460,7 @@ const Control = ({ data, toggleDrawer }) => {
             {
                 !showChat &&
                 <div className='sticky h-32 bottom-0 z-20 max-w-full'>
-                    <div className="container flex justify-between items-end">
+                    <div className="sm:container flex justify-between items-end">
 
                         <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
                             <div className="relative">
