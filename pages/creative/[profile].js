@@ -174,45 +174,20 @@ function MyProfile() {
     return (
         <>
             <EditPopUp />
-            <div className='container'>
-                <div className='cover relative' style={{ backgroundImage: `url('${profile['cover-pic']}')` }} >
-                    <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6' />
-                </div>
+            <div className='sm:container'>
+                <Conver converPic={profile['cover-pic']} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
-                    <div className='left-side flex-1'>
+                    <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
-                        <div className='relative px-10'>
-                            <div className='flex items-center'>
-                                <div className='w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame'>
-                                    <img className='w-full h-full rounded-full' src={profile['profile-pic']} alt="profile picture" />
-                                </div>
-                                <div className='flex-2 flex-col gap-1'>
-                                    <span className='text-3xl font-bold capitalize'>{profile['personalName']}</span>
-                                    <span className='flex items-center'>
-                                        <Icon className='opacity-50 mr-2' name='location-dot' />
-                                        <span className="opacity-50 capitalize text-lg">{profile['location']}</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className='flex justify-center pt-25 items-center gap-3'>
-                                <p className='rank'>{profile['rank']}</p>
-                                <p id='photographer'>{profile['occupation']}</p>
-                                <div id='rating' className='flex items-center gap-1 w-20'>
-                                    <p>{profile['value']}</p>
-                                    <Icon className='text-primary w-7' name={'star'} />
-                                </div>
-                            </div>
-                            <div className='flex justify-center pt-7 items-center'>
-                                <div className='flex justify-center'>
-                                    {Object.entries(profile.popularity).map(([key, value]) => (
-                                        <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
-                                            <p className='number'>{convertToK(value, 0)}</p>
-                                            <p className='unit'>{key}</p>
-                                        </div>
-                                    ))}
-
-                                </div>
-                            </div>
+                        <div className='relative px-6 sm:px-10'>
+                            <Info src={profile['profile-pic']}
+                                location={profile['location']}
+                                occupation={profile['occupation']}
+                                personalName={profile['personalName']}
+                                popularity={profile.popularity}
+                                rank={profile['rank']}
+                                value={profile['value']}
+                            />
                         </div>
 
                         <div>
@@ -264,13 +239,8 @@ function MyProfile() {
                             <h3>No projects Found </h3>
                         }
 
-                        {profile.projects.length > 0 && (
-                            <div className='project-grid gap-4'>
-                                {profile.projects.map((data, index) => (
-                                    <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
-                                ))}
-                            </div>
-                        )}
+                        <Projects projects={profile.projects} />
+
                     </div>
                 </div>
             </div>
@@ -288,8 +258,6 @@ function OtherProfile() {
     const handleCloseChat = () => {
         setShowChat(false);
     };
-
-
 
     var profile = {
         "coverImg": "/assets/imgs/projects/cover.jpeg",
@@ -485,44 +453,21 @@ function OtherProfile() {
             <div className="fixed bottom-0 z-20">
                 {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
             </div>
-            <div className='container'>
-                <div className='cover relative' style={{ backgroundImage: `url('${profile['coverImg']}')` }} >
-                    <Icon name='share2' className='absolute cursor-pointer left-6 bottom-6' />
-                </div>
+            <div className='sm:container'>
+                <Conver converPic={profile['coverImg']} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
-                    <div className='left-side flex-1 relative'>
-                        <div className='px-10'>
-                            <div className='flex items-center'>
-                                <div className='w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat'>
-                                    <img className='w-full h-full rounded-full' src={"/assets/imgs/profile/contact-2.png"} alt="profile picture" />
-                                </div>
-                                <div className='flex-2 flex-col gap-1'>
-                                    <span className='text-3xl font-bold capitalize'>{profile['personalName']}</span>
-                                    <span className='flex items-center'>
-                                        <Icon className='opacity-50 mr-2' name='location-dot' />
-                                        <span className="opacity-50 capitalize text-lg">{profile['location']}</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className='flex justify-center pt-25 items-center gap-3'>
-                                <p className='rank'>{profile['rank']}</p>
-                                <p id='photographer'>{profile['occupation']}</p>
-                                <div id='rating' className='flex items-center gap-1 w-20'>
-                                    <p>{profile['value']}</p>
-                                    <Icon className='text-primary w-7' name={'star'} />
-                                </div>
-                            </div>
-                            <div className='flex justify-center pt-7 items-center'>
-                                <div className='flex justify-center'>
-                                    {Object.entries(profile.popularity).map(([key, value]) => (
-                                        <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
-                                            <p className='number'>{convertToK(value, 0)}</p>
-                                            <p className='unit'>{key}</p>
-                                        </div>
-                                    ))}
-
-                                </div>
-                            </div>
+                    <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
+                        <div className='px-6 sm:px-10'>
+                            {/* info */}
+                            <Info src={"/assets/imgs/profile/contact-2.png"}
+                                location={profile['location']}
+                                occupation={profile['occupation']}
+                                personalName={profile['personalName']}
+                                popularity={profile.popularity}
+                                rank={profile['rank']}
+                                value={profile['value']}
+                            />
+                            {/* -- info -- */}
                             <div className='flex gap-3 items-center'>
                                 <Button className="w-full mb-7 mt-7 z-0" >Follow</Button>
                                 <div onClick={() => { setShowChat(true) }} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
@@ -530,6 +475,7 @@ function OtherProfile() {
                                 </div>
                             </div>
                         </div>
+
                         <div className='h-divider'></div>
                         <div className='px-10'>
                             <h3 className='pt-6' id='about-header'>about</h3>
@@ -552,13 +498,7 @@ function OtherProfile() {
                             <h3>No projects Found </h3>
                         }
 
-                        {profile.projects.length > 0 && (
-                            <div className='project-grid gap-3'>
-                                {profile.projects.map((data, index) => (
-                                    <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
-                                ))}
-                            </div>
-                        )}
+                        <Projects projects={profile.projects} />
                     </div>
                 </div>
             </div>
@@ -566,6 +506,59 @@ function OtherProfile() {
     );
 }
 
+
+
+
+function Conver({ converPic }) {
+    return <div className='cover h-[150px] sm:h-[300px] sm:rounded-b-[55px] relative' style={{ backgroundImage: `url('${converPic}')` }} >
+        <Icon name='share2' className='absolute cursor-pointer right-6 sm:left-6 bottom-6' />
+    </div>
+}
+
+function Info({ src, personalName, location, rank, occupation, value, popularity, isboronze = false }) {
+    return <>
+        <div className='flex items-end sm:items-center pb-5'>
+            <div className={`w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
+                <img className='w-full h-full rounded-full' src={src} alt="profile picture" />
+            </div>
+            <div className='flex-2 flex-col gap-1'>
+                <span className='text-3xl font-bold capitalize'>{personalName}</span>
+                <span className='flex items-center'>
+                    <Icon className='opacity-50 mr-2' name='location-dot' />
+                    <span className="opacity-50 capitalize text-lg">{location}</span>
+                </span>
+            </div>
+        </div>
+        <div className='flex justify-center pt-25 items-center gap-3'>
+            <p className='rank'>{rank}</p>
+            <p id='photographer'>{occupation}</p>
+            <div id='rating' className='flex items-center gap-1 w-20'>
+                <p>{value}</p>
+                <Icon className='text-primary w-7' name={'star'} />
+            </div>
+        </div>
+        <div className='flex justify-center pt-7 items-center'>
+            <div className='flex justify-center'>
+                {Object.entries(popularity).map(([key, value]) => (
+                    <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
+                        <p className='number'>{convertToK(value, 0)}</p>
+                        <p className='unit'>{key}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </>
+}
+
+function Projects({ projects }) {
+    return projects.length > 0 && (
+        <div className='project-grid gap-[15px]'>
+            {projects.map((data, index) => (
+                <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
+            ))}
+        </div>
+    )
+}
 
 const Project = ({ data, isbig }) => (
 
@@ -581,5 +574,6 @@ const Project = ({ data, isbig }) => (
 
 
 );
+
 
 export default Profile;

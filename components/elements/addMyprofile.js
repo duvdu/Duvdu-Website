@@ -12,7 +12,7 @@ const PopUp = ({ setShowAddPanal }) => {
                 <div className="overlay" ></div>
             </div>
             
-                <div className='fixed bottom-0 z-40 container p-0 w-[460px]'>
+                <div className='fixed bottom-0 z-40 container p-0 max-w-[460px]'>
                     <div className='addpost'>
                         <div
                             onClick={handleShowPopUp}

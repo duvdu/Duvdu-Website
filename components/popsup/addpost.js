@@ -20,7 +20,7 @@ function AddPost() {
     return (
         <>
             <Popup id='add-post' className='w-full lg:w-[942px] flex flex-col gap-9' header={'Add Post'}>
-                <div className='lg:w-[600px] flex flex-col gap-7 mx-12'>
+                <div className='lg:w-[600px] flex flex-col gap-7 sm:mx-12'>
                     <section>
                         <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
                             <label htmlFor="file-upload" className='rounded-full p-4 bg-[#F5F5F5]'>

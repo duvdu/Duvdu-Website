@@ -39,7 +39,6 @@ function Auth({ children, isloading, error }) {
     useEffect(() => {
         // Function to run when the route changes
         const handleRouteChange = (url) => {
-            console.log(url)
             swiper?.destroy();
         };
 

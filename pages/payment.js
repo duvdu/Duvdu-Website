@@ -95,7 +95,6 @@ const LeftSide = () => {
     };
 
     const handleCardClick = (index) => {
-        console.log(index)
         const updatedCardData = cardData.map((card, i) => {
             return {
                 ...card,

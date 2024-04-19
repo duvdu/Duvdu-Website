@@ -93,7 +93,7 @@ const Card = ({ cardData, className = "", href }) => {
             {
               cardData.backgroundImages.length > 1 &&
               <Swiper
-              dir='ltr'
+                dir='ltr'
                 className='cardimg'
                 modules={[Autoplay, Navigation, EffectFade, Pagination]}
                 spaceBetween={0}
