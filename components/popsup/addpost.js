@@ -3,7 +3,6 @@
 import Popup from '../elements/popup';
 import Icon from '../Icons';
 import React, { useState } from "react";
-import ArrowBtn from '../elements/arrowBtn';
 import { handleFileUpload } from '../../util/util';
 import Switch from '../elements/switcher'
 import Button from '../elements/button';

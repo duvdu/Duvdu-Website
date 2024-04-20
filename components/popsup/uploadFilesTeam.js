@@ -61,7 +61,7 @@ function UploadFile() {
                                 <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
                                 </div>
                                 <span className="pl-5 w-full">New Yourk, USA</span>
-                                <Icon name={"angle-right"} className={"mr-4 text-primary"} />
+                                <Icon name={"angle-right"} className={"mr-4 text-primary w-3"} />
                             </div>
                         </div>
 
@@ -72,7 +72,7 @@ function UploadFile() {
                                 <Icon className="text-primary text-2xl" name={"image"} />
                                 </div>
                                 <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                                <Icon name={"angle-right"} className={"mr-4 text-primary"} />
+                                <Icon name={"angle-right"} className={"mr-4 text-primary w-3"} />
                             </div>
                         </div>
                     </section>
@@ -80,7 +80,7 @@ function UploadFile() {
                     <section className="sticky bottom-0">
                         <div className="flex justify-center mt-11">
                             <a>
-                                <ArrowBtn className="cursor-pointer w-96" text='continue' isEnable={true} />
+                                <ArrowBtn className="cursor-pointer w-min sm:w-96" text='continue' isEnable={true} />
                             </a>
                         </div>
                     </section>

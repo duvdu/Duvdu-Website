@@ -27,9 +27,9 @@ const SelectDate = ({ }) => {
                 <span className="text-xs opacity-60 font-medium">
                     select date
                 </span>
-                <span className="text-xs font-medium text-[#8A96BC] cursor-pointer">
+                <span className="flex text-xs font-medium text-[#8A96BC] cursor-pointer">
                     Augest
-                    <Icon className="mx-2 text-[#222E54]" name={"angle-right"} />
+                    <Icon className="mx-2 text-[#222E54] w-2" name={"angle-right"} />
                 </span>
             </div>
             <div className="flex justify-between gap-3">

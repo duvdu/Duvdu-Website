@@ -136,7 +136,7 @@ const projects = ({ projects, projectFilters, fetchProjects }) => {
                 <AddToTeam />
                 <Report />
                 <ThanksMSG />
-                <div className={isOpen ? "h-0 overflow-hidden" : ""}>
+                <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
                     <div className="sm:container mt-6">
                         <section className="mx-7 sm:mx-0" >
                             <Header data={data} />
@@ -489,7 +489,7 @@ const Control = ({ data, toggleDrawer }) => {
                             <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
                                 <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} text-2xl`} name={'heart'} type={loveIconName} />
                             </div>
-                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer max-w-[211px]" text='book now' />
+                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
                         </Controller>
                     </div>
                 </div>

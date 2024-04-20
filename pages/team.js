@@ -163,15 +163,15 @@ const TheTeam = () => {
                     }
                     {
                         State == 1 &&
-                        <div className="flex gap-7">
+                        <div className="flex flex-col lg:flex-row gap-7 items-center">
                             <LeftSide />
                             <RightSide onClick={() => setState(2)} />
                         </div>
                     }
                     {
                         State == 2 &&
-                        <div className="flex gap-7">
-                            <LeftSide isSolid={true}  />
+                        <div className="flex flex-col lg:flex-row gap-7">
+                            <LeftSide isSolid={true} />
                             <RightSide isSolid={true} />
                         </div>
                     }
@@ -185,7 +185,7 @@ const TheTeam = () => {
 function Person({ person }) {
 
     return (
-        <div className='flex gap-4 h-14 min-w-[400px]'>
+        <div className='flex gap-4 h-12 min-w-[400px]'>
             <img className='rounded-full h-full aspect-square' src={person.img} alt='profile img' />
             <div className='w-full flex flex-col justify-center'>
                 <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.name}</span>
@@ -193,14 +193,14 @@ function Person({ person }) {
             </div>
             <div className={`flex rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
                 <span className='text-primary text-sm font-semibold capitalize'> message </span>
-                <div className='w-5 h-5'>
+                <div className='size-5'>
                     <Icon name={'chat'} />
                 </div>
             </div>
             {/* action */}
 
-            {person.state === 'wating' && <Icon name="wating" className="w-14 h-14" />}
-            {person.state === 'bug' && <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 w-7 h-7" />}
+            {person.state === 'wating' && <Icon name="wating" className="size-12" />}
+            {person.state === 'bug' && <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 size-6" />}
             {person.state === 'avalible' && (
                 <Selector
                     options={[
@@ -208,7 +208,7 @@ function Person({ person }) {
                         { value: "option 2", onClick: () => { } },
                         { value: "option 3", onClick: () => { } }
                     ]}
-                    className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF40] flex justify-center items-center w-14 h-14 cursor-pointer"
+                    className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF40] flex justify-center items-center size-12 cursor-pointer"
                 />
             )}
 
@@ -261,10 +261,10 @@ const LeftSide = ({ isSolid }) => {
 
     return (
         <>
-            <div className="h-body w-2/3 overflow-y-scroll py-14">
+            <div className="h-body w-full overflow-y-scroll pt-14">
                 {!isAddToTeamPage &&
                     <>
-                        <h1 className="page-header">team project</h1>
+                        <h1 className="page-header mb-12">team project</h1>
                         {data.map((section, index) => (
                             <div key={index} >
                                 <Sections isSolid={isSolid} AddTeam={togglePage} section={section} />
@@ -283,33 +283,21 @@ const LeftSide = ({ isSolid }) => {
 
 const RightSide = ({ isSolid, onClick }) => {
     return (
-        <div className="w-1/3 h-body py-14">
+        <div className="w-full max-w-[483px] h-body py-10">
             <div className="flex gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
                 <div className="p-12">
                     <h2 className="opacity-80 text-2xl font-semibold capitalize"> project details </h2>
                 </div>
                 {
                     !isSolid &&
-                    <div className="absolute flex flex-col gap-4 bottom-0 w-full h-48 p-6">
+
+                    <div className="border-t absolute flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
                         <div className="flex justify-between w-full">
                             <span className="font-bold">Total Amount</span>
                             <span className="font-bold">$6,699.0</span>
                         </div>
 
-                        <ArrowBtn onClick={onClick} className="cursor-pointer w-full" text='Check-Out' isEnable={false} IconName="check" />
-
-                        {/* <div onClick={onClick} className="w-full px-6 cursor-pointer">
-                            <div className="bg-[#677A93] flex rounded-full p-1" >
-                                <div className="w-full flex justify-center items-center">
-                                    <span className="capitalize flex mx-5 items-center text-lg font-bold text-DS_white text-center">Check-Out</span>
-                                </div>
-                                <div className="flex aspect-square items-center justify-center rounded-full bg-white bg-opacity-25 h-20 w-20">
-                                    <Icon className="text-3xl text-white" name={'check'} />
-                                </div>
-                            </div>
-                        </div> */}
-
-
+                        <ArrowBtn onClick={onClick} className="cursor-pointer  w-full sm:w-[388px]" text='Check-Out' isEnable={false} IconName="check" />
 
                     </div>
                 }
@@ -321,10 +309,10 @@ const RightSide = ({ isSolid, onClick }) => {
 const AddCreative = ({ onClick }) => {
     return (
         <div onClick={onClick} className="flex items-center rounded-full border border-primary p-1 w-min cursor-pointer">
-            <div className="w-11 h-11 flex items-center justify-center border rounded-full border-primary">
-                <Icon className="text-xl text-primary" name='plus' />
+            <div className="size-11 flex items-center justify-center border rounded-full border-primary">
+                <Icon className="text-xl text-primary " name='plus' />
             </div>
-            <div className=" text-center text-primary font-semibold mx-6 capitalize whitespace-nowrap">
+            <div className=" text-center text-primary font-semibold mx-4 capitalize whitespace-nowrap">
                 add creative
             </div>
         </div>
@@ -365,12 +353,20 @@ const AddToTeamCard = ({ info, goback }) =>
                     </span>
                 </div>
             </div>
-            <div className='flex justify-center pt-25 items-center gap-3 mt-6'>
-                <p className='rank'>{info['rank']}</p>
-                <p className="info-container">{info['occupation']}</p>
-                <div className='info-container flex items-center gap-1 w-20'>
-                    <p>{info['value']}</p>
-                    <Icon className='text-primary mr-2' name={'rate-star'} />
+         
+            <div className='flex justify-center pt-25 items-center gap-3'>
+                <div className='Professional-background-decoration px-2 py-1 '>
+                    <span className='Professional-text-decoration font-bold text-lg'>{info.rank}</span>
+                </div>
+
+                <span className=' flex border rounded-full px-2 py-1 gap-1 text-lg'>
+                    <span>{info.occupation}</span>
+                </span>
+                <div className='border rounded-full px-2 py-1 text-lg flex items-center gap-1'>
+                    <span>{info.value}</span>
+                    <div className='w-5'>
+                        <Icon className='text-primary' name={'rate-star'} />
+                    </div>
                 </div>
             </div>
             <div className='flex justify-center pt-7 items-center'>
@@ -401,7 +397,7 @@ const AddToTeamCard = ({ info, goback }) =>
 
 const AddToTeamPage = ({ goback }) => <>
     <Filter hideSwitch={true} />
-    <div className="grid minmax-360 gap-5 mt-6">
+    <div className="grid minmax-360 gap-5 my-6">
         {
             users.map((value, index) =>
                 <AddToTeamCard goback={goback} info={value} key={index} className='cursor-pointer' href="/project/1" />

@@ -126,13 +126,13 @@ const producersDrawer = ({ data, isOpen, toggleDrawer , submitt }) => {
                             <Icon className="text-primary text-2xl" name={"image"} />
                         </div>
                         <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                        <Icon name={"angle-right"} className={"mr-4 text-primary"} />
+                        <Icon name={"angle-right"} className={"mr-4 text-primary w-3"} />
                     </div>
             </section>
 
             <section className="sticky bottom-0">
                 <div className="flex justify-center mt-11">
-                    <ArrowBtn data-popup-toggle="popup" data-popup-target="form-submitted" Click={submitt} className="cursor-pointer w-96" text='continue' />
+                    <ArrowBtn data-popup-toggle="popup" data-popup-target="form-submitted" Click={submitt} className="cursor-pointer w-min sm:w-96" text='continue' />
                 </div>
             </section>
         </Drawer >

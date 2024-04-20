@@ -101,21 +101,23 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
             </section>
             <section>
                 <p className="capitalize opacity-60">project details</p>
-                <textarea placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5">
+                <textarea placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5"
+                style={{ height: '120px' }}
+                >
                 </textarea>
             </section>
             <section>
                 {/* <p className="capitalize opacity-60 mb-4">extra payments</p> */}
             </section>
-            <section className="my-11 flex justify-between gap-7">
+            <section className="my-11 flex flex-col sm:flex-row justify-between gap-7">
                 <div className="w-full">
                     <p className="capitalize opacity-60 mb-4">location</p>
                     <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                            <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
+                            <Icon className='text-primary w-8' name={"location-dot"} />
                         </div>
                         <span className="pl-5 w-full">New Yourk, USA</span>
-                        <Icon name={"angle-right"} className={"mr-4 text-primary"} />
+                        <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
                     </div>
                 </div>
 
@@ -123,10 +125,10 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
                     <p className="capitalize opacity-60 mb-4">upload alike project</p>
                     <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                            <Icon className="text-primary text-2xl" name={"image"} />
+                            <Icon className="text-primary" name={"image"} />
                         </div>
                         <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                        <Icon name={"angle-right"} className={"mr-4 text-primary"} />
+                        <Icon name={"angle-right"} className={"mr-2 text-primary w-2"} />
                     </div>
                 </div>
             </section>
@@ -173,7 +175,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
             <section className="sticky bottom-0">
                 <div className="flex justify-center mt-11">
                     <a href="/payment">
-                        <ArrowBtn className="cursor-pointer w-96" text='continue' />
+                        <ArrowBtn className="cursor-pointer w-min sm:w-96" text='continue' />
                     </a>
                 </div>
             </section>

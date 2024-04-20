@@ -74,13 +74,13 @@ const Saved = () => {
             <CreateBoard  />
             <Layout shortheader={true} isbodyWhite={true}>
                 <section className="mt-3 mb-12">
-                    <div className="container mb-7">
+                    <div className="sm:container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
                             <h1 className="text-2xl opacity-80 font-semibold capitalize">mood boards</h1>
                             <div className="mr-6"></div>
                             <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board">
                                 new board
-                                <Icon name={"plus"} />
+                                <Icon className="text-white" name={"plus"} />
                             </div>
                         </div>
                         {false && (

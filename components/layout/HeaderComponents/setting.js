@@ -122,34 +122,34 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                     {
                         img: 'notification-icon.svg',
                         name: 'Notification',
-                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
                     },
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
-                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
                         onClick: () => setOpened(2)
                     },
                     {
                         img: 'number-icon.svg',
                         name: 'Change number',
-                        action: <a href="/changePhoneNumber"> <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} /></a>,
+                        action: <a href="/changePhoneNumber"> <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} /></a>,
                     },
                     {
                         img: 'lock-icon.svg',
                         name: 'Terms & Conditions',
-                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
                     },
                     {
                         img: 'chat-icon.svg',
                         name: 'Contact Us',
-                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => setOpened(1)
                     },
                     {
                         img: 'about-icon.svg',
                         name: 'About',
-                        action: <Icon className="text-[#4F5E7B] opacity-40" name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
                     },
 
                 ].map((e, i) => (
