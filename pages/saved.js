@@ -56,6 +56,7 @@ const Boards = ({ data }) => {
                 <div className="boards-info projects-num">{projectsNum} projects</div>
 
                 <Selector options={dropdown} iconclassName="text-white" className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center" invert={true} />
+                <div className="absolute bottom-0 w-full h-1/2 rounded-[50px]  gradient1"/>
 
                 <div className="boards-info projects-name flex">
                     {name == "favorites" && <Icon name={"favorites"} />}

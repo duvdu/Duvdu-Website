@@ -80,7 +80,7 @@ function EnterYourPhoneNumber({ onNextStep }) {
     return (
         <form method="post" onSubmit={handleSubmit}>
             <div className="heading_s1 mb-8">
-                <h1 className="auth-title">Enter phone number</h1>
+                <h1 className="auth-title text-center">Enter phone number</h1>
             </div>
             <div className={`mb-8 ${numberError.isError && 'error'}`}>
                 <input
@@ -125,9 +125,9 @@ function OTP({ onNextStep }) {
                         <OtpInput
                             value={otp}
                             onChange={setOtp}
-                            numInputs={5}
+                            numInputs={6}
                             renderSeparator={<span style={{ width: "100%" }} > </span>}
-                            renderInput={(props) => <input {...props} className={`${error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "63px", height: "72px" }} />}
+                            renderInput={(props) => <input {...props} className={`${error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "53px", height: "62px" }} />}
                         />
 
                         {

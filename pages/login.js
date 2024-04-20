@@ -146,12 +146,12 @@ function Login({ loading, error, data, login }) {
             <p className="px-4 font-bold my-10 ">OR</p>
             <div className="border-t border-black opacity-20 w-full my-4"></div>
           </div>
-          <div className="flex flex-col sm:flex-row justify-center gap-8">
-            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full sm:w-64 flex justify-center gap-4 items-center cursor-pointer">
+          <div className="flex flex-col sm:flex-row justify-center gap-8 ">
+            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer">
               <img src="/assets/imgs/theme/google-icon.svg" />
               <p className="text-lg font-bold"> Google </p>
             </div>
-            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full sm:w-64 flex justify-center gap-4 items-center cursor-pointer">
+            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer">
               <img src="/assets/imgs/theme/apple-logo.png" className="w-9 dark:invert" />
               <p className="text-lg font-bold"> Apple </p>
             </div>

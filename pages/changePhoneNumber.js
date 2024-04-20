@@ -19,10 +19,12 @@ function ChangePassword() {
     return (
         <>
             <Layout shortheader={true}>
-                <div className="container flex justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
-                    {currentStep === 1 && <Step1 onNextStep={handleNextStep} />}
-                    {currentStep === 2 && <Step2 onNextStep={handleNextStep} />}
-                    {currentStep === 3 && <Step3 />}
+                <div className="container">
+                    <div className="mx-auto flex justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
+                        {currentStep === 1 && <Step1 onNextStep={handleNextStep} />}
+                        {currentStep === 2 && <Step2 onNextStep={handleNextStep} />}
+                        {currentStep === 3 && <Step3 />}
+                    </div>
                 </div>
             </Layout>
         </>
@@ -30,7 +32,7 @@ function ChangePassword() {
 }
 
 
-function Step1({onNextStep}) {
+function Step1({ onNextStep }) {
     const [PhoneNumber, setPhoneNumber] = useState('');
     const [numberError, setNumberError] = useState({ isError: false, message: '' });
 
@@ -46,9 +48,9 @@ function Step1({onNextStep}) {
 
     };
     return (
-        <form method="post" onSubmit={handleSubmit}>
+        <form className="w-[521px]" method="post" onSubmit={handleSubmit}>
             <div className="heading_s1 mb-8">
-                <h1 className="auth-title">change phone number</h1>
+                <h1 className="auth-title capitalize">change phone number</h1>
             </div>
             <div className={`mb-8 ${numberError.isError && 'error'}`}>
                 <input
@@ -66,11 +68,15 @@ function Step1({onNextStep}) {
         </form>
     )
 }
-function Step2({onNextStep}) {
+function Step2({ onNextStep }) {
     const [otp, setOtp] = useState('');
     const [counter, setcount] = useState(100);
     const [error, seterror] = useState(false);
 
+    const handlechange = (value)=> {
+        setOtp(value)
+        if(value.length == 6) onNextStep()
+    }
     useEffect(() => {
         if (counter > 0) {
             const intervalId = setInterval(() => {
@@ -92,17 +98,17 @@ function Step2({onNextStep}) {
                     </div>
                     <OtpInput
                         value={otp}
-                        onChange={setOtp}
-                        numInputs={5}
+                        onChange={handlechange}
+                        numInputs={6}
                         renderSeparator={<span style={{ width: "100%" }} > </span>}
-                        renderInput={(props) => <input {...props} className={`${error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "63px", height: "72px"}} />}
+                        renderInput={(props) => <input {...props} className={`${error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "53px", height: "62px" }} />}
                     />
 
                     {
                         error &&
                         <p className="error-msg mt-10" >Wrong code, please try again</p>
                     }
-                    <div className="mt-14 mb-28">
+                    <div className="mt-40">
 
                         {
                             counter > 0 ?
@@ -115,12 +121,6 @@ function Step2({onNextStep}) {
                         }
                     </div>
                 </div>
-            </div>
-            <div className="mb-4 relative mb-30 mt-55 w-full">
-                <Button name="reset-password" onClick={onNextStep}>
-                    Reset
-                </Button>
-                <div className="submit-btn"></div>
             </div>
         </form>
     )

@@ -383,9 +383,9 @@ const RightSide = () => {
 
     const Recents = ({ img, name, address }) =>
         <a href='/creative/youseff_abdulla'>
-            <div className='w-40 h-14 lg:gap-3 rounded-full border border-[#00000033] dark:border-[#FFFFFF33] flex' >
+            <div className='h-14 w-full flex gap-1 rounded-full border border-[#00000033] dark:border-[#FFFFFF33] ' >
                 <img src={img} alt='user' className='rounded-full m-1' />
-                <div className='flex flex-col items-start justify-center w-full'>
+                <div className='flex flex-col items-start justify-center w-full pr-3'>
                     <span className='opacity-80 font-semibold'> {name} </span>
                     <span className='opacity-50'> {address} </span>
                 </div>
@@ -395,7 +395,7 @@ const RightSide = () => {
 
     const HisTory = ({ isCanceled }) =>
         <>
-            <div className='w-full max-w-[388px] p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
+            <div className='w-full  max-w-[388px] p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
                 {/* dropdown */}
                 <Selector options={[
                     {
@@ -459,7 +459,7 @@ const RightSide = () => {
         <>
             {/* <Clients /> */}
             <div className='h-auto lg:h-body overflow-y-scroll min-w-max'>
-                <div className='flex flex-col gap-[15px] w-max mr-auto ml-auto text-center mt-9 '>
+                <div className='flex flex-col gap-[15px] w-max mr-auto ml-auto text-center mt-9'>
                     <Title title="recent clients" />
                     <div className='flex sm:flex-row gap-2'>
                         <Recents img='/assets/imgs/profile/1.jpg' name='youseff ali' address='zayed city' />

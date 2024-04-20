@@ -367,8 +367,8 @@ const AddToTeamCard = ({ info, goback }) =>
             </div>
             <div className='flex justify-center pt-25 items-center gap-3 mt-6'>
                 <p className='rank'>{info['rank']}</p>
-                <p id='photographer'>{info['occupation']}</p>
-                <div id='rating' className='flex items-center gap-1 w-20'>
+                <p className="info-container">{info['occupation']}</p>
+                <div className='info-container flex items-center gap-1 w-20'>
                     <p>{info['value']}</p>
                     <Icon className='text-primary mr-2' name={'rate-star'} />
                 </div>

@@ -270,8 +270,8 @@ const About = ({ data }) => (
             </div>
             <div className='flex justify-center pt-25 items-center gap-3 '>
                 <p className='rank'>{data.creative.rank}</p>
-                <p id='photographer'>{data.creative.occupation}</p>
-                <div id='rating' className='flex items-center gap-1 w-20'>
+                <p className="info-container">{data.creative.occupation}</p>
+                <div className='info-container flex items-center gap-1 w-20'>
                     <p>{data.creative.rate}</p>
                     <Icon className='text-primary w-7' name={'rate-star'} />
                 </div>

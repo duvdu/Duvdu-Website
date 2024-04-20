@@ -123,8 +123,7 @@ function Auth({ children, isloading, error }) {
                                 </div>
                             </div>
                             <div className="lg:w-7/12 xl:w-7/12 ">
-                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center  rounded-lg h-auto sm:h-full">
-
+                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center rounded-lg h-auto sm:h-full">
                                     <a href="/" className="as-Guest flex items-center">
                                         Continue as a Guest
                                         <Icon name="arrow-right-long" className="ml-3 text-xl w-6" />

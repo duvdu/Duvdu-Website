@@ -531,8 +531,8 @@ function Info({ src, personalName, location, rank, occupation, value, popularity
         </div>
         <div className='flex justify-center pt-25 items-center gap-3'>
             <p className='rank'>{rank}</p>
-            <p id='photographer'>{occupation}</p>
-            <div id='rating' className='flex items-center gap-1 w-20'>
+            <p className='info-container'>{occupation}</p>
+            <div className='info-container flex items-center gap-1 w-20'>
                 <p>{value}</p>
                 <Icon className='text-primary w-7' name={'star'} />
             </div>

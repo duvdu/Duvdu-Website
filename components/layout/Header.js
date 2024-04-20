@@ -170,7 +170,7 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
                         </div>
                     </div>
                 </div>
-                <div className={"border-borderColor header-bottom-bg-color py-2 " + (!fromlayout.shortheader ? " border-y" : "")}>
+                <div className={"border-borderColor header-bottom-bg-color py-2 lg:py-0 " + (!fromlayout.shortheader ? " border-y" : "")}>
                     <div className="container">
                         <div className="header-wrap header-space-between relative">
                             <div className="logo block lg:hidden w-full">

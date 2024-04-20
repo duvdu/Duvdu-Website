@@ -27,6 +27,11 @@
     width: 104px;
     height: 104px;
 }
+.profile-frame-2,
+.profileImgture-2 {
+    width: 86px;
+    height: 86px;
+}
 
 .profile-frame>* {
     top: 50%;
@@ -106,7 +111,7 @@
     text-transform: capitalize;
 }
 
-#photographer {
+.info-container {
     padding: 5px 20px;
     border-radius: 17.543px;
     border: 1.3px solid rgba(var(--black-rgb), .25);
