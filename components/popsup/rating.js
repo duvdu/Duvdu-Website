@@ -40,7 +40,7 @@ function Rating() {
                     </div>
                     <div>
                         <div className="capitalize opacity-60">rating</div>
-                        <textarea placeholder="Rating will show on creative’s profile..." className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-[464px] resize-none" />
+                        <textarea placeholder="Rating will show on creative’s profile..." className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none" />
                     </div>
                     <Button className="mb-7 mx-16 font-bold text-lg w-[345px] mt-20" shadow={true}>
                         <span className='text-white font-bold capitalize text-lg'>

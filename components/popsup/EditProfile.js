@@ -233,7 +233,7 @@ function EditPopUp() {
                             style={{ height: '120px' }}
                         />
                     </div>
-                    <AppButton type="submit" className='sticky bottom-10 w-96 max-w-96 mt-12 z-10' shadow={true}>
+                    <AppButton type="submit" className='sticky bottom-10 w-full max-w-96 mt-12 z-10' shadow={true}>
                         Done
                     </AppButton>
                 </form>

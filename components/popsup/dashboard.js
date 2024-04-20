@@ -15,8 +15,8 @@ function dashboard() {
                         <br />
                         to access this feature
                     </span>
-                    <a className="w-96" href="/register">
-                        <AppButton >
+                    <a className="max-w-96 w-full" href="/register">
+                        <AppButton>
                                 register
                         </AppButton>
                     </a>

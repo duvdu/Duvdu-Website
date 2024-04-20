@@ -175,6 +175,10 @@ function MyProfile() {
         <>
             <EditPopUp />
             <div className='sm:container'>
+            {
+                            showAddPanal &&
+                            <AddMyprofile setShowAddPanal={setShowAddPanal} />
+                        }
                 <Conver converPic={profile['cover-pic']} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
@@ -214,10 +218,7 @@ function MyProfile() {
                             </div>
                         </div>
                         <AddPost />
-                        {
-                            showAddPanal &&
-                            <AddMyprofile setShowAddPanal={setShowAddPanal} />
-                        }
+                        
                         {
                             !showAddPanal &&
                             <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
@@ -552,7 +553,7 @@ function Info({ src, personalName, location, rank, occupation, value, popularity
 
 function Projects({ projects }) {
     return projects.length > 0 && (
-        <div className='project-grid gap-[15px]'>
+        <div className='sm:max-w-none project-grid gap-[15px]'>
             {projects.map((data, index) => (
                 <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
             ))}

@@ -74,7 +74,7 @@ const Saved = () => {
             <CreateBoard  />
             <Layout shortheader={true} isbodyWhite={true}>
                 <section className="mt-3 mb-12">
-                    <div className="sm:container mb-7">
+                    <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
                             <h1 className="text-2xl opacity-80 font-semibold capitalize">mood boards</h1>
                             <div className="mr-6"></div>

@@ -49,12 +49,12 @@ const LeftSide = () => {
     };
     const Clients = () =>
         <section className='h-full'>
-            <section className='mt-11 flex flex-col gap-4'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending />
                 <Pending />
             </section>
-            <section className='mt-11 flex flex-col gap-4'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                 <Ongoing />
                 <Ongoing />
@@ -62,12 +62,12 @@ const LeftSide = () => {
         </section>
 
     const Creatives = () =>
-        <section className='h-full '>
-            <section className='mt-11 flex flex-col gap-4'>
+        <section className='h-full'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending2 />
             </section>
-            <section className='mt-11 flex flex-col gap-4'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                 <Ongoing2 />
                 <Ongoing2 />
@@ -77,15 +77,15 @@ const LeftSide = () => {
         <>
             <div className='h-auto lg:h-body overflow-y-scroll'>
                 <div className='flex flex-col h-full'>
-                    <section className='flex gap-3 mt-6 mb-2 sticky py-4 top-16 lg:p-0 z-[5]'>
+                    <section className='flex gap-3 mt-6 mb-2 sticky py-4 top-16 p-0 z-[5]'>
                         <div
-                            className={`px-5 lg:px-10 py-2 lg:py-5 contact-toggle ${activeIndex === 0 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
                         >
                             my clients
                         </div>
                         <div
-                            className={`px-5 lg:px-10 py-2 lg:py-5 contact-toggle ${activeIndex === 1 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(1)}
                         >
                             my creatives
@@ -103,7 +103,7 @@ const LeftSide = () => {
 
 const Pending = () => {
     return (
-        <div className='flex justify-between border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative'>
+        <div className='flex justify-between w-[370px] lg:w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative'>
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -121,10 +121,10 @@ const Pending = () => {
                             left
                         </span>
                     </span>
-                        <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
-                            respond
-                        </div>
-                    
+                    <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
+                        respond
+                    </div>
+
                 </div>
                 {/*********/}
             </div>
@@ -155,26 +155,26 @@ const Pending = () => {
 };
 const Pending2 = () => {
     return (
-        <div className='flex justify-between items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6'>
-        <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center w-full'>
-            {/* profile */}
-            <div className='flex gap-3 items-center'>
-                <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
-                <div className='flex-col gap-1'>
-                    <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
-                    <span className='opacity-50'>Yesterday</span>
+        <div className='flex justify-between w-[370px] lg:w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6'>
+            <div className='flex flex-col gap-2 lg:gap-0 lg:flex-row justify-center items-center lg:w-full'>
+                {/* profile */}
+                <div className='flex gap-3 items-center'>
+                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
+                    <div className='flex-col gap-1'>
+                        <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
+                        <span className='opacity-50'>Yesterday</span>
+                    </div>
                 </div>
-            </div>
-            {/*********/}
-            {/* deadline */}
-            <div className='text-lg ml-auto mr-auto'>
-                <span className='opacity-50'>
-                    Anna will respond in
-                </span>
-                <span className='text-primary'>
-                    18:58
-                </span>
-            </div>
+                {/*********/}
+                {/* deadline */}
+                <div className='text-lg ml-auto mr-auto'>
+                    <span className='opacity-50 mx-1' >
+                        Anna will respond in
+                    </span>
+                    <span className='text-primary'>
+                        18:58
+                    </span>
+                </div>
             </div>
             {/*********/}
             {/* dropdown */}
@@ -200,7 +200,7 @@ const Pending2 = () => {
 
 const Ongoing = ({ type }) => {
     return (
-        <div className='flex justify-between rounded-[50px] bg-primary p-6 relative'>
+        <div className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] lg:w-full mx-auto'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -230,49 +230,46 @@ const Ongoing = ({ type }) => {
                         </div>
                     </div>
                     {/* button */}
-                        {(type === "submit-files" ?
-                            <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
-                                submit files
-                            </div>
-                            :
-                            <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
-                                scan QR
-                            </div>
-                        )}
-                    
+                    {(type === "submit-files" ?
+                        <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
+                            submit files
+                        </div>
+                        :
+                        <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
+                            scan QR
+                        </div>
+                    )}
+
                     {/*********/}
                 </div>
 
                 {/*********/}
             </div>
-            <div className='absolute top-5 right-5'>
-                {/* dropdown */}
-                <Selector
-                    iconclassName='text-white'
-                    options={[
-                        {
-                            value: "oprion 1",
-                            onclick: () => { },
-                        },
-                        {
-                            value: "oprion 2",
-                            onclick: () => { },
-                        },
-                        {
-                            value: "oprion 3",
-                            onclick: () => { },
-                        }
-                    ]} className="relative border rounded-full border-[#FFFFFF40] flex justify-center items-center w-14 h-14 cursor-pointer" />
-                {/*********/}
-
-            </div>
+            <Selector
+                iconclassName={'text-white'}
+                options={[
+                    {
+                        value: "oprion 1",
+                        onclick: () => { },
+                    },
+                    {
+                        value: "oprion 2",
+                        onclick: () => { },
+                    },
+                    {
+                        value: "oprion 3",
+                        onclick: () => { },
+                    }
+                ]} className="absolute right-6  border rounded-full border-[#FFFFFF40] flex justify-center items-center size-14 cursor-pointer" />
         </div>
 
     );
 };
 const Ongoing2 = ({ type }) => {
     return (
-        <div className='flex justify-between border rounded-[50px] bg-primary p-6'>
+
+
+        <div className='w-[370px] lg:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative'>
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -303,27 +300,26 @@ const Ongoing2 = ({ type }) => {
 
                 {/*********/}
             </div>
-            <div className='flex flex-col gap-11 items-end justify-between'>
-                {/* dropdown */}
-                <Selector
-                    iconclassName={'text-white'}
-                    options={[
-                        {
-                            value: "oprion 1",
-                            onclick: () => { },
-                        },
-                        {
-                            value: "oprion 2",
-                            onclick: () => { },
-                        },
-                        {
-                            value: "oprion 3",
-                            onclick: () => { },
-                        }
-                    ]} className="relative border rounded-full border-[#FFFFFF40] flex justify-center items-center w-14 h-14 cursor-pointer" />
-                {/*********/}
-            </div>
+            <Selector
+                iconclassName={'text-white'}
+                options={[
+                    {
+                        value: "oprion 1",
+                        onclick: () => { },
+                    },
+                    {
+                        value: "oprion 2",
+                        onclick: () => { },
+                    },
+                    {
+                        value: "oprion 3",
+                        onclick: () => { },
+                    }
+                ]} className="absolute right-6  border rounded-full border-[#FFFFFF40] flex justify-center items-center size-14 cursor-pointer" />
         </div>
+
+
+
 
     );
 };
@@ -347,7 +343,7 @@ const Loadingcomponent = () => {
 
     const Type3 = () => <div className='w-14 h-14 bg-[#F2F2F2] rounded-full' />
 
-    const Type4 = () => <div className='w-[388px] h-[241px] bg-[#F2F2F2] rounded-3xl' />
+    const Type4 = () => <div className='w-[370px] h-[241px] bg-[#F2F2F2] rounded-3xl' />
 
     return (
         <div className='h-body overflow-y-hidden'>
@@ -395,7 +391,7 @@ const RightSide = () => {
 
     const HisTory = ({ isCanceled }) =>
         <>
-            <div className='w-full  max-w-[388px] p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
+            <div className='w-full max-w-[370px] mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
                 {/* dropdown */}
                 <Selector options={[
                     {
@@ -459,7 +455,7 @@ const RightSide = () => {
         <>
             {/* <Clients /> */}
             <div className='h-auto lg:h-body overflow-y-scroll min-w-max'>
-                <div className='flex flex-col gap-[15px] w-max mr-auto ml-auto text-center mt-9'>
+                <div className='flex flex-col gap-[15px] w-max mx-auto text-center mt-9'>
                     <Title title="recent clients" />
                     <div className='flex sm:flex-row gap-2'>
                         <Recents img='/assets/imgs/profile/1.jpg' name='youseff ali' address='zayed city' />

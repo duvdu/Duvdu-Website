@@ -29,7 +29,7 @@ function SuccessBody({ toggleDirectorConfirmed }) {
                     <Icon name={"done"} className="m-3 w-9" />
                     <span className="text-[#43A047] text-lg font-semibold capitalize">form submitted</span>
                 </div>
-                <h2 className="text-lg font-medium w-96 mt-9">The director will confirm in 72 hours. If approved you’ll book an appointment</h2>
+                <h2 className="text-lg font-medium w-full max-w-96 mt-9">The director will confirm in 72 hours. If approved you’ll book an appointment</h2>
             </div>
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
