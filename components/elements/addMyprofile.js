@@ -1,7 +1,7 @@
 import Icon from '../Icons';
 import React, { useEffect, useState, useRef } from 'react';
 
-const PopUp = ({ setShowAddPanal }) => {
+const PopUp = ({ setShowAddPanal , setashowaddpost }) => {
 
     const handleShowPopUp = () => setShowAddPanal(false);
 
@@ -14,7 +14,10 @@ const PopUp = ({ setShowAddPanal }) => {
                 <div className='fixed bottom-0 z-40 container p-0 max-w-[460px]'>
                     <div className='addpost'>
                         <div
-                            onClick={handleShowPopUp}
+                            onClick={ ()=>  { 
+                                setashowaddpost(true)
+                                handleShowPopUp() 
+                            }}
                             className='bg-white px-16 py-7 mb-3 text-center rounded-3xl sticky bottom-0 cursor-pointer'
                             data-popup-toggle="popup" data-popup-target="add-post"
                         >

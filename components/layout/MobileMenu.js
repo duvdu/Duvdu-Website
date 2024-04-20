@@ -89,7 +89,7 @@ const Tabs2 = () => {
             {
                 [
                     {
-                        url: '#',
+                        url: '/creative/youseff_abdulla',
                         icon: 'user',
                         name: 'profile',
                     },
