@@ -185,14 +185,14 @@ const TheTeam = () => {
 function Person({ person }) {
 
     return (
-        <div className='flex gap-4 h-12 min-w-[400px]'>
+        <div className='flex gap-4 h-12 min-w-[300px]'>
             <img className='rounded-full h-full aspect-square' src={person.img} alt='profile img' />
             <div className='w-full flex flex-col justify-center'>
                 <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.name}</span>
                 <span className='text-DS_black text-[13px] opacity-50'>{person.subtitle}</span>
             </div>
             <div className={`flex rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
-                <span className='text-primary text-sm font-semibold capitalize'> message </span>
+                <span className='hidden sm:block text-primary text-sm font-semibold capitalize'> message </span>
                 <div className='size-5'>
                     <Icon name={'chat'} />
                 </div>
