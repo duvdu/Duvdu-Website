@@ -16,7 +16,7 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "" }) =
                         </div>
                         <div className='flex rounded-full border font-medium items-center'>
                             {img &&
-                                <img className="h-11 m-1" src={img} />}
+                                <img className="h-11 m-1" src={img} alt='user'/>}
                             {name &&
                                 <span className='capitalize mx-5 text-lg'>{name}</span>}
                         </div>

@@ -18,7 +18,7 @@ const Chat = ({ messages, data, online ,Close}) => {
         <div className="chat  dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-DS_white shadow-xl sm:left-8">
             <a href='/creative/anaa_youseff' className="flex p-2 h-16 cursor-pointer border-b border-[#00000040] dark:border-[#FFFFFF40]">
                 <div className="relative">
-                    <img className="h-full" src={data.user.img} />
+                    <img className="h-full" src={data.user.img} alt='user'/>
                     {online && (
                         <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                     )}

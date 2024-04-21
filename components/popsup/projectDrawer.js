@@ -72,7 +72,7 @@ const ProjectDrawer = ({ data, isOpen, toggleDrawer }) => {
                 {team.map((item, i) => (
                     <div key={i} className="flex">
                         <div key={i} className="team-padge">
-                            {item.user.img && <img src={item.user.img} />}
+                            {item.user.img && <img src={item.user.img} alt="user"/>}
                             <span className="mx-3">{item.user.name}</span>
                         </div>
                         {
