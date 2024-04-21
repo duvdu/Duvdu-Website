@@ -20,13 +20,13 @@ function Login({ loading, error, data, login }) {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  var convertError = JSON.parse(error ?? null)
+  console.log(error)
+  var convertError = error ?? null 
 
   if (data && data.message == 'success') {
     router.push({
         pathname: `/`,
-        
-    });
+   });
 }
 
   useEffect(() => {

@@ -3,7 +3,7 @@
 import axios from 'axios'
 // Create an instance of axios
 export const mainApiInstance = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: process.env.BASE_URL || ""
 });
 
 // Add a request interceptor

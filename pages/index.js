@@ -133,7 +133,7 @@ const RelatedCategories = ({ className, NeedTranslate = true }) => {
                     className="mySwiper"
                     breakpoints={{
                         240: {
-                            slidesPerView: 1,
+                            slidesPerView: 1.5,
                             spaceBetween: 10
                         },
                         532: {
