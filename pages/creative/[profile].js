@@ -72,14 +72,14 @@ function MyProfile() {
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
             {
-                "id": 1,
+                "id": 2,
                 "userName": "jonathan donrew",
                 "date": "Sun - Aug 3",
                 "avatar": "/assets/imgs/projects/1.jpeg",
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
             {
-                "id": 1,
+                "id": 3,
                 "userName": "jonathan donrew",
                 "date": "Sun - Aug 3",
                 "avatar": "/assets/imgs/projects/1.jpeg",
@@ -189,13 +189,12 @@ function MyProfile() {
                             />
                         </div>
 
-                        <div>
-                            <div className='flex items-center justify-center my-7 gap-2'>
-                                <Switch onSwitchChange={handleSwitchChange} />
-                                <span className={isable ? "" : "opacity-70"}>
-                                    Instant Projects is {isable ? "open" : "disabled"}
-                                </span>
-                            </div>
+
+                        <div className='flex items-center justify-center my-7 gap-2'>
+                            <Switch onSwitchChange={handleSwitchChange} />
+                            <span className={isable ? "" : "opacity-70"}>
+                                Instant Projects is {isable ? "open" : "disabled"}
+                            </span>
                         </div>
 
                         <div className='h-divider'></div>
@@ -206,7 +205,6 @@ function MyProfile() {
                         <div className='h-divider my-7'></div>
                         <div className='px-10'>
                             <div className='flex flex-col gap-4'>
-
                                 {profile.comments.map((comment) => (
                                     <Comment key={comment.id} comment={comment} />
                                 ))}
@@ -591,74 +589,102 @@ const Project = ({ data, isbig }) => (
 );
 
 const AddPost = ({ onpublish }) => {
-    const [file, setfile] = useState(null);
+    const [file, setFile] = useState(null);
+    const [formData, setFormData] = useState({
+        projectName: '',
+        projectDescription: '',
+        toolsUsed: '',
+        tagCreatives: '',
+        creativeFunctions: '',
+        location: '',
+        searchKeywords: '',
+        projectBudget: '',
+        duration: '',
+        durationUnit: 'second',
+        showOnFeed: false
+    });
 
-    const FileUpload = (e) => {
-        const data = handleFileUpload(e);
-        setfile(data)
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({ ...prevState, [name]: value }));
     };
-    const inputstyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50"
+
+    const handleFileUpload = (e) => {
+        const data = e.target.files[0];
+        setFile(data);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onpublish(formData);
+    };
+
+    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50";
+
     return (
-        <div className='flex flex-col gap-7 mx-5 max-w-96 sm:mx-auto'>
+        <form className='flex flex-col gap-7 mx-5 max-w-96 sm:mx-auto' onSubmit={handleSubmit}>
             <section>
                 <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
-                    <label htmlFor="file-upload" className='rounded-full p-4 bg-[#F5F5F5]'>
-                        <Icon name={"add-file"} className='w-6 h-6' />
+                    <label htmlFor="file-upload" className='rounded-full size-16 flex justify-center items-center bg-[#F5F5F5]'>
+                        <input id="file-upload" type="file" className="hidden" onChange={handleFileUpload} />
+                        <Icon name={"add-file"} className='size-7' />
                     </label>
                     <span className="text-primary text-sm">Click to Upload</span>
                 </div>
             </section>
             <section>
-                <input placeholder='name your project' className={inputstyle} />
+                <input placeholder='Name your project' className={inputStyle} value={formData.projectName} onChange={handleInputChange} name="projectName" />
             </section>
             <section>
-                <input placeholder='project description' className={inputstyle} />
+                <input placeholder='Project description' className={inputStyle} value={formData.projectDescription} onChange={handleInputChange} name="projectDescription" />
             </section>
             <section>
-                <input placeholder='tools used' className={inputstyle} />
+                <input placeholder='Tools used' className={inputStyle} value={formData.toolsUsed} onChange={handleInputChange} name="toolsUsed" />
             </section>
             <section>
-                <input placeholder='tag other creatives' className={inputstyle} />
+                <input placeholder='Tag other creatives' className={inputStyle} value={formData.tagCreatives} onChange={handleInputChange} name="tagCreatives" />
             </section>
             <section>
-                <input placeholder='add creative’s functions' className={inputstyle} />
+                <input placeholder="Add creative’s functions" className={inputStyle} value={formData.creativeFunctions} onChange={handleInputChange} name="creativeFunctions" />
             </section>
             <section>
-                <input placeholder='location' className={inputstyle} />
+                <input placeholder='Location' className={inputStyle} value={formData.location} onChange={handleInputChange} name="location" />
             </section>
             <section>
-                <input placeholder='search keywords' className={inputstyle} />
+                <input placeholder='Search keywords' className={inputStyle} value={formData.searchKeywords} onChange={handleInputChange} name="searchKeywords" />
             </section>
             <section>
-                <input placeholder='project budget' className={inputstyle} />
+                <input placeholder='Project budget' className={inputStyle} value={formData.projectBudget} onChange={handleInputChange} name="projectBudget" />
             </section>
             <section>
                 <div className='flex justify-center items-center gap-9'>
-                    <input placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                    <input placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" value={formData.duration} onChange={handleInputChange} name="duration" />
                     <select
                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalize"
+                        value={formData.durationUnit}
+                        onChange={handleInputChange}
+                        name="durationUnit"
                         required
                     >
-                        {[
-
-                            'second',
-                            'minutes',
-                            'Hours',
-                        ].map((value, index) => <option key={index} value={value}>{value}</option>)}
+                        {['second', 'minutes', 'Hours'].map((value, index) => (
+                            <option key={index} value={value.toLowerCase()}>{value}</option>
+                        ))}
                     </select>
                 </div>
             </section>
             <div className='flex justify-center gap-3 mt-1'>
-                <Switch onSwitchChange={() => { }} />
+                <Switch onSwitchChange={(checked) => setFormData({ ...formData, showOnFeed: checked })} />
                 <p className='opacity-70'> Show on home feed & profile </p>
             </div>
 
-            <Button className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"} onClick={() => { onpublish("") }}>
-                <span className='text-white font-bold capitalize text-lg'>
-                    publish
-                </span>
-            </Button>
-        </div>
+            <button type="submit">
+                <Button className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
+                    <span className='text-white font-bold capitalize text-lg'>
+                        Publish
+                    </span>
+                </Button>
+            </button>
+        </form>
     );
 }
 

@@ -34,7 +34,6 @@ const Category = ({ category, language }) => {
       megaMenuRef.current.removeAttribute('style');
       if (language == 'English') {
         const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
-        console.log("rightPosition ", rightPosition, megaMenuRef.current)
         if (rightPosition < 0) {
           megaMenuRef.current.style.right = '0px';
         }

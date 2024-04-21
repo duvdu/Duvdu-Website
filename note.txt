@@ -58,4 +58,30 @@
 - chat color
 - minimun
 ----------------------------------- day task -----------------------------------
-- switch direction
+
+ - localhost:8080/account_created
+ - localhost:8080/changePhoneNumber
+ - localhost:8080/contracts
+ - localhost:8080/password_changed
+ - localhost:8080/reset_password
+ - localhost:8080/project
+ - localhost:8080/register
+ - localhost:8080/save
+ - localhost:8080/saved
+ - localhost:8080/teams
+ - localhost:8080/forget_password
+ - localhost:8080/permits
+ - localhost:8080/producers
+ - localhost:8080/payment_success
+ - localhost:8080/dashboard
+ - localhost:8080/team
+ - andge and fixed button 
+ - ------ new ------
+ - page notification , message
+ - page notification
+ - page message
+ - page chat
+ - page setting
+ - sheetpopup contact us
+ - sheetpopup language
+
