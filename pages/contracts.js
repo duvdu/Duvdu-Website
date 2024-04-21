@@ -49,12 +49,12 @@ const LeftSide = () => {
     };
     const Clients = () =>
         <section className='h-full'>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending />
                 <Pending />
             </section>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                 <Ongoing />
                 <Ongoing />
@@ -63,11 +63,11 @@ const LeftSide = () => {
 
     const Creatives = () =>
         <section className='h-full'>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending2 />
             </section>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min lg:w-auto'>
+            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                 <Ongoing2 />
                 <Ongoing2 />
@@ -76,8 +76,8 @@ const LeftSide = () => {
     return (
         <>
             <div className='h-auto lg:h-body overflow-y-scroll'>
-                <div className='flex flex-col h-full'>
-                    <section className='flex gap-3 mt-6 mb-2 sticky py-4 top-16 p-0 z-[5]'>
+                <div className='flex flex-col h-full mt-24 lg:mt-0'>
+                    <section className='flex gap-3 mt-6 mb-2 fixed lg:sticky py-4 top-16 p-0 z-[5]'>
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
@@ -103,7 +103,7 @@ const LeftSide = () => {
 
 const Pending = () => {
     return (
-        <div className='flex justify-between w-[370px] lg:w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative'>
+        <div className='flex justify-between w-[370px] sm:w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative'>
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -155,8 +155,8 @@ const Pending = () => {
 };
 const Pending2 = () => {
     return (
-        <div className='flex justify-between w-[370px] lg:w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6'>
-            <div className='flex flex-col gap-2 lg:gap-0 lg:flex-row justify-center items-center lg:w-full'>
+        <div className='flex justify-between w-[370px] sm:w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6'>
+            <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center sm:w-full'>
                 {/* profile */}
                 <div className='flex gap-3 items-center'>
                     <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
@@ -200,7 +200,7 @@ const Pending2 = () => {
 
 const Ongoing = ({ type }) => {
     return (
-        <div className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] lg:w-full mx-auto'>
+        <div className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] sm:w-full mx-auto'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -267,9 +267,7 @@ const Ongoing = ({ type }) => {
 };
 const Ongoing2 = ({ type }) => {
     return (
-
-
-        <div className='w-[370px] lg:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative'>
+        <div className='w-[370px] sm:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative'>
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
@@ -317,10 +315,6 @@ const Ongoing2 = ({ type }) => {
                     }
                 ]} className="absolute right-6  border rounded-full border-[#FFFFFF40] flex justify-center items-center size-14 cursor-pointer" />
         </div>
-
-
-
-
     );
 };
 
@@ -391,7 +385,8 @@ const RightSide = () => {
 
     const HisTory = ({ isCanceled }) =>
         <>
-            <div className='w-full max-w-[370px] mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
+            {/* max-w-[370px] ahmed */}
+            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
                 {/* dropdown */}
                 <Selector options={[
                     {
@@ -454,12 +449,17 @@ const RightSide = () => {
     return (
         <>
             {/* <Clients /> */}
-            <div className='h-auto lg:h-body overflow-y-scroll min-w-max'>
-                <div className='flex flex-col gap-[15px] w-max mx-auto text-center mt-9'>
+            {/* ahmed */}
+
+            <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
+                <div className='flex flex-col gap-[15px] mx-auto sm:mx-0 w-max sm:w-auto text-center mt-9'>
                     <Title title="recent clients" />
                     <div className='flex sm:flex-row gap-2'>
                         <Recents img='/assets/imgs/profile/1.jpg' name='youseff ali' address='zayed city' />
                         <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
+                        <div className='hidden sm:block lg:hidden'>
+                            <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
+                        </div>
                         <div data-popup-toggle="popup" data-popup-target='clients'>
                             <MoreIcon />
                         </div>
