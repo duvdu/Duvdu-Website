@@ -77,7 +77,23 @@ const LeftSide = () => {
         <>
             <div className='h-auto lg:h-body overflow-y-scroll'>
                 <div className='flex flex-col h-full mt-24 lg:mt-0'>
-                    <section className='flex gap-3 mt-6 mb-2 fixed lg:sticky py-4 top-16 p-0 z-[5]'>
+                    <section className='flex left-0 lg:hidden gap-3 mt-6 mb-2 fixed w-full py-4 top-16 p-0 z-[5] px-4'>
+                        <div
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
+                            onClick={() => handleToggleClick(0)}
+                            >
+                            my clients
+                        </div>
+                        <div
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
+                            onClick={() => handleToggleClick(1)}
+                        >
+                            my creatives
+                        </div>
+                        
+                    </section>
+
+                    <section className='hidden lg:flex gap-3 mt-6 mb-2 w-full sticky py-4 top-12 p-0 z-[5] '>
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
