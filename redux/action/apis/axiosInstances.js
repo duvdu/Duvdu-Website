@@ -41,7 +41,7 @@ console.log(response)
     if (error.response && error.response.status === 423) {
 
       if (error.config.url == "/api/users/auth/refresh") {
-
+        console.log('error ' , error)
       }
       else {
         try {

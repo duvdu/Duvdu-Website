@@ -17,8 +17,7 @@ function Profile({ username, user }) {
 
     const route = useRouter()
     const { profile } = route.query
-    console.log(user,profile)
-
+    
     return (
         <Layout>
             {profile === username &&

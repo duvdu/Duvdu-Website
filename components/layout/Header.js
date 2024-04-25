@@ -118,7 +118,6 @@ const Header = ({
                 api.error &&
                 <Popup className="show">
                     <div className="h-20 flex flex-col justify-center">
-
                     <span className="m-10">
                         {errorConvertedMessage(api.error)}
                     </span>
