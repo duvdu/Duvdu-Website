@@ -9,29 +9,32 @@ import { useRouter } from 'next/router';
 import Switch from '../../components/elements/switcher'
 import AddMyprofile from '../../components/elements/addMyprofile';
 // import AddPost from '../../components/popsup/addpost';
+import { connect } from "react-redux";
 import Button from '../../components/elements/button';
 import Chat from '../../components/elements/chat';
 
-function Profile() {
+function Profile({ username, user }) {
 
     const route = useRouter()
     const { profile } = route.query
+    console.log(user,profile)
 
     return (
         <Layout>
-            {profile == "youseff_abdulla" &&
-                <MyProfile />
+            {profile === username &&
+                <MyProfile userdata={user} />
             }
-            {profile != "youseff_abdulla" &&
+            {profile != username &&
                 <OtherProfile />
             }
-
         </Layout>
     );
 }
 
 
-function MyProfile() {
+function MyProfile({ userdata }) {
+    
+
     const [isable, setIsDisabled] = useState(false);
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
@@ -51,7 +54,7 @@ function MyProfile() {
     var profile = {
         "cover-pic": "/assets/imgs/projects/cover.jpeg",
         "profile-pic": "/assets/imgs/profile/1.jpg",
-        "personalName": "youseff abdulla",
+        "personalName": userdata.name,
         "value": 3.7,
         "price": '30',
         "location": "5th settlement",
@@ -262,7 +265,7 @@ function MyProfile() {
 }
 
 
-function OtherProfile() {
+function OtherProfile({ userdata }) {
 
     const [showChat, setShowChat] = useState(false);
 
@@ -462,7 +465,6 @@ function OtherProfile() {
     }
     return (
         <>
-            <EditPopUp profile={profile} />
             <div className="fixed bottom-0 z-20">
                 {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
             </div>
@@ -537,7 +539,7 @@ function Info({ src, personalName, location, rank, occupation, value, popularity
             <div className='flex-2 flex-col gap-1'>
                 <span className='text-3xl font-bold capitalize'>{personalName}</span>
                 <span className='flex items-center'>
-                    <Icon className='opacity-50 mr-2' name='location-dot' />
+                    <Icon className='opacity-50 mr-2 w-3' name='location-dot' />
                     <span className="opacity-50 capitalize text-lg">{location}</span>
                 </span>
             </div>
@@ -565,7 +567,7 @@ function Info({ src, personalName, location, rank, occupation, value, popularity
 
 function Projects({ projects }) {
     return projects.length > 0 && (
-        <div className='container sm:p-0 project-grid gap-[15px]'>
+        <div className='container sm:p-0 project-grid gap-[10px]'>
             {projects.map((data, index) => (
                 <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
             ))}
@@ -688,5 +690,14 @@ const AddPost = ({ onpublish }) => {
     );
 }
 
+const mapStateToProps = (state) => ({
+    api: state.api,
+    islogin: state.auth.login,
+    username: state.auth.username,
+    user: state.auth.user,
+    isDark: state.setting.ISDARK,
+    getheaderpopup: state.setting.headerpopup,
+});
 
-export default Profile;
+
+export default connect(mapStateToProps)(Profile);

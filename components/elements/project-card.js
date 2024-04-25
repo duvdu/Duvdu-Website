@@ -3,12 +3,14 @@ import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
 import { convertDuration } from '../../util/util';
-
+import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { connect } from "react-redux";
+
 import 'swiper/swiper-bundle.css';
 
-const Card = ({ cardData, className = "", href }) => {
+const Card = ({ cardData, className = "", href ,islogin}) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [loveIconName, setLoveIconName] = useState('far');
   const [isMuted, setIsMuted] = useState(false);
@@ -112,13 +114,13 @@ const Card = ({ cardData, className = "", href }) => {
               </Swiper>
             }
           </a>
-          {cardData.showLove &&
+          {cardData.showLove && islogin &&
             <div onClick={handleLoveIconClick} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
             </div>
           }
 
-          {cardData.showSound &&
+          {cardData.showSound && 
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
@@ -145,4 +147,14 @@ const Card = ({ cardData, className = "", href }) => {
   );
 };
 
-export default Card;
+const mapStateToProps = (state) => ({
+  api: state.api,
+  islogin: state.auth.login
+});
+
+const mapDispatchToProps = {
+  
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
+

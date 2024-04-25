@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { signup } from "../../redux/action/apis/auth/signup/signup";
 import { useRouter } from 'next/router';
 
-function Register({ signup, loading, error, data }) {
+function Register({ signup, api }) {
 
     const router = useRouter();
 
@@ -30,16 +30,16 @@ function Register({ signup, loading, error, data }) {
     const [termsAgreedError, setTermsAgreedError] = useState({ isError: false, message: '' });
 
 
-    var convertError = JSON.parse(error ?? null)
+    var convertError = JSON.parse(api.error ?? null)
 
-    if (data && data.message == 'success') {
+    if (api.data && api.data.message == 'success' && api.req == "signup") {
         router.push({
             pathname: `/register/${username}`,
-            
+
         });
     }
     useEffect(() => {
-        if (convertError) {
+        if (convertError && api.req == "signup") {
             if (convertError.status == 422) {
                 convertError.data.errors.forEach(({ field, message }) => {
                     switch (field) {
@@ -72,7 +72,7 @@ function Register({ signup, loading, error, data }) {
         }
         else
             setErrorMSG(null)
-    }, [error])
+    }, [api.error])
 
     const handleSubmit = (e) => {
 
@@ -130,7 +130,7 @@ function Register({ signup, loading, error, data }) {
 
     return (
         <>
-            <Auth isloading={loading}>
+            <Auth>
                 <form method="post" onSubmit={handleSubmit}>
                     <div className="heading_s1 mb-11">
                         <h1 className="auth-title">Create an Account</h1>
@@ -243,14 +243,12 @@ function Register({ signup, loading, error, data }) {
 }
 
 const mapStateToProps = (state) => ({
-    loading: state.api.loading,
-    error: state.api.error,
-    data: state.api.data,
+    api: state.api,
 });
 
 const mapDispatchToProps = {
     signup,
-    
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

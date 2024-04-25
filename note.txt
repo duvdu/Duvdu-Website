@@ -53,28 +53,26 @@
 - mobile menu margin ( icon , list )
 - popUp ( subscribe , alarm )
 ----------------------------------- day task -----------------------------------
-- dark border
-- controller
-- chat color
-- minimun
+- handle UI popups 
+
 ----------------------------------- day task -----------------------------------
 
- - localhost:8080/account_created
- - localhost:8080/changePhoneNumber
- - localhost:8080/contracts
- - localhost:8080/password_changed
- - localhost:8080/reset_password
- - localhost:8080/project
- - localhost:8080/register
- - localhost:8080/save
- - localhost:8080/saved
- - localhost:8080/teams
- - localhost:8080/forget_password
- - localhost:8080/permits
- - localhost:8080/producers
- - localhost:8080/payment_success
- - localhost:8080/dashboard
- - localhost:8080/team
+ - localhost:3000/account_created
+ - localhost:3000/changePhoneNumber
+ - localhost:3000/contracts
+ - localhost:3000/password_changed
+ - localhost:3000/reset_password
+ - localhost:3000/project
+ - localhost:3000/register
+ - localhost:3000/save
+ - localhost:3000/saved
+ - localhost:3000/teams
+ - localhost:3000/forget_password
+ - localhost:3000/permits
+ - localhost:3000/producers
+ - localhost:3000/payment_success
+ - localhost:3000/dashboard
+ - localhost:3000/team
  - andge and fixed button 
  - ------ new ------
  - page notification , message
@@ -85,3 +83,10 @@
  - sheetpopup contact us
  - sheetpopup language
 
+
+# connect.sid=s%3AMQFMG9HVspPVO4Tq5TLFCnozwmOtPH6N.N83cJFrKy3NZjXAanZ%2Bp5KQ5X%2FdcdqPxRYM9LIcmtfg; Path=/; HttpOnly;
+
+- don't use username but token token 
+- find user by URL
+- forget_password required
+- error cases handling

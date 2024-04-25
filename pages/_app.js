@@ -31,7 +31,7 @@ import '../util/i18n'
 function MyApp({ Component, pageProps }) {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
-        setLoading(true);
+        // setLoading(true);
         setTimeout(() => {
             setLoading(false);
             import("../public/assets/js/popupScript")

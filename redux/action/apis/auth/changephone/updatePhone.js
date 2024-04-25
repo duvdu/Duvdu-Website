@@ -3,16 +3,15 @@ import { mainApiInstance } from '../../axiosInstances'
 
 
 export const UpdatePhone = ({phoneNumber}) => {
-  return async dispatch => {
-    dispatch({ type: Types.FETCH_DATA_REQUEST });
+    return async dispatch => {
+    dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'UpdatePhone' });
     try {
-      const response = await mainApiInstance.post(`api/users/auth/update-phone`, {
+      const response = await mainApiInstance.patch(`api/users/auth/update-phone`, {
         phoneNumber: phoneNumber
       });
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data });
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: 'UpdatePhone' });
     } catch (error) {
-      dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response) });
+      dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: 'UpdatePhone' });
     }
   };
 };
-

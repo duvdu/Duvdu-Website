@@ -36,10 +36,10 @@ const Layout = ({
 
             {isToggled && <div className="body-overlay-1" onClick={toggleClick}></div>}
 
-            <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite, showTabs: showTabs, iSsticky:iSsticky }} />
+            <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite, showTabs: showTabs, iSsticky: iSsticky }} />
 
             <MobileMenu isToggled={isToggled} toggleClick={toggleClick} />
-
+            
             <main className="main bg-body" >
                 {children}
             </main>

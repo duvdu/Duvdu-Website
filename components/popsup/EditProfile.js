@@ -3,7 +3,10 @@ import Comment from '../elements/comment';
 import Controller from '../elements/controllers';
 import Icon from '../Icons';
 import Popup from '../elements/popup';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from "react-redux";
+import { updateProfile } from "../../redux/action/apis/auth/profile/updateprofile";
+import { errorConvertedMessage, handleFileUpload } from '../../util/util';
 
 var profile = {
     "coverImg": "/assets/imgs/projects/cover.jpeg",
@@ -128,16 +131,31 @@ var profile = {
 
 };
 
-function EditPopUp() {
+function EditPopUp({ user, updateProfile, api }) {
+    const [error, setError] = useState(false);
+    const [img, setimg] = useState(profile['profileImg']);
+    const [cover, setcover] = useState(profile['coverImg']);
+
     const [formData, setformData] = useState({
-        'personalName': profile['personalName'],
+        'personalName': user.name,
         'occupation': profile['occupation'],
         'location': profile['location'],
-        'price': profile['price'],
+        'price': user.pricePerHour,
         'about': profile['about'],
-        "coverImg": profile['coverImg'],
-        "profileImg": profile['profileImg'],
+        "coverImg": cover,
+        "profileImg": img,
     });
+
+    const mappingData = () => {
+        return {
+            about: formData.about,
+            category: formData.occupation,
+            coverImage: formData.coverImg,
+            profileImage: formData.profileImg,
+            name: formData.personalName
+        }
+
+    }
 
     // Handle input change for each field
     const handleInputChange = (event) => {
@@ -152,27 +170,49 @@ function EditPopUp() {
     // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
-        
+        updateProfile({ data: mappingData() })
     };
+    useEffect(() => {
+        if (api.error && api.req == "updateProfile") {
+            setError(errorConvertedMessage(api.error))
+        }
+    }, [api.loading, api.error, api.data])
+
+
+    const profileUpload = (e) => {
+        const data = handleFileUpload(e);
+        setimg(URL.createObjectURL(data.file))
+    };
+    const coverUpload = (e) => {
+        const data = handleFileUpload(e);
+        setcover(URL.createObjectURL(data.file))
+    };
+
     return (
         <>
             <Popup id='edit-details' header={'Edit Details'} addWhiteShadow={true}>
-                
-
                 <div className='relative'>
-                    <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center  border-[#0000001A]">
-                        <Icon className='text-white' name={'pen'} />
-                    </Controller>
-                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={`${formData['coverImg']}`} alt="cover pic" />
-                    <div className='absolute bottom-0 edit w-28 h-28 transform translate-y-1/2 translate-x-1/2'>
-                        <img className='rounded-full w-full h-full' src={formData['profileImg']} alt="profile picture" />
-                        <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center border-[#0000001A]">
+                    <label htmlFor="cover-file-upload" >
+                        <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center  border-[#0000001A]" >
                             <Icon className='text-white' name={'pen'} />
                         </Controller>
+                    </label>
+                    <input onChange={coverUpload} className='hidden' id="cover-file-upload" type="file" />
+
+                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={cover} alt="cover pic" />
+                    <div className='absolute bottom-0 edit size-28 transform translate-y-1/2 translate-x-1/2'>
+                        <img className='rounded-full w-full h-full' src={img} alt="profile picture" />
+
+                        <label htmlFor="profile-file-upload" >
+                            <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center border-[#0000001A]" >
+                                <Icon className='text-white' name={'pen'} />
+                            </Controller>
+                        </label>
+                        <input onChange={profileUpload} className='hidden' id="profile-file-upload" type="file" />
                     </div>
                 </div>
-        
-                <form className='pb-0 flex flex-col items-center max-w-[700px] sm:p-20 py-20' onSubmit={handleSubmit}>
+
+                <form className='pb-0 flex flex-col items-center sm:w-[500px] md:w-[700px] sm:p-20 py-20' onSubmit={handleSubmit}>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             name
@@ -233,14 +273,32 @@ function EditPopUp() {
                             style={{ height: '120px' }}
                         />
                     </div>
-                    <AppButton type="submit" className='sticky bottom-10 w-full max-w-96 mt-12 z-10' shadow={true}>
-                        Done
-                    </AppButton>
+                    <button className='w-full flex justify-center' type="submit">
+
+                        <AppButton className='sticky bottom-10 w-full max-w-96 mt-12 z-10' shadow={true}>
+                            Done
+                        </AppButton>
+                    </button>
+
                 </form>
-                
+
+                {
+                    error &&
+                    <p className="error-msg mt-10" >{error}</p>
+                }
             </Popup>
         </>
     );
 }
 
-export default EditPopUp;
+const mapStateToProps = (state) => ({
+    api: state.api,
+    user: state.auth.user,
+    isDark: state.setting.ISDARK,
+    getheaderpopup: state.setting.headerpopup,
+});
+
+const mapDispatchToProps = {
+    updateProfile
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EditPopUp);

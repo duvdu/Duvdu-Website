@@ -3,8 +3,9 @@
 import * as Types from '../constants/actionTypes'
 
 export const login = () => dispatch => {
-    dispatch({ type: Types.LOGIN })
+    dispatch({ type: Types.SET_USER , payload:{} })
 };
+
 export const logout = () => dispatch => {
-    dispatch({ type: Types.LOGOUT })
+    dispatch({ type: Types.USER_NONE })
 };

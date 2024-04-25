@@ -85,6 +85,7 @@ export function handleFileUpload(event) {
     fileName: fileName,
     fileType: fileType,
     formattedFileSize: formattedFileSize,
+    file:file
   };
 }
 
@@ -110,4 +111,22 @@ export const convertDuration = (durationInMilliseconds) => {
   const seconds = totalSeconds % 60;
   const formattedDuration = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   return formattedDuration;
+};
+
+export const errorConvertedMessage = (error) => {
+  if (!error) return null
+  try {
+    var errorConverted = JSON.parse(error)
+    try {
+      const errorMessage = errorConverted.data.errors.map(error => error.message).join('\n');
+      return errorMessage;
+    }
+    catch (err) {
+      const errorMessage = errorConverted.data.message;
+      return errorMessage;
+    }
+  }
+  catch (err) {
+    return error.toString()
+  }
 };

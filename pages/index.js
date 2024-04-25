@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { fetchProjects } from "../redux/action/project";
-import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
 
 import Card from "../components/elements/project-card";
 import Filter from "../components/elements/filter";
@@ -11,7 +10,7 @@ import Filter from "../components/elements/filter";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 
-const Projects = ({ loading, error, data ,projects, projectFilters, fetchProjects , getMyprofile }) => {
+const Projects = ({ loading, error, data, req, projects, projectFilters, fetchProjects }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const showLimit = 24;
@@ -19,9 +18,6 @@ const Projects = ({ loading, error, data ,projects, projectFilters, fetchProject
 
     const targetRef = useRef(null);
     
-    useEffect(() => {
-        getMyprofile()
-    },[data]);
 
     useEffect(() => {
         fetchProjects(searchTerm, "/static/projects.json", projectFilters);
@@ -30,8 +26,8 @@ const Projects = ({ loading, error, data ,projects, projectFilters, fetchProject
     useEffect(() => {
         fetchProjects(searchTerm, "/static/projects.json", projectFilters, limit);
     }, [limit]);
-    
-        useEffect(() => {
+
+    useEffect(() => {
         const options = {
             root: null,
             rootMargin: '0px',
@@ -124,7 +120,7 @@ const RelatedCategories = ({ className, NeedTranslate = true }) => {
 
     return (
         <div className={className + (NeedTranslate ? " h-26 -translate-y-8" : "")}>
-            <h2 className="opacity-70 font-semibold text-lg">
+            <h2 className="opacity-70 font-semibold text-lg lg:mt-6">
                 related categories
             </h2>
             <div className="mt-4">
@@ -133,7 +129,7 @@ const RelatedCategories = ({ className, NeedTranslate = true }) => {
                     className="mySwiper"
                     breakpoints={{
                         240: {
-                            slidesPerView: 1.5,
+                            slidesPerView: 1,
                             spaceBetween: 10
                         },
                         532: {
@@ -215,15 +211,13 @@ const mapStateToProps = (state) => ({
     projects: state.projects,
     projectFilters: state.projectFilters,
 
-    loading: state.api.loading,
-    error: state.api.error,
-    data: state.api.data,
+    api: state.api,
+    req: state.api.req,
 
 });
 
 const mapDispatchToProps = {
     fetchProjects,
-    getMyprofile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);

@@ -22,15 +22,22 @@ export const SHOWPROFILE = "SHOWPROFILE"
 
 // SETTING AUTH
 
-// SETTING AUTH
 export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const FORGET_PASSWORD = 'FORGET_PASSWORD';
+export const SET_USER_NAME = 'SET_USER_NAME';
+export const SET_USER = 'SET_USER';
+export const USER_NONE = 'USER_NONE';
+export const PERMITTED = "PERMITTED"
+export const DENIED = "DENIED"
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
 
 
+
+// PROFILE
+export const SET_PROFILE_DATE = 'SET_PROFILE_DATE';
 
 // LOCAL STORAGE
 export const INCREMENT = 'INCREMENT';

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import * as Types from '../../../redux/constants/actionTypes'
 import Icon from "../../Icons";
 
-function Profile({ getheaderpopup }) {
+function Profile({ getheaderpopup, api }) {
     const { t } = useTranslation();
 
     const [showMiddleCard, setShowMiddleCard] = useState(true);
@@ -27,125 +27,133 @@ function Profile({ getheaderpopup }) {
             "text": "Verify your Email"
         },
     ]
-    return (
-        <div className={"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown" + (getheaderpopup == Types.SHOWPROFILE ? " active" : "")}  >
-            <div className="dialog dialog-2 flex flex-col">
-                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
-                    <div className="bg-DS_white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
-                        <div className="flex w-full overflow-hidden h-20">
-                            {["/assets/imgs/projects/1.jpeg",
-                                "/assets/imgs/projects/6.jpeg",
-                                "/assets/imgs/projects/3.jpeg",
-                                "/assets/imgs/projects/4.jpeg"].map((image, index) => (
-                                    <img key={index} className="w-1/4" src={image} alt={`Image ${index}`} />
-                                ))}
-                        </div>
-                        <div className='p-5'>
-                            <div className='flex items-start gap-4 -translate-y-4 h-12'>
-                                <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                    <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"/assets/imgs/profile/1.jpg"} alt="profile picture" />
+
+
+    const data = api.data ? api.data.data : null
+    
+    if (data == null) return <></>
+    else
+        return (
+            <div className={"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown" + (getheaderpopup == Types.SHOWPROFILE ? " active" : "")}  >
+                <div className="dialog dialog-2 flex flex-col">
+                    <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
+                        <div className="bg-DS_white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
+                            <div className="flex w-full overflow-hidden h-20">
+                                {["/assets/imgs/projects/1.jpeg",
+                                    "/assets/imgs/projects/6.jpeg",
+                                    "/assets/imgs/projects/3.jpeg",
+                                    "/assets/imgs/projects/4.jpeg"].map((image, index) => (
+                                        <img key={index} className="w-1/4" src={image} alt={`Image ${index}`} />
+                                    ))}
+                            </div>
+                            <div className='p-5'>
+                                <div className='flex items-start gap-4 -translate-y-4 h-12'>
+                                    <div className='size-[72px] bg-cover relative bg-no-repeat'>
+                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"/assets/imgs/profile/1.jpg"} alt="profile picture" />
+                                    </div>
+                                    <div className='flex-2 flex-col'>
+                                        <span className='text-base font-bold capitalize'>{data.name}</span>
+                                        <span className='flex items-center gap-1 opacity-40'>
+                                            <Icon className="w-2 ml-2" name="location-dot" />
+                                            <span className="text-xs font-semibold capitalize">{'5th settlement'}</span>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className='flex-2 flex-col'>
-                                    <span className='text-base font-bold capitalize'>{'youseff abdulla'}</span>
-                                    <span className='flex items-center gap-1 opacity-40'>
-                                        <Icon className="w-2 ml-2" name="location-dot" />
-                                        <span className="text-xs font-semibold capitalize">{'5th settlement'}</span>
-                                    </span>
+                                <div className="flex gap-3 mt-3">
+                                    <a href={`/creative/${data.username}`} className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
+                                        <span className="text-primary font-bold text-base">
+                                            {t('view profile')}
+                                        </span>
+                                    </a>
+
                                 </div>
                             </div>
-                            <div className="flex gap-3 mt-3">
-                                <a href='/creative/youseff_abdulla' className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
-                                    <span className="text-primary font-bold text-base">
-                                        {t('view profile')}
-                                    </span>
-                                </a>
-
-                            </div>
                         </div>
-                    </div>
 
-                    {/* middle card  */}
-                    {
-                        showMiddleCard &&
-                        <div className="p-6 bg-DS_white dark:bg-[#1A2024] rounded-[45px]">
-                            <div className="flex gap-3">
-                                <div className="w-full">
+                        {/* middle card  */}
+                        {
+                            showMiddleCard &&
+                            <div className="p-6 bg-DS_white dark:bg-[#1A2024] rounded-[45px]">
+                                <div className="flex gap-3">
+                                    <div className="w-full">
 
-                                    <h4 className="opacity-82 font-semibold text-sm mb-2 capitalize">
-                                        {t('Complete your Profile')}
-                                    </h4>
-                                    <div className='flex items-center'>
-                                        <div className="flex gap-2 w-full">
-                                            <div className="header-progress-bar relative w-full">
-                                                <div className="absolute inset-0 rounded-lg h-full" style={{
-                                                    width: `${badge}%`,
-                                                    background: 'linear-gradient(270deg, #711AEB 7.19%, #226BEB 100%)',
-                                                    filter: 'blur(10.547093391418457px)'
-                                                }}></div>
+                                        <h4 className="opacity-82 font-semibold text-sm mb-2 capitalize">
+                                            {t('Complete your Profile')}
+                                        </h4>
+                                        <div className='flex items-center'>
+                                            <div className="flex gap-2 w-full">
+                                                <div className="header-progress-bar relative w-full">
+                                                    <div className="absolute inset-0 rounded-lg h-full" style={{
+                                                        width: `${badge}%`,
+                                                        background: 'linear-gradient(270deg, #711AEB 7.19%, #226BEB 100%)',
+                                                        filter: 'blur(10.547093391418457px)'
+                                                    }}></div>
 
-                                                <div className="relative h-full overflow-hidden">
-                                                    <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
+                                                    <div className="relative h-full overflow-hidden">
+                                                        <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
+                                                    </div>
                                                 </div>
+                                                <span className="text-primary font-semibold text-xs right-0 bottom-full whitespace-nowrap">{badge}%</span>
                                             </div>
-                                            <span className="text-primary font-semibold text-xs right-0 bottom-full whitespace-nowrap">{badge}%</span>
+                                        </div>
+                                    </div>
+                                    <div onClick={handleCloseMiddleCard} className='flex justify-center items-center cursor-pointer'>
+                                        <div className="rounded-full header-border h-10 w-10 flex items-center justify-center">
+                                            <Icon className="size-5" name={'xmark'} useinvert={true} />
                                         </div>
                                     </div>
                                 </div>
-                                <div onClick={handleCloseMiddleCard} className='flex justify-center items-center cursor-pointer'>
-                                    <div className="rounded-full header-border h-10 w-10 flex items-center justify-center">
-                                        <Icon className="size-5" name={'xmark'} useinvert={true} />
+
+                                <div className="flex flex-col gap-3 mt-4">
+                                    {states.map((item, index) => (
+                                        <React.Fragment key={index}>
+                                            {item.state ? (
+                                                <div className="flex items-center gap-3">
+                                                    <div className="text-[#999999] text-sm font-semibold">
+                                                        {t(item.text)}
+                                                    </div>
+                                                    <Icon name="greenCheck" />
+                                                </div>
+                                            ) : (
+                                                <a className="no-underline text-sm font-semibold">{t(item.text)}</a>
+                                            )}
+                                            {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+
+
+                            </div>}
+
+                        {/* end card  */}
+                        <a href="/saved">
+                            <div className="p-3 bg-DS_white dark:bg-[#1A2024] rounded-[45px] mb-2">
+                                <h4 className="opacity-70 text-sm font-semibold m-2">
+                                    {t('saved projects')}
+                                </h4>
+                                <div className="flex justify-between gap-3">
+                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
+                                        <img src="/assets/imgs/projects/1.jpeg" />
+                                    </div>
+                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
+                                        <img src="/assets/imgs/projects/3.jpeg" />
                                     </div>
                                 </div>
                             </div>
+                        </a>
 
-                            <div className="flex flex-col gap-3 mt-4">
-                                {states.map((item, index) => (
-                                    <React.Fragment key={index}>
-                                        {item.state ? (
-                                            <div className="flex items-center gap-3">
-                                                <div className="text-[#999999] text-sm font-semibold">
-                                                    {t(item.text)}
-                                                </div>
-                                                <Icon name="greenCheck" />
-                                            </div>
-                                        ) : (
-                                            <a className="no-underline text-sm font-semibold">{t(item.text)}</a>
-                                        )}
-                                        {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
-                                    </React.Fragment>
-                                ))}
-                            </div>
-
-
-                        </div>}
-
-                    {/* end card  */}
-                    <a href="/saved">
-                        <div className="p-3 bg-DS_white dark:bg-[#1A2024] rounded-[45px] mb-2">
-                            <h4 className="opacity-70 text-sm font-semibold m-2">
-                                {t('saved projects')}
-                            </h4>
-                            <div className="flex justify-between gap-3">
-                                <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                    <img src="/assets/imgs/projects/1.jpeg" />
-                                </div>
-                                <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                    <img src="/assets/imgs/projects/3.jpeg" />
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
 }
 
 const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
     islogin: state.auth.login,
     getheaderpopup: state.setting.headerpopup,
+
+    api: state.api,
 });
 
 

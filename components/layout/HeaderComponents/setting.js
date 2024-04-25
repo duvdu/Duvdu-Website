@@ -133,7 +133,8 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                     {
                         img: 'number-icon.svg',
                         name: 'Change number',
-                        action: <a href="/changePhoneNumber"> <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} /></a>,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
+                        onClick: () => window.location.href = "/changePhoneNumber"
                     },
                     {
                         img: 'lock-icon.svg',

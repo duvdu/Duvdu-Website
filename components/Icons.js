@@ -30,6 +30,7 @@ const Icon = ({ name, type = "fas", useinvert, invert, className = "", ...rest }
     "burger-menu",
     "x-icon",
     "search-menu",
+    "arrow-right-long",
   ];
 
   if (IsincludesSVG.includes(name)) return <IconSVG name={name} className={className} {...rest} />

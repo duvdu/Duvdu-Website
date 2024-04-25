@@ -6,8 +6,9 @@ import Icon from '../components/Icons';
 import { connect } from "react-redux";
 import { login } from "../redux/action/apis/auth/signin/signin";
 import { useRouter } from 'next/router';
+import { errorConvertedMessage } from "../util/util";
 
-function Login({ loading, error, data, login }) {
+function Login({ api, login }) {
 
   const [errorMSG, setErrorMSG] = useState(null);
   const router = useRouter();
@@ -20,17 +21,17 @@ function Login({ loading, error, data, login }) {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  console.log(error)
-  var convertError = error ?? null 
+  var convertError = JSON.parse(api.error ?? null)
 
-  if (data && data.message == 'success') {
+  if (api.data && api.data.message == 'success') {
     router.push({
         pathname: `/`,
-   });
+        
+    });
 }
 
   useEffect(() => {
-    if (convertError) {
+    if (convertError && api.req == "login") {
       if (convertError.status == 422) {
         convertError.data.errors.forEach(({ field, message }) => {
           switch (field) {
@@ -45,17 +46,15 @@ function Login({ loading, error, data, login }) {
           }
         });
       }
-      else if (convertError.status == 400) {
-        const errorMessages = convertError.data.errors.map(({ message }) => message).join('\n');
+      else {
+        const errorMessages = errorConvertedMessage(api.error)
         setErrorMSG(errorMessages)
       }
-      else {
-        setErrorMSG(convertError.statusText)
-      }
+      
     }
     else
       setErrorMSG(null)
-  }, [error])
+  }, [api.error])
 
 
 
@@ -88,7 +87,7 @@ function Login({ loading, error, data, login }) {
 
   return (
     <>
-      <Auth isloading={loading}>
+      <Auth>
         <form method="post" onSubmit={handleSubmit}>
           <div className="heading_s1 mb-8">
             <h1 className="auth-title">Welcome Back !!</h1>
@@ -158,7 +157,7 @@ function Login({ loading, error, data, login }) {
           </div>
         </form>
         {errorMSG &&
-          <div className="text-red-600 text-center">
+          <div className="text-red-600 text-center translate-y-10">
             {errorMSG}
           </div>}
       </Auth>
@@ -167,9 +166,7 @@ function Login({ loading, error, data, login }) {
 }
 
 const mapStateToProps = (state) => ({
-  loading: state.api.loading,
-  error: state.api.error,
-  data: state.api.data,
+  api: state.api
 });
 
 const mapDispatchToProps = {

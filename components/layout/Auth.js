@@ -4,12 +4,14 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import SwiperCore, { Autoplay, Navigation, EffectFade } from 'swiper';
 import Icon from '../Icons';
+import { connect } from "react-redux";
 
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { combineSlices } from "@reduxjs/toolkit";
 
-function Auth({ children, isloading, error }) {
+function Auth({ children, isloading, error, api, auth }) {
 
     const [active, setActive] = useState(-1);
     const [swiper, setSwiper] = useState(null);
@@ -33,8 +35,9 @@ function Auth({ children, isloading, error }) {
             "p": "we make it fast, simple, & cost effective to find, hire & pay the best professionals anywhere, any time ."
         }
     ];
-    
+
     const router = useRouter();
+
 
     useEffect(() => {
         // Function to run when the route changes
@@ -54,27 +57,19 @@ function Auth({ children, isloading, error }) {
     useEffect(() => {
         setLocalerror(true)
     }, [isloading]);
-    
+
+    useEffect(() => {
+        if (auth.username && auth.login) {
+            window.location.href ="/"
+        }
+    },[auth.username]);
     useEffect(() => {
         setLocation(window.location.origin)
     });
     return (
         <>
-            <Layout shortheader={true} showTabs={false}>
-                {
-                    isloading &&
-                    <div className="w-screen h-screen absolute top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
-                        <img src="/assets/imgs/theme/loading-icon.png" />
-                    </div>
-                }
-                {
-                    (error && localerror) &&
-                    <div onClick={() => setLocalerror(false)} className="w-screen h-screen absolute top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
-                        <span className="text-red-400 font-bold text-xl">
-                            {error}
-                        </span>
-                    </div>
-                }
+            <Layout isloading={isloading} shortheader={true} showTabs={false}>
+
                 <div className="h-body center-div">
                     <div className="container">
                         <div className="flex flex-col lg:flex-row gap-6 h-body py-9">
@@ -126,7 +121,7 @@ function Auth({ children, isloading, error }) {
                                 <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center rounded-lg h-auto sm:h-full">
                                     <a href="/" className="as-Guest flex items-center">
                                         Continue as a Guest
-                                        <Icon name="arrow-right-long" className="ml-3 text-xl w-6" />
+                                        <Icon name="arrow-right-long" className="ml-3 text-xl w-6 text-primary" />
                                     </a>
                                     <div className="size-full max-w-[650px]">
                                         <div className="h-full scroll-w-0 overflow-y-scroll flex flex-col justify-start">
@@ -149,4 +144,13 @@ function Auth({ children, isloading, error }) {
     );
 }
 
-export default Auth;
+const mapStateToProps = (state) => ({
+    api: state.api,
+    auth: state.auth
+});
+
+const mapDispatchToProps = {
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

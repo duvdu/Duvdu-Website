@@ -14,7 +14,7 @@ const Card = ({ cardData, className = "", onClick }) => {
           <div className='flex-2 flex-col gap-1'>
             <h3 className='opacity-80 text-lg font-bold'>{cardData.name}</h3>
             <span className='flex items-center justify-center opacity-40'>
-              <Icon className='opacity-50 mr-2' name='location-dot' />
+              <Icon className='opacity-50 mr-1 w-3' name='location-dot' />
               <span className="location">{cardData.location}</span>
             </span>
           </div>

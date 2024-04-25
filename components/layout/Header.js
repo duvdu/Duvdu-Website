@@ -8,15 +8,37 @@ import { toggleDarkMode, headerPopUp } from "../../redux/action/setting";
 import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
 import Profile from "./HeaderComponents/Profile";
 import Setting from "./HeaderComponents/setting";
-import { login } from "../../redux/action/auth";
+import { login, logout } from "../../redux/action/auth";
 import * as Types from "../../redux/constants/actionTypes";
+import { login as setlogin } from "../../redux/action/apis/auth/signin/signin";
+import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
+import PopUp from "../elements/addMyprofile";
+import { errorConvertedMessage } from "../../util/util";
+import Popup from "../elements/popup";
 
 // toggleDarkMode
 
-const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, getheaderpopup, toggleDarkMode }) => {
+const Header = ({
+    api,
+    fromlayout,
+    toggleClick,
+    isDark,
+    islogin,
+    headerPopUp,
+    getheaderpopup,
+    toggleDarkMode,
+    setlogin,
+    getMyprofile }) => {
 
     const { i18n, t } = useTranslation();
 
+    if (api.error && JSON.parse(api.error).status == 423) {
+        logout()
+    }
+
+    useEffect(() => {
+        getMyprofile()
+    }, []);
 
     useEffect(() => {
 
@@ -70,9 +92,39 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
         document.addEventListener('keydown', dismissPopupOnEsc);
 
     }, []);
-
+    
     return (
         <>
+            {
+                api.loading &&
+                <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
+                    <img src="/assets/imgs/theme/loading-icon.png" />
+                </div>
+            }
+            {
+                process.env.NODE_ENV != "production" &&
+                <button onClick={() => setlogin({ username: "ahmed_magdy", password: "Ahmed!123" })} className="mx-5">
+                    login
+                </button>
+            }
+            {
+                process.env.NODE_ENV != "production" &&
+                <button onClick={() => getMyprofile()} >
+                    getMyprofile
+                </button>
+            }
+
+            {
+                api.error &&
+                <Popup className="show">
+                    <div className="h-20 flex flex-col justify-center">
+
+                    <span className="m-10">
+                        {errorConvertedMessage(api.error)}
+                    </span>
+                    </div>
+                </Popup>
+            }
             <div onClick={() => headerPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
             <header className={`bg-DS_white w-full z-10 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
@@ -110,10 +162,8 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
                                             <Icon name={"contracts"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
                                             <span>
                                                 {t('contracts')}
-
                                             </span>
                                         </a>
-
 
                                         <a href="/teams" className="capitalize whitespace-nowrap">
                                             <Icon name={"teams"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
@@ -161,7 +211,7 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
                                     {
                                         !islogin &&
                                         <div className="header-action-2 flex gap-6 items-center">
-                                            <a onClick={login} className="text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</a>
+                                            <a href="/login" className="text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</a>
                                             <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</a>
                                         </div>
                                     }
@@ -214,13 +264,16 @@ const Header = ({ fromlayout, toggleClick, isDark, islogin, login, headerPopUp, 
 const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
     getheaderpopup: state.setting.headerpopup,
-    islogin: state.auth.login
+    islogin: state.auth.login,
+
+    api: state.api,
 });
 
 const mapDispatchToProps = {
     toggleDarkMode,
     headerPopUp,
-    login,
+    setlogin,
+    getMyprofile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -6,9 +6,9 @@ import { login } from "../../redux/action/auth";
 import { connect } from "react-redux";
 import Auth from '../../components/layout/Auth';
 import { useRouter } from 'next/router';
-import { convertDuration } from '../../util/util';
+import { convertDuration, errorConvertedMessage } from '../../util/util';
 
-function OTP({ loading, error, data, verify, resendCode }) {
+function OTP({ api, verify, resendCode }) {
 
     const router = useRouter();
     const { username } = router.query;
@@ -18,31 +18,28 @@ function OTP({ loading, error, data, verify, resendCode }) {
     const [local_error, setlocal_error] = useState(false);
 
     useEffect(() => {
-        console.log(loading, error, data)
-        if (data && data.code) {
-            if (data.message == "success") {
+        if (api.data && api.data.code) {
+            if (api.data.message == "success") {
                 setcount(100)
-                data = null
+                api.data = null
             }
         }
-        if (data && data.username) {
-            if (data.message == "success") {
+        if (api.data && api.data.username) {
+            if (api.data.message == "success") {
                 window.location.href = "/login"
             }
         }
-    }, [loading, error, data])
+    }, [api.loading, api.error, api.data])
 
     useEffect(() => {
-        if (error) {
-            var errorConverted = JSON.parse(error)
-            // console.log(errorConverted)
-            const errorMessage = errorConverted.data.errors.map(error => error.message).join('\n');
+        if (api.error) {
+            const errorMessage = errorConvertedMessage(api.error)
             setlocal_error(errorMessage)
         }
         else {
             setlocal_error(null)
         }
-    }, [error])
+    }, [api.error])
 
     useEffect(() => {
         if (counter > 0) {
@@ -61,7 +58,7 @@ function OTP({ loading, error, data, verify, resendCode }) {
 
     return (
         <>
-            <Auth loading={loading}>
+            <Auth>
                 <form className="flex flex-col items-center">
                     <div className="max-w-96 flex flex-col items-center justify-center">
                         <div className="w-353">
@@ -95,7 +92,6 @@ function OTP({ loading, error, data, verify, resendCode }) {
                             </div>
                         </div>
                     </div>
-
                 </form>
             </Auth>
         </>
@@ -103,9 +99,7 @@ function OTP({ loading, error, data, verify, resendCode }) {
 }
 
 const mapStateToProps = (state) => ({
-    loading: state.api.loading,
-    error: state.api.error,
-    data: state.api.data
+    api: state.api,
 });
 
 const mapDispatchToProps = {
