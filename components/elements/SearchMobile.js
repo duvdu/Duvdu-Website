@@ -1,10 +1,11 @@
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Link from 'next/link';
 import Icon from "../Icons";
+import { useRouter } from 'next/router';
 
 const Search = ({}) => {
     const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter();
 
     const handleSearch = () => {
 
@@ -56,7 +57,7 @@ const Search = ({}) => {
                         "director",
                         "fashion model"
                     ].map((item, index) => (
-                        <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#000000BF] rounded-full" key={index}>
+                        <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full" key={index}>
                             <Link href="/">
                                 <a className="text-[#000000BF] capitalize">{item}</a>
                             </Link>

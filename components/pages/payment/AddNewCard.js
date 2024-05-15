@@ -18,7 +18,7 @@ export default function AddNewCard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted!');
+        console.log('Form submited!');
         // Add validation logic here and set error state accordingly
     };
 

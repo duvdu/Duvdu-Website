@@ -4,54 +4,78 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import SwiperCore, { Autoplay, Navigation, EffectFade } from 'swiper';
 import Icon from '../Icons';
+import { connect } from "react-redux";
+import * as Types from "../../redux/constants/actionTypes";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
 
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
-import { Swiper, SwiperSlide } from "swiper/react";
 
-function Auth({ children }) {
+function Auth({ children, isloading, errors, auth, api, resendCode }) {
+
     const [active, setActive] = useState(-1);
     const [swiper, setSwiper] = useState(null);
+    const [localerror, setLocalerror] = useState(true);
+    const [location, setLocation] = useState(null);
 
     const imageSources = [
         {
-            "img": 'assets/imgs/authswiper/login-1.png',
+            "img": '/assets/imgs/authswiper/login-1.png',
             "h1": "let your project shine",
             "p": "we make it fast, simple, & cost effective to find, hire & pay the best professionals anywhere, any time ."
         },
         {
-            "img": 'assets/imgs/authswiper/login-2.png',
+            "img": '/assets/imgs/authswiper/login-2.png',
             "h1": "let your project shine",
             "p": "we make it fast, simple, & cost effective to find, hire & pay the best professionals anywhere, any time ."
         },
         {
-            "img": 'assets/imgs/authswiper/login-3.png',
+            "img": '/assets/imgs/authswiper/login-3.png',
             "h1": "let your project shine",
             "p": "we make it fast, simple, & cost effective to find, hire & pay the best professionals anywhere, any time ."
         }
     ];
 
     const router = useRouter();
-
     useEffect(() => {
-        // Function to run when the route changes
+
         const handleRouteChange = (url) => {
-            console.log(url)
             swiper?.destroy();
         };
 
-        // Subscribe to the router's routeChange event
         router.events.on('routeChangeStart', handleRouteChange);
 
-        // Clean up the event listener on component unmount
         return () => {
             router.events.off('routeChangeStart', handleRouteChange);
         };
     }, [router]);
 
+    useEffect(() => {
+        setLocalerror(true)
+    }, [isloading]);
+
+    useEffect(() => {
+        
+        // if (!auth.username && !auth.login && router.pathname == "/forget_password") {
+            
+        // }
+        if (auth.username && auth.login && auth.user.isVerified !== false) {
+            router.push(`/`);
+        }
+        else if (auth.username && auth.login && auth.user.isVerified === false) {
+            resendCode({ username: auth.username })
+            router.push(`/register/${auth.username}`);
+        }
+    }, [auth.username]);
+
+    useEffect(() => {
+        setLocation(window.location.origin)
+    }, []);
+
     return (
         <>
-            <Layout shortheader={true} showTabs={false}>
+            <Layout isloading={isloading} shortheader={true} showTabs={false}>
                 <div className="h-body center-div">
                     <div className="container">
                         <div className="flex flex-col lg:flex-row gap-6 h-body py-9">
@@ -76,7 +100,10 @@ function Auth({ children }) {
                                                             <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
                                                             <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
                                                         </div>
-                                                        <div className="bg-cover border-top swipper-img h-full" style={{ backgroundImage: `url(${source.img})` }} />
+                                                        {
+                                                            location &&
+                                                            <div className="bg-cover border-top swipper-img h-full" style={{ backgroundImage: `url(${location}/${source.img})` }} />
+                                                        }
                                                     </div>
                                                     {/* <div className="w-full h-full bg-black" /> */}
                                                 </SwiperSlide>
@@ -95,11 +122,10 @@ function Auth({ children }) {
                                 </div>
                             </div>
                             <div className="lg:w-7/12 xl:w-7/12 ">
-                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center  rounded-lg h-auto sm:h-full">
-
+                                <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center rounded-lg h-auto sm:h-full">
                                     <a href="/" className="as-Guest flex items-center">
                                         Continue as a Guest
-                                        <Icon name="arrow-right-long" className="ml-3 text-xl w-6" />
+                                        <Icon name="arrow-right-long" className="ml-3 text-xl w-6 text-primary" />
                                     </a>
                                     <div className="size-full max-w-[650px]">
                                         <div className="h-full scroll-w-0 overflow-y-scroll flex flex-col justify-start">
@@ -121,4 +147,14 @@ function Auth({ children }) {
     );
 }
 
-export default Auth;
+const mapStateToProps = (state) => ({
+    api: state.api,
+    errors: state.errors,
+    auth: state.auth
+});
+
+const mapDispatchToProps = {
+    resendCode
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

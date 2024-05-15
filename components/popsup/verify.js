@@ -12,7 +12,7 @@ function Verify() {
                 <div className='flex flex-col justify-center items-center w-full lg:w-[828px]'>
                     <h1 className='text-primary text-3xl capitalize font-extrabold mt-7 mb-12'> verify your account </h1>
                     <div className='w-36 h-36 bg-cover relative p-3 bg-no-repeat boronze-frame'>
-                        <img className='w-full h-full rounded-full' src={"/assets/imgs/profile/contact-2.png"} alt="profile picture" />
+                        <img className='w-full h-full rounded-full' src={"/assets/imgs/profile/defultUser.jpg"} alt="profile picture" />
                     </div>
                     <div className='flex gap-1 items-center justify-center mt-9'>
                         <span className='capitalize text-xl font-bold'> yousseff Abdulla </span>

@@ -3,26 +3,148 @@ import Auth from '../components/layout/Auth';
 import Button from '../components/elements/button';
 import { useState, useEffect } from 'react';
 import Layout from "../components/layout/Layout";
-import OtpInput from 'react-otp-input';
+import { connect } from "react-redux";
 import Icon from '../components/Icons';
 
-function ChangePassword() {
-    const [currentStep, setCurrentStep] = useState(1);
+import { askChangePhone } from "../redux/action/apis/auth/changephone/askupdatePhone";
+import { UpdatePhone } from "../redux/action/apis/auth/changephone/updatePhone";
+import { errorConvertedMessage } from '../util/util';
+import OTP from "../components/elements/otp";
 
-    const handleNextStep = () => {
-        setCurrentStep(currentStep + 1);
+function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, UpdatePhone, username }) {
+    const [step, setStep] = useState(0);
+    const [error, setError] = useState('');
+    const pages = ['', 'EnterPhoneNumber', 'OTP', 'PhoneChanged', 'OTP'];
+
+    useEffect(() => {
+        const handlePopstate = () => {
+            const queryParams = new URLSearchParams(window.location.search);
+            const page = queryParams.get('page');
+            const newStep = pages.indexOf(page);
+            setStep(newStep !== -1 ? newStep : 1);
+        };
+
+        window.addEventListener('popstate', handlePopstate);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopstate);
+        };
+    }, []);
+
+
+    useEffect(() => {
+        if (api.error && JSON.parse(api.error).status == 423) {
+            window.location.href = "/"
+        }
+        else if(api.error){
+            setError(api.error)
+        }
+    }, [api.error]);
+
+
+    useEffect(() => {
+        askChangePhone()
+    }, []);
+
+    if (respond_Update)
+        handleNextStep(3)
+    else if (respond_Ask)
+        handleNextStep(1)
+    
+    const handleNextStep = (value) => {
+        if (step < pages.length - 1) {
+            setStep(value);
+            const newURL = `${window.location.pathname}?page=${pages[step + 1]}`;
+            window.history.pushState({ path: newURL }, '', newURL);
+        }
     };
 
     const handlePreviousStep = () => {
         setCurrentStep(currentStep - 1);
     };
+
+
+    function EnterNewPhone() {
+        const [PhoneNumber, setPhoneNumber] = useState('');
+        const [numberError, setNumberError] = useState({ isError: false, message: '' });
+
+        if (api.req == "UpdatePhone" && api.error && !numberError.isError) {
+            const errorMessage = errorConvertedMessage(api.error)
+            setNumberError({ isError: true, message: errorMessage });
+        }
+
+
+        const handleSubmit = (e) => {
+            e.preventDefault();
+
+            if (PhoneNumber.length < 1) {
+                setNumberError({ isError: true, message: 'Enter new phone number' });
+            } else {
+                setNumberError({ isError: false, message: '' });
+                UpdatePhone({ phoneNumber: PhoneNumber })
+            }
+        };
+
+
+        return (
+            <form className="w-[521px]" method="post" onSubmit={handleSubmit}>
+                <div className="heading_s1 mb-8">
+                    <h1 className="auth-title capitalize">Change Phone Number</h1>
+                </div>
+                <div className={`mb-8 ${numberError.isError && 'error'}`}>
+                    <input
+                        type="text"
+                        value={PhoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="new number"
+                        className={numberError.isError ? "app-field error" : "app-field"}
+                    />
+                    {numberError.isError && <p className="error-msg">{numberError.message}</p>}
+                </div>
+                <button className="w-full" type="submit" >
+                    <Button name="login" shadow={true} className="w-full " >
+                        confirm
+                    </Button>
+                </button>
+            </form>
+        )
+    }
+
+
+    function Message() {
+
+        return (
+            <div className="flex flex-col justify-center h-full">
+                <div className="heading_s1 mb-[88px] text-center">
+                    <div className="flex w-full justify-center">
+                        <Icon name={"done"} className="mb-9" />
+                    </div>
+                    <h1 className="auth-title mb-2">number changed</h1>
+                    <p>Your phone number has been changed successfully</p>
+                </div>
+                <div className="mb-4 relative">
+                    <a href={"/login"}>
+                        <Button type="submit" name="login" shadow={true}>
+                            done
+                        </Button>
+                    </a>
+                </div>
+            </div>
+        )
+    }
+
+
     return (
         <>
             <Layout shortheader={true}>
-                <div className="container flex justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
-                    {currentStep === 1 && <Step1 onNextStep={handleNextStep} />}
-                    {currentStep === 2 && <Step2 onNextStep={handleNextStep} />}
-                    {currentStep === 3 && <Step3 />}
+                <div className="container">
+                    <div className="mx-auto flex justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
+                        {step === 1 && <OTP oNsucess={() => handleNextStep(2)} username={username} />}
+                        {step === 2 && <EnterNewPhone />}
+                        {step === 3 && <OTP oNsucess={() => handleNextStep(4)} username={username} />}
+                        {step === 4 && <Message />}
+                        <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} />
+                    </div>
                 </div>
             </Layout>
         </>
@@ -30,134 +152,17 @@ function ChangePassword() {
 }
 
 
-function Step1({onNextStep}) {
-    const [PhoneNumber, setPhoneNumber] = useState('');
-    const [numberError, setNumberError] = useState({ isError: false, message: '' });
 
+const mapStateToProps = (state) => ({
+    api: state.api,
+    respond_Ask: state.askChangePhone,
+    respond_Update: state.UpdatePhone,
+    username: state.auth.username
+});
 
+const mapDispatchToProps = {
+    askChangePhone,
+    UpdatePhone
+};
 
-    const handleSubmit = (e) => {
-
-        if (PhoneNumber.length < 8) {
-            setNumberError({ isError: true, message: 'Password must be at least 8 characters long.' });
-        } else {
-            setNumberError({ isError: false, message: '' });
-        }
-
-    };
-    return (
-        <form method="post" onSubmit={handleSubmit}>
-            <div className="heading_s1 mb-8">
-                <h1 className="auth-title">change phone number</h1>
-            </div>
-            <div className={`mb-8 ${numberError.isError && 'error'}`}>
-                <input
-                    type="text"
-                    value={PhoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="new number"
-                    className={numberError.isError ? "auth-field error" : "auth-field"}
-                />
-                {numberError.isError && <p className="error-msg">{numberError.message}</p>}
-            </div>
-            <Button name="login" shadow={true} className="w-full " onClick={onNextStep}>
-                confirm
-            </Button>
-        </form>
-    )
-}
-function Step2({onNextStep}) {
-    const [otp, setOtp] = useState('');
-    const [counter, setcount] = useState(59);
-    const [error, seterror] = useState(false);
-
-    useEffect(() => {
-        if (counter > 0) {
-            const intervalId = setInterval(() => {
-                setcount((prevCount) => prevCount - 1);
-            }, 1000);
-
-            // Cleanup interval on component unmount or when counter reaches 0
-            return () => clearInterval(intervalId);
-        }
-    }, [counter]);
-
-    return (
-        <form className="flex flex-col items-center">
-            <div class="max-w-96 flex flex-col items-center justify-center">
-                <div class="w-353">
-                    <div className="heading_s1 mb-11 text-center">
-                        <h1 className="auth-title">Enter code</h1>
-                        <p className="otpnews" >Enter the verification code we just sent to your phone +20 12* **** *74</p>
-                    </div>
-                    <OtpInput
-                        value={otp}
-                        onChange={setOtp}
-                        numInputs={5}
-                        renderSeparator={<span style={{ width: "100%" }} > </span>}
-                        renderInput={(props) => <input {...props} className={`${error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "63px", height: "72px"}} />}
-                    />
-
-                    {
-                        error &&
-                        <p className="error-msg mt-10" >Wrong code, please try again</p>
-                    }
-                    <div className="mt-14 mb-28">
-
-                        {
-                            counter > 0 ?
-                                <p className="resendMSG">
-                                    <span className="msg"> Send code again </span><span className="counter"> 00:{counter}</span>
-                                </p> :
-                                <p className="resendMSG2 text-center cursor-pointer" onClick={() => { setcount(59) }}>
-                                    Send code again
-                                </p>
-                        }
-                    </div>
-                </div>
-            </div>
-            <div className="mb-4 relative mb-30 mt-55 w-full">
-                <Button name="reset-password" onClick={onNextStep}>
-                    Reset
-                </Button>
-                <div className="submit-btn"></div>
-            </div>
-        </form>
-    )
-}
-
-function Step3() {
-    const [PhoneNumber, setPhoneNumber] = useState('');
-    const [numberError, setNumberError] = useState({ isError: false, message: '' });
-
-
-
-    const handleSubmit = (e) => {
-
-        if (PhoneNumber.length < 8) {
-            setNumberError({ isError: true, message: 'Password must be at least 8 characters long.' });
-        } else {
-            setNumberError({ isError: false, message: '' });
-        }
-
-    };
-    return (
-        <div className="flex flex-col justify-center h-full">
-            <div className="heading_s1 mb-[88px] text-center">
-                <div className="flex w-full justify-center">
-                    <Icon name={"done"} className="mb-9" />
-                </div>
-                <h1 className="auth-title mb-2">number changed</h1>
-                <p>Your phone number has been changed successfully</p>
-            </div>
-            <div className="mb-4 relative">
-                <a href={"/login"}>
-                    <Button type="submit" name="login" shadow={true}>
-                        done
-                    </Button>
-                </a>
-            </div>
-        </div>
-    )
-}
-export default ChangePassword;
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePhoneNumber);

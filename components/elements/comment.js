@@ -1,20 +1,20 @@
-const comment = ({comment}) => {
+const Comment = ({comment}) => {
     
     return (
         <>
             <div className="rounded-3xl border border-solid border-[#00000040] dark:border-[#FFFFFF40] p-5">
-                <div className="flex">
-                    <div className="flex profile">
+                <a href={`/creative/${comment.userName}`} className="flex">
+                    <div className="flex profile gap-3">
                         <img src={comment.avatar} alt={comment.userName} width="45" height="45" />
                         <div className='flex-column'>
-                            <p className="name">{comment.userName}</p>
+                            <p className="name">{comment.name}</p>
                             <p className="date">{comment.date}</p>
                         </div>
                     </div>
-                </div>
+                </a>
                 <p className="pt-4">{comment.commentText}</p>
             </div>
         </>
     );
 };
-export default comment;
+export default Comment;

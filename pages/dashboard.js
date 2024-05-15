@@ -99,7 +99,7 @@ const Dashboard = () => {
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
                                     <br />
                                     <br />
-                                    <span className='text-[47.907px] text-DS_black font-medium capitalize'>1530</span>
+                                    <span className='text-4xl text-DS_black font-medium capitalize'>1530</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
@@ -124,12 +124,12 @@ const Dashboard = () => {
                                             <span className={`${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {viewRate}%</span>
                                         </div>
 
-                                        <span className='bg-[#D9D9D9] dark:bg-[#333333] rounded-2xl w-5 h-5 flex justify-center cursor-pointer aspect-square items-center'>
+                                        {/* <span className='bg-[#D9D9D9] dark:bg-[#333333] rounded-2xl w-5 h-5 flex justify-center cursor-pointer aspect-s?are items-center'>
                                             ?
-                                        </span>
+                                        </span> */}
                                     </div>
                                     <br />
-                                    <span className='text-[47.907px] text-DS_black font-medium capitalize'>top 30%</span>
+                                    <span className='text-4xl text-DS_black font-medium capitalize'>top 30%</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>

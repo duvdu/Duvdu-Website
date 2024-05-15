@@ -4,7 +4,9 @@ const renderAfterDelay = () => {
             const popup = document.getElementById(targetId);
             if (popup) {
                 popup.classList.add('show');
-                // popup.setAttribute('aria-hidden', 'false');
+                const body = document.body;
+                body.style.overflow = 'hidden';
+
             }
         };
 
@@ -22,7 +24,10 @@ const renderAfterDelay = () => {
                 const popup = dismissButton.closest('.popup, .addpost-shadow');
                 if (popup) {
                     popup.classList.remove('show');
-                    // popup.setAttribute('aria-hidden', 'true');
+
+                    const body = document.body;
+                    body.style.overflow = 'visible';
+
                 }
             });
         });
@@ -33,6 +38,10 @@ const renderAfterDelay = () => {
                 if (visiblePopup) {
                     visiblePopup.classList.remove('show');
                     // visiblePopup.setAttribute('aria-hidden', 'true');
+                }
+                const visibledropDown = document.querySelector('.account-dropdown.active');
+                if (visibledropDown) {
+                    visibledropDown.classList.remove('active');
                 }
             }
         };

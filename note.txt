@@ -33,6 +33,10 @@
 # project UI of Show
 # home video time
 # drawer select date
+# post with drawer 
+# using ahmed choose category
+# remove category add project
+# handle api.req && api.data 
 
 ------------------ later tasks ---------------------
 - suggest strong password
@@ -45,17 +49,53 @@
 - last screen UI
 - report Project popUp
 ----------------------------------- day task -----------------------------------    
-- enable file drag drop
-- what is next-auth
-- handle darkmode
+ - page notification , message
+ - page notification
+ - page message
+ - page chat
+ - page setting
+ - sheetpopup contact us
+ - sheetpopup language
 ----------------------------------- day task -----------------------------------
-- project controll
-- mobile menu margin ( icon , list )
-- popUp ( subscribe , alarm )
+- login error handling
+- how logout ?
+- record account when -> login to verify 
+- edit profile img and others 
+- find user by URL
+- error cases handling
+- verify 10 min ?? return time
+- how empty profile look like (karim)
+- error popup 
+- expired auth popUp
+
+- tgas other creative
+- duration should be only number
+- limitation length of inputs
+- creative  in studio booking
+- get user from url
+- studio booking category
+- get user by username
+
 ----------------------------------- day task -----------------------------------
-- dark border
-- controller
-- chat color
-- minimun
+handle converting format clean Code
+select date
+handle get studio
+start in chating
+edit profile image file
+get profile owner name and profile
+handle respond success AtTime
+tool 
+
+select creative
+read files
+mark read
+other profile
+get project
+open new chat 
 ----------------------------------- day task -----------------------------------
-- dark mode switch
+logout
+valid username iunput                             // too much ???
+category in create
+creative tag ( project post , team project )
+test auth
+ 

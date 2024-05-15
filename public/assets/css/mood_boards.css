@@ -6,7 +6,11 @@
     gap: 20px;
     max-width: 1370px;
 }
-
+@media (max-width: 768px) {
+    .boards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
 .boards-card {
     position: relative;
     width: 100%;

@@ -9,12 +9,12 @@ function Receive_project_files() {
     return (
         <>
             <Popup id="receive_project_files" header={"project files"}>
-                <div className='flex flex-col justify-center items-center px-52 '>
-                    <div className='max-w-[400px] mb-32'>
+                
+                    <div className='max-w-[400px] mb-32 pt-7'>
                         <section>
                             <a href='https://google.drive.com/aislfahe438alljjaislfahe438alljjaislfahe438alljjaislfahe438alljj' target="_blank">
 
-                            <div className="border border-primary bg-[#1a73eb33] rounded-3xl border-black border-opacity-10 mt-4 p-4 text-primary font-bold text-base overflow-hidden overflow-ellipsis" >
+                            <div className="w-full border border-primary bg-[#1a73eb33] rounded-3xl border-black border-opacity-10 mt-4 p-4 text-primary font-bold text-base overflow-hidden overflow-ellipsis" >
                                 https://google.drive.com/aislfahe438alljjaislfahe438alljjaislfahe438alljjaislfahe438alljj
                             </div>
                             </a>
@@ -27,8 +27,7 @@ function Receive_project_files() {
                             </div>
                         </section>
                     </div>
-                </div>
-                    <div className='flex sm:mx-20 gap-7 mb-10'>
+                    <div className='flex gap-3 sm:gap-7 mb-10'>
                         <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"}>
                             <span className='text-white font-bold capitalize text-lg'>
                                 submit

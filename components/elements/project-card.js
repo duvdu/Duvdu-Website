@@ -3,12 +3,14 @@ import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
 import { convertDuration } from '../../util/util';
-
+import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { connect } from "react-redux";
+
 import 'swiper/swiper-bundle.css';
 
-const Card = ({ cardData, className = "", href }) => {
+const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [loveIconName, setLoveIconName] = useState('far');
   const [isMuted, setIsMuted] = useState(false);
@@ -60,14 +62,15 @@ const Card = ({ cardData, className = "", href }) => {
   };
   return (
     <>
-      <div className={`select-none project-card ${className}`} onClick={() => { }} >
+      <div className={`select-none project-card  ${className}`} onClick={() => { }} >
         <div
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           className='project'>
-          <a href={href}>
+          <a href={`/${type}/${cardData._id}`}>
             {
-              cardData.backgroundImages.length == 1 &&
+              false &&
+                cardData.backgroundImages.length == 1 &&
                 cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
                 <>
                   <video
@@ -85,14 +88,16 @@ const Card = ({ cardData, className = "", href }) => {
                   </div>
                 </>
               ) : (
-                cardData.backgroundImages.length == 1 &&
-                <img className='cardimg' src={cardData.backgroundImages[0]} alt="project" />
+                // cardData.cover.length == 1 &&
+                <img className='cardimg' src={cardData.cover} alt="project" />
               )
             }
 
             {
+              false &&
               cardData.backgroundImages.length > 1 &&
               <Swiper
+                dir='ltr'
                 className='cardimg'
                 modules={[Autoplay, Navigation, EffectFade, Pagination]}
                 spaceBetween={0}
@@ -111,35 +116,49 @@ const Card = ({ cardData, className = "", href }) => {
               </Swiper>
             }
           </a>
-          {cardData.showLove &&
+          {cardData.showLove && islogin &&
             <div onClick={handleLoveIconClick} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
             </div>
           }
 
-          {cardData.showSound &&
+          {
+            false &&
+            cardData.showSound &&
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
           }
         </div>
-        <div className='details'>
-          <div className='creator-info'>
-            <a href='/creative/anaa_youseff' className='profile cursor-pointer'>
-              <img src={cardData.profileImage} alt='user' />
+        <div className='mt-3 flex justify-between items-center'>
+          <div className='flex items-center gap-3'>
+            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer'>
+              <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
             </a>
-            <a href='/creative/anaa_youseff' className='name cursor-pointer' >
-              <span className='text-sm font-semibold'>{cardData.name}</span>
+            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer' >
+              <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
             </a>
-            <span className='mr-2 text-base opacity-80 font-medium'>{cardData.rating}</span>
-            <Icon className='text-primary w-7' name={'rate-star'} />
           </div>
-          <p className='text-xl opacity-70 font-medium'>{cardData.filmName}</p>
-          <div className='text-xl font-bold mt-3'>{cardData.price}</div>
+          <div className='flex items-center gap-2'>
+            <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates||0).toFixed(1) }</span>
+            <Icon className='text-primary size-4' name={'rate-star'} />
+          </div>
         </div>
+        <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
+        <div className='text-xl font-bold'>{cardData.price}</div>
       </div>
     </>
   );
 };
 
-export default Card;
+const mapStateToProps = (state) => ({
+  api: state.api,
+  islogin: state.auth.login
+});
+
+const mapDispatchToProps = {
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);
+

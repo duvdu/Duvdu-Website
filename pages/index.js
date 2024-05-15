@@ -3,28 +3,26 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { fetchProjects } from "../redux/action/project";
-import Card from "../components/elements/project-card";
+
+import ProjectCard from "../components/elements/project-card";
 import Filter from "../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 
-const Projects = ({ projects, projectFilters, fetchProjects }) => {
+const Projects = ({ projects , GetProjects}) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const showLimit = 24;
     const [limit, setLimit] = useState(showLimit);
 
     const targetRef = useRef(null);
+    
 
     useEffect(() => {
-        fetchProjects(searchTerm, "/static/projects.json", projectFilters);
-    }, [projectFilters]);
-
-    useEffect(() => {
-        fetchProjects(searchTerm, "/static/projects.json", projectFilters, limit);
-    }, [limit]);
-
+        GetProjects()
+    },[])
     useEffect(() => {
         const options = {
             root: null,
@@ -65,8 +63,8 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
     }, [limit]);
 
 
-    const getPaginatedProjects = projects.items.slice(0, limit);
-
+    const getPaginatedProjects = projects?.data || []
+    
 
     return (
         <>
@@ -83,7 +81,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                             !searchTerm &&
                             <div className="h-7" />
                         }
-                        <h1 className="page-header">most popular on duvdu</h1>
+                        <h1 className="page-header pb-9">most popular on duvdu</h1>
                         {getPaginatedProjects.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
@@ -93,7 +91,7 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === 9 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                                     {i === 12 && <RelatedCategories className="hidden xl:block col-span-full" />}
-                                    <Card className='cursor-pointer' href="/project/1" cardData={item} />
+                                    <ProjectCard className='cursor-pointer' cardData={item} />
                                 </React.Fragment>
                             ))}
                         </div>
@@ -118,7 +116,7 @@ const RelatedCategories = ({ className, NeedTranslate = true }) => {
 
     return (
         <div className={className + (NeedTranslate ? " h-26 -translate-y-8" : "")}>
-            <h2 className="opacity-70 font-semibold text-lg">
+            <h2 className="opacity-70 font-semibold text-lg lg:mt-6">
                 related categories
             </h2>
             <div className="mt-4">
@@ -206,12 +204,12 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
 }
 
 const mapStateToProps = (state) => ({
-    projects: state.projects,
+    projects: state.api.GetProjects,
     projectFilters: state.projectFilters,
 });
 
 const mapDispatchToProps = {
-    fetchProjects,
+    GetProjects,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);

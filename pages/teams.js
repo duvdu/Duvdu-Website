@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 const data = [
     {
-        img: '/assets/imgs/projects/1.jpeg',
+        img: '/assets/imgs/profile/defultUser.jpg',
         projectsNum: '37',
         name: 'new team project',
     },
@@ -63,8 +63,8 @@ const CreateBoard = () => {
                             <h1 className="text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">team projects</h1>
                             <div className="mr-6"></div>
                             <div className="flex gap-5 items-center py-[21px] px-[35px] rounded-full bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
-                                new team project
-                                <Icon className="w-4" name={"plus"} />
+                                new project
+                                <Icon className="w-4 text-white" name={"plus"} />
                             </div>
                         </div>
                         {false && (

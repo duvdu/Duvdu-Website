@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 const data = [
     {
-        img1: '/assets/imgs/projects/1.jpeg',
+        img1: '/assets/imgs/profile/defultUser.jpg',
         img2: '/assets/imgs/projects/2.jpeg',
         img3: '/assets/imgs/projects/3.jpeg',
         projectsNum: '37',
@@ -55,7 +55,8 @@ const Boards = ({ data }) => {
                 </a>
                 <div className="boards-info projects-num">{projectsNum} projects</div>
 
-                <Selector options={dropdown} iconclassName="text-white" className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center" invert={true} />
+                <Selector options={dropdown} iconclassName="text-white" className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center border border-white border-opacity-20" invert={true} />
+                <div className="absolute bottom-0 w-full h-1/2 rounded-[50px]  gradient1"/>
 
                 <div className="boards-info projects-name flex">
                     {name == "favorites" && <Icon name={"favorites"} />}
@@ -77,9 +78,9 @@ const Saved = () => {
                         <div className="flex alignCenter mb-7 items-center">
                             <h1 className="text-2xl opacity-80 font-semibold capitalize">mood boards</h1>
                             <div className="mr-6"></div>
-                            <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board">
+                            <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board ">
                                 new board
-                                <Icon name={"plus"} />
+                                <Icon className="text-white" name={"plus"} />
                             </div>
                         </div>
                         {false && (

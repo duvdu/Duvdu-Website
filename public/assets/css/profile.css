@@ -1,18 +1,11 @@
 .cover {
     width: 100%;
-    height: 300px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
-    border-bottom-left-radius: 55px;
-    border-bottom-right-radius: 55px;
 }
 
 .left-side {
-    background-color: var(--white);
-    border-radius: 55px;
-    padding-top: 40px;
-    padding-bottom: 40px;
     height: min-content;
 }
 
@@ -25,7 +18,7 @@
     height: 120px;
 }
 
-.edit.auth-field {
+.edit.app-field {
     max-width: 700px;
 }
 
@@ -33,6 +26,11 @@
 .profileImgture {
     width: 104px;
     height: 104px;
+}
+.profile-frame-2,
+.profileImgture-2 {
+    width: 86px;
+    height: 86px;
 }
 
 .profile-frame>* {
@@ -113,8 +111,8 @@
     text-transform: capitalize;
 }
 
-#photographer {
-    padding: 5px 20px;
+.info-container {
+    padding: 5px 15px;
     border-radius: 17.543px;
     border: 1.3px solid rgba(var(--black-rgb), .25);
     backdrop-filter: blur(4.385797023773193px);
@@ -243,19 +241,27 @@
     opacity: 0.5;
 }
 
+.size-small {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.size-big {
+    left: 37.31px;
+    
+}
 .profile-project>.title {
     position: absolute;
-    bottom: 24.7px;
-    left: 37.31px;
     color: #FFF;
     text-align: center;
-
+    bottom: 24.7px;
     font-size: 22.131px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     text-transform: capitalize;
 }
+
 
 .profile-project>.creatives {
     position: absolute;
@@ -301,6 +307,7 @@
     flex-wrap: wrap;
     margin-bottom: 30px;
     justify-content: end;
+    direction: rtl
 }
 
 .edit-pop::-webkit-scrollbar {

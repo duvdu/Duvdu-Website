@@ -1,0 +1,15 @@
+[
+    "CheckUsernameExists",
+    "TagUser",
+    "ChangePassword",
+    "ASKforgetpassword",
+    "UpdatePhone",
+    "_updateProfile",
+    "CreateTicket",
+    "resendCode",
+    "verify",
+    "getMyprofile",
+    "GetAllChats",
+    "signup",
+    "login"
+]

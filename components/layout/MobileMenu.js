@@ -65,7 +65,7 @@ const Header = ({ onClick, toggleOpenSearch, openSearch }) => {
             </Link>
         </div>
 
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 ">
             <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={toggleOpenSearch}>
                 <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'}  />
             </div>
@@ -89,7 +89,7 @@ const Tabs2 = () => {
             {
                 [
                     {
-                        url: '#',
+                        url: '/creative/youseff_abdulla',
                         icon: 'user',
                         name: 'profile',
                     },
@@ -104,9 +104,9 @@ const Tabs2 = () => {
                         name: 'notifications',
                     },
                 ].map((item, index) =>
-                    <a key={index} href={item.url} className="flex gap-1">
-                        <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
-                        <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
+                    <a key={index} href={item.url} className="flex gap-1 items-center">
+                        <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
+                        <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{item.name}</span>
                     </a>
                 )
             }

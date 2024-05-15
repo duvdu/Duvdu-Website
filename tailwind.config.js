@@ -1,8 +1,8 @@
 module.exports = {
   darkMode: 'class',
   content: [
-    './components/**/*.{js,jsx,ts,tsx}', 
-    './pages/**/*.{js,jsx,ts,tsx}', 
+    './components/**/*.{js,jsx,ts,tsx}',
+    './pages/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
     extend: {
@@ -16,7 +16,7 @@ module.exports = {
         '68%': '68%',
         '28%': '28%',
         '48%': '48%',
-        },
+      },
       colors: {
         DS_gray_1: 'var(--gray-1)',
         DS_white: "var(--white)",
@@ -29,6 +29,11 @@ module.exports = {
       container: {
         center: true,
         padding: '1.5rem',
+      },
+    },
+    container: {
+      screens: {
+        '2xl': '1328px'
       },
     },
   },

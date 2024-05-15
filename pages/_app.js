@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // import "react-input-range/lib/css/index.css";
-import { Provider } from "react-redux";
+import { Provider, connect } from "react-redux";
 import { ToastContainer } from 'react-toastify';
 // import "slick-carousel/slick/slick-theme.css";
 // import "slick-carousel/slick/slick.css";
@@ -21,6 +21,10 @@ import "../public/assets/css/project.css";
 import "../public/assets/css/chat.css";
 import "../public/assets/css/home.css";
 import "../public/assets/css/mood_boards.css";
+import '../util/i18n'
+import { OpenChannel } from "../redux/action/apis/realTime/socket/socket";
+import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
+import { GetAllChats } from "../redux/action/apis/realTime/chat/chats";
 
 // const HomeCSS = dynamic(() => import('../public/assets/css/home.css'));
 // const MoodBoardsCSS = dynamic(() => import('../public/assets/css/mood_boards.css'));
@@ -30,38 +34,12 @@ import "../public/assets/css/mood_boards.css";
 function MyApp({ Component, pageProps }) {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-            import("../public/assets/js/popupScript")
-        }, 1000);
-
-        // new WOW.WOW({
-        //     live: false
-        //   }).init()
+        // setLoading(true);
+        // setTimeout(() => {
+        //     setLoading(false);
+        // }, 1000);
+        import("../public/assets/js/popupScript")
     }, []);
-
-//     try {
-        
-//     switch (location.pathname.slice(1)) {
-//         case "":
-//             import('../public/assets/css/home.css');
-//             break;
-//         case 'saved':
-//             import('../public/assets/css/mood_boards.css');
-//             break;
-//         case 'profile':
-//             import('../public/assets/css/profile.css');
-//             break;
-//         case 'dashboard':
-//             import('../public/assets/css/dashboard.css');
-//             break;
-//         default:
-    
-//     }
-// }catch{
-    
-// }
 
     return (
         <>
@@ -77,4 +55,6 @@ function MyApp({ Component, pageProps }) {
     );
 }
 
+
 export default MyApp;
+

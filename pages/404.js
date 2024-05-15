@@ -7,7 +7,7 @@ function Custom404() {
                 parent="Home"
                 sub="Pages"
                 subChild="404"
-               
+
             >
                 <main className="main page-404">
                     <div className="h-body center-div pt-150 pb-150">
@@ -39,24 +39,12 @@ function Custom404() {
                                         </a></Link>
                                         about the problem
                                     </p>
-                                    <div className="search-form">
-                                        <form action="#">
-                                            <input
-                                                type="text"
-                                                placeholder="Search…"
-                                            />
-                                            <button type="submit">
-                                                <i className="fi-rs-search"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <Link href="/"><a
-                                        className="btn btn-default submit-auto-width font-xs hover-up mt-30"
-                                        
-                                    >
-                                        <i className="fi-rs-home mr-5"></i> Back To
-                                        Home Page
-                                        </a></Link>
+
+                                    <Link href="/"><a className=" ">
+                                        <i className="mr-5"></i>
+                                        Back To Home Page
+                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

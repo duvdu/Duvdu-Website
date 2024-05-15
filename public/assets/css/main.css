@@ -34,12 +34,20 @@ TABLE CONTENT
 /*import plugins*/
 /*RESET*/
 
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
 @font-face {
-  src: url('/assets/fonts/Urbanist/Urbanist.ttf') format('truetype');
+  font-family: 'Urbanist';
+  src: url('../fonts/Urbanist/Urbanist.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Cairo';
+  src: url('https://fonts.googleapis.com/css2?family=Cairo&display=swap') format('woff2');
 }
 
 * {
-  font-family: 'Urbanist', sans-serif;
+  font-family: "Urbanist", 'Cairo', sans-serif;
 }
 
 ol,
@@ -678,11 +686,6 @@ table p {
 }
 
 
-.logo a {
-  display: block;
-}
-
-
 .header-action .header-action-icon:last-child {
   margin-right: 0;
 }
@@ -793,7 +796,6 @@ table p {
 
 .cart-dropdown-wrap {
   position: absolute;
-  right: 0;
   top: calc(100% + 20px);
   z-index: 99;
   /* width: 320px; */
@@ -814,9 +816,7 @@ table p {
 }
 
 .cart-dropdown-wrap.account-dropdown a {
-
   cursor: pointer;
-
 }
 
 .cart-dropdown-wrap ul li:last-child {
@@ -945,7 +945,7 @@ table p {
 .search-style-2 .dialog-history ul {
   display: flex;
   flex-wrap: wrap;
-  
+
 }
 
 .search-style-2 .dialog-history {
@@ -1078,9 +1078,9 @@ table p {
 
 
 /* Container */
-.container {
+/* .container {
   max-width: 1328px;
-}
+} */
 
 
 
@@ -1181,7 +1181,6 @@ table p {
   visibility: hidden;
   margin-top: 20px;
   border-radius: 0 0 10px 10px;
-  z-index: 999;
   -webkit-box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
   box-shadow: 5px 5px 15px rgba(var(--black-rgb), 0.05);
 }
@@ -1407,7 +1406,6 @@ table p {
 
 .profile img {
   border-radius: 30px;
-  margin-right: 10px;
   aspect-ratio: 1;
 }
 
@@ -1594,7 +1592,7 @@ table p {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.shadow2{
+.shadow2 {
   text-shadow: 0px 3.488px 10.465px rgba(0, 0, 0, 0.50);
 }
 
@@ -1775,7 +1773,7 @@ table p {
   line-height: 30px;
 }
 
-.auth-field.error {
+.app-field.error {
   border-radius: 33.5px;
   border: 1.5px solid #EB1A40;
   background: var(--Alabaster);
@@ -1783,13 +1781,16 @@ table p {
 
 
 
-.auth-field:focus {
+.app-field:focus {
   border-radius: 33.5px;
   border: 1.5px solid var(--primary);
   background: var(--Alabaster);
 }
 
-.auth-field {
+.app-field::placeholder {
+  text-transform: capitalize;
+}
+.app-field {
   background: var(--Alabaster);
   border-radius: 33.5px;
   font-style: normal;
@@ -1799,12 +1800,11 @@ table p {
   display: flex;
   align-items: center;
   letter-spacing: 0.35px;
-  text-transform: capitalize;
   color: #989898;
   width: 100%;
   border: none;
   height: 64px;
-  padding-left: 27px;
+  padding-left: 27px;  
 }
 
 
@@ -2104,19 +2104,45 @@ table p {
 
 /* Add this in your CSS file or style tag */
 @keyframes fadeInOut {
-  0% { opacity: 0; }
-  1% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(3); }
+  0% {
+    opacity: 0;
+  }
+
+  1% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(3);
+  }
 }
 
 @keyframes scaleIn {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1); }
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
 }
 
 @keyframes scaleOut {
-  0% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.termsBody ul{
+  list-style: disc;
+  padding: revert;
+  margin: revert;
 }
 
 /* Apply these classes to the elements */
@@ -2128,7 +2154,20 @@ table p {
   animation: scaleIn 0.5s ease forwards, fadeOut 0.5s ease forwards;
 }
 
+.Professional-background-decoration {
+  border-radius: 100px;
+  border: 1.5px solid #F4D074;
+  background: rgba(237, 197, 157, 0.20);
+  backdrop-filter: blur(7.5px);
+}
 
+.Professional-text-decoration {
+  background: linear-gradient(90deg, #DA8D3D 11.8%, #F6D377 76.94%, #DC9241 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
 
 /****************/
 
@@ -2173,6 +2212,6 @@ table p {
   --indigo: var(--black);
   --Alabaster: #1A2024;
   --water: #001F4A;
-  --linear-popup:linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 91.04%);
+  --linear-popup: linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 91.04%);
   --drop-white-arrow: url('../imgs/theme/icons/drop-white-arrow.svg') --padge: #FFFFFFBF;
 }
