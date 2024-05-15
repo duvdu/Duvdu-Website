@@ -1,10 +1,11 @@
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Link from 'next/link';
 import Icon from "../Icons";
+import { useRouter } from 'next/router';
 
 const Search = ({}) => {
     const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter();
 
     const handleSearch = () => {
 

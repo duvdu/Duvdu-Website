@@ -8,7 +8,7 @@ import { login } from "../redux/action/apis/auth/signin/signin";
 import { useRouter } from 'next/router';
 import { errorConvertedMessage } from "../util/util";
 
-function Login({ api, login }) {
+function Login({ api, login_respond, login }) {
 
   const [errorMSG, setErrorMSG] = useState(null);
   const router = useRouter();
@@ -22,13 +22,12 @@ function Login({ api, login }) {
   const [showPassword, setShowPassword] = useState(false);
 
   var convertError = JSON.parse(api.error ?? null)
-
-  if (api.data && api.data.message == 'success') {
+  
+  if (login_respond) {
     router.push({
-        pathname: `/`,
-        
+      pathname: `/`,
     });
-}
+  }
 
   useEffect(() => {
     if (convertError && api.req == "login") {
@@ -50,7 +49,7 @@ function Login({ api, login }) {
         const errorMessages = errorConvertedMessage(api.error)
         setErrorMSG(errorMessages)
       }
-      
+
     }
     else
       setErrorMSG(null)
@@ -93,7 +92,7 @@ function Login({ api, login }) {
             <h1 className="auth-title">Welcome Back !!</h1>
           </div>
           <div className={`mb-4 ${emailError.isError && 'error'}`}>
-            <input autoComplete="on" type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="@username" className={emailError.isError ? "auth-field error" : "auth-field"} />
+            <input autoComplete="on" type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="@username" className={emailError.isError ? "app-field error" : "app-field"} />
             {emailError.isError && <p className="error-msg">{emailError.message}</p>}
           </div>
           <div className={`mb-8 ${passwordError.isError && 'error'}`}>
@@ -104,7 +103,7 @@ function Login({ api, login }) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 autoComplete="on"
-                className={passwordError.isError ? "auth-field error" : "auth-field"}
+                className={passwordError.isError ? "app-field error" : "app-field"}
               />
               {
                 !showPassword &&
@@ -157,20 +156,20 @@ function Login({ api, login }) {
           </div>
         </form>
         {errorMSG &&
-          <div className="text-red-600 text-center translate-y-10">
-            {errorMSG}
-          </div>}
+          <div className="text-red-600 text-center translate-y-10" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
       </Auth>
     </>
   );
 }
 
 const mapStateToProps = (state) => ({
-  api: state.api
+  api: state.api,
+  login_respond: state.api.login,
+  user: state.auth
 });
 
 const mapDispatchToProps = {
-  login,
+  login
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 
 import 'swiper/swiper-bundle.css';
 
-const Card = ({ cardData, className = "", href ,islogin}) => {
+const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [loveIconName, setLoveIconName] = useState('far');
   const [isMuted, setIsMuted] = useState(false);
@@ -67,9 +67,10 @@ const Card = ({ cardData, className = "", href ,islogin}) => {
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           className='project'>
-          <a href={href}>
+          <a href={`/${type}/${cardData._id}`}>
             {
-              cardData.backgroundImages.length == 1 &&
+              false &&
+                cardData.backgroundImages.length == 1 &&
                 cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
                 <>
                   <video
@@ -87,12 +88,13 @@ const Card = ({ cardData, className = "", href ,islogin}) => {
                   </div>
                 </>
               ) : (
-                cardData.backgroundImages.length == 1 &&
-                <img className='cardimg' src={cardData.backgroundImages[0]} alt="project" />
+                // cardData.cover.length == 1 &&
+                <img className='cardimg' src={cardData.cover} alt="project" />
               )
             }
 
             {
+              false &&
               cardData.backgroundImages.length > 1 &&
               <Swiper
                 dir='ltr'
@@ -120,7 +122,9 @@ const Card = ({ cardData, className = "", href ,islogin}) => {
             </div>
           }
 
-          {cardData.showSound && 
+          {
+            false &&
+            cardData.showSound &&
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
@@ -128,19 +132,19 @@ const Card = ({ cardData, className = "", href ,islogin}) => {
         </div>
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <a href='/creative/anaa_youseff' className='cursor-pointer'>
-              <img src={cardData.profileImage} alt='user' className='size-6' />
+            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer'>
+              <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
             </a>
-            <a href='/creative/anaa_youseff' className='cursor-pointer' >
-              <span className='text-sm font-semibold'>{cardData.name}</span>
+            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer' >
+              <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
             </a>
           </div>
           <div className='flex items-center gap-2'>
-            <span className='text-base opacity-80 font-medium'>{cardData.rating}</span>
+            <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates||0).toFixed(1) }</span>
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-4'>{cardData.filmName}</p>
+        <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
         <div className='text-xl font-bold'>{cardData.price}</div>
       </div>
     </>
@@ -153,8 +157,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  
+
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);
 

@@ -10,7 +10,7 @@ const Popup = ({ id, children, onCancel, header, className = "", img, addWhiteSh
                 <div className='p-5 pl-[31px]'>
                     <div className='flex gap-3 top-0 -translate-x-4'>
                         <div onClick={onCancel} data-popup-dismiss="popup" className='flex rounded-full header-border p-4 cursor-pointer justify-center items-center'>
-                            <Icon name={'xmark'} useinvert={true} className='w-7 h-6' />
+                            <Icon name={'xmark'} className='w-7 h-6' />
                         </div>
                         {
                             header &&

@@ -1,4 +1,4 @@
-import * as Types from "../../../../../constants/actionTypes";
+import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 export const generateToken = () => {

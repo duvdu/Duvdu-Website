@@ -10,12 +10,12 @@ import { convertToK } from '../util/util';
 var users = [
     {
         "images": [
-            "/assets/imgs/projects/1.jpeg",
+            "/assets/imgs/profile/defultUser.jpg",
             "/assets/imgs/projects/6.jpeg",
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "profileImg": "/assets/imgs/profile/defultUser.jpg",
         "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
@@ -31,12 +31,12 @@ var users = [
     },
     {
         "images": [
-            "/assets/imgs/projects/1.jpeg",
+            "/assets/imgs/profile/defultUser.jpg",
             "/assets/imgs/projects/6.jpeg",
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "profileImg": "/assets/imgs/profile/defultUser.jpg",
         "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
@@ -52,12 +52,12 @@ var users = [
     },
     {
         "images": [
-            "/assets/imgs/projects/1.jpeg",
+            "/assets/imgs/profile/defultUser.jpg",
             "/assets/imgs/projects/6.jpeg",
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "profileImg": "/assets/imgs/profile/defultUser.jpg",
         "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
@@ -73,12 +73,12 @@ var users = [
     },
     {
         "images": [
-            "/assets/imgs/projects/1.jpeg",
+            "/assets/imgs/profile/defultUser.jpg",
             "/assets/imgs/projects/6.jpeg",
             "/assets/imgs/projects/3.jpeg",
             "/assets/imgs/projects/4.jpeg"
         ],
-        "profileImg": "/assets/imgs/profile/contact-2.png",
+        "profileImg": "/assets/imgs/profile/defultUser.jpg",
         "personalName": "youseff abdulla",
         "value": 3.7,
         "price": '30',
@@ -99,7 +99,7 @@ const data = [
         name: 'Modeling',
         person: [
             {
-                img: '/assets/imgs/profile/1.jpg',
+                img: '/assets/imgs/profile/defultUser.jpg',
                 name: 'Mohamed Omar',
                 subtitle: '$55',
                 enableMessage: true,
@@ -138,7 +138,7 @@ const data = [
                 state: 'bug',
             },
             {
-                img: '/assets/imgs/profile/1.jpg',
+                img: '/assets/imgs/profile/defultUser.jpg',
                 name: 'Mohamed Omar',
                 subtitle: '$85',
                 enableMessage: false,

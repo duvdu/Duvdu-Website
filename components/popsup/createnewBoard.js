@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
-import Icon from "../Icons";
 import AppButton from '../elements/button';
 
 function createnewBoard() {
@@ -28,7 +27,7 @@ function createnewBoard() {
                             value={PhoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                             placeholder="Board name"
-                            className={numberError.isError ? "auth-field error" : "auth-field"}
+                            className={numberError.isError ? "app-field error" : "app-field"}
                         />
                         {numberError.isError && <p className="error-msg">{numberError.message}</p>}
                     </div>

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toggleDarkMode, toggleLanguage } from "../../../redux/action/setting";
 import { logout } from "../../../redux/action/auth";
 import * as Types from '../../../redux/constants/actionTypes'
+import ContactUs from "./contactUs";
 
 
 function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopup, language }) {
@@ -30,24 +31,6 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
         // window.location.reload();
     }
 
-    const ContactUs = () => (
-        <>
-            <div className='flex gap-3 z-50'>
-                <div onClick={() => setOpened(0)} className='rounded-full header-border h-14 w-14 flex justify-center items-center cursor-pointer'>
-                    <Icon className="text-xl size-5" name={'xmark'} useinvert={true} />
-                </div>
-                <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
-                    {t('contact us')}
-                </span>
-            </div>
-            <div className="capitalize opacity-60 mt-8">{t('your message')}</div>
-            <textarea placeholder="start typing..." className="bg-[#9999991A] rounded-3xl h-48 border-none mt-5" />
-            <Button className="w-full mb-7 mt-7" shadow={true}>
-                {t('Send')}
-
-            </Button>
-        </>
-    )
     const Language = () => {
         const { i18n } = useTranslation();
 
@@ -71,7 +54,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
             <>
                 <div className='flex gap-3'>
                     <div onClick={() => setOpened(0)} className='rounded-full header-border min-w-14 size-14 flex justify-center items-center cursor-pointer'>
-                        <Icon className="text-xl" name={'x-icon'} useinvert={true} />
+                        <Icon className="text-xl" name={'x-icon'} />
                     </div>
                     <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>{t('Language')}</span>
                 </div>
@@ -111,7 +94,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                     {
                         img: 'mode-icon.svg',
                         name: 'Dark mode',
-                        action: <Switch defaultValue={isDark} onSwitchChange={() => { toggle() }} />,
+                        action: <Switch value={isDark} onSwitchChange={() => { toggle() }} />,
                     },
                     {
                         img: 'power-icon.svg',
@@ -168,14 +151,14 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
         </>
     )
 
-
+if(getheaderpopup != Types.SHOWSETTING ) return
     return (
-        <div className={"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown" + (getheaderpopup == Types.SHOWSETTING ? " active" : "")}  >
+        <div className="cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"   >
             <div className="dialog flex flex-col">
                 <div className="overflow-y-scroll rounded-b-[60px] p-3">
                     <div className="p-6 bg-white dark:bg-[#1A2024] w-72 rounded-[45px]" >
                         {open == 0 && <Main />}
-                        {open == 1 && <ContactUs />}
+                        {open == 1 && <ContactUs setOpened={setOpened} />}
                         {open == 2 && <Language />}
                         {/* <Main /> */}
                     </div>

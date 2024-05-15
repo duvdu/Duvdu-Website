@@ -1,8 +1,9 @@
 import * as Types from "../constants/actionTypes";
 // Initial state
 const initstate = {
-    login: false,
     username: null,
+    isVerify: null,
+    login: null,
     user: null,
 };
 
@@ -24,6 +25,11 @@ const auth = (state = initstate, action) => {
                 user: action.payload,
                 username: action.payload.username,
                 login: true
+            };
+        case Types.VERIFIED:
+            return {
+                ...state,
+                isVerify: action.payload,
             };
 
         default:

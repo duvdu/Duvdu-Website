@@ -55,7 +55,7 @@ function UploadFile() {
                     </section>
                     <section className="my-11 flex justify-between gap-7">
                         <div className="w-full">
-                            <p className="capitalize opacity-60 mb-4">location</p>
+                            <h3 className="capitalize opacity-60 mb-4">location</h3>
                             <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                                 <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                                 <Icon className='text-primary text-2xl w-8' name={"location-dot"} />
@@ -66,7 +66,7 @@ function UploadFile() {
                         </div>
 
                         <div className="w-full">
-                            <p className="capitalize opacity-60 mb-4">upload alike project</p>
+                            <h3 className="capitalize opacity-60 mb-4">upload alike project</h3>
                             <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
                                 <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                                 <Icon className="text-primary text-2xl" name={"image"} />

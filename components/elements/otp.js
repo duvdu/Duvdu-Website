@@ -10,22 +10,32 @@ function OTP({
     username,
     verify,
     resendCode,
-    oNsucess
+    oNsucess,
+    resendCode_respond,
+    verify_respond,
+    initcount = 100
 }) {
 
     const [otp, setOtp] = useState('');
-    const [counter, setcount] = useState(100);
+    const [counter, setcount] = useState(120);
     const [local_error, setlocal_error] = useState(false);
 
-
     useEffect(() => {
-        if (api.data && api.data.message == "success" && api.req == "resendCode") {
+        console.log(resendCode_respond)
+    }, [resendCode_respond?.message])
+    
+    useEffect(() => {
+        if (resendCode_respond) {
             setcount(100)
         }
-        if (api.data && api.data.message == "success" && api.req == "verify") {
+    }, [resendCode_respond?.message])
+
+    useEffect(() => {
+        if (verify_respond) {
             oNsucess()
         }
-    }, [api.loading, api.error, api.data])
+    }, [verify_respond?.message])
+
 
     useEffect(() => {
         if (api.error && (api.req == "resendCode" || api.req == "verify")) {
@@ -92,7 +102,10 @@ function OTP({
 }
 
 const mapStateToProps = (state) => ({
+    resendCode_respond: state.api.resendCode,
+    verify_respond: state.api.verify,
     api: state.api,
+
 });
 
 const mapDispatchToProps = {

@@ -1,4 +1,7 @@
 
+import exclude_errors from '../public/static/exclude_errors.json'
+import exclude_loadings from '../public/static/exclude_loading.json'
+
 export const findprojectIndex = (list, slug) => {
   const index = list.findIndex((item) => item.slug === slug);
   return index;
@@ -85,8 +88,43 @@ export function handleFileUpload(event) {
     fileName: fileName,
     fileType: fileType,
     formattedFileSize: formattedFileSize,
-    file:file
+    file: file
   };
+}
+
+export function handleMultipleFileUpload(event) {
+  const files = event.target.files; // Get all selected files
+  if (!files.length) {
+    return []; // No files selected, return empty array
+  }
+
+  // Convert FileList to an array and map over it to gather file info
+  return Array.from(files).map(file => {
+    const fileName = file.name;
+    const fileType = file.type;
+    const fileSize = file.size;
+
+    // Optional: Format the file size for human readability
+    const formattedFileSize = formatFileSize(fileSize);
+
+    return {
+      fileName: fileName,
+      fileType: fileType,
+      formattedFileSize: formattedFileSize,
+      file: file
+    };
+  });
+}
+
+export function gettFileUploaded(file) {
+  const data = handleFileUpload(file);
+  try {
+    return URL.createObjectURL(data.file ?? null)
+  }
+  catch (ex) {
+    return null
+  }
+
 }
 
 // Function to format file size for human readability (optional)
@@ -118,8 +156,17 @@ export const errorConvertedMessage = (error) => {
   try {
     var errorConverted = JSON.parse(error)
     try {
-      const errorMessage = errorConverted.data.errors.map(error => error.message).join('\n');
-      return errorMessage;
+      //////////// main //////////////
+      var isFeilds = validateErrorsAsList(errorConverted.data)
+      if (isFeilds) {
+        const errors = errorConverted.data.errors;
+        const formattedMessages = errors.map(error => `<ul>${error.field}: ${error.message}</ul>`).join('');
+        return `<strong>Errors Fields:</strong> <li style="padding-left:20px"> ${formattedMessages} </li>`;
+      }
+      else {
+        const errorMessage = errorConverted.data.errors.map(error => error.message).join('<br/>');
+        return errorMessage;
+      }
     }
     catch (err) {
       const errorMessage = errorConverted.data.message;
@@ -129,4 +176,113 @@ export const errorConvertedMessage = (error) => {
   catch (err) {
     return error.toString()
   }
+};
+
+function validateErrorsAsList(data) {
+  // Check if 'data' is an object
+  if (typeof data !== 'object' || data === null) {
+    // console.log("Invalid data: Not an object.");
+    return false;
+  }
+
+  // Check if 'data' has a property 'errors'
+  if (!data.hasOwnProperty('errors')) {
+    // console.log("Invalid data: 'errors' property missing.");
+    return false;
+  }
+
+  // Check if 'data.errors' is an array
+  if (!Array.isArray(data.errors)) {
+    // console.log("Invalid data: 'errors' is not an array.");
+    return false;
+  }
+
+  // Optional: Check if 'data.errors' array has elements
+  if (data.errors.length === 0) {
+    // console.log("Warning: 'errors' array is empty.");
+    return false;  // Change to 'true' if empty array is acceptable
+  }
+
+  // Optional: Check each element in the array (if you expect each element to have certain properties)
+  data.errors.forEach((error, index) => {
+    if (!error.hasOwnProperty('message') || !error.hasOwnProperty('field')) {
+      // console.log(`Invalid format in errors array at index ${index}: Required properties missing.`);
+      return false;
+    }
+  });
+
+  // console.log("Validation successful: data.errors[index] path is valid.");
+  return true;
+}
+
+
+export const getAllTagsOfSubcategories = (categories, categoryId) => {
+
+  const category = categories.find(cat => cat._id === categoryId);
+  if (!category) {
+    return []; // Return an empty array if no category is found
+  }
+
+  // Aggregate all tags from all subcategories of the found category
+  const allTags = category.subCategories.reduce((acc, subCategory) => {
+    return acc.concat(subCategory.tags); // Collect all tags
+  }, []);
+
+  return allTags;
+}
+
+export const exclude_error = (errorReq) => {
+  // return false
+  return exclude_errors.includes(errorReq) ? true : false
+}
+export const exclude_loading = (loadingReq) => {
+  // return false
+  return exclude_loadings.includes(loadingReq) ? true : false
+}
+
+export const filterByCycle = (categories, cycleType) => {
+  if (!Array.isArray(categories)) {
+    throw new TypeError('Expected an array of categories');
+  }
+  return categories.filter(category => category.cycle === cycleType);
+}
+
+export const noScroll = (event) => {
+  const body = document.body;
+
+  if (event) {
+    body.style.overflow = 'hidden';
+  } else {
+    body.style.overflow = 'visible';
+  }
+}
+
+export const convertToFormData = (data, avoidfeilds = []) => {
+  const formData = new FormData();
+
+  Object.keys(data).forEach(key => {
+    // Append each key-value pair to the FormData instance
+    if (avoidfeilds.includes(key)) return
+    formData.append(key, data[key]);
+  });
+
+  return formData;
+}
+
+export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = '') => {
+  Object.keys(obj).forEach(key => {
+      if (avoidFields.includes(key)) return; // Skip processing if key is in avoidFields
+      const value = obj[key];
+      const prefixedKey = `${prefix}${prefix ? '.' : ''}${key}`;
+      if (Array.isArray(value)) {
+          value.forEach((item, index) => {
+              const arrayKey = `${prefixedKey}[${index}]`;
+              if (onUpdate) onUpdate(arrayKey, item);
+          });
+      } else if (value && typeof value === 'object' && value !== null) {
+          UpdateKeysAndValues(value, onUpdate, avoidFields, prefixedKey); // Pass avoidFields down
+      } else {
+          if (onUpdate) onUpdate(prefixedKey, value);
+      }
+  });
 };

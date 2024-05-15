@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 const data = [
     {
-        img1: '/assets/imgs/projects/1.jpeg',
+        img1: '/assets/imgs/profile/defultUser.jpg',
         img2: '/assets/imgs/projects/2.jpeg',
         img3: '/assets/imgs/projects/3.jpeg',
         projectsNum: '37',

@@ -6,8 +6,22 @@ import Icon from '../../components/Icons';
 import { connect } from "react-redux";
 import { signup } from "../../redux/action/apis/auth/signup/signup";
 import { useRouter } from 'next/router';
+import { CheckUsernameExists } from "../../redux/action/apis/auth/signin/CheckUsernameExists";
 
-function Register({ signup, api }) {
+function Register({ signup, api, respond, userExists, CheckUsernameExists }) {
+
+    const [isUsernameExists, setIsUsernameExists] = useState(userExists?.isUsernameExists);
+
+    useEffect(() => {
+        if (api.req === "CheckUsernameExists" && api.loading) {
+            setIsUsernameExists("loading");
+        } else {
+            setIsUsernameExists(userExists?.isUsernameExists);
+        }
+    }, [userExists, api]);
+    
+
+    // console.log("isUsernameExists = ", isUsernameExists)
 
     const router = useRouter();
 
@@ -32,7 +46,7 @@ function Register({ signup, api }) {
 
     var convertError = JSON.parse(api.error ?? null)
 
-    if (api.data && api.data.message == 'success' && api.req == "signup") {
+    if (respond) {
         router.push({
             pathname: `/register/${username}`,
 
@@ -127,7 +141,17 @@ function Register({ signup, api }) {
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
+    const handleusernameChange = (e) => {
+        const value = e.target.value
+        setUsername(value)
+        if (value.length > 5)
+            CheckUsernameExists(value);
+        else
+        {
+            // setUsernameError({ isError: true, message: 'should be greater that 5 characters' });
+            setIsUsernameExists(null)
+        }
+    };
     return (
         <>
             <Auth>
@@ -142,7 +166,7 @@ function Register({ signup, api }) {
                             name="name"
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Name"
-                            className={nameError.isError ? "auth-field error" : "auth-field"}
+                            className={nameError.isError ? "app-field error" : "app-field"}
                         />
                         {nameError.isError && <p className="error-msg">{nameError.message}</p>}
                     </div>
@@ -153,19 +177,42 @@ function Register({ signup, api }) {
                             name="phone"
                             onChange={(e) => setPhone(e.target.value)}
                             placeholder="Phone"
-                            className={phoneError.isError ? "auth-field error" : "auth-field"}
+                            className={phoneError.isError ? "app-field error" : "app-field"}
                         />
                         {phoneError.isError && <p className="error-msg">{phoneError.message}</p>}
                     </div>
-                    <div className={`mb-4 ${usernameError.isError && 'error'}`}>
-                        <input
-                            type="text"
-                            value={username}
-                            name="username"
-                            onChange={(e) => setUsername(e.target.value)}
-                            placeholder="@username"
-                            className={usernameError.isError ? "auth-field error" : "auth-field"}
-                        />
+                    <div className="relative mb-4">
+                        <div className={`${usernameError.isError && 'error'}`}>
+                            <input
+                                type="text"
+                                value={username}
+                                name="username"
+                                onChange={handleusernameChange}
+                                placeholder="@username"
+                                className={usernameError.isError ? "app-field error" : "app-field"}
+                            />
+                            <div className="absolute -right-8 top-6">
+                                {
+                                    isUsernameExists === false &&
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name={'check'} />
+                                    </div>
+                                }
+                                {
+                                    isUsernameExists === true &&
+                                    <div className="bg-red-700 rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name={'xmark'} />
+                                    </div>
+                                }
+                                {
+                                    isUsernameExists == 'loading' &&
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name={'circle'} />
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
                         {usernameError.isError && <p className="error-msg">{usernameError.message}</p>}
                     </div>
                     <div className={`mb-11 ${passwordError.isError && 'error'}`}>
@@ -177,7 +224,7 @@ function Register({ signup, api }) {
                                 name="password"
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Create Password"
-                                className={passwordError.isError ? "auth-field error" : "auth-field"}
+                                className={passwordError.isError ? "app-field error" : "app-field"}
                             />
                             {
                                 !showPassword &&
@@ -196,7 +243,6 @@ function Register({ signup, api }) {
                     </div>
 
                     <div className="mb-11">
-
                         <div className="login_footer">
                             <div className="chek-form">
                                 <div className="flex gap-2 ">
@@ -211,9 +257,7 @@ function Register({ signup, api }) {
                                     <label className="form-check-label terms-submit flex gap-1 items-center " htmlFor="exampleCheckbox1">
                                         <span className="capitalize text-xs">
                                             <span>I agree to </span>
-
-                                            <a href="/terms" className="font-bold text-primary">terms and conditions</a>
-
+                                            <a href="/terms&condations" className="font-bold text-primary">terms and conditions</a>
                                         </span>
                                     </label>
                                 </div>
@@ -234,9 +278,7 @@ function Register({ signup, api }) {
                         <a href="/login"> Log in</a>
                     </div>
                 </form>
-                <div className="text-red-600 text-center">
-                    {errorMSG}
-                </div>
+                <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>
             </Auth>
         </>
     );
@@ -244,10 +286,14 @@ function Register({ signup, api }) {
 
 const mapStateToProps = (state) => ({
     api: state.api,
+    respond: state.api.signup,
+    userExists: state.api.CheckUsernameExists
+
 });
 
 const mapDispatchToProps = {
     signup,
+    CheckUsernameExists
 
 };
 

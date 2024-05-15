@@ -816,9 +816,7 @@ table p {
 }
 
 .cart-dropdown-wrap.account-dropdown a {
-
   cursor: pointer;
-
 }
 
 .cart-dropdown-wrap ul li:last-child {
@@ -1775,7 +1773,7 @@ table p {
   line-height: 30px;
 }
 
-.auth-field.error {
+.app-field.error {
   border-radius: 33.5px;
   border: 1.5px solid #EB1A40;
   background: var(--Alabaster);
@@ -1783,13 +1781,16 @@ table p {
 
 
 
-.auth-field:focus {
+.app-field:focus {
   border-radius: 33.5px;
   border: 1.5px solid var(--primary);
   background: var(--Alabaster);
 }
 
-.auth-field {
+.app-field::placeholder {
+  text-transform: capitalize;
+}
+.app-field {
   background: var(--Alabaster);
   border-radius: 33.5px;
   font-style: normal;
@@ -1799,12 +1800,11 @@ table p {
   display: flex;
   align-items: center;
   letter-spacing: 0.35px;
-  text-transform: capitalize;
   color: #989898;
   width: 100%;
   border: none;
   height: 64px;
-  padding-left: 27px;
+  padding-left: 27px;  
 }
 
 
@@ -2137,6 +2137,12 @@ table p {
   100% {
     transform: scale(1);
   }
+}
+
+.termsBody ul{
+  list-style: disc;
+  padding: revert;
+  margin: revert;
 }
 
 /* Apply these classes to the elements */

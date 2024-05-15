@@ -4,17 +4,19 @@ import Search from "../elements/Search";
 import Menu from '../elements/menu'
 import Icon from "../Icons";
 import { useTranslation } from 'react-i18next';
-import { toggleDarkMode, headerPopUp } from "../../redux/action/setting";
+import { toggleDarkMode, SetheaderPopUp } from "../../redux/action/setting";
 import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
 import Profile from "./HeaderComponents/Profile";
 import Setting from "./HeaderComponents/setting";
-import { login, logout } from "../../redux/action/auth";
+import { logout, verify } from "../../redux/action/auth";
 import * as Types from "../../redux/constants/actionTypes";
-import { login as setlogin } from "../../redux/action/apis/auth/signin/signin";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
-import PopUp from "../elements/addMyprofile";
-import { errorConvertedMessage } from "../../util/util";
+import { errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import Popup from "../elements/popup";
+import Verify_acount from "../popsup/verify_account_now";
+import Chat from "../elements/chat";
+import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
+
 
 // toggleDarkMode
 
@@ -24,11 +26,11 @@ const Header = ({
     toggleClick,
     isDark,
     islogin,
-    headerPopUp,
+    SetheaderPopUp,
     getheaderpopup,
     toggleDarkMode,
-    setlogin,
-    getMyprofile }) => {
+    user,
+    verify }) => {
 
     const { i18n, t } = useTranslation();
 
@@ -37,8 +39,12 @@ const Header = ({
     }
 
     useEffect(() => {
-        getMyprofile()
-    }, []);
+        noScroll(getheaderpopup != Types.NONEPOPUP)
+    }, [getheaderpopup]);
+
+    // if (user)
+    //     verify(api.data.data.isVerified)
+
 
     useEffect(() => {
 
@@ -85,46 +91,48 @@ const Header = ({
 
         const dismissPopupOnEsc = (event) => {
             if (event.key === 'Escape') {
-                headerPopUp(Types.NONEPOPUP)
+                SetheaderPopUp(Types.NONEPOPUP)
             }
         };
 
         document.addEventListener('keydown', dismissPopupOnEsc);
 
     }, []);
-    
+
     return (
         <>
+            <Chat />
             {
-                api.loading &&
+                api.loading && !exclude_loading(api.req) &&
                 <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
                     <img src="/assets/imgs/theme/loading-icon.png" />
                 </div>
             }
             {
-                process.env.NODE_ENV != "production" &&
-                <button onClick={() => setlogin({ username: "ahmed_magdy", password: "Ahmed!123" })} className="mx-5">
-                    login
-                </button>
-            }
-            {
-                process.env.NODE_ENV != "production" &&
-                <button onClick={() => getMyprofile()} >
-                    getMyprofile
-                </button>
-            }
-
-            {
-                api.error &&
+                api.error && !exclude_error(api.req) &&
                 <Popup className="show">
-                    <div className="h-20 flex flex-col justify-center">
-                    <span className="m-10">
-                        {errorConvertedMessage(api.error)}
-                    </span>
+                    <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
+                        <div className="heading_s1 mb-[88px] text-center">
+                            <div className="flex w-full justify-center">
+                                <div className="size-16 bg-red-600 rounded-full flex justify-center items-center">
+                                    <Icon name={"xmark"} className="size-10 text-white" />
+                                </div>
+                            </div>
+                            <h1 className="text-3xl font-semibold my-5">Someting went wrong</h1>
+                            <span dangerouslySetInnerHTML={{ __html: errorConvertedMessage(api.error) }} />
+                            <span >
+                                <strong>function : </strong>
+                                {api.req}
+                            </span>
+                        </div>
+
                     </div>
+
                 </Popup>
             }
-            <div onClick={() => headerPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
+            <Verify_acount />
+
+            <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
             <header className={`bg-DS_white w-full z-10 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
                 <div className="py-3 hidden lg:block">
@@ -150,7 +158,7 @@ const Header = ({
                                     <div className="header-tabs">
 
                                         <a href="/dashboard">
-                                            <Icon name={"dashboard"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
                                             <span className="text-nowrap">
                                                 {t('dashboard')}
                                             </span>
@@ -158,14 +166,14 @@ const Header = ({
 
 
                                         <a href="/contracts">
-                                            <Icon name={"contracts"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <Icon name={"contracts"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
                                             <span>
                                                 {t('contracts')}
                                             </span>
                                         </a>
 
                                         <a href="/teams" className="capitalize whitespace-nowrap">
-                                            <Icon name={"teams"} useinvert={true} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                            <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
                                             <span>
                                                 {t('team projects')}
 
@@ -179,24 +187,25 @@ const Header = ({
                                     <Search />
                                 </div>
                                 <div className="hidden lg:flex min-w-max">
+
                                     {
                                         islogin &&
                                         <div className="header-action-2 flex items-center ">
                                             <div className="header-action-icon-2 z-10" >
-                                                <div className="icon-holder cursor-pointer" onClick={() => headerPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)}>
+                                                <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)}>
                                                     <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span>
                                                     <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                 </div>
                                                 <MessageAndNotofication />
                                             </div>
                                             <div className="header-action-icon-2 mx-6 z-50"  >
-                                                <div className="icon-holder cursor-pointer" onClick={() => headerPopUp(getheaderpopup != Types.SHOWSETTING ? Types.SHOWSETTING : Types.NONEPOPUP)}>
-                                                    <Icon className={"dark:text-[#B3B3B3]"} name={"gear"} useinvert={true} />
+                                                <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWSETTING ? Types.SHOWSETTING : Types.NONEPOPUP)}>
+                                                    <Icon className={"dark:text-[#B3B3B3]"} name={"gear"} />
                                                 </div>
                                                 <Setting />
                                             </div>
                                             <div className="header-action-icon-2"  >
-                                                <div className="icon-holder cursor-pointer" onClick={() => headerPopUp(getheaderpopup != Types.SHOWPROFILE ? Types.SHOWPROFILE : Types.NONEPOPUP)}>
+                                                <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWPROFILE ? Types.SHOWPROFILE : Types.NONEPOPUP)}>
                                                     <div className="flex justify-center items-center h-[18px]">
                                                         <div className="border border-[#B3B3B3] rounded-full p-2">
                                                             <Icon className={"dark:text-[#B3B3B3] "} name={"user"} type="far" />
@@ -214,6 +223,7 @@ const Header = ({
                                             <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</a>
                                         </div>
                                     }
+
                                 </div>
                             </div>
                         </div>
@@ -264,15 +274,16 @@ const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
     getheaderpopup: state.setting.headerpopup,
     islogin: state.auth.login,
-
     api: state.api,
+    error: state.errors,
+    user: state.auth.user,
 });
 
 const mapDispatchToProps = {
     toggleDarkMode,
-    headerPopUp,
-    setlogin,
-    getMyprofile,
+    SetheaderPopUp,
+    verify,
+    GetAllChats
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

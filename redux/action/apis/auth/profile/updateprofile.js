@@ -2,27 +2,23 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const updateProfile = ({ id, data }) => {
+export const updateProfile = (data,withloading) => {
+  const req = "updateProfile"
   return async dispatch => {
-    dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'updateProfile' });
+    if (withloading === false)
+      dispatch({ type: Types.DISAABLE_LOADING, });
+    if (withloading === true)
+      dispatch({ type: Types.ENABLE_LOADING, });
+
+    dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      let formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('about', data.about);
-        // formData.append('category', data.category);
-        // formData.append('coverImage', data.coverImage);
-        // formData.append('profileImage', data.profileImage);
-
-
-        for(let [name, value] of formData) {
-          console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
-        }
-      
-      const response = await mainApiInstance.patch(`api/users/auth/profile`, formData,);
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: 'updateProfile' });
+      for (let [name, value] of data) {
+        console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
+      }
+      const response = await mainApiInstance.patch(`api/users/auth/profile`, data);
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
-      dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: 'updateProfile' });
+      dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
     }
   };
 };
-

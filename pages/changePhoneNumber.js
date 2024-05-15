@@ -5,13 +5,15 @@ import { useState, useEffect } from 'react';
 import Layout from "../components/layout/Layout";
 import { connect } from "react-redux";
 import Icon from '../components/Icons';
-import OTP from "../components/elements/OTP";
+
 import { askChangePhone } from "../redux/action/apis/auth/changephone/askupdatePhone";
 import { UpdatePhone } from "../redux/action/apis/auth/changephone/updatePhone";
 import { errorConvertedMessage } from '../util/util';
+import OTP from "../components/elements/otp";
 
-function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
+function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, UpdatePhone, username }) {
     const [step, setStep] = useState(0);
+    const [error, setError] = useState('');
     const pages = ['', 'EnterPhoneNumber', 'OTP', 'PhoneChanged', 'OTP'];
 
     useEffect(() => {
@@ -34,24 +36,21 @@ function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
         if (api.error && JSON.parse(api.error).status == 423) {
             window.location.href = "/"
         }
-    }, [api.req]);
+        else if(api.error){
+            setError(api.error)
+        }
+    }, [api.error]);
+
 
     useEffect(() => {
         askChangePhone()
     }, []);
 
-    console.log(api)
-
-    useEffect(() => {
-        if (api.req == "askChangePhone" && api.data && api.data.message == "success") {
-            handleNextStep(1)
-        }
-        if (api.req == "UpdatePhone" && api.data && api.data.message == "success") {
-            handleNextStep(3)
-        }
-
-    }, [api.req, (api.data && api.data.message)]);
-
+    if (respond_Update)
+        handleNextStep(3)
+    else if (respond_Ask)
+        handleNextStep(1)
+    
     const handleNextStep = (value) => {
         if (step < pages.length - 1) {
             setStep(value);
@@ -68,7 +67,7 @@ function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
     function EnterNewPhone() {
         const [PhoneNumber, setPhoneNumber] = useState('');
         const [numberError, setNumberError] = useState({ isError: false, message: '' });
-        
+
         if (api.req == "UpdatePhone" && api.error && !numberError.isError) {
             const errorMessage = errorConvertedMessage(api.error)
             setNumberError({ isError: true, message: errorMessage });
@@ -85,7 +84,7 @@ function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
                 UpdatePhone({ phoneNumber: PhoneNumber })
             }
         };
-        
+
 
         return (
             <form className="w-[521px]" method="post" onSubmit={handleSubmit}>
@@ -98,7 +97,7 @@ function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
                         value={PhoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         placeholder="new number"
-                        className={numberError.isError ? "auth-field error" : "auth-field"}
+                        className={numberError.isError ? "app-field error" : "app-field"}
                     />
                     {numberError.isError && <p className="error-msg">{numberError.message}</p>}
                 </div>
@@ -113,7 +112,7 @@ function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
 
 
     function Message() {
-                
+
         return (
             <div className="flex flex-col justify-center h-full">
                 <div className="heading_s1 mb-[88px] text-center">
@@ -140,10 +139,11 @@ function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
             <Layout shortheader={true}>
                 <div className="container">
                     <div className="mx-auto flex justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
-                        {step === 1 && <OTP oNsucess={() => handleNextStep(2)} username={username}/>}
+                        {step === 1 && <OTP oNsucess={() => handleNextStep(2)} username={username} />}
                         {step === 2 && <EnterNewPhone />}
-                        {step === 3 && <OTP oNsucess={() => handleNextStep(4)} username={username}/>}
+                        {step === 3 && <OTP oNsucess={() => handleNextStep(4)} username={username} />}
                         {step === 4 && <Message />}
+                        <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} />
                     </div>
                 </div>
             </Layout>
@@ -155,7 +155,9 @@ function ChangePhoneNumber({ api, askChangePhone, UpdatePhone,username }) {
 
 const mapStateToProps = (state) => ({
     api: state.api,
-    username:state.auth.username
+    respond_Ask: state.askChangePhone,
+    respond_Update: state.UpdatePhone,
+    username: state.auth.username
 });
 
 const mapDispatchToProps = {

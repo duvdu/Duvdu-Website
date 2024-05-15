@@ -33,6 +33,10 @@
 # project UI of Show
 # home video time
 # drawer select date
+# post with drawer 
+# using ahmed choose category
+# remove category add project
+# handle api.req && api.data 
 
 ------------------ later tasks ---------------------
 - suggest strong password
@@ -45,36 +49,6 @@
 - last screen UI
 - report Project popUp
 ----------------------------------- day task -----------------------------------    
-- enable file drag drop
-- what is next-auth
-- handle darkmode
------------------------------------ day task -----------------------------------
-- project controll
-- mobile menu margin ( icon , list )
-- popUp ( subscribe , alarm )
------------------------------------ day task -----------------------------------
-- handle UI popups 
-
------------------------------------ day task -----------------------------------
-
- - localhost:3000/account_created
- - localhost:3000/changePhoneNumber
- - localhost:3000/contracts
- - localhost:3000/password_changed
- - localhost:3000/reset_password
- - localhost:3000/project
- - localhost:3000/register
- - localhost:3000/save
- - localhost:3000/saved
- - localhost:3000/teams
- - localhost:3000/forget_password
- - localhost:3000/permits
- - localhost:3000/producers
- - localhost:3000/payment_success
- - localhost:3000/dashboard
- - localhost:3000/team
- - andge and fixed button 
- - ------ new ------
  - page notification , message
  - page notification
  - page message
@@ -82,11 +56,46 @@
  - page setting
  - sheetpopup contact us
  - sheetpopup language
-
-
-# connect.sid=s%3AMQFMG9HVspPVO4Tq5TLFCnozwmOtPH6N.N83cJFrKy3NZjXAanZ%2Bp5KQ5X%2FdcdqPxRYM9LIcmtfg; Path=/; HttpOnly;
-
-- don't use username but token token 
+----------------------------------- day task -----------------------------------
+- login error handling
+- how logout ?
+- record account when -> login to verify 
+- edit profile img and others 
 - find user by URL
-- forget_password required
 - error cases handling
+- verify 10 min ?? return time
+- how empty profile look like (karim)
+- error popup 
+- expired auth popUp
+
+- tgas other creative
+- duration should be only number
+- limitation length of inputs
+- creative  in studio booking
+- get user from url
+- studio booking category
+- get user by username
+
+----------------------------------- day task -----------------------------------
+handle converting format clean Code
+select date
+handle get studio
+start in chating
+edit profile image file
+get profile owner name and profile
+handle respond success AtTime
+tool 
+
+select creative
+read files
+mark read
+other profile
+get project
+open new chat 
+----------------------------------- day task -----------------------------------
+logout
+valid username iunput                             // too much ???
+category in create
+creative tag ( project post , team project )
+test auth
+ 

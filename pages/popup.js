@@ -17,13 +17,14 @@ import Share from '../components/popsup/Share';
 import ProjectDetils from '../components/popsup/project-details';
 import UploadFilesTeam from '../components/popsup/uploadFilesTeam';
 import HourWorks from '../components/popsup/hourWorks';
-import ChooseCategory from '../components/popsup/chooseCategory';
+import ChooseCategory from '../components/popsup/create/assets/chooseCategory';
 import Dashboard from '../components/popsup/dashboard';
 import DeleteBoard from '../components/popsup/DeleteBoard';
-import EditProfile from '../components/popsup/EditProfile';
+import EditProfile from '../components/drawer/EditProfile';
 import CreatenewBoard from '../components/popsup/createnewBoard';
-import Formsubmitted from '../components/popsup/formsubmitted';
+import Formsubmited from '../components/popsup/formsubmited';
 import Reportproject from '../components/popsup/report-project';
+import Verify_account_now from '../components/popsup/verify_account_now';
 import QRScanner from '../components/elements/QRScanner';
 
 
@@ -39,7 +40,7 @@ function Test() {
                         <BTN target='delete-board'> DeleteBoard </BTN>
                         <BTN target='edit-details'> EditProfile </BTN>
                         <BTN target='create-new-board'> CreatenewBoard </BTN>
-                        <BTN target='form-submitted'> Formsubmitted </BTN>
+                        <BTN target='form-submited'> Formsubmited </BTN>
                         <BTN target='report-project2'> Reportproject </BTN>
                         <BTN target='subscribe-notfree'> Subscribe </BTN>
                         <BTN target='subscribe-free'> free Subscribe </BTN>
@@ -59,7 +60,8 @@ function Test() {
                         <BTN target='project-details'> Project Details </BTN>
                         <BTN target='team_uploading_files'> upload files </BTN>
                         <BTN target='work-hour'> hours work </BTN>
-                        <BTN target='add-post'> add post </BTN>
+                        <BTN target='project-post'> add post </BTN>
+                        <BTN target='verify-account-now'> verify now </BTN>
                     </div>
 
 
@@ -67,7 +69,7 @@ function Test() {
                     <DeleteBoard />
                     <EditProfile />
                     <CreatenewBoard />
-                    <Formsubmitted />
+                    <Formsubmited />
                     <Reportproject />
                     <Subscribe />
                     <Subscribe isfree={true} />
@@ -88,6 +90,7 @@ function Test() {
                     <UploadFilesTeam />
                     <HourWorks />
                     <ChooseCategory />
+                    <Verify_account_now />
                     {/* <QRScanner /> */}
                 </div>
               

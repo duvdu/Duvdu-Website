@@ -33,7 +33,7 @@ function Rating() {
             <Popup id="Rating" header={"Rating Anna"}>
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
                     <div className='w-20 h-20 rounded-full overflow-hidden'>
-                        <img src="/assets/imgs/profile/contact-2.png" alt="user" />
+                        <img src="/assets/imgs/profile/defultUser.jpg" alt="user" />
                     </div>
                     <div className='flex gap-5 my-5'>
                         {renderStars()}
@@ -42,7 +42,7 @@ function Rating() {
                         <div className="capitalize opacity-60">rating</div>
                         <textarea placeholder="Rating will show on creative’s profile..." className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none" />
                     </div>
-                    <Button className="mb-7 mx-16 font-bold text-lg w-[345px] mt-20" shadow={true}>
+                    <Button className="mb-7 mx-4 font-bold text-lg w-full max-w-[345px] mt-20" shadow={true}>
                         <span className='text-white font-bold capitalize text-lg'>
                             Done
                         </span>

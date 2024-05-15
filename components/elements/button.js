@@ -1,5 +1,5 @@
 
-function button({ children, color, conentclassName = "", className = "", shadow = false, shadowHeight, ...rest }) {
+function AppButton({ children, color, conentclassName = "", className = "", shadow = false, shadowHeight, ...rest }) {
     let buttonClass;
   
     switch (color) {
@@ -35,4 +35,4 @@ function button({ children, color, conentclassName = "", className = "", shadow 
     );
   }
   
-  export default button;
+  export default AppButton;

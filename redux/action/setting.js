@@ -12,6 +12,6 @@ export const toggleLanguage = (value) => dispatch => {
     dispatch({ type: Types.LANGUAGE, payload:value })
 };
 
-export const headerPopUp = (value) => dispatch => {
+export const SetheaderPopUp = (value) => dispatch => {
     dispatch({ type: value })
 };

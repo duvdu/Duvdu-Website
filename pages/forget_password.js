@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import Button from '../components/elements/button';
 import Icon from '../components/Icons';
 import { connect } from "react-redux";
-import OTP from '../components/elements/OTP';
+import OTP from '../components/elements/otp';
 import { ASKforgetpassword } from "../redux/action/apis/auth/changePassword/askForgetPassword";
 import { ChangePassword } from "../redux/action/apis/auth/changePassword/changePassword";
 import { errorConvertedMessage } from '../util/util';
 
 
 
-function Page({ api, ASKforgetpassword, ChangePassword }) {
+function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_respond }) {
     const [step, setStep] = useState(1);
     const pages = ['', 'OTP', 'ResetPassword', 'PasswordChanged'];
     const [username, setUsername] = useState(null);
@@ -38,13 +38,14 @@ function Page({ api, ASKforgetpassword, ChangePassword }) {
         }
     };
     useEffect(() => {
-        if (api.req == "ASKforgetpassword" && api.data && api.data.message == "success") {
+        if (ask_respond)
             handleNextStep()
-        }
-        if (api.req == "ChangePassword" && api.data && api.data.message == "success") {
+    }, [ask_respond?.message])
+
+    useEffect(() => {
+        if (Change_respond)
             handleNextStep()
-        }
-    }, [api.req, (api.data && api.data.message)]);
+    }, [Change_respond?.message])
 
 
 
@@ -70,11 +71,13 @@ function Page({ api, ASKforgetpassword, ChangePassword }) {
         const handleChange = (value) => {
             setPhoneNumber(value);
         };
+        useEffect(() => {
 
-        if (api.req == "ASKforgetpassword" && api.error) {
-            const errorMessage = errorConvertedMessage(api.error)
-            setNumberError({ isError: true, message: errorMessage });
-        }
+            if (api.req == "ASKforgetpassword" && api.error) {
+                const errorMessage = errorConvertedMessage(api.error)
+                setNumberError({ isError: true, message: errorMessage });
+            }
+        }, [api.error])
 
         return (
             <form method="post" onSubmit={handleSubmit}>
@@ -85,12 +88,13 @@ function Page({ api, ASKforgetpassword, ChangePassword }) {
                     <input
                         type="text"
                         placeholder="Phone number"
-                        className={numberError.isError ? "auth-field error" : "auth-field"}
+                        className={numberError.isError ? "app-field error" : "app-field"}
                         value={PhoneNumber}
                         onChange={(e) => handleChange(e.target.value)}
 
                     />
-                    {numberError.isError && <p className="error-msg">{numberError.message}</p>}
+                    {numberError.isError &&<span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(numberError.message) }} /> }
+                     
                 </div>
                 <div className="h-10" />
                 <button className="w-full" type="submit" >
@@ -171,7 +175,7 @@ function Page({ api, ASKforgetpassword, ChangePassword }) {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password *"
                                 autoComplete="on"
-                                className={passwordError.isError ? "auth-field error" : "auth-field"}
+                                className={passwordError.isError ? "app-field error" : "app-field"}
                             />
                             {
                                 !showPassword &&
@@ -197,7 +201,7 @@ function Page({ api, ASKforgetpassword, ChangePassword }) {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="Confirm Password *"
                                 autoComplete="on"
-                                className={passwordError.isError ? "auth-field error" : "auth-field"}
+                                className={passwordError.isError ? "app-field error" : "app-field"}
                             />
                             {
                                 !showConfirmPassword &&
@@ -228,7 +232,7 @@ function Page({ api, ASKforgetpassword, ChangePassword }) {
     return (
         <Auth>
             {step === 1 && <EnterYourPhoneNumber />}
-            {step === 2 && <OTP oNsucess={handleNextStep} username={username} />}
+            {step === 2 && <OTP oNsucess={handleNextStep} username={username} />} 
             {step === 3 && <ResetPassword />}
             {step === 4 && <PasswordChanged />}
             {/* 
@@ -270,7 +274,9 @@ const PasswordChanged = () => <div className="flex flex-col justify-center h-ful
 </div>
 
 const mapStateToProps = (state) => ({
-    api: state.api
+    api: state.api,
+    ask_respond: state.api.ASKforgetpassword,
+    Change_respond: state.api.ChangePassword
 });
 
 const mapDispatchToProps = {

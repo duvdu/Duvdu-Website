@@ -10,8 +10,7 @@ export const login = ({ username, password }) => {
         password: password
       });
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data , req: 'login'});
-      dispatch({ type: Types.SET_USER,payload:{}});
-    } catch (error) {
+      } catch (error) {
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response) , req: 'login'});
     }
   };

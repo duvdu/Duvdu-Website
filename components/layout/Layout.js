@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Footer from "./Footer";
 import Header from "./Header";
 import MobileMenu from "./MobileMenu";
+import { connect } from "react-redux";
+import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
+import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 
 const Layout = ({
     children,
@@ -11,6 +14,10 @@ const Layout = ({
     headerStyle,
     showTabs = true,
     iSsticky = true,
+    getMyprofile,
+    GetAllChats,
+    login_respond
+    
 }) => {
     const [isToggled, setToggled] = useState(1);
 
@@ -26,6 +33,11 @@ const Layout = ({
                 .classList.add("mobile-menu-active");
     };
 
+
+    useEffect(()=>{
+        getMyprofile()
+        GetAllChats()
+    },[login_respond])
     return (
         <>
             <Head>
@@ -47,5 +59,13 @@ const Layout = ({
         </>
     );
 };
+const mapStateToProps = (state) => ({
+  login_respond: state.api.login,
+});
 
-export default Layout;
+const mapDispatchToProps = {
+    getMyprofile,
+    GetAllChats,
+    
+};
+export default connect(mapStateToProps,mapDispatchToProps)(Layout);

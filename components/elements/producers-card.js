@@ -12,8 +12,8 @@ const Card = ({ cardData, className = "", onClick }) => {
           <img className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow' src={cardData.img} alt="profile picture" />
           <div className='flex-2 flex-col gap-1'>
             <h3 className='opacity-80 text-lg font-bold'>{cardData.name}</h3>
-            <span className='flex items-center justify-center opacity-40'>
-              <Icon className='opacity-50 mr-2' name='location-dot' />
+            <span className='flex items-center opacity-40 gap-1'>
+              <Icon className='w-3' name='location-dot' />
               <span className="location">{cardData.location}</span>
             </span>
           </div>
@@ -22,7 +22,6 @@ const Card = ({ cardData, className = "", onClick }) => {
           <div className='Professional-background-decoration px-3 py-1'>
             <span className='Professional-text-decoration font-bold text-lg'>{cardData.rank}</span>
           </div>
-
           <span className='info-container flex gap-1'>
             <span>{cardData.projects}</span> <span>projects</span>
           </span>

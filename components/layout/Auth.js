@@ -5,13 +5,14 @@ import { useRouter } from 'next/router';
 import SwiperCore, { Autoplay, Navigation, EffectFade } from 'swiper';
 import Icon from '../Icons';
 import { connect } from "react-redux";
+import * as Types from "../../redux/constants/actionTypes";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
 
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { combineSlices } from "@reduxjs/toolkit";
 
-function Auth({ children, isloading, error, api, auth }) {
+function Auth({ children, isloading, errors, auth, api, resendCode }) {
 
     const [active, setActive] = useState(-1);
     const [swiper, setSwiper] = useState(null);
@@ -37,18 +38,14 @@ function Auth({ children, isloading, error, api, auth }) {
     ];
 
     const router = useRouter();
-
-
     useEffect(() => {
-        // Function to run when the route changes
+
         const handleRouteChange = (url) => {
             swiper?.destroy();
         };
 
-        // Subscribe to the router's routeChange event
         router.events.on('routeChangeStart', handleRouteChange);
 
-        // Clean up the event listener on component unmount
         return () => {
             router.events.off('routeChangeStart', handleRouteChange);
         };
@@ -59,17 +56,26 @@ function Auth({ children, isloading, error, api, auth }) {
     }, [isloading]);
 
     useEffect(() => {
-        if (auth.username && auth.login) {
-            window.location.href ="/"
+        
+        // if (!auth.username && !auth.login && router.pathname == "/forget_password") {
+            
+        // }
+        if (auth.username && auth.login && auth.user.isVerified !== false) {
+            router.push(`/`);
         }
-    },[auth.username]);
+        else if (auth.username && auth.login && auth.user.isVerified === false) {
+            resendCode({ username: auth.username })
+            router.push(`/register/${auth.username}`);
+        }
+    }, [auth.username]);
+
     useEffect(() => {
         setLocation(window.location.origin)
-    });
+    }, []);
+
     return (
         <>
             <Layout isloading={isloading} shortheader={true} showTabs={false}>
-
                 <div className="h-body center-div">
                     <div className="container">
                         <div className="flex flex-col lg:flex-row gap-6 h-body py-9">
@@ -94,12 +100,10 @@ function Auth({ children, isloading, error, api, auth }) {
                                                             <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
                                                             <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
                                                         </div>
-
                                                         {
                                                             location &&
                                                             <div className="bg-cover border-top swipper-img h-full" style={{ backgroundImage: `url(${location}/${source.img})` }} />
                                                         }
-
                                                     </div>
                                                     {/* <div className="w-full h-full bg-black" /> */}
                                                 </SwiperSlide>
@@ -139,18 +143,18 @@ function Auth({ children, isloading, error, api, auth }) {
                     </div>
                 </div>
             </Layout>
-
         </>
     );
 }
 
 const mapStateToProps = (state) => ({
     api: state.api,
+    errors: state.errors,
     auth: state.auth
 });
 
 const mapDispatchToProps = {
-
+    resendCode
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

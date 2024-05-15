@@ -34,14 +34,14 @@ mainApiInstance.interceptors.request.use(
 // Add a response interceptor
 mainApiInstance.interceptors.response.use(
   response => {
-console.log(response)
     return response;
   },
   async error => {
+    console.log(error.response)
     if (error.response && error.response.status === 423) {
 
       if (error.config.url == "/api/users/auth/refresh") {
-        console.log('error ' , error)
+        
       }
       else {
         try {

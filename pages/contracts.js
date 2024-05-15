@@ -123,7 +123,7 @@ const Pending = () => {
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
                         <span className='opacity-50'>Yesterday</span>
@@ -175,7 +175,7 @@ const Pending2 = () => {
             <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center sm:w-full'>
                 {/* profile */}
                 <div className='flex gap-3 items-center'>
-                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
                         <span className='opacity-50'>Yesterday</span>
@@ -220,7 +220,7 @@ const Ongoing = ({ type }) => {
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>anna jonathan</h3>
                         <span className='opacity-50 text-white'>Yesterday</span>
@@ -287,7 +287,7 @@ const Ongoing2 = ({ type }) => {
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>anna jonathan</h3>
                         <span className='opacity-50 text-white'>Yesterday</span>
@@ -422,7 +422,7 @@ const RightSide = () => {
                 {/* profile */}
                 <a href='/creative/youseff_abdulla'>
                     <div className='flex gap-3 items-center'>
-                        <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/contact-2.png" alt="profile picture" />
+                        <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
                         <div className='flex flex-col items-start justify-start'>
                             <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
                             <span className='opacity-50'>Sun - Aug 3</span>
@@ -471,7 +471,7 @@ const RightSide = () => {
                 <div className='flex flex-col gap-[15px] mx-auto sm:mx-0 w-max sm:w-auto text-center mt-9'>
                     <Title title="recent clients" />
                     <div className='flex sm:flex-row gap-2'>
-                        <Recents img='/assets/imgs/profile/1.jpg' name='youseff ali' address='zayed city' />
+                        <Recents img='/assets/imgs/profile/defultUser.jpg' name='youseff ali' address='zayed city' />
                         <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
                         <div className='hidden sm:block lg:hidden'>
                             <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />

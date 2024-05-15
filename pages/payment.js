@@ -156,17 +156,17 @@ const RightSide = () => {
             </Popup>
             <div className='rounded-2xl bg-DS_white border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>
                 <section>
-                    <p className="capitalize opacity-60 mb-4">project type</p>
+                    <h3 className="capitalize opacity-60 mb-4">project type</h3>
                     <span className="rounded-full border border-black border-opacity-55 px-3 py-1"> videography </span>
                 </section>
 
                 <section className='my-9'>
-                    <p className="capitalize opacity-60 mb-4">project details</p>
+                    <h3 className="capitalize opacity-60 mb-4">project details</h3>
                     <span className="font-bold"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt </span>
                 </section>
 
                 <section>
-                    <p className="capitalize opacity-60 mb-4">shooting days</p>
+                    <h3 className="capitalize opacity-60 mb-4">shooting days</h3>
                     <span className="font-bold"> 5 days </span>
                 </section>
 

@@ -18,7 +18,7 @@
     height: 120px;
 }
 
-.edit.auth-field {
+.edit.app-field {
     max-width: 700px;
 }
 
@@ -112,7 +112,7 @@
 }
 
 .info-container {
-    padding: 5px 20px;
+    padding: 5px 15px;
     border-radius: 17.543px;
     border: 1.3px solid rgba(var(--black-rgb), .25);
     backdrop-filter: blur(4.385797023773193px);
@@ -307,6 +307,7 @@
     flex-wrap: wrap;
     margin-bottom: 30px;
     justify-content: end;
+    direction: rtl
 }
 
 .edit-pop::-webkit-scrollbar {

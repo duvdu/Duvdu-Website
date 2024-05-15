@@ -1,3 +1,10 @@
+// APIS
+
+export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
+export const ENABLE_LOADING = 'ENABLE_LOADING';
+export const DISAABLE_LOADING = 'DISAABLE_LOADING';
 
 // PROJECT TYPES
 
@@ -9,6 +16,7 @@ export const FETCHED_MORE_PROJECT = "FETCHED_MORE_PROJECT"
 export const UPDATE_PROJECT_FILTERS = "UPDATE_PROJECT_FILTERS"
 export const UPDATE_PROJECT_CATEGORY = "UPDATE_PROJECT_CATEGORY"
 export const UPDATE_RATING = "UPDATE_RATING"
+export const SET_DATA = "SET_DATA"
 
 // SETTING TYPES
 
@@ -20,21 +28,26 @@ export const SHOWNOTOFICATION = "SHOWNOTOFICATION"
 export const SHOWSETTING = "SHOWSETTING"
 export const SHOWPROFILE = "SHOWPROFILE"
 
-// SETTING AUTH
+// AUTH
 
-export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
-export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
-export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
-export const FORGET_PASSWORD = 'FORGET_PASSWORD';
 export const SET_USER_NAME = 'SET_USER_NAME';
 export const SET_USER = 'SET_USER';
+export const VERIFIED = 'VERIFIED';
 export const USER_NONE = 'USER_NONE';
-export const PERMITTED = "PERMITTED"
-export const DENIED = "DENIED"
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
 
 
+// ERROR handling
+
+export const SETERROR = 'SETERROR';
+
+export const ERROR_SIGNUP_VERIFY = 'SIGNUP_VERIFY';
+export const ERROR_UNKNOWN = 'UNKNOWN';
+
+// CATEGORIES
+
+export const SET_CATEGORIES = 'SET_CATEGORIES';
 
 // PROFILE
 export const SET_PROFILE_DATE = 'SET_PROFILE_DATE';
@@ -42,3 +55,11 @@ export const SET_PROFILE_DATE = 'SET_PROFILE_DATE';
 // LOCAL STORAGE
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
+
+
+// Message
+export const SET_CHATS = 'SET_CHATS';
+export const OPEN_CHAT = 'OPEN_CHAT';
+export const CLOSE_CHAT = 'CLOSE_CHAT';
+export const RESET_CHAT = 'RESET_CHAT';
+export const SET_MESSAGES_LIST = 'SET_MESSAGES_LIST';

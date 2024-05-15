@@ -1,25 +1,31 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from "react";
-import headerMen from '../../public/static/header_content.json';
+// import headerMen from '../../public/static/header_content.json';
 import { connect } from "react-redux";
+import { getCategory } from '../../redux/action/apis/category/getCategories';
 
-
-const MegaMenu = ({ language }) => {
-  const [categories, setCategories] = useState(null);
+const MegaMenu = ({ language, api, getCategory,categories }) => {
+  
+  function repeatArray(arr, count) {
+    let result = [];
+    for (let i = 0; i < count; i++) {
+        result = result.concat(arr);
+    }
+    return result;
+  }
 
   useEffect(() => {
-    setCategories(headerMen);
+    getCategory()
   }, []);
 
-  return (
-    <ul className='flex justify-between'>
+    return (
+    <ul className='flex flex-wrap gap-x-4'>
       {categories &&
         categories.map((category, index) => (
           <Category key={index} category={category} language={language} />
         ))}
     </ul>
   );
-
 }
 
 
@@ -38,32 +44,32 @@ const Category = ({ category, language }) => {
           megaMenuRef.current.style.right = '0px';
         }
       }
-        else {
-          const leftPosition = parseFloat(computedStyle.getPropertyValue('left'));
-          console.log("leftPosition ", leftPosition, megaMenuRef.current)
-          if (leftPosition < 0) {
-            megaMenuRef.current.style.left = '0px';
-          }
+      else {
+        const leftPosition = parseFloat(computedStyle.getPropertyValue('left'));
+        console.log("leftPosition ", leftPosition, megaMenuRef.current)
+        if (leftPosition < 0) {
+          megaMenuRef.current.style.left = '0px';
         }
+      }
     }
   }, [language]);
   return (
     <li className='header-category'>
       <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>
-        {category.category}
+        {category.title}
       </div>
       <ul className="hover-menu" ref={megaMenuRef}>
         <div>
-          {category.subcategories.map((subcategory, subIndex) => (
-            subIndex / category.subcategories.length < 0.5 &&
-            <MenuItem key={subIndex} title={subcategory.title} items={subcategory.items} />
+          {category.subCategories.map((subcategory, subIndex) => (
+            subIndex / category.subCategories.length < 0.5 &&
+            <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
           ))}
         </div>
-        {category.subcategories.length > 1 &&
+        {category.subCategories.length > 1 &&
           <div>
-            {category.subcategories.map((subcategory, subIndex) => (
-              subIndex / category.subcategories.length >= 0.5 &&
-              <MenuItem key={subIndex} title={subcategory.title} items={subcategory.items} />
+            {category.subCategories.map((subcategory, subIndex) => (
+              subIndex / category.subCategories.length >= 0.5 &&
+              <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
             ))}
           </div>
         }
@@ -95,7 +101,14 @@ const MenuItem = ({ title, items }) => (
 
 const mapStateToProps = (state) => ({
   language: state.setting.LANGUAGE,
+  api: state.api,
+  categories: state.categories
+
 });
 
-export default connect(mapStateToProps)(MegaMenu);
+const mapDispatchToProps = {
+  getCategory
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MegaMenu);
 
