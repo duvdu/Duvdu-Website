@@ -17,6 +17,7 @@ const Layout = ({
     iSsticky = true,
     getMyprofile,
     GetAllChats,
+    GetNotifications,
     login_respond
     
 }) => {
@@ -68,6 +69,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     getMyprofile,
     GetAllChats,
+    GetNotifications
     
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Layout);

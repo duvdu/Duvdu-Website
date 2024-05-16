@@ -7,16 +7,13 @@ import MessageTile from "../../elements/MessageTile";
 
 const notification = []
 
-function MessageAndNotofication({ getheaderpopup, chats ,GetNotifications_resond}) {
-    console.log("GetNotifications_resond = ",GetNotifications_resond)
-    console.log("chats_resond = ",chats_resond)
-    console.log("=============")
+function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond, chats_resond }) {
+    
     const { t } = useTranslation();
     const [viewallState, setViewallState] = useState(0);
     useEffect(() => {
         setViewallState(0)
-    },
-        [getheaderpopup == Types.SHOWNOTOFICATION])
+    }, [getheaderpopup == Types.SHOWNOTOFICATION])
 
     if (getheaderpopup != Types.SHOWNOTOFICATION) return
 
@@ -27,13 +24,13 @@ function MessageAndNotofication({ getheaderpopup, chats ,GetNotifications_resond
                     {
                         viewallState == 0 &&
                         <>
-                            <ViewFew Type={'notification'} list={notification} t={t} onViewAll={() => setViewallState(1)} />
+                            <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewallState(1)} />
                             <ViewFew Type={'messages'} list={chats || []} t={t} onViewAll={() => setViewallState(2)} />
                         </>
                     }
                     {
                         viewallState == 1 &&
-                        <ViewAll Type={'notification'} list={notification} t={t} />
+                        <ViewAll Type={'notification'} list={GetNotifications_resond?.data || []} t={t} />
                     }
                     {
                         viewallState == 2 &&
@@ -81,12 +78,12 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
 
 const NotificationTile = ({ tile }) =>
     <div className="w-64 flex gap-4">
-        <img className="size-9 rounded-full" src={tile.img_url} alt="user" width="45" height="45" />
+        <img className="size-9 rounded-full" src={tile.sourceUser.profileImage} alt="user" width="45" height="45" />
         <div className="flex flex-col justify-center">
             <span className="leading-[1px]">
-                <span className="rtl:hidden font-bold">{tile.name} </span>
-                <span className="text-xs opacity-60">{tile.event}</span>
-                <span className="ltr:hidden font-bold">{tile.name} </span>
+                <span className="rtl:hidden font-bold">{tile.sourceUser.name||'NONE'} </span>
+                <span className="text-xs opacity-60">{tile.title}</span>
+                <span className="ltr:hidden font-bold">{tile.message} </span>
             </span>
         </div>
     </div>
@@ -96,8 +93,8 @@ const NotificationTile = ({ tile }) =>
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
     chats: state.chats.list,
-    chats_resond:state.api.GetAllChats,
-    GetNotifications_resond:state.api.GetNotifications
+    chats_resond: state.api.GetAllChats,
+    GetNotifications_resond: state.api.GetNotifications
 
 });
 const mapDispatchToProps = {
