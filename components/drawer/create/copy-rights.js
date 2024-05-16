@@ -65,6 +65,8 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
 
 
     const toggleDrawer = () => {
+        CreateCopyrights(-1);
+        setPost_success(false)
         resetForm()
         router.replace({
             pathname: `/creative/${auth.username}`,
@@ -75,7 +77,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={() => api.req = null} message="Creating"/>
+            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating"/>
             <Drawer isOpen={true} name={'copy right'} toggleDrawer={toggleDrawer}>
                 <form className='flex flex-col gap-5 container mx-auto' onSubmit={handleSubmit}>
                     <section>

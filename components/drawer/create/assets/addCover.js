@@ -10,7 +10,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
     const formData = addprojectState.formData;
     const img = formData.coverShow;
     const profileUpload = (e) => {
-        UpdateFormData('cover', handleFileUpload(e).file)
+        UpdateFormData('cover', handleFileUpload(e)?.file)
         UpdateFormData('coverShow', gettFileUploaded(e))
     };
 

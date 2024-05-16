@@ -7,7 +7,7 @@ import { UpdateFormData } from '../../redux/action/logic/forms/Addproject';
 import { convertToFormData, handleMultipleFileUpload } from '../../util/util';
 import dateFormat from "dateformat";
 
-const Chat = ({ user, respond, close, GetAllMessageInChat, messages, SendMessages, UpdateFormData, addprojectState }) => {
+const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, UpdateFormData, addprojectState }) => {
     const formData = addprojectState.formData;
     const chatRef = useRef(null);
     const [otherUser, setOtherUser] = useState({})
@@ -52,10 +52,9 @@ const Chat = ({ user, respond, close, GetAllMessageInChat, messages, SendMessage
     }, [messages]);
 
 
-    function onClise() {
+    function onClose() {
         GetAllMessageInChat(null)
         ClearChatInput()
-        close?.()
     }
 
     const onSend = () => {
@@ -79,7 +78,7 @@ const Chat = ({ user, respond, close, GetAllMessageInChat, messages, SendMessage
 
     return (
         <div className={`fixed bottom-0 z-20 ${messages.openchat == true ? '' : 'hidden'}`}>
-            <div onClick={onClise} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
+            <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
 
             {messages.openchat &&
                 <div className="chat dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-DS_white shadow-xl sm:left-8">
@@ -101,7 +100,7 @@ const Chat = ({ user, respond, close, GetAllMessageInChat, messages, SendMessage
                             <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
                         </div>
                     </div>
-                    <div onClick={onClise} className='absolute right-4 top-4 cursor-pointer'>
+                    <div onClick={onClose} className='absolute right-4 top-4 cursor-pointer'>
                         <Icon name={'xmark'} className='text-xl opacity-50 w-3' />
                     </div>
                     <div className="messages-chat h-full" id="chat" ref={chatRef}>

@@ -257,7 +257,7 @@ function Register({ signup, api, respond, userExists, CheckUsernameExists }) {
                                     <label className="form-check-label terms-submit flex gap-1 items-center " htmlFor="exampleCheckbox1">
                                         <span className="capitalize text-xs">
                                             <span>I agree to </span>
-                                            <a href="/terms&condations" className="font-bold text-primary">terms and conditions</a>
+                                            <a href="/terms_conditions" className="font-bold text-primary">terms and conditions</a>
                                         </span>
                                     </label>
                                 </div>

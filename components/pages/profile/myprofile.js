@@ -8,7 +8,7 @@ import Switch from '../../../components/elements/switcher'
 import PostSheet from '../../../components/elements/Post';
 import { useRouter } from 'next/router';
 import { connect } from "react-redux";
-import { resetForm, UpdateFormData } from '../../../redux/action/logic/forms/Addproject';
+import { InsertToArray, resetForm, UpdateFormData } from '../../../redux/action/logic/forms/Addproject';
 import { updateProfile } from "../../../redux/action/apis/auth/profile/updateprofile";
 
 import AddStudioBooking from '../../../components/drawer/create/studio-booking'
@@ -23,6 +23,9 @@ import Conver from '../../elements/profile/conver';
 import Info from '../../elements/profile/info';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
 import { GetProjects } from '../../../redux/action/apis/cycles/projects/get';
+import AddToolUsed from '../../popsup/create/addToolUsed';
+import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
+import EquipmentAvailable from '../../popsup/create/equipmentAvailable';
 
 
 
@@ -72,7 +75,7 @@ const profile = {
     ]
 };
 
-function MyProfile({ updateProfile, GetProjects, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
 
     const route = useRouter()
 
@@ -96,32 +99,33 @@ function MyProfile({ updateProfile, GetProjects, projects, UpdateFormData, getMy
     }
 
     function InputDrawer() {
-        console.log('??????')
         if (type) {
             switch (type) {
                 case 'studio-booking':
                     return <AddStudioBooking />
                 case 'equipment-rental':
-                    return <EquipmentRental />
+                    removeQueryParameter()
+                    // return <EquipmentRental />
                 case 'music-audio':
                     removeQueryParameter()
-                    // add more logic specific to music & audio
                     break;
                 case 'copyrights-permits':
                     return <AddCopyrights />
-                    // add more logic specific to copyrights & permits
                     break;
                 case 'executive-producing':
                     removeQueryParameter()
+                    break;
+                case 'portfolio-post':
+                    return <AddPost />
                     break;
                 default:
                     // handle unknown URL
                     break;
 
             }
-            if (category && subcategory && tags) {
-                return <AddPost />
-            }
+            // if (category && subcategory && tags) {
+            //     return <AddPost />
+            // }
         }
         removeQueryParameter()
     }
@@ -144,6 +148,7 @@ function MyProfile({ updateProfile, GetProjects, projects, UpdateFormData, getMy
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data, false)
         }
+        
         return (
             <>
                 <Conver converPic={user.coverImg || "/assets/imgs/projects/cover.jpeg"} />
@@ -194,7 +199,7 @@ function MyProfile({ updateProfile, GetProjects, projects, UpdateFormData, getMy
                             !showAddPanal &&
                             <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
                                 <Controller>
-                                    <div onClick={() => setShowAddPanal(true)} className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
+                                    <div data-popup-toggle="popup" data-popup-target="select-type" className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
                                         <Icon className='text-white text-2xl' name={'plus'} />
                                     </div>
                                     <div onClick={() => setShowEditProfile(true)} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
@@ -224,7 +229,9 @@ function MyProfile({ updateProfile, GetProjects, projects, UpdateFormData, getMy
         <>
 
             <EditDrawer isOpen={showEditProfile} onClose={() => setShowEditProfile(false)} />
-
+            <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
+            <AddOtherCreatives onSubmit={(value) => InsertToArray('creatives', value)} />
+            <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <InputDrawer />
             {
                 !(type || category) &&
@@ -263,7 +270,8 @@ const mapDispatchToProps = {
     UpdateFormData,
     updateProfile,
     getMyprofile,
-    GetProjects
+    GetProjects,
+    InsertToArray
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);

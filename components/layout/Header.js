@@ -153,8 +153,7 @@ const Header = ({
                             </div>
 
                             <div className="header-right">
-                                {fromlayout.showTabs && islogin
-                                    &&
+                                {fromlayout.showTabs && islogin &&
                                     <div className="header-tabs">
 
                                         <a href="/dashboard">
@@ -193,7 +192,7 @@ const Header = ({
                                         <div className="header-action-2 flex items-center ">
                                             <div className="header-action-icon-2 z-10" >
                                                 <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)}>
-                                                    <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span>
+                                                    {/* <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span> */}
                                                     <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                 </div>
                                                 <MessageAndNotofication />

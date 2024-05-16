@@ -10,11 +10,11 @@ function PostPopup({auth}) {
     const router = useRouter();
     const [selectedCycle, setSelectedCyvle] = useState(null);
 
-    const handleNextStep = () => {
-        if (selectedCycle)
+    const handleNextStep = (index) => {
+        if (index)
             router.push({
                 pathname: `/creative/${auth.username}`,
-                query: { type: selectedCycle }
+                query: { type: index }
             });
     };
 
@@ -26,7 +26,8 @@ function PostPopup({auth}) {
     function ServiceType() {
 
         const handleCycleSelect = (index) => {
-            setSelectedCyvle(index);
+            handleNextStep(index)
+            // setSelectedCyvle(index);
         };
 
         return (
@@ -34,17 +35,21 @@ function PostPopup({auth}) {
                 <div className='flex flex-col gap-3 justify-center min-w-96 mt-16'>
                     {[
                         {
+                            "value": "portfolio post",
+                            "url": "portfolio-post"
+                        },
+                        {
+                            "value": "copy right",
+                            "url": "copyrights-permits"
+                        },
+                        {
                             "value": "studio booking",
                             "url": "studio-booking"
                         },
-                        {
-                            "value": "equipment rental",
-                            "url": "equipment-rental"
-                        },
-                        {
-                            "value": "copy rights & permits",
-                            "url": "copyrights-permits"
-                        },
+                        // {
+                        //     "value": "equipment rental",
+                        //     "url": "equipment-rental"
+                        // },
                         // {
                         //     "value": "music & audio",
                         //     "url": "music-audio"
@@ -74,14 +79,9 @@ function PostPopup({auth}) {
     return (
         <>
             <Popup id="select-type" onCancel={reset} header={"Select Type"}>
-                <div className='flex flex-col items-center'>
+                <div className='flex flex-col items-center mb-11'>
                     <ServiceType />
-                    <Button onClick={handleNextStep} className="w-full mb-7 mt-11 max-w-[400px]" shadow={true} shadowHeight={"14"}>
-                        <span className='text-white font-bold capitalize text-lg'>
-                            Post
-                        </span>
-                    </Button>
-
+                    
                 </div>
             </Popup>
 

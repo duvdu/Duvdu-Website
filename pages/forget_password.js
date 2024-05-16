@@ -30,41 +30,38 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
             window.removeEventListener('popstate', handlePopstate);
         };
     }, []);
-    const handleNextStep = () => {
-        if (step < pages.length - 1) {
-            setStep(step + 1);
-            const newURL = `${window.location.pathname}?page=${pages[step + 1]}`;
+    const handleNextStep = (value) => {
+        if (value <= pages.length) {
+            setStep(value);
+            const newURL = `${window.location.pathname}?page=${pages[step]}`;
             window.history.pushState({ path: newURL }, '', newURL);
         }
     };
     useEffect(() => {
+        console.log(ask_respond)
         if (ask_respond)
-            handleNextStep()
+            handleNextStep(2)
     }, [ask_respond?.message])
 
     useEffect(() => {
         if (Change_respond)
-            handleNextStep()
+            handleNextStep(4)
     }, [Change_respond?.message])
 
-
-
-
-
     function EnterYourPhoneNumber() {
-        const [PhoneNumber, setPhoneNumber] = useState('');
+        const [username, setPhoneNumber] = useState('');
 
-        const [numberError, setNumberError] = useState({ isError: false, message: '' });
+        const [nameError, setUserError] = useState({ isError: false, message: '' });
 
         const handleSubmit = (e) => {
 
             e.preventDefault();
-            if (PhoneNumber.length < 1) {
-                setNumberError({ isError: true, message: 'Enter phone number' });
+            if (username.length < 1) {
+                setUserError({ isError: true, message: 'Enter your username' });
             } else {
-                setNumberError({ isError: false, message: '' });
-                ASKforgetpassword({ username: PhoneNumber })
-                setUsername(PhoneNumber)
+                setUserError({ isError: false, message: '' });
+                ASKforgetpassword({ username: username })
+                setUsername(username)
             }
         };
 
@@ -75,26 +72,26 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
 
             if (api.req == "ASKforgetpassword" && api.error) {
                 const errorMessage = errorConvertedMessage(api.error)
-                setNumberError({ isError: true, message: errorMessage });
+                setUserError({ isError: true, message: errorMessage });
             }
         }, [api.error])
 
         return (
             <form method="post" onSubmit={handleSubmit}>
                 <div className="heading_s1 mb-8">
-                    <h1 className="auth-title text-center">Enter phone number</h1>
+                    <h1 className="auth-title text-center">Enter your username</h1>
                 </div>
-                <div className={`mb-8 ${numberError.isError && 'error'}`}>
+                <div className={`mb-8 ${nameError.isError && 'error'}`}>
                     <input
                         type="text"
-                        placeholder="Phone number"
-                        className={numberError.isError ? "app-field error" : "app-field"}
-                        value={PhoneNumber}
+                        placeholder="@username"
+                        className={nameError.isError ? "app-field error" : "app-field"}
+                        value={username}
                         onChange={(e) => handleChange(e.target.value)}
 
                     />
-                    {numberError.isError &&<span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(numberError.message) }} /> }
-                     
+                    {nameError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(nameError.message) }} />}
+
                 </div>
                 <div className="h-10" />
                 <button className="w-full" type="submit" >
@@ -232,7 +229,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
     return (
         <Auth>
             {step === 1 && <EnterYourPhoneNumber />}
-            {step === 2 && <OTP oNsucess={handleNextStep} username={username} />} 
+            {step === 2 && <OTP oNsucess={handleNextStep(3)} username={username} />}
             {step === 3 && <ResetPassword />}
             {step === 4 && <PasswordChanged />}
             {/* 

@@ -5,9 +5,12 @@ import { mainApiInstance } from '../../axiosInstances'
 export const CreateStudio = (data) => {
   const req = "CreateStudio"
   return async dispatch => {
+    if(data == -1) {
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
+      return
+    }
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-        
       const response = await mainApiInstance.post(`api/studio-booking`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {

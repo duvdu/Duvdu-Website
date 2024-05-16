@@ -46,7 +46,7 @@ const StartFree = () => {
                     </span>
                 </Button>
             </div>
-            <a className="text-DS_black text-sm opacity-50" href="/terms&condations">terms & conditions</a>
+            <a className="text-DS_black text-sm opacity-50" href="/terms_conditions">terms & conditions</a>
         </div>
 
     )
@@ -71,7 +71,7 @@ const Subscribe = () => {
                     </span>
                 </Button>
             </div>
-            <a className="text-DS_black text-sm opacity-50" href="/terms&condations">terms & conditions</a>
+            <a className="text-DS_black text-sm opacity-50" href="/terms_conditions">terms & conditions</a>
         </div>
 
     )

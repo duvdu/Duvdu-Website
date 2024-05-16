@@ -20,13 +20,13 @@ const PostSheet = ({ setShowAddPanal, username }) => {
                         <p className='opacity-70 text-sm'>Upload videos & photos to showcase your creative work</p>
 
                     </div>
-                    <div className='bg-white px-16 py-7 mb-7 text-center rounded-3xl cursor-pointer'>
-                        <div onClick={hidePopUp} data-popup-toggle="popup" data-popup-target='select-type'>
+                    <div onClick={hidePopUp} data-popup-toggle="popup" data-popup-target='select-type' className='bg-white px-16 py-7 mb-7 text-center rounded-3xl cursor-pointer'>
+                        
                             <h3 className='text-primary text-2xl font-semibold'> offer service </h3>
                             <p className='opacity-70 text-sm'>
                                 For studios and equipment owners, copyrights & permits service and producers
                             </p>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

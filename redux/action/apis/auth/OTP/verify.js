@@ -5,7 +5,11 @@ import { mainApiInstance } from '../../axiosInstances'
 
 export const verify = ({ username, code }) => {
   return async dispatch => {
-      dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'verify' });
+    if(code == -1) {
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null , req: 'verify'});
+      return
+    }
+    dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'verify' });
       try {
         const response = await mainApiInstance.post('api/users/auth/verify', {
           username: username,

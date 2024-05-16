@@ -26,12 +26,12 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
-    console.log(categories)
+
     categories = filterByCycle(categories, 'studio-booking')
 
     useEffect(() => {
-        UpdateFormData('location.lat', '20,4575541')
-        UpdateFormData('location.lng', '20,4575541')
+        UpdateFormData('location[lat]', 50)
+        UpdateFormData('location[lng]', 50)
     }, [])
     const convertToFormData = () => {
         const data = new FormData();
@@ -67,7 +67,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
         // Append creatives
         if (formData.creatives)
             formData.creatives.forEach((creative, index) => {
-                data.append(`creatives[${index}][creative]`, creative.creative);
+                data.append(`creatives[${index}][creative]`, creative._id);
                 data.append(`creatives[${index}][fees]`, creative.fees);
             });
 
@@ -147,10 +147,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     // }, [api.data && api.data.data.createdAt, api.error]);
 
-    const reset = () => {
-        api.req = null
-        setPost_success(false)
-    }
+    
     useEffect(() => {
         if (auth.login === false)
             router.push({
@@ -160,6 +157,8 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
 
     const toggleDrawer = () => {
+        CreateStudio(-1);
+        setPost_success(false)
         if (nextstep == 2) {
             setNextstep(1)
             return
@@ -172,100 +171,101 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     return (
-        <Drawer isOpen={true} name={'equipment rental'} toggleDrawer={toggleDrawer}>
-            <Successfully_posting isShow={post_success} onCancel={reset} message="Creating" />
-            {/* <SetCover isShow={post_success} /> */}
-            {nextstep == 2 ? (
-                <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
-            ) :
-                (
-                    <form className='flex flex-col gap-5 container mx-auto'>
-                        <div className="my-5">
-                            <CategorySelection
-                                categories={categories}
-                                value={{
-                                    'category': formData.category,
-                                    'subCategory': formData.subCategory,
-                                    'tags': formData.tags,
-                                }}
-                                categorie
-                                onChange={(value) => {
-                                    UpdateFormData('category', value.category)
-                                    UpdateFormData('subCategory', value.subCategory)
-                                    UpdateFormData('tags', value.tags)
-                                }} />
-                        </div>
-                        <section className="w-full ">
+        <>
+            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <Drawer isOpen={true} name={'equipment rental'} toggleDrawer={toggleDrawer}>
+                {/* <SetCover isShow={post_success} /> */}
+                {nextstep == 2 ? (
+                    <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
+                ) :
+                    (
+                        <form className='flex flex-col gap-5 container mx-auto'>
+                            <div className="my-5">
+                                <CategorySelection
+                                    categories={categories}
+                                    value={{
+                                        'category': formData.category,
+                                        'subCategory': formData.subCategory,
+                                        'tags': formData.tags,
+                                    }}
+                                    categorie
+                                    onChange={(value) => {
+                                        UpdateFormData('category', value.category)
+                                        UpdateFormData('subCategory', value.subCategory)
+                                        UpdateFormData('tags', value.tags)
+                                    }} />
+                            </div>
+                            <section className="w-full ">
 
-                            <label htmlFor="attachment-upload" >
-                                <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
-                                    <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
-                                        <Icon name={"add-file"} className='size-7' />
-                                    </div>
-                                    <span className="text-primary text-sm font-bold mt-3">Click to Upload</span>
-                                </div>
-                            </label>
-                            <input onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-
-                            {
-                                formData.attachments &&
-                                formData.attachments.length > 0 &&
-                                formData.attachments.map((file, key) => (
-                                    <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
-                                        <Icon name={'file'} className="size-10" />
-                                        <div>
-                                            <span className=''>{file.fileName}</span>
-                                            <br />
-                                            <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
+                                <label htmlFor="attachment-upload" >
+                                    <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
+                                        <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
+                                            <Icon name={"add-file"} className='size-7' />
                                         </div>
+                                        <span className="text-primary text-sm font-bold mt-3">Click to Upload</span>
                                     </div>
-                                ))
-                            }
-                        </section>
-                        <section >
-                            <input placeholder='equipment name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />
-                            <input placeholder='phone number' type="tel" value={formData.studioNumber} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
-                            <input placeholder='description' value={formData.description} onChange={handleInputChange} name="description" className={inputStyle} />
-                            <input placeholder='address' value={formData.address} onChange={handleInputChange} name="address" className={inputStyle} />
-                            <ListInput
-                                placeholder={'equipment available'}
-                                target="EquipmentAvailable"
-                                name={"EquipmentsUsed"}
-                                listdiv={formData.equipments && formData.equipments.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
-                                remove={(value) => removeFromArray('equipments', value)}
-                                enable={false}
-                            />
-                            <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
-                        </section>
-                        <section className="h-96 relative overflow-hidden hidden">
-                            <span> Set location </span>
-                            <GoogleMap width={'100%'} onsetLocation={(value) => UpdateFormData('location', value)} />
-                        </section>
-                        <section className='flex justify-center gap-3 mt-1'>
-                            <Switch value={formData.differentLocation} onSwitchChange={(checked) => UpdateFormData('differentLocation', checked)} />
-                            <p className='opacity-70'> Client can choose different location </p>
-                        </section>
-                        <section >
-                            <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                            <input placeholder='price per hour' value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
-                            <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
-                        </section>
-                        <section className='flex justify-center gap-3 mt-1'>
-                            <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData( 'showOnHome', checked )} />
-                            <p className='opacity-70'> Show on home feed & profile </p>
-                        </section>
+                                </label>
+                                <input onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
 
-                        <Button onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                                {
+                                    formData.attachments &&
+                                    formData.attachments.length > 0 &&
+                                    formData.attachments.map((file, key) => (
+                                        <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
+                                            <Icon name={'file'} className="size-10" />
+                                            <div>
+                                                <span className=''>{file.fileName}</span>
+                                                <br />
+                                                <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
+                                            </div>
+                                        </div>
+                                    ))
+                                }
+                            </section>
+                            <section >
+                                <input placeholder='equipment name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />
+                                <input placeholder='phone number' type="tel" value={formData.studioNumber} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
+                                <input placeholder='description' value={formData.description} onChange={handleInputChange} name="description" className={inputStyle} />
+                                <input placeholder='address' value={formData.address} onChange={handleInputChange} name="address" className={inputStyle} />
+                                <ListInput
+                                    placeholder={'equipment available'}
+                                    target="EquipmentAvailable"
+                                    name={"EquipmentsUsed"}
+                                    listdiv={formData.equipments && formData.equipments.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    remove={(value) => removeFromArray('equipments', value)}
+                                    enable={false}
+                                />
+                            </section>
+                            <section className="h-96 relative overflow-hidden hidden">
+                                <span> Set location </span>
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                            </section>
+                            <section className='flex justify-center gap-3 mt-1'>
+                                <Switch value={formData.differentLocation} onSwitchChange={(checked) => UpdateFormData('differentLocation', checked)} />
+                                <p className='opacity-70'> Client can choose different location </p>
+                            </section>
+                            <section >
+                                <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <input placeholder='price per hour' value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
+                                <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
+                            </section>
+                            <section className='flex justify-center gap-3 mt-1'>
+                                <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
+                                <p className='opacity-70'> Show on home feed & profile </p>
+                            </section>
 
-                            <span className='text-white font-bold capitalize text-lg'>
-                                Next
-                            </span>
+                            <Button onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
 
-                        </Button>
+                                <span className='text-white font-bold capitalize text-lg'>
+                                    Next
+                                </span>
 
-                    </form>
-                )}
-        </Drawer>
+                            </Button>
+
+                        </form>
+                    )}
+            </Drawer>
+        </>
 
     );
 }

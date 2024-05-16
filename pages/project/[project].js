@@ -22,10 +22,11 @@ import { GetProject } from "../../redux/action/apis/cycles/projects/getOne";
 import GoogleMap from "../../components/elements/googleMap";
 import dateFormat from "dateformat";
 import StudioBooking from "../../components/drawer/book/studio";
+import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
 
 
 
-const projects = ({ GetProjects, projects_respond, GetProject, project_respond }) => {
+const projects = ({ GetProjects, projects_respond, GetProject, project_respond, GetAllMessageInChat ,chat_respond}) => {
 
     const router = useRouter()
     const { project: projectId } = router.query;
@@ -48,7 +49,7 @@ const projects = ({ GetProjects, projects_respond, GetProject, project_respond }
         setIsOpen(!isOpen);
     };
 
-    const data = project ?( {
+    const data = project ? ({
         _id: project._id,
         title: project.title,
         user: {
@@ -118,6 +119,7 @@ const projects = ({ GetProjects, projects_respond, GetProject, project_respond }
         projectScale: project.projectScale,
 
     }) : null
+
     return (
         <>
             <Layout >
@@ -148,7 +150,7 @@ const projects = ({ GetProjects, projects_respond, GetProject, project_respond }
                                     </section>
                                 </div>
                             </div>
-                            <Control data={data} toggleDrawer={toggleDrawer} />
+                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond}/>
                             {project.cycle == 1 ?
                                 <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} /> :
                                 <StudioBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
@@ -390,7 +392,7 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, toggleDrawer }) => {
+const Control = ({ data, toggleDrawer, GetAllMessageInChat, chat_respond }) => {
 
     const [loveIconName, setLoveIconName] = useState('far');
     const [showChat, setShowChat] = useState(false);
@@ -407,72 +409,17 @@ const Control = ({ data, toggleDrawer }) => {
 
     const handleOpenChat = () => {
         setShowChat(true);
+        GetAllMessageInChat(data.creative._id)
     };
 
-    const messages = [
-        {
-            "type": "time",
-            "data": "yesterday at 11:41"
-        },
-        {
-            "type": "me",
-            "data": "Hey, man! What's up, Mr other? 👋"
-        },
-        {
-            "type": "other",
-            "data": "Kid, where'd you come from?"
-        },
-        {
-            "type": "me",
-            "data": "Field trip! 🤣"
-        },
-        {
-            "type": "me",
-            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
-        },
-        {
-            "type": "other",
-            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
-        },
-        {
-            "type": "time",
-            "data": "Today at 11:41"
-        },
-        {
-            "type": "me",
-            "data": "Hey, man! What's up, Mr other? 👋"
-        },
-        {
-            "type": "other",
-            "data": "Kid, where'd you come from?"
-        },
-        {
-            "type": "me",
-            "data": "Field trip! 🤣"
-        },
-        {
-            "type": "me",
-            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
-        },
-        {
-            "type": "other",
-            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
-        },
-        {
-            "type": "typing other",
-            "data": ""
-        },
-    ];
+
     return (
         <>
-            <div className="fixed bottom-0 z-20">
-                {showChat && <Chat Close={handleCloseChat} online={online} messages={messages} data={data} />}
-            </div>
-            {
-                !showChat &&
-                <div className='sticky h-32 bottom-0 z-20 max-w-full'>
-                    <div className="sm:container flex justify-between items-end">
 
+            <div className='sticky h-32 bottom-0 z-20 max-w-full'>
+                <div className="sm:container flex justify-between items-end">
+                    {
+                        !chat_respond ?
                         <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
                             <div className="relative">
                                 <img className="h-full" src={data.user.profileImage} alt="user" />
@@ -489,26 +436,24 @@ const Control = ({ data, toggleDrawer }) => {
                                     {data.user.name}
                                 </span>
                                 <div />
-                                <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
+                                {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
                             </div>
+                        </div> : <div className="w-1"/>
+                    }
+                    <Controller className={"mr-auto ml-auto lg:m-0 "}>
+                        <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
+                            <Icon name={'share'} />
                         </div>
-
-
-                        <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                            <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
-                                <Icon name={'share'} />
-                            </div>
-                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
-                                <Icon className="text-white text-xl" name={'plus'} />
-                            </div>
-                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
-                                <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
-                            </div>
-                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
-                        </Controller>
-                    </div>
+                        <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
+                            <Icon className="text-white text-xl" name={'plus'} />
+                        </div>
+                        <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
+                            <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
+                        </div>
+                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
+                    </Controller>
                 </div>
-            }
+            </div>
 
         </>
     );
@@ -521,12 +466,14 @@ const mapStateToProps = (state) => ({
     projects_respond: state.api.GetProjects,
     project_respond: state.api.GetProject,
     projectFilters: state.projectFilters,
+    chat_respond: state.api.GetAllMessageInChat,
 });
 
 const mapDidpatchToProps = {
     // openCart,
     GetProjects,
     GetProject,
+    GetAllMessageInChat
     // fetchMoreproject,
 };
 

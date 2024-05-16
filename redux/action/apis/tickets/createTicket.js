@@ -3,15 +3,6 @@ import { mainApiInstance } from '../axiosInstances'
 
 
 export const CreateTicket = ({ message, username, phoneNumber }) => {
-    console.log(
-        {
-            "name": username,
-            "phoneNumber": {
-                "number": phoneNumber
-            },
-            "message": message
-        }
-    )
     return async dispatch => {
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'CreateTicket' });
         try {

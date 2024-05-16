@@ -3,11 +3,15 @@ import { mainApiInstance } from '../../axiosInstances'
 
 export const BookCopyrights = (id,data) => {
   
-  for(let [name, value] of data) {
-    console.log(`${name} = ${value}`); 
-  }
   const req = "BookCopyrights"
   return async dispatch => {
+    if(!id) {
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
+      return 
+    }
+    for(let [name, value] of data) {
+      console.log(`${name} = ${value}`); 
+    }
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const response = await mainApiInstance.post(`api/copyrights/book/${id}`, data);

@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
-import { fetchProjects } from "../../redux/action/project";
 import Icon from '../../components/Icons';
 import { convertToK } from "../../util/util";
 import ProjectCard from "../../components/elements/project-card";
@@ -10,7 +9,6 @@ import { convertHoursTo__ } from '../../util/util';
 import Comment from '../../components/elements/comment';
 import Controller from '../../components/elements/controllers';
 import ArrowBtn from '../../components/elements/arrowBtn';
-import Chat from '../../components/elements/chat';
 import AddToTeam from '../../components/popsup/AddToTeam';
 import Report from '../../components/popsup/report';
 import ThanksMSG from '../../components/popsup/thanksMSG';
@@ -25,14 +23,12 @@ import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/g
 
 
 
-const projects = ({ GetStudios, projects_respond, Getstudio, project_respond ,GetAllMessageInChat}) => {
+const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, GetAllMessageInChat,chat_respond }) => {
 
     const router = useRouter()
     const { studio: studioId } = router.query;
     const projects = projects_respond?.data || []
     const project = project_respond?.data
-
-    console.log(project)
 
     useEffect(() => {
         if (studioId)
@@ -151,7 +147,7 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond ,Ge
                                     </section>
                                 </div>
                             </div>
-                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat}/>
+                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond}/>
                             {project.cycle == 1 ?
                                 <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} /> :
                                 <StudioBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
@@ -394,7 +390,7 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, toggleDrawer , GetAllMessageInChat }) => {
+const Control = ({ data, toggleDrawer, GetAllMessageInChat,chat_respond }) => {
 
     const [loveIconName, setLoveIconName] = useState('far');
     const [showChat, setShowChat] = useState(false);
@@ -414,104 +410,53 @@ const Control = ({ data, toggleDrawer , GetAllMessageInChat }) => {
         GetAllMessageInChat(data.creative._id)
     };
 
-    const messages = [
-        {
-            "type": "time",
-            "data": "yesterday at 11:41"
-        },
-        {
-            "type": "me",
-            "data": "Hey, man! What's up, Mr other? 👋"
-        },
-        {
-            "type": "other",
-            "data": "Kid, where'd you come from?"
-        },
-        {
-            "type": "me",
-            "data": "Field trip! 🤣"
-        },
-        {
-            "type": "me",
-            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
-        },
-        {
-            "type": "other",
-            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
-        },
-        {
-            "type": "time",
-            "data": "Today at 11:41"
-        },
-        {
-            "type": "me",
-            "data": "Hey, man! What's up, Mr other? 👋"
-        },
-        {
-            "type": "other",
-            "data": "Kid, where'd you come from?"
-        },
-        {
-            "type": "me",
-            "data": "Field trip! 🤣"
-        },
-        {
-            "type": "me",
-            "data": "Uh, what is this guy's problem, Mr. other? 🤔"
-        },
-        {
-            "type": "other",
-            "data": "Uh, he's from space, he came here to steal a necklace from a wizard."
-        },
-        {
-            "type": "typing other",
-            "data": ""
-        },
-    ];
-    
+
+
     return (
         <>
-            {
-                !showChat &&
-                <div className='sticky h-32 bottom-0 z-20 max-w-full'>
-                    <div className="sm:container flex justify-between items-end">
 
-                        <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
-                            <div className="relative">
-                                <img className="h-full" src={data.user.profileImage} alt="user" />
-                                {online && (
-                                    <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                )}
-                                {!online && (
-                                    <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                )}
+            <div className='sticky h-32 bottom-0 z-20 max-w-full'>
+                <div className="sm:container flex justify-between items-end">
 
-                            </div>
-                            <div className="px-3">
-                                <span className="capitalize font-bold">
-                                    {data.user.name}
-                                </span>
-                                <div />
-                                <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
-                            </div>
+                    {
+                        !chat_respond ?
+                            <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
+                                <div className="relative">
+                                    <img className="h-full" src={data.user.profileImage} alt="user" />
+                                    {online && (
+                                        <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                                    )}
+                                    {!online && (
+                                        <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                                    )}
+
+                                </div>
+                                <div className="px-3">
+                                    <span className="capitalize font-bold">
+                                        {data.user.name}
+                                    </span>
+                                    <div />
+                                    {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
+                                </div>
+                            </div> : <div className="w-1" />
+                    }
+
+
+                    <Controller className={"mr-auto ml-auto lg:m-0 "}>
+                        <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
+                            <Icon name={'share'} />
                         </div>
-
-
-                        <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                            <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
-                                <Icon name={'share'} />
-                            </div>
-                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
-                                <Icon className="text-white text-xl" name={'plus'} />
-                            </div>
-                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
-                                <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
-                            </div>
-                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
-                        </Controller>
-                    </div>
+                        <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
+                            <Icon className="text-white text-xl" name={'plus'} />
+                        </div>
+                        <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
+                            <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
+                        </div>
+                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
+                    </Controller>
                 </div>
-            }
+            </div>
+
 
         </>
     );
@@ -524,6 +469,7 @@ const mapStateToProps = (state) => ({
     projects_respond: state.api.GetStudios,
     project_respond: state.api.Getstudio,
     projectFilters: state.projectFilters,
+    chat_respond: state.api.GetAllMessageInChat,
 });
 
 const mapDidpatchToProps = {

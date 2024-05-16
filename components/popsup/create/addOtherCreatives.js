@@ -6,7 +6,7 @@ import { TagUser } from '../../../redux/action/apis/auth/profile/TagUser';
 import { connect } from 'react-redux';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
 
-function AddOtherCreatives({ onSubmit, TagUser, getMyprofile, TagUser_respond }) {
+function AddOtherCreatives({ onSubmit, TagUser, TagUser_respond }) {
 
     const [creatives, setCreatives] = useState([]);
     const [formData, setFormData] = useState({
@@ -18,10 +18,6 @@ function AddOtherCreatives({ onSubmit, TagUser, getMyprofile, TagUser_respond })
         name: '',
         fees: ''
     });
-
-    useEffect(() => {
-        console.log(creatives)
-    }, [creatives])
 
     useEffect(() => {
         if (TagUser_respond?.message == "success")

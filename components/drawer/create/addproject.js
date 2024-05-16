@@ -5,25 +5,31 @@ import Switch from '../../elements/switcher'
 import { connect } from "react-redux";
 import Button from '../../elements/button';
 
-import { UpdateFormData, InsertToArray } from '../../../redux/action/logic/forms/Addproject';
+import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
 import { filterByCycle, gettFileUploaded, handleMultipleFileUpload } from "../../../util/util";
 import Successfully_posting from "../../popsup/post_successfully_posting";
 import SetCover from "./assets/addCover";
 import ListInput from "../../elements/listInput";
-import AddToolUsed from "../../popsup/create/addToolUsed";
-import AddOtherCreatives from "../../popsup/create/addOtherCreatives";
 import Drawer from "../../elements/drawer";
 import { CreateProject } from "../../../redux/action/apis/cycles/projects/create";
+import CategorySelection from "./assets/selectCategory";
 
 
-const AddPost = ({ CreateProject, categories, user, auth, respond, InsertToArray, UpdateFormData, addprojectState }) => {
+const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, addprojectState,categories,resetForm }) => {
     const router = useRouter();
     const formData = addprojectState.formData;
-
+    
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
+    
+    categories = filterByCycle(categories, 'portfolio-post')
+    
+    useEffect(() => {
+        UpdateFormData('location.lat', '20.4575541')
+        UpdateFormData('location.lng', '20.4575541')
+    }, [])
 
     const convertToFormData = () => {
         const data = new FormData();
@@ -34,6 +40,10 @@ const AddPost = ({ CreateProject, categories, user, auth, respond, InsertToArray
         data.append('address', formData.address);
         data.append('projectBudget', formData.price);
         data.append('projectScale[scale]', formData.durationnum);
+
+        data.append('location.lat', formData['location.lat']);
+        data.append('location.lng', formData['location.lng']);
+
         data.append('projectScale[time]', formData.durationUnit || "minute");
         data.append('showOnHome', formData.showOnHome || false);
 
@@ -139,10 +149,13 @@ const AddPost = ({ CreateProject, categories, user, auth, respond, InsertToArray
     }, [auth.login])
 
     const toggleDrawer = () => {
+        CreateProject(-1)
+        setPost_success(false)
         if (nextstep == 2) {
             setNextstep(1)
             return
         }
+        resetForm()
         router.replace({
             pathname: `/creative/${auth.username}`,
         })
@@ -153,15 +166,28 @@ const AddPost = ({ CreateProject, categories, user, auth, respond, InsertToArray
 
     return (
         <>
-            <Successfully_posting isShow={post_success} message="Creating" />
-            <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
-            <AddOtherCreatives onSubmit={(value) => InsertToArray('creatives', value)} categories={categories} />
+            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating"/>
             <Drawer isOpen={true} name={'add project'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
                     <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
                 ) :
                     (
                         <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
+                            <div className="my-5">
+                                <CategorySelection
+                                    categories={categories}
+                                    value={{
+                                        'category': formData.category,
+                                        'subCategory': formData.subCategory,
+                                        'tags': formData.tags,
+                                    }}
+                                    categorie
+                                    onChange={(value) => {
+                                        UpdateFormData('category', value.category)
+                                        UpdateFormData('subCategory', value.subCategory)
+                                        UpdateFormData('tags', value.tags)
+                                    }} />
+                            </div>
                             <section>
                                 <label htmlFor="attachment-upload" >
                                     <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
@@ -194,22 +220,15 @@ const AddPost = ({ CreateProject, categories, user, auth, respond, InsertToArray
                             <section>
                                 <input placeholder='Project description' className={inputStyle} value={formData.projectDescription} onChange={handleInputChange} name="projectDescription" />
                             </section>
-                            <section>
-                                <input placeholder='Tag other creatives' className={inputStyle} value={formData.tagCreatives} onChange={handleInputChange} name="tagCreatives" />
-                            </section>
                             {/* <section>
                                 <input placeholder="Add creative’s functions" className={inputStyle} value={formData.creativeFunctions} onChange={handleInputChange} name="creativeFunctions" />
                             </section> */}
                             <section>
-                                <input placeholder='Location' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                                <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
                             </section>
                             <section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                             </section>
-                            <section>
-                                <ListInput name={'tags'} placeholder={'Tags'} onChange={(value) => InsertToArray('tags', value)} />
-                            </section>
-
                             <section>
                                 <ListInput
                                     placeholder={'add tool used'}
@@ -225,7 +244,6 @@ const AddPost = ({ CreateProject, categories, user, auth, respond, InsertToArray
                                     listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
                                     remove={(value) => removeFromArray('creatives', value)}
                                 />
-
                             </section>
                             {/* 
                             <section>
@@ -289,7 +307,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     UpdateFormData,
     InsertToArray,
-    CreateProject
+    CreateProject,
+    resetForm
 };
 
 

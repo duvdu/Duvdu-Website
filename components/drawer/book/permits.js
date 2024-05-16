@@ -40,7 +40,13 @@ const PermitsBooking = ({ respond, addprojectState, UpdateFormData, BookCopyrigh
         else
             resetForm()
     }
-
+    function OnSucess() {
+        BookCopyrights(null)
+        setPost_success(false)
+        resetForm()
+        toggleDrawer()
+        ontoggleDrawer()
+    }
     useEffect(() => {
         UpdateFormData('location[lat]', 50)
         UpdateFormData('location[lng]', 50)
@@ -102,8 +108,9 @@ const PermitsBooking = ({ respond, addprojectState, UpdateFormData, BookCopyrigh
             </div>
         </Drawer >
     return (
+        <>
+            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
         <Drawer name={preview ? 'Review Booking' : data.name} img={data.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
-            <Successfully_posting isShow={post_success} onCancel={ontoggleDrawer} message="Booking" />
             <div className="mt-11" />
             <div className={preview ? ' hidden' : ''}>
                 <section>
@@ -205,6 +212,7 @@ const PermitsBooking = ({ respond, addprojectState, UpdateFormData, BookCopyrigh
             </section>
 
         </Drawer >
+        </>
     );
 };
 

@@ -38,7 +38,7 @@ function SuccessBody({ toggleDirectorConfirmed }) {
                     </Button>
                 </div>
             </div>
-            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms&condations">terms & conditions</a>
+            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">terms & conditions</a>
         </div>
     );
 }
@@ -62,7 +62,7 @@ function Directorconfirmed() {
                     </a>
                 </div>
             </div>
-            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms&condations">book appointment</a>
+            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">book appointment</a>
         </div>
     );
 }

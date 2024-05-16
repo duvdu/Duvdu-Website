@@ -25,7 +25,10 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
     if (respond && isOpen)
         window.location.reload()
     
-
+useEffect(()=>{
+    UpdateFormData("location.lat",30)
+    UpdateFormData("location.lng",30)
+},[])
 
     function UpdateKeysAndValues(obj, prefix = '') {
         Object.keys(obj).forEach(key => {
@@ -157,12 +160,12 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
                     </div>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                            location
+                        address
                         </span>
                         <input
                             type='text'
-                            name='location'
-                            value={formData.location}
+                            name='address'
+                            value={formData.address }
                             onChange={handleInputChange}
                             className="edit app-field"
                         />

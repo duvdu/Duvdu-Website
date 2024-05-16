@@ -6,7 +6,6 @@ const BookTeam = ({ team, onChange }) => {
     const handleRemoveItem = (id) => {
         setLocalTeam(prevTeam => prevTeam.filter(item => item._id !== id));
     };
-    console.log(localteam)
     useEffect(() => setLocalTeam(team) , [])
     useEffect(() => onChange?.(localteam.map((i)=> i._id)) , [localteam])
     return (

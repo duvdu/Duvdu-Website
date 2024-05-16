@@ -43,7 +43,13 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         else
             resetForm()
     }
-
+    function OnSucess() {
+        StudopBooking(null)
+        setPost_success(false)
+        resetForm()
+        toggleDrawer()
+        ontoggleDrawer()
+    }
     useEffect(() => {
         UpdateFormData('creatives', creatives.map(item => item._id))
     }, [creatives.length])
@@ -79,6 +85,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         }
         if (submit)
             submit()
+        console.log(formData)
         StudopBooking(data._id, formData)
     }
 
@@ -90,7 +97,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         UpdateFormData(name, value)
     };
 
-
+console.log(data)
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     if (!isOpen) {
@@ -108,10 +115,9 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                 />
             </div>
         </Drawer >
-    console.log("data = ", data)
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={ontoggleDrawer} message="Booking"/>
+            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking"/>
             <Drawer name={preview ? 'Review Booking' : data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
                 <section className="my-11">
                     <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('equipments', value)} />

@@ -7,6 +7,7 @@ export const GetAllMessageInChat = (id) => {
     return async dispatch => {
         if (!id) {
             dispatch({ type: Types.RESET_CHAT });
+            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
             return
         }
         dispatch({ type: Types.OPEN_CHAT, payload: id });

@@ -19,11 +19,10 @@ import SetCover from "./assets/addCover";
 import CategorySelection from './assets/selectCategory';
 
 
-const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray ,resetForm}) => {
+const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
 
     const router = useRouter();
     const formData = addprojectState.formData;
-    const { category, tags } = router.query
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
@@ -32,13 +31,11 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const convertToFormData = () => {
         const data = new FormData();
 
-        // Append simple string and number values directly from the state
         data.append('desc', formData.description);
         data.append('studioEmail', formData.studioEmail);
         data.append('studioNumber', formData.studioNumber);
         data.append('studioName', formData.studioName);
 
-        // Append searchKeywords
         if (formData.searchKeywords)
             formData.searchKeywords.forEach((keyword, index) => {
                 data.append(`searchKeywords[${index}]`, keyword);
@@ -68,7 +65,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         // Append creatives
         if (formData.creatives)
             formData.creatives.forEach((creative, index) => {
-                data.append(`creatives[${index}][creative]`, creative.creative);
+                data.append(`creatives[${index}][creative]`, creative._id);
                 data.append(`creatives[${index}][fees]`, creative.fees);
             });
 
@@ -82,10 +79,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                 data.append(`attachments`, file.file);
             }
 
-        if (tags)
-            tags.forEach((creative, index) => {
-                data.append(`tags[${index}]`, creative.tags);
-            });
+        
         return data;
     };
 
@@ -123,7 +117,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
 
     const removeFromArray = (arrayName, index) => {
         const newArray = [...formData[arrayName]]; // Create a new array to avoid mutating the original state
-        console.log(newArray)
+
         newArray.splice(index, 1); // Remove the item at the specified index
         UpdateFormData(arrayName, newArray);
     };
@@ -139,9 +133,6 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             setPost_success(true)
     }, [respond?.message])
 
-    const reset = () => {
-        setPost_success(false)
-    }
     
     useEffect(() => {
         if (auth.login === false)
@@ -162,11 +153,10 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         })
     }
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-    console.log(formData)
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
-            <Successfully_posting isShow={post_success} onCancel={reset} message="Creating" />
+            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'studio booking'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
                     <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
@@ -174,18 +164,18 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                     (
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
-                                <CategorySelection 
-                                value={{
-                                    'category' :formData.category,
-                                    'subCategory':formData.subCategory,
-                                    'tags':formData.tags,
-                                }} 
-                                categories={categories} 
-                                onChange={(value) => {
-                                    UpdateFormData('category', value.category)
-                                    UpdateFormData('subCategory', value.subCategory)
-                                    UpdateFormData('tags', value.tags)
-                                }} />
+                                <CategorySelection
+                                    value={{
+                                        'category': formData.category,
+                                        'subCategory': formData.subCategory,
+                                        'tags': formData.tags,
+                                    }}
+                                    categories={categories}
+                                    onChange={(value) => {
+                                        UpdateFormData('category', value.category)
+                                        UpdateFormData('subCategory', value.subCategory)
+                                        UpdateFormData('tags', value.tags)
+                                    }} />
                             </div>
                             <section className="w-full ">
                                 {
@@ -231,15 +221,21 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                     enable={false}
                                 />
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ListInput
+                                    placeholder={'add other creatives'}
+                                    target="addOtherCreatives"
+                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    remove={(value) => removeFromArray('creatives', value)}
+                                />
                                 <input placeholder='price per hour' value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
                                 <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span> Set location </span>
-                                <GoogleMap width={'100%'} onsetLocation={(value) => UpdateFormData('location', value)} />
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                             </section>
                             <section className='flex justify-center gap-3 mt-1'>
-                                <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData( 'showOnHome', checked )} />
+                                <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'> Show on home feed & profile </p>
                             </section>
 

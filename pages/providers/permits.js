@@ -9,7 +9,7 @@ import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
 
 
 const convertDataFormat = (data) => {
-
+console.log(data.user.profileImage)
     return {
         _id: data._id,
         img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",

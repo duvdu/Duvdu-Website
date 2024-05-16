@@ -23,7 +23,7 @@ function OTP({
     useEffect(() => {
         console.log(resendCode_respond)
     }, [resendCode_respond?.message])
-    
+
     useEffect(() => {
         if (resendCode_respond) {
             setcount(100)
@@ -31,8 +31,10 @@ function OTP({
     }, [resendCode_respond?.message])
 
     useEffect(() => {
+        console.log(verify_respond)
         if (verify_respond) {
             oNsucess()
+            verify({ username: username, code: -1 })
         }
     }, [verify_respond?.message])
 
@@ -80,7 +82,7 @@ function OTP({
 
                         {
                             local_error &&
-                            <p className="error-msg mt-10" >{local_error}</p>
+                            <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(local_error) }} />
                         }
                         <div className="mt-14 mb-28">
 
