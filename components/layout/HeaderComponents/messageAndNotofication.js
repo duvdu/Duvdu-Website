@@ -7,108 +7,10 @@ import MessageTile from "../../elements/MessageTile";
 
 const notification = []
 
-const messages = [
-    {
-        "img_url": "/assets/imgs/profile/defultUser.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": 'now',
-        'messagesNum': 5,
-        'isNew': true,
-        "isActive": true,
-    },
-    {
-        "img_url": "/assets/imgs/profile/2.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '2:54 pm',
-        'messagesNum': 1,
-        "isActive": true,
-    },
-    {
-        "img_url": "/assets/imgs/profile/3.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '',
-        'messagesNum': 1,
-        "isActive": false,
-    },
-    {
-        "img_url": "/assets/imgs/profile/4.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '6:15 am',
-        'messagesNum': 1,
-        "isActive": false,
-    },
-    {
-        "img_url": "/assets/imgs/profile/defultUser.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": 'now',
-        'messagesNum': 5,
-        'isNew': true,
-        "isActive": true,
-    },
-    {
-        "img_url": "/assets/imgs/profile/2.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '2:54 pm',
-        'messagesNum': 1,
-        "isActive": true,
-    },
-    {
-        "img_url": "/assets/imgs/profile/3.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '',
-        'messagesNum': 1,
-        "isActive": false,
-    },
-    {
-        "img_url": "/assets/imgs/profile/4.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '6:15 am',
-        'messagesNum': 1,
-        "isActive": false,
-    },
-    {
-        "img_url": "/assets/imgs/profile/defultUser.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": 'now',
-        'messagesNum': 5,
-        'isNew': true,
-        "isActive": true,
-    },
-    {
-        "img_url": "/assets/imgs/profile/2.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '2:54 pm',
-        'messagesNum': 1,
-        "isActive": true,
-    },
-    {
-        "img_url": "/assets/imgs/profile/3.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '',
-        'messagesNum': 1,
-        "isActive": false,
-    },
-    {
-        "img_url": "/assets/imgs/profile/4.jpg",
-        "name": "Ali Haider",
-        "event": "Hello, thank you for sharing yo...",
-        "date": '6:15 am',
-        'messagesNum': 1,
-        "isActive": false,
-    },
-]
-function MessageAndNotofication({ getheaderpopup, chats }) {
+function MessageAndNotofication({ getheaderpopup, chats ,GetNotifications_resond}) {
+    console.log("GetNotifications_resond = ",GetNotifications_resond)
+    console.log("chats_resond = ",chats_resond)
+    console.log("=============")
     const { t } = useTranslation();
     const [viewallState, setViewallState] = useState(0);
     useEffect(() => {
@@ -194,6 +96,8 @@ const NotificationTile = ({ tile }) =>
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
     chats: state.chats.list,
+    chats_resond:state.api.GetAllChats,
+    GetNotifications_resond:state.api.GetNotifications
 
 });
 const mapDispatchToProps = {

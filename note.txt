@@ -1,42 +1,42 @@
-# Account Created
-# search
-# view profile drop down
-# dropdown hover color border and text
-# edit profile
-# dashboard
-# routing in profile
-# swiper fotter
-# button with shadow
-# icon cl#ass
-# add team popup    
-# payment successful
-# popup
-# other screen
-# icon fav and love 
-# button shadow
-# success component
-# send files
-# enable , disable ArrowBtn
-# Auth responsive
-# apple logo
-# x circle in popups
-# stop sticky in myProfile mobile and fixed comment 
-# header out of slider
-# layer and sticy of popups
-# handle Icon                       (popup)
-# switch
-# icons : index icon star
-# button hover
-# create App 
-# popups btn
-# header responsive
-# project UI of Show
-# home video time
-# drawer select date
-# post with drawer 
-# using ahmed choose category
-# remove category add project
-# handle api.req && api.data 
+✅ Account Created
+✅ search
+✅ view profile drop down
+✅ dropdown hover color border and text
+✅ edit profile
+✅ dashboard
+✅ routing in profile
+✅ swiper fotter
+✅ button with shadow
+✅ icon cl#ass
+✅ add team popup    
+✅ payment successful
+✅ popup
+✅ other screen
+✅ icon fav and love 
+✅ button shadow
+✅ success component
+✅ send files
+✅ enable , disable ArrowBtn
+✅ Auth responsive
+✅ apple logo
+✅ x circle in popups
+✅ stop sticky in myProfile mobile and fixed comment 
+✅ header out of slider
+✅ layer and sticy of popups
+✅ handle Icon                       (popup)
+✅ switch
+✅ icons : index icon star
+✅ button hover
+✅ create App 
+✅ popups btn
+✅ header responsive
+✅ project UI of Show
+✅ home video time
+✅ drawer select date
+✅ post with drawer 
+✅ using ahmed choose category
+✅ remove category add project
+✅ handle api.req && api.data 
 
 ------------------ later tasks ---------------------
 - suggest strong password
@@ -93,27 +93,5 @@ other profile
 get project
 open new chat 
 ----------------------------------- day task -----------------------------------
-# sign in 
-# sign up
-# my profile
-# other profile
-# change phone + verify
-# forget passwoed + verify
-# get categories
-# copy right create
-# copy right get
-# copy right booking
-# Project create
-# Project get (card and full page)
-# Project booking
-# studio create
-# studio get (card and full page)
-studio booking
-# terms and condation
-# chat 
-notification
-# ticket 
-
-
 - mark as read 
 - last message did not update

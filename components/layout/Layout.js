@@ -6,6 +6,7 @@ import MobileMenu from "./MobileMenu";
 import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
+import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
 
 const Layout = ({
     children,
@@ -37,6 +38,7 @@ const Layout = ({
     useEffect(()=>{
         getMyprofile()
         GetAllChats()
+        GetNotifications()
     },[login_respond])
     return (
         <>

@@ -15,7 +15,6 @@ import { errorConvertedMessage, exclude_error, exclude_loading, noScroll } from 
 import Popup from "../elements/popup";
 import Verify_acount from "../popsup/verify_account_now";
 import Chat from "../elements/chat";
-import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 
 
 // toggleDarkMode
@@ -281,8 +280,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     toggleDarkMode,
     SetheaderPopUp,
-    verify,
-    GetAllChats
+    verify
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

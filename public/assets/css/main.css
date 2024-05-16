@@ -2169,6 +2169,16 @@ table p {
 
 }
 
+
+.date-selector .arrow-icon {
+  visibility: hidden;
+  transition: visibility 0.3s;
+}
+
+.date-selector:hover .arrow-icon {
+  visibility: visible;
+}
+
 /****************/
 
 :root {

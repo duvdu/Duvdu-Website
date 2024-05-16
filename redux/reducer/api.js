@@ -21,7 +21,7 @@ const dataReducer = (state = initialState, action) => {
         case Types.ENABLE_LOADING:
             return { ...state, loadingenable: true };
 
-        case Types.DISAABLE_LOADING:
+        case Types.DISABLE_LOADING:
             return { ...state, loadingenable: false };
 
         default:

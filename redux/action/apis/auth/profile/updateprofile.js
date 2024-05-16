@@ -6,7 +6,7 @@ export const updateProfile = (data,withloading) => {
   const req = "updateProfile"
   return async dispatch => {
     if (withloading === false)
-      dispatch({ type: Types.DISAABLE_LOADING, });
+      dispatch({ type: Types.DISABLE_LOADING, });
     if (withloading === true)
       dispatch({ type: Types.ENABLE_LOADING, });
 

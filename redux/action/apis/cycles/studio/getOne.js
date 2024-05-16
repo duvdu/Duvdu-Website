@@ -9,7 +9,6 @@ export const Getstudio = (id) => {
     try {
       const response = await mainApiInstance.get(`api/studio-booking/${id}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
-      console.log(response.data.data)
       dispatch({ type: Types.SET_DATA, payload: response.data.data });
       
     } catch (error) {

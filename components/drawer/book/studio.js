@@ -85,7 +85,6 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         }
         if (submit)
             submit()
-        console.log(formData)
         StudopBooking(data._id, formData)
     }
 
@@ -97,7 +96,6 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         UpdateFormData(name, value)
     };
 
-console.log(data)
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     if (!isOpen) {

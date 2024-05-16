@@ -1,59 +1,124 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from "../Icons";
 
 const SelectDate = ({ onChange }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(null);
+    const [isExpanded, setIsExpanded] = useState(false);
 
-    const getDates = (baseDate) => {
+    useEffect(() => {
+        setCurrentDate(new Date()); // Ensure the current date is set when the component mounts
+    }, []);
+
+    const getMonthDates = (year, month) => {
         const dates = [];
-        for (let i = 0; i < 5; i++) {
-            const date = new Date(baseDate);
-            date.setDate(baseDate.getDate() + i);
-            dates.push({
-                week: date.toLocaleDateString('en-US', { weekday: 'short' }),
-                day: date.getDate(),
-                fullDate: date
-            });
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const startDay = firstDay.getDay(); // Day of the week (0-6) for the first day of the month
+        const totalDays = lastDay.getDate(); // Total number of days in the month
+        const tomorrow = new Date();
+        const tomorrowTime = tomorrow.getTime();
+
+        // Add leading empty dates for days before the first day of the month
+        for (let i = 0; i < startDay; i++) {
+            dates.push(null);
         }
+
+        // Add the dates for the current month
+        for (let i = 1; i <= totalDays; i++) {
+            const date = new Date(year, month, i);
+            if (date.getTime() >= tomorrowTime) {
+                dates.push(date);
+            } else {
+                dates.push(null);
+            }
+        }
+
         return dates;
     };
 
-    const dates = getDates(currentDate);
-
     const handleDateClick = (date) => {
-        setSelectedDate(date.fullDate);
-        if(onChange)
-        onChange(date.fullDate.toISOString()); 
+        setSelectedDate(date);
+        if (onChange)
+            onChange(date.toISOString());
     };
 
-    const handleMonthChange = (change) => {
-        const newDate = new Date(currentDate.setMonth(currentDate.getMonth() + change));
-        setCurrentDate(newDate);
+    const handleScroll = (change) => {
+        const newDate = new Date(currentDate);
+        newDate.setMonth(currentDate.getMonth() + change);
+        
+        // Check if newDate is before tomorrow, if yes, do not update the state
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const tomorrow = new Date(today);
+        
+        if (newDate >= tomorrow) {
+            setCurrentDate(newDate);
+        }
     };
 
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const monthDates = getMonthDates(year, month);
+    const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 5);
     return (
-        <div className="flex flex-col gap-2 w-min h-[80px]">
-            <div className="flex justify-between w-full">
+        <div className="flex flex-col gap-2 items-center date-selector">
+            <div className="flex justify-between w-full mb-4">
                 <span className="opacity-60 font-medium">
-                    Select date
+                    {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                 </span>
                 <div className="flex items-center font-medium text-[#8A96BC] cursor-pointer text-sm">
-                    {currentDate.toLocaleDateString('en-US', { month: 'long' })}
-                    <Icon className="mx-2 text-[#222E54] w-1" name="angle-right" onClick={() => handleMonthChange(1)} />
+                    <Icon className="mx-2 text-[#222E54] w-2" name="angle-left" onClick={() => handleScroll(-1)} />
+                    <Icon className="mx-2 text-[#222E54] w-2 -rotate-180" name="angle-left" onClick={() => handleScroll(1)} />
                 </div>
             </div>
-            <div className="flex justify-between gap-3">
-                {dates.map((value, index) =>
-                    <div key={index} className={`border-[1.5px] border-[#F7F8F8] rounded-xl px-3 flex flex-col justify-center items-center aspect-square w-12 h-12 cursor-pointer ${selectedDate && selectedDate.toDateString() === value.fullDate.toDateString() ? 'bg-blue-200' : ''}`} onClick={() => handleDateClick(value)}>
-                        <span className="font-semibold text-xs text-[#263257]">
-                            {value.day}
-                        </span>
-                        <span className="font-medium text-xs text-[#8A96BC]">
-                            {value.week}
-                        </span>
-                    </div>
-                )}
+            {isExpanded ? (
+                <div className="grid grid-cols-7 gap-1">
+                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
+                        <div key={index} className="text-center font-medium text-[#8A96BC]">
+                            {day}
+                        </div>
+                    ))}
+                    {monthDates.map((date, index) =>
+                        date ? (
+                            <div
+                                key={index}
+                                className={`border-[1.5px] border-[#F7F8F8] rounded-xl p-2 flex justify-center items-center aspect-square w-full cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
+                                onClick={() => handleDateClick(date)}
+                            >
+                                <span className="font-semibold text-sm text-[#263257]">
+                                    {date.getDate()}
+                                </span>
+                            </div>
+                        ) : (
+                            <div key={index} className="aspect-square w-full"></div>
+                        )
+                    )}
+                </div>
+            ) : (
+                <div className="flex justify-between gap-3 w-72">
+                    {firstFiveNonNullDates.slice(0, 5).map((date, index) =>
+                        date ? (
+                            <div
+                                key={index}
+                                className={`border-[1.5px] border-[#F7F8F8] rounded-xl px-3 flex flex-col justify-center items-center aspect-square w-12 h-12 cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
+                                onClick={() => handleDateClick(date)}
+                            >
+                                <span className="font-semibold text-xs text-[#263257]">
+                                    {date.getDate()}
+                                </span>
+                                <span className="font-medium text-xs text-[#8A96BC]">
+                                    {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                                </span>
+                            </div>
+                        ) : (
+                            <div key={index} className='size-4 bg-white' ></div>
+                        )
+                    )}
+                </div>
+            )}
+            <div className="flex justify-center rounded-full p-1 shadow arrow-icon cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+                <Icon className="w-3 text-black opacity-50" name={isExpanded ? "arrow-up" : "arrow-down"} />
             </div>
         </div>
     );

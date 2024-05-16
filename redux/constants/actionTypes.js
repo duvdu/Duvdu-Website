@@ -4,7 +4,7 @@ export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
 export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const ENABLE_LOADING = 'ENABLE_LOADING';
-export const DISAABLE_LOADING = 'DISAABLE_LOADING';
+export const DISABLE_LOADING = 'DISABLE_LOADING';
 
 // PROJECT TYPES
 
@@ -63,3 +63,6 @@ export const OPEN_CHAT = 'OPEN_CHAT';
 export const CLOSE_CHAT = 'CLOSE_CHAT';
 export const RESET_CHAT = 'RESET_CHAT';
 export const SET_MESSAGES_LIST = 'SET_MESSAGES_LIST';
+
+// Notification
+export const SET_NOTIFICATIONs = 'SET_CHATS';
