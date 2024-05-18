@@ -47,10 +47,11 @@ function Register({ signup, api, respond, userExists, CheckUsernameExists }) {
     var convertError = JSON.parse(api.error ?? null)
 
     if (respond) {
-        router.push({
-            pathname: `/register/${username}`,
+            console.log(respond)
+        // router.push({
+        //     pathname: `/register/${username}`,
 
-        });
+        // });
     }
     useEffect(() => {
         if (convertError && api.req == "signup") {

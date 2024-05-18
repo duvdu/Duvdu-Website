@@ -46,7 +46,7 @@ function Profile({ getheaderpopup, api, user }) {
                             <div className='p-5'>
                                 <div className='flex items-start gap-4 -translate-y-4 h-12'>
                                     <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                                     </div>
                                     <div className='flex-2 flex-col'>
                                         <span className='text-base font-bold capitalize'>{user.name}</span>

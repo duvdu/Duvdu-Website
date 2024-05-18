@@ -75,7 +75,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, Upda
         UpdateFormData('content', '')
         UpdateFormData('attachments', null)
     };
-
     return (
         <div className={`fixed bottom-0 z-20 ${messages.openchat == true ? '' : 'hidden'}`}>
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />

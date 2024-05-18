@@ -51,7 +51,7 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
         title: project.title,
         location: project.location,
         user: {
-            img: project.user?.profileImage || process.env.DEFULT_PROFILE_PATH,
+            profileImage: project.user?.profileImage || process.env.DEFULT_PROFILE_PATH,
             name: project.user?.name || 'NONE',
             rate: project.user?.totalRates || 0,
         },
@@ -89,35 +89,12 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
         description: project.desc,
         shooting_time: 144,
         delivery_time: 48,
-        comments: [
-            {
-                "id": 1,
-                "userName": "jonathan donrew",
-                "date": "Sun - Aug 3",
-                "avatar": "/assets/imgs/profile/defultUser.jpg",
-                "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-            },
-            {
-                "id": 2,
-                "userName": "jonathan donrew",
-                "date": "Sun - Aug 3",
-                "avatar": "/assets/imgs/profile/defultUser.jpg",
-                "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-            },
-            {
-                "id": 3,
-                "userName": "jonathan donrew",
-                "date": "Sun - Aug 3",
-                "avatar": "/assets/imgs/profile/defultUser.jpg",
-                "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-            },
-        ],
+        comments: [],
         creatives: project.creatives,
         projectBudget: project.projectBudget,
         projectScale: project.projectScale,
 
     } : null
-
     return (
         <>
             <Layout >
@@ -148,10 +125,8 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
                                 </div>
                             </div>
                             <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond}/>
-                            {project.cycle == 1 ?
-                                <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} /> :
-                                <StudioBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
-                            }
+                            <StudioBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+                            
                         </>
                     ) : (
                         <div className="flex flex-col h-body items-center justify-center">
@@ -171,7 +146,7 @@ const Header = ({ data }) => (
         <h1 className="text-xl capitalize opacity-80 font-bold"> {data.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
             <a className='flex items-center gap-3 cursor-pointer' href={`/creative/${data.userName}`}>
-                <img alt='user' className="w-16" src={data.user.profileImage} />
+                <img alt='user aspect-square rounded-full' className="w-16 aspect-square rounded-full" src={data.user.profileImage} />
                 <div>
                     <span className="capitalize font-semibold text-lg">{data.user.name}</span>
                     <div className="flex items-center gap-1 mt-1">
@@ -422,7 +397,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat,chat_respond }) => {
                         !chat_respond ?
                             <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
                                 <div className="relative">
-                                    <img className="h-full" src={data.user.profileImage} alt="user" />
+                                    <img className="h-full aspect-square rounded-full" src={data.user.profileImage} alt="user" />
                                     {online && (
                                         <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                                     )}

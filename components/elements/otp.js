@@ -21,7 +21,6 @@ function OTP({
     const [local_error, setlocal_error] = useState(false);
 
     useEffect(() => {
-        console.log(resendCode_respond)
     }, [resendCode_respond?.message])
 
     useEffect(() => {
@@ -31,7 +30,6 @@ function OTP({
     }, [resendCode_respond?.message])
 
     useEffect(() => {
-        console.log(verify_respond)
         if (verify_respond) {
             oNsucess()
             verify({ username: username, code: -1 })

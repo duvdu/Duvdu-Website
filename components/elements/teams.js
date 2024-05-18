@@ -27,8 +27,9 @@ const BookTeam = ({ team, onChange }) => {
                         <span className="mx-3">{item.creative.occupation||""} $</span>
                     </div>
                 }
+                    
                 {
-                    item.removable ? item.removable : true &&
+                    (!item.removable) &&
                     <div className="remove-padge cursor-pointer" onClick={() => handleRemoveItem(item._id)}>
                         <span className="mx-3 capitalize">remove</span>
                         <div className="bg-[#FF4646] rounded-full aspect-square flex items-center justify-center p-1">

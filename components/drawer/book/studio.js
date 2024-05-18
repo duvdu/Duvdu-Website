@@ -26,7 +26,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
             formData.address?.length > 0 &&
             formData.jobDetails?.length > 5 &&
             formData.bookingHours &&
-            formData.deadline
+            formData.appointmentDate
         ) setEnableBtn(true)
         else setEnableBtn(false)
     }, [formData])
@@ -113,20 +113,37 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                 />
             </div>
         </Drawer >
+        
     return (
         <>
             <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking"/>
             <Drawer name={preview ? 'Review Booking' : data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
-                <section className="my-11">
-                    <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('equipments', value)} />
-                </section>
+            {
+                    creatives.length > 0 &&
+                    <section className="my-11">
+                        <h3 className="capitalize opacity-60 mb-4">team</h3>
+                        <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name }))} onChange={(value) => UpdateFormData('creative', value)} />
+                    </section>
+                }
+                {
+                    data.booktools.length > 0 &&
+                    <section className="my-11">
+                        <h3 className="capitalize opacity-60 mb-4">equipments   </h3>
+                        <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('equipments', value)} />
+                    </section>
+                }
                 <div className="mt-11" />
                 <div className={preview ? ' hidden' : ''}>
                     <section>
                         <h3 className="capitalize opacity-60">job details</h3>
                         <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
-                    <section className="my-11 flex justify-between gap-7">
+                    <section className="my-11 max-w-64">
+                        <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
+                        <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
+                    </section>
+                    <section className="my-11 max-w-64">
+                        <h3 className="capitalize opacity-60 mb-4">deadline Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('deadline', value)} />
                     </section>
                     <section className="my-11 gap-7 mr-24 ${ispreview">
@@ -205,10 +222,20 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             <Icon className='text-primary' name={"calendar"} />
                         </div>
                         <div className="flex flex-col pl-5 w-full">
-                            <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
-                            <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
+                            <span className="font-normal text-base">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
+                            <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'dddd , h:mm TT')}</span>
                         </div>
                     </div>
+                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
+                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                            <Icon className='text-primary' name={"calendar"} />
+                        </div>
+                        <div className="flex flex-col pl-5 w-full">
+                            <span className="font-normal text-base">{dateFormat(formData.deadline, 'd mmmm , yyyy')}</span>
+                            <span className="text-[#747688] text-xs">{dateFormat(formData.deadline, 'dddd , h:mm TT')}</span>
+                        </div>
+                    </div>
+                        
 
                     <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">

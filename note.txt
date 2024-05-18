@@ -95,3 +95,14 @@ open new chat
 ----------------------------------- day task -----------------------------------
 - mark as read 
 - last message did not update
+----------------------------------- day task -----------------------------------
+- project details
+- share popup
+- mobile version header (2)
+
+
+- set duration as number
+
+
+// real time check
+// handling error   

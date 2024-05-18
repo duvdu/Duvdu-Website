@@ -148,16 +148,16 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data, false)
         }
-        
+        console.log(user)
         return (
             <>
-                <Conver converPic={user.coverImg || "/assets/imgs/projects/cover.jpeg"} />
+                <Conver converPic={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+user.coverImage || "/assets/imgs/projects/cover.jpeg"} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
                         <div className='relative px-6 sm:px-10'>
                             <Info
-                                src={ user.profileImage || process.env.DEFULT_PROFILE_PATH}
+                                src={ "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage || process.env.DEFULT_PROFILE_PATH}
                                 location={user.adress || 'NONE'}
                                 occupation={user.service || '---'}
                                 personalName={user.name}

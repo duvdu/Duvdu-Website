@@ -229,7 +229,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
     return (
         <Auth>
             {step === 1 && <EnterYourPhoneNumber />}
-            {step === 2 && <OTP oNsucess={handleNextStep(3)} username={username} />}
+            {step === 2 && <OTP oNsucess={()=>handleNextStep(3)} username={username} />}
             {step === 3 && <ResetPassword />}
             {step === 4 && <PasswordChanged />}
             {/* 

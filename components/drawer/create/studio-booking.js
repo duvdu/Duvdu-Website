@@ -143,6 +143,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
 
 
     const toggleDrawer = () => {
+        CreateStudio(-1)
         if (nextstep == 2) {
             setNextstep(1)
             return

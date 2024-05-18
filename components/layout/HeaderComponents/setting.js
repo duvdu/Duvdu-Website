@@ -121,7 +121,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                     },
                     {
                         img: 'lock-icon.svg',
-                        name: 'Terms & Conditions',
+                        name: 'Change password',
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
                     },
                     {

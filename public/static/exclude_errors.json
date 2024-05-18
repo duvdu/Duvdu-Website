@@ -10,6 +10,7 @@
     "verify",
     "getMyprofile",
     "GetAllChats",
+    "GetNotifications",
     "signup",
     "login"
 ]

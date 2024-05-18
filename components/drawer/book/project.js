@@ -118,32 +118,32 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
             <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
             <Drawer name={preview ? 'Review Booking' : data.user?.name} img={data.user?.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
 
-                {
-                    creatives.length > 0 &&
-                    <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">team</h3>
-                        <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name }))} onChange={(value) => UpdateFormData('creative', value)} />
-                    </section>
-                }
-                {
-                    data.booktools.length > 0 &&
-                    <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">tools</h3>
-                        <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('tools', value)} />
-                    </section>
-                }
                 <div className="mt-11" />
                 <div className={preview ? ' hidden' : ''}>
+                    {
+                        creatives.length > 0 &&
+                        <section className="my-11">
+                            <h3 className="capitalize opacity-60 mb-4">team</h3>
+                            <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name }))} onChange={(value) => UpdateFormData('creative', value)} />
+                        </section>
+                    }
+                    {
+                        data.booktools.length > 0 &&
+                        <section className="my-11">
+                            <h3 className="capitalize opacity-60 mb-4">tools</h3>
+                            <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('tools', value)} />
+                        </section>
+                    }
                     <section>
                         <h3 className="capitalize opacity-60">job details</h3>
                         <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
-                    <section className="my-11">
+                    <section className="my-11 max-w-64">
                         <h3 className="capitalize opacity-60 mb-4">Start Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
-                    <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">Deadline</h3>
+                    <section className="my-11 max-w-64">
+                        <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
                     <section className="my-11 gap-7 mr-24 ${ispreview">
@@ -198,7 +198,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 name="customRequirement[unit]"
                                 required
                             >
-                                {['second', 'minute', 'Hours', 'days'].map((value, index) => (
+                                {['minute', 'Hours'].map((value, index) => (
                                     <option key={index} value={value.toLowerCase()}>{value}</option>
                                 ))}
                             </select>
@@ -221,6 +221,21 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                 </div>
 
                 <div className={preview ? ' flex flex-col gap-9' : ' hidden'}>
+                <div className="flex flex-col gap-9 overflow-y-scroll">
+                    {
+                        creatives.length > 0 &&
+                        <section className="">
+                            <h3 className="capitalize opacity-60 mb-4">team</h3>
+                            <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name, removable: true }))} onChange={(value) => UpdateFormData('creative', value)} />
+                        </section>
+                    }
+                    {
+                        data.booktools.length > 0 &&
+                        <section className="">
+                            <h3 className="capitalize opacity-60 mb-4">tools</h3>
+                            <BookTeam team={data.booktools.map(i => ({ ...i, removable: true }))} onChange={(value) => UpdateFormData('tools', value)} />
+                        </section>
+                    }
                     <section className="w-full">
                         <h2 className='opacity-60 capitalize mb-3'> project type </h2>
                         <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
@@ -266,6 +281,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <span className="font-normal text-base">{formData.address}</span>
                         </div>
                     </div>
+                    </div>
+
                     <section className={`left-0 bottom-0 absolute w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
