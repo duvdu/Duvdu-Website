@@ -8,95 +8,6 @@ import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
 import AppButton from "../../elements/button";
 
-
-
-var users = [
-    {
-        "images": [
-            "/assets/imgs/profile/defultUser.jpg",
-            "/assets/imgs/projects/6.jpeg",
-            "/assets/imgs/projects/3.jpeg",
-            "/assets/imgs/projects/4.jpeg"
-        ],
-        "profileImg": "/assets/imgs/profile/defultUser.jpg",
-        "personalName": "youseff abdulla",
-        "value": 3.7,
-        "price": '30',
-        "location": "5th settlement",
-        "occupation": "photographer",
-        "rank": "professional",
-        "about": "hello i’m Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-        "popularity": {
-            "likes": 28000,
-            "followers": 514,
-            "views": 258000
-        },
-    },
-    {
-        "images": [
-            "/assets/imgs/profile/defultUser.jpg",
-            "/assets/imgs/projects/6.jpeg",
-            "/assets/imgs/projects/3.jpeg",
-            "/assets/imgs/projects/4.jpeg"
-        ],
-        "profileImg": "/assets/imgs/profile/defultUser.jpg",
-        "personalName": "youseff abdulla",
-        "value": 3.7,
-        "price": '30',
-        "location": "5th settlement",
-        "occupation": "photographer",
-        "rank": "professional",
-        "about": "hello i’m Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-        "popularity": {
-            "likes": 28000,
-            "followers": 514,
-            "views": 258000
-        },
-    },
-    {
-        "images": [
-            "/assets/imgs/profile/defultUser.jpg",
-            "/assets/imgs/projects/6.jpeg",
-            "/assets/imgs/projects/3.jpeg",
-            "/assets/imgs/projects/4.jpeg"
-        ],
-        "profileImg": "/assets/imgs/profile/defultUser.jpg",
-        "personalName": "youseff abdulla",
-        "value": 3.7,
-        "price": '30',
-        "location": "5th settlement",
-        "occupation": "photographer",
-        "rank": "professional",
-        "about": "hello i’m Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-        "popularity": {
-            "likes": 28000,
-            "followers": 514,
-            "views": 258000
-        },
-    },
-    {
-        "images": [
-            "/assets/imgs/profile/defultUser.jpg",
-            "/assets/imgs/projects/6.jpeg",
-            "/assets/imgs/projects/3.jpeg",
-            "/assets/imgs/projects/4.jpeg"
-        ],
-        "profileImg": "/assets/imgs/profile/defultUser.jpg",
-        "personalName": "youseff abdulla",
-        "value": 3.7,
-        "price": '30',
-        "location": "5th settlement",
-        "occupation": "photographer",
-        "rank": "professional",
-        "about": "hello i’m Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-        "popularity": {
-            "likes": 28000,
-            "followers": 514,
-            "views": 258000
-        },
-    },
-];
-
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
     return (
         <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
@@ -164,6 +75,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
 
 const AddToTeamPage = ({ goback, FindUser, respond }) => {
     const [id, setId] = useState(null);
+    const [user, setuser] = useState(null);
     const [hours, setHours] = useState(null);
 
     useEffect(() => {
@@ -172,6 +84,7 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
 
     const openpopUp = (value) => {
         setId(value._id)
+        setuser(value)
         const popup = document.querySelector('.ADD_HOURS_TO_CREATIVE');
         if (popup) {
             popup.classList.add('show');
@@ -183,7 +96,7 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
         if (popup) {
             popup.classList.remove('show');
         }
-        goback({user:id,workHours:hours})
+        goback({user:id,workHours:hours,user:user})
     }
 
     return (

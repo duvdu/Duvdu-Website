@@ -13,10 +13,12 @@ import CategoryMultiSelection from '../elements/CategoryMultiSelection';
 import SelectDate from '../elements/selectDate';
 import { CreateTeamProject } from '../../redux/action/apis/teamproject/create';
 import GoogleMap from '../elements/googleMap';
+import { useRouter } from 'next/router';
 
 function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create_respond, resetForm }) {
     const formData = addprojectState.formData
     const [isPopupVisible, setIsPopupVisible] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         UpdateFormData('category', '663e0cdf2cf865f07888f153')
@@ -29,22 +31,21 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         UpdateFormData(name, value)
-        navigate('/', { state: { selectedOption: option } });
     };
 
     const handleCancel = () => {
-        // Set a timeout to hide the popup after 1 second
         resetForm()
         setTimeout(() => {
             setIsPopupVisible(false);
         }, 100);
     };
     const onsubmit = () => {
-
+        router.push({
+            pathname: "/addteams",
+        });
         // UpdateFormData('attachments', formData?.attachment?.map((e)=> e.file))
         // const form = new FormData()
         // UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
-
     }
 
 
@@ -58,7 +59,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     </section>
                     <section>
                         <h3 className='opacity-60 font-medium my-2 text-lg'>select Categories</h3>
-                        <CategoryMultiSelection onChange={(v) => { UpdateFormData('creatives', v) }} />
+                        <CategoryMultiSelection onChange={(v) => { UpdateFormData('jobTitle', v) }} />
                     </section>
                     <section className="w-full mt-11">
                         <AddAttachment UpdateFormData={UpdateFormData} formData={formData} />

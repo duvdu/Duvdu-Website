@@ -3,28 +3,38 @@ import Layout from "../../components/layout/Layout";
 import Selector from "../../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
 import ArrowBtn from '../../components/elements/arrowBtn';
-import Filter from "../../components/elements/filter";
-import { convertToK } from '../../util/util';
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { GetTeamProject } from "../../redux/action/apis/teamproject/getone";
 import UsersToAdd from "../../components/layout/team/usersToAdd";
 import { UpdateTeamProject } from "../../redux/action/apis/teamproject/update";
+import { DeleteTeamProjects } from "../../redux/action/apis/teamproject/deleteProject";
 
 
-const TheTeam = ({ GetTeamProject, respond, UpdateTeamProject, update_respond }) => {
+const TheTeam = ({
+    GetTeamProject,
+    get_respond,
+    UpdateTeamProject,
+    update_respond,
+    DeleteTeamProjects,
+    delete_respond
+}) => {
     const [state, setState] = useState(1);
     const router = useRouter();
     const { teamId } = router.query;
 
     useEffect(() => {
+        console.log(delete_respond)
         if (teamId) {
             GetTeamProject({ id: teamId });
         }
-    }, [teamId, update_respond]);
+    }, [teamId, update_respond, delete_respond]);
 
     const updateTeamProject = (data) => {
         UpdateTeamProject(data, teamId)
+    }
+    const handleDelete = (id) => {
+        DeleteTeamProjects(id)
     }
 
     return (
@@ -33,14 +43,14 @@ const TheTeam = ({ GetTeamProject, respond, UpdateTeamProject, update_respond })
                 {state === 0 && <Empty />}
                 {state === 1 && (
                     <div className="flex flex-col lg:flex-row gap-7 items-center">
-                        <LeftSide respond={respond} onAddOne={(v) => updateTeamProject(v)} />
-                        <RightSide onClick={() => setState(2)} />
+                        <LeftSide respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleDelete={handleDelete} />
+                        <RightSide onClick={() => setState(1)} />
                     </div>
                 )}
                 {state === 2 && (
                     <div className="flex flex-col lg:flex-row gap-7">
                         <Cover />
-                        <LeftSide isSolid={true} respond={respond} />
+                        <LeftSide isSolid={true} respond={get_respond} handleDelete={handleDelete} />
                         <RightSide isSolid={true} />
                     </div>
                 )}
@@ -48,58 +58,10 @@ const TheTeam = ({ GetTeamProject, respond, UpdateTeamProject, update_respond })
         </Layout>
     );
 };
-const Person = ({ person }) => (
-    <div className='flex gap-4 h-12 min-w-[300px]'>
-        <img className='rounded-full h-full aspect-square' src={person.user.profileImage} alt='profile img' />
-        <div className='w-full flex flex-col justify-center'>
-            <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
-            <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
-        </div>
-        <div className={`flex rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
-            <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>message</span>
-            <div className='size-5'>
-                <Icon name={'chat'} />
-            </div>
-        </div>
-        {person.status == 'pending' && <Icon name="waiting" className="size-12" />}
-        {person.status == 'refuse' && <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 size-6" />}
-        {person.status == 'available' && (
-            <Selector
-                options={[
-                    { value: "option 1", onClick: () => { } },
-                    { value: "option 2", onClick: () => { } },
-                    { value: "option 3", onClick: () => { } }
-                ]}
-                className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF40] flex justify-center items-center size-12 cursor-pointer"
-            />
-        )}
-    </div>
-);
 
-const Sections = ({ section, AddTeam, isSolid }) => (
-    <>
-        <div className="flex justify-between my-3">
-            <span className="opacity-60 capitalize font-medium">
-                {section.jobTitle}
-            </span>
-            {!isSolid && (
-                <div className="flex gap-2 cursor-pointer items-center">
-                    <Icon className="text-[#FF4646]" name="xmark" />
-                    <span className="text-[#FF4646]">Remove</span>
-                </div>
-            )}
-        </div>
-        <div className="w-full h-[1px] bg-black opacity-15" />
-        <div className='flex flex-col gap-5 my-5 max-h-[600px] overflow-y-scroll'>
-            {section?.users?.map((person, index) => (
-                <Person key={index} person={person} />
-            ))}
-            {!isSolid && <AddCreative onClick={AddTeam} />}
-        </div>
-    </>
-);
 
-const LeftSide = ({ isSolid, respond, onAddOne }) => {
+
+const LeftSide = ({ isSolid, respond, onAddOne, handleDelete }) => {
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
     const [categoryId, setCategoryId] = useState();
 
@@ -123,7 +85,7 @@ const LeftSide = ({ isSolid, respond, onAddOne }) => {
                     <Cover respond={respond} />
                     {data.map((section, index) => (
                         <div key={index}>
-                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} />
+                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} handleDelete={handleDelete} />
                             {index !== data.length - 1 && <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>}
                         </div>
                     ))}
@@ -133,6 +95,54 @@ const LeftSide = ({ isSolid, respond, onAddOne }) => {
             )}
         </div>
     );
+};
+
+const Sections = ({ section, AddTeam, isSolid, handleDelete }) => (
+    <>
+        <div className="flex justify-between my-3">
+            <span className="opacity-60 capitalize font-medium">
+                {section.jobTitle}
+            </span>
+            {!isSolid && (
+                <div className="flex gap-2 cursor-pointer items-center">
+                    <Icon className="text-[#FF4646]" name="xmark" />
+                    <span className="text-[#FF4646]">Remove</span>
+                </div>
+            )}
+        </div>
+        <div className="w-full h-[1px] bg-black opacity-15" />
+        <div className='flex flex-col gap-5 my-5 max-h-[600px] overflow-y-scroll'>
+            {section?.users?.map((person, index) => (
+                <Person key={index} person={person} onDelete={handleDelete} />
+            ))}
+            {!isSolid && <AddCreative onClick={AddTeam} />}
+        </div>
+    </>
+);
+
+const Person = ({ person, onDelete }) => {
+    const options = [
+        { value: 'delete' },
+    ];
+
+    return (
+        <div className='flex gap-4 h-12 min-w-[300px]'>
+            <img className='rounded-full h-full aspect-square' src={person.user.profileImage} alt='profile img' />
+            <div className='w-full flex flex-col justify-center'>
+                <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
+                <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
+            </div>
+            <div className={`flex rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
+                <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>message</span>
+                <div className='size-5'>
+                    <Icon name={'chat'} />
+                </div>
+            </div>
+            {person.status == 'pending' && <Selector options={options} onSelect={() => onDelete(person._id)}> <Icon name="waiting" className="size-12" /> </Selector>}
+            {person.status == 'refuse' && <Selector options={options} onSelect={() => onDelete(person._id)}> <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div> </Selector>}
+            {person.status == 'available' && <Selector options={options} onSelect={() => onDelete(person._id)} ><div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div></Selector>}
+        </div>
+    )
 };
 
 const RightSide = ({ isSolid, onClick }) => (
@@ -156,11 +166,11 @@ const RightSide = ({ isSolid, onClick }) => (
 
 const Cover = ({ respond }) => (
     <div className="relative h-20 w-full rounded-full overflow-hidden flex justify-center items-center mb-8">
-            <div className="absolute inset-0 blur-sm" style={{ backgroundImage: `url(${respond?.data?.cover})`}}></div>
-            <span className="absolute text-lg font-semibold text-white">
-                {respond?.data?.title}
-            </span>
-    
+        <div className="absolute inset-0 blur-sm" style={{ backgroundImage: `url(${respond?.data?.cover})` }}></div>
+        <span className="absolute text-lg font-semibold text-white">
+            {respond?.data?.title}
+        </span>
+
     </div>
 );
 
@@ -191,14 +201,16 @@ const Empty = () => (
 
 
 const mapStateToProps = (state) => ({
-    respond: state.api.GetTeamProject,
+    get_respond: state.api.GetTeamProject,
     update_respond: state.api.UpdateTeamProject,
+    delete_respond: state.api.UpdateTeamProject,
 
 });
 
 const mapDispatchToProps = {
     GetTeamProject,
-    UpdateTeamProject
+    UpdateTeamProject,
+    DeleteTeamProjects
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TheTeam);
 
