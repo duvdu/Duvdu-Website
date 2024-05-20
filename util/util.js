@@ -65,7 +65,7 @@ export function convertHoursTo__(hours) {
 }
 
 export function handleFileUpload(event) {
-  const file = event.target.files[0]; // Get the first selected file
+  const file = event?.target?.files[0] || event?.target?.file// Get the first selected file
   if (!file) {
     return; // No file selected, do nothing
   }

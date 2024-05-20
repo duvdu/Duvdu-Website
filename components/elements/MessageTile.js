@@ -2,7 +2,7 @@ import { connect } from "react-redux"
 import dateFormat from "dateformat";
 import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
 
-function MessageTile({ GetAllMessageInChat, message,user }) {
+function MessageTile({ GetAllMessageInChat, message, user }) {
     const lastMSG = message.newestMessage
     const unreadedcount = message.unreadMessageCount;
     // Start from the last element and move backwards
@@ -12,17 +12,18 @@ function MessageTile({ GetAllMessageInChat, message,user }) {
     }
 
     function getotherdata() {
-        
-            const element = lastMSG;
-            if (!checkIsMe(element.sender)) {
-                return element.sender
-            }
-            if (!checkIsMe(element.receiver)) {
-                return element.receiver
-            }
-        
+
+        const element = lastMSG;
+        if (!checkIsMe(element.sender)) {
+            return element.sender
+        }
+        if (!checkIsMe(element.receiver)) {
+            return element.receiver
+        }
+
     }
-    const other =  getotherdata()??{}
+    const other = getotherdata() ?? {}
+    
     return (
         <div className="w-64 flex gap-4 cursor-pointer" onClick={() => GetAllMessageInChat(message._id)}>
             <div className="relative">
@@ -49,7 +50,7 @@ function MessageTile({ GetAllMessageInChat, message,user }) {
 
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
-    user:state.auth.user
+    user: state.auth.user
 })
 const mapDispatchToProps = {
     GetAllMessageInChat

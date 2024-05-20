@@ -71,7 +71,6 @@ useEffect(()=>{
             if (avoidFeilds.includes(key)) return
             data.append(key, formData[key]);
         });
-
         return data;
     }
 
@@ -90,10 +89,10 @@ useEffect(()=>{
 
     const profileUpload = (e) => {
         UpdateFormData('_profileImage', gettFileUploaded(e))
+        console.log(handleFileUpload(e).file)
         UpdateFormData('profileImage', handleFileUpload(e).file)
     };
     const coverUpload = (e) => {
-        UpdateFormData('_coverImage', gettFileUploaded(e))
         UpdateFormData('coverImage', handleFileUpload(e).file)
     };
 

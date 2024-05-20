@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Icons from '../public/static/LocalIconsName.json';
-import IconSVG from '../util/IconSVG';
+import IconSVG, { IsincludesSVG } from '../util/IconSVG';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons';
@@ -11,28 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Icon = ({ name, type = "fas", useinvert, invert, className = "", ...rest }) => {
 
 
-  const IsincludesSVG = [
-    "dashboard",
-    "contracts",
-    "teams",
-    "gear",
-    "user",
-    "bell",
-    "angle-right",
-    "pen",
-    "plus",
-    "add-file",
-    "attachment",
-    "bag",
-    "card",
-    "chat",
-    "check-verify",
-    "burger-menu",
-    "x-icon",
-    "search-menu",
-    "arrow-right-long",
-    "calendar"
-  ];
 
   if (IsincludesSVG.includes(name)) return <IconSVG name={name} className={className} {...rest} />
   else {

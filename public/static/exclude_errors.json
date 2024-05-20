@@ -1,6 +1,6 @@
 [
     "CheckUsernameExists",
-    "TagUser",
+    "FindUser",
     "ChangePassword",
     "ASKforgetpassword",
     "UpdatePhone",
