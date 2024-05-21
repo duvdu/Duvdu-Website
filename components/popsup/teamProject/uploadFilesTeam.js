@@ -103,7 +103,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                             <span className="capitalize opacity-50">location</span>
                             <div className="capitalize mt-4">
                                 <section className="h-52 relative rounded-3xl overflow-hidden">
-                                    <GoogleMap width={'100%'} value={{ 'lat': formData?.location?.lat, 'lng': formData?.location?.lng }} />
+                                    <GoogleMap  width={'100%'} value={{ 'lat': formData?.location?.lat, 'lng': formData?.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                                 </section>
                             </div>
                         </section>

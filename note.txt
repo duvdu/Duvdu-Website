@@ -104,7 +104,26 @@ open new chat
 
 // real time check
 // handling error   
------------------------------------ day task -----------------------------------
 
 - edit teams
 - edit categorey
+
+----------------------------------- day task -----------------------------------
+
+In User website
+    get my teams
+    Add new team
+    edit team
+    add creative to team
+    remove creative from team
+    remove team
+
+
+In user website
+    add new board
+    edit board
+    remove board
+    add project to board
+    get boards
+    get board projects 
+    remove project from board

@@ -268,21 +268,34 @@ export const convertToFormData = (data, avoidfeilds = []) => {
 
   return formData;
 }
+export const OpenPopUp = (id) => {
+  const editBoardElement = document.querySelector('#' + id);
+  if (editBoardElement) {
+    editBoardElement.classList.add('show');
+  }
+}
+export const ClosePopUp = (id) => {
+  const editBoardElement = document.querySelector('#' + id);
+  if (editBoardElement) {
+    editBoardElement.classList.remove('show');
+
+  }
+}
 
 export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = '') => {
   Object.keys(obj).forEach(key => {
-      if (avoidFields.includes(key)) return; // Skip processing if key is in avoidFields
-      const value = obj[key];
-      const prefixedKey = `${prefix}${prefix ? '.' : ''}${key}`;
-      if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-              const arrayKey = `${prefixedKey}[${index}]`;
-              if (onUpdate) onUpdate(arrayKey, item);
-          });
-      } else if (value && typeof value === 'object' && value !== null) {
-          UpdateKeysAndValues(value, onUpdate, avoidFields, prefixedKey); // Pass avoidFields down
-      } else {
-          if (onUpdate) onUpdate(prefixedKey, value);
-      }
+    if (avoidFields.includes(key)) return; // Skip processing if key is in avoidFields
+    const value = obj[key];
+    const prefixedKey = `${prefix}${prefix ? '.' : ''}${key}`;
+    if (Array.isArray(value)) {
+      value.forEach((item, index) => {
+        const arrayKey = `${prefixedKey}[${index}]`;
+        if (onUpdate) onUpdate(arrayKey, item);
+      });
+    } else if (value && typeof value === 'object' && value !== null) {
+      UpdateKeysAndValues(value, onUpdate, avoidFields, prefixedKey); // Pass avoidFields down
+    } else {
+      if (onUpdate) onUpdate(prefixedKey, value);
+    }
   });
 };

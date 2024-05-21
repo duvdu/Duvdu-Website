@@ -1,15 +1,13 @@
-import * as Types from "../../../constants/actionTypes";
-import { mainApiInstance } from '../axiosInstances'
+import * as Types from "../../../../constants/actionTypes";
+import { mainApiInstance } from '../../axiosInstances'
 
 
-export const GetTeamProject = ({ id, page="", limit="" }) => {
-    const req = "GetTeamProject"
+export const AddProjectToBoard = ({ idboard, idproject }) => {
+    const req = "AddProjectToBoard"
     return async dispatch => {
         dispatch({ type: Types.NONEPOPUP });
         try {
-            
-            const queryString = new URLSearchParams({ page: page, limit: limit }).toString();
-            const response = await mainApiInstance.get(`api/team/${id}?${queryString}`);
+            const response = await mainApiInstance.post(`api/users/saved-projects/${idboard}/project/${idproject}`,);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
         } catch (error) {
             // console.log("error " , JSON.stringify(error.response))

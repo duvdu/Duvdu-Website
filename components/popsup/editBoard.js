@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import AppButton from '../elements/button';
 
-function createnewBoard({onSbmit}) {
+function EditBoard({onSbmit ,id}) {
+    
     const [board, setBoardName] = useState('');
     const [boardError, setBoardError] = useState({ isError: false, message: '' });
     const handleSubmit = (e) => {
@@ -18,20 +19,20 @@ function createnewBoard({onSbmit}) {
 
     return (
         <>
-            <Popup id="create-new-board" header={"create new Board"} >
+            <Popup id={"edit-board-"+id} header={"Edit Board Title"} >
                 <div method="post" onSubmit={handleSubmit} className='mt-12 '>
                     <div className={`mb-12 ${boardError.isError && 'error'}`}>
                         <input
                             type="text"
                             value={board}
                             onChange={(e) => setBoardName(e.target.value)}
-                            placeholder="Board name"
+                            placeholder="New Board name"
                             className={boardError.isError ? "app-field error" : "app-field"}
                         />
                         {boardError.isError && <p className="error-msg">{boardError.message}</p>}
                     </div>
                     <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>  
-                        Create
+                        Edit
                     </AppButton>
                     <div className='mb-4'/>
                 </div>
@@ -41,4 +42,4 @@ function createnewBoard({onSbmit}) {
 }
 
 
-export default createnewBoard;
+export default EditBoard;

@@ -1,9 +1,15 @@
 import Icon from "../components/Icons";
 import Layout from "../components/layout/Layout";
-import DeleteBoard from "../components/popsup/DeleteBoard";
-import CreateBoard from "../components/popsup/createnewBoard";
+import CreateBoardPopup from "../components/popsup/createnewBoard";
 import Selector from "../components/elements/CustomSelector";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { GetBoards } from "../redux/action/apis/savedProject/board/get";
+import { UpdateBoard } from "../redux/action/apis/savedProject/board/update";
+import { CreateSavedBoard } from "../redux/action/apis/savedProject/board/create";
+import { connect } from "react-redux";
+import { DeleteSavedBoard } from "../redux/action/apis/savedProject/board/deleteboard";
+import { OpenPopUp } from "../util/util";
+import EditBoard from "../components/popsup/editBoard";
 
 const data = [
     {
@@ -30,48 +36,77 @@ const data = [
 
 ];
 
-const Boards = ({ data }) => {
 
+const Saved = ({
+    GetBoards,
+    CreateSavedBoard,
+    UpdateBoard,
+    DeleteSavedBoard,
+    getBoards_respond,
+    createBoard_respond,
+    updateBoard_respond,
+    deleteSavedBoard_respond
 
-    const { img1, img2, img3, projectsNum, name, favorite } = data;
+}) => {
+    const Boards = ({ data, }) => {
+        console.log(data._id)
+        const { projectsNum, title, _id: id } = data;
+        const img1 = data?.projects[0]?.project?.cover
+        const img2 = data?.projects[1]?.project?.cover
+        const img3 = data?.projects[2]?.project?.cover
 
-    const dropdown = [
-        {
-            value: "Delete",
-            id: 'delete-board',
-        },
-    ]
+        const dropdown = [
+            {
+                value: "Delete",
+            },
+            {
+                value: "Edit",
+            },
+        ]
 
-    return (
-        <>
-            <DeleteBoard />
-            <div className="boards-card">
-                <a href="/save" className="projects cursor-pointer">
-                    <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
-                    <div className="col2">
-                        <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
-                        <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
+        return (
+            <>
+                <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
+                <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v} , id)} />
+                <div className="boards-card">
+                    <div className="absolute top-7 right-7">
+                        <Selector options={dropdown} onSelect={(v) => v.value == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-"+id) }> <div className="size-5 bg-black rounded-full">  </div> </Selector> 
                     </div>
-                </a>
-                <div className="boards-info projects-num">{projectsNum} projects</div>
+                    <a href={`/save/${id}`} className="projects cursor-pointer">
+                        <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
+                        <div className="col2">
+                            <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
+                            <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
+                        </div>
+                    </a>
+                    <div className="boards-info projects-num">{projectsNum} projects</div>
+                    <a href={`/save/${id}`}>
 
-                <Selector options={dropdown} iconclassName="text-white" className="absolute right-7 top-7 appblur rounded-full w-14 aspect-square flex justify-center items-center border border-white border-opacity-20" invert={true} />
-                <div className="absolute bottom-0 w-full h-1/2 rounded-[50px]  gradient1"/>
+                        <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
 
-                <div className="boards-info projects-name flex">
-                    {name == "favorites" && <Icon name={"favorites"} />}
-                    {name}
+                        <div className="boards-info projects-name flex">
+                            {title == "favorites" && <Icon name={"favorites"} />}
+                            {title}
+                        </div>
+                    </a>
                 </div>
-            </div>
-        </>
-    );
-};
+            </>
+        );
+    };
 
-const Saved = () => {
-    
+
+
+    useEffect(() => {
+        // console.log(getBoards_respond)
+    }, [getBoards_respond])
+    useEffect(() => {
+        GetBoards()
+    }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])
+
+
     return (
         <>
-            <CreateBoard  />
+
             <Layout shortheader={true} isbodyWhite={true}>
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
@@ -88,7 +123,7 @@ const Saved = () => {
                         )}
                         <div className="boards-grid">
                             {
-                                data.map((feature, index) => (
+                                getBoards_respond?.data?.map((feature, index) => (
                                     <Boards key={index} data={feature} />
                                 ))
                             }
@@ -99,5 +134,20 @@ const Saved = () => {
         </>
     );
 };
+const mapStateToProps = (state) => ({
+    getBoards_respond: state.api.GetBoards,
+    createBoard_respond: state.api.CreateSavedBoard,
+    updateBoard_respond: state.api.UpdateBoard,
+    deleteBoard_respond: state.api.DeleteBoard,
+    deleteSavedBoard_respond: state.api.DeleteSavedBoard,
+});
 
-export default Saved;
+const mapDispatchToProps = {
+    GetBoards,
+    CreateSavedBoard,
+    UpdateBoard,
+    DeleteSavedBoard
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Saved);

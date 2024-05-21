@@ -84,7 +84,6 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
     return (
         <>
             <Popup id='edit_team_uploading_files' className='w-full lg:w-[600px] flex flex-col gap-9' addWhiteShadow={true} header={'upload files'} onCancel={handleCancel} ref={elementRef}>
-
                 {
                     isPopupVisible &&
                     <div className='lg:w-[600px]'>

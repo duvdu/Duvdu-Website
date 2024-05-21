@@ -1,0 +1,27 @@
+import * as Types from "../../../../constants/actionTypes";
+import { mainApiInstance } from '../../axiosInstances'
+
+
+export const UpdateBoard = (data, id) => {
+
+  const req = "UpdateBoard"
+  return async dispatch => {
+    dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
+    try {
+
+      const response = await mainApiInstance.put(`api/users/saved-projects/${id}`, data);
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
+    } catch (error) {
+      try {
+        dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
+      }
+      catch (error) {
+        dispatch({ type: Types.FETCH_DATA_FAILURE, payload: "unknown", req: req });
+      }
+    }
+  };
+};
+
+// {
+//   "title":""
+// }

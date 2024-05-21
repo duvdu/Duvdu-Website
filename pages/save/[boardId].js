@@ -1,28 +1,46 @@
 import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
-import Layout from "./../components/layout/Layout";
-import { fetchProjects } from "./../redux/action/project";
-import Card from "./../components/elements/project-card";
-import Icon from '../components/Icons';
-import { Goback } from '../util/util';
+import Layout from "../../components/layout/Layout";
+import { fetchProjects } from "../../redux/action/project";
+import Card from "../../components/elements/project-card";
+import Icon from '../../components/Icons';
+import { Goback } from '../../util/util';
+import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
+import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
+import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
 
 
-const Projects = ({ projects, projectFilters, fetchProjects }) => {
+const Projects = ({
+    projects,
+    projectFilters,
+    fetchProjects,
+
+    AddProjectToBoard,
+    DeleteProjectFromBoard,
+    GetSavedBoard,
+    delete_respond,
+    get_respond
+
+}) => {
     const Router = useRouter();
-    const searchTerm = Router.query.search;
+    const boardId = Router.query.boardId;
     const showLimit = 24;
+    const [allprojects, setallProjects] = useState(null);
     const [limit, setLimit] = useState(showLimit);
 
     const targetRef = useRef(null);
 
+    console.log(allprojects)
     useEffect(() => {
-        fetchProjects(searchTerm, "/static/projects.json", projectFilters);
-    }, [projectFilters]);
+        if(get_respond)
+            setallProjects(get_respond?.data?.projects)
+    }, [get_respond,delete_respond]);
 
     useEffect(() => {
-        fetchProjects(searchTerm, "/static/projects.json", projectFilters, limit);
-    }, [limit]);
+        if(boardId)
+        GetSavedBoard({ id: boardId })
+    }, [boardId]);
 
     useEffect(() => {
         const options = {
@@ -66,9 +84,9 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
         };
     }, [limit]);
 
-  
 
-    const getPaginatedProjects = Math.random() < 0.5 ? projects.items.slice(0, 0) : projects.items.slice(0, limit);
+
+    const getPaginatedProjects = allprojects;
 
 
     return (
@@ -78,23 +96,23 @@ const Projects = ({ projects, projectFilters, fetchProjects }) => {
                     <div className="container mb-30">
 
                         <div className='flex gap-3 pb-6'>
-                        <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={Goback}>
-                            <Icon className='text-xl' name={'angle-left'} />
-                        </div>
+                            <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={Goback}>
+                                <Icon className='text-xl' name={'angle-left'} />
+                            </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
                                 Favorites
                             </span>
                         </div>
-                        {getPaginatedProjects.length === 0 && (
+                        {getPaginatedProjects?.length === 0 && (
                             <EmptyComponent />
                         )}
                         <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects.map((item, i) => (
+                            {getPaginatedProjects?.map((item, i) => (
                                 <Card className='cursor-pointer' href="/project/1" key={i} cardData={item} />
                             ))}
                         </div>
                         {
-                            getPaginatedProjects.length === limit &&
+                            getPaginatedProjects?.length === limit &&
                             <div className="load-parent">
                                 <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                             </div>
@@ -120,12 +138,15 @@ const EmptyComponent = () => {
 };
 
 const mapStateToProps = (state) => ({
-    projects: state.projects,
-    projectFilters: state.projectFilters,
+    add_respond: state.api.AddProjectToBoard,
+    delete_respond: state.api.DeleteProjectFromBoard,
+    get_respond: state.api.GetSavedBoard,
 });
 
 const mapDispatchToProps = {
-    fetchProjects,
+    AddProjectToBoard,
+    DeleteProjectFromBoard,
+    GetSavedBoard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);
