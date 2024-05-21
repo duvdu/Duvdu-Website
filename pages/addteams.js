@@ -15,14 +15,16 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     const [creatives, setCreatives] = useState({
         creatives: [],
     });
+    console.log(formData)
     useEffect(() => {
-        console.log(creatives)
+        console.log(create_respond)
     }, [creatives])
     useEffect(() => {
-        const updatedCreatives = formData?.jobTitle?.map(categoryId => {
+        const updatedCreatives = formData?.category?.map(categoryId => {
             const category = categories.find(cat => cat._id === categoryId);
             return {
                 category: category ? category.title : "Unknown Category",
+                categoryId: categoryId,
                 users: [],
             };
         });
@@ -34,6 +36,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             category: data.category,
             workHours: data.workHours,
             totalAmount: data.totalAmount,
+            categoryId: data.categoryId,
             ...data.user,
         };
 
@@ -82,9 +85,8 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
 
         creatives.creatives.forEach((creative, index) => {
             const categoryKey = `creatives[${index}][category]`;
-            const categoryValue = creative.category;
-            form.append(categoryKey, "6637d6c0866031e30eda7d1a"||categoryValue);
-
+            const categoryValue = creative.categoryId;
+            form.append(categoryKey, categoryValue);
             creative.users.forEach((user, userIndex) => {
                 const userKeyPrefix = `creatives[${index}][users][${userIndex}]`;
                 form.append(`${userKeyPrefix}[user]`, user._id);
@@ -93,11 +95,14 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             });
         });
 
+if (formData?._attachments) {
+    formData._attachments.forEach((attachment, index) => {
+        form.append(`attachments`, attachment.file);
+    });
+}
 
-        if (formData?._attachments)
-            form.append('attachments', formData?._attachments[0]?.file)
         form.append('cover', formData?.cover)
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', '_attachments', 'attachments'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', '_attachments', 'attachments', 'category', 'jobTitle'])
         CreateTeamProject(form)
 
         // Printing FormData for demonstration
@@ -118,7 +123,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             if (typeof (value) == 'string')
                 setCategoryId(value)
             else
-                onAddOne?.({ ...value, category: categoryId, totalAmount: 20 })
+                onAddOne?.({ ...value, category: categoryId })
 
             setIsAddToTeamPage(!isAddToTeamPage);
         };
@@ -176,7 +181,11 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                         <Icon name={'chat'} />
                     </div>
                 </div>
-                {person.status == 'pending' && <Selector options={options} onSelect={() => removeUser(person._id)}> <Icon name="waiting" className="size-12" /> </Selector>}
+                <Selector options={[
+                    {
+                        value: "delete",
+                    },
+                ]} onSelect={() => removeUser(person._id)} />
                 {person.status == 'refuse' && <Selector options={options} onSelect={() => removeUser(person._id)}> <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div> </Selector>}
                 {person.status == 'available' && <Selector options={options} onSelect={() => removeUser(person._id)} ><div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div></Selector>}
             </div>

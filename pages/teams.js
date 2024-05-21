@@ -2,17 +2,27 @@ import Icon from "../components/Icons";
 import Layout from "../components/layout/Layout";
 import Selector from "../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
-import UploadFilesTeam from '../components/popsup/uploadFilesTeam';
+import UploadFilesTeam from '../components/popsup/teamProject/uploadFilesTeam';
 import { connect } from "react-redux";
 import { GetTeamProjects } from "../redux/action/apis/teamproject/get";
 import Link from "next/link";
 import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
 import { DeleteTeamProjects } from "../redux/action/apis/teamproject/deleteProject";
+import EditFilesTeam from "../components/popsup/teamProject/EditFilesTeam";
+import { useRouter } from "next/router";
 
 const Card = ({ data, DeleteTeamProjects }) => {
     const { cover, creatives, title, _id } = data;
+    const route = useRouter()
+
     const onDelete = () => {
         DeleteTeamProjects(_id)
+    }
+    const onEdit = (_id) => {
+        route.push({
+            pathname: '/teams',
+            query: { edit: _id },
+        });
     }
 
     return (
@@ -26,10 +36,13 @@ const Card = ({ data, DeleteTeamProjects }) => {
                 </Link>
                 <div className="absolute top-0 right-0 pe-12 pt-12 flex justify-center items-center">
                     <Selector
-                        onSelect={onDelete}
+                        onSelect={(v) => v.value == 'delete' ? onDelete() : onEdit(_id)}
                         options={[
                             {
-                                value: "delete",
+                                value: "Delete",
+                            },
+                            {
+                                value: "Edit",
                             },
 
                         ]} >
@@ -51,35 +64,47 @@ const Card = ({ data, DeleteTeamProjects }) => {
 };
 
 const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond }) => {
+    const route = useRouter()
+
     useEffect(() => {
         GetTeamProjects();
     }, [GetTeamProjects, delete_respond, create_respond]);
 
 
-
     return (
         <Layout shortheader={true} isbodyWhite={true}>
+
             <UploadFilesTeam />
+
+            <EditFilesTeam />
+
             <section className="mt-3 mb-12">
                 <div className="container mb-7">
                     <div className="flex gap-6 alignCenter mb-7 items-center">
                         <h1 className="text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">Team Projects</h1>
                         <div
-                            data-popup-toggle="popup" data-popup-target="team_uploading_files"
+                            onClick={() => {
+                                route.push({
+                                    pathname: '/teams',
+                                    query: { add: true },
+                                });
+                            }}
                             className="flex gap-5 items-center py-[21px] px-[35px] rounded-full bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
                             New Project
                             <Icon className="w-4 text-white" name="plus" />
                         </div>
                     </div>
-                    {get_respond?.data?.length > 0 ? (
-                        <div className="boards-grid">
-                            {get_respond.data.map((feature, index) => (
-                                <Card key={index} data={feature} DeleteTeamProjects={DeleteTeamProjects} />
-                            ))}
-                        </div>
-                    ) : (
-                        <Empty />
-                    )}
+                    {
+                        get_respond?.data?.length > 0 ? (
+                            <div className="boards-grid">
+                                {get_respond.data.map((feature, index) => (
+                                    <Card key={index} data={feature} DeleteTeamProjects={DeleteTeamProjects} />
+                                ))}
+                            </div>
+                        ) : (
+                            get_respond?.data &&
+                            <Empty />
+                        )}
                 </div>
             </section>
         </Layout>

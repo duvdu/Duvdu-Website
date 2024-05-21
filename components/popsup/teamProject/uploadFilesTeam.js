@@ -1,45 +1,58 @@
 
-import Popup from '../elements/popup';
-import Icon from '../Icons';
-import React, { useEffect, useState } from "react";
-import ArrowBtn from '../elements/arrowBtn';
-import { UpdateKeysAndValues, handleFileUpload } from '../../util/util';
-import Switch from '../elements/switcher'
-import AddAttachment from '../elements/attachment';
-import AddCoverPhoto from '../elements/AddCoverPhoto';
+import Popup from '../../elements/popup';
+import Icon from '../../Icons';
+import React, { useEffect, useRef, useState } from "react";
+import ArrowBtn from '../../elements/arrowBtn';
+import { UpdateKeysAndValues, handleFileUpload } from '../../../util/util';
+import AddAttachment from '../../elements/attachment';
+import AddCoverPhoto from '../../elements/AddCoverPhoto';
 import { connect } from 'react-redux';
-import { UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
-import CategoryMultiSelection from '../elements/CategoryMultiSelection';
-import SelectDate from '../elements/selectDate';
-import { CreateTeamProject } from '../../redux/action/apis/teamproject/create';
-import GoogleMap from '../elements/googleMap';
+import { UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
+import CategoryMultiSelection from '../../elements/CategoryMultiSelection';
+import SelectDate from '../../elements/selectDate';
+import { CreateTeamProject } from '../../../redux/action/apis/teamproject/create';
+import GoogleMap from '../../elements/googleMap';
 import { useRouter } from 'next/router';
 
 function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create_respond, resetForm }) {
     const formData = addprojectState.formData
     const [isPopupVisible, setIsPopupVisible] = useState(true);
     const router = useRouter();
+    const elementRef = useRef(null);
 
-    useEffect(() => {
-        UpdateFormData('category', '663e0cdf2cf865f07888f153')
-        UpdateFormData('showOnHome', true)
-    }, [isPopupVisible])
     // useEffect(() => {
     // //    console.log(create_respond)
     // }, [create_respond])
-
+    useEffect(() => {
+        // GetTeamProject()
+        const element = document.getElementById('team_uploading_files');
+        if (router.query.add) {
+            if (element) {
+                element.classList.add('show');
+                setIsPopupVisible(true)
+            }
+        }
+        else {
+            if (element) {
+                element.classList.remove('show');
+                setIsPopupVisible(false)
+            }
+        }
+    }, [router.query.add])
+    
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         UpdateFormData(name, value)
     };
 
     const handleCancel = () => {
+        router.push({
+            pathname: "/teams",
+        });
         resetForm()
-        setTimeout(() => {
-            setIsPopupVisible(false);
-        }, 100);
     };
     const onsubmit = () => {
+        console.log(formData)
         router.push({
             pathname: "/addteams",
         });
@@ -48,18 +61,19 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
         // UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
     }
 
-
-    if (!isPopupVisible) return <></>
     return (
         <>
-            <Popup id='team_uploading_files' className='w-full lg:w-[600px] flex flex-col gap-9' addWhiteShadow={true} header={'upload files'} onCancel={handleCancel}>
+            <Popup id='team_uploading_files' className='w-full lg:w-[600px] flex flex-col gap-9' addWhiteShadow={true} header={'upload files'} onCancel={handleCancel} ref={elementRef}>
+
+            {
+                isPopupVisible &&
                 <div className='lg:w-[600px]'>
                     <section>
                         <AddCoverPhoto UpdateFormData={UpdateFormData} formData={formData} />
                     </section>
                     <section>
                         <h3 className='opacity-60 font-medium my-2 text-lg'>select Categories</h3>
-                        <CategoryMultiSelection onChange={(v) => { UpdateFormData('jobTitle', v) }} />
+                        <CategoryMultiSelection onChange={(v) => { UpdateFormData('category', v) }} />
                     </section>
                     <section className="w-full mt-11">
                         <AddAttachment UpdateFormData={UpdateFormData} formData={formData} />
@@ -111,36 +125,14 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                         <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
-                    <section className="my-11 flex sm:flex-row justify-between gap-7 hidden">
-                        <div className="w-full">
-                            <h3 className="capitalize opacity-60 mb-4">location</h3>
-                            <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
-                                <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                                    <Icon className='text-primary w-4' name={"location-dot"} />
-                                </div>
-                                <span className="pl-5 w-full">New Yourk, USA</span>
-                                <Icon name={"angle-right"} className={"mr-4 text-primary w-3"} />
-                            </div>
-                        </div>
 
-                        <div className="w-full">
-                            <h3 className="capitalize opacity-60 mb-4">upload alike project</h3>
-                            <div className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2">
-                                <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                                    <Icon className="text-primary w-4" name={"image"} />
-                                </div>
-                                <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                                <Icon name={"angle-right"} className={"mr-4 text-primary w-3"} />
-                            </div>
-                        </div>
-                    </section>
 
                     <section className="sticky bottom-5 z-10">
                         <div className="flex justify-center">
-                            <ArrowBtn onClick={onsubmit} className="cursor-pointer w-min sm:w-96 z-10" text='continue' isEnable={true} />
+                            <ArrowBtn onClick={onsubmit} className="cursor-pointer w-min sm:w-96 z-10" text='Save' isEnable={true} />
                         </div>
                     </section>
-                </div>
+                </div>}
 
             </Popup>
         </>

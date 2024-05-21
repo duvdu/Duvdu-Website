@@ -24,14 +24,14 @@ const TheTeam = ({
     const { teamId } = router.query;
 
     useEffect(() => {
-        console.log(delete_respond)
         if (teamId) {
             GetTeamProject({ id: teamId });
         }
     }, [teamId, update_respond, delete_respond]);
 
     const updateTeamProject = (data) => {
-        UpdateTeamProject(data, teamId)
+        console.log(data)
+        UpdateTeamProject(data, teamId);
     }
     const handleDelete = (id) => {
         DeleteTeamProjects(id)
@@ -70,7 +70,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete }) => {
         if (typeof (value) == 'string')
             setCategoryId(value)
         else
-            onAddOne?.({ ...value, category: categoryId, totalAmount: 20 })
+            onAddOne?.({ ...value, user:value.user._id, craetiveScope: categoryId }) 
 
         setIsAddToTeamPage(!isAddToTeamPage);
     };
@@ -203,7 +203,7 @@ const Empty = () => (
 const mapStateToProps = (state) => ({
     get_respond: state.api.GetTeamProject,
     update_respond: state.api.UpdateTeamProject,
-    delete_respond: state.api.UpdateTeamProject,
+    delete_respond: state.api.DeleteTeamProjects,
 
 });
 

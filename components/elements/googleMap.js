@@ -10,7 +10,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, value }) => {
     };
     
     useEffect(() => {
-        if (value) setMarkerPosition({ lat: value.lat, lng: value.lng });
+        if (value?.lat) setMarkerPosition({ lat: value.lat, lng: value.lng });
     }, [value])
 
     const onMapClicked = (mapProps, map, clickEvent) => {

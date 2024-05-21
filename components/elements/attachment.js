@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { handleMultipleFileUpload } from '../../util/util';
 import Icon from '../Icons';

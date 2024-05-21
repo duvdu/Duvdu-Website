@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { handleFileUpload } from '../../util/util';
 import Icon from '../Icons';
 
-function AddCoverPhoto({ UpdateFormData, header }) {
-    const [cover, setCover] = useState(null);
+function AddCoverPhoto({ UpdateFormData, header,initalValue }) {
+    const [cover, setCover] = useState(initalValue);
 
     const coverUpload = (e) => {
         const uploadedFile = handleFileUpload(e);
@@ -21,8 +21,8 @@ function AddCoverPhoto({ UpdateFormData, header }) {
             />
             <label htmlFor="file-upload" className='rounded-full p-4 bg-[#F5F5F5] cursor-pointer'>
                 <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5'>
-                    {cover ? (
-                        <img src={cover} alt="Uploaded Cover" className="mt-3 max-h-56 rounded-lg" style={{ maxWidth: '100%' }} />
+                    {cover || initalValue? (
+                        <img src={cover || initalValue} alt="Uploaded Cover" className="mt-3 max-h-56 rounded-lg" style={{ maxWidth: '100%' }} />
                     ) : (
                         <>
                             <div className='rounded-full p-4 bg-[#F5F5F5] cursor-pointer'>

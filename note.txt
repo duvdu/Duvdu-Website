@@ -100,9 +100,11 @@ open new chat
 - share popup
 - mobile version header (2)
 
-
 - set duration as number
-
 
 // real time check
 // handling error   
+----------------------------------- day task -----------------------------------
+
+- edit teams
+- edit categorey

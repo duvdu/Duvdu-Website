@@ -77,6 +77,7 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
     const [id, setId] = useState(null);
     const [user, setuser] = useState(null);
     const [hours, setHours] = useState(null);
+    const [amount, setAmount] = useState(null);
 
     useEffect(() => {
         FindUser()
@@ -96,18 +97,24 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
         if (popup) {
             popup.classList.remove('show');
         }
-        goback({user:id,workHours:hours,user:user})
+        goback({user:id,workHours:hours,user:user,totalAmount:amount})
     }
 
     return (
         <>
             <Filter />
-            <Popup className="ADD_HOURS_TO_CREATIVE" header={'work hours'}>
+            <Popup className="ADD_HOURS_TO_CREATIVE" header={'Work Details'}>
                 <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
                     <div className='flex items-center gap-9'>
                         <input type="number" onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             hours
+                        </span>
+                    </div>
+                    <div className='flex items-center gap-9'>
+                        <input type="number" onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <span className="text-xl opacity-50">
+                            amount
                         </span>
                     </div>
                     <AppButton onClick={(e)=>onadd(e.target.value)} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
