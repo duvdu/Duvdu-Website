@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { handleMultipleFileUpload } from '../../util/util';
+import { handleMultipleFileUpload, handleMultipleFileUploadUpdated } from '../../util/util';
 import Icon from '../Icons';
 
 function AddAttachment({ UpdateFormData, formData, header }) {
 
     const [uploadedFiles, setUploadedFiles] = useState([]);
-
+console.log("formData = " ,formData.__attachments)
     const attachmentsUpload = (e) => {
-        const files = handleMultipleFileUpload(e);
-        const newFiles = files.map(file => ({ ...file, id: Date.now() + file.fileName }));
+        const files = handleMultipleFileUploadUpdated(e);
+        const newFiles = files.data.map(file => ({ ...file, id: Date.now() + file.fileName }));
         // setUploadedFiles(prevFiles => [...prevFiles, ...newFiles]);
         UpdateFormData?.('_attachments', [...formData?._attachments || [], ...newFiles]);
+        UpdateFormData?.('__attachments', files.files);
     };
 
     const removeAttachment = (id) => {

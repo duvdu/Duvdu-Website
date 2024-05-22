@@ -127,3 +127,18 @@ In user website
     get boards
     get board projects 
     remove project from board
+
+
+chat files and record
+add to team
+    
+----------------------------------- Notes -----------------------------------
+
+chat , messages , notification pagganation
+complate messages media url pagganation
+chat cn't send voice note
+send Empty content in voice reocrding 
+error file size formatted respond 
+error server 500 in get board after add project to board
+        ما عرفتش اكمل تيست بسبب الايرور دا
+create team نفس مشكله الشات بالظبطمش عارف ابعت collection of file 

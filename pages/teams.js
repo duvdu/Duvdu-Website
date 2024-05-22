@@ -36,7 +36,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                 </Link>
                 <div className="absolute top-0 right-0 pe-12 pt-12 flex justify-center items-center">
                     <Selector
-                        onSelect={(v) => v.value == 'delete' ? onDelete() : onEdit(_id)}
+                        onSelect={(v) => v.value == 'Delete' ? onDelete() : onEdit(_id)}
                         options={[
                             {
                                 value: "Delete",

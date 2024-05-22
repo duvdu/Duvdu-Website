@@ -6,7 +6,6 @@ function MessageTile({ GetAllMessageInChat, message, user }) {
     const lastMSG = message.newestMessage
     const unreadedcount = message.unreadMessageCount;
     // Start from the last element and move backwards
-    console.log(user)
     function checkIsMe(writer) {
         return writer._id == user._id
     }

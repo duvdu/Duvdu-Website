@@ -116,6 +116,31 @@ export function handleMultipleFileUpload(event) {
   });
 }
 
+export function handleMultipleFileUploadUpdated(event) {
+  const files = event.target.files; // Get all selected files
+  if (!files.length) {
+    return []; // No files selected, return empty array
+  }
+
+  // Convert FileList to an array and map over it to gather file info
+  const data =  Array.from(files).map(file => {
+    const fileName = file.name;
+    const fileType = file.type;
+    const fileSize = file.size;
+
+    // Optional: Format the file size for human readability
+    const formattedFileSize = formatFileSize(fileSize);
+
+    return {
+      fileName: fileName,
+      fileType: fileType,
+      formattedFileSize: formattedFileSize,
+      file:file
+    };
+  });
+  return {data:data , files:files}
+}
+
 export function gettFileUploaded(file) {
   const data = handleFileUpload(file);
   try {

@@ -8,7 +8,7 @@ import { UpdateBoard } from "../redux/action/apis/savedProject/board/update";
 import { CreateSavedBoard } from "../redux/action/apis/savedProject/board/create";
 import { connect } from "react-redux";
 import { DeleteSavedBoard } from "../redux/action/apis/savedProject/board/deleteboard";
-import { OpenPopUp } from "../util/util";
+import { ClosePopUp, OpenPopUp } from "../util/util";
 import EditBoard from "../components/popsup/editBoard";
 
 const data = [
@@ -49,6 +49,7 @@ const Saved = ({
 
 }) => {
     const Boards = ({ data, }) => {
+        if(!data) return
         console.log(data._id)
         const { projectsNum, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
@@ -66,7 +67,6 @@ const Saved = ({
 
         return (
             <>
-                <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
                 <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v} , id)} />
                 <div className="boards-card">
                     <div className="absolute top-7 right-7">
@@ -101,12 +101,13 @@ const Saved = ({
     }, [getBoards_respond])
     useEffect(() => {
         GetBoards()
+        ClosePopUp("create-new-board")
     }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])
 
 
     return (
         <>
-
+           <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
             <Layout shortheader={true} isbodyWhite={true}>
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">

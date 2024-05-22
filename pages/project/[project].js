@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import { fetchProjects } from "../../redux/action/project";
 import Icon from '../../components/Icons';
-import { convertToK } from "../../util/util";
+import { OpenPopUp, convertToK } from "../../util/util";
 import ProjectCard from "../../components/elements/project-card";
 import { convertHoursTo__ } from '../../util/util';
 import Comment from '../../components/elements/comment';
@@ -23,10 +23,21 @@ import GoogleMap from "../../components/elements/googleMap";
 import dateFormat from "dateformat";
 import StudioBooking from "../../components/drawer/book/studio";
 import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
+import Successfully_posting from "../../components/popsup/post_successfully_posting";
+import AddToSaved from "../../components/popsup/addToSaved";
+import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
 
 
 
-const projects = ({ GetProjects, projects_respond, GetProject, project_respond, GetAllMessageInChat, chat_respond }) => {
+const projects = ({ 
+    GetProjects, 
+    projects_respond, 
+    GetProject, 
+    project_respond, 
+    GetAllMessageInChat, 
+    chat_respond ,
+    addProjectToBoard_respond
+}) => {
 
     const router = useRouter()
     const { project: projectId } = router.query;
@@ -51,7 +62,7 @@ const projects = ({ GetProjects, projects_respond, GetProject, project_respond, 
     const data = project ? ({
         _id: project._id,
         title: project.title,
-        user: project.user ,
+        user: project.user,
         creative: {
             _id: project.user?._id,
             profileImage: project.user?.profileImage || process.env.DEFULT_PROFILE_PATH,
@@ -114,14 +125,21 @@ const projects = ({ GetProjects, projects_respond, GetProject, project_respond, 
         projectScale: project.projectScale,
 
     }) : null
+    
+    console.log(addProjectToBoard_respond)
+    useEffect(()=>{
+        if(addProjectToBoard_respond)
+            OpenPopUp('addProjectToBoard-popup')
+    },[addProjectToBoard_respond])
 
     return (
         <>
-            <Layout >   
+            <Layout >
+                <Successfully_posting id="addProjectToBoard-popup" message="Add To Team" />
                 {project ?
                     (
                         <>
-                            <AddToTeam />
+                            <AddToSaved />
                             <Report />
                             <ThanksMSG />
                             <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
@@ -145,10 +163,10 @@ const projects = ({ GetProjects, projects_respond, GetProject, project_respond, 
                                     </section>
                                 </div>
                             </div>
-                            {!chat_respond &&
-                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} />}
-                            <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} /> 
-                            
+                            {!chat_respond && 
+                                <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} />}
+                            <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+
                         </>
                     ) : (
                         <div className="flex flex-col h-body items-center justify-center">
@@ -166,12 +184,12 @@ const Header = ({ data }) => (
     <>
         <h1 className="text-xl capitalize opacity-80 font-bold"> {data.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
-            <a className='flex items-center gap-3 cursor-pointer' href={`/creative/${data?.user?.username||''}`}>
+            <a className='flex items-center gap-3 cursor-pointer' href={`/creative/${data?.user?.username || ''}`}>
                 <img alt='user' className="w-16 aspect-square rounded-full" src={data.user.profileImage || process.env.DEFULT_PROFILE_PATH} />
                 <div>
                     <span className="capitalize font-semibold text-lg">{data.user.name || 'NONE'}</span>
                     <div className="flex items-center gap-1 mt-1">
-                        <p>{data.user?.totalRates||0}</p>
+                        <p>{data.user?.totalRates || 0}</p>
                         <Icon className='text-primary' name={'rate-star'} />
                     </div>
                 </div>
@@ -277,7 +295,7 @@ const About = ({ data }) => (
                 <p className='rank'>{data.creative.rank}</p>
                 <p className="info-container">{data.creative.occupation}</p>
                 <div className='info-container flex items-center gap-1 w-20'>
-                    <p>{data.creative.totalRates||0}</p>
+                    <p>{data.creative.totalRates || 0}</p>
                     <Icon className='text-primary w-4' name={'rate-star'} />
                 </div>
             </div>
@@ -412,27 +430,27 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, chat_respond }) => {
 
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                 <div className="sm:container flex justify-between items-end">
-                    
-                            <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
-                                <div className="relative">
-                                    <img className="h-full aspect-square rounded-full" src={data.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" />
-                                    {online && (
-                                        <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                    )}
-                                    {!online && (
-                                        <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                    )}
 
-                                </div>
-                                <div className="px-3">
-                                    <span className="capitalize font-bold">
-                                        {data.user.name || 'NONE'}
-                                    </span>
-                                    <div />
-                                    {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
-                                </div>
-                            </div> : <div className="w-1" />
-                    
+                    <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
+                        <div className="relative">
+                            <img className="h-full aspect-square rounded-full" src={data.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" />
+                            {online && (
+                                <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                            )}
+                            {!online && (
+                                <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                            )}
+
+                        </div>
+                        <div className="px-3">
+                            <span className="capitalize font-bold">
+                                {data.user.name || 'NONE'}
+                            </span>
+                            <div />
+                            {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
+                        </div>
+                    </div> : <div className="w-1" />
+
                     <Controller className={"mr-auto ml-auto lg:m-0 "}>
                         <div className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                             <Icon name={'share'} />
@@ -458,16 +476,15 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, chat_respond }) => {
 const mapStateToProps = (state) => ({
     projects_respond: state.api.GetProjects,
     project_respond: state.api.GetProject,
+    addProjectToBoard_respond: state.api.AddProjectToBoard,
     projectFilters: state.projectFilters,
     chat_respond: state.api.GetAllMessageInChat,
 });
 
 const mapDidpatchToProps = {
-    // openCart,
     GetProjects,
     GetProject,
-    GetAllMessageInChat
-    // fetchMoreproject,
+    GetAllMessageInChat,
 };
 
 export default connect(mapStateToProps, mapDidpatchToProps)(projects);

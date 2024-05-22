@@ -13,6 +13,7 @@ function createnewBoard({onSbmit}) {
         }
     };
     const toggleDirectorConfirmed = () => {
+        setBoardName('')
         onSbmit?.(board);
     }
 

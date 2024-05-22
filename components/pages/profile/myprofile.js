@@ -148,7 +148,6 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data, false)
         }
-        console.log(user)
         return (
             <>
                 <Conver converPic={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+user.coverImage || "/assets/imgs/projects/cover.jpeg"} />

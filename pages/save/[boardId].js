@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import { fetchProjects } from "../../redux/action/project";
-import Card from "../../components/elements/project-card";
+import Card from "../../components/elements/saved-project-card";
 import Icon from '../../components/Icons';
 import { Goback } from '../../util/util';
 import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";

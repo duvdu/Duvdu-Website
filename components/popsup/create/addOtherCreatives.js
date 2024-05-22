@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Comman from './assets/comman';
 import InputFeid from '../../elements/inputFeid';
 import AppButton from '../../elements/button';
-import { TagUser } from '../../../redux/action/apis/auth/profile/TagUser';
 import { connect } from 'react-redux';
+import { FindUser } from '../../../redux/action/apis/auth/profile/FindUser';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
 
-function AddOtherCreatives({ onSubmit, TagUser, TagUser_respond }) {
+function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
 
     const [creatives, setCreatives] = useState([]);
     const [formData, setFormData] = useState({
@@ -20,14 +20,14 @@ function AddOtherCreatives({ onSubmit, TagUser, TagUser_respond }) {
     });
 
     useEffect(() => {
-        if (TagUser_respond?.message == "success")
-            setCreatives(TagUser_respond.data)
-    }, [TagUser_respond])
+        if (FindUser_respond?.message == "success")
+            setCreatives(FindUser_respond.data)
+    }, [FindUser_respond])
     // Handler to manage input changes for any field
     const handleInputChange = (name, value) => {
         if (name == 'name') {
             if (value.length >= 3) {
-                TagUser(value)
+                FindUser(value)
             }
             else setCreatives([])
         }
@@ -138,11 +138,11 @@ function AddOtherCreatives({ onSubmit, TagUser, TagUser_respond }) {
     );
 }
 const mapStateToProps = (state) => ({
-    TagUser_respond: state.api.TagUser
+    FindUser_respond: state.api.FindUser
 });
 
 const mapDispatchToProps = {
-    TagUser,
+    FindUser,
     getMyprofile
 
 };

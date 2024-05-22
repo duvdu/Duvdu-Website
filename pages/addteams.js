@@ -15,7 +15,6 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     const [creatives, setCreatives] = useState({
         creatives: [],
     });
-    console.log(formData)
     useEffect(() => {
         console.log(create_respond)
     }, [creatives])
@@ -95,11 +94,9 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             });
         });
 
-if (formData?._attachments) {
-    formData._attachments.forEach((attachment, index) => {
-        form.append(`attachments`, attachment.file);
-    });
-}
+        if (formData?.__attachments) {
+            form.append(`attachments`, formData?.__attachments);
+        }
 
         form.append('cover', formData?.cover)
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', '_attachments', 'attachments', 'category', 'jobTitle'])
