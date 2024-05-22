@@ -8,7 +8,7 @@ import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
-import Selector from "../../components/elements/CustomSelector";
+import Selector from "./CustomSelector";
 
 import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';

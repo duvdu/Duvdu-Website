@@ -123,7 +123,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         data.append('receiver', receiver)
 
         if (recordobject) {
-            data.append('attachments', recordobject)
+            data.append('attachments', recordobject)      // mos3ad
             data.append('content', "NONE")
         }
         else

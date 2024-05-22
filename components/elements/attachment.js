@@ -5,7 +5,6 @@ import Icon from '../Icons';
 function AddAttachment({ UpdateFormData, formData, header }) {
 
     const [uploadedFiles, setUploadedFiles] = useState([]);
-console.log("formData = " ,formData.__attachments)
     const attachmentsUpload = (e) => {
         const files = handleMultipleFileUploadUpdated(e);
         const newFiles = files.data.map(file => ({ ...file, id: Date.now() + file.fileName }));

@@ -94,6 +94,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             });
         });
 
+        console.log(formData?.__attachments) // mos3ad
         if (formData?.__attachments) {
             form.append(`attachments`, formData?.__attachments);
         }
