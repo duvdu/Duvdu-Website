@@ -52,7 +52,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
             data.append('location.lat', formData.location.lat);
             data.append('location.lng', formData.location.lng);
         }
-        data.append('category', formData.category || categories[0]._id);
+        data.append('category', formData.category );
         data.append('showOnHome', formData.showOnHome || false);
         data.append('insurance', formData.insurance);
         data.append('pricePerHour', formData.pricePerHour);

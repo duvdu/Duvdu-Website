@@ -3,10 +3,12 @@ import Layout from "../components/layout/Layout";
 import Selector from "../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
 import ArrowBtn from '../components/elements/arrowBtn';
-import { UpdateKeysAndValues, convertToK } from '../util/util';
+import { OpenPopUp, UpdateKeysAndValues, convertToK } from '../util/util';
 import { connect } from "react-redux";
 import UsersToAdd from "../components/layout/team/usersToAdd";
 import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
+import Successfully_posting from "../components/popsup/post_successfully_posting";
+import { useRouter } from "next/router";
 
 
 const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectState }) => {
@@ -15,9 +17,9 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     const [creatives, setCreatives] = useState({
         creatives: [],
     });
-    useEffect(() => {
-        console.log(create_respond)
-    }, [creatives])
+
+    const router = useRouter();
+
     useEffect(() => {
         const updatedCreatives = formData?.category?.map(categoryId => {
             const category = categories.find(cat => cat._id === categoryId);
@@ -63,17 +65,15 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     };
 
     const removeUser = (userId) => {
-        setCreatives((prevState) => {
-            const updatedCreatives = prevState.creatives.map((creative) => {
-                return {
-                    ...creative,
-                    users: creative.users.filter((user) => user._id !== userId),
-                };
-            }).filter(creative => creative.users.length > 0); // Remove categories with no users
 
-            return { creatives: updatedCreatives };
-        });
+        setCreatives(prevState => ({
+            creatives: prevState.creatives.map(category => ({
+                ...category,
+                users: category.users.filter(user => user._id !== userId)
+            }))
+        }));
     };
+
 
 
     const updateTeamProject = (data) => {
@@ -94,19 +94,21 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             });
         });
 
-        console.log(formData?.__attachments) // mos3ad
-        if (formData?.__attachments) {
-            form.append(`attachments`, formData?.__attachments);
-        }
 
+
+        for (let i = 0; i < formData?._attachments?.length; i++) {
+            const file = formData?._attachments[i];
+            console.log(file.file)
+            form.append(`attachments`, file.file);
+        }
         form.append('cover', formData?.cover)
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', '_attachments', 'attachments', 'category', 'jobTitle'])
         CreateTeamProject(form)
 
         // Printing FormData for demonstration
-        for (const pair of form.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
+        // for (const pair of form.entries()) {
+        //     console.log(pair[0] + ', ' + pair[1]);
+        // }
 
         // UpdateFormData('attachments', formData?.attachment?.map((e)=> e.file))
         // const form = new FormData()
@@ -127,6 +129,8 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
         };
 
         const data = respond?.creatives || [];
+        
+
 
         return (
             <div className="h-body w-full overflow-y-scroll pt-14">
@@ -229,8 +233,18 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             </div>
         </div>
     );
+    console.log(create_respond)
+    const OnSucess = (value) => {
+        router.push({ pathname: "/team/" + create_respond.data._id });
+    }
+    useEffect(() => {
+        if (create_respond) {
+            OpenPopUp("successfully-create-team")
+        }
+    }, [create_respond])
     return (
         <Layout shortheader={true}>
+            <Successfully_posting id="successfully-create-team" onCancel={OnSucess} message="Create Team" />
 
             <section className="container">
 

@@ -4,7 +4,7 @@ import { mainApiInstance } from '../axiosInstances'
 
 export const CreateTeamProject = (data) => {
   
-  const req = "CreateTeam"
+  const req = "CreateTeamProject"
   return async dispatch => {
     if(data == -1) {
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });

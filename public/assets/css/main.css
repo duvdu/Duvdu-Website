@@ -2179,6 +2179,21 @@ table p {
   visibility: visible;
 }
 
+audio::-webkit-media-controls-panel {
+  background-color: var(--primary);
+}
+
+audio::-webkit-media-controls-play-button {
+  color: white;
+  
+}
+
+audio::-webkit-media-controls-volume-slider-container {
+  color: white;
+  
+}
+
+
 /****************/
 
 :root {

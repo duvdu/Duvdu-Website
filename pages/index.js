@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { fetchProjects } from "../redux/action/project";
 
-import ProjectCard from "../components/elements/saved-project-card";
+import ProjectCard from "../components/elements/project-card";
 import Filter from "../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';

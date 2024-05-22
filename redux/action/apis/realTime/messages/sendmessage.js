@@ -4,9 +4,9 @@ import { mainApiInstance } from '../../axiosInstances'
 
 export const SendMessages = (data) => {
   const req = "SendMessages"
-  for(let [name, value] of data) {
-    console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
-  }
+  // for(let [name, value] of data) {
+  //   console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
+  // }
   return async dispatch => {
     try {
   

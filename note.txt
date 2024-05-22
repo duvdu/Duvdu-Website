@@ -99,7 +99,6 @@ open new chat
 - project details
 - share popup
 - mobile version header (2)
-
 - set duration as number
 
 // real time check
@@ -127,18 +126,29 @@ In user website
     get boards
     get board projects 
     remove project from board
-
-
 chat files and record
 add to team
     
 ----------------------------------- Notes -----------------------------------
-
 chat , messages , notification pagganation
-complate messages media url pagganation
-chat cn't send voice note
+messages media url 
+chat can't send voice note
 send Empty content in voice reocrding 
-error file size formatted respond 
-error server 500 in get board after add project to board
+error file size formatted respond                                   ( validtion size )
+error server 500 in get board after add project to board            
         ما عرفتش اكمل تيست بسبب الايرور دا
 create team نفس مشكله الشات بالظبطمش عارف ابعت collection of file 
+logout request
+delete error in category
+----------------------------------- error handling -----------------------------------
+notification error after login
+loading status in one state
+paganation of category
+paganation of all servcies
+subcategorey 
+cycle in edit
+cancel in edit backforward
+change names search project name , paganation , clean header of grid services
+check team project length
+change icon down down 
+width notification empty

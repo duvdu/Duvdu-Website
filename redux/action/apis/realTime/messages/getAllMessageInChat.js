@@ -14,7 +14,7 @@ export const GetAllMessageInChat = (id,limit) => {
         dispatch({ type: Types.NONEPOPUP });
         try {
             const params = {};
-            if (limit) params.limit = limit || 10;
+            params.limit = limit || 100;
             const queryString = new URLSearchParams(params).toString();
             const response = await mainApiInstance.get(`api/message/${id}/chat?${queryString}`,);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });

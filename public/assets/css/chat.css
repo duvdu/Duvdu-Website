@@ -84,8 +84,12 @@
 }
 .chat .messages-chat .message.other {
   border: 0.7px solid rgba(0, 0, 0, 0.20);
-
 }
+
+.margin-me {
+  margin: 0.5rem 0.5rem 0.5rem auto;
+}
+
 .chat .messages-chat .message.me {
   margin: .5rem .5rem .5rem auto;
   font-size: 13.696px;

@@ -44,7 +44,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             data.append('location.lat', formData.location.lat);
             data.append('location.lng', formData.location.lng);
         }
-        data.append('category', formData.category || categories[0]._id);
+        data.append('category', formData.category);
         data.append('subCategory', formData.subCategory);
         data.append('showOnHome', formData.showOnHome || false);
         data.append('insurance', formData.insurance);

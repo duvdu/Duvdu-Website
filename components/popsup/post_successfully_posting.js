@@ -16,13 +16,10 @@ function Successfully_posting({ id = "Report-sent-successfully",isShow, onCancel
         setShowPopup(false);
     }
 
-    if (!showPopup) {
-        return null;
-    }
 
     return (
         <>
-            <Popup id={id} className='show' onCancel={Cancel}>
+            <Popup id={id} className={showPopup ? 'show' : '' } onCancel={Cancel}>
                 <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
                     <div className="heading_s1 mb-[88px] text-center">
                         <div className="flex w-full justify-center">

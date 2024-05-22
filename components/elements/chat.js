@@ -49,11 +49,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
         setOtherUser(getotherdata())
-        if(messages.list)
-        messages.list.reverse()
 
     }, [messages]);
-
+    const msglist = [...messages.list]
+    msglist.reverse()
     useEffect(() => {
         const handleScroll = () => {
             if (chatRef.current && chatRef.current.scrollTop === 0) {
@@ -94,8 +93,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         return writer._id == user.profile._id
     }
     function getotherdata() {
-        for (let i = 0; i < messages.list.length; i++) {
-            const element = messages.list[i];
+        for (let i = 0; i < msglist.length; i++) {
+            const element = msglist[i];
             if (!checkIsMe(element.sender)) {
                 return element.sender
             }
@@ -118,17 +117,27 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         ClearChatInput()
     }
 
-    const onSend = () => {
+    const onSend = async () => {
         const data = new FormData
         data.append('receiver', receiver)
 
+        if (attachments)
+            for (let i = 0; i < attachments.length; i++) {
+                const file = attachments[i];
+                console.log(file.file)
+                data.append(`attachments`, file.file);
+            }
+
+
+
         if (recordobject) {
-            data.append('attachments', recordobject)      // mos3ad
-            data.append('content', "NONE")
+            const wavFile = new File([recordobject], 'audio.wav', { type: 'audio/wav' });
+            data.append('attachments', wavFile)
+            data.append('content', "NULL")
         }
         else
             data.append('content', content)
-        data.append('attachments', _attachments);
+        // data.append('attachments', _attachments);
 
 
         //////// SENDING MESSAGE ///////////////
@@ -183,7 +192,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                     </div>
                     <div className="messages-chat h-full" id="chat" ref={chatRef}>
 
-                        {messages.list.map((message, index) => {
+                        {msglist.map((message, index) => {
 
                             if (message.type === 'time') {
                                 return (
@@ -243,7 +252,15 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                             </div>) :
                             <>
                                 {!record &&
-                                    <input value={content} onChange={onChange} name='content' onKeyDown={handleKeyPress} className='border-none bg-transparent w-full h-min' placeholder="Write a message..." type="text" />
+                                    <input
+                                        value={content}
+                                        onChange={onChange}
+                                        name='content'
+                                        onKeyDown={handleKeyPress}
+                                        className='border-none bg-transparent w-full h-min'
+                                        placeholder="Write a message..."
+                                        type="text"
+                                        accept="video/*,audio/*,image/*,.pdf" />
                                 }
                                 <label htmlFor="attachment-upload" >
                                     <Icon className="cursor-pointer" name={'attachment'} />
@@ -272,58 +289,87 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 };
 
 const Me = ({ message }) => {
-    return <div className="message me">
-        <div className='flex-col'>
-            <div>
-                <span className='text-white'>
-                    {message.content}
-                </span>
+    return (
+        (message?.media[0]?.type === "audio/wav") ?
+            <div className="ml-20">
+                <audio controls controlsList="nodownload">
+                    <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />
+                    Your browser does not support the audio element.
+                </audio>
             </div>
-            <div className='flex flex-wrap gap-2'>
-            {(message.media?.length || false) && message.media?.map((media, index) => (
-                media.type && (
-                    media.type.includes('image') ?
-                    <img key={index} src={media.url} className='h-28' alt="media" /> :
-                    <a href={media.url}>
 
-                    <Icon key={index} name={'file'} className="size-10" />
-                    </a>
-                )
-            ))}
+            :
+            <div className="message me">
+                <div className="flex-col">
+                    <div>
+                        <span className="text-white">
+                            {message.content}
+                        </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                        {message.media?.map((media, index) => {
+                            if (media.type === "image/png") {
+                                return (
+                                    <img key={`image-${index}`} src={media.url} className="h-28" alt="media" />
+                                );
+                            } else {
+                                return (
+                                    <Icon key={`file-${index}`} name="file" className="size-10" />
+                                );
+                            }
+                        })}
+                    </div>
+                    <div className="w-full text-end">
+                        <span className="text-white text-xs">
+                            {dateFormat(message.updatedAt, 'hh:mm')}
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div className='w-full text-end'>
-                <span className='text-white text-xs'>
-                    {dateFormat(message.updatedAt, 'hh:mm')}
-                </span>
-            </div>
-        </div>
-    </div>
-}
+    );
+};
 
 const Other = ({ message }) => {
     return (
         <div className="message other bg-DS_white">
-            <div>
-                <span className='text-[#1B1A57]'>
-                    {message.content}
-                </span>
+            {
+                !message.content != "NULL" &&
+                <div>
+                    <span className="text-[#1B1A57]">
+                        {message.content}
+                    </span>
+                </div>
+            }
+            <div className="flex flex-wrap gap-2">
+                {message.media?.map((media, index) => {
+                    if (media.type === "audio/wav") {
+                        console.log(process.env.ASSETS_URL + media.url)
+                        return (
+                            <audio key={`audio-${index}`} controls controlsList="nodownload">
+                                <source src={process.env.ASSETS_URL + media.url} controlsList="nodownload" type="audio/wav" />
+                                Your browser does not support the audio element.
+                            </audio>
+                        );
+                    } else if (media.type === "image/png") {
+                        return (
+                            <img key={`image-${index}`} src={process.env.ASSETS_URL + media.url} className="h-28" alt="media" />
+                        );
+                    } else {
+                        return (
+                            <Icon key={`file-${index}`} name="file" className="size-10" />
+                        );
+                    }
+                })}
             </div>
-            {(message.media?.length || false) && message.media?.map((media, index) => (
-                media.type && (
-                    media.type.includes('image') ?
-                        <img key={index} src={media.url} className='h-28' alt="media" /> :
-                        <Icon key={index} name={'file'} className="size-10" />
-                )
-            ))}
-            <div className='w-full text-start'>
-                <span className='text-[#A1A1BC] text-xs'>
+            <div className="w-full text-start">
+                <span className="text-[#A1A1BC] text-xs">
                     {dateFormat(message.updatedAt, 'hh:mm')}
                 </span>
             </div>
         </div>
-    )
-}
-
+    );
+};
 
 const mapStateToProps = (state) => ({
     respond: state.api.SendMessages,
