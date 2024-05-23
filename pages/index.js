@@ -11,18 +11,21 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 
-const Projects = ({ projects , GetProjects}) => {
+const Projects = ({ projects, GetProjects }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const showLimit = 24;
+    const showLimit = 30;
     const [limit, setLimit] = useState(showLimit);
+    const [page, setpage] = useState(1);
 
     const targetRef = useRef(null);
-    
+    const projectsList = projects?.data || []
+    const pagganation = projects?.pagination
 
     useEffect(() => {
-        GetProjects()
-    },[])
+        if (searchTerm && limit && page)
+            GetProjects({ limit: limit, search: searchTerm, page: page })
+    }, [searchTerm, limit, page])
     useEffect(() => {
         const options = {
             root: null,
@@ -63,8 +66,7 @@ const Projects = ({ projects , GetProjects}) => {
     }, [limit]);
 
 
-    const getPaginatedProjects = projects?.data || []
-    
+
 
     return (
         <>
@@ -82,11 +84,11 @@ const Projects = ({ projects , GetProjects}) => {
                             <div className="h-7" />
                         }
                         <h1 className="page-header pb-9">most popular on duvdu</h1>
-                        {getPaginatedProjects.length === 0 && (
+                        {projectsList.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects.map((item, i) => (
+                            {projectsList.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
                                     {i === -1 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === -1 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
@@ -96,7 +98,7 @@ const Projects = ({ projects , GetProjects}) => {
                             ))}
                         </div>
                         {
-                            getPaginatedProjects.length === limit &&
+                            projectsList.length === limit &&
                             <div className="load-parent">
                                 <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                             </div>

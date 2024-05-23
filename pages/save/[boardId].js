@@ -84,10 +84,7 @@ const Projects = ({
         };
     }, [limit]);
 
-
-
     const getPaginatedProjects = allprojects;
-
 
     return (
         <>
@@ -100,7 +97,7 @@ const Projects = ({
                                 <Icon className='text-xl' name={'angle-left'} />
                             </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
-                                Favorites
+                                {data?.title}
                             </span>
                         </div>
                         {getPaginatedProjects?.length === 0 && (

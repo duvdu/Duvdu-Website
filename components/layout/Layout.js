@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
+import { getAuthToken } from "../../util/auth";
 
 const Layout = ({
     children,
@@ -19,7 +20,7 @@ const Layout = ({
     GetAllChats,
     GetNotifications,
     login_respond
-    
+
 }) => {
     const [isToggled, setToggled] = useState(1);
 
@@ -36,11 +37,11 @@ const Layout = ({
     };
 
 
-    useEffect(()=>{
+    useEffect(() => {
         getMyprofile()
         GetAllChats()
         GetNotifications()
-    },[login_respond])
+    }, [login_respond])
     return (
         <>
             <Head>
@@ -54,7 +55,7 @@ const Layout = ({
             <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite, showTabs: showTabs, iSsticky: iSsticky }} />
 
             <MobileMenu isToggled={isToggled} toggleClick={toggleClick} />
-            
+
             <main className="main bg-body" >
                 {children}
             </main>
@@ -63,13 +64,13 @@ const Layout = ({
     );
 };
 const mapStateToProps = (state) => ({
-  login_respond: state.api.login,
+    login_respond: state.api.login,
 });
 
 const mapDispatchToProps = {
     getMyprofile,
     GetAllChats,
     GetNotifications
-    
+
 };
-export default connect(mapStateToProps,mapDispatchToProps)(Layout);
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

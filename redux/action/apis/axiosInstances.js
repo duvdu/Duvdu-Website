@@ -34,6 +34,14 @@ mainApiInstance.interceptors.request.use(
 // Add a response interceptor
 mainApiInstance.interceptors.response.use(
   response => {
+   const setCookieHeader = response.headers['set-cookie'];
+    if (setCookieHeader) {
+      // Find the 'connect.sid' cookie in the set-cookie header
+      const connectSidCookie = setCookieHeader.find(cookie => cookie.startsWith('connect.sid='));
+      if (connectSidCookie) {
+        console.log('connect.sid:', connectSidCookie);
+      }
+    }
     return response;
   },
   async error => {
