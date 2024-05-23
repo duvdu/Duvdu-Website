@@ -9,15 +9,23 @@ import { GetTeamProject } from "../../redux/action/apis/teamproject/getone";
 import UsersToAdd from "../../components/layout/team/usersToAdd";
 import { UpdateTeamProject } from "../../redux/action/apis/teamproject/update";
 import { DeleteTeamProjects } from "../../redux/action/apis/teamproject/deleteProject";
+import { AddTeamProject } from "../../redux/action/apis/teamproject/addCreative";
+import { UpdateTeamUser } from "../../redux/action/apis/teamproject/updatecreative";
+import { ClosePopUp, OpenPopUp } from "../../util/util";
+import Popup from "../../components/elements/popup";
+import AppButton from "../../components/elements/button";
 
 
 const TheTeam = ({
     GetTeamProject,
     get_respond,
-    UpdateTeamProject,
-    update_respond,
+    AddTeamProject,
+    add_creative,
     DeleteTeamProjects,
-    delete_respond
+    delete_respond,
+    UpdateTeamUser,
+    update_respond,
+
 }) => {
     const [state, setState] = useState(1);
     const router = useRouter();
@@ -27,14 +35,17 @@ const TheTeam = ({
         if (teamId) {
             GetTeamProject({ id: teamId });
         }
-    }, [teamId, update_respond, delete_respond]);
+    }, [teamId, add_creative, delete_respond, update_respond]);
 
     const updateTeamProject = (data) => {
-        console.log(data)
-        UpdateTeamProject(data, teamId);
+        AddTeamProject(data, teamId);
     }
     const handleDelete = (id) => {
         DeleteTeamProjects(id)
+    }
+    const handleUpdate = (alldata) => {
+        console.log(teamId)
+        UpdateTeamUser(alldata , teamId)
     }
 
     return (
@@ -43,14 +54,14 @@ const TheTeam = ({
                 {state === 0 && <Empty />}
                 {state === 1 && (
                     <div className="flex flex-col lg:flex-row gap-7 items-center">
-                        <LeftSide respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleDelete={handleDelete} />
+                        <LeftSide respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleDelete={handleDelete} handleUpdate={handleUpdate} />
                         <RightSide onClick={() => setState(1)} />
                     </div>
                 )}
                 {state === 2 && (
                     <div className="flex flex-col lg:flex-row gap-7">
                         <Cover />
-                        <LeftSide isSolid={true} respond={get_respond} handleDelete={handleDelete} />
+                        <LeftSide isSolid={true} respond={get_respond} handleDelete={handleDelete} handleUpdate={handleUpdate} />
                         <RightSide isSolid={true} />
                     </div>
                 )}
@@ -61,16 +72,16 @@ const TheTeam = ({
 
 
 
-const LeftSide = ({ isSolid, respond, onAddOne, handleDelete }) => {
+const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) => {
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
     const [categoryId, setCategoryId] = useState();
 
     const togglePage = (value) => {
-        console.log(value, data)
+        
         if (typeof (value) == 'string')
             setCategoryId(value)
         else
-            onAddOne?.({ ...value, user:value.user._id, craetiveScope: categoryId }) 
+            onAddOne?.({ ...value, user: value.user._id, craetiveScope: categoryId })
 
         setIsAddToTeamPage(!isAddToTeamPage);
     };
@@ -85,7 +96,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete }) => {
                     <Cover respond={respond} />
                     {data.map((section, index) => (
                         <div key={index}>
-                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} handleDelete={handleDelete} />
+                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate( { ...v, craetiveScope: section._id }) }    } />
                             {index !== data.length - 1 && <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>}
                         </div>
                     ))}
@@ -97,51 +108,85 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete }) => {
     );
 };
 
-const Sections = ({ section, AddTeam, isSolid, handleDelete }) => (
+const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => (
     <>
         <div className="flex justify-between my-3">
             <span className="opacity-60 capitalize font-medium">
-                {section.jobTitle}
+                {section.category.title}
             </span>
             {!isSolid && (
                 <div className="flex gap-2 cursor-pointer items-center">
                     <Icon className="text-[#FF4646]" name="xmark" />
-                    <span className="text-[#FF4646]">Remove</span>
+                    <span className="text-[#FF4646] hidden">Remove</span>
                 </div>
             )}
         </div>
         <div className="w-full h-[1px] bg-black opacity-15" />
         <div className='flex flex-col gap-5 my-5 max-h-[600px] overflow-y-scroll'>
             {section?.users?.map((person, index) => (
-                <Person key={index} person={person} onDelete={handleDelete} />
+                <Person key={index} person={person} onDelete={handleDelete} onUpdate={handleUpdate} />
             ))}
             {!isSolid && <AddCreative onClick={AddTeam} />}
         </div>
     </>
 );
 
-const Person = ({ person, onDelete }) => {
+const Person = ({ person, onDelete, onUpdate }) => {
+    const [hours, setHours] = useState();
+    const [amount, setAmount] = useState();
+    
+    const onCancel = () => {
+        setHours("")
+        setHours("")
+    }
+    const onupdate = () => {
+        onUpdate({ user: person.user._id, workHours: hours, totalAmount: amount })
+        ClosePopUp(`Edit-creative-${person._id}`)
+    }
     const options = [
         { value: 'delete' },
+        { value: 'Edit' },
     ];
+    
 
     return (
-        <div className='flex gap-4 h-12 min-w-[300px]'>
-            <img className='rounded-full h-full aspect-square' src={person.user.profileImage} alt='profile img' />
-            <div className='w-full flex flex-col justify-center'>
-                <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
-                <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
-            </div>
-            <div className={`flex rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
-                <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>message</span>
-                <div className='size-5'>
-                    <Icon name={'chat'} />
+        <>
+            <Popup id={"Edit-creative-" + person._id} header={'Work Details'} onCancel={onCancel}>
+                <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
+                    <div className='flex items-center gap-9'>
+                        <input type="number" defaultValue={person.workHours} onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <span className="text-xl opacity-50">
+                            hours
+                        </span>
+                    </div>
+                    <div className='flex items-center gap-9'>
+                        <input type="number" defaultValue={person.totalAmount} onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <span className="text-xl opacity-50">
+                            amount
+                        </span>
+                    </div>
+                    <AppButton onClick={(e) => onupdate()} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
+                        Confirm
+                    </AppButton>
                 </div>
+            </Popup>
+            <div className='flex gap-4 h-12 min-w-[300px]'>
+                <img className='rounded-full h-full aspect-square' src={person.user.profileImage} alt='profile img' />
+                <div className='w-full flex flex-col justify-center'>
+                    <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
+                    <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
+                </div>
+                <div className={`flex rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
+                    <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>message</span>
+                    <div className='size-5'>
+                        <Icon name={'chat'} />
+                    </div>
+                </div>
+                {person.status == 'pending' && <Selector options={options} onSelect={(v) => v.value == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)}> <Icon name="waiting" className="size-12" /> </Selector>}
+                {person.status == 'refuse' && <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div>}
+                {person.status == 'available' && <div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div>}
             </div>
-            {person.status == 'pending' && <Selector options={options} onSelect={() => onDelete(person._id)}> <Icon name="waiting" className="size-12" /> </Selector>}
-            {person.status == 'refuse' && <Selector options={options} onSelect={() => onDelete(person._id)}> <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div> </Selector>}
-            {person.status == 'available' && <Selector options={options} onSelect={() => onDelete(person._id)} ><div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div></Selector>}
-        </div>
+        </>
     )
 };
 
@@ -202,15 +247,17 @@ const Empty = () => (
 
 const mapStateToProps = (state) => ({
     get_respond: state.api.GetTeamProject,
-    update_respond: state.api.UpdateTeamProject,
+    add_creative: state.api.AddTeamProject,
     delete_respond: state.api.DeleteTeamProjects,
+    update_respond: state.api.UpdateTeamUser,
 
 });
 
 const mapDispatchToProps = {
     GetTeamProject,
-    UpdateTeamProject,
-    DeleteTeamProjects
+    AddTeamProject,
+    DeleteTeamProjects,
+    UpdateTeamUser,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TheTeam);
 

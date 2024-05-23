@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Layout from "../../components/layout/Layout";
-import Card from "../../components/elements/producers-card";
+import Card from "../../components/elements/project-card";
 import Filter from "../../components/elements/filter";
 import PermitsBooking from "../../components/drawer/book/permits";
 import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetStudios } from '../../redux/action/apis/cycles/studio/get';
+import { useRouter } from 'next/router';
 
 const convertDataFormat = (data) => {
 
@@ -30,21 +31,21 @@ const calculateRating = (rate) => {
 };
 
 
-const Projects = ({  GetStudio,respond }) => {
+const Studios = ({ GetStudio, respond,api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
+    const producers = respond?.data 
+    const pagganation = respond?.pagination
+    const page = 1;
     const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
-    const [page, setPage] = useState(1);
-
     const targetRef = useRef(null);
-    const projectsList = projects?.data || []
-    const pagganation = projects?.pagination
+
     
     useEffect(() => {
-        if (limit && page)
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
-    }, [limit, page])
+        if (limit)
+            GetStudio({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
+    }, [limit])
 
 
     useEffect(() => {
@@ -66,72 +67,9 @@ const Projects = ({  GetStudio,respond }) => {
     }, [page, pagganation?.totalPages]);
 
 
-
-
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState(null);
-    const [producers, setProducers] = useState([]);
     
-
-    useEffect(() => {
-        GetStudio()
-    }, [])
-    
-    useEffect(() => {
-        if (respond) {
-            const array = respond.data
-            
-            let convertedList = []
-            for (let index = 0; index < array.length; index++) {
-                const element = convertDataFormat(array[index]);
-                convertedList.push(element)
-            }
-            setProducers(convertedList)
-        }
-    }, [respond?.message])
-    
-    useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5,
-        };
-
-        let hasBeenVisible = false;
-
-        const handleIntersection = (entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        setLimit((prevLimit) => prevLimit + showLimit);
-                    }, 2000);
-                    if (targetRef.current) {
-                        targetRef.current.classList.add('active');
-                    }
-                    hasBeenVisible = true;
-                    observer.unobserve(entry.target);
-                }
-                else {
-                    if (targetRef.current) {
-                        targetRef.current.classList.remove('active');
-                    }
-
-                }
-
-            });
-        };
-
-        const observer = new IntersectionObserver(handleIntersection, options);
-
-        if (targetRef.current) {
-            observer.observe(targetRef.current);
-        }
-
-        return () => {
-            observer.disconnect();
-        };
-    }, [limit]);
-
 
 
     const handlesetdata = (item) => {
@@ -145,6 +83,7 @@ const Projects = ({  GetStudio,respond }) => {
         toggleDrawer();
     };
 
+    if(!producers) return
     return (
         <>
             <Layout>
@@ -162,7 +101,7 @@ const Projects = ({  GetStudio,respond }) => {
                             })}
                         </div>
                         <div className="w-0 h-0" />
-                        <img className={(api.loading && api.req == "GetProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
+                        <img className={(api.loading && api.req == "GetStudios" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                         <Formsubmited />
                     </div>
                 </section>
@@ -175,10 +114,11 @@ const Projects = ({  GetStudio,respond }) => {
     );
 };
 const mapStateToProps = (state) => ({
-    respond: state.api.GetStudio,
+    api: state.api,
+    respond: state.api.GetStudios,
 });
 
 const mapDispatchToProps = {
     GetStudio: GetStudios
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Projects);
+export default connect(mapStateToProps, mapDispatchToProps)(Studios);

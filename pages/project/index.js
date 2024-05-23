@@ -9,63 +9,46 @@ import Filter from "../../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { GetProjects } from "../../redux/action/apis/cycles/projects/get";
+import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 
-const Projects = ({ projects , GetProjects}) => {
+const Projects = ({ projects, GetProjects, api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const showLimit = 24;
+    const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
+    const [page, setPage] = useState(1);
 
     const targetRef = useRef(null);
+    const projectsList = projects?.data || []
+    const pagganation = projects?.pagination
     
+    useEffect(() => {
+        if (limit && page)
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
+    }, [limit, page])
+
 
     useEffect(() => {
-        GetProjects()
-    },[])
-    useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5,
-        };
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-        const handleIntersection = (entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        setLimit((prevLimit) => prevLimit + showLimit);
-                    }, 2000);
-                    if (targetRef.current) {
-                        targetRef.current.classList.add('active');
-                    }
-                    observer.unobserve(entry.target);
+                if (scrolledToBottom) {
+                    setLimit(prevPage => showLimit + limit);
                 }
-                else {
-                    if (targetRef.current) {
-                        targetRef.current.classList.remove('active');
-                    }
-
-                }
-
-            });
+            }
         };
 
-        const observer = new IntersectionObserver(handleIntersection, options);
-
-        if (targetRef.current) {
-            observer.observe(targetRef.current);
-        }
-
-        return () => {
-            observer.disconnect();
-        };
-    }, [limit]);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [page, pagganation?.totalPages]);
 
 
-    const getPaginatedProjects = projects?.data || []
-    
 
+    if(!projectsList) return <></>
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
@@ -82,25 +65,21 @@ const Projects = ({ projects , GetProjects}) => {
                             <div className="h-7" />
                         }
                         <h1 className="page-header pb-9">most popular on duvdu</h1>
-                        {getPaginatedProjects.length === 0 && (
+                        {projectsList.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects.map((item, i) => (
+                            {projectsList.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
-                                    {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
-                                    {i === 9 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
-                                    {i === 12 && <RelatedCategories className="hidden xl:block col-span-full" />}
+                                    {i === -1 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
+                                    {i === -1 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
+                                    {i === -1 && <RelatedCategories className="hidden xl:block col-span-full" />}
                                     <ProjectCard className='cursor-pointer' cardData={item} />
                                 </React.Fragment>
                             ))}
                         </div>
-                        {
-                            getPaginatedProjects.length === limit &&
-                            <div className="load-parent">
-                                <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
-                            </div>
-                        }
+                        <div className="w-0 h-0" />
+                        <img className={(api.loading && api.req == "GetProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                     </div>
                 </section>
             </Layout>
@@ -205,6 +184,7 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
 
 const mapStateToProps = (state) => ({
     projects: state.api.GetProjects,
+    api: state.api,
     projectFilters: state.projectFilters,
 });
 

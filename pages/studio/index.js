@@ -21,8 +21,8 @@ const Studio = ({ projects , GetStudios}) => {
     console.log(projects)
 
     useEffect(() => {
-        GetStudios()
-    },[])
+        GetStudios({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
+    }, [limit, searchTerm,searchTerm])
     useEffect(() => {
         const options = {
             root: null,

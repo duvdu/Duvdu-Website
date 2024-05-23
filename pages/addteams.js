@@ -137,7 +137,6 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                 {!isAddToTeamPage ? (
                     <>
                         <h1 className="page-header mb-8">Team Project</h1>
-                        <Cover respond={respond} />
                         {data.map((section, index) => (
                             <div key={index}>
                                 <Sections isSolid={isSolid} AddTeam={() => togglePage(section.category)} section={section} />
@@ -213,16 +212,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
         </div>
     );
 
-    const Cover = ({ respond }) => (
-        <div className="relative h-20 w-full rounded-full overflow-hidden flex justify-center items-center mb-8">
-            <div className="absolute inset-0 blur-sm" style={{ backgroundImage: `url(${respond?.cover})` }}></div>
-            <span className="absolute text-lg font-semibold text-white">
-                {respond?.title}
-            </span>
-
-        </div>
-    );
-
+    
     const AddCreative = ({ onClick }) => (
         <div onClick={onClick} className="flex items-center rounded-full border border-primary p-1 w-min cursor-pointer">
             <div className="size-11 flex items-center justify-center border rounded-full border-primary">

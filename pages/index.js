@@ -14,18 +14,18 @@ import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 const Projects = ({ projects, GetProjects, api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const showLimit = 12;
-    const [limit, setLimit] = useState(showLimit);
-    const [page, setPage] = useState(1);
-
-    const targetRef = useRef(null);
     const projectsList = projects?.data || []
     const pagganation = projects?.pagination
+    const page = 1;
+    const showLimit = 12;
+    const [limit, setLimit] = useState(showLimit);
+    const targetRef = useRef(null);
+
     
     useEffect(() => {
-        if (limit && page)
+        if (limit)
             GetProjects({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
-    }, [limit, page])
+    }, [limit])
 
 
     useEffect(() => {
