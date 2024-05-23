@@ -31,14 +31,47 @@ const calculateRating = (rate) => {
 
 
 const Projects = ({  GetStudio,respond }) => {
-    const showLimit = 24;
+    const Router = useRouter();
+    const searchTerm = Router.query.search;
+    const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
+    const [page, setPage] = useState(1);
+
+    const targetRef = useRef(null);
+    const projectsList = projects?.data || []
+    const pagganation = projects?.pagination
+    
+    useEffect(() => {
+        if (limit && page)
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
+    }, [limit, page])
+
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+                if (scrolledToBottom) {
+                    setLimit(prevPage => showLimit + limit);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [page, pagganation?.totalPages]);
+
+
+
+
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState(null);
     const [producers, setProducers] = useState([]);
     
-
-    const targetRef = useRef(null);
 
     useEffect(() => {
         GetStudio()
@@ -128,12 +161,8 @@ const Projects = ({  GetStudio,respond }) => {
 
                             })}
                         </div>
-                        {
-                            producers.length === limit &&
-                            <div className="load-parent">
-                                <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
-                            </div>
-                        }
+                        <div className="w-0 h-0" />
+                        <img className={(api.loading && api.req == "GetProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                         <Formsubmited />
                     </div>
                 </section>
