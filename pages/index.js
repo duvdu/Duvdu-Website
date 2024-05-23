@@ -23,7 +23,7 @@ const Projects = ({ projects, GetProjects }) => {
     const pagganation = projects?.pagination
 
     useEffect(() => {
-        if (searchTerm && limit && page)
+        if (limit && page)
             GetProjects({ limit: limit, search: searchTerm, page: page })
     }, [searchTerm, limit, page])
     useEffect(() => {
