@@ -2,7 +2,7 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const GetProjects = ({ page="", limit="",search="" }) => {
+export const GetProjects = ({ page="1", limit="",search="" }) => {
   const req = "GetProjects"
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });

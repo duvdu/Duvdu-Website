@@ -82,16 +82,16 @@ const Category = ({ category, language }) => {
 const MenuItem = ({ title, items }) => (
   items.length > 0 &&
   <li>
-    <Link legacyBehavior href="#">
+    <Link href="#">
       <a className="text-[#3E3E3E] dark:text-[#FFFFFFBF] font-semibold text-sm">
         {title}
       </a>
     </Link>
     <ul className={"gap-1"}>
       {items.map((item, index) => (
-        <li className='py-1 px-2 border border-[#00000080] dark:border-[#FFFFFF4D] rounded-full' key={index}>
-          <Link legacyBehavior href="/">
-            <a className='dark:text-[#FFFFFFBF] text-[#3E3E3E]'>{item}</a>
+        <li className='py-1 px-2 border hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
+          <Link href="/">
+            <a className='dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'>{item}</a>
           </Link>
         </li>
       ))}

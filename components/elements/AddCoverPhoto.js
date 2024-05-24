@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { handleFileUpload } from '../../util/util';
+import { handleFileUpload, handleRemoveEvent } from '../../util/util';
 import Icon from '../Icons';
 
 function AddCoverPhoto({ UpdateFormData, header,initalValue }) {
@@ -19,6 +19,7 @@ function AddCoverPhoto({ UpdateFormData, header,initalValue }) {
                 type="file"
                 onChange={coverUpload}
                 className="hidden"
+                onClick={handleRemoveEvent}
             />
             <label htmlFor="file-upload" className='rounded-full p-4 bg-[#F5F5F5] cursor-pointer'>
                 <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5'>

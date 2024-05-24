@@ -8,7 +8,7 @@ import { CreateStudio } from '../../../redux/action/apis/cycles/studio/create';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
 import { useRouter } from "next/router";
-import { filterByCycle, handleMultipleFileUpload } from "../../../util/util";
+import { filterByCycle, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
 import Successfully_posting from "../../popsup/post_successfully_posting";
@@ -205,7 +205,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                         <span className="text-primary text-sm font-bold mt-3">Click to Upload</span>
                                     </div>
                                 </label>
-                                <input onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
+                                <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
 
                                 {
                                     formData.attachments &&

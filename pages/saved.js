@@ -49,7 +49,7 @@ const Saved = ({
 
 }) => {
     const Boards = ({ data, }) => {
-        if(!data) return
+        if (!data) return
         console.log(data._id)
         const { projectsNum, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
@@ -64,13 +64,19 @@ const Saved = ({
                 value: "Edit",
             },
         ]
-
+        const handleSelectClick = (event) => {
+            event.stopPropagation();
+        };
         return (
             <>
-                <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v} , id)} />
+                <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} />
                 <div className="boards-card">
-                    <div className="absolute top-7 right-7">
-                        <Selector options={dropdown} onSelect={(v) => v.value == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-"+id) }> <div className="size-5 bg-black rounded-full">  </div> </Selector> 
+                    <div className="absolute top-7 right-7" onClick={handleSelectClick}>
+                        <Selector options={dropdown} onSelect={(v) => v.value == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-" + id)}>
+                            <div className="border rounded-full size-9 flex justify-center items-center">
+                                <Icon className="size-6 text-white" name="ellipsis-vertical" />
+                            </div>
+                        </Selector>
                     </div>
                     <a href={`/save/${id}`} className="projects cursor-pointer">
                         <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
@@ -107,7 +113,7 @@ const Saved = ({
 
     return (
         <>
-           <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
+            <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
             <Layout shortheader={true} isbodyWhite={true}>
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">

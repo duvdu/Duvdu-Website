@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { handleMultipleFileUpload } from '../../util/util';
+import { handleMultipleFileUpload, handleRemoveEvent } from '../../util/util';
 import Icon from '../Icons';
 
 function AddAttachment({ UpdateFormData, formData, header }) {
@@ -29,7 +29,7 @@ function AddAttachment({ UpdateFormData, formData, header }) {
                 <span className="pl-5 w-full text-blue-600">Open gallery</span>
                 <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
             </label>
-            <input onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
+            <input  onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
             {
                 formData?._attachments?.map((file, key) => (
                     <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>

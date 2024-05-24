@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as Types from '../../../redux/constants/actionTypes'
 import Icon from "../../Icons";
+import Link from 'next/link';
 
 function Profile({ getheaderpopup, api, user }) {
 
@@ -13,24 +14,45 @@ function Profile({ getheaderpopup, api, user }) {
     const handleCloseMiddleCard = () => {
         setShowMiddleCard(false);
     };
-    const badge = 63;
-    const states = [
-        {
-            "state": true,
-            "text": "Add Profile Picture"
-        },
-        {
-            "state": true,
-            "text": "Add your Category"
-        },
-        {
-            "state": false,
-            "text": "Verify your Email"
-        },
+    const requiredFields = [
+        { field: "profileImage", label: "Add Profile Image" },
+        { field: "coverImage", label: "Add Cover Image" },
+        { field: "location.lat", label: "Add your Address" },
+        { field: "location.lng", label: "Add your Address" },
+        { field: "isVerified", label: "Is Verified" },
+        { field: "about", label: "About" },
+        { field: "pricePerHour", label: "Price Per Hour" }
     ]
 
 
+    const checkField = (obj, path) => {
+        const value = path.split('.').reduce((o, p) => o && o[p], obj);
+        return value != null && value !== 0; // Consider 0 as false but allow other non-empty values
+    };
 
+    // Count completed fields
+    const completedCount = requiredFields.filter(field => checkField(user, field.field)).length;
+    const totalCount = requiredFields.length;
+
+    // Calculate completion percentage
+    const completionPercentage = ((completedCount / totalCount) * 100).toFixed(1);
+
+    // Determine if the user gets a verification badge (assuming 100% completion is needed)
+    const hasVerificationBadge = completionPercentage === "100.0";
+    const states = requiredFields.map(field => ({
+        state: checkField(user, field.field),
+        text: field.label
+    }));
+    const sortedStates = states.sort((a, b) => {
+        // Sort true values before false values
+        if (a.state && !b.state) {
+            return -1; // a comes before b
+        } else if (!a.state && b.state) {
+            return 1; // b comes before a
+        } else {
+            return 0; // Leave order unchanged
+        }
+    });
     if (user == null) return <></>
     if (getheaderpopup != Types.SHOWPROFILE) return
     else
@@ -40,13 +62,13 @@ function Profile({ getheaderpopup, api, user }) {
                     <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
                         <div className="bg-DS_white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
                             <div className="flex w-full overflow-hidden h-20">
-                                <img className="w-full" src={ user.coverImage || process.env.DEFULT_COVER_PATH} alt="conver" />
+                                <img className="w-full" src={user.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.coverImage : process.env.DEFULT_COVER_PATH} alt="conver" />
 
                             </div>
                             <div className='p-5'>
                                 <div className='flex items-start gap-4 -translate-y-4 h-12'>
                                     <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={user.profileImage?"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage : process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                                     </div>
                                     <div className='flex-2 flex-col'>
                                         <span className='text-base font-bold capitalize'>{user.name}</span>
@@ -81,16 +103,16 @@ function Profile({ getheaderpopup, api, user }) {
                                             <div className="flex gap-2 w-full">
                                                 <div className="header-progress-bar relative w-full">
                                                     <div className="absolute inset-0 rounded-lg h-full" style={{
-                                                        width: `${badge}%`,
+                                                        width: `${completionPercentage}%`,
                                                         background: 'linear-gradient(270deg, #711AEB 7.19%, #226BEB 100%)',
                                                         filter: 'blur(10.547093391418457px)'
                                                     }}></div>
 
                                                     <div className="relative h-full overflow-hidden">
-                                                        <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${badge}%` }}></div>
+                                                        <div className="absolute inset-0 rounded-lg bg-primary" style={{ width: `${completionPercentage}%` }}></div>
                                                     </div>
                                                 </div>
-                                                <span className="text-primary font-semibold text-xs right-0 bottom-full whitespace-nowrap">{badge}%</span>
+                                                <span className="text-primary font-semibold text-xs right-0 bottom-full whitespace-nowrap">{completionPercentage}%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +124,7 @@ function Profile({ getheaderpopup, api, user }) {
                                 </div>
 
                                 <div className="flex flex-col gap-3 mt-4">
-                                    {states.map((item, index) => (
+                                    {sortedStates.map((item, index) => (
                                         <React.Fragment key={index}>
                                             {item.state ? (
                                                 <div className="flex items-center gap-3">
@@ -112,7 +134,7 @@ function Profile({ getheaderpopup, api, user }) {
                                                     <Icon name="greenCheck" />
                                                 </div>
                                             ) : (
-                                                <a className="no-underline text-sm font-semibold">{t(item.text)}</a>
+                                                <Link href={`/creative/${user.username}?edit=true`} className="no-underline text-sm font-semibold">{t(item.text)}</Link>
                                             )}
                                             {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
                                         </React.Fragment>

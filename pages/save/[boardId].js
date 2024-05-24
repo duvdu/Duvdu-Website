@@ -85,7 +85,7 @@ const Projects = ({
     }, [limit]);
 
     const getPaginatedProjects = allprojects;
-
+    console.log(get_respond)
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -97,7 +97,7 @@ const Projects = ({
                                 <Icon className='text-xl' name={'angle-left'} />
                             </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
-                                {data?.title}
+                                {get_respond?.data?.title}
                             </span>
                         </div>
                         {getPaginatedProjects?.length === 0 && (

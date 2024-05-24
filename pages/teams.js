@@ -12,7 +12,7 @@ import EditFilesTeam from "../components/popsup/teamProject/EditFilesTeam";
 import { useRouter } from "next/router";
 
 const Card = ({ data, DeleteTeamProjects }) => {
-    const { cover, creatives, title, _id } = data;
+    const { cover, creatives, title, _id, status } = data;
     const route = useRouter()
 
     const onDelete = () => {
@@ -24,41 +24,54 @@ const Card = ({ data, DeleteTeamProjects }) => {
             query: { edit: _id },
         });
     }
+    const handleSelectClick = (event) => {
+        event.stopPropagation();
+    };
+    console.log(data)
+    const ioconstyle = "rounded-full -translate-y-1/2 translate-x-1/2 border p-3 text-2xl size-11"
 
     return (
         <>
-            <div className="boards-card ">
-                <Link href={`/team/${_id}`}>
+            <Link href={`/team/${_id}`}>
+                <div className="boards-card relative">
                     <>
-                        <div className="w-full h-full rounded-[50px] img-cart-style" style={{ backgroundImage: `url(${cover})` }} />
-                        <div className="boards-info projects-num capitalize">{creatives.length} creatives</div>
+                        <div
+                            className="w-full h-full rounded-[50px] img-cart-style"
+                            style={{ backgroundImage: `url(${cover})` }}
+                        />
+                        <div className="boards-info projects-num capitalize">
+                            {creatives.length} creatives
+                        </div>
                     </>
-                </Link>
-                <div className="absolute top-0 right-0 pe-12 pt-12 flex justify-center items-center">
-                    <Selector
-                        onSelect={(v) => v.value == 'Delete' ? onDelete() : onEdit(_id)}
-                        options={[
-                            {
-                                value: "Delete",
-                            },
-                            {
-                                value: "Edit",
-                            },
+                    <div
+                        className="absolute top-0 right-0 pe-12 pt-12 flex justify-center items-center"
+                        onClick={handleSelectClick}
+                    >
+                         <Selector
+                            onSelect={(v) => v.value === 'Delete' ? onDelete() : onEdit(_id)}
+                            options={[
+                                {
+                                    value: 'Delete',
+                                },
+                                {
+                                    value: 'Edit',
+                                },
+                            ]}
+                        >
 
-                        ]} >
-                        <Icon className="text-[#50C878] rounded-full -translate-y-1/2 translate-x-1/2 border border-[#50C878] p-3 text-2xl size-11 " name="circle-check" />
-
-                    </Selector>
-                </div>
-                <Link href={`/team/${_id}`}>
+                            {status == 'pending' && <Icon name="waiting" className={"-translate-y-1/2 translate-x-1/2"} />}
+                            {status == 'refuse' && <Icon name="circle-exclamation" className={"border-[#D72828] text-[#D72828] " + ioconstyle} />}
+                            {status == 'available' && <Icon className={"text-[#50C878] border-[#50C878]" + ioconstyle} name="circle-check" />}
+                        </Selector>
+                    </div>
                     <div>
                         <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px] gradient1" />
                         <div className="boards-info projects-name shadow2 flex">
                             {title}
                         </div>
                     </div>
-                </Link>
-            </div>
+                </div>
+            </Link>
         </>
     );
 };

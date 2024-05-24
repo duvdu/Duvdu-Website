@@ -97,6 +97,19 @@ const Header = ({
         document.addEventListener('keydown', dismissPopupOnEsc);
 
     }, []);
+    const clearErrors = () => {
+        setrrorMsg(null)
+        setrrorReq(null)
+    }
+    const [errorMsg, setrrorMsg] = useState(null)
+    const [errorReq, setrrorReq] = useState(null)
+    useEffect(() => {
+
+        if (api.error && !exclude_error(api.req)) {
+            setrrorMsg(errorConvertedMessage(api.error))
+            setrrorReq(api.req)
+        }
+    }, [api.error && !exclude_error(api.req)]);
 
     return (
         <>
@@ -108,8 +121,8 @@ const Header = ({
                 </div>
             }
             {
-                api.error && !exclude_error(api.req) &&
-                <Popup className="show">
+                errorMsg && errorReq &&
+                <Popup className="show" onCancel={clearErrors}>
                     <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
                         <div className="heading_s1 mb-[88px] text-center">
                             <div className="flex w-full justify-center">
@@ -118,10 +131,10 @@ const Header = ({
                                 </div>
                             </div>
                             <h1 className="text-3xl font-semibold my-5">Someting went wrong</h1>
-                            <span dangerouslySetInnerHTML={{ __html: errorConvertedMessage(api.error) }} />
+                            <span dangerouslySetInnerHTML={{ __html: errorMsg }} />
                             <span >
                                 <strong>function : </strong>
-                                {api.req}
+                                {errorReq}
                             </span>
                         </div>
 

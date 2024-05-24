@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { GetAllMessageInChat } from '../../redux/action/apis/realTime/messages/getAllMessageInChat';
 import { SendMessages } from '../../redux/action/apis/realTime/messages/sendmessage';
-import { convertToFormData, handleMultipleFileUpload } from '../../util/util';
+import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent } from '../../util/util';
 import dateFormat from "dateformat";
 import ChatComponent from './recording';
 import AudioRecorder from './recording';
@@ -13,7 +13,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
     const chatRef = useRef(null);
     const [otherUser, setOtherUser] = useState({})
     const [limit, setLimit] = useState(100)
-    const [record, setrecord] = useState(null)
+    const [isRecording, setIsRecord] = useState(null)
     ///////////// inputs //////////////
 
     ///////////// audio //////////////
@@ -161,8 +161,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         setRecordobject(object)
     };
 
-    const startRecording = () => {
-        setrecord(!record)
+    const swapRecording = () => {
+        setIsRecord(!isRecording)
     };
     return (
         <div className={`fixed bottom-0 z-20 ${messages.openchat == true ? '' : 'hidden'}`}>
@@ -240,7 +240,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 
                     <div className="flex justify-end items-center dark:bg-[#4d4c4c] p-3 ">
                         <AudioRecorder
-                            isstartRecording={record}
+                            isstartRecording={isRecording}
                             recordingoutput={recording}
                         />
                         {audioSrc ? (
@@ -251,7 +251,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                                 </div>
                             </div>) :
                             <>
-                                {!record &&
+                                {!isRecording &&
                                     <input
                                         value={content}
                                         onChange={onChange}
@@ -265,9 +265,9 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                                 <label htmlFor="attachment-upload" >
                                     <Icon className="cursor-pointer" name={'attachment'} />
                                 </label>
-                                <input onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-                                <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' onClick={startRecording}>
-                                    {!record ?
+                                <input  onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
+                                <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' onClick={swapRecording}>
+                                    {!isRecording ?
                                         <Icon name={'microphone'} /> :
                                         <Icon className='size-5 text-white' name={'stop'} />}
                                 </div>
@@ -275,7 +275,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                         }
 
                         {
-                            !record && (content?.length > 0 || audioSrc) &&
+                            !isRecording && (content?.length > 0 || audioSrc) &&
                             <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' onClick={onSend}>
                                 <Icon className='size-4 text-white' name={'paper-plane'} />
                             </div>
@@ -289,16 +289,15 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 };
 
 const Me = ({ message }) => {
+    console.log(message)
     return (
         (message?.media[0]?.type === "audio/wav") ?
-            <div className="ml-20">
+            <div className="ml-20 mt-2">
                 <audio controls controlsList="nodownload">
                     <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />
                     Your browser does not support the audio element.
                 </audio>
-            </div>
-
-            :
+            </div> :
             <div className="message me">
                 <div className="flex-col">
                     <div>
@@ -308,17 +307,19 @@ const Me = ({ message }) => {
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                        {message.media?.map((media, index) => {
-                            if (media.type === "image/png") {
-                                return (
-                                    <img key={`image-${index}`} src={media.url} className="h-28" alt="media" />
-                                );
-                            } else {
-                                return (
-                                    <Icon key={`file-${index}`} name="file" className="size-10" />
-                                );
-                            }
-                        })}
+                        {
+                            message.media?.length > 0 &&
+                            message.media?.map((media, index) => {
+                                if (media.type === "image/png") {
+                                    return (
+                                        <img key={`image-${index}`} src={media.url} className="h-28" alt="media" />
+                                    );
+                                } else {
+                                    return (
+                                        <Icon key={`file-${index}`} name="file" className="size-10" />
+                                    );
+                                }
+                            })}
                     </div>
                     <div className="w-full text-end">
                         <span className="text-white text-xs">
@@ -331,8 +332,14 @@ const Me = ({ message }) => {
 };
 
 const Other = ({ message }) => {
-    return (
-        <div className="message other bg-DS_white">
+    
+    return ((message?.media[0]?.type === "audio/wav") ?
+        <div className="ml-20 mt-2">
+            <audio controls controlsList="nodownload">
+                <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />
+                Your browser does not support the audio element.
+            </audio>
+        </div> : <div className="message other bg-DS_white">
             {
                 !message.content != "NULL" &&
                 <div>
@@ -342,25 +349,26 @@ const Other = ({ message }) => {
                 </div>
             }
             <div className="flex flex-wrap gap-2">
-                {message.media?.map((media, index) => {
-                    if (media.type === "audio/wav") {
-                        console.log(process.env.ASSETS_URL + media.url)
-                        return (
-                            <audio key={`audio-${index}`} controls controlsList="nodownload">
-                                <source src={process.env.ASSETS_URL + media.url} controlsList="nodownload" type="audio/wav" />
-                                Your browser does not support the audio element.
-                            </audio>
-                        );
-                    } else if (media.type === "image/png") {
-                        return (
-                            <img key={`image-${index}`} src={process.env.ASSETS_URL + media.url} className="h-28" alt="media" />
-                        );
-                    } else {
-                        return (
-                            <Icon key={`file-${index}`} name="file" className="size-10" />
-                        );
-                    }
-                })}
+                {
+                    message.media?.length > 0 &&
+                    message.media?.map((media, index) => {
+                        if (media.type === "audio/wav") {
+                            return (
+                                <audio key={`audio-${index}`} controls controlsList="nodownload">
+                                    <source src={process.env.ASSETS_URL + media.url} controlsList="nodownload" type="audio/wav" />
+                                    Your browser does not support the audio element.
+                                </audio>
+                            );
+                        } else if (media.type === "image/png") {
+                            return (
+                                <img key={`image-${index}`} src={process.env.ASSETS_URL + media.url} className="h-28" alt="media" />
+                            );
+                        } else {
+                            return (
+                                <Icon key={`file-${index}`} name="file" className="size-10" />
+                            );
+                        }
+                    })}
             </div>
             <div className="w-full text-start">
                 <span className="text-[#A1A1BC] text-xs">

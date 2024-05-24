@@ -141,6 +141,15 @@ export function handleMultipleFileUploadUpdated(event) {
   return {data:data , files:files}
 }
 
+export function gettFileURL(file) {
+  try {
+    return URL.createObjectURL(file ?? null)
+  }
+  catch (ex) {
+    return null
+  }
+
+}
 export function gettFileUploaded(file) {
   const data = handleFileUpload(file);
   try {
@@ -240,6 +249,10 @@ function validateErrorsAsList(data) {
   return true;
 }
 
+export const handleRemoveEvent = (e) => {
+  if(e.current)
+  e.current.value = null;
+};
 
 export const getAllTagsOfSubcategories = (categories, categoryId) => {
 

@@ -21,18 +21,18 @@ const ProjectCard = ({
   type = 'project',
   DeleteProjectFromBoard,
 }) => {
-    const Router = useRouter();
-    const boardId = Router.query.boardId;
-    const [soundIconName, setSoundIconName] = useState('volume-xmark');
+  const Router = useRouter();
+  const boardId = Router.query.boardId;
+  const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [loveIconName, setLoveIconName] = useState('far');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
   const dropdown = [
     {
-        value: "Delete",
+      value: "Delete",
     },
-]
+  ]
   useEffect(() => {
     if (videoRef.current) {
       const timerId = setInterval(() => {
@@ -78,10 +78,17 @@ const ProjectCard = ({
   };
   const ProjectId = cardData._id
   cardData = cardData?.project
+  const handleSelectClick = (event) => {
+    event.stopPropagation();
+  };
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
-        <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId , ProjectId) }> <div className="absolute top-3 right-3 size-5 bg-black rounded-full z-10">  </div> </Selector>
+        <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId, ProjectId)}>
+          <div className="border rounded-full size-9 flex justify-center items-center">
+            <Icon className="size-6 text-white" name="ellipsis-vertical" />
+          </div>
+        </Selector>
         <div
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
@@ -160,8 +167,8 @@ const ProjectCard = ({
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-          <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
-          <div className='text-xl font-bold'>{cardData.projectBudget}$</div>
+        <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
+        <div className='text-xl font-bold'>{cardData.projectBudget}$</div>
       </div>
     </>
   );

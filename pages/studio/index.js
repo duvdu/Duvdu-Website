@@ -14,12 +14,12 @@ import { GetStudios } from "../../redux/action/apis/cycles/studio/get";
 const Studio = ({ projects , GetStudios}) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
+    const page = 1;
     const showLimit = 24;
     const [limit, setLimit] = useState(showLimit);
 
     const targetRef = useRef(null);
-    console.log(projects)
-
+    
     useEffect(() => {
         GetStudios({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
     }, [limit, searchTerm,searchTerm])
@@ -63,7 +63,7 @@ const Studio = ({ projects , GetStudios}) => {
     }, [limit]);
 
 
-    const getPaginatedProjects = projects?.data || []
+    const getPaginatedProjects = projects?.data 
     
 
     return (
@@ -82,11 +82,11 @@ const Studio = ({ projects , GetStudios}) => {
                             <div className="h-7" />
                         }
                         <h1 className="page-header pb-9">most popular on duvdu</h1>
-                        {getPaginatedProjects.length === 0 && (
+                        {getPaginatedProjects?.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects.map((item, i) => (
+                            {getPaginatedProjects?.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === 9 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
@@ -96,7 +96,7 @@ const Studio = ({ projects , GetStudios}) => {
                             ))}
                         </div>
                         {
-                            getPaginatedProjects.length === limit &&
+                            getPaginatedProjects?.length === limit &&
                             <div className="load-parent">
                                 <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                             </div>

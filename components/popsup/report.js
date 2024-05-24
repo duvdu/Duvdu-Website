@@ -2,7 +2,7 @@
 import Popup from '../elements/popup';
 import AppButton from '../elements/button';
 import Icon from '../Icons';
-import { handleFileUpload } from '../../util/util';
+import { handleFileUpload, handleRemoveEvent } from '../../util/util';
 import React, { useState } from "react";
 
 function Report() {
@@ -42,7 +42,7 @@ function Report() {
                             <label htmlFor="file-upload" className='text-[#54575C] rounded-2xl border-2 border-[#CBD0DC] text-3xl px-8 py-4 my-4'>
                                 Browse File
                             </label>
-                            <input onChange={FileUpload} className='hidden' id="file-upload" type="file" />
+                            <input  onClick={handleRemoveEvent} onChange={FileUpload} className='hidden' id="file-upload" type="file" />
                         </div>
                     }
                     {

@@ -1,5 +1,5 @@
 function Projects({ projects }) {
-    return projects.length > 0 && (
+    return projects?.length > 0 && (
         <div className='container sm:p-0 project-grid gap-[10px]'>
             {projects.map((data, index) => (
                 <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />

@@ -79,16 +79,16 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
 
     const route = useRouter()
 
-    const { type, category, subcategory, tags } = route.query
+    const { type, category, subcategory, tags, edit: goEdit } = route.query
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
     const [showEditProfile, setShowEditProfile] = useState(false);
 
-    
+
     useEffect(() => {
-        GetProjects()
+        GetProjects({})
     }, [])
-    
+    console.log(goEdit)
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
             route.replace({
@@ -105,7 +105,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                     return <AddStudioBooking />
                 case 'equipment-rental':
                     removeQueryParameter()
-                    // return <EquipmentRental />
+                // return <EquipmentRental />
                 case 'music-audio':
                     removeQueryParameter()
                     break;
@@ -135,6 +135,23 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
         setshowAddPost(false)
     };
 
+    const onOpenEdit = () => {
+        console.log(route)
+
+        route.push({
+            pathname: route.asPath,
+            query: {
+                edit: true
+            }
+        });
+    };
+    const onCloseEdit = () => {
+        const url = new URL(route.asPath, window.location.origin);
+        route.push({
+            pathname: url.pathname,
+        });
+    };
+
 
     function Allpage() {
         useEffect(() => {
@@ -150,13 +167,13 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
         }
         return (
             <>
-                <Conver converPic={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+user.coverImage || "/assets/imgs/projects/cover.jpeg"} />
+                <Conver converPic={user.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.coverImage : "/assets/imgs/projects/cover.jpeg"} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
                         <div className='relative px-6 sm:px-10'>
                             <Info
-                                src={ "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage || process.env.DEFULT_PROFILE_PATH}
+                                src={user.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage : process.env.DEFULT_PROFILE_PATH}
                                 location={user.adress || 'NONE'}
                                 occupation={user.service || '---'}
                                 personalName={user.name}
@@ -201,7 +218,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                                     <div data-popup-toggle="popup" data-popup-target="select-type" className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
                                         <Icon className='text-white text-2xl' name={'plus'} />
                                     </div>
-                                    <div onClick={() => setShowEditProfile(true)} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
+                                    <div onClick={() => onOpenEdit()} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
                                         <Icon className='text-white text-2xl' name={'pen'} />
                                     </div>
                                 </Controller>
@@ -227,7 +244,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     return (
         <>
 
-            <EditDrawer isOpen={showEditProfile} onClose={() => setShowEditProfile(false)} />
+            <EditDrawer isOpen={goEdit} onClose={() => onCloseEdit()} />
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <AddOtherCreatives onSubmit={(value) => InsertToArray('creatives', value)} />
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />

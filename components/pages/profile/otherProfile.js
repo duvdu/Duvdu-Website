@@ -16,10 +16,10 @@ function OtherProfile({ user, getOtherprofile, GetAllMessageInChat,GetProjects,p
     const { profile: username } = route.query
     useEffect(() => {
         getOtherprofile(username)
-        GetProjects()
+        GetProjects({})
     }, [username])
     
-    projects = projects?.data || []
+    projects = projects?.data 
     
     var profile = {
      
@@ -51,7 +51,8 @@ function OtherProfile({ user, getOtherprofile, GetAllMessageInChat,GetProjects,p
     };
     user = user?.data[0]
     return (
-        !user ? <h1> There's No User name {username} </h1> :
+        user &&
+        // !user ? <h1> There's No User name {username} </h1> :
             <div className='sm:container'>
                 <Conver converPic={user.coverImage || process.env.DEFULT_COVER_PATH} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
@@ -96,8 +97,8 @@ function OtherProfile({ user, getOtherprofile, GetAllMessageInChat,GetProjects,p
                     </div>
                     <div className='right-side'>
                         {
-                            projects.length == 0 &&
-                            <h3>No projects Found </h3>
+                            projects?.length == 0 &&
+                            <h3>No User Found </h3>
                         }
 
                         <Projects projects={projects} />

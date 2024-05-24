@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import AppButton from '../../../elements/button';
 import Icon from '../../../Icons';
-import { gettFileUploaded, handleFileUpload } from '../../../../util/util';
+import { gettFileUploaded, handleFileUpload, handleRemoveEvent } from '../../../../util/util';
 import { connect } from "react-redux";
 import { UpdateFormData } from '../../../../redux/action/logic/forms/Addproject';
 
@@ -41,7 +41,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
                                     } : {}} />}
 
                             </label>
-                            <input id="file-upload" type="file" multiple className="hidden" onChange={profileUpload} />
+                            <input  onClick={handleRemoveEvent} id="file-upload" type="file" multiple className="hidden" onChange={profileUpload} />
                         </section>
                         <section className='mt-5'>
                             <span className='opacity-40 text-base capitalize'>

@@ -14,7 +14,7 @@ import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 const Projects = ({ projects, GetProjects, api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const projectsList = projects?.data || []
+    const projectsList = projects?.data
     const pagganation = projects?.pagination
     const page = 1;
     const showLimit = 12;
@@ -65,11 +65,11 @@ const Projects = ({ projects, GetProjects, api }) => {
                             <div className="h-7" />
                         }
                         <h1 className="page-header pb-9">most popular on duvdu</h1>
-                        {projectsList.length === 0 && (
+                        {projectsList?.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="grid minmax-280 gap-5">
-                            {projectsList.map((item, i) => (
+                            {projectsList?.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
                                     {i === -1 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === -1 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}

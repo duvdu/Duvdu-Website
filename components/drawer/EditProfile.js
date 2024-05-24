@@ -5,7 +5,7 @@ import Icon from '../Icons';
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import { updateProfile } from "../../redux/action/apis/auth/profile/updateprofile";
-import { gettFileUploaded, handleFileUpload } from '../../util/util';
+import { gettFileURL, gettFileUploaded, handleFileUpload, handleRemoveEvent } from '../../util/util';
 import { UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
 import Drawer from '../elements/drawer';
 
@@ -16,19 +16,25 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
     if (!user) return <></>
 
     const [error, setError] = useState(false);
+    const [profileImage, setProfileImage] = useState(null);
+    const [cover, setCover] = useState(null);
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
     useEffect(() => {
         if (isOpen)
-            UpdateKeysAndValues(user)
+            {
+                console.log(user)
+                UpdateFormData("profileImage", user.profileImage);
+                UpdateFormData("coverImage", user.coverImage);
+            }
     }, [isOpen])
 
     if (respond && isOpen)
         window.location.reload()
-    
-useEffect(()=>{
-    UpdateFormData("location.lat",30)
-    UpdateFormData("location.lng",30)
-},[])
+
+    useEffect(() => {
+        UpdateFormData("location.lat", 30)
+        UpdateFormData("location.lng", 30)
+    }, [])
 
     function UpdateKeysAndValues(obj, prefix = '') {
         Object.keys(obj).forEach(key => {
@@ -37,17 +43,6 @@ useEffect(()=>{
             if (value && typeof value === 'object' && !Array.isArray(value) && value !== null) {
                 UpdateKeysAndValues(value, prefixedKey);
             } else {
-                if (prefixedKey == 'profileImage')
-                    {
-                        UpdateFormData("_profileImage", value)
-                        UpdateFormData("profileImage", value)
-                    }
-                    if (prefixedKey == 'coverImage')
-                    {
-                        UpdateFormData("_coverImage", value)
-                        UpdateFormData("_coverImage", value)
-                    }
-
                 UpdateFormData(prefixedKey, value)
             }
         });
@@ -56,8 +51,8 @@ useEffect(()=>{
     const converting = () => {
         const data = new FormData();
         const avoidFeilds = [
-            '_profileImage',
-            '_coverImage',
+            'profileImage',
+            'coverImage',
             'username',
             'isVerified',
             'acceptedProjectsCounter',
@@ -71,6 +66,10 @@ useEffect(()=>{
             if (avoidFeilds.includes(key)) return
             data.append(key, formData[key]);
         });
+        if (cover)
+            data.append('coverImage', cover)
+        if (profileImage)
+            data.append('profileImage', cover)
         return data;
     }
 
@@ -85,15 +84,13 @@ useEffect(()=>{
         event.preventDefault();
         updateProfile(converting())
     };
- 
+
 
     const profileUpload = (e) => {
-        UpdateFormData('_profileImage', gettFileUploaded(e))
-        console.log(handleFileUpload(e).file)
-        UpdateFormData('profileImage', handleFileUpload(e).file)
+        setProfileImage(handleFileUpload(e)?.file??null)
     };
     const coverUpload = (e) => {
-        UpdateFormData('coverImage', handleFileUpload(e).file)
+        setCover(handleFileUpload(e)?.file??null)
     };
 
 
@@ -106,7 +103,7 @@ useEffect(()=>{
         reset()
         onClose()
     };
-
+    
     return (
         <>
             <Drawer name={'Edit Details'} addWhiteShadow={true} isOpen={isOpen} toggleDrawer={close}>
@@ -116,19 +113,19 @@ useEffect(()=>{
                             <Icon className='text-white' name={'pen'} />
                         </Controller>
                     </label>
-                    <input onChange={coverUpload} className='hidden' id="cover-file-upload" type="file" />
+                    <input onClick={handleRemoveEvent} onChange={coverUpload} className='hidden' id="cover-file-upload" type="file" />
 
-                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={formData._coverImage || process.env.DEFULT_COVER_PATH} alt="cover pic" />
+                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={gettFileURL(cover) || (formData.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + formData.coverImage : process.env.DEFULT_COVER_PATH)} alt="cover pic" />
 
                     <div className='absolute bottom-0 edit size-28 transform translate-y-1/2 translate-x-1/2'>
-                        <img className='rounded-full w-full h-full' src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+formData._profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                        <img className='rounded-full w-full h-full' src={gettFileURL(profileImage) || (formData.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + formData.profileImage : process.env.DEFULT_PROFILE_PATH)} alt="profile picture" />
 
                         <label htmlFor="profile-file-upload" >
                             <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center border-[#0000001A]" >
                                 <Icon className='text-white' name={'pen'} />
                             </Controller>
                         </label>
-                        <input onChange={profileUpload} className='hidden' id="profile-file-upload" type="file" />
+                        <input onClick={handleRemoveEvent} onChange={profileUpload} className='hidden' id="profile-file-upload" type="file" />
                     </div>
                 </div>
 
@@ -159,12 +156,12 @@ useEffect(()=>{
                     </div>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                        address
+                            address
                         </span>
                         <input
                             type='text'
                             name='address'
-                            value={formData.address }
+                            value={formData.address}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />

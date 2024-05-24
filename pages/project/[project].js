@@ -29,13 +29,14 @@ import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardPro
 
 
 
-const projects = ({ 
-    GetProjects, 
-    projects_respond, 
-    GetProject, 
-    project_respond, 
-    GetAllMessageInChat, 
-    chat_respond ,
+const projects = ({
+    api,
+    GetProjects,
+    projects_respond,
+    GetProject,
+    project_respond,
+    GetAllMessageInChat,
+    chat_respond,
     addProjectToBoard_respond
 }) => {
 
@@ -43,7 +44,6 @@ const projects = ({
     const { project: projectId } = router.query;
     const projects = projects_respond?.data || []
     const project = project_respond?.data
-
     useEffect(() => {
         if (projectId)
             GetProject(projectId);
@@ -51,7 +51,7 @@ const projects = ({
     }, [projectId]);
 
     useEffect(() => {
-        GetProjects();
+        GetProjects({ limit: "4" });
     }, []);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -125,56 +125,55 @@ const projects = ({
         projectScale: project.projectScale,
 
     }) : null
-    
-    console.log(addProjectToBoard_respond)
-    useEffect(()=>{
-        if(addProjectToBoard_respond)
-            OpenPopUp('addProjectToBoard-popup')
-    },[addProjectToBoard_respond])
 
+    useEffect(() => {
+        if (addProjectToBoard_respond)
+            OpenPopUp('addProjectToBoard-popup')
+    }, [addProjectToBoard_respond])
+    
     return (
         <>
             <Layout >
-                <Successfully_posting id="addProjectToBoard-popup" message="Add To Team" />
-                {project ?
-                    (
-                        <>
-                            <AddToSaved />
-                            <Report />
-                            <ThanksMSG />
-                            <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
-                                <div className="sm:container mt-6">
-                                    <section className="mx-7 sm:mx-0" >
-                                        <Header data={data} />
+
+                {project &&
+                    <>
+                        <Successfully_posting id="addProjectToBoard-popup" message="Add To Team" />
+                        <AddToSaved />
+                        <Report />
+                        <ThanksMSG />
+                        <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
+                            <div className="sm:container mt-6">
+                                <section className="mx-7 sm:mx-0" >
+                                    <Header data={data} />
+                                </section>
+                                <div className="lg:flex gap-6">
+                                    <section className="lg:w-2/3">
+                                        {/* <ProjectShow data={data} /> */}
+                                        <ProjectCover data={data} />
+                                        <About data={data} />
                                     </section>
-                                    <div className="lg:flex gap-6">
-                                        <section className="lg:w-2/3">
-                                            {/* <ProjectShow data={data} /> */}
-                                            <ProjectCover data={data} />
-                                            <About data={data} />
-                                        </section>
-                                        <section className="lg:w-1/3 mt-10 lg:mt-0">
-                                            <Details data={data} />
-                                            <Reviews data={data} />
-                                        </section>
-                                    </div>
-                                    <section className="mx-7 sm:mx-0">
-                                        <Recommended projects={projects} />
+                                    <section className="lg:w-1/3 mt-10 lg:mt-0">
+                                        <Details data={data} />
+                                        <Reviews data={data} />
                                     </section>
                                 </div>
+                                <section className="mx-7 sm:mx-0">
+                                    <Recommended projects={projects} />
+                                </section>
                             </div>
-                            {!chat_respond && 
-                                <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} />}
-                            <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
-
-                        </>
-                    ) : (
-                        <div className="flex flex-col h-body items-center justify-center">
-                            <h1 className="text-4xl font-bold">
-                                No Project To Show
-                            </h1>
                         </div>
-                    )}
+                        {!chat_respond &&
+                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} />}
+                        <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+                    </>
+                }
+                {
+                    (api.error && api.req == "GetProject") &&
+                    <div className="flex flex-col h-body items-center justify-center">
+                        <h1 className="text-4xl font-bold">
+                            No Project To Show
+                        </h1>
+                    </div>}
             </Layout>
         </>
     );
@@ -479,6 +478,7 @@ const mapStateToProps = (state) => ({
     addProjectToBoard_respond: state.api.AddProjectToBoard,
     projectFilters: state.projectFilters,
     chat_respond: state.api.GetAllMessageInChat,
+    api: state.api
 });
 
 const mapDidpatchToProps = {

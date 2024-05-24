@@ -6,7 +6,7 @@ import SelectDate from "../../elements/selectDate";
 import { connect } from "react-redux";
 import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Addproject";
 import GoogleMap from "../../elements/googleMap";
-import { handleMultipleFileUpload } from "../../../util/util";
+import { handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import { BookCopyrights } from "../../../redux/action/apis/cycles/copywriter/book";
 import dateFormat from "dateformat";
 import Successfully_posting from "../../popsup/post_successfully_posting";
@@ -145,7 +145,7 @@ const PermitsBooking = ({ respond, addprojectState, UpdateFormData, BookCopyrigh
                         <span className="pl-5 w-full text-blue-600">Open gallery</span>
                         <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
                     </label>
-                    <input onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
+                    <input  onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
                     {
                         formData.attachments &&
                         formData.attachments.length > 0 &&
