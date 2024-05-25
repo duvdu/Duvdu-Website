@@ -112,7 +112,7 @@ const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => 
     <>
         <div className="flex justify-between my-3">
             <span className="opacity-60 capitalize font-medium">
-                {section.category.title}
+                {section?.category?.title}
             </span>
             {!isSolid && (
                 <div className="flex gap-2 cursor-pointer items-center">

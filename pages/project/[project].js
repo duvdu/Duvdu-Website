@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import { fetchProjects } from "../../redux/action/project";
 import Icon from '../../components/Icons';
-import { OpenPopUp, convertToK } from "../../util/util";
+import { ClosePopUp, OpenPopUp, convertToK, isFav } from "../../util/util";
 import ProjectCard from "../../components/elements/project-card";
 import { convertHoursTo__ } from '../../util/util';
 import Comment from '../../components/elements/comment';
@@ -26,6 +26,7 @@ import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/g
 import Successfully_posting from "../../components/popsup/post_successfully_posting";
 import AddToSaved from "../../components/popsup/addToSaved";
 import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
+import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
 
 
 
@@ -37,28 +38,53 @@ const projects = ({
     project_respond,
     GetAllMessageInChat,
     chat_respond,
-    addProjectToBoard_respond
+    AddProjectToBoard,
+    addProjectToBoard_respond,
+    getBoards_respond,
+    DeleteProjectFromBoard,
+    deleteProjectFromBoard_respond
 }) => {
 
     const router = useRouter()
     const { project: projectId } = router.query;
     const projects = projects_respond?.data || []
     const project = project_respond?.data
-    useEffect(() => {
-        if (projectId)
-            GetProject(projectId);
+    const [isOpen, setIsOpen] = useState(false);
+    const [love, setLove] = useState(false);
+    const [isFave, seIsFav] = useState(false);
 
+    useEffect(() => {
+        if (projectId) {
+            GetProject(projectId);
+        }
     }, [projectId]);
+
+    useEffect(() => {
+        if (projectId && getBoards_respond) {
+            setLove(isFav(projectId, getBoards_respond))
+        }
+    }, [projectId, getBoards_respond]);
 
     useEffect(() => {
         GetProjects({ limit: "4" });
     }, []);
 
-    const [isOpen, setIsOpen] = useState(false);
-
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
+
+    const loveToggleAction = () => {
+        if (projectId && getBoards_respond.data) {
+            if (love) {
+                DeleteProjectFromBoard(getBoards_respond.data[0]._id, projectId)
+            }
+            else {
+                AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
+            }
+            seIsFav(true)
+        }
+    };
+
     const data = project ? ({
         _id: project._id,
         title: project.title,
@@ -127,17 +153,26 @@ const projects = ({
     }) : null
 
     useEffect(() => {
-        if (addProjectToBoard_respond)
+        if (addProjectToBoard_respond && !isFave) {
             OpenPopUp('addProjectToBoard-popup')
-    }, [addProjectToBoard_respond])
-    
+        }
+        else if (api.req == 'AddProjectToBoard' && isFave) {
+            setLove(true)
+        }
+        else if (api.req == 'DeleteProjectFromBoard' && isFave) {
+            setLove(false)
+        }
+        seIsFav(false)
+    }, [addProjectToBoard_respond, deleteProjectFromBoard_respond])
+
+
     return (
         <>
             <Layout >
 
                 {project &&
                     <>
-                        <Successfully_posting id="addProjectToBoard-popup" message="Add To Team" />
+                        <Successfully_posting id="addProjectToBoard-popup" message="Add To Team" onCancel={() => ClosePopUp("addProjectToBoard-popup")} />
                         <AddToSaved />
                         <Report />
                         <ThanksMSG />
@@ -163,7 +198,7 @@ const projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} />}
+                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} isLove={love} loveToggleAction={loveToggleAction} />}
                         <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>
                 }
@@ -403,23 +438,16 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, toggleDrawer, GetAllMessageInChat, chat_respond }) => {
+const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, isLove }) => {
 
-    const [loveIconName, setLoveIconName] = useState('far');
-    const [showChat, setShowChat] = useState(false);
-
-    const online = false
+    const loveIconName = isLove ? 'fas' : 'far'
+    const online = data.user.isOnline
 
     const handleLoveIconClick = () => {
-        setLoveIconName(loveIconName === 'fas' ? 'far' : 'fas');
-    };
-
-    const handleCloseChat = () => {
-        setShowChat(false);
+        loveToggleAction()
     };
 
     const handleOpenChat = () => {
-        setShowChat(true);
         GetAllMessageInChat(data.creative._id)
     };
 
@@ -476,8 +504,10 @@ const mapStateToProps = (state) => ({
     projects_respond: state.api.GetProjects,
     project_respond: state.api.GetProject,
     addProjectToBoard_respond: state.api.AddProjectToBoard,
+    deleteProjectFromBoard_respond: state.api.DeleteProjectFromBoard,
     projectFilters: state.projectFilters,
     chat_respond: state.api.GetAllMessageInChat,
+    getBoards_respond: state.api.GetBoards,
     api: state.api
 });
 
@@ -485,6 +515,8 @@ const mapDidpatchToProps = {
     GetProjects,
     GetProject,
     GetAllMessageInChat,
+    AddProjectToBoard,
+    DeleteProjectFromBoard
 };
 
 export default connect(mapStateToProps, mapDidpatchToProps)(projects);

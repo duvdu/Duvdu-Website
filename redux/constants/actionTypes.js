@@ -66,3 +66,7 @@ export const SET_MESSAGES_LIST = 'SET_MESSAGES_LIST';
 
 // Notification
 export const SET_NOTIFICATIONs = 'SET_CHATS';
+
+// SAVED PROJECT
+export const SAWAP_FAV = 'SAWAP_FAV';
+export const ADD_TO = 'ADD_TO';

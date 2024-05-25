@@ -18,7 +18,6 @@ function Profile({ getheaderpopup, api, user }) {
         { field: "profileImage", label: "Add Profile Image" },
         { field: "coverImage", label: "Add Cover Image" },
         { field: "location.lat", label: "Add your Address" },
-        { field: "location.lng", label: "Add your Address" },
         { field: "isVerified", label: "Is Verified" },
         { field: "about", label: "About" },
         { field: "pricePerHour", label: "Price Per Hour" }
@@ -62,13 +61,16 @@ function Profile({ getheaderpopup, api, user }) {
                     <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
                         <div className="bg-DS_white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
                             <div className="flex w-full overflow-hidden h-20">
-                                <img className="w-full" src={user.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.coverImage : process.env.DEFULT_COVER_PATH} alt="conver" />
-
+                                <img
+                                    className="w-full h-full object-cover"
+                                    src={user.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.coverImage : process.env.DEFULT_COVER_PATH}
+                                    alt="cover"
+                                />
                             </div>
                             <div className='p-5'>
                                 <div className='flex items-start gap-4 -translate-y-4 h-12'>
                                     <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={user.profileImage?"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage : process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={user.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage : process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                                     </div>
                                     <div className='flex-2 flex-col'>
                                         <span className='text-base font-bold capitalize'>{user.name}</span>

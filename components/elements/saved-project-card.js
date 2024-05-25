@@ -13,7 +13,7 @@ import Selector from "./CustomSelector";
 import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
 import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
-import { GetSavedBoard } from '../../redux/action/apis/savedProject/boardProjects/getone';
+import Link from 'next/link';
 
 const ProjectCard = ({
   cardData,
@@ -84,16 +84,20 @@ const ProjectCard = ({
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
-        <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId, ProjectId)}>
-          <div className="border rounded-full size-9 flex justify-center items-center">
-            <Icon className="size-6 text-white" name="ellipsis-vertical" />
-          </div>
-        </Selector>
         <div
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           className='project'>
-          <a href={`/${type}/${cardData._id}`}>
+          
+          <Link href={`/${type}/${cardData._id}`}>
+            <div className='cursor-pointer'>
+            <div className="absolute top-2 right-2" onClick={handleSelectClick}>
+              <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId, ProjectId)}>
+                <div className="border rounded-full size-9 flex justify-center items-center">
+                  <Icon className="size-6 text-white" name="ellipsis-vertical" />
+                </div>
+              </Selector>
+            </div>
             {
               false &&
                 cardData.backgroundImages.length == 1 &&
@@ -141,7 +145,8 @@ const ProjectCard = ({
                 ))}
               </Swiper>
             }
-          </a>
+            </div>
+          </Link>
           <>
             {
               false &&
@@ -155,11 +160,11 @@ const ProjectCard = ({
 
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <a href={`/creative/${cardData?.username}`} className='cursor-pointer'>
-              <img src={cardData?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
+            <a href={`/creative/${cardData?.user?.username}`} className='cursor-pointer'>
+              <img src={cardData?.user?.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + cardData?.user?.profileImage : process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
             </a>
-            <a href={`/creative/${cardData?.username}`} className='cursor-pointer' >
-              <span className='text-sm font-semibold'>{cardData?.name || ''}</span>
+            <a href={`/creative/${cardData?.user?.username}`} className='cursor-pointer' >
+              <span className='text-sm font-semibold'>{cardData?.user?.name || ''}</span>
             </a>
           </div>
           <div className='flex items-center gap-2'>
@@ -177,7 +182,6 @@ const ProjectCard = ({
 
 const mapStateToProps = (state) => ({
   add_respond: state.api.AddProjectToBoard,
-  delete_respond: state.api.DeleteProjectFromBoard,
 });
 
 const mapDispatchToProps = {

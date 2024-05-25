@@ -69,7 +69,7 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
         if (cover)
             data.append('coverImage', cover)
         if (profileImage)
-            data.append('profileImage', cover)
+            data.append('profileImage', profileImage)
         return data;
     }
 

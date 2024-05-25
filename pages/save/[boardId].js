@@ -31,15 +31,18 @@ const Projects = ({
 
     const targetRef = useRef(null);
 
-    console.log(allprojects)
     useEffect(() => {
-        if(get_respond)
+        if (get_respond)
             setallProjects(get_respond?.data?.projects)
-    }, [get_respond,delete_respond]);
+    }, [get_respond]);
 
     useEffect(() => {
-        if(boardId)
-        GetSavedBoard({ id: boardId })
+            GetSavedBoard({ id: boardId })
+    }, [delete_respond]);
+
+    useEffect(() => {
+        if (boardId)
+            GetSavedBoard({ id: boardId })
     }, [boardId]);
 
     useEffect(() => {
@@ -85,16 +88,15 @@ const Projects = ({
     }, [limit]);
 
     const getPaginatedProjects = allprojects;
-    console.log(get_respond)
+
     return (
         <>
             <Layout isbodyWhite={true}>
                 <section className="mt-6 mb-12">
                     <div className="container mb-30">
-
                         <div className='flex gap-3 pb-6'>
                             <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={Goback}>
-                                <Icon className='text-xl' name={'angle-left'} />
+                                <Icon className='w-5 h-5 text-black' name={'angle-left'} />
                             </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
                                 {get_respond?.data?.title}
@@ -105,7 +107,7 @@ const Projects = ({
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
-                                <Card className='cursor-pointer' href="/project/1" key={i} cardData={item} />
+                                <Card href="/project/1" key={i} cardData={item} />
                             ))}
                         </div>
                         {

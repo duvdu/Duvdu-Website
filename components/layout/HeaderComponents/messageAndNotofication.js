@@ -53,7 +53,7 @@ const ViewAll = ({ Type, list, t }) =>
                 {list.map((tile, index) => (
                     Type == 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} />
                 ))}
-            </div> : <span className="whitespace-nowrap">There's No Messages</span>}
+            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">There's No Messages</span></div>}
 
     </div>
 
@@ -71,7 +71,7 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
                 {list.slice(0, 4).map((tile, index) => (
                     Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} />
                 ))}
-            </div> : <span className="whitespace-nowrap">There's No Notification</span>}
+            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">There's No Notification</span> </div> }
     </div>
 );
 

@@ -123,7 +123,7 @@ export function handleMultipleFileUploadUpdated(event) {
   }
 
   // Convert FileList to an array and map over it to gather file info
-  const data =  Array.from(files).map(file => {
+  const data = Array.from(files).map(file => {
     const fileName = file.name;
     const fileType = file.type;
     const fileSize = file.size;
@@ -135,10 +135,10 @@ export function handleMultipleFileUploadUpdated(event) {
       fileName: fileName,
       fileType: fileType,
       formattedFileSize: formattedFileSize,
-      file:file
+      file: file
     };
   });
-  return {data:data , files:files}
+  return { data: data, files: files }
 }
 
 export function gettFileURL(file) {
@@ -250,8 +250,8 @@ function validateErrorsAsList(data) {
 }
 
 export const handleRemoveEvent = (e) => {
-  if(e.current)
-  e.current.value = null;
+  if (e.current)
+    e.current.value = null;
 };
 
 export const getAllTagsOfSubcategories = (categories, categoryId) => {
@@ -337,3 +337,25 @@ export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = ''
     }
   });
 };
+
+
+export const isFav = (idproject, FavList) => {
+  // Check if FavList has at least one element
+  FavList = FavList.data
+  if (FavList.length === 0) return false;
+  // Access the first board in FavList
+  const firstBoard = FavList[0];
+  // Check if any project's ID in the first board matches the given idproject
+  return firstBoard.projects.some(project => project.project._id === idproject);
+};
+
+export const isProjectInObject = (data, projectId) => {
+  for (const board of data) {
+    for (const project of board.projects) {
+      if (project._id === projectId) {
+        return false;
+      }
+    }
+  }
+  return true;
+}

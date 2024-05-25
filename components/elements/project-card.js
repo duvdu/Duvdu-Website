@@ -2,7 +2,7 @@
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration } from '../../util/util';
+import { convertDuration, isFav } from '../../util/util';
 import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,12 +10,13 @@ import { connect } from "react-redux";
 
 import 'swiper/swiper-bundle.css';
 
-const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) => {
+const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_respond, islogin }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
-  const [loveIconName, setLoveIconName] = useState('far');
+  const loveIconName = love ? 'fas' : 'far'
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
+  const [love, setLove] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -28,21 +29,26 @@ const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) =>
     }
   }, [videoRef.current?.duration == NaN]);
 
+  const loveToggleAction = () => {
+    if (projectId && getBoards_respond.data) {
+        if (love) {
+            DeleteProjectFromBoard(getBoards_respond.data[0]._id, projectId)
+        }
+        else {
+            AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
+        }
+        seIsFav(true)
+    }
+};
 
   const timeUpdate = () => {
     setDuration(videoRef.current.duration - videoRef.current.currentTime);
-
   }
   const handleSoundIconClick = () => {
-    setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark');
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
     if (videoRef.current)
       videoRef.current.muted = soundIconName === 'volume-high';
 
-  };
-
-  const handleLoveIconClick = () => {
-    setLoveIconName(loveIconName === 'far' ? 'fas' : 'far');
   };
 
   const handleHover = () => {
@@ -60,6 +66,14 @@ const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) =>
     }
 
   };
+
+  useEffect(() => {
+    if (cardData._id && getBoards_respond) {
+      setLove(isFav(cardData._id, getBoards_respond))
+    }
+  }, [cardData._id, getBoards_respond]);
+
+
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
@@ -75,9 +89,9 @@ const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) =>
                 <>
                   <video
                     className='cardvideo relative'
-                    loop
                     ref={videoRef}
                     onTimeUpdate={timeUpdate}
+                    loop
                   >
                     <source src={cardData.backgroundImages[0]} type='video/mp4' />
                   </video>
@@ -92,7 +106,6 @@ const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) =>
                 <img className='cardimg' src={cardData.cover} alt="project" />
               )
             }
-
             {
               false &&
               cardData.backgroundImages.length > 1 &&
@@ -117,13 +130,11 @@ const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) =>
             }
           </a>
           {cardData.showLove && islogin &&
-            <div onClick={handleLoveIconClick} className="blur-container love z-[1]">
+            <div onClick={loveToggleAction} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
             </div>
           }
-
           {
-            false &&
             cardData.showSound &&
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
@@ -140,7 +151,7 @@ const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) =>
             </a>
           </div>
           <div className='flex items-center gap-2'>
-            <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates||0).toFixed(1) }</span>
+            <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
@@ -153,7 +164,9 @@ const ProjectCard = ({ cardData, className = "", type = 'project', islogin }) =>
 
 const mapStateToProps = (state) => ({
   api: state.api,
-  islogin: state.auth.login
+  islogin: state.auth.login,
+  getBoards_respond: state.api.GetBoards,
+
 });
 
 const mapDispatchToProps = {

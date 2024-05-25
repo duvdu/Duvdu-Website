@@ -48,10 +48,10 @@ const Saved = ({
     deleteSavedBoard_respond
 
 }) => {
-    const Boards = ({ data, }) => {
+    const Boards = ({ data, isFav }) => {
         if (!data) return
-        console.log(data._id)
-        const { projectsNum, title, _id: id } = data;
+        console.log(data)
+        const { totalProjects, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
         const img2 = data?.projects[1]?.project?.cover
         const img3 = data?.projects[2]?.project?.cover
@@ -72,11 +72,12 @@ const Saved = ({
                 <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} />
                 <div className="boards-card">
                     <div className="absolute top-7 right-7" onClick={handleSelectClick}>
-                        <Selector options={dropdown} onSelect={(v) => v.value == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-" + id)}>
-                            <div className="border rounded-full size-9 flex justify-center items-center">
-                                <Icon className="size-6 text-white" name="ellipsis-vertical" />
-                            </div>
-                        </Selector>
+                        {!isFav &&
+                            <Selector options={dropdown} onSelect={(v) => v.value == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-" + id)}>
+                                <div className="border rounded-full size-9 flex justify-center items-center">
+                                    <Icon className="size-6 text-white" name="ellipsis-vertical" />
+                                </div>
+                            </Selector>}
                     </div>
                     <a href={`/save/${id}`} className="projects cursor-pointer">
                         <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
@@ -85,13 +86,13 @@ const Saved = ({
                             <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
                         </div>
                     </a>
-                    <div className="boards-info projects-num">{projectsNum} projects</div>
+                    <div className="boards-info projects-num">{totalProjects} projects</div>
                     <a href={`/save/${id}`}>
 
                         <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
 
                         <div className="boards-info projects-name flex">
-                            {title == "favorites" && <Icon name={"favorites"} />}
+                            {isFav && <Icon name={"favorites"} />}
                             {title}
                         </div>
                     </a>
@@ -131,7 +132,7 @@ const Saved = ({
                         <div className="boards-grid">
                             {
                                 getBoards_respond?.data?.map((feature, index) => (
-                                    <Boards key={index} data={feature} />
+                                    <Boards key={index} isFav={index == 0} data={feature} />
                                 ))
                             }
                         </div>

@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
-import { getAuthToken } from "../../util/auth";
+import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
+import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
 
 const Layout = ({
     children,
@@ -19,7 +20,8 @@ const Layout = ({
     getMyprofile,
     GetAllChats,
     GetNotifications,
-    login_respond
+    login_respond,
+    GetBoards
 
 }) => {
     const [isToggled, setToggled] = useState(1);
@@ -38,7 +40,8 @@ const Layout = ({
 
 
     useEffect(() => {
-        getMyprofile()
+        getMyprofile()              // create a day sessions
+        GetBoards({})
         GetAllChats()
         GetNotifications()
     }, [login_respond])
@@ -70,7 +73,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     getMyprofile,
     GetAllChats,
-    GetNotifications
+    GetNotifications,
+    GetBoards
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);
