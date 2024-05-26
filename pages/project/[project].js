@@ -53,21 +53,21 @@ const projects = ({
     const [love, setLove] = useState(false);
     const [isFave, seIsFav] = useState(false);
 
-    useEffect(() => {
-        if (projectId) {
-            GetProject(projectId);
-        }
-    }, [projectId]);
+     useEffect(() => {
+         if (projectId) {
+             GetProject(projectId);
+         }
+     }, [projectId]);
+
+     useEffect(() => {
+        GetProjects({ limit: "4" });
+    }, []);
 
     useEffect(() => {
         if (projectId && getBoards_respond) {
             setLove(isFav(projectId, getBoards_respond))
         }
     }, [projectId, getBoards_respond]);
-
-    useEffect(() => {
-        GetProjects({ limit: "4" });
-    }, []);
 
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
@@ -76,7 +76,8 @@ const projects = ({
     const loveToggleAction = () => {
         if (projectId && getBoards_respond.data) {
             if (love) {
-                DeleteProjectFromBoard(getBoards_respond.data[0]._id, projectId)
+                console.log(findProjectId(projectId,getBoards_respond.data[0]._id))
+                DeleteProjectFromBoard(getBoards_respond.data[0]._id, findProjectId(projectId,getBoards_respond.data[0]._id))
             }
             else {
                 AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
@@ -84,6 +85,34 @@ const projects = ({
             seIsFav(true)
         }
     };
+    
+    useEffect(() => {
+        if (addProjectToBoard_respond && !isFave) {
+            OpenPopUp('addProjectToBoard-popup')
+        }
+        else if (api.req == 'AddProjectToBoard' && isFave) {
+            setLove(true)
+        }
+        else if (api.req == 'DeleteProjectFromBoard' && isFave) {
+            setLove(false)
+        }
+        seIsFav(false)
+    }, [addProjectToBoard_respond, deleteProjectFromBoard_respond])
+
+
+    const findProjectId = (projectId, boardId) => {
+        for (const board of getBoards_respond.data) {
+            if (board._id === boardId) {
+                for (const project of board.projects) {
+                    if (project.project._id === projectId) {
+                        return project._id;
+                    }
+                }
+            }
+        }
+        return null; 
+      };
+
 
     const data = project ? ({
         _id: project._id,
@@ -152,20 +181,7 @@ const projects = ({
 
     }) : null
 
-    useEffect(() => {
-        if (addProjectToBoard_respond && !isFave) {
-            OpenPopUp('addProjectToBoard-popup')
-        }
-        else if (api.req == 'AddProjectToBoard' && isFave) {
-            setLove(true)
-        }
-        else if (api.req == 'DeleteProjectFromBoard' && isFave) {
-            setLove(false)
-        }
-        seIsFav(false)
-    }, [addProjectToBoard_respond, deleteProjectFromBoard_respond])
-
-
+  
     return (
         <>
             <Layout >

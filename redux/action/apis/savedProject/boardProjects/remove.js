@@ -5,7 +5,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const DeleteProjectFromBoard = (idBoard , idProject) => {
     const req = "DeleteProjectFromBoard"
     return async dispatch => {
-        dispatch({ type: Types.NONEPOPUP });
+        
         try {
             console.log(idBoard , idProject)
             const response = await mainApiInstance.delete(`/api/users/saved-projects/${idBoard}/project/${idProject}`);

@@ -9,7 +9,7 @@ export const AddProjectToBoard = ({ idboard, idproject }) => {
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
             return
           }
-        dispatch({ type: Types.NONEPOPUP });
+        
         try {
             const response = await mainApiInstance.post(`api/users/saved-projects/${idboard}/project/${idproject}`,);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });

@@ -14,7 +14,7 @@ import { UpdateTeamUser } from "../../redux/action/apis/teamproject/updatecreati
 import { ClosePopUp, OpenPopUp } from "../../util/util";
 import Popup from "../../components/elements/popup";
 import AppButton from "../../components/elements/button";
-
+import dateFormat from "dateformat";
 
 const TheTeam = ({
     GetTeamProject,
@@ -45,7 +45,7 @@ const TheTeam = ({
     }
     const handleUpdate = (alldata) => {
         console.log(teamId)
-        UpdateTeamUser(alldata , teamId)
+        UpdateTeamUser(alldata, teamId)
     }
 
     return (
@@ -77,7 +77,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
     const [categoryId, setCategoryId] = useState();
 
     const togglePage = (value) => {
-        
+
         if (typeof (value) == 'string')
             setCategoryId(value)
         else
@@ -96,7 +96,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
                     <Cover respond={respond} />
                     {data.map((section, index) => (
                         <div key={index}>
-                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate( { ...v, craetiveScope: section._id }) }    } />
+                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} />
                             {index !== data.length - 1 && <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>}
                         </div>
                     ))}
@@ -134,7 +134,7 @@ const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => 
 const Person = ({ person, onDelete, onUpdate }) => {
     const [hours, setHours] = useState();
     const [amount, setAmount] = useState();
-    
+
     const onCancel = () => {
         setHours("")
         setHours("")
@@ -147,7 +147,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
         { value: 'delete' },
         { value: 'Edit' },
     ];
-    
+
 
     return (
         <>
@@ -192,12 +192,61 @@ const Person = ({ person, onDelete, onUpdate }) => {
 
 const RightSide = ({ isSolid, onClick }) => (
     <div className="w-full max-w-[483px] h-body py-10">
-        <div className="flex gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
-            <div className="p-12">
+        <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
+            <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
                 <h2 className="opacity-80 text-2xl font-semibold capitalize">Project Details</h2>
+                <div className="w-full flex flex-col gap-8 h-full mt-9">
+                    <section>
+                        <h3 className="opacity-60 capitalize mb-4">project type</h3>
+                        <div className="border border-opacity-55 rounded-full w-min">
+                            <span className="text-opacity-85 text-lg px-3 py-2">
+                                videography
+                            </span>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 className="opacity-60 capitalize text-base mb-4">project details</h3>
+                        <span className="font-bold">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                        </span>
+                    </section>
+                    <section>
+                        <h3 className="opacity-60 capitalize mb-4">shooting days</h3>
+                        <span className="font-semibold">
+                            5 days
+                        </span>
+                    </section>
+                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                            <Icon className='text-primary' name={"calendar"} />
+                        </div>
+                        <div className="flex flex-col pl-5 w-full">
+                            <span className="font-normal text-base">{dateFormat(new Date(), 'd mmmm , yyyy')}</span>
+                            <span className="text-[#747688] text-xs">{dateFormat(new Date(), 'dddd , h:mm TT')}</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                            <Icon className='text-primary w-4' name={"location-dot"} />
+                        </div>
+                        <div className="flex flex-col pl-5 w-full">
+                            <span className="font-normal text-base">Gala Convention Center</span>
+                            <span className="text-[#747688] text-xs">36 Guild Street London, UK </span>
+                        </div>
+                    </div>
+                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                            <Icon className='text-primary w-4' name={"location-dot"} />
+                        </div>
+                        <div className="flex flex-col pl-5 w-full">
+                            <span className="font-normal text-base">alike media</span>
+                            <span className="text-[#747688] text-xs">240 files</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             {!isSolid && (
-                <div className="border-t absolute flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
+                <div className="border-t flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
                     <div className="flex justify-between w-full">
                         <span className="font-bold">Total Amount</span>
                         <span className="font-bold">$0.0</span>

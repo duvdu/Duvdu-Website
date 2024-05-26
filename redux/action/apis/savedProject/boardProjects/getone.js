@@ -5,7 +5,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetSavedBoard = ({ id = "", page="", limit="",search="" }) => {
     const req = "GetSavedBoard"
     return async dispatch => {
-        dispatch({ type: Types.NONEPOPUP });
+        
         try {
             const params = {};
             if (search) params.search = search;

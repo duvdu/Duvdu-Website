@@ -18,14 +18,14 @@ function AddToSaved({
     const [currentStep, setCurrentStep] = useState('step1');
     const router = useRouter();
     const { project: projectId } = router.query;
-
-
     const projects = getBoards_respond?.data || []
+
+
     
     useEffect(() => {
         GetBoards()
         AddProjectToBoard({idboard: -1})
-    }, [getBoards_respond])
+    }, [AddProjectToBoard.message])
 
     const handleNextStep = (id) => {
         AddProjectToBoard({ idboard: id, idproject: projectId })

@@ -5,7 +5,7 @@ import { mainApiInstance } from '../axiosInstances'
 export const GetTeamProjects = () => {
     const req = "GetTeamProjects"
     return async dispatch => {
-        dispatch({ type: Types.NONEPOPUP });
+        
         try {
             const response = await mainApiInstance.get(`api/team`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });

@@ -12,6 +12,7 @@ import { logout, verify } from "../../redux/action/auth";
 import * as Types from "../../redux/constants/actionTypes";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
+import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
 import Popup from "../elements/popup";
 import Verify_acount from "../popsup/verify_account_now";
 import Chat from "../elements/chat";
@@ -28,6 +29,7 @@ const Header = ({
     SetheaderPopUp,
     getheaderpopup,
     toggleDarkMode,
+    MarkNotificationsAsRead,
     user,
     verify }) => {
 
@@ -41,8 +43,13 @@ const Header = ({
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
 
-    // if (user)
-    //     verify(api.data.data.isVerified)
+    useEffect(() => {
+        if(getheaderpopup == Types.SHOWNOTOFICATION){
+
+        MarkNotificationsAsRead()
+    }
+    }, [getheaderpopup]);
+
 
 
     useEffect(() => {
@@ -110,7 +117,9 @@ const Header = ({
             setrrorReq(api.req)
         }
     }, [api.error && !exclude_error(api.req)]);
-
+    const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
+    const totalUnwatchedNotification = api?.GetNotifications?.data?.filter(message => !message.watched).length;
+    const totalNews = totalUnreadMessages + totalUnwatchedNotification
     return (
         <>
             <Chat />
@@ -203,8 +212,13 @@ const Header = ({
                                         islogin &&
                                         <div className="header-action-2 flex items-center ">
                                             <div className="header-action-icon-2 z-10" >
-                                                <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)}>
-                                                    {/* <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">3</span> */}
+                                                <div className="icon-holder cursor-pointer" onClick={() => 
+                                                    SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)
+                                                
+                                                }>
+                                                    {totalNews > 0 &&
+                                                        <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{totalNews}</span>
+                                                    }
                                                     <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                 </div>
                                                 <MessageAndNotofication />
@@ -293,6 +307,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     toggleDarkMode,
     SetheaderPopUp,
+    MarkNotificationsAsRead,
     verify
 };
 

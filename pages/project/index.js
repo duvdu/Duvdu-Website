@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
-import { fetchProjects } from "../../redux/action/project";
 
 import ProjectCard from "../../components/elements/project-card";
 import Filter from "../../components/elements/filter";
@@ -11,22 +10,21 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetProjects } from "../../redux/action/apis/cycles/projects/get";
 
-
 const Projects = ({ projects, GetProjects, api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
+    const projectsList = projects?.data
+    const pagganation = projects?.pagination
     const page = 1;
     const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
-    
     const targetRef = useRef(null);
-    const projectsList = projects?.data
-    const pagganation = projects?.pagination
+
     
     useEffect(() => {
-        if (limit && page)
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
-    }, [limit, page])
+        if (limit)
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page })
+    }, [limit,searchTerm])
 
 
     useEffect(() => {
@@ -46,6 +44,7 @@ const Projects = ({ projects, GetProjects, api }) => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [page, pagganation?.totalPages]);
+
 
 
 

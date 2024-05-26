@@ -5,7 +5,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const DeleteSavedBoard = (id) => {
     const req = "DeleteSavedBoard"
     return async dispatch => {
-        dispatch({ type: Types.NONEPOPUP });
+        
         try {
             const response = await mainApiInstance.delete(`api/users/saved-projects/${id}`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });

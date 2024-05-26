@@ -61,7 +61,7 @@ const Search = () => {
                     <ul className="gap-1">
                         {searchHistory.map((item, index) => (
                             <li className="py-1 px-2 border border-[#0000004D] dark:border-[#FFFFFF4D] rounded-full" key={index}>
-                                <Link href={`?search=${item}`}>
+                                <Link href={`/project?search=${item}`}>
                                     <div className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</div>
                                 </Link>
                             </li>

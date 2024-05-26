@@ -2,12 +2,12 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const GetBoards = () => {
-    const req = "GetBoards"
+export const MarkNotificationsAsRead = () => {
+    const req = "notificationsMarkAsRead"
     return async dispatch => {
         
         try {
-            const response = await mainApiInstance.get(`api/users/saved-projects`);
+            const response = await mainApiInstance.patch(`api/notification`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
         } catch (error) {
             // console.log("error " , JSON.stringify(error.response))

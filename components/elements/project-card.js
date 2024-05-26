@@ -28,16 +28,15 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
       }, 10)
     }
   }, [videoRef.current?.duration == NaN]);
-
+// console.log(getBoards_respond)
   const loveToggleAction = () => {
-    if (projectId && getBoards_respond.data) {
+    if (cardData._id && getBoards_respond.data) {
         if (love) {
-            DeleteProjectFromBoard(getBoards_respond.data[0]._id, projectId)
+            DeleteProjectFromBoard(getBoards_respond.data[0]._id, cardData._id)
         }
         else {
-            AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
+            AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: cardData._id })
         }
-        seIsFav(true)
     }
 };
 
@@ -129,7 +128,7 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
               </Swiper>
             }
           </a>
-          {cardData.showLove && islogin &&
+          {islogin &&
             <div onClick={loveToggleAction} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
             </div>

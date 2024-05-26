@@ -18,6 +18,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     const [swiper, setSwiper] = useState(null);
     const [localerror, setLocalerror] = useState(true);
     const [location, setLocation] = useState(null);
+    const [swiperError, setSwiperError] = useState(null);
 
     const imageSources = [
         {
@@ -57,9 +58,6 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
 
     useEffect(() => {
         
-        // if (!auth.username && !auth.login && router.pathname == "/forget_password") {
-            
-        // }
         if (auth.username && auth.login && auth.user.isVerified !== false) {
             router.push(`/`);
         }

@@ -8,6 +8,8 @@ import dateFormat from "dateformat";
 import ChatComponent from './recording';
 import AudioRecorder from './recording';
 import Waveform from './audioRecordWave';
+import Link from 'next/link';
+import PopUpImage from './popUpImage';
 
 const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) => {
     const chatRef = useRef(null);
@@ -124,7 +126,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         if (attachments)
             for (let i = 0; i < attachments.length; i++) {
                 const file = attachments[i];
-                console.log(file.file)
                 data.append(`attachments`, file.file);
             }
 
@@ -265,7 +266,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                                 <label htmlFor="attachment-upload" >
                                     <Icon className="cursor-pointer" name={'attachment'} />
                                 </label>
-                                <input  onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
+                                <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
                                 <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' onClick={swapRecording}>
                                     {!isRecording ?
                                         <Icon name={'microphone'} /> :
@@ -289,7 +290,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 };
 
 const Me = ({ message }) => {
-    console.log(message)
     return (
         (message?.media[0]?.type === "audio/wav") ?
             <div className="ml-20 mt-2">
@@ -310,13 +310,21 @@ const Me = ({ message }) => {
                         {
                             message.media?.length > 0 &&
                             message.media?.map((media, index) => {
-                                if (media.type === "image/png") {
+                                if (media.type.includes("image")) {
                                     return (
-                                        <img key={`image-${index}`} src={media.url} className="h-28" alt="media" />
+                                        <PopUpImage>
+                                        <img key={`image-${index}`} src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+media.url}  alt="media" className='cursor-pointer' />
+                                        </PopUpImage>
                                     );
                                 } else {
+                                    console.log(media.type)
                                     return (
-                                        <Icon key={`file-${index}`} name="file" className="size-10" />
+                                        <a href={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+media.url} key={`file-${index}`} target="_blank" >
+                                            <div className='relative size-14 flex justify-center items-center cursor-pointer'>
+                                            <Icon name="file" className="absolute size-full opacity-50" />
+                                            <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
+                                            </div>
+                                        </a>
                                     );
                                 }
                             })}
@@ -332,7 +340,7 @@ const Me = ({ message }) => {
 };
 
 const Other = ({ message }) => {
-    
+
     return ((message?.media[0]?.type === "audio/wav") ?
         <div className="ml-20 mt-2">
             <audio controls controlsList="nodownload">

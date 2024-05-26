@@ -5,7 +5,6 @@ import { mainApiInstance } from '../axiosInstances'
 export const GetTeamProject = ({ id, page="", limit="" }) => {
     const req = "GetTeamProject"
     return async dispatch => {
-        dispatch({ type: Types.NONEPOPUP });
         try {
             
             const queryString = new URLSearchParams({ page: page, limit: limit }).toString();

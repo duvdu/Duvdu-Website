@@ -21,7 +21,8 @@ const Layout = ({
     GetAllChats,
     GetNotifications,
     login_respond,
-    GetBoards
+    GetBoards,
+    getMyprofile_respond
 
 }) => {
     const [isToggled, setToggled] = useState(1);
@@ -40,11 +41,17 @@ const Layout = ({
 
 
     useEffect(() => {
-        getMyprofile()              // create a day sessions
-        GetBoards({})
-        GetAllChats()
-        GetNotifications()
+        getMyprofile()
     }, [login_respond])
+
+    useEffect(() => {
+        if (getMyprofile_respond) {
+            GetBoards({})
+            GetAllChats()
+            GetNotifications()
+        }
+    }, [getMyprofile_respond])
+
     return (
         <>
             <Head>
@@ -68,6 +75,7 @@ const Layout = ({
 };
 const mapStateToProps = (state) => ({
     login_respond: state.api.login,
+    getMyprofile_respond: state.api.getMyprofile
 });
 
 const mapDispatchToProps = {
