@@ -47,7 +47,7 @@ const TheTeam = ({
         console.log(teamId)
         UpdateTeamUser(alldata, teamId)
     }
-
+    console.log(get_respond)
     return (
         <Layout shortheader={true}>
             <section className="container">
@@ -55,14 +55,14 @@ const TheTeam = ({
                 {state === 1 && (
                     <div className="flex flex-col lg:flex-row gap-7 items-center">
                         <LeftSide respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                        <RightSide onClick={() => setState(1)} />
+                        <RightSide data={get_respond?.data || {}} onClick={() => setState(1)} />
                     </div>
                 )}
                 {state === 2 && (
                     <div className="flex flex-col lg:flex-row gap-7">
                         <Cover />
                         <LeftSide isSolid={true} respond={get_respond} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                        <RightSide isSolid={true} />
+                        <RightSide data={get_respond?.data || {}} isSolid={true} />
                     </div>
                 )}
             </section>
@@ -190,13 +190,13 @@ const Person = ({ person, onDelete, onUpdate }) => {
     )
 };
 
-const RightSide = ({ isSolid, onClick }) => (
+const RightSide = ({ isSolid, data, onClick }) => (
     <div className="w-full max-w-[483px] h-body py-10">
         <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
             <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
                 <h2 className="opacity-80 text-2xl font-semibold capitalize">Project Details</h2>
                 <div className="w-full flex flex-col gap-8 h-full mt-9">
-                    <section>
+                    <section className="hidden">
                         <h3 className="opacity-60 capitalize mb-4">project type</h3>
                         <div className="border border-opacity-55 rounded-full w-min">
                             <span className="text-opacity-85 text-lg px-3 py-2">
@@ -207,13 +207,13 @@ const RightSide = ({ isSolid, onClick }) => (
                     <section>
                         <h3 className="opacity-60 capitalize text-base mb-4">project details</h3>
                         <span className="font-bold">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            {data.desc}
                         </span>
                     </section>
                     <section>
                         <h3 className="opacity-60 capitalize mb-4">shooting days</h3>
                         <span className="font-semibold">
-                            5 days
+                            {data.shootingDays} days
                         </span>
                     </section>
                     <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
@@ -221,8 +221,8 @@ const RightSide = ({ isSolid, onClick }) => (
                             <Icon className='text-primary' name={"calendar"} />
                         </div>
                         <div className="flex flex-col pl-5 w-full">
-                            <span className="font-normal text-base">{dateFormat(new Date(), 'd mmmm , yyyy')}</span>
-                            <span className="text-[#747688] text-xs">{dateFormat(new Date(), 'dddd , h:mm TT')}</span>
+                            <span className="font-normal text-base">{dateFormat(data.startDate, 'd mmmm , yyyy')}</span>
+                            <span className="text-[#747688] text-xs">{dateFormat(data.startDate, 'dddd , h:mm TT')}</span>
                         </div>
                     </div>
                     <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
@@ -230,17 +230,17 @@ const RightSide = ({ isSolid, onClick }) => (
                             <Icon className='text-primary w-4' name={"location-dot"} />
                         </div>
                         <div className="flex flex-col pl-5 w-full">
-                            <span className="font-normal text-base">Gala Convention Center</span>
-                            <span className="text-[#747688] text-xs">36 Guild Street London, UK </span>
+                            <span className="font-normal text-base">{data.address}</span>
+                            {/* <span className="text-[#747688] text-xs">36 Guild Street London, UK </span> */}
                         </div>
                     </div>
                     <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                            <Icon className='text-primary w-4' name={"location-dot"} />
+                            <Icon className='text-primary w-4' name={"image"} />
                         </div>
                         <div className="flex flex-col pl-5 w-full">
                             <span className="font-normal text-base">alike media</span>
-                            <span className="text-[#747688] text-xs">240 files</span>
+                            <span className="text-[#747688] text-xs">{data.attachments?.length} files</span>
                         </div>
                     </div>
                 </div>

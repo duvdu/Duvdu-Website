@@ -23,7 +23,7 @@ function AddToSaved({
 
     
     useEffect(() => {
-        GetBoards()
+        // GetBoards()
         AddProjectToBoard({idboard: -1})
     }, [AddProjectToBoard.message])
 

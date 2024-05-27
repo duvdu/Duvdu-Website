@@ -50,7 +50,7 @@ const Saved = ({
 }) => {
     const Boards = ({ data, isFav }) => {
         if (!data) return
-        console.log(data)
+        
         const { totalProjects, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
         const img2 = data?.projects[1]?.project?.cover
@@ -107,7 +107,7 @@ const Saved = ({
         // console.log(getBoards_respond)
     }, [getBoards_respond])
     useEffect(() => {
-        GetBoards()
+        // GetBoards()
         ClosePopUp("create-new-board")
     }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])
 

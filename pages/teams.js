@@ -27,7 +27,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
     const handleSelectClick = (event) => {
         event.stopPropagation();
     };
-    console.log(data)
+    
     const ioconstyle = "rounded-full -translate-y-1/2 translate-x-1/2 border p-3 text-2xl size-11"
 
     return (

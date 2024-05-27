@@ -9,6 +9,7 @@ import UsersToAdd from "../components/layout/team/usersToAdd";
 import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
 import Successfully_posting from "../components/popsup/post_successfully_posting";
 import { useRouter } from "next/router";
+import dateFormat from "dateformat";
 
 
 const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectState }) => {
@@ -98,7 +99,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
 
         for (let i = 0; i < formData?._attachments?.length; i++) {
             const file = formData?._attachments[i];
-            console.log(file.file)
+
             form.append(`attachments`, file.file);
         }
         form.append('cover', formData?.cover)
@@ -129,7 +130,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
         };
 
         const data = respond?.creatives || [];
-        
+
 
 
         return (
@@ -194,10 +195,60 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     }
 
     const RightSide = ({ isSolid, onClick }) => (
+
         <div className="w-full max-w-[483px] h-body py-10">
-            <div className="flex gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
-                <div className="p-12">
+            <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
+                <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
                     <h2 className="opacity-80 text-2xl font-semibold capitalize">Project Details</h2>
+                    <div className="w-full flex flex-col gap-8 h-full mt-9">
+                        <section className="hidden">
+                            <h3 className="opacity-60 capitalize mb-4">project type</h3>
+                            <div className="border border-opacity-55 rounded-full w-min">
+                                <span className="text-opacity-85 text-lg px-3 py-2">
+                                    videography
+                                </span>
+                            </div>
+                        </section>
+                        <section>
+                            <h3 className="opacity-60 capitalize text-base mb-4">project details</h3>
+                            <span className="font-bold">
+                                {formData.desc}
+                            </span>
+                        </section>
+                        <section>
+                            <h3 className="opacity-60 capitalize mb-4">shooting days</h3>
+                            <span className="font-semibold">
+                                {formData.shootingDays} days
+                            </span>
+                        </section>
+                        <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                <Icon className='text-primary' name={"calendar"} />
+                            </div>
+                            <div className="flex flex-col pl-5 w-full">
+                                <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
+                                <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
+                            </div>
+                        </div>
+                        <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                <Icon className='text-primary w-4' name={"location-dot"} />
+                            </div>
+                            <div className="flex flex-col pl-5 w-full">
+                                <span className="font-normal text-base">{formData.address}</span>
+                                {/* <span className="text-[#747688] text-xs">36 Guild Street London, UK </span> */}
+                            </div>
+                        </div>
+                        <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                <Icon className='text-primary w-4' name={"image"} />
+                            </div>
+                            <div className="flex flex-col pl-5 w-full">
+                                <span className="font-normal text-base">alike media</span>
+                                <span className="text-[#747688] text-xs">{formData._attachments?.length} files</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {!isSolid && (
                     <div className="border-t absolute flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
@@ -212,7 +263,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
         </div>
     );
 
-    
+
     const AddCreative = ({ onClick }) => (
         <div onClick={onClick} className="flex items-center rounded-full border border-primary p-1 w-min cursor-pointer">
             <div className="size-11 flex items-center justify-center border rounded-full border-primary">
@@ -223,7 +274,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             </div>
         </div>
     );
-    console.log(create_respond)
+    
     const OnSucess = (value) => {
         router.push({ pathname: "/team/" + create_respond.data._id });
     }
@@ -232,6 +283,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             OpenPopUp("successfully-create-team")
         }
     }, [create_respond])
+
     return (
         <Layout shortheader={true}>
             <Successfully_posting id="successfully-create-team" onCancel={OnSucess} message="Create Team" />
@@ -240,7 +292,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
 
                 <div className="flex flex-col lg:flex-row gap-7 items-center">
                     <LeftSide respond={creatives} onAddOne={(v) => updateTeamProject(v)} />
-                    <RightSide onClick={onsubmit} />
+                    <RightSide data={{}} onClick={onsubmit} />
                 </div>
 
             </section>
