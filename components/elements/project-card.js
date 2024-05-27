@@ -7,6 +7,7 @@ import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
+import Link from 'next/link';
 
 import 'swiper/swiper-bundle.css';
 
@@ -80,12 +81,12 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           className='project'>
-          <a href={`/${type}/${cardData._id}`}>
+          <>
             {
               false &&
                 cardData.backgroundImages.length == 1 &&
                 cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
-                <>
+                <Link href={`/${type}/${cardData._id}`}>
                   <video
                     className='cardvideo relative'
                     ref={videoRef}
@@ -99,15 +100,17 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
                       {convertDuration(Duration * 1000)}
                     </span>
                   </div>
-                </>
+                </Link>
               ) : (
-                // cardData.cover.length == 1 &&
-                <img className='cardimg' src={cardData.cover} alt="project" />
+                <Link href={`/${type}/${cardData._id}`}>
+                  <img className='cardimg' src={cardData.cover} alt="project" />
+                </Link>
               )
             }
             {
               false &&
               cardData.backgroundImages.length > 1 &&
+              <Link href={`/${type}/${cardData._id}`}>
               <Swiper
                 dir='ltr'
                 className='cardimg'
@@ -126,8 +129,9 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
                   </SwiperSlide>
                 ))}
               </Swiper>
+              </Link>
             }
-          </a>
+          </>
           {islogin &&
             <div onClick={loveToggleAction} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
