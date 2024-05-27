@@ -16,6 +16,7 @@ import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notifi
 import Popup from "../elements/popup";
 import Verify_acount from "../popsup/verify_account_now";
 import Chat from "../elements/chat";
+import Link from "next/link";
 
 
 // toggleDarkMode
@@ -161,16 +162,13 @@ const Header = ({
                         <div className="header-wrap">
 
                             <div className="logo logo-width-1 mr-12">
-                                {
-                                    <a href="/">
+                                    <Link href="/">
                                         <img
                                             src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
                                             className="min-h-9"
                                             alt="main logo"
                                         />
-                                    </a>
-
-                                }
+                                    </Link>
                             </div>
 
                             <div className="header-right">

@@ -32,6 +32,7 @@ import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boa
 
 const projects = ({
     api,
+    auth,
     GetProjects,
     projects_respond,
     GetProject,
@@ -181,7 +182,6 @@ const projects = ({
 
     }) : null
 
-  
     return (
         <>
             <Layout >
@@ -214,7 +214,7 @@ const projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} isLove={love} loveToggleAction={loveToggleAction} />}
+                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} isLove={love} loveToggleAction={loveToggleAction} auth={auth}/>}
                         <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>
                 }
@@ -454,7 +454,7 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, isLove }) => {
+const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, isLove,auth }) => {
 
     const loveIconName = isLove ? 'fas' : 'far'
     const online = data.user.isOnline
@@ -473,7 +473,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
 
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                 <div className="sm:container flex justify-between items-end">
-
+                {auth.login ?
                     <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
                         <div className="relative">
                             <img className="h-full aspect-square rounded-full" src={data.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" />
@@ -492,19 +492,22 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
                             <div />
                             {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
                         </div>
-                    </div> : <div className="w-1" />
+                    </div> : <div className="w-1" />}
 
                     <Controller className={"mr-auto ml-auto lg:m-0 "}>
                         <div className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                             <Icon name={'share'} />
                         </div>
+                        {auth.login &&
                         <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
                             <Icon className="text-white text-xl" name={'plus'} />
-                        </div>
+                        </div>}
+                        {auth.login &&
                         <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
                             <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
-                        </div>
-                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
+                        </div>}
+                        {auth.login &&
+                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />}
                     </Controller>
                 </div>
             </div>
@@ -524,7 +527,8 @@ const mapStateToProps = (state) => ({
     projectFilters: state.projectFilters,
     chat_respond: state.api.GetAllMessageInChat,
     getBoards_respond: state.api.GetBoards,
-    api: state.api
+    auth: state.auth,
+    api: state.api,
 });
 
 const mapDidpatchToProps = {

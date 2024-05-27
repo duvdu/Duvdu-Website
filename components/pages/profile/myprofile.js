@@ -14,6 +14,7 @@ import { updateProfile } from "../../../redux/action/apis/auth/profile/updatepro
 import AddStudioBooking from '../../../components/drawer/create/studio-booking'
 import AddCopyrights from '../../../components/drawer/create/copy-rights'
 import AddPost from '../../../components/drawer/create/addproject'
+import AddProducer from '../../../components/drawer/create/producer'
 import EquipmentRental from '../../../components/drawer/create/Equipment-rental';
 import PostPopup from '../../../components/popsup/create/assets/chooseCategory';
 import SelectType from '../../../components/popsup/create/assets/selectType';
@@ -112,8 +113,9 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                 case 'copyrights-permits':
                     return <AddCopyrights />
                     break;
-                case 'executive-producing':
-                    removeQueryParameter()
+                case 'add-producer':
+                    return <AddProducer />
+                    
                     break;
                 case 'portfolio-post':
                     return <AddPost />

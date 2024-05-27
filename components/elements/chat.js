@@ -227,15 +227,36 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                     </div>
                     {
                         attachments &&
-                        <div className='flex flex-wrap gap-1 p-2 relative'>
-                            {
-                                attachments?.map((file, index) =>
-                                    file.fileType.includes('image') ? <Icon key={index} name={'image'} className="size-10 text-gray-400" /> : <Icon key={index} name={'file'} className="size-10" />
-                                )
-                            }
-                            <div onClick={clearattachments}>
-                                <Icon name={'xmark'} className='text-xl opacity-50 w-3 absolute right-4 top-3 cursor-pointer' />
-                            </div>
+                        <div className='flex flex-wrap gap-1 p-2 relative max-h-56 overflow-y-scroll'>
+                            {attachments?.map((file, index) => {
+                                switch (true) {
+                                    case file.fileType.includes('image'):
+                                        return (
+                                            <PopUpImage key={index}>
+                                                <img src={URL.createObjectURL(file.file)} className="size-48 text-gray-400" />
+                                            </PopUpImage>
+                                        );
+
+                                    case file.fileType.includes('video'):
+                                        return (
+                                            <div key={index} className="size-48 text-gray-400">
+                                                <video controls>
+                                                    <source src={URL.createObjectURL(file.file)} type={file.fileType} />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        );
+
+                                    default:
+                                        return (
+                                            <Icon key={index} name={'file'} className="size-10" />
+                                        );
+                                }
+                            })}
+                            <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red-700 rounded-full size-6 flex justify-center items-center" onClick={clearattachments}>
+                                <Icon className='p-1' name={"xmark"} />
+                            </button>
+
                         </div>
                     }
 
@@ -270,7 +291,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                                 <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' onClick={swapRecording}>
                                     {!isRecording ?
                                         <Icon name={'microphone'} /> :
-                                        <Icon className='size-5 text-white' name={'stop'} />}
+                                        <Icon className='size-5 text-white' name={'stop'} />
+                                    }
                                 </div>
                             </>
                         }
@@ -312,22 +334,29 @@ const Me = ({ message }) => {
                             message.media?.map((media, index) => {
                                 if (media.type.includes("image")) {
                                     return (
-                                        <PopUpImage>
-                                        <img key={`image-${index}`} src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+media.url}  alt="media" className='cursor-pointer' />
+                                        <PopUpImage key={`image-${index}`}>
+                                            <img src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} alt="media" className='cursor-pointer' />
                                         </PopUpImage>
                                     );
-                                } else {
-                                    console.log(media.type)
+                                } else if (media.type.includes("video")) {
                                     return (
-                                        <a href={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+media.url} key={`file-${index}`} target="_blank" >
+                                        <video key={`video-${index}`} controls className='size-48'>
+                                            <source src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} type={media.type} />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    );
+                                } else {
+                                    return (
+                                        <a href={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
                                             <div className='relative size-14 flex justify-center items-center cursor-pointer'>
-                                            <Icon name="file" className="absolute size-full opacity-50" />
-                                            <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
+                                                <Icon name="file" className="absolute size-full opacity-50" />
+                                                <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
                                             </div>
                                         </a>
                                     );
                                 }
-                            })}
+                            })
+                        }
                     </div>
                     <div className="w-full text-end">
                         <span className="text-white text-xs">
