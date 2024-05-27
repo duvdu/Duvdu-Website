@@ -341,7 +341,7 @@ export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = ''
 
 export const isFav = (idproject, FavList) => {
   // Check if FavList has at least one element
-  FavList = FavList.data
+  FavList = FavList?.data||[]
   if (FavList.length === 0) return false;
   // Access the first board in FavList
   const firstBoard = FavList[0];

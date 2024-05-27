@@ -9,14 +9,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
 
 import 'swiper/swiper-bundle.css';
+import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
+import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
 
-const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_respond, islogin }) => {
+const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_respond,addProjectToBoard_respond, AddProjectToBoard,DeleteProjectFromBoard,islogin }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
-  const loveIconName = love ? 'fas' : 'far'
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
   const [love, setLove] = useState(false);
+  const loveIconName = love ? 'fas' : 'far'
 
   useEffect(() => {
     if (videoRef.current) {
@@ -28,14 +30,20 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
       }, 10)
     }
   }, [videoRef.current?.duration == NaN]);
-// console.log(getBoards_respond)
-  const loveToggleAction = () => {
+  useEffect(() => {
+    if (addProjectToBoard_respond) {
+      
+    }
+  }, [addProjectToBoard_respond]);
+
+const loveToggleAction = () => {
+    console.log(getBoards_respond)
     if (cardData._id && getBoards_respond.data) {
         if (love) {
             DeleteProjectFromBoard(getBoards_respond.data[0]._id, cardData._id)
         }
         else {
-            AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: cardData._id })
+          AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: cardData._id })
         }
     }
 };
@@ -66,11 +74,12 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
 
   };
 
+  console.log(loveIconName)
   useEffect(() => {
-    if (cardData._id && getBoards_respond) {
+    if (cardData._id) {
       setLove(isFav(cardData._id, getBoards_respond))
     }
-  }, [cardData._id, getBoards_respond]);
+  }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
 
 
   return (
@@ -165,11 +174,13 @@ const mapStateToProps = (state) => ({
   api: state.api,
   islogin: state.auth.login,
   getBoards_respond: state.api.GetBoards,
+  addProjectToBoard_respond: state.api.AddProjectToBoard,
 
 });
 
 const mapDispatchToProps = {
-
+  AddProjectToBoard,
+  DeleteProjectFromBoard
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);
