@@ -2,10 +2,10 @@ import React, { useRef, useEffect, useState } from 'react';
 import Layout from "../../components/layout/Layout";
 import Card2 from "../../components/elements/permits-card";
 import Filter from "../../components/elements/filter";
-import Drawer from "../../components/drawer/book/permits";
+import Drawer from "../../components/drawer/book/producer";
 import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
-import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
+import { GetProducer } from '../../redux/action/apis/cycles/producer/get';
 import { calculateRating } from '../../util/util';
 
 
@@ -24,7 +24,7 @@ console.log(data.user.profileImage)
     };
 };
 
-const Permit = ({ GetCopyrights, respond }) => {
+const Producers = ({ GetProducer, respond }) => {
     const showLimit = 24;
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,7 @@ const Permit = ({ GetCopyrights, respond }) => {
     const [permits, setPermits] = useState([]);
 
     useEffect(() => {
-        GetCopyrights({})
+        GetProducer({})
     }, [])
     
     useEffect(() => {
@@ -140,10 +140,10 @@ const Permit = ({ GetCopyrights, respond }) => {
 
 const mapStateToProps = (state) => ({
     api: state.api,
-    respond: state.api.GetCopyrights,
+    respond: state.api.GetProducer,
 });
 
 const mapDispatchToProps = {
-    GetCopyrights
+    GetProducer
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Permit);
+export default connect(mapStateToProps, mapDispatchToProps)(Producers);

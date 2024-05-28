@@ -7,29 +7,7 @@ import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetStudios } from '../../redux/action/apis/cycles/studio/get';
 import { useRouter } from 'next/router';
-
-const convertDataFormat = (data) => {
-
-    return {
-        _id: data._id,
-        img: data.user.profileImage ? (data.user.profileImage) : process.env.DEFULT_PROFILE_PATH,  // Default image if null
-        name: data.user.name || "NONE",  // Default name if not provided
-        location: data.address || "NONE",  // Default location if not provided
-        rank: "----",  // Assuming static value for demonstration
-        projects: data.user.acceptedProjectsCounter || 0,  // Default projects count if not provided
-        rating: calculateRating(data.rate),  // Calculate rating based on available data
-        pricing: data.price || 170,  // Default pricing if not provided
-        duration: parseInt(data.duration) || 0  // Parse and default duration if not provided
-    };
-};
-const calculateRating = (rate) => {
-    if (!rate) return 0
-    if (rate.ratersCounter > 0) {
-        return rate.totalRates / rate.ratersCounter;
-    }
-    return 0;
-};
-
+import { calculateRating } from '../../util/util';
 
 const Studios = ({ GetStudio, respond,api }) => {
     const Router = useRouter();

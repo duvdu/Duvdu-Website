@@ -362,3 +362,11 @@ export const isProjectInObject = (data, projectId) => {
   }
   return true;
 }
+
+export const calculateRating = (rate) => {
+  if (!rate) return 0
+  if (rate.ratersCounter > 0) {
+      return rate.totalRates / rate.ratersCounter;
+  }
+  return 0;
+};
