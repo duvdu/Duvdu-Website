@@ -160,12 +160,12 @@ const ProjectCard = ({
 
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <a href={`/creative/${cardData?.user?.username}`} className='cursor-pointer'>
+            <Link href={`/creative/${cardData?.user?.username}`} className='cursor-pointer'>
               <img src={cardData?.user?.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + cardData?.user?.profileImage : process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
-            </a>
-            <a href={`/creative/${cardData?.user?.username}`} className='cursor-pointer' >
+            </Link>
+            <Link href={`/creative/${cardData?.user?.username}`} className='cursor-pointer' >
               <span className='text-sm font-semibold'>{cardData?.user?.name || ''}</span>
-            </a>
+            </Link>
           </div>
           <div className='flex items-center gap-2'>
             <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>

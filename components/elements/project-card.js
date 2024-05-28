@@ -7,11 +7,11 @@ import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
-import Link from 'next/link';
 
 import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
 import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
+import Link from 'next/link';
 
 const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_respond,addProjectToBoard_respond, AddProjectToBoard,DeleteProjectFromBoard,islogin }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
@@ -155,12 +155,12 @@ const loveToggleAction = () => {
         </div>
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer'>
+            <Link href={`/creative/${cardData.user.username}`} className='cursor-pointer'>
               <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
-            </a>
-            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer' >
+            </Link>
+            <Link href={`/creative/${cardData.user.username}`} className='cursor-pointer' >
               <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
-            </a>
+            </Link>
           </div>
           <div className='flex items-center gap-2'>
             <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
