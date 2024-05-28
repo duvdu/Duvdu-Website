@@ -123,10 +123,12 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                             </div>
                             <div className="lg:w-7/12 xl:w-7/12 ">
                                 <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center rounded-lg h-auto sm:h-full">
-                                    <a href="/" className="as-Guest flex items-center">
-                                        Continue as a Guest
-                                        <Icon name="arrow-right-long" className="ml-3 text-xl w-6 text-primary" />
-                                    </a>
+                                    <Link href="/" className="as-Guest flex items-center">
+                                        <span>
+                                            Continue as a Guest
+                                            <Icon name="arrow-right-long" className="ml-3 text-xl w-6 text-primary" />
+                                        </span>
+                                    </Link>
                                     <div className="size-full max-w-[650px]">
                                         <div className="h-full scroll-w-0 overflow-y-scroll flex flex-col justify-start">
                                             <div className="h-full flex flex-col justify-between px-5 md:px-28">

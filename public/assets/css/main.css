@@ -673,16 +673,17 @@ table p {
   margin-right: 25px;
 }
 
-.header-tabs a {
+.header-tabs .header-link {
   font-size: 14px;
   display: flex;
   align-items: center;
 }
 
-.header-tabs a span {
+.header-tabs .header-link span {
   color: var(--header-tab);
   font-weight: 700;
   text-transform: capitalize;
+  cursor:pointer;
 }
 
 

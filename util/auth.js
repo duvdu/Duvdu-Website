@@ -14,7 +14,7 @@ export const removeAuthToken = () => {
   Cookies.remove(AUTH_TOKEN_KEY);
 };
 
-export function checkHasAuthToken() {
+export function m() {
   const token = Cookies.get(AUTH_TOKEN_KEY);
   if (!token) return false;
   return true;

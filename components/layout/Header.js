@@ -161,11 +161,11 @@ const Header = ({
                     <div className="container">
                         <div className="header-wrap">
 
-                            <div className="logo logo-width-1 mr-12">
+                            <div className="logo logo-width-1 mr-12 cursor-pointer">
                                     <Link href="/">
                                         <img
                                             src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                            className="min-h-9"
+                                            className="min-h-9 cursor-pointer"
                                             alt="main logo"
                                         />
                                     </Link>
@@ -175,28 +175,33 @@ const Header = ({
                                 {fromlayout.showTabs && islogin &&
                                     <div className="header-tabs">
 
-                                        <a href="/dashboard">
-                                            <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
-                                            <span className="text-nowrap">
-                                                {t('dashboard')}
-                                            </span>
-                                        </a>
+                                        <Link href="/dashboard">
+                                            <div className="header-link">
+                                                <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                                <span className="text-nowrap">
+                                                    {t('dashboard')}
+                                                </span>
+                                            </div>
+                                        </Link>
 
 
-                                        <a href="/contracts">
-                                            <Icon name={"contracts"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
-                                            <span>
-                                                {t('contracts')}
-                                            </span>
-                                        </a>
+                                        <Link href="/contracts">
+                                            <div className="header-link">
+                                                <Icon name={"contracts"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                                <span>
+                                                    {t('contracts')}
+                                                </span>
+                                            </div>
+                                        </Link>
 
-                                        <a href="/teams" className="capitalize whitespace-nowrap">
-                                            <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
-                                            <span>
-                                                {t('team projects')}
-
-                                            </span>
-                                        </a>
+                                        <Link href="/teams" className="capitalize">
+                                            <div className="header-link whitespace-nowrap">
+                                                <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                                <span>
+                                                    {t('team projects')}
+                                                </span>
+                                            </div>
+                                        </Link>
 
                                     </div>
                                 }
