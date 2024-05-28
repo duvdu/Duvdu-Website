@@ -171,19 +171,25 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
             {messages.openchat &&
                 <div className="chat dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-DS_white shadow-xl sm:left-8">
                     <div className="flex p-2 h-16 border-b border-[#00000040] dark:border-[#FFFFFF40]">
-                        <a href={`/creative/${otherUser.username || ""}`} className="relative cursor-pointer">
-                            <img className="h-full object-cover aspect-square rounded-full" src={otherUser.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
-                            {otherUser.isOnline && (
-                                <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                            )}
-                            {!otherUser.isOnline && (
-                                <div className="absolute w-4 h-4 bg-gray-500 border-2 b order-white rounded-full right-0 -translate-y-3" />
-                            )}
-                        </a>
+                        <Link href={`creative/${otherUser.username || ""}`}>
+                            <div className="relative cursor-pointer">
+                                {/* <> */}
+                                    <img className="h-full object-cover aspect-square rounded-full" src={otherUser.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
+                                    {otherUser.isOnline && (
+                                        <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                                    )}
+                                    {!otherUser.isOnline && (
+                                        <div className="absolute w-4 h-4 bg-gray-500 border-2 b order-white rounded-full right-0 -translate-y-3" />
+                                    )}
+                                {/* </> */}
+                            </div>
+                        </Link>
                         <div className="px-3">
-                            <a href={`/creative/${otherUser.username || ""}`} className="capitalize font-bold text-black">
-                                {otherUser.name}
-                            </a>
+                            <Link href={`creative/${otherUser.username || ""}`}>
+                                <div className="cursor-pointer capitalize font-bold text-black">
+                                    {otherUser.name}
+                                </div>
+                            </Link>
                             <div />
                             <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
                         </div>

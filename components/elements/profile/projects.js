@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Projects({ projects }) {
     return projects?.length > 0 && (
         <div className='container sm:p-0 project-grid gap-[10px]'>
@@ -9,15 +11,17 @@ function Projects({ projects }) {
 }
 
 const Project = ({ data, isbig }) => (
-    <a href={`/project/${data._id}`} className={isbig ? 'profile-project big w-full xl:w-68%' : 'profile-project small w-48% xl:w-28%'}>
-        <img className='cardimg' src={data.cover} alt='project cover' />
-        <div className='creatives'>
-            {data.projectBudget} $
+    <Link href={`/project/${data._id}`}>
+        <div className={isbig ? 'profile-project big w-full xl:w-68% cursor-pointer' : 'profile-project small w-48% xl:w-28% cursor-pointer'}>
+            <img className='cardimg' src={data.cover} alt='project cover' />
+            <div className='creatives'>
+                {data.projectBudget} $
+            </div>
+            <div className={`title ${isbig ? 'size-big' : 'size-small'}`}>
+                {data.title}
+            </div>
         </div>
-        <div className={`title ${isbig ? 'size-big' : 'size-small'}`}>
-            {data.title}
-        </div>
-    </a>
+    </Link>
 );
 
 export default Projects
