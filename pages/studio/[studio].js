@@ -23,7 +23,7 @@ import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/g
 
 
 
-const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, GetAllMessageInChat, chat_respond ,auth}) => {
+const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, GetAllMessageInChat, chat_respond, auth }) => {
 
     const router = useRouter()
     const { studio: studioId } = router.query;
@@ -125,7 +125,7 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
                                 </div>
                             </div>
                             {!chat_respond &&
-                                <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} auth={auth}/>}
+                                <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} auth={auth} />}
                             <StudioBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
 
                         </>
@@ -368,7 +368,7 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, toggleDrawer, GetAllMessageInChat,auth, chat_respond }) => {
+const Control = ({ data, toggleDrawer, GetAllMessageInChat, auth, chat_respond }) => {
 
     const [loveIconName, setLoveIconName] = useState('far');
     const [showChat, setShowChat] = useState(false);
@@ -387,11 +387,14 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat,auth, chat_respond })
         setShowChat(true);
         GetAllMessageInChat(data.creative._id)
     };
-
+    const openShare = () => {
+        OpenPopUp("Share")
+    };
 
 
     return (
         <>
+            <Share url={window.location.href} title={'See DuvDu Studuio'} />
 
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                 <div className="sm:container flex justify-between items-end">
@@ -420,7 +423,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat,auth, chat_respond })
 
 
                     <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                        <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
+                        <div onclick={openShare} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                             <Icon name={'share'} />
                         </div>
                         {auth.login &&
@@ -434,10 +437,10 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat,auth, chat_respond })
                             </div>
                         }
                         {auth.login &&
-                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
+                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
                         }
                     </Controller>
-                </div>  
+                </div>
             </div>
 
 

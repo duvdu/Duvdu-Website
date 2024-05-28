@@ -15,7 +15,6 @@ import QrCode from '../components/popsup/QR_code';
 import Rating from '../components/popsup/rating';
 import Share from '../components/popsup/Share';
 import ProjectDetils from '../components/popsup/project-details';
-import UploadFilesTeam from '../components/popsup/uploadFilesTeam';
 import HourWorks from '../components/popsup/hourWorks';
 import ChooseCategory from '../components/popsup/create/assets/chooseCategory';
 import Dashboard from '../components/popsup/dashboard';
@@ -87,7 +86,7 @@ function Test() {
                     <Rating />
                     <Share />
                     <ProjectDetils />
-                    <UploadFilesTeam />
+                    {/* <UploadFilesTeam /> */}
                     <HourWorks />
                     <ChooseCategory />
                     <Verify_account_now />
