@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { DeleteSavedBoard } from "../redux/action/apis/savedProject/board/deleteboard";
 import { ClosePopUp, OpenPopUp } from "../util/util";
 import EditBoard from "../components/popsup/editBoard";
-
+import Link from 'next/link'
 
 const Saved = ({
     GetBoards,
@@ -54,23 +54,26 @@ const Saved = ({
                                 </div>
                             </Selector>}
                     </div>
-                    <a href={`/save/${id}`} className="projects cursor-pointer">
-                        <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
-                        <div className="col2">
-                            <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
-                            <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
+                    <Link href={`/save/${id}`}>
+                        <div className="projects cursor-pointer">
+                            <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
+                            <div className="col2">
+                                <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
+                                <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
+                            </div>
                         </div>
-                    </a>
+                    </Link>
                     <div className="boards-info projects-num">{totalProjects} projects</div>
-                    <a href={`/save/${id}`}>
+                    <Link href={`/save/${id}`} >
+                        <div className="cursor-pointer">
+                            <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
 
-                        <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
-
-                        <div className="boards-info projects-name flex">
-                            {isFav && <Icon name={"favorites"} />}
-                            {title}
+                            <div className="boards-info projects-name flex">
+                                {isFav && <Icon name={"favorites"} />}
+                                {title}
+                            </div>
                         </div>
-                    </a>
+                    </Link>
                 </div>
             </>
         );

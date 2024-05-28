@@ -155,12 +155,16 @@ const loveToggleAction = () => {
         </div>
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer'>
-              <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
-            </a>
-            <a href={`/creative/${cardData.user.username}`} className='cursor-pointer' >
-              <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
-            </a>
+            <Link href={`/creative/${cardData.user.username}`} >
+              <div className='cursor-pointer'>
+                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
+              </div>
+            </Link>
+            <Link  href={`/creative/${cardData.user.username}`}>
+              <div className='cursor-pointer' >
+                <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
+              </div>
+            </Link>
           </div>
           <div className='flex items-center gap-2'>
             <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>

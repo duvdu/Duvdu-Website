@@ -27,7 +27,7 @@ import Successfully_posting from "../../components/popsup/post_successfully_post
 import AddToSaved from "../../components/popsup/addToSaved";
 import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
 import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
-
+import Link from 'next/link'
 
 
 const projects = ({
@@ -234,16 +234,18 @@ const Header = ({ data }) => (
     <>
         <h1 className="text-xl capitalize opacity-80 font-bold"> {data?.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
-            <a className='flex items-center gap-3 cursor-pointer' href={`/creative/${data?.user?.username || ''}`}>
-                <img alt='user' className="w-16 aspect-square rounded-full" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} />
-                <div>
-                    <span className="capitalize font-semibold text-lg">{data?.user?.name || 'NONE'}</span>
-                    <div className="flex items-center gap-1 mt-1">
-                        <p>{data?.user?.totalRates || 0}</p>
-                        <Icon className='text-primary' name={'rate-star'} />
+            <Link href={`/creative/${data?.user?.username || ''}`}>
+                <div className='flex items-center gap-3 cursor-pointer'>
+                    <img alt='user' className="w-16 aspect-square rounded-full" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} />
+                    <div>
+                        <span className="capitalize font-semibold text-lg">{data?.user?.name || 'NONE'}</span>
+                        <div className="flex items-center gap-1 mt-1">
+                            <p>{data?.user?.totalRates || 0}</p>
+                            <Icon className='text-primary' name={'rate-star'} />
+                        </div>
                     </div>
                 </div>
-            </a>
+            </Link>
             <Selector options={[
                 {
                     value: "oprion 1",
