@@ -155,11 +155,15 @@ const loveToggleAction = () => {
         </div>
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <Link href={`/creative/${cardData.user.username}`} className='cursor-pointer'>
-              <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
+            <Link href={`/creative/${cardData.user.username}`} >
+              <div className='cursor-pointer'>
+                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
+              </div>
             </Link>
-            <Link href={`/creative/${cardData.user.username}`} className='cursor-pointer' >
-              <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
+            <Link  href={`/creative/${cardData.user.username}`}>
+              <div className='cursor-pointer' >
+                <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
+              </div>
             </Link>
           </div>
           <div className='flex items-center gap-2'>

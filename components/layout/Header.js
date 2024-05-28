@@ -165,7 +165,7 @@ const Header = ({
                                     <Link href="/">
                                         <img
                                             src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                            className="min-h-9"
+                                            className="min-h-9 cursor-pointer"
                                             alt="main logo"
                                         />
                                     </Link>
