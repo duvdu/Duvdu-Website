@@ -158,21 +158,21 @@ const projects = ({
                 "id": 1,
                 "userName": "jonathan donrew",
                 "date": "Sun - Aug 3",
-                "avatar": "/assets/imgs/profile/defultUser.jpg",
+                "avatar": "/assets/imgs/profile/defultUser?.jpg",
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
             {
                 "id": 2,
                 "userName": "jonathan donrew",
                 "date": "Sun - Aug 3",
-                "avatar": "/assets/imgs/profile/defultUser.jpg",
+                "avatar": "/assets/imgs/profile/defultUser?.jpg",
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
             {
                 "id": 3,
                 "userName": "jonathan donrew",
                 "date": "Sun - Aug 3",
-                "avatar": "/assets/imgs/profile/defultUser.jpg",
+                "avatar": "/assets/imgs/profile/defultUser?.jpg",
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
         ],
@@ -232,14 +232,14 @@ const projects = ({
 
 const Header = ({ data }) => (
     <>
-        <h1 className="text-xl capitalize opacity-80 font-bold"> {data.title} </h1>
+        <h1 className="text-xl capitalize opacity-80 font-bold"> {data?.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
             <a className='flex items-center gap-3 cursor-pointer' href={`/creative/${data?.user?.username || ''}`}>
-                <img alt='user' className="w-16 aspect-square rounded-full" src={data.user.profileImage || process.env.DEFULT_PROFILE_PATH} />
+                <img alt='user' className="w-16 aspect-square rounded-full" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} />
                 <div>
-                    <span className="capitalize font-semibold text-lg">{data.user.name || 'NONE'}</span>
+                    <span className="capitalize font-semibold text-lg">{data?.user?.name || 'NONE'}</span>
                     <div className="flex items-center gap-1 mt-1">
-                        <p>{data.user?.totalRates || 0}</p>
+                        <p>{data?.user?.totalRates || 0}</p>
                         <Icon className='text-primary' name={'rate-star'} />
                     </div>
                 </div>
@@ -267,7 +267,7 @@ const ProjectCover = ({ data }) => {
     return (
         <img
             className="sm:rounded-[50px] w-full"
-            src={data.projectImg}
+            src={data?.projectImg}
             alt="Project Cover"
         />
     );
@@ -297,7 +297,7 @@ const ProjectShow = ({ data }) => {
         <div className="relative">
             <video
                 className="sm:rounded-[50px] w-full"
-                src={data.projectImg}
+                src={data?.projectImg}
                 controls
                 ref={videoRef}
                 onClick={handlePlayPause}
@@ -331,27 +331,27 @@ const About = ({ data }) => (
             <div className='flex items-center justify-center'>
                 <div className='w-32 h-32 relative'>
                     <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                    <img className='profileImgture absolute rounded-full' src={data.creative.profileImage} alt="profile picture" />
+                    <img className='profileImgture absolute rounded-full' src={data?.creative.profileImage} alt="profile picture" />
                 </div>
                 <div className='flex-2 flex-col gap-1'>
-                    <h3 className="capitalize font-semibold text-lg">{data.creative.name}</h3>
+                    <h3 className="capitalize font-semibold text-lg">{data?.creative.name}</h3>
                     <span className='flex items-center'>
                         <Icon className='opacity-50 mr-2 w-3' name='location-dot' />
-                        <span className="location">{data.creative.location}</span>
+                        <span className="location">{data?.creative.location}</span>
                     </span>
                 </div>
             </div>
             <div className='flex justify-center pt-25 items-center gap-3 '>
-                <p className='rank'>{data.creative.rank}</p>
-                <p className="info-container">{data.creative.occupation}</p>
+                <p className='rank'>{data?.creative.rank}</p>
+                <p className="info-container">{data?.creative.occupation}</p>
                 <div className='info-container flex items-center gap-1 w-20'>
-                    <p>{data.creative.totalRates || 0}</p>
+                    <p>{data?.creative.totalRates || 0}</p>
                     <Icon className='text-primary w-4' name={'rate-star'} />
                 </div>
             </div>
             <div className='flex justify-center pt-7 items-center'>
                 <div className='flex justify-center'>
-                    {Object.entries(data.creative.popularity).map(([key, value]) => (
+                    {Object.entries(data?.creative.popularity).map(([key, value]) => (
                         <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
                             <p className='number'>{convertToK(value, 0)}</p>
                             <p className='unit'>{key}</p>
@@ -361,7 +361,7 @@ const About = ({ data }) => (
             </div>
             <div className='sm:px-10 border-[#00000040] dark:border-[#FFFFFF40] border-t mt-6 pt-6'>
                 <p id='about-header'>about</p>
-                <p className='pt-2' id='about-paragraph'>{data.creative.about}</p>
+                <p className='pt-2' id='about-paragraph'>{data?.creative.about}</p>
             </div>
         </div>
     </div>
@@ -369,11 +369,11 @@ const About = ({ data }) => (
 const Details = ({ data }) => (
     <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent w-full border-50 p-6">
         <div className="w-full flex justify-center my-10">
-            <span className="text-center capitalize opacity-50">{data.date}</span>
+            <span className="text-center capitalize opacity-50">{data?.date}</span>
         </div>
 
         <div className="flex flex-col gap-2">
-            {data.tools.map((toolGroup, i) => (
+            {data?.tools.map((toolGroup, i) => (
                 <div key={i} className="flex gap-2">
                     {toolGroup.map((tool, j) => (
                         <div key={j} className={`text-white rounded-3xl py-2 px-4 ${tool.isActive ? 'bg-primary' : 'bg-[#00000040]'}`}>
@@ -387,11 +387,11 @@ const Details = ({ data }) => (
         <div className="mt-9">
             <span className="capitalize opacity-50">description</span>
         </div>
-        <span className="capitalize font-semibold mt-4">{data.description}</span>
+        <span className="capitalize font-semibold mt-4">{data?.description}</span>
         <div className="mt-9">
         </div>
         {
-            data.location &&
+            data?.location &&
             <section>
                 <span className="capitalize opacity-50">location</span>
                 <div className="capitalize mt-4">
@@ -406,7 +406,7 @@ const Details = ({ data }) => (
                 <span className="capitalize opacity-50">shooting time</span>
             </div>
             <div>
-                <span className="capitalize font-semibold">{convertHoursTo__(data.shooting_time)}</span>
+                <span className="capitalize font-semibold">{convertHoursTo__(data?.shooting_time)}</span>
             </div>
         </section>
         <section className="hidden">
@@ -415,7 +415,7 @@ const Details = ({ data }) => (
                 <span className="capitalize opacity-50">delivery time</span>
             </div>
             <div>
-                <span className="capitalize font-semibold">{convertHoursTo__(data.delivery_time)}</span>
+                <span className="capitalize font-semibold">{convertHoursTo__(data?.delivery_time)}</span>
             </div>
         </section>
     </div>
@@ -429,7 +429,7 @@ const Reviews = ({ data }) => (
         <div className='flex flex-col gap-4'>
             <div className='flex flex-col gap-4'>
 
-                {data.comments.map((comment) => (
+                {data?.comments.map((comment) => (
                     <Comment key={comment.id} comment={comment} />
                 ))}
             </div>
@@ -457,14 +457,14 @@ const Recommended = ({ projects }) => {
 const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, isLove,auth }) => {
 
     const loveIconName = isLove ? 'fas' : 'far'
-    const online = data.user.isOnline
+    const online = data?.user?.isOnline
 
     const handleLoveIconClick = () => {
         loveToggleAction()
     };
 
     const handleOpenChat = () => {
-        GetAllMessageInChat(data.creative._id)
+        GetAllMessageInChat(data?.creative._id)
     };
 
 
@@ -476,7 +476,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
                 {auth.login ?
                     <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
                         <div className="relative">
-                            <img className="h-full aspect-square rounded-full" src={data.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" />
+                            <img className="h-full aspect-square rounded-full" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" />
                             {online && (
                                 <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                             )}
@@ -487,7 +487,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
                         </div>
                         <div className="px-3">
                             <span className="capitalize font-bold">
-                                {data.user.name || 'NONE'}
+                                {data?.user?.name || 'NONE'}
                             </span>
                             <div />
                             {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
