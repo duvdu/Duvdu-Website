@@ -247,8 +247,12 @@ const Header = ({
                                     {
                                         !islogin &&
                                         <div className="header-action-2 flex gap-6 items-center">
-                                            <a href="/login" className="text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</a>
-                                            <a href="/register" className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</a>
+                                            <Link href="/login">
+                                                <div className="text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</div>
+                                            </Link>
+                                            <Link href="/register">
+                                                <div  className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</div>
+                                            </Link>
                                         </div>
                                     }
 
@@ -261,12 +265,14 @@ const Header = ({
                     <div className="container">
                         <div className="header-wrap header-space-between relative">
                             <div className="logo block lg:hidden w-full">
-                                <a href="/">
-                                    <img
-                                        src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                        alt="main logo"
-                                    />
-                                </a>
+                                <Link href="/">
+                                    <div className="cursor-pointer">
+                                        <img
+                                            src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                            alt="main logo"
+                                        />
+                                    </div>
+                                </Link>
                             </div>
                             {
                                 !fromlayout.shortheader &&

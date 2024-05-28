@@ -185,8 +185,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
 
     const Auth = () =>
         <div className="flex mx-5 gap-3 my-8">
-            <a href="/login" className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold"> log-in </a>
-            <a href="/register" className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm"> register </a>
+            <Link href="/login">
+                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold"> log-in </div>
+            </Link>
+            <Link href="/register">
+                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm">register </div>
+            </Link>
         </div>
     const SpeficIcon = ({ name }) => {
         return (
