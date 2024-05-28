@@ -11,31 +11,6 @@ import { DeleteSavedBoard } from "../redux/action/apis/savedProject/board/delete
 import { ClosePopUp, OpenPopUp } from "../util/util";
 import EditBoard from "../components/popsup/editBoard";
 
-const data = [
-    {
-        img1: '/assets/imgs/profile/defultUser.jpg',
-        img2: '/assets/imgs/projects/2.jpeg',
-        img3: '/assets/imgs/projects/3.jpeg',
-        projectsNum: '37',
-        name: 'favorites',
-    },
-    {
-        img1: '/assets/imgs/projects/4.jpeg',
-        img2: '/assets/imgs/projects/5.jpeg',
-        img3: '/assets/imgs/projects/6.jpeg',
-        projectsNum: '564',
-        name: 'new shoot inspiration',
-    },
-    {
-        img1: '/assets/imgs/projects/7.jpeg',
-        img2: '/assets/imgs/projects/8.jpeg',
-        img3: '/assets/imgs/projects/9.jpeg',
-        projectsNum: '546',
-        name: 'mood board for our project',
-    },
-
-];
-
 
 const Saved = ({
     GetBoards,
@@ -50,7 +25,7 @@ const Saved = ({
 }) => {
     const Boards = ({ data, isFav }) => {
         if (!data) return
-        
+
         const { totalProjects, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
         const img2 = data?.projects[1]?.project?.cover
@@ -107,7 +82,11 @@ const Saved = ({
         // console.log(getBoards_respond)
     }, [getBoards_respond])
     useEffect(() => {
-        // GetBoards()
+        if (createBoard_respond || updateBoard_respond || deleteSavedBoard_respond)
+            {
+                GetBoards()
+                DeleteSavedBoard(-1)
+            }
         ClosePopUp("create-new-board")
     }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])
 
@@ -116,6 +95,7 @@ const Saved = ({
         <>
             <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
             <Layout shortheader={true} isbodyWhite={true}>
+            
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">

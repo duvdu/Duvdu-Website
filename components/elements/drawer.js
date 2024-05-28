@@ -6,7 +6,6 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "" }) =
     useEffect(() => {
         noScroll(isOpen)
 
-
         // Function to handle key press
         const handleKeyDown = (event) => {
             if (event.key === "Escape" && isOpen) {

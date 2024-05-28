@@ -6,7 +6,7 @@ import * as Types from '../../../redux/constants/actionTypes'
 import Icon from "../../Icons";
 import Link from 'next/link';
 
-function Profile({ getheaderpopup, api, user }) {
+function Profile({ getheaderpopup, api, user, getBoards_respond }) {
 
     const { t } = useTranslation();
 
@@ -22,6 +22,7 @@ function Profile({ getheaderpopup, api, user }) {
         { field: "about", label: "About" },
         { field: "pricePerHour", label: "Price Per Hour" }
     ]
+
 
 
     const checkField = (obj, path) => {
@@ -52,6 +53,18 @@ function Profile({ getheaderpopup, api, user }) {
             return 0; // Leave order unchanged
         }
     });
+    const getProjectCovers = (data) => {
+        const covers = [];
+        data.forEach((item) => {
+            item.projects.slice(0, 1).forEach((project) => {
+                covers.push(project.project.cover);
+            });
+        });
+
+        return covers;
+    };
+    const saved = getProjectCovers(getBoards_respond?.data || [])
+
     if (user == null) return <></>
     if (getheaderpopup != Types.SHOWPROFILE) return
     else
@@ -90,8 +103,6 @@ function Profile({ getheaderpopup, api, user }) {
                                 </div>
                             </div>
                         </div>
-
-                        {/* middle card  */}
                         {
                             showMiddleCard &&
                             <div className="p-6 bg-DS_white dark:bg-[#1A2024] rounded-[45px]">
@@ -136,7 +147,15 @@ function Profile({ getheaderpopup, api, user }) {
                                                     <Icon name="greenCheck" />
                                                 </div>
                                             ) : (
-                                                <Link href={`/creative/${user.username}?edit=true`} className="no-underline text-sm font-semibold">{t(item.text)}</Link>
+                                                item.text === "Is Verified" ? (
+                                                    <Link href={`/register/${auth.username}`} className="no-underline text-sm font-semibold">
+                                                        {t(item.text)}
+                                                    </Link>
+                                                ) : (
+                                                    <Link href={`/creative/${user.username}?edit=true`} className="no-underline text-sm font-semibold">
+                                                        {t(item.text)}
+                                                    </Link>
+                                                )
                                             )}
                                             {index !== states.length - 1 && <hr className="border-[#E6E6E6]" />}
                                         </React.Fragment>
@@ -154,15 +173,14 @@ function Profile({ getheaderpopup, api, user }) {
                                 </h4>
                                 <div className="flex justify-between gap-3">
                                     <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                        <img src={process.env.DEFULT_PROFILE_PATH} />
+                                        <img src={saved[0]} />
                                     </div>
                                     <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                        <img src="/assets/imgs/projects/3.jpeg" />
+                                        <img src={saved[1]} />
                                     </div>
                                 </div>
                             </div>
                         </a>
-
                     </div>
                 </div>
             </div>
@@ -175,6 +193,8 @@ const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
     api: state.api,
     user: state.user.profile,
+    getBoards_respond: state.api.GetBoards,
+
 });
 
 

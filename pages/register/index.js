@@ -47,11 +47,10 @@ function Register({ signup, api, respond, userExists, CheckUsernameExists }) {
     var convertError = JSON.parse(api.error ?? null)
 
     if (respond) {
-            console.log(respond)
-        // router.push({
-        //     pathname: `/register/${username}`,
-
-        // });
+        console.log(respond)
+        router.push({
+            pathname: `/register/${username}`,
+        });
     }
     useEffect(() => {
         if (convertError && api.req == "signup") {
@@ -289,12 +288,14 @@ const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.signup,
     userExists: state.api.CheckUsernameExists
+    
 
 });
 
 const mapDispatchToProps = {
     signup,
-    CheckUsernameExists
+    CheckUsernameExists,
+
 
 };
 

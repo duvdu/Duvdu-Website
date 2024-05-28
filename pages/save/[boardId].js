@@ -37,6 +37,7 @@ const Projects = ({
     }, [get_respond]);
 
     useEffect(() => {
+        if(delete_respond)
             GetSavedBoard({ id: boardId })
     }, [delete_respond]);
 

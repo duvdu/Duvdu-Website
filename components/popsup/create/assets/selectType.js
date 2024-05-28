@@ -46,10 +46,10 @@ function PostPopup({auth}) {
                             "value": "studio booking",
                             "url": "studio-booking"
                         },
-                        // {
-                        //     "value": "equipment rental",
-                        //     "url": "equipment-rental"
-                        // },
+                        {
+                            "value": "producer",
+                            "url": "add-producer"
+                        },
                         // {
                         //     "value": "music & audio",
                         //     "url": "music-audio"

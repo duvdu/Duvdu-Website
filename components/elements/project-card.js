@@ -75,7 +75,7 @@ const loveToggleAction = () => {
 
   };
 
-  console.log(loveIconName)
+  
   useEffect(() => {
     if (cardData._id) {
       setLove(isFav(cardData._id, getBoards_respond))

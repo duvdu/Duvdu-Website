@@ -19,6 +19,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     const [localerror, setLocalerror] = useState(true);
     const [location, setLocation] = useState(null);
     const [swiperError, setSwiperError] = useState(null);
+    const [isAutoplay, setIsAutoplay] = useState(true);
 
     const imageSources = [
         {
@@ -60,10 +61,11 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
         
         if (auth.username && auth.login && auth.user.isVerified !== false) {
             router.push(`/`);
+            // window.location.href = "/"
         }
         else if (auth.username && auth.login && auth.user.isVerified === false && !verify_respond) {
             // resendCode({ username: auth.username })
-            router.push(`/register/${auth.username}`);
+            // router.push(`/register/${auth.username}`);
         }
     }, [auth.username]);
 

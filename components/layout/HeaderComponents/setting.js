@@ -102,11 +102,11 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                         subName: 'short delivery time, More money',
                         action: <Switch onSwitchChange={() => { }} />,
                     },
-                    {
-                        img: 'notification-icon.svg',
-                        name: 'Notification',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
-                    },
+                    // {
+                    //     img: 'notification-icon.svg',
+                    //     name: 'Notification',
+                    //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
+                    // },
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
