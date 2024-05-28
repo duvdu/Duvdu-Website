@@ -73,10 +73,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
                             name: 'notifications',
                         },
                     ].map((item, index) =>
-                        <a key={index} href={item.url} className="flex gap-1 items-center">
-                            <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
-                            <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{item.name}</span>
-                        </a>
+                        <Link key={index} href={item.url}>
+                            <div className="flex gap-1 items-center cursor-pointer">
+                                <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
+                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{item.name}</span>
+                            </div>
+                        </Link>
                     )
                 }
             </div>
@@ -104,10 +106,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
                             name: 'team projects',
                         },
                     ].map((item, index) =>
-                        <a key={index} href={item.url} className="flex justify-center items-center">
+                        <Link key={index} href={item.url}>
+                            <div className="flex justify-center items-center cursor-pointer">
                             <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
                             <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
-                        </a>
+                            </div>
+                        </Link>
                     )
                 }
             </div>

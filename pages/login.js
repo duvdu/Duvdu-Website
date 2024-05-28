@@ -120,8 +120,9 @@ function Login({ api, login_respond, login }) {
 
             </div>
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
-
-            <a href="/forget_password" className="forgot-password">Forgot password ?</a>
+            <Link  href="/forget_password">
+                <div className="forgot-password cursor-pointer">Forgot password ?</div>
+            </Link>
 
           </div>
           <div className="login_footer mb-4"></div>
@@ -135,8 +136,9 @@ function Login({ api, login_respond, login }) {
           </button>
           <div className="have-account">
             <span>Don't have an account ?</span>
-
-            <a href="/register"> Register now</a>
+              <Link  href="/register">
+                <div className="cursor-pointer">Register now</div>
+              </Link>
 
           </div>
           <div className="flex items-center">

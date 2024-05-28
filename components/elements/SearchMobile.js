@@ -59,7 +59,7 @@ const Search = ({}) => {
                     ].map((item, index) => (
                         <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full" key={index}>
                             <Link href="/">
-                                <a className="text-[#000000BF] capitalize">{item}</a>
+                                <div className="cursor-pointer text-[#000000BF] capitalize">{item}</div>
                             </Link>
                         </li>
                     ))}

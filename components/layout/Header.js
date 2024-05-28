@@ -248,10 +248,10 @@ const Header = ({
                                         !islogin &&
                                         <div className="header-action-2 flex gap-6 items-center">
                                             <Link href="/login">
-                                                <div className="text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</div>
+                                                <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</div>
                                             </Link>
                                             <Link href="/register">
-                                                <div  className="px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</div>
+                                                <div  className="cursor-pointer px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</div>
                                             </Link>
                                         </div>
                                     }

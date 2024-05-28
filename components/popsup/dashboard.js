@@ -15,11 +15,13 @@ function dashboard() {
                         <br />
                         to access this feature
                     </span>
-                    <a className="max-w-96 w-full" href="/register">
-                        <AppButton>
-                                register
-                        </AppButton>
-                    </a>
+                    <Link href="/register">
+                        <div className="max-w-96 w-full cursor-pointer">
+                            <AppButton>
+                                    register
+                            </AppButton>
+                        </div>
+                    </Link>
                 </div>
             </Popup>
         </>
