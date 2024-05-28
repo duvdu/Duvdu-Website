@@ -8,7 +8,7 @@ export const GetStudios = ({ page="", limit="",search="" }) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const params = {};
-      if (search.length>0) params.search = search;
+      if (search?.length > 0) params.search = search;
       if (page) params.page = page;
       if (limit) params.limit = limit;
       const queryString = new URLSearchParams(params).toString();

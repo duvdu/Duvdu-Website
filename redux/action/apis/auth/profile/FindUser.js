@@ -8,7 +8,7 @@ export const FindUser = ( search = "", page = 1, limit = 10 ) => {
         try {
             // Construct query string only with provided parameters
             const params = {};
-            if (search.length>0) params.search = search;
+            if (search?.length > 0) params.search = search;
             if (page) params.page = page;
             if (limit) params.limit = limit;
 

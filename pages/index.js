@@ -23,8 +23,10 @@ const Projects = ({ projects, GetProjects, api }) => {
 
     
     useEffect(() => {
-        if (limit)
+        if (limit){
+            console.log("??????")
             GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page })
+        }
     }, [limit,searchTerm])
 
 
