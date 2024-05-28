@@ -94,11 +94,13 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                                     </div>
                                 </div>
                                 <div className="flex gap-3 mt-3">
-                                    <a href={`/creative/${user.username}`} className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
-                                        <span className="text-primary font-bold text-base">
-                                            {t('view profile')}
-                                        </span>
-                                    </a>
+                                    <Link href={`/creative/${user.username}`} >
+                                        <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
+                                            <span className="text-primary font-bold text-base">
+                                                {t('view profile')}
+                                            </span>
+                                        </div>
+                                    </Link>
 
                                 </div>
                             </div>
@@ -166,7 +168,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                             </div>}
 
                         {/* end card  */}
-                        <a href="/saved">
+                        <Link href="/saved">
                             <div className="p-3 bg-DS_white dark:bg-[#1A2024] rounded-[45px] mb-2">
                                 <h4 className="opacity-70 text-sm font-semibold m-2">
                                     {t('saved projects')}
@@ -180,7 +182,8 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </Link>
+                        
                     </div>
                 </div>
             </div>
