@@ -24,8 +24,8 @@ const Projects = ({ projects, GetProjects, api }) => {
     
     useEffect(() => {
         if (limit)
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
-    }, [limit])
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page })
+    }, [limit,searchTerm])
 
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                 const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
                 if (scrolledToBottom) {
-                    setLimit(prevPage => showLimit + limit);
+                    setLimit(showLimit + limit);
                 }
             }
         };

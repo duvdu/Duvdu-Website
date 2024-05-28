@@ -23,7 +23,7 @@ import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/g
 
 
 
-const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, GetAllMessageInChat,chat_respond }) => {
+const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, GetAllMessageInChat, chat_respond ,auth}) => {
 
     const router = useRouter()
     const { studio: studioId } = router.query;
@@ -37,7 +37,7 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
     }, [studioId]);
 
     useEffect(() => {
-        GetStudios();
+        GetStudios({ limit: 4 });
     }, []);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -124,16 +124,19 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
                                     </section>
                                 </div>
                             </div>
-                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond}/>
+                            {!chat_respond &&
+                                <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} chat_respond={chat_respond} auth={auth}/>}
                             <StudioBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
-                            
+
                         </>
                     ) : (
-                        <div className="flex flex-col h-body items-center justify-center">
-                            <h1 className="text-4xl font-bold">
-                                No Project To Show
-                            </h1>
-                        </div>
+                        project?.length ?
+                            <div className="flex flex-col h-body items-center justify-center">
+                                <h1 className="text-4xl font-bold">
+                                    No Project To Show
+                                </h1>
+                            </div> :
+                            <></>
                     )
                 }
             </Layout>
@@ -365,7 +368,7 @@ const Recommended = ({ projects }) => {
     );
 };
 
-const Control = ({ data, toggleDrawer, GetAllMessageInChat,chat_respond }) => {
+const Control = ({ data, toggleDrawer, GetAllMessageInChat,auth, chat_respond }) => {
 
     const [loveIconName, setLoveIconName] = useState('far');
     const [showChat, setShowChat] = useState(false);
@@ -393,27 +396,26 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat,chat_respond }) => {
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                 <div className="sm:container flex justify-between items-end">
 
-                    {
-                        !chat_respond ?
-                            <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
-                                <div className="relative">
-                                    <img className="h-full aspect-square rounded-full" src={data.user.profileImage} alt="user" />
-                                    {online && (
-                                        <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                    )}
-                                    {!online && (
-                                        <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                    )}
+                    {auth.login ?
+                        <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
+                            <div className="relative">
+                                <img className="h-full aspect-square rounded-full" src={data.user.profileImage} alt="user" />
+                                {online && (
+                                    <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                                )}
+                                {!online && (
+                                    <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
+                                )}
 
-                                </div>
-                                <div className="px-3">
-                                    <span className="capitalize font-bold">
-                                        {data.user.name}
-                                    </span>
-                                    <div />
-                                    {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
-                                </div>
-                            </div> : <div className="w-1" />
+                            </div>
+                            <div className="px-3">
+                                <span className="capitalize font-bold">
+                                    {data.user.name}
+                                </span>
+                                <div />
+                                {/* <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span> */}
+                            </div>
+                        </div> : <div className="w-1" />
                     }
 
 
@@ -421,15 +423,21 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat,chat_respond }) => {
                         <div className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                             <Icon name={'share'} />
                         </div>
-                        <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
-                            <Icon className="text-white text-xl" name={'plus'} />
-                        </div>
-                        <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
-                            <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
-                        </div>
+                        {auth.login &&
+                            <div data-popup-toggle="popup" data-popup-target="add-to-team" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
+                                <Icon className="text-white text-xl" name={'plus'} />
+                            </div>
+                        }
+                        {auth.login &&
+                            <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
+                                <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
+                            </div>
+                        }
+                        {auth.login &&
                         <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
+                        }
                     </Controller>
-                </div>
+                </div>  
             </div>
 
 
@@ -445,6 +453,7 @@ const mapStateToProps = (state) => ({
     project_respond: state.api.Getstudio,
     projectFilters: state.projectFilters,
     chat_respond: state.api.GetAllMessageInChat,
+    auth: state.auth,
 });
 
 const mapDidpatchToProps = {

@@ -27,16 +27,18 @@ const Search = () => {
             setSearchHistory(updatedHistory);
             localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
         }
+        const query = searchTerm ? { search: searchTerm } : {};
+
         router.push({
             pathname: "/",
-            query: { search: searchTerm },
+            query: query,
         });
     };
 
     const handleInput = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-       handleSearch();
+            handleSearch();
         }
     };
 
@@ -61,7 +63,7 @@ const Search = () => {
                     <ul className="gap-1">
                         {searchHistory.map((item, index) => (
                             <li className="py-1 px-2 border border-[#0000004D] dark:border-[#FFFFFF4D] rounded-full" key={index}>
-                                <Link href={`/project?search=${item}`}>
+                                <Link href={item ? `/project?search=${item}` : '/project'}>
                                     <div className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</div>
                                 </Link>
                             </li>

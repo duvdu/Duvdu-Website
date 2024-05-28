@@ -36,7 +36,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                 const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
                 if (scrolledToBottom) {
-                    setLimit(prevPage => showLimit + limit);
+                    setLimit(showLimit + limit);
                 }
             }
         };
