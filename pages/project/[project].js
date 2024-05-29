@@ -115,7 +115,6 @@ const projects = ({
         return null; 
       };
 
-
     const data = project ? ({
         _id: project._id,
         title: project.title,

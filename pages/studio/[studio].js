@@ -20,6 +20,7 @@ import StudioBooking from "../../components/drawer/book/studio";
 import { GetStudios } from "../../redux/action/apis/cycles/studio/get";
 import { Getstudio } from "../../redux/action/apis/cycles/studio/getOne";
 import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
+import Share from "../../components/popsup/Share";
 
 
 
