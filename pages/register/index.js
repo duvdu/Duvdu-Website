@@ -257,7 +257,9 @@ function Register({ signup, api, respond, userExists, CheckUsernameExists }) {
                                     <label className="form-check-label terms-submit flex gap-1 items-center " htmlFor="exampleCheckbox1">
                                         <span className="capitalize text-xs">
                                             <span>I agree to </span>
-                                            <a href="/terms_conditions" className="font-bold text-primary">terms and conditions</a>
+                                            <Link href="/terms_conditions">
+                                                <span className="font-bold text-primary cursor-pointer">terms and conditions</span>
+                                            </Link>
                                         </span>
                                     </label>
                                 </div>
@@ -275,7 +277,7 @@ function Register({ signup, api, respond, userExists, CheckUsernameExists }) {
                     </button>
                     <div className="have-account">
                         <span>Already have an account ? </span>
-                        <a href="/login"> Log in</a>
+                        <Link href="/login">Log in</Link>
                     </div>
                 </form>
                 <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>

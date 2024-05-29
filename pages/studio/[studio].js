@@ -20,6 +20,8 @@ import StudioBooking from "../../components/drawer/book/studio";
 import { GetStudios } from "../../redux/action/apis/cycles/studio/get";
 import { Getstudio } from "../../redux/action/apis/cycles/studio/getOne";
 import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
+import Share from './../../components/popsup/Share';
+import Link from "next/link";
 
 
 
@@ -148,16 +150,18 @@ const Header = ({ data }) => (
     <>
         <h1 className="text-xl capitalize opacity-80 font-bold"> {data.title} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
-            <a className='flex items-center gap-3 cursor-pointer' href={`/creative/${data.userName}`}>
-                <img alt='user aspect-square rounded-full' className="w-16 aspect-square rounded-full" src={data.user.profileImage} />
-                <div>
-                    <span className="capitalize font-semibold text-lg">{data.user.name}</span>
-                    <div className="flex items-center gap-1 mt-1">
-                        <p>{data.user?.rate}</p>
-                        <Icon className='text-primary' name={'rate-star'} />
+            <Link href={`/creative/${data.userName}`}>
+                <div className='flex items-center gap-3 cursor-pointer'>
+                    <img alt='user aspect-square rounded-full' className="w-16 aspect-square rounded-full" src={data.user.profileImage} />
+                    <div>
+                        <span className="capitalize font-semibold text-lg">{data.user.name}</span>
+                        <div className="flex items-center gap-1 mt-1">
+                            <p>{data.user?.rate}</p>
+                            <Icon className='text-primary' name={'rate-star'} />
+                        </div>
                     </div>
                 </div>
-            </a>
+            </Link>
             <Selector options={[
                 {
                     value: "oprion 1",

@@ -133,11 +133,11 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
                     <p>Your phone number has been changed successfully</p>
                 </div>
                 <div className="mb-4 relative">
-                    <a href={"/login"}>
-                        <Button type="submit" name="login" shadow={true}>
-                            done
-                        </Button>
-                    </a>
+                <Link href={"/login"}>
+                    <Button type="submit" name="login" shadow={true}>
+                        Done
+                    </Button>
+                </Link>
                 </div>
             </div>
         )

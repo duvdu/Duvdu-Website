@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Selector from "../components/elements/CustomSelector";
 import Icon from '../components/Icons';
 import Clients from '../components/popsup/clients';
+import Link from "next/link";
 
 function Contracts() {
 
@@ -388,15 +389,17 @@ const RightSide = () => {
     const Title = ({ title }) => <h2 className="font-bold text-start text-lg capitalize opacity-80 mt-3">{title}</h2>
 
     const Recents = ({ img, name, address }) =>
-        <a href='/creative/youseff_abdulla'>
-            <div className='h-14 w-full flex gap-1 rounded-full border border-[#00000033] dark:border-[#FFFFFF33] ' >
-                <img src={img} alt='user' className='rounded-full m-1' />
-                <div className='flex flex-col items-start justify-center w-full pr-3'>
-                    <span className='opacity-80 font-semibold'> {name} </span>
-                    <span className='opacity-50'> {address} </span>
+        <Link href='/creative/youseff_abdulla'>
+            <div className="cursor-pointer">
+                <div className='h-14 w-full flex gap-1 rounded-full border border-[#00000033] dark:border-[#FFFFFF33] ' >
+                    <img src={img} alt='user' className='rounded-full m-1' />
+                    <div className='flex flex-col items-start justify-center w-full pr-3'>
+                        <span className='opacity-80 font-semibold'> {name} </span>
+                        <span className='opacity-50'> {address} </span>
+                    </div>
                 </div>
             </div>
-        </a>
+        </Link>
     const MoreIcon = () => <Icon className='cursor-pointer' name={'more'} />
 
     const HisTory = ({ isCanceled }) =>
@@ -420,15 +423,17 @@ const RightSide = () => {
                 ]} className="absolute right-6 border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer" />
                 {/*********/}
                 {/* profile */}
-                <a href='/creative/youseff_abdulla'>
-                    <div className='flex gap-3 items-center'>
-                        <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
-                        <div className='flex flex-col items-start justify-start'>
-                            <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
-                            <span className='opacity-50'>Sun - Aug 3</span>
+                <Link href='/creative/youseff_abdulla'>
+                    <div className="cursor-pointer">
+                        <div className='flex gap-3 items-center'>
+                            <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
+                            <div className='flex flex-col items-start justify-start'>
+                                <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
+                                <span className='opacity-50'>Sun - Aug 3</span>
+                            </div>
                         </div>
                     </div>
-                </a>
+                </Link>
                 {/*********/}
 
                 {/* types */}

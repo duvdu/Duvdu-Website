@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Layout from "../components/layout/Layout";
 import AppButton from '../components/elements/button';
+import Link from "next/link";
 
 const Payment_success = () => {
     return (
@@ -20,9 +21,10 @@ const Payment_success = () => {
                     <AppButton className={"mt-16 mb-3 w-full max-w-[350px]"} >
                         Done
                     </AppButton>
-                    <a className='opacity-70 font-semibold underline capitalize text-sm'>
-                        terms & conditions
-                    </a>
+                    <Link href="/terms_conditions">
+                        <span className="opacity-70 font-semibold underline capitalize text-sm text-primary cursor-pointer">terms and conditions</span>
+                    </Link>
+                           
                 </div>
             </Layout>
         </>

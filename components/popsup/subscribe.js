@@ -1,7 +1,7 @@
 
 import Button from '../elements/button';
 import Icon from '../Icons'
-
+import Link from "next/link";
 
 function Popup({ isfree = false }) {
     return (
@@ -46,7 +46,9 @@ const StartFree = () => {
                     </span>
                 </Button>
             </div>
-            <a className="text-DS_black text-sm opacity-50" href="/terms_conditions">terms & conditions</a>
+            <Link href="/terms_conditions">
+                <span className="text-DS_black text-sm opacity-50 cursor-pointer" >terms & conditions</span>
+            </Link>
         </div>
 
     )
@@ -71,7 +73,9 @@ const Subscribe = () => {
                     </span>
                 </Button>
             </div>
-            <a className="text-DS_black text-sm opacity-50" href="/terms_conditions">terms & conditions</a>
+            <Link href="/terms_conditions">
+                <span className="text-DS_black text-sm opacity-50 cursor-pointer" >terms & conditions</span>
+            </Link>
         </div>
 
     )

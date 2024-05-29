@@ -16,11 +16,11 @@ function ResetPassword() {
             <p>Now choose a category to view the best creatives in this field</p>
           </div>
           <div className="mb-4 relative">
-            <a href="/">
-            <Button name="login" shadow={true}>
-              home screen
-            </Button>
-            </a>
+            <Link href={"/"}>
+              <Button type="submit" name="login" shadow={true}>
+                home screen
+              </Button>
+            </Link>
           </div>
         </form>
       </Auth>
