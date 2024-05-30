@@ -17,11 +17,11 @@ function PasswordChanged() {
             <p>Your password has been changed successfully</p>
           </div>
           <div className="mb-4 relative">
-            <a href={"/"}>
+            <Link href={"/login"}>
               <Button type="submit" name="login" shadow={true}>
                 Back to Login
               </Button>
-            </a>
+            </Link>
           </div>
         </div>
       </Auth>

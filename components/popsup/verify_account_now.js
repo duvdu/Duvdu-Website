@@ -37,11 +37,11 @@ function Verify({ auth, showpopup, resendCode }) {
                         <br />
                         Please verify your account now.
                     </span>
-                    <a className="max-w-96 w-full" onClick={handleverifyClick}>
+                    <div className="max-w-96 w-full" onClick={handleverifyClick}>
                         <AppButton>
                             Verify
                         </AppButton>
-                    </a>
+                    </div>
                 </div>
             </Popup>
         </>

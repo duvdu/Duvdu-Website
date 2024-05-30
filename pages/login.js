@@ -135,11 +135,8 @@ function Login({ api, login_respond, login }) {
             <div className="submit-btn"></div>
           </button>
           <div className="have-account">
-            <span>Don't have an account ?</span>
-              <Link  href="/register">
-                <div className="cursor-pointer">Register now</div>
-              </Link>
-
+            <span>Don't have an account ? </span>
+              <Link  href="/register">Register now</Link>
           </div>
           <div className="flex items-center">
             <div className="border-t border-black opacity-20 w-full my-4"></div>

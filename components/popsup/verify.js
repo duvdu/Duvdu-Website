@@ -3,6 +3,7 @@
 import Popup from '../elements/popup';
 import Button from '../elements/button';
 import Icon from '../Icons'
+import Link from "next/link";
 
 
 function Verify() {
@@ -44,7 +45,9 @@ function Verify() {
                             </Button>
                         </div>
                     </div>
-                    <a className="text-DS_black text-sm opacity-50 mt-3" href="/terms_conditions">terms & conditions</a>
+                    <Link href="/terms_conditions">
+                    <span className="text-DS_black text-sm opacity-50 mt-3 cursor-pointer" >terms & conditions</span>
+                    </Link>
                 </div>
             </Popup>
 

@@ -29,21 +29,25 @@ function Custom404() {
                                         the page may have been removed.
                                         <br />
                                         visit the{" "}
-                                        <Link href="/"><a>
-                                            {" "}
-                                            <span> Homepage</span>
-                                        </a></Link>
-                                        or{" "}
-                                        <Link href="/page-contact"><a>
-                                            <span>Contact us</span>
-                                        </a></Link>
+                                        <Link href="/">
+                                            <span className="text-primary cursor-pointer">
+                                                {" "}Homepage
+                                            </span>
+                                        </Link>
+                                        {" "}or{" "}
+                                        <Link href="/page-contact">
+                                            <span className="text-primary cursor-pointer">
+                                                Contact us{" "}
+                                            </span>
+                                        </Link>
                                         about the problem
                                     </p>
 
-                                    <Link href="/"><a className=" ">
-                                        <i className="mr-5"></i>
-                                        Back To Home Page
-                                    </a>
+                                    <Link href="/">
+                                        <span className="text-primary cursor-pointer">
+                                            <i className="mr-5"></i>
+                                            Back To Home Page
+                                        </span>
                                     </Link>
                                 </div>
                             </div>

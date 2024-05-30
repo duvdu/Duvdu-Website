@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
 import Button from '../elements/button';
+import Link from "next/link";
 
 function FormSubmitted() {
     const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
@@ -55,14 +56,17 @@ function Directorconfirmed() {
             </div>
             <div className="flex justify-center items-center">
                 <div className='flex justify-center w-full '>
-                    <a href='/payment'>
-                    <Button  className={'px-36 my-5 max-w-[400px] text-white'} >
-                        Done
-                    </Button>
-                    </a>
+                    <Link href={"/payment"}>
+                        <Button  className={'px-36 my-5 max-w-[400px] text-white'} >
+                            Done
+                        </Button>
+                    </Link>
                 </div>
             </div>
-            <a className="text-DS_black text-sm underline font-semibold opacity-70 mt-3" href="/terms_conditions">book appointment</a>
+            <Link href="/">
+                <span className="DS_black text-sm underline font-semibold opacity-70 mt-3 cursor-pointer" >book appointment</span>
+            </Link>
+
         </div>
     );
 }

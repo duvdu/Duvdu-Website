@@ -243,11 +243,11 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                 )}
                 {step == pages.length - 1 && (
                     <div className="mb-4 relative">
-                        <a href={"/"}>
+                        <Link href={"/login"}>
                             <Button type="submit" name="login" shadow={true}>
                                 Back to Login
                             </Button>
-                        </a>
+                        </Link>
                     </div>
                 )}
             </div> */}
