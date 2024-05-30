@@ -10,19 +10,21 @@ import { GetAllMessageInChat } from "../../../redux/action/apis/realTime/message
 import { getOtherprofile } from "../../../redux/action/apis/auth/profile/getOtherProfile";
 import { useRouter } from "next/router";
 import { GetProjects } from "../../../redux/action/apis/cycles/projects/get";
+import { setFollow } from "../../../redux/action/apis/auth/profile/setFollow";
+import { setUnFollow } from "../../../redux/action/apis/auth/profile/setUnFollow";
 
-function OtherProfile({ user, getOtherprofile, GetAllMessageInChat,GetProjects,projects }) {
+function OtherProfile({ user, getOtherprofile, GetAllMessageInChat, GetProjects, projects, setFollow, follow_respond, setUnFollow, unfollow_respond }) {
     const route = useRouter()
     const { profile: username } = route.query
     useEffect(() => {
         getOtherprofile(username)
         GetProjects({})
     }, [username])
-    
-    projects = projects?.data 
-    
+
+    projects = projects?.data
+
     var profile = {
-     
+
         "comments": [
             {
                 "id": 1,
@@ -46,65 +48,77 @@ function OtherProfile({ user, getOtherprofile, GetAllMessageInChat,GetProjects,p
                 "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
             },
         ],
-       
 
     };
-    user = user?.data[0]
+    if (follow_respond)
+        user = user?.data[0]
+    const swapFollow = () => {
+        if (user.isFollow || false) // isFollow
+            setUnFollow(user._id)
+        else
+            setFollow(user._id)
+    }
+
     return (
         user &&
         // !user ? <h1> There's No User name {username} </h1> :
-            <div className='sm:container'>
-                <Conver converPic={user.coverImage || process.env.DEFULT_COVER_PATH} />
-                <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
-                    <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
-                        <div className='px-6 sm:px-10'>
-                            {/* info */}
-                            <Info src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
-                                location={user.adress || 'NONE'}
-                                occupation={'---'}
-                                personalName={user.name}
-                                popularity={{
-                                    likes:0,
-                                    followers:0,
-                                    views:0,
-                                }}
-                                rank={'---'}
-                                rates={user?.rate?.totalRates}
-                            />
-                            {/* -- info -- */}
-                            <div className='flex gap-3 items-center'>
-                                <AppButton className="w-full mb-7 mt-7 z-0" >Follow</AppButton>
-                                <div onClick={() =>  GetAllMessageInChat(user._id) } className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
-                                    <Icon type='far' name="chat" />
-                                </div>
+        <div className='sm:container'>
+            <Conver converPic={user.coverImage || process.env.DEFULT_COVER_PATH} />
+            <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
+                <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
+                    <div className='px-6 sm:px-10'>
+                        {/* info */}
+                        <Info src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
+                            location={user.adress || 'NONE'}
+                            occupation={'---'}
+                            personalName={user.name}
+                            popularity={{
+                                likes: 0,
+                                followers: user.followers || 0,
+                                views: 0,
+                            }}  
+                            rank={'---'}
+                            rates={user?.rate?.totalRates}
+                        />
+                        {/* -- info -- */}
+                        <div className='flex gap-3 items-center'>
+                            <AppButton
+                                className={`w-full mb-7 mt-7 z-0 ${user.isFollow ? 'opacity-60' : ''}`}
+                                onClick={swapFollow}
+                            >
+                                {user.isFollow ? 'Unfollow' : 'Follow'}
+                            </AppButton>
+                            <div onClick={() => GetAllMessageInChat(user._id)} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
+                                <Icon type='far' name="chat" />
                             </div>
                         </div>
-
-                        <div className='h-divider'></div>
-                        <div className='px-10'>
-                            <h3 className='pt-6' id='about-header'>about</h3>
-                            <p className='pt-6' id='about-paragraph'>{user.about}</p>
-                        </div>
-                        <div className='h-divider my-7'></div>
-                        <div className='px-10'>
-                            <div className='flex flex-col gap-4'>
-                                {profile.comments.map((comment) => (
-                                    <Comment key={comment.id} comment={comment} />
-                                ))}
-                            </div>
-                        </div>
-
                     </div>
-                    <div className='right-side'>
-                        {
-                            projects?.length == 0 &&
-                            <h3>No User Found </h3>
-                        }
 
-                        <Projects projects={projects} />
+                    <div className='h-divider'></div>
+                    <div className='px-10'>
+                        <h3 className='pt-6' id='about-header'>about</h3>
+                        <p className='pt-6' id='about-paragraph'>{user.about}</p>
                     </div>
+                    <div className='h-divider my-7'></div>
+                    <div className='px-10'>
+                        <div className='flex flex-col gap-4'>
+                            {profile.comments.map((comment) => (
+                                <Comment key={comment.id} comment={comment} />
+                            ))}
+                        </div>
+                    </div>
+
+                </div>
+                <div className='right-side'>
+                    {
+                        projects?.length == 0 &&
+                        <h3>No User Found </h3>
+                    }
+
+                    <Projects projects={projects} />
                 </div>
             </div>
+        </div>
 
     );
 }
@@ -112,13 +126,17 @@ function OtherProfile({ user, getOtherprofile, GetAllMessageInChat,GetProjects,p
 
 const mapStateToProps = (state) => ({
     user: state.api.getOtherprofile,
-    projects: state.api.GetProjects
+    projects: state.api.GetProjects,
+    follow_respond: state.api.setFollow,
+    setUnFollow_respond: state.api.setUnFollow,
 });
 
 const mapDispatchToProps = {
     GetAllMessageInChat,
     getOtherprofile,
-    GetProjects
+    GetProjects,
+    setFollow,
+    setUnFollow
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OtherProfile);

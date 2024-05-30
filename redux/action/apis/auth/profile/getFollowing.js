@@ -1,24 +1,20 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
+import { io } from "socket.io-client";
 
-export const BookProducer = (id,data) => {
-  
-  const req = "BookProducer"
+
+export const getFollowing = () => {
+  const req = "getFollowing"
   return async dispatch => {
-    if(!id) {
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
-      return 
-    }
-    // for(let [name, value] of data) {
-    //   console.log(`${name} = ${value}`); 
-    // }
+    
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
+
     try {
-      const response = await mainApiInstance.post(`api/producer/book`, data);
+      const response = await mainApiInstance.get('/api/users/follow/user-following');
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
-        // console.log("error " , JSON.stringify(error.response))
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
+      dispatch({ type: Types.USER_NONE })
     }
   };
-};
+}

@@ -38,7 +38,7 @@ const Permit = ({ GetCopyrights, respond }) => {
     useEffect(() => {
     if (respond) {
         const array = respond.data
-        console.log(array)
+        
         
         let convertedList = []
         for (let index = 0; index < array.length; index++) {

@@ -89,7 +89,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     useEffect(() => {
         GetProjects({})
     }, [])
-    console.log(goEdit)
+    
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
             route.replace({

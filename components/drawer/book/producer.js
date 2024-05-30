@@ -46,7 +46,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         toggleDrawer()
         ontoggleDrawer()
     }
-    
+
     useEffect(() => {
         if (respond)
             setPost_success(true)
@@ -65,14 +65,9 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
     }
 
     function onsubmit() {
-        if (!preview) {
-            setPreview(true)
-            return
-        }
-        if (submit)
-            submit()
-
-        BookProducer(data._id, converting(formData))
+        submit?.()
+        console.log(formData)
+        BookProducer(data._id, formData)
     }
 
     const attachmentsUpload = (e) => {
@@ -127,7 +122,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                 <div className="h-24" />
                 <section className={`absolute left-0 bottom-0 w-full flex flex-col gap-7 py-6`}>
                     <div className="flex justify-center">
-                        <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-min sm:w-96" text={preview ? 'check-out' : 'continue'} />
+                        <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-min sm:w-96" text={'continue'} />
                     </div>
                 </section>
 

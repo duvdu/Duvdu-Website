@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import Icon from '../../components/Icons';
-import { convertToK } from "../../util/util";
+import { OpenPopUp, convertToK } from "../../util/util";
 import ProjectCard from "../../components/elements/project-card";
 import { convertHoursTo__ } from '../../util/util';
 import Comment from '../../components/elements/comment';
@@ -424,7 +424,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, auth, chat_respond }
 
 
                     <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                        <div onclick={openShare} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
+                        <div onClick={openShare} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                             <Icon name={'share'} />
                         </div>
                         {auth.login &&
