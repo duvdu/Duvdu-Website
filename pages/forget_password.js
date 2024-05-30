@@ -187,8 +187,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                                 </div>
                             }
                         </div>
-
-                        {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
+                        {passwordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(passwordError.message) }} />}
                     </div>
                     <div className={`mb-20 ${confirmPasswordError.isError && 'error'}`}>
                         <div className="relative password-container">
@@ -213,9 +212,8 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                                 </div>
                             }
                         </div>
-                        {confirmPasswordError.isError && <p className="error-msg">{confirmPasswordError.message}</p>}
+                        {confirmPasswordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(confirmPasswordError.message) }}/>}
                     </div>
-                    <div className="h-10" />
                     <button className="w-full" type="submit" >
                         <Button name="reset-password" shadow={true}>
                             Next

@@ -90,15 +90,17 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                             onSwiper={(swiper) => setSwiper(swiper)}
                                             onSlideChange={() => setActive((active + 1) % imageSources.length)}
                                             loop={true}
-                                            autoplay={{ delay: 4000 }}
+                                            // autoplay={{ delay: 4000 }}
                                             speed={1500}
                                         >
                                             {imageSources.map((source, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <div className="relative min-h-[790px] min-w-96 size-full">
-                                                        <div className="absolute flex flex-col justify-end auth-gradient h-full px-16 py-28">
-                                                            <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
-                                                            <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
+                                                    <div className="relative min-h-[790px] lg:min-h-0 min-w-96 size-full">
+                                                        <div className="absolute inset-0 flex flex-col auth-gradient px-16">
+                                                            <div className="absolute bottom-20">
+                                                                <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
+                                                                <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
+                                                            </div>
                                                         </div>
                                                         {
                                                             location &&

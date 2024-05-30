@@ -21,13 +21,14 @@ function OTP({
     const [local_error, setlocal_error] = useState(false);
 
     useEffect(() => {
+        console.log(resendCode_respond?.code)
     }, [resendCode_respond?.message])
 
-    useEffect(() => {
-        if (resendCode_respond) {
-            setcount(100)
-        }
-    }, [resendCode_respond?.message])
+    // useEffect(() => {
+    //     if (resendCode_respond) {
+    //         setcount(100)
+    //     }
+    // }, [resendCode_respond?.message])
 
     useEffect(() => {
         if (verify_respond) {
@@ -40,6 +41,9 @@ function OTP({
     useEffect(() => {
         if (api.error && (api.req == "resendCode" || api.req == "verify")) {
             const errorMessage = errorConvertedMessage(api.error);
+            if(api.req){
+                setcount(0)
+            }
             setlocal_error(errorMessage)
         }
         else {
