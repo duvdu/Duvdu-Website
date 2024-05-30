@@ -167,6 +167,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data, false)
         }
+    
         return (
             <>
                 <Conver converPic={user.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.coverImage : "/assets/imgs/projects/cover.jpeg"} />
@@ -179,18 +180,15 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                                 location={user.adress || 'NONE'}
                                 occupation={user.service || '---'}
                                 personalName={user.name}
-                                popularity={
-                                    {
-                                        'Likes': '---',
-                                        'Followers': '---',
-                                        'Views': user.profileViews,
-                                    }
-                                }
-                                rank={"-------"}
+                                popularity={{
+                                    likes:0,
+                                    followers:user.followers,
+                                    views:0,
+                                }}
+                                rank={"---"}
                                 rates={user.rate.totalRates.toFixed(1)}
                             />
                         </div>
-
 
                         <div className='flex items-center justify-center my-7 gap-2'>
                             <Switch onSwitchChange={updateInstantState} value={user.isAvaliableToInstantProjects} id='profile-instant' />
@@ -202,7 +200,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                         <div className='h-divider'></div>
                         <div className='px-10'>
                             <h3 className='pt-6' id='about-header'>about</h3>
-                            <p className='pt-6' id='about-paragraph'>{user.about || '-----'}</p>
+                            <p className='pt-6' id='about-paragraph'>{user.about || '---'}</p>
                         </div>
                         <div className='h-divider my-7'></div>
                         <div className='px-10'>

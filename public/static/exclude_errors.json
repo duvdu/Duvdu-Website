@@ -12,5 +12,6 @@
     "GetAllChats",
     "GetNotifications",
     "signup",
+    "GetBoards",
     "login"
 ]
