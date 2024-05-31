@@ -122,7 +122,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
                 </Link>
               ) : (
                 <Link href={`/${type}/${cardData._id}`}>
-                  <img className='cardimg' src={cardData.cover} alt="project" />
+                  <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
                 </Link>
               )
             }

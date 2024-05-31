@@ -75,7 +75,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                                     {i === -1 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === -1 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                                     {i === -1 && <RelatedCategories className="hidden xl:block col-span-full" />}
-                                    <ProjectCard className='cursor-pointer' cardData={item} />
+                                    <ProjectCard cardData={item} />
                                 </React.Fragment>
                             ))}
                         </div>
