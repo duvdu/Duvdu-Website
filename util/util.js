@@ -186,29 +186,39 @@ export const convertDuration = (durationInMilliseconds) => {
 };
 
 export const errorConvertedMessage = (error) => {
-  if (!error) return null
+  if (!error) return null;
+
   try {
-    var errorConverted = JSON.parse(error)
+    const errorConverted = JSON.parse(error);
+    console.log(errorConverted);
+
     try {
-      //////////// main //////////////
-      var isFeilds = validateErrorsAsList(errorConverted.data)
-      if (isFeilds) {
-        const errors = errorConverted.data.errors;
-        const formattedMessages = errors.map(error => `<ul>${error.field}: ${error.message}</ul>`).join('');
-        return `<strong>Errors Fields:</strong> <li style="padding-left:20px"> ${formattedMessages} </li>`;
+      const errors = errorConverted.data.errors;
+
+      if (errors.length === 1) {
+        // If there is only one error, return a simple error message
+        return `<div>Error message: ${errors[0].message}</div>`;
       }
-      else {
-        const errorMessage = errorConverted.data.errors.map(error => error.message).join('<br/>');
-        return errorMessage;
+
+      // Check if there are field-specific errors
+      const hasFieldErrors = errors.some(error => error.field);
+
+      if (hasFieldErrors) {
+        // Format field-specific errors as a list
+        const formattedMessages = errors.map(error => `<li>${error.field}: ${error.message}</li>`).join('');
+        return `<strong>Error Fields:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
+      } else {
+        // Format general errors as a list
+        const formattedMessages = errors.map(error => `<li>${error.message}</li>`).join('');
+        return `<strong>Error Messages:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       }
-    }
-    catch (err) {
+    } catch (err) {
       const errorMessage = errorConverted.data.message;
       return errorMessage;
     }
-  }
-  catch (err) {
-    return error.toString()
+  } catch (err) {
+    console.log("Error parsing JSON:", err);
+    return error.toString();
   }
 };
 

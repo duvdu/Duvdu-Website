@@ -38,6 +38,11 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
 
     }, [studioId]);
 
+    const loveToggleAction = () => {
+        SwapProjectToFav({ projectId: projectId, action: project.isFavourite ? "remove" : "add" })
+    };
+
+    
     useEffect(() => {
         GetStudios({ limit: 4 });
     }, []);

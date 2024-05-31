@@ -74,17 +74,6 @@ const projects = ({
 
     const loveToggleAction = () => {
         SwapProjectToFav({ projectId: projectId, action: project.isFavourite ? "remove" : "add" })
-
-        // if (projectId && getBoards_respond.data) {
-        //     if (love) {
-        //         console.log(findProjectId(projectId,getBoards_respond.data[0]._id))
-        //         DeleteProjectFromBoard(getBoards_respond.data[0]._id, findProjectId(projectId,getBoards_respond.data[0]._id))
-        //     }
-        //     else {
-        //         AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
-        //     }
-        //     seIsFav(true)
-        // }
     };
     
     useEffect(() => {
