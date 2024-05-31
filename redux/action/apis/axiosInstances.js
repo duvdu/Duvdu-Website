@@ -1,7 +1,19 @@
+import axios from 'axios';
 
-// import * as Types from "../../constants/actionTypes";
-import axios from 'axios'
-let prevdate = Date.now();
+let prevDate = Date.now();
+
+function convertLanguageToISO(languageName) {
+  switch (languageName.toLowerCase()) {
+    case 'arabic':
+      return 'ar';
+    case 'english':
+      return 'en';
+    // Add more cases for other languages if needed
+    default:
+      return 'en'; // Default to English
+  }
+}
+
 // Create an instance of axios
 export const mainApiInstance = axios.create({
   baseURL: process.env.BASE_URL || "",
@@ -11,19 +23,30 @@ export const mainApiInstance = axios.create({
 // Add a request interceptor
 mainApiInstance.interceptors.request.use(
   config => {
-    const dateNow = Date.now()
-    const timeSinceLastRequest = dateNow - prevdate;
+    const dateNow = Date.now();
+    const timeSinceLastRequest = dateNow - prevDate;
+
+    const languageName = localStorage.getItem('lang') || 'english';
+    const languageISOCode = convertLanguageToISO(languageName);
+
+    // Set the language in the request headers
+    config.headers['lang'] = languageISOCode;
 
     if (timeSinceLastRequest < 1000) {  // Check if less than 1 second has passed
       // Delay the request to fulfill the 1 second requirement
       return new Promise((resolve) => {
         setTimeout(() => {
-          prevdate = Date.now();  // Update prevdate to the current time
+          prevDate = Date.now();  // Update prevDate to the current time
           resolve(config);  // Continue with the request configuration
         }, 1000 - timeSinceLastRequest);  // Calculate the remaining time to delay
       });
     }
-    prevdate = dateNow;
+    prevDate = dateNow;
+
+    // Get the language from wherever it's stored in your application
+    // Default to English if not found
+
+
     return config;
   },
   error => {
@@ -45,11 +68,11 @@ mainApiInstance.interceptors.response.use(
     return response;
   },
   async error => {
-    console.log(error.response)
+    // console.log(error.response)
     if (error.response && error.response.status === 423) {
 
       if (error.config.url == "/api/users/auth/refresh") {
-        
+
       }
       else {
         try {

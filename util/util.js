@@ -190,25 +190,24 @@ export const errorConvertedMessage = (error) => {
 
   try {
     const errorConverted = JSON.parse(error);
-    console.log(errorConverted);
-
+    
     try {
       const errors = errorConverted.data.errors;
 
       if (errors.length === 1) {
-        // If there is only one error, return a simple error message
-        return `<div>Error message: ${errors[0].message}</div>`;
+      
+        return `<div>${errors[0].message}</div>`;
       }
 
-      // Check if there are field-specific errors
+      
       const hasFieldErrors = errors.some(error => error.field);
 
       if (hasFieldErrors) {
-        // Format field-specific errors as a list
+        
         const formattedMessages = errors.map(error => `<li>${error.field}: ${error.message}</li>`).join('');
         return `<strong>Error Fields:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       } else {
-        // Format general errors as a list
+        
         const formattedMessages = errors.map(error => `<li>${error.message}</li>`).join('');
         return `<strong>Error Messages:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       }
