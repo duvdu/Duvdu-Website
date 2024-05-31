@@ -12,7 +12,7 @@ import { calculateRating } from '../../util/util';
 const Studios = ({ GetStudio, respond,api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const producers = respond?.data 
+    const studios = respond?.data 
     const pagganation = respond?.pagination
     const page = 1;
     const showLimit = 12;
@@ -61,7 +61,7 @@ const Studios = ({ GetStudio, respond,api }) => {
         toggleDrawer();
     };
 
-    if(!producers) return
+    if(!studios) return
     return (
         <>
             <Layout>
@@ -69,11 +69,11 @@ const Studios = ({ GetStudio, respond,api }) => {
                     <div className="container mb-30">
                         <Filter />
                         <h1 className="page-header my-6">most popular on duvdu</h1>
-                        {producers.length === 0 && (
+                        {studios.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="minmax-360">
-                            {producers.map((item, i) => {
+                            {studios.map((item, i) => {
                                 return <Card onClick={() => handlesetdata(item)} key={i} cardData={item} />;
 
                             })}

@@ -12,14 +12,28 @@ import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
 import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
 import Link from 'next/link';
+import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
+import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 
-const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_respond,addProjectToBoard_respond, AddProjectToBoard,DeleteProjectFromBoard,islogin }) => {
+const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, GetProject, GetProject_respond, SwapProjectToFav }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
   const [love, setLove] = useState(false);
-  const loveIconName = love ? 'fas' : 'far'
+  const [actionID, setActionID] = useState(null);
+  const [cardData, setCardData] = useState(initialCardData);
+  const loveIconName = cardData.isFavourite ? 'fas' : 'far'
+
+  useEffect(() => {
+    if(swapProjectToFav_respond && actionID == cardData._id)
+    {setCardData(prev => ({ 
+      ...prev, 
+      isFavourite: !prev.isFavourite 
+    }));
+    setActionID(null)
+  }
+  }, [swapProjectToFav_respond]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -31,23 +45,19 @@ const ProjectCard = ({ cardData, className = "", type = 'project', getBoards_res
       }, 10)
     }
   }, [videoRef.current?.duration == NaN]);
-  useEffect(() => {
-    if (addProjectToBoard_respond) {
-      
-    }
-  }, [addProjectToBoard_respond]);
 
-const loveToggleAction = () => {
-    console.log(getBoards_respond)
-    if (cardData._id && getBoards_respond.data) {
-        if (love) {
-            DeleteProjectFromBoard(getBoards_respond.data[0]._id, cardData._id)
-        }
-        else {
-          AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: cardData._id })
-        }
-    }
-};
+  // useEffect(() => {
+  //   if (swapProjectToFav_respond) {
+  //     GetProject(cardData._id)
+  //   }
+  // }, [swapProjectToFav_respond]);
+
+
+
+  const loveToggleAction = () => {
+    setActionID(cardData._id)
+    SwapProjectToFav({ projectId: cardData._id, action: cardData.isFavourite ? "remove" : "add" })
+  };
 
   const timeUpdate = () => {
     setDuration(videoRef.current.duration - videoRef.current.currentTime);
@@ -75,12 +85,12 @@ const loveToggleAction = () => {
 
   };
 
-  
-  useEffect(() => {
-    if (cardData._id) {
-      setLove(isFav(cardData._id, getBoards_respond))
-    }
-  }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
+
+  // useEffect(() => {
+  //   if (cardData._id) {
+  //     setLove(isFav(cardData._id, getBoards_respond))
+  //   }
+  // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
 
 
   return (
@@ -120,24 +130,24 @@ const loveToggleAction = () => {
               false &&
               cardData.backgroundImages.length > 1 &&
               <Link href={`/${type}/${cardData._id}`}>
-              <Swiper
-                dir='ltr'
-                className='cardimg'
-                modules={[Autoplay, Navigation, EffectFade, Pagination]}
-                spaceBetween={0}
-                slidesPerView={1}
-                scrollbar={{ draggable: true }}
-                loop={true}
-                pagination={{
-                  clickable: true,
-                }}
-              >
-                {cardData.backgroundImages.map((source, index) => (
-                  <SwiperSlide key={index}>
-                    <img key={index} src={source} className='cardimg' alt="project" />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+                <Swiper
+                  dir='ltr'
+                  className='cardimg'
+                  modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                  spaceBetween={0}
+                  slidesPerView={1}
+                  scrollbar={{ draggable: true }}
+                  loop={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                >
+                  {cardData.backgroundImages.map((source, index) => (
+                    <SwiperSlide key={index}>
+                      <img key={index} src={source} className='cardimg' alt="project" />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
               </Link>
             }
           </>
@@ -160,7 +170,7 @@ const loveToggleAction = () => {
                 <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
               </div>
             </Link>
-            <Link  href={`/creative/${cardData.user.username}`}>
+            <Link href={`/creative/${cardData.user.username}`}>
               <div className='cursor-pointer' >
                 <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
               </div>
@@ -183,12 +193,16 @@ const mapStateToProps = (state) => ({
   islogin: state.auth.login,
   getBoards_respond: state.api.GetBoards,
   addProjectToBoard_respond: state.api.AddProjectToBoard,
+  swapProjectToFav_respond: state.api.SwapProjectToFav,
+  GetProject_respond: state.api.GetProject,
 
 });
 
 const mapDispatchToProps = {
   AddProjectToBoard,
-  DeleteProjectFromBoard
+  DeleteProjectFromBoard,
+  SwapProjectToFav,
+  GetProject
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);

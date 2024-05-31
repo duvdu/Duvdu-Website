@@ -1,4 +1,4 @@
-import Auth from '../components/layout/Auth'
+import Auth from '../components/layout/Auth';
 import React, { useEffect, useState } from 'react';
 import Button from '../components/elements/button';
 import Icon from '../components/Icons';
@@ -8,13 +8,10 @@ import { ASKforgetpassword } from "../redux/action/apis/auth/changePassword/askF
 import { ChangePassword } from "../redux/action/apis/auth/changePassword/changePassword";
 import { errorConvertedMessage } from '../util/util';
 
-
-
 function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_respond }) {
     const [step, setStep] = useState(1);
-    const pages = ['', 'OTP', 'ResetPassword', 'PasswordChanged'];
     const [username, setUsername] = useState(null);
-
+    const pages = ['', 'OTP', 'ResetPassword', 'PasswordChanged'];
 
     useEffect(() => {
         const handlePopstate = () => {
@@ -25,11 +22,17 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
         };
 
         window.addEventListener('popstate', handlePopstate);
-
-        return () => {
-            window.removeEventListener('popstate', handlePopstate);
-        };
+        return () => window.removeEventListener('popstate', handlePopstate);
     }, []);
+
+    useEffect(() => {
+        if (ask_respond) handleNextStep(2);
+    }, [ask_respond?.message]);
+
+    useEffect(() => {
+        if (Change_respond) handleNextStep(4);
+    }, [Change_respond?.message]);
+
     const handleNextStep = (value) => {
         if (value <= pages.length) {
             setStep(value);
@@ -37,44 +40,32 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
             window.history.pushState({ path: newURL }, '', newURL);
         }
     };
-    useEffect(() => {
-        console.log(ask_respond)
-        if (ask_respond)
-            handleNextStep(2)
-    }, [ask_respond?.message])
 
-    useEffect(() => {
-        if (Change_respond)
-            handleNextStep(4)
-    }, [Change_respond?.message])
-
-    function EnterYourPhoneNumber() {
-        const [username, setPhoneNumber] = useState('');
-
-        const [nameError, setUserError] = useState({ isError: false, message: '' });
+    const EnterYourPhoneNumber = () => {
+        const [phoneNumber, setPhoneNumber] = useState('');
+        const [nameError, setNameError] = useState({ isError: false, message: '' });
 
         const handleSubmit = (e) => {
-
             e.preventDefault();
-            if (username.length < 1) {
-                setUserError({ isError: true, message: 'Enter your username' });
+            if (phoneNumber.length < 1) {
+                setNameError({ isError: true, message: 'Enter your username' });
             } else {
-                setUserError({ isError: false, message: '' });
-                ASKforgetpassword({ username: username })
-                setUsername(username)
+                setNameError({ isError: false, message: '' });
+                ASKforgetpassword({ username: phoneNumber });
+                setUsername(phoneNumber);
             }
         };
 
         const handleChange = (value) => {
             setPhoneNumber(value);
         };
-        useEffect(() => {
 
-            if (api.req == "ASKforgetpassword" && api.error) {
-                const errorMessage = errorConvertedMessage(api.error)
-                setUserError({ isError: true, message: errorMessage });
+        useEffect(() => {
+            if (api.req === "ASKforgetpassword" && api.error) {
+                const errorMessage = errorConvertedMessage(api.error);
+                setNameError({ isError: true, message: errorMessage });
             }
-        }, [api.error])
+        }, [api.error]);
 
         return (
             <form method="post" onSubmit={handleSubmit}>
@@ -86,187 +77,116 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                         type="text"
                         placeholder="@username"
                         className={nameError.isError ? "app-field error" : "app-field"}
-                        value={username}
+                        value={phoneNumber}
                         onChange={(e) => handleChange(e.target.value)}
-
                     />
                     {nameError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(nameError.message) }} />}
-
                 </div>
                 <div className="h-10" />
-                <button className="w-full" type="submit" >
-                    <Button name="reset-password" shadow={true}>
-                        Next
-                    </Button>
+                <button className="w-full" type="submit">
+                    <Button name="reset-password" shadow={true}>Next</Button>
                 </button>
-
             </form>
-        )
-    }
+        );
+    };
 
-    function ResetPassword({ onNextStep }) {
+    const ResetPassword = () => {
         const [password, setPassword] = useState('');
         const [confirmPassword, setConfirmPassword] = useState('');
-
         const [passwordError, setPasswordError] = useState({ isError: false, message: '' });
         const [confirmPasswordError, setConfirmPasswordError] = useState({ isError: false, message: '' });
-
         const [showPassword, setShowPassword] = useState(false);
         const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-
         const handleSubmit = (e) => {
             e.preventDefault();
+            let pError = password.length < 8;
+            let pcError = password !== confirmPassword;
 
-            // Validation for password
-            var pError = true, pcError = true
+            setPasswordError({ isError: pError, message: pError ? 'Password must be at least 8 characters long' : '' });
+            setConfirmPasswordError({ isError: pcError, message: pcError ? 'Passwords do not match' : '' });
 
-            pError = password.length < 8
-            if (pError) {
-                setPasswordError({ isError: true, message: 'Password must be at least 8 characters long' });
-            } else {
-                setPasswordError({ isError: false, message: '' });
-            }
-
-            pcError = password !== confirmPassword
-            if (pcError) {
-                setConfirmPasswordError({ isError: true, message: 'Passwords do not match' });
-            } else {
-                setConfirmPasswordError({ isError: false, message: '' });
-            }
-
-            // Continue with form submission or other actions if no errors
             if (!pError && !pcError) {
-                ChangePassword({ newPassword: password, username: username })
-                // onNextStep();
+                ChangePassword({ newPassword: password, username: username });
             }
         };
 
         useEffect(() => {
-            if (api.req == "ChangePassword" && api.error) {
-                const errorMessage = errorConvertedMessage(api.error)
+            if (api.req === "ChangePassword" && api.error) {
+                const errorMessage = errorConvertedMessage(api.error);
                 setPasswordError({ isError: true, message: errorMessage });
             }
-        }, [api.req, api.error && api.error.message]);
-        const toggleShowPassword = () => {
-            setShowPassword(!showPassword);
-        };
+        }, [api.req, api.error]);
 
-        const toggleShowConfirmPassword = () => {
-            setShowConfirmPassword(!showConfirmPassword);
-        };
+        const toggleShowPassword = () => setShowPassword(!showPassword);
+        const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
         return (
-            <>
-                <form method="post" action="/password_changed" onSubmit={handleSubmit}>
-                    <div className="heading_s1 mb-20 text-center">
-                        <h1 className="auth-title">Reset Password</h1>
-                        <p className="text-lg text-[#455154]">Please type something you’ll remember</p>
-                    </div>
-                    <div className={`mb-4 ${passwordError.isError && 'error'}`}>
-
-                        <div className="relative password-container">
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Password *"
-                                autoComplete="on"
-                                className={passwordError.isError ? "app-field error" : "app-field"}
-                            />
-                            {
-                                !showPassword &&
-                                <div className="w-5 icon" onClick={toggleShowPassword} >
-                                    <Icon className="opacity-40" name={"eye"} />
-                                </div>
-                            }
-                            {
-                                showPassword &&
-                                <div className="w-5 icon" onClick={toggleShowPassword}>
-                                    <Icon className="opacity-40" name={"eye-slash"} />
-                                </div>
-                            }
+            <form method="post" onSubmit={handleSubmit}>
+                <div className="heading_s1 mb-20 text-center">
+                    <h1 className="auth-title">Reset Password</h1>
+                    <p className="text-lg text-[#455154]">Please type something you’ll remember</p>
+                </div>
+                <div className={`mb-4 ${passwordError.isError && 'error'}`}>
+                    <div className="relative password-container">
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Password *"
+                            autoComplete="on"
+                            className={passwordError.isError ? "app-field error" : "app-field"}
+                        />
+                        <div className="w-5 icon" onClick={toggleShowPassword}>
+                            <Icon className="opacity-40" name={showPassword ? "eye-slash" : "eye"} />
                         </div>
-                        {passwordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(passwordError.message) }} />}
                     </div>
-                    <div className={`mb-20 ${confirmPasswordError.isError && 'error'}`}>
-                        <div className="relative password-container">
-                            <input
-                                type={showConfirmPassword ? 'text' : 'password'}
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                placeholder="Confirm Password *"
-                                autoComplete="on"
-                                className={passwordError.isError ? "app-field error" : "app-field"}
-                            />
-                            {
-                                !showConfirmPassword &&
-                                <div className="w-5 icon" onClick={toggleShowConfirmPassword} >
-                                    <Icon className="opacity-40" name={"eye"} />
-                                </div>
-                            }
-                            {
-                                showConfirmPassword &&
-                                <div className="w-5 icon" onClick={toggleShowConfirmPassword}>
-                                    <Icon className="opacity-40" name={"eye-slash"} />
-                                </div>
-                            }
+                    {passwordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(passwordError.message) }} />}
+                </div>
+                <div className={`mb-20 ${confirmPasswordError.isError && 'error'}`}>
+                    <div className="relative password-container">
+                        <input
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="Confirm Password *"
+                            autoComplete="on"
+                            className={confirmPasswordError.isError ? "app-field error" : "app-field"}
+                        />
+                        <div className="w-5 icon" onClick={toggleShowConfirmPassword}>
+                            <Icon className="opacity-40" name={showConfirmPassword ? "eye-slash" : "eye"} />
                         </div>
-                        {confirmPasswordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(confirmPasswordError.message) }}/>}
                     </div>
-                    <button className="w-full" type="submit" >
-                        <Button name="reset-password" shadow={true}>
-                            Next
-                        </Button>
-                    </button>
-                </form>
-            </>
+                    {confirmPasswordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(confirmPasswordError.message) }} />}
+                </div>
+                <button className="w-full" type="submit">
+                    <Button name="reset-password" shadow={true}>Next</Button>
+                </button>
+            </form>
         );
-    }
+    };
+
+    const PasswordChanged = () => (
+        <div className="flex flex-col justify-center h-full">
+            <div className="heading_s1 mb-[88px] text-center">
+                <div className="flex w-full justify-center">
+                    <Icon name={"done"} className="mb-9" />
+                </div>
+                <h1 className="auth-title mb-2">Password changed</h1>
+                <p>Your password has been changed successfully</p>
+            </div>
+        </div>
+    );
 
     return (
         <Auth>
             {step === 1 && <EnterYourPhoneNumber />}
-            {step === 2 && <OTP oNsucess={()=>handleNextStep(3)} username={username} />}
+            {step === 2 && <OTP onSuccess={() => handleNextStep(3)} username={username} />}
             {step === 3 && <ResetPassword />}
             {step === 4 && <PasswordChanged />}
-            {/* 
-            <div className="mb-4 relative">
-                {step < pages.length - 1 && (
-                    <button className="w-full" type="button" onClick={handleNextStep}>
-                        <Button name="reset-password" shadow={true}>
-                            Next
-                        </Button>
-                    </button>
-                )}
-                {step == pages.length - 1 && (
-                    <div className="mb-4 relative">
-                        <Link href={"/login"}>
-                            <Button type="submit" name="login" shadow={true}>
-                                Back to Login
-                            </Button>
-                        </Link>
-                    </div>
-                )}
-            </div> */}
         </Auth>
     );
 }
-
-
-
-
-
-
-const PasswordChanged = () => <div className="flex flex-col justify-center h-full">
-    <div className="heading_s1 mb-[88px] text-center">
-        <div className="flex w-full justify-center">
-            <Icon name={"done"} className="mb-9" />
-        </div>
-        <h1 className="auth-title mb-2">Password changed</h1>
-        <p>Your password has been changed successfully</p>
-    </div>
-</div>
 
 const mapStateToProps = (state) => ({
     api: state.api,
@@ -280,4 +200,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);
-

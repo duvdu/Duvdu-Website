@@ -7,10 +7,11 @@ import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetProducer } from '../../redux/action/apis/cycles/producer/get';
 import { calculateRating } from '../../util/util';
+import { useRouter } from 'next/router';
 
 
 const convertDataFormat = (data) => {
-console.log(data.user.profileImage)
+    console.log(data.user.profileImage)
     return {
         _id: data._id,
         img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",
@@ -25,29 +26,34 @@ console.log(data.user.profileImage)
 };
 
 const Producers = ({ GetProducer, respond }) => {
-    const showLimit = 24;
-    const [limit, setLimit] = useState(showLimit);
+    const Router = useRouter();
+    const searchTerm = Router.query.search;
+    const producers = respond?.data
+    const pagganation = respond?.pagination
+    const page = 1;
+    const showLimit = 12;
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
     const [permits, setPermits] = useState([]);
 
     useEffect(() => {
-        GetProducer({})
-    }, [])
-    
+        if (limit)
+            GetStudio({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
+    }, [limit])
+
     useEffect(() => {
-    if (respond) {
-        const array = respond.data
-        
-        
-        let convertedList = []
-        for (let index = 0; index < array.length; index++) {
-            const element = convertDataFormat(array[index]);
-            convertedList.push(element)
+        if (respond) {
+            const array = respond.data
+
+
+            let convertedList = []
+            for (let index = 0; index < array.length; index++) {
+                const element = convertDataFormat(array[index]);
+                convertedList.push(element)
+            }
+            setPermits(convertedList)
         }
-        setPermits(convertedList)
-    }
-}, [respond?.message])
+    }, [respond?.message])
 
 
 
@@ -55,46 +61,22 @@ const Producers = ({ GetProducer, respond }) => {
     const targetRef = useRef(null);
 
     useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5,
-        };
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-        let hasBeenVisible = false;
-
-        const handleIntersection = (entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        setLimit((prevLimit) => prevLimit + showLimit);
-                    }, 2000);
-                    if (targetRef.current) {
-                        targetRef.current.classList.add('active');
-                    }
-                    hasBeenVisible = true;
-                    observer.unobserve(entry.target);
+                if (scrolledToBottom) {
+                    setLimit(prevPage => showLimit + limit);
                 }
-                else {
-                    if (targetRef.current) {
-                        targetRef.current.classList.remove('active');
-                    }
-
-                }
-
-            });
+            }
         };
 
-        const observer = new IntersectionObserver(handleIntersection, options);
-
-        if (targetRef.current) {
-            observer.observe(targetRef.current);
-        }
-
-        return () => {
-            observer.disconnect();
-        };
-    }, [limit]);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [page, pagganation?.totalPages]);
 
 
     const handlesetdata = (item) => {
@@ -121,12 +103,7 @@ const Producers = ({ GetProducer, respond }) => {
 
                             })}
                         </div>
-                        {
-                            permits.length === limit &&
-                            <div className="load-parent">
-                                <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
-                            </div>
-                        }
+                        <img className={(api.loading && api.req == "GetProducer" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                         <Formsubmited />
                     </div>
                 </section>

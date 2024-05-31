@@ -13,14 +13,27 @@ import { GetProjects } from "../../../redux/action/apis/cycles/projects/get";
 import { setFollow } from "../../../redux/action/apis/auth/profile/setFollow";
 import { setUnFollow } from "../../../redux/action/apis/auth/profile/setUnFollow";
 
-function OtherProfile({ user, getOtherprofile, GetAllMessageInChat, GetProjects, projects, setFollow, follow_respond, setUnFollow, unfollow_respond }) {
+function OtherProfile({ 
+    user, 
+    getOtherprofile, 
+    GetAllMessageInChat, 
+    GetProjects, 
+    projects, 
+    setFollow, 
+    follow_respond, 
+    setUnFollow, 
+    setUnFollow_respond }) {
+
     const route = useRouter()
     const { profile: username } = route.query
     useEffect(() => {
         getOtherprofile(username)
         GetProjects({})
-    }, [username])
+        setUnFollow(-1)
+        setFollow(-1)
+    }, [username, setUnFollow_respond, follow_respond])
 
+    
     projects = projects?.data
 
     var profile = {
@@ -50,8 +63,9 @@ function OtherProfile({ user, getOtherprofile, GetAllMessageInChat, GetProjects,
         ],
 
     };
-    if (follow_respond)
-        user = user?.data[0]
+    user = user?.data[0]
+
+
     const swapFollow = () => {
         if (user.isFollow || false) // isFollow
             setUnFollow(user._id)
@@ -76,7 +90,7 @@ function OtherProfile({ user, getOtherprofile, GetAllMessageInChat, GetProjects,
                                 likes: 0,
                                 followers: user.followers || 0,
                                 views: 0,
-                            }}  
+                            }}
                             rank={'---'}
                             rates={user?.rate?.totalRates}
                         />
