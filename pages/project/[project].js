@@ -29,6 +29,7 @@ import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardPro
 import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
 import Link from 'next/link'
 import Share from "../../components/popsup/Share";
+import { SwapProjectToFav } from "../../redux/action/apis/savedProject/fav/favAction";
 
 
 const projects = ({
@@ -44,7 +45,9 @@ const projects = ({
     addProjectToBoard_respond,
     getBoards_respond,
     DeleteProjectFromBoard,
-    deleteProjectFromBoard_respond
+    deleteProjectFromBoard_respond,
+    swapProjectToFav_respond,
+    SwapProjectToFav
 }) => {
 
     const router = useRouter()
@@ -59,33 +62,29 @@ const projects = ({
          if (projectId) {
              GetProject(projectId);
          }
-     }, [projectId]);
+     }, [projectId,swapProjectToFav_respond]);
 
      useEffect(() => {
         GetProjects({ limit: "4" });
     }, []);
-
-    useEffect(() => {
-        if (projectId && getBoards_respond) {
-            setLove(isFav(projectId, getBoards_respond))
-        }
-    }, [projectId, getBoards_respond]);
 
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
 
     const loveToggleAction = () => {
-        if (projectId && getBoards_respond.data) {
-            if (love) {
-                console.log(findProjectId(projectId,getBoards_respond.data[0]._id))
-                DeleteProjectFromBoard(getBoards_respond.data[0]._id, findProjectId(projectId,getBoards_respond.data[0]._id))
-            }
-            else {
-                AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
-            }
-            seIsFav(true)
-        }
+        SwapProjectToFav({ projectId: projectId, action: project.isFavourite ? "remove" : "add" })
+
+        // if (projectId && getBoards_respond.data) {
+        //     if (love) {
+        //         console.log(findProjectId(projectId,getBoards_respond.data[0]._id))
+        //         DeleteProjectFromBoard(getBoards_respond.data[0]._id, findProjectId(projectId,getBoards_respond.data[0]._id))
+        //     }
+        //     else {
+        //         AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
+        //     }
+        //     seIsFav(true)
+        // }
     };
     
     useEffect(() => {
@@ -214,7 +213,7 @@ const projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} isLove={love} loveToggleAction={loveToggleAction} auth={auth}/>}
+                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} isLove={project.isFavourite} loveToggleAction={loveToggleAction} auth={auth}/>}
                         <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>
                 }
@@ -533,6 +532,7 @@ const mapStateToProps = (state) => ({
     projectFilters: state.projectFilters,
     chat_respond: state.api.GetAllMessageInChat,
     getBoards_respond: state.api.GetBoards,
+    swapProjectToFav_respond: state.api.SwapProjectToFav,
     auth: state.auth,
     api: state.api,
 });
@@ -542,7 +542,8 @@ const mapDidpatchToProps = {
     GetProject,
     GetAllMessageInChat,
     AddProjectToBoard,
-    DeleteProjectFromBoard
+    DeleteProjectFromBoard,
+    SwapProjectToFav
 };
 
 export default connect(mapStateToProps, mapDidpatchToProps)(projects);
