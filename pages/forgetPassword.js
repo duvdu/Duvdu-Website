@@ -41,23 +41,23 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
         }
     };
 
-    const EnterYourPhoneNumber = () => {
-        const [phoneNumber, setPhoneNumber] = useState('');
+    const EnterYourUserName = () => {
+        const [userName, setUserName] = useState('');
         const [nameError, setNameError] = useState({ isError: false, message: '' });
 
         const handleSubmit = (e) => {
             e.preventDefault();
-            if (phoneNumber.length < 1) {
+            if (userName.length < 1) {
                 setNameError({ isError: true, message: 'Enter your username' });
             } else {
                 setNameError({ isError: false, message: '' });
-                ASKforgetpassword({ username: phoneNumber });
-                setUsername(phoneNumber);
+                ASKforgetpassword({ username: userName });
+                setUsername(userName);
             }
         };
 
         const handleChange = (value) => {
-            setPhoneNumber(value);
+            setUserName(value);
         };
 
         useEffect(() => {
@@ -77,7 +77,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                         type="text"
                         placeholder="@username"
                         className={nameError.isError ? "app-field error" : "app-field"}
-                        value={phoneNumber}
+                        value={userName}
                         onChange={(e) => handleChange(e.target.value)}
                     />
                     {nameError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(nameError.message) }} />}
@@ -180,7 +180,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
 
     return (
         <Auth>
-            {step === 1 && <EnterYourPhoneNumber />}
+            {step === 1 && <EnterYourUserName />}
             {step === 2 && <OTP onSuccess={() => handleNextStep(3)} username={username} />}
             {step === 3 && <ResetPassword />}
             {step === 4 && <PasswordChanged />}

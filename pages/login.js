@@ -120,7 +120,7 @@ function Login({ api, login_respond, login }) {
 
             </div>
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
-            <Link  href="/forget_password">
+            <Link  href="/forgetPassword">
                 <div className="forgot-password cursor-pointer">Forgot password ?</div>
             </Link>
 

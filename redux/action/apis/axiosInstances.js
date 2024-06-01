@@ -43,10 +43,6 @@ mainApiInstance.interceptors.request.use(
     }
     prevDate = dateNow;
 
-    // Get the language from wherever it's stored in your application
-    // Default to English if not found
-
-
     return config;
   },
   error => {

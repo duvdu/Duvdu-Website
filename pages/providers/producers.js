@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 
 const convertDataFormat = (data) => {
-    console.log(data.user.profileImage)
+    
     return {
         _id: data._id,
         img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",
@@ -25,20 +25,21 @@ const convertDataFormat = (data) => {
     };
 };
 
-const Producers = ({ GetProducer, respond }) => {
+const Producers = ({ GetProducer, respond,api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const producers = respond?.data
+    const producers = respond?.data || []
     const pagganation = respond?.pagination
     const page = 1;
     const showLimit = 12;
+    const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
     const [permits, setPermits] = useState([]);
 
     useEffect(() => {
         if (limit)
-            GetStudio({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
+            GetProducer({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
     }, [limit])
 
     useEffect(() => {
@@ -54,9 +55,6 @@ const Producers = ({ GetProducer, respond }) => {
             setPermits(convertedList)
         }
     }, [respond?.message])
-
-
-
 
     const targetRef = useRef(null);
 
@@ -94,11 +92,11 @@ const Producers = ({ GetProducer, respond }) => {
                     <div className="container mb-30">
                         <Filter />
                         <h1 className="page-header my-6">most popular on duvdu</h1>
-                        {permits.length === 0 && (
+                        {producers.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="minmax-360">
-                            {permits.map((item, i) => {
+                            {producers.map((item, i) => {
                                 return <Card2 onClick={() => handlesetdata(item)} key={i} cardData={item} />;
 
                             })}
