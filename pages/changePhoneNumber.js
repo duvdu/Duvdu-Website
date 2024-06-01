@@ -153,7 +153,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
                         {step === 2 && <EnterNewPhone />}
                         {step === 3 && <OTP key={1} oNsucess={() => handleNextStep(4)} username={username} />}
                         {step === 4 && <Message />}
-                        <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} />
+                        {/* <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} /> */}
                     </div>
                 </div>
             </Layout>
