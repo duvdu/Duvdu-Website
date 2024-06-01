@@ -39,15 +39,17 @@ function OTP({
 
 
     useEffect(() => {
+        console.log(api)
         if (api.error && (api.req == "resendCode" || api.req == "verify")) {
             const errorMessage = errorConvertedMessage(api.error);
-            if(api.req){
-                setcount(0)
+            if(api.req == "resendCode" ) setcount(errorMessage)
+            if(api.req == "verify"){
+                setlocal_error('Invalid Code')
             }
-            setlocal_error(errorMessage)
         }
         else {
             setlocal_error(null)
+            setOtp('')
         }
     }, [api.error])
 
@@ -84,7 +86,7 @@ function OTP({
 
                         {
                             local_error &&
-                            <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(local_error) }} />
+                            <div className="error-msg text-center" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(local_error) }} />
                         }
                         <div className="mt-14 mb-28">
 
@@ -93,7 +95,10 @@ function OTP({
                                     <p className="resendMSG">
                                         <span className="msg"> Send code again </span><span className="counter"> {convertDuration(counter * 1000)} </span>
                                     </p> :
-                                    <p className="resendMSG2 text-center cursor-pointer" onClick={() => { resendCode({ username }); }}>
+                                    <p className="resendMSG2 text-center cursor-pointer" onClick={() => { 
+                                        setcount(120)
+                                        resendCode({ username });
+                                        }}>
                                         Send code again
                                     </p>
                             }

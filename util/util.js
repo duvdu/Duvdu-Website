@@ -196,7 +196,7 @@ export const errorConvertedMessage = (error) => {
 
       if (errors.length === 1) {
       
-        return `<div>${errors[0].message}</div>`;
+        return `${errors[0].message}`;
       }
 
       
