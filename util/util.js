@@ -94,7 +94,7 @@ export function handleFileUpload(event) {
 
 export function handleMultipleFileUpload(event) {
   const files = event.target.files; // Get all selected files
-  if (!files.length) {
+  if (!files?.length) {
     return []; // No files selected, return empty array
   }
 
@@ -169,7 +169,27 @@ function formatFileSize(bytes) {
     bytes /= 1024;
     i++;
   }
-  return `${bytes.toFixed(2)}${units[i]}`;
+  return `${bytes.toFixed(2)} ${units[i]}`;
+}
+
+export function parseFileSize(sizeString) {
+  const units = ["B", "KB", "MB", "GB", "TB"];
+  const regex = /([\d.]+)\s*(B|KB|MB|GB|TB)/i;
+  const match = sizeString.match(regex);
+
+  if (!match) {
+    throw new Error("Invalid size format");
+  }
+
+  const value = parseFloat(match[1]);
+  const unit = match[2].toUpperCase();
+
+  const unitIndex = units.indexOf(unit);
+  if (unitIndex === -1) {
+    throw new Error("Invalid unit");
+  }
+
+  return value * Math.pow(1024, unitIndex);
 }
 
 export const Goback = () => {

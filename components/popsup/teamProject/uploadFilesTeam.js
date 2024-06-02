@@ -76,7 +76,8 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                         <CategoryMultiSelection onChange={(v) => { UpdateFormData('category', v) }} />
                     </section>
                     <section className="w-full mt-11">
-                        <AddAttachment UpdateFormData={UpdateFormData} formData={formData} />
+                        <h3 className="capitalize opacity-60">upload alike project</h3>
+                        <AddAttachment value={formData._attachments} onChange={handleInputChange} formData={formData} />
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">team name</p>

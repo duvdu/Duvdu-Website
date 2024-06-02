@@ -6,17 +6,19 @@ import SelectDate from "../../elements/selectDate";
 import { connect } from "react-redux";
 import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Addproject";
 import GoogleMap from "../../elements/googleMap";
-import { UpdateKeysAndValues, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
+import { UpdateKeysAndValues, handleMultipleFileUpload, handleRemoveEvent, parseFileSize } from "../../../util/util";
 import dateFormat from "dateformat";
 import Successfully_posting from "../../popsup/post_successfully_posting";
 import BookTeam from "../../elements/teams";
 import { BookProducer } from "../../../redux/action/apis/cycles/producer/book";
+import AddAttachment from "../../elements/attachment";
 
 const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProducer, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
 
     const formData = addprojectState.formData
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
+    const [attachmentValidation, setAttachmentValidation] = useState(true);
     
     useEffect(() => {
         if (
@@ -26,6 +28,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
             formData.episodes?.length > 0 &&
             formData.expectedprofits?.length > 0 &&
             formData.platform?.length > 0 &&
+            attachmentValidation > 0 &&
             formData.producer?.length > 0 
         ) setEnableBtn(true)
         else setEnableBtn(false)
@@ -68,10 +71,10 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
             submit()
         const form = new FormData()
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
-        BookProducer(data._id, form)
     }
 
     const attachmentsUpload = (e) => {
+        console.log(e)
         UpdateFormData('attachments', handleMultipleFileUpload(e))
     };
 
@@ -125,6 +128,8 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                     </section>
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">attachments</h3>
+                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v)=>setAttachmentValidation(v)} />
+                        {/* 
                         <label htmlFor="attachment-upload" className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
                             <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                                 <Icon className="text-primary w-4" name={"image"} />
@@ -132,11 +137,13 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                             <span className="pl-5 w-full text-blue-600">Open gallery</span>
                             <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
                         </label>
+
                         <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
                         {
                             formData.attachments &&
                             formData.attachments.length > 0 &&
                             formData.attachments.map((file, key) => (
+                                parseFileSize(file.formattedFileSize) <= parseFileSize('3 MB') ?
                                 <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
                                     <Icon name={'file'} className="size-10" />
                                     <div>
@@ -144,9 +151,18 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                                         <br />
                                         <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
                                     </div>
+                                </div>: 
+                                <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
+                                <Icon name={'file-error'} className="size-10" />
+                                <div>
+                                    <span className='text-[#C92519] font-bold'>{file.fileName}</span>
+                                    <br />
+                                    <span className='text-[#C92519]'> {"File Over Size : "}{file.formattedFileSize}</span>
+                                    <br />
                                 </div>
+                            </div>
                             ))
-                        }
+                        } */}
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 `}>
                         <div className="flex justify-center">
