@@ -46,7 +46,6 @@ const Producers = ({ GetProducer, respond,api }) => {
         if (respond) {
             const array = respond.data
 
-
             let convertedList = []
             for (let index = 0; index < array.length; index++) {
                 const element = convertDataFormat(array[index]);

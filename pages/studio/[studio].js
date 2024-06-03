@@ -67,7 +67,7 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
             profileImage: project.user?.profileImage || process.env.DEFULT_PROFILE_PATH,
             name: project.user?.name || 'NONE',
             rate: (project.user?.totalRates || 0).toFixed(1),
-            location: project.user?.adress || 'NONE',
+            location: project.user?.address || 'NONE',
             occupation: "----",
             rank: "----",
             about: "----",

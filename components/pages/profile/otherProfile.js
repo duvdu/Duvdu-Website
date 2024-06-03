@@ -63,11 +63,11 @@ function OtherProfile({
         ],
 
     };
-    user = user?.data[0]
+    user = user?.data
 
 
     const swapFollow = () => {
-        if (user.isFollow || false) // isFollow
+        if (user.isFollow || false)
             setUnFollow(user._id)
         else
             setFollow(user._id)
@@ -83,13 +83,13 @@ function OtherProfile({
                     <div className='px-6 sm:px-10'>
                         {/* info */}
                         <Info src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
-                            location={user.adress || 'NONE'}
+                            location={user.address || 'NONE'}
                             occupation={'---'}
                             personalName={user.name}
                             popularity={{
-                                likes: 0,
-                                followers: user.followers || 0,
-                                views: 0,
+                                likes:user.likes,
+                                followers:user.followCount.followers,
+                                views:user.profileViews,
                             }}
                             rank={'---'}
                             rates={user?.rate?.totalRates}

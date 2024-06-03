@@ -56,11 +56,12 @@ const Saved = ({
                     </div>
                     <Link href={`/save/${id}`}>
                         <div className="projects cursor-pointer">
-                            <div className="col1 img-cart-style bg-[${img1}]" style={{ backgroundImage: `url(${img1})` }}></div>
-                            <div className="col2">
-                                <div className="row1 img-cart-style" style={{ backgroundImage: `url(${img2})` }}></div>
-                                <div className="row2 img-cart-style" style={{ backgroundImage: `url(${img3})` }}></div>
+                        {img1 ? 
+                            <div className="w-full rounded-[50px] img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div>:
+                            <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
+                                <Icon className="w-44" name={'dvudu-image'}/>
                             </div>
+                        }
                         </div>
                     </Link>
                     <div className="boards-info projects-num">{totalProjects} projects</div>

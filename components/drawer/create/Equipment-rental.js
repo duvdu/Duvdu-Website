@@ -41,7 +41,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
         data.append('studioEmail', formData.studioEmail);
         data.append('studioNumber', formData.studioNumber);
         data.append('studioName', formData.studioName);
-        data.append('adress', formData.address);
+        data.append('address', formData.address);
 
         // Append searchKeywords
         if (formData.searchKeywords)

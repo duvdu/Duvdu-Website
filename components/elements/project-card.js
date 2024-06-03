@@ -20,19 +20,18 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
-  const [love, setLove] = useState(false);
   const [actionID, setActionID] = useState(null);
   const [cardData, setCardData] = useState(initialCardData);
   const loveIconName = cardData.isFavourite ? 'fas' : 'far'
 
   useEffect(() => {
-    if(swapProjectToFav_respond && actionID == cardData._id)
-    {setCardData(prev => ({ 
-      ...prev, 
-      isFavourite: !prev.isFavourite 
-    }));
-    setActionID(null)
-  }
+    if (swapProjectToFav_respond && actionID == cardData._id) {
+      setCardData(prev => ({
+        ...prev,
+        isFavourite: !prev.isFavourite
+      }));
+      setActionID(null)
+    }
   }, [swapProjectToFav_respond]);
 
   useEffect(() => {

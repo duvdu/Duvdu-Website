@@ -98,6 +98,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             resetForm()
         }
     }
+    console.log(user)
 
     function InputDrawer() {
         if (type) {
@@ -177,13 +178,13 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                         <div className='relative px-6 sm:px-10'>
                             <Info
                                 src={user.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage : process.env.DEFULT_PROFILE_PATH}
-                                location={user.adress || 'NONE'}
+                                location={user.address || 'NONE'}
                                 occupation={user.service || '---'}
                                 personalName={user.name}
                                 popularity={{
-                                    likes:0,
-                                    followers:user.followers,
-                                    views:0,
+                                    likes:user.likes,
+                                    followers:user.followCount.followers,
+                                    views:user.profileViews,
                                 }}
                                 rank={"---"}
                                 rates={user.rate.totalRates.toFixed(1)}

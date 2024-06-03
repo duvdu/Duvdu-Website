@@ -10,7 +10,7 @@ import { calculateRating } from '../../util/util';
 
 
 const convertDataFormat = (data) => {
-console.log(data.user.profileImage)
+    console.log(data.user.profileImage)
     return {
         _id: data._id,
         img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",
@@ -26,76 +26,51 @@ console.log(data.user.profileImage)
 
 const Permit = ({ GetCopyrights, respond }) => {
     const showLimit = 24;
+    const page = 1;
+    const searchTerm = Router.query.search;
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
     const [permits, setPermits] = useState([]);
 
     useEffect(() => {
-        GetCopyrights({})
-    }, [])
-    
+        if (limit)
+            GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
+    }, [limit])
+
     useEffect(() => {
-    if (respond) {
-        const array = respond.data
-        
-        
-        let convertedList = []
-        for (let index = 0; index < array.length; index++) {
-            const element = convertDataFormat(array[index]);
-            convertedList.push(element)
+        if (respond) {
+            const array = respond.data
+
+            let convertedList = []
+            for (let index = 0; index < array.length; index++) {
+                const element = convertDataFormat(array[index]);
+                convertedList.push(element)
+            }
+            setPermits(convertedList)
         }
-        setPermits(convertedList)
-    }
-}, [respond?.message])
-
-
-
+    }, [respond?.message])
 
     const targetRef = useRef(null);
 
     useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5,
-        };
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-        let hasBeenVisible = false;
-
-        const handleIntersection = (entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        setLimit((prevLimit) => prevLimit + showLimit);
-                    }, 2000);
-                    if (targetRef.current) {
-                        targetRef.current.classList.add('active');
-                    }
-                    hasBeenVisible = true;
-                    observer.unobserve(entry.target);
+                if (scrolledToBottom) {
+                    setLimit(prevPage => showLimit + limit);
                 }
-                else {
-                    if (targetRef.current) {
-                        targetRef.current.classList.remove('active');
-                    }
-
-                }
-
-            });
+            }
         };
 
-        const observer = new IntersectionObserver(handleIntersection, options);
-
-        if (targetRef.current) {
-            observer.observe(targetRef.current);
-        }
-
-        return () => {
-            observer.disconnect();
-        };
-    }, [limit]);
-
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [page, pagganation?.totalPages]);
+    
 
     const handlesetdata = (item) => {
         setdata(item)

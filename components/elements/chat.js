@@ -14,7 +14,7 @@ import PopUpImage from './popUpImage';
 const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) => {
     const chatRef = useRef(null);
     const [otherUser, setOtherUser] = useState({})
-    const [limit, setLimit] = useState(100)
+    const [limit, setLimit] = useState(50)
     const [isRecording, setIsRecord] = useState(null)
     ///////////// inputs //////////////
 
@@ -40,9 +40,9 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         setReceiver(otherUser._id)
     }, [otherUser])
 
-    // useEffect(() => {
-    //     GetAllMessageInChat(messages._id, limit)
-    // }, [limit]);
+    useEffect(() => {
+        GetAllMessageInChat(messages._id, limit)
+    }, [limit]);
 
 
     useEffect(() => {
@@ -109,7 +109,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 
 
     const loadMore = () => {
-        setLimit(prev => prev + 10)
+        setLimit(prev => prev + 50)
         console.log('Loading more messages...');
         // Your custom logic to load more messages
     };

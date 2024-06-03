@@ -89,7 +89,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                                         <span className='text-base font-bold capitalize'>{user.name}</span>
                                         <span className='flex items-center gap-1 opacity-40'>
                                             <Icon className="w-2 ml-2" name="location-dot" />
-                                            <span className="text-xs font-semibold capitalize">{user.adress || 'NONE'}</span>
+                                            <span className="text-xs font-semibold capitalize">{user.address || 'NONE'}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -163,15 +163,13 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                                         </React.Fragment>
                                     ))}
                                 </div>
-
-
                             </div>}
-
                         {/* end card  */}
-                        <Link href="/saved">
+                        <div>
                             <div className="p-3 bg-DS_white dark:bg-[#1A2024] rounded-[45px] mb-2">
-                                <h4 className="opacity-70 text-sm font-semibold m-2">
+                                <h4 className="opacity-70 text-sm font-semibold m-2 flex justify-between">
                                     {t('saved projects')}
+                                    <Link href="/saved" className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</Link>
                                 </h4>
                                 <div className="flex justify-between gap-3">
                                     <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
@@ -182,8 +180,8 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                                     </div>
                                 </div>
                             </div>
-                        </Link>
-                        
+                        </div>
+
                     </div>
                 </div>
             </div>

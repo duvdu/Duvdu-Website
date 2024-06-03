@@ -112,7 +112,7 @@ const projects = ({
             profileImage: project.user?.profileImage || process.env.DEFULT_PROFILE_PATH,
             name: project.user?.name || 'NONE',
             totalRates: (project.user?.totalRates || 0).toFixed(1),
-            location: project.user?.adress || 'NONE',
+            location: project.user?.address || 'NONE',
             occupation: "professional",
             rank: "----",
             about: "----",
