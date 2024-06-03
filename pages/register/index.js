@@ -66,10 +66,12 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     }, [api.error]);
 
     const handleApiErrors = (convertError) => {
+        console.log(convertError)
         if (convertError.status === 422) {
             const updatedErrors = { ...formErrors };
             convertError.data.errors.forEach(({ field, message }) => {
                 if (updatedErrors[field]) {
+                    console.log(updatedErrors)
                     updatedErrors[field] = { isError: true, message };
                 }
             });
@@ -121,13 +123,22 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
         }
 
         if (formData.username.trim() === '') {
-            errors.username = { isError: true, message: 'Email is required.' };
+            errors.username = { isError: true, message: 'Username is required.' };
         } else {
             errors.username = { isError: false, message: '' };
         }
+        const uppercaseRegex = /[A-Z]/;
+        const lowercaseRegex = /[a-z]/;
+        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
         if (formData.password.length < 8) {
             errors.password = { isError: true, message: 'Password must be at least 8 characters long.' };
+        } else if (!uppercaseRegex.test(formData.password)) {
+            errors.password = { isError: true, message: 'Password must contain at least one uppercase letter.' };
+        } else if (!lowercaseRegex.test(formData.password)) {
+            errors.password = { isError: true, message: 'Password must contain at least one lowercase letter.' };
+        } else if (!specialCharRegex.test(formData.password)) {
+            errors.password = { isError: true, message: 'Password must contain at least one special character.' };
         } else {
             errors.password = { isError: false, message: '' };
         }
@@ -144,7 +155,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
+    console.log(formErrors)
     return (
         <Auth>
             <form method="post" onSubmit={handleSubmit}>
@@ -204,7 +215,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     </div>
                     {formErrors.username.isError && <p className="error-msg">{formErrors.username.message}</p>}
                 </div>
-                <div className={`mb-11 ${formErrors.password.isError ? 'error' : ''}`}>
+                <div className={`mb-4 ${formErrors.password.isError ? 'error' : ''}`}>
                     <div className="relative password-container">
                         <input
                             type={showPassword ? 'text' : 'password'}
@@ -244,6 +255,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         </div>
                     </div>
                     {formErrors.termsAgreed.isError && <p className="error-msg">{formErrors.termsAgreed.message}</p>}
+                    {errorMSG && <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}   
                 </div>
                 <button type="submit" className="mb-4 relative mb-30 w-full">
                     <Button name="login" shadow>
@@ -256,7 +268,6 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     <Link href="/login">Log in</Link>
                 </div>
             </form>
-            {errorMSG && <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
         </Auth>
     );
 };

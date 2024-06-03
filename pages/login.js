@@ -46,8 +46,8 @@ function Login({ api, login_respond, login }) {
         });
       }
       else {
-        const errorMessages = errorConvertedMessage(api.error)
-        setErrorMSG(errorMessages)
+        console.log(api.error)
+        setErrorMSG('Username or Password is incorrect')
       }
 
     }
@@ -62,14 +62,22 @@ function Login({ api, login_respond, login }) {
 
     var eError = true, pError = true
     if (username.trim() === '') {
-      setEmailError({ isError: true, message: 'Email is required.' });
+      setEmailError({ isError: true, message: 'Username is required.' });
     } else {
       eError = false
       setEmailError({ isError: false, message: '' });
     }
-
+    const uppercaseRegex = /[A-Z]/;
+    const lowercaseRegex = /[a-z]/;
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
     if (password.length < 8) {
       setPasswordError({ isError: true, message: 'Password must be at least 8 characters long.' });
+    } else if (!uppercaseRegex.test(password)) {
+        setPasswordError({ isError: true, message: 'Password must contain at least one uppercase letter.' });
+    } else if (!lowercaseRegex.test(password)) {
+        setPasswordError({ isError: true, message: 'Password must contain at least one lowercase letter.' });
+    } else if (!specialCharRegex.test(password)) {
+        setPasswordError({ isError: true, message: 'Password must contain at least one special character.' });
     } else {
       pError = false
       setPasswordError({ isError: false, message: '' });
@@ -95,7 +103,7 @@ function Login({ api, login_respond, login }) {
             <input autoComplete="on" type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="@username" className={emailError.isError ? "app-field error" : "app-field"} />
             {emailError.isError && <p className="error-msg">{emailError.message}</p>}
           </div>
-          <div className={`mb-8 ${passwordError.isError && 'error'}`}>
+          <div className={`${passwordError.isError && 'error'}`}>
             <div className="relative password-container">
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -123,10 +131,12 @@ function Login({ api, login_respond, login }) {
             <Link  href="/forgetPassword">
                 <div className="forgot-password cursor-pointer">Forgot password ?</div>
             </Link>
+            
+          {errorMSG &&
+          <div className="text-red-600 text-center">{errorMSG}</div>}
 
           </div>
           <div className="login_footer mb-4"></div>
-
 
           <button type="submit" className="mb-4 relative mb-30 w-full">
             <Button name="login" shadow={true}>
@@ -154,8 +164,6 @@ function Login({ api, login_respond, login }) {
             </div>
           </div>
         </form>
-        {errorMSG &&
-          <div className="text-red-600 text-center translate-y-10" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
       </Auth>
     </>
   );
