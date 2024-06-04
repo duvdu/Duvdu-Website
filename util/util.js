@@ -237,7 +237,6 @@ export const errorConvertedMessage = (error) => {
       
     }
   } catch (err) {
-    console.log("Error parsing JSON:", err);
     return error.toString();
   }
 };

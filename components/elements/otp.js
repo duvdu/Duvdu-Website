@@ -39,7 +39,6 @@ function OTP({
 
 
     useEffect(() => {
-        console.log(api)
         if (api.error && (api.req == "resendCode" || api.req == "verify")) {
             const errorMessage = errorConvertedMessage(api.error);
             if(api.req == "resendCode" ) setcount(errorMessage)

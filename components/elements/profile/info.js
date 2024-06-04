@@ -1,7 +1,17 @@
 import { convertToK } from "../../../util/util";
 import Icon from "../../Icons";
 
-function Info({ src, personalName, location, rank, occupation, rates, popularity, isboronze = false }) {
+function Info({ 
+    src, 
+    personalName, 
+    location, 
+    rank, 
+    occupation, 
+    rates, 
+    popularity, 
+    isboronze = false ,
+    followes, 
+}) {
     return <>
         <div className='flex items-end sm:items-center pb-5'>
             <div className={`w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>

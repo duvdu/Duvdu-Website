@@ -95,6 +95,7 @@ function OtherProfile({
                             }}
                             rank={'---'}
                             rates={user?.rate?.totalRates}
+                            followes={[]}
                         />
                         {/* -- info -- */}
                         {

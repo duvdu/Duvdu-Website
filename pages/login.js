@@ -7,14 +7,15 @@ import { connect } from "react-redux";
 import { login } from "../redux/action/apis/auth/signin/signin";
 import { useRouter } from 'next/router';
 import { errorConvertedMessage, validatePassword } from "../util/util";
+import { resendCode } from "../redux/action/apis/auth/OTP/resend";
 
-function Login({ api, login_respond, login }) {
+function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
 
   const [errorMSG, setErrorMSG] = useState(null);
   const router = useRouter();
 
   const [username, setUsername] = useState('');
-  const [emailError, setEmailError] = useState({ isError: false, message: '' });
+  const [userNameError, setUserNameError] = useState({ isError: false, message: '' });
 
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState({ isError: false, message: '' });
@@ -37,52 +38,61 @@ function Login({ api, login_respond, login }) {
             case 'username':
               setUsername({ isError: true, message: message });
               break;
-            case 'password':
-              setPasswordError({ isError: true, message: message });
-              break;
-            default:
-              break;
-          }
+              case 'password':
+                setPasswordError({ isError: true, message: message });
+                break;
+                default:
+                  break;
+                }
         });
       }
       else {
-        console.log(api.error)
-        setErrorMSG('Username or Password is incorrect')
+        setErrorMSG(errorConvertedMessage(api.error))
       }
 
     }
     else
       setErrorMSG(null)
   }, [api.error])
-
-
-
+  
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
     var eError = true, pError = true
     if (username.trim() === '') {
-      setEmailError({ isError: true, message: 'Username is required.' });
+      setUserNameError({ isError: true, message: 'Username is required.' });
     } else {
       eError = false
-      setEmailError({ isError: false, message: '' });
+      setUserNameError({ isError: false, message: '' });
     }
     
     const error = validatePassword(password);
-
+    
     if (error) {
       setPasswordError({ isError: true, message: error });
     } else {
       setPasswordError({ isError: false, message: '' });
       login({ username, password })
     }
-
+    
   };
-
+  
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  const verifyAccount = () => {
+     resendCode({ username: username })
+  };
+  
+  useEffect(() => {
+    if(resendCode_respond)
+      router.push(`/register/${username}`);
+  }, [resendCode_respond])
+  
+  
   return (
     <>
       <Auth>
@@ -90,9 +100,9 @@ function Login({ api, login_respond, login }) {
           <div className="heading_s1 mb-8">
             <h1 className="auth-title">Welcome Back !!</h1>
           </div>
-          <div className={`mb-4 ${emailError.isError && 'error'}`}>
-            <input autoComplete="on" type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="@username" className={emailError.isError ? "app-field error" : "app-field"} />
-            {emailError.isError && <p className="error-msg">{emailError.message}</p>}
+          <div className={`mb-4 ${userNameError.isError && 'error'}`}>
+            <input autoComplete="on" type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="@username" className={userNameError.isError ? "app-field error" : "app-field"} />
+            {userNameError.isError && <p className="error-msg">{userNameError.message}</p>}
           </div>
           <div className={`${passwordError.isError && 'error'}`}>
             <div className="relative password-container">
@@ -123,8 +133,13 @@ function Login({ api, login_respond, login }) {
               <div className="forgot-password cursor-pointer">Forgot password ?</div>
             </Link>
 
-            {errorMSG &&
-              <div className="text-red-600 text-center">{errorMSG}</div>}
+            {errorMSG && (errorMSG.includes("Account not verified") ?
+              <div className="flex whitespace-nowrap">
+                <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(errorMSG) }} />
+                <button className="text-primary" onClick={verifyAccount}>Verify Now</button>
+              </div>
+              : <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(errorMSG) }} />
+            )}
 
           </div>
           <div className="login_footer mb-4"></div>
@@ -163,11 +178,13 @@ function Login({ api, login_respond, login }) {
 const mapStateToProps = (state) => ({
   api: state.api,
   login_respond: state.api.login,
+  resendCode_respond: state.api.resendCode,
   user: state.auth
 });
 
 const mapDispatchToProps = {
-  login
+  login,
+  resendCode
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

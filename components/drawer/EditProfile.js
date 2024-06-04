@@ -134,10 +134,10 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                     </label>
                     <input onClick={handleRemoveEvent} onChange={coverUpload} className='hidden' id="cover-file-upload" type="file" accept="image/*" />
 
-                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={gettFileURL(cover) || (formData.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + formData.coverImage : process.env.DEFULT_COVER_PATH)} alt="cover pic" />
+                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={gettFileURL(cover) || formData.coverImage} alt="cover pic" />
 
                     <div className='absolute bottom-0 edit size-28 transform translate-y-1/2 translate-x-1/2'>
-                        <img className='rounded-full w-full h-full' src={gettFileURL(profileImage) || (formData.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + formData.profileImage : process.env.DEFULT_PROFILE_PATH)} alt="profile picture" />
+                        <img className='rounded-full w-full h-full' src={gettFileURL(profileImage) || formData.profileImage} alt="profile picture" />
 
                         <label htmlFor="profile-file-upload" >
                             <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center border-[#0000001A]" >

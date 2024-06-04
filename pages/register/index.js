@@ -39,7 +39,6 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
         }
     }, [userExists, api]);
 
-    // handle sending check of username isExists
 
     useEffect(() => {
         // Check username availability if it changes and has more than 5 characters, but only if it's different from the last checked username
@@ -124,18 +123,26 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
         }
 
         const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
-    
+
         if (formData.phone.trim() === '') {
-            errors.phone =  { isError: true, message: 'Phone is required.' };
+            errors.phone = { isError: true, message: 'Phone is required.' };
         } else if (!egyptianPhoneRegex.test(formData.phone)) {
-            errors.phone =  { isError: true, message: 'Invalid Egyptian phone number.' };
+            errors.phone = { isError: true, message: 'Invalid Egyptian phone number.' };
         } else {
-            errors.phone =  { isError: false, message: '' };
+            errors.phone = { isError: false, message: '' };
         }
-        
+
+
+        const usernameRegex = /^[a-z0-9_]+$/;
 
         if (formData.username.trim() === '') {
             errors.username = { isError: true, message: 'Username is required.' };
+        } else if (formData.username.trim().length < 6) {
+            errors.username = { isError: true, message: 'Username must be at least 6 characters long.' };
+        } else if (!usernameRegex.test(formData.username.trim())) {
+            errors.username = { isError: true, message: 'Username can only contain lowercase letters, numbers, and underscores.' };
+        } else if (isUsernameExists) {
+            errors.username = { isError: true, message: 'Username already exists.' };
         } else {
             errors.username = { isError: false, message: '' };
         }
@@ -161,7 +168,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    
+
     return (
         <Auth>
             <form method="post" onSubmit={handleSubmit}>

@@ -24,7 +24,7 @@ function MessageTile({ GetAllMessageInChat, message, user }) {
     const other = getotherdata() ?? {}
     const renderMessageContent = () => {
         if (!lastMSG.media || lastMSG.media.length === 0) {
-            return lastMSG.content && lastMSG.content.trim() !== '__' ? lastMSG.content : 'No content';
+            return lastMSG.content ;
         }
 
         const media = lastMSG.media[0];
