@@ -10,7 +10,7 @@ function OTP({
     username,
     verify,
     resendCode,
-    oNsucess,
+    onSuccess,
     resendCode_respond,
     verify_respond,
     initcount = 100
@@ -32,7 +32,7 @@ function OTP({
 
     useEffect(() => {
         if (verify_respond) {
-            oNsucess()
+            onSuccess()
             verify({ username: username, code: -1 })
         }
     }, [verify_respond?.message])

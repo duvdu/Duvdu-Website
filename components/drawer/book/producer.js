@@ -71,6 +71,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
             submit()
         const form = new FormData()
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
+        BookProducer(data._id, form)
     }
 
     const attachmentsUpload = (e) => {

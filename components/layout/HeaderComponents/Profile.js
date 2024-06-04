@@ -17,13 +17,13 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
     const requiredFields = [
         { field: "profileImage", label: "Add Profile Image" },
         { field: "coverImage", label: "Add Cover Image" },
-        { field: "location.lat", label: "Add your Address" },
+        { field: "address", label: "Add your Address" },
         { field: "isVerified", label: "Is Verified" },
         { field: "about", label: "About" },
         { field: "pricePerHour", label: "Price Per Hour" }
     ]
 
-
+    
 
     const checkField = (obj, path) => {
         const value = path.split('.').reduce((o, p) => o && o[p], obj);

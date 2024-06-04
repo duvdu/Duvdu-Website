@@ -2,13 +2,15 @@ import Pending from "./Pending";
 import Pending2 from "./pending2";
 import Ongoing from "./ongoing";
 import Ongoing2 from "./ongoing2";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { connect } from "react-redux";
 import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 
-const LeftSide = () => {
+const LeftSide = ({getAllContracts}) => {
     const [activeIndex, setActiveIndex] = useState(0);
-
+    useEffect(()=>{
+        getAllContracts()
+    },[])
     const handleToggleClick = (index) => {
         setActiveIndex(index);
     };

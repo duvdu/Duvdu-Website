@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Layout from "../../components/layout/Layout";
 import Card2 from "../../components/elements/permits-card";
 import Filter from "../../components/elements/filter";
-import Drawer from "../../components/drawer/book/producer";
+import ProducerBooking from "../../components/drawer/book/producer";
 import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetProducer } from '../../redux/action/apis/cycles/producer/get';
@@ -11,12 +11,12 @@ import { useRouter } from 'next/router';
 
 
 const convertDataFormat = (data) => {
-    
+    console.log(data)
     return {
         _id: data._id,
         img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",
         name: data.user.name || "NONE",
-        location: data.address || "NONE",
+        location: data.user.address || "NONE",
         rank: "----",
         projects: data.user.acceptedProjectsCounter || 0,
         rating: calculateRating(data.rate),
@@ -105,7 +105,7 @@ const Producers = ({ GetProducer, respond,api }) => {
                     </div>
                 </section>
 
-                <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+                <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
 
             </Layout>
         </>

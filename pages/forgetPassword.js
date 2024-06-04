@@ -102,13 +102,25 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
             e.preventDefault();
             let pError = password.length < 8;
             let pcError = password !== confirmPassword;
+            const uppercaseRegex = /[A-Z]/;
+            const lowercaseRegex = /[a-z]/;
+            const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;        
+              if (password.length < 8) {
+                setPasswordError({ isError: true, message: 'Password must be at least 8 characters long.' });
+              } else if (!uppercaseRegex.test(password)) {
+                  setPasswordError({ isError: true, message: 'Password must contain at least one uppercase letter.' });
+              } else if (!lowercaseRegex.test(password)) {
+                  setPasswordError({ isError: true, message: 'Password must contain at least one lowercase letter.' });
+              } else if (!specialCharRegex.test(password)) {
+                  setPasswordError({ isError: true, message: 'Password must contain at least one special character.' });
+              } else if(password !== confirmPassword) {
+                setPasswordError({ isError: false, message: '' });
+                 setConfirmPasswordError({ isError: pcError, message: pcError ? 'Passwords do not match' : '' });
+              }else {
+                    ChangePassword({ newPassword: password, username: username });
+                    setConfirmPasswordError({ isError: false, message: '' });
+              }
 
-            setPasswordError({ isError: pError, message: pError ? 'Password must be at least 8 characters long' : '' });
-            setConfirmPasswordError({ isError: pcError, message: pcError ? 'Passwords do not match' : '' });
-
-            if (!pError && !pcError) {
-                ChangePassword({ newPassword: password, username: username });
-            }
         };
 
         useEffect(() => {
