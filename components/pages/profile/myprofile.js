@@ -83,8 +83,8 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     const { type, category, subcategory, tags, edit: goEdit } = route.query
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
-    const [showEditProfile, setShowEditProfile] = useState(false);
-
+    const [userInfo, setUserInfo] = useState(user);
+    
 
     useEffect(() => {
         GetProjects({})
@@ -98,7 +98,6 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             resetForm()
         }
     }
-    console.log(user)
 
     function InputDrawer() {
         if (type) {
@@ -139,8 +138,6 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     };
 
     const onOpenEdit = () => {
-        console.log(route)
-
         route.push({
             pathname: route.asPath,
             query: {
@@ -155,11 +152,10 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
         });
     };
 
-
     function Allpage() {
         useEffect(() => {
             if (updateProfile_respond) {
-                getMyprofile(false)
+                setUserInfo(updateProfile_respond.data)
             }
         }, [updateProfile_respond])
 
@@ -171,37 +167,37 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     
         return (
             <>
-                <Conver converPic={user.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.coverImage : "/assets/imgs/projects/cover.jpeg"} />
+                <Conver converPic={userInfo.coverImage } />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
                         <div className='relative px-6 sm:px-10'>
                             <Info
-                                src={user.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage : process.env.DEFULT_PROFILE_PATH}
-                                location={user.address || 'NONE'}
-                                occupation={user.service || '---'}
-                                personalName={user.name}
+                                src={userInfo.profileImage}
+                                location={userInfo.address || 'NONE'}
+                                occupation={userInfo.service || '---'}
+                                personalName={userInfo.name}
                                 popularity={{
-                                    likes:user.likes,
-                                    followers:user.followCount.followers,
-                                    views:user.profileViews,
+                                    likes:userInfo.likes,
+                                    followers:userInfo.followCount.followers,
+                                    views:userInfo.profileViews,
                                 }}
                                 rank={"---"}
-                                rates={user.rate.totalRates.toFixed(1)}
+                                rates={userInfo.rate.totalRates.toFixed(1)}
                             />
                         </div>
 
                         <div className='flex items-center justify-center my-7 gap-2'>
-                            <Switch onSwitchChange={updateInstantState} value={user.isAvaliableToInstantProjects} id='profile-instant' />
-                            <span className={user.isAvaliableToInstantProjects ? "" : "opacity-70"}>
-                                Instant Projects is {user.isAvaliableToInstantProjects ? "open" : "disabled"}
+                            <Switch onSwitchChange={updateInstantState} value={userInfo.isAvaliableToInstantProjects} id='profile-instant' />
+                            <span className={userInfo.isAvaliableToInstantProjects ? "" : "opacity-70"}>
+                                Instant Projects is {userInfo.isAvaliableToInstantProjects ? "open" : "disabled"}
                             </span>
                         </div>
 
                         <div className='h-divider'></div>
                         <div className='px-10'>
                             <h3 className='pt-6' id='about-header'>about</h3>
-                            <p className='pt-6' id='about-paragraph'>{user.about || '---'}</p>
+                            <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
                         </div>
                         <div className='h-divider my-7'></div>
                         <div className='px-10'>
@@ -260,7 +256,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             <div className='sm:container'>
                 {
                     showAddPanal &&
-                    <PostSheet setShowAddPanal={setShowAddPanal} username={user.username} />
+                    <PostSheet setShowAddPanal={setShowAddPanal} username={userInfo.username} />
                 }
                 {
                     showAddPost &&

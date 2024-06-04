@@ -68,7 +68,7 @@ function Login({ api, login_respond, login }) {
       setEmailError({ isError: false, message: '' });
     }
     
-    const error = formData.password(password);
+    const error = validatePassword(password);
 
     if (error) {
       setPasswordError({ isError: true, message: error });

@@ -11,12 +11,13 @@ import Setting from "./HeaderComponents/setting";
 import { logout, verify } from "../../redux/action/auth";
 import * as Types from "../../redux/constants/actionTypes";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
-import { errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
+import { OpenPopUp, errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
 import Popup from "../elements/popup";
 import Verify_acount from "../popsup/verify_account_now";
 import Chat from "../elements/chat";
 import Link from "next/link";
+import ErrorPopUp from "../popsup/errorPopUp";
 
 
 // toggleDarkMode
@@ -112,46 +113,31 @@ const Header = ({
     const [errorMsg, setrrorMsg] = useState(null)
     const [errorReq, setrrorReq] = useState(null)
     useEffect(() => {
-
+        
         if (api.error && !exclude_error(api.req)) {
             setrrorMsg(errorConvertedMessage(api.error))
             setrrorReq(api.req)
         }
     }, [api.error && !exclude_error(api.req)]);
+    useEffect(() => {
+        if(errorMsg && errorReq)
+            OpenPopUp('main_error_message')
+    }, [errorMsg && errorReq]);
+
     const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
     const totalUnwatchedNotification = api?.GetNotifications?.data?.filter(message => !message.watched).length;
     const totalNews = totalUnreadMessages + totalUnwatchedNotification
     return (
         <>
             <Chat />
+            <ErrorPopUp id="main_error_message" onCancel={clearErrors} errorReq={errorReq} errorMsg={errorMsg}/>
             {
                 api.loading && !exclude_loading(api.req) &&
                 <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
                     <img src="/assets/imgs/theme/loading-icon.png" />
                 </div>
             }
-            {
-                errorMsg && errorReq &&
-                <Popup className="show" onCancel={clearErrors}>
-                    <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
-                        <div className="heading_s1 mb-[88px] text-center">
-                            <div className="flex w-full justify-center">
-                                <div className="size-16 bg-red-600 rounded-full flex justify-center items-center">
-                                    <Icon name={"xmark"} className="size-10 text-white" />
-                                </div>
-                            </div>
-                            <h1 className="text-3xl font-semibold my-5">Someting went wrong</h1>
-                            <span dangerouslySetInnerHTML={{ __html: errorMsg }} />
-                            <span >
-                                <strong>function : </strong>
-                                {errorReq}
-                            </span>
-                        </div>
-
-                    </div>
-
-                </Popup>
-            }
+            
             <Verify_acount />
 
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 

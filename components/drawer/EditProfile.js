@@ -5,13 +5,14 @@ import Icon from '../Icons';
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import { updateProfile } from "../../redux/action/apis/auth/profile/updateprofile";
-import { gettFileURL, gettFileUploaded, handleFileUpload, handleRemoveEvent } from '../../util/util';
+import { OpenPopUp, errorConvertedMessage, gettFileURL, gettFileUploaded, handleFileUpload, handleRemoveEvent, parseFileSize } from '../../util/util';
 import { UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
 import Drawer from '../elements/drawer';
+import ErrorPopUp from '../popsup/errorPopUp';
 
 
 
-function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormData, resetForm, formData }) {
+function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, resetForm, formData }) {
 
     if (!user) return <></>
 
@@ -19,22 +20,25 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
     const [profileImage, setProfileImage] = useState(null);
     const [cover, setCover] = useState(null);
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
+
     useEffect(() => {
-        if (isOpen)
-            {
-                console.log(user)
-                UpdateFormData("profileImage", user.profileImage);
-                UpdateFormData("coverImage", user.coverImage);
-            }
+
+        if (isOpen) {
+            UpdateFormData("profileImage", user.profileImage);
+            UpdateFormData("coverImage", user.coverImage);
+            UpdateFormData("name", user.name);
+            UpdateFormData("service", user.service);
+            UpdateFormData("address", user.address);
+            UpdateFormData("pricePerHour", user.pricePerHour);
+            UpdateFormData("about", user.about);
+        }
+        else {
+            resetForm()
+            setProfileImage(null)
+            setCover(null)
+        }
     }, [isOpen])
 
-    if (respond && isOpen)
-        window.location.reload()
-
-    useEffect(() => {
-        UpdateFormData("location.lat", 30)
-        UpdateFormData("location.lng", 30)
-    }, [])
 
     function UpdateKeysAndValues(obj, prefix = '') {
         Object.keys(obj).forEach(key => {
@@ -64,7 +68,9 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
         Object.keys(formData).forEach(key => {
             // Append each key-value pair to the FormData instance
             if (avoidFeilds.includes(key)) return
-            data.append(key, formData[key]);
+            if (formData[key] !== user[key]) {
+                data.append(key, formData[key]);
+            }
         });
         if (cover)
             data.append('coverImage', cover)
@@ -87,10 +93,22 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
 
 
     const profileUpload = (e) => {
-        setProfileImage(handleFileUpload(e)?.file??null)
+        const image = handleFileUpload(e)
+        if (parseFileSize(image.formattedFileSize) <= parseFileSize("3 MB"))
+            setProfileImage(image.file ?? null)
+        else {
+            setError(errorConvertedMessage(`<div class="error-msg" >Sorry, the image you're trying to upload exceeds the maximum file size limit of 3 MB. Please choose a smaller image and try again.</div>`))
+            OpenPopUp("image_size_error")
+        }
     };
     const coverUpload = (e) => {
-        setCover(handleFileUpload(e)?.file??null)
+        const image = handleFileUpload(e)
+        if (parseFileSize(image.formattedFileSize) <= parseFileSize("3 MB"))
+            setCover(image.file ?? null)
+        else {
+            setError(errorConvertedMessage(`<div class="error-msg" >Sorry, the image you're trying to upload exceeds the maximum file size limit of 3 MB. Please choose a smaller image and try again.</div>`))
+            OpenPopUp("image_size_error")
+        }
     };
 
 
@@ -103,9 +121,10 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
         reset()
         onClose()
     };
-    
+
     return (
         <>
+            <ErrorPopUp id="image_size_error" errorMsg={error} />
             <Drawer name={'Edit Details'} addWhiteShadow={true} isOpen={isOpen} toggleDrawer={close}>
                 <div className='relative'>
                     <label htmlFor="cover-file-upload" >
@@ -113,7 +132,7 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
                             <Icon className='text-white' name={'pen'} />
                         </Controller>
                     </label>
-                    <input onClick={handleRemoveEvent} onChange={coverUpload} className='hidden' id="cover-file-upload" type="file" />
+                    <input onClick={handleRemoveEvent} onChange={coverUpload} className='hidden' id="cover-file-upload" type="file" accept="image/*" />
 
                     <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={gettFileURL(cover) || (formData.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + formData.coverImage : process.env.DEFULT_COVER_PATH)} alt="cover pic" />
 
@@ -125,7 +144,7 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
                                 <Icon className='text-white' name={'pen'} />
                             </Controller>
                         </label>
-                        <input onClick={handleRemoveEvent} onChange={profileUpload} className='hidden' id="profile-file-upload" type="file" />
+                        <input onClick={handleRemoveEvent} onChange={profileUpload} className='hidden' id="profile-file-upload" type="file" accept="image/*" />
                     </div>
                 </div>
 
@@ -209,7 +228,6 @@ function EditDrawer({ user, updateProfile, respond, isOpen, onClose, UpdateFormD
 }
 
 const mapStateToProps = (state) => ({
-    respond: state.api.updateProfile,
     user: state.auth.user,
     isDark: state.setting.ISDARK,
     getheaderpopup: state.setting.headerpopup,

@@ -13,16 +13,18 @@ import { GetProjects } from "../../../redux/action/apis/cycles/projects/get";
 import { setFollow } from "../../../redux/action/apis/auth/profile/setFollow";
 import { setUnFollow } from "../../../redux/action/apis/auth/profile/setUnFollow";
 
-function OtherProfile({ 
-    user, 
-    getOtherprofile, 
-    GetAllMessageInChat, 
-    GetProjects, 
-    projects, 
-    setFollow, 
-    follow_respond, 
-    setUnFollow, 
-    setUnFollow_respond }) {
+function OtherProfile({
+    user,
+    getOtherprofile,
+    GetAllMessageInChat,
+    GetProjects,
+    projects,
+    setFollow,
+    follow_respond,
+    setUnFollow,
+    setUnFollow_respond,
+    islogin
+}) {
 
     const route = useRouter()
     const { profile: username } = route.query
@@ -33,7 +35,7 @@ function OtherProfile({
         setFollow(-1)
     }, [username, setUnFollow_respond, follow_respond])
 
-    
+
     projects = projects?.data
 
     var profile = {
@@ -87,28 +89,31 @@ function OtherProfile({
                             occupation={'---'}
                             personalName={user.name}
                             popularity={{
-                                likes:user.likes,
-                                followers:user.followCount.followers,
-                                views:user.profileViews,
+                                likes: user.likes,
+                                followers: user.followCount.followers,
+                                views: user.profileViews,
                             }}
                             rank={'---'}
                             rates={user?.rate?.totalRates}
                         />
                         {/* -- info -- */}
-                        <div className='flex gap-3 items-center'>
-                            <AppButton
-                                className={`w-full mb-7 mt-7 z-0 ${user.isFollow ? 'opacity-60' : ''}`}
-                                onClick={swapFollow}
-                            >
-                                {user.isFollow ? 'Unfollow' : 'Follow'}
-                            </AppButton>
-                            <div onClick={() => GetAllMessageInChat(user._id)} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
-                                <Icon type='far' name="chat" />
+                        {
+                            islogin &&
+                            <div className='flex gap-3 items-center mt-7'>
+                                <AppButton
+                                    className={`w-full z-0 ${user.isFollow ? 'opacity-60' : ''}`}
+                                    onClick={swapFollow}
+                                >
+                                    {user.isFollow ? 'Unfollow' : 'Follow'}
+                                </AppButton>
+                                <div onClick={() => GetAllMessageInChat(user._id)} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
+                                    <Icon type='far' name="chat" />
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
 
-                    <div className='h-divider'></div>
+                    <div className='h-divider mt-7 mb-7'></div>
                     <div className='px-10'>
                         <h3 className='pt-6' id='about-header'>about</h3>
                         <p className='pt-6' id='about-paragraph'>{user.about}</p>
@@ -139,6 +144,8 @@ function OtherProfile({
 
 
 const mapStateToProps = (state) => ({
+    islogin: state.auth.login,
+    // login_respond: state.api.login,
     user: state.api.getOtherprofile,
     projects: state.api.GetProjects,
     follow_respond: state.api.setFollow,

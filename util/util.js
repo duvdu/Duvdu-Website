@@ -218,12 +218,12 @@ export const errorConvertedMessage = (error) => {
 
         return `<div class="error-msg" >${errors[0].message}</div>`;
       }
-
-
+      
+      
       const hasFieldErrors = errors.some(error => error.field);
 
       if (hasFieldErrors) {
-
+        
         const formattedMessages = errors.map(error => `<li>${error.field}: ${error.message}</li>`).join('');
         return `<strong>Error Fields:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       } else {
@@ -233,7 +233,8 @@ export const errorConvertedMessage = (error) => {
       }
     } catch (err) {
       const errorMessage = errorConverted.data.message;
-      return errorMessage;
+      return `<div class="error-msg" >${errorMessage}</div>`;
+      
     }
   } catch (err) {
     console.log("Error parsing JSON:", err);
