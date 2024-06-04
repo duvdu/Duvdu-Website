@@ -106,7 +106,6 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
                                 beginAtZero: true,
                                 grid: {
                                     color: function(context) {
-                                        console.log(context)
                                         if (context.index > 0) {
                                           return `rgba(${color}, ${color}, ${color}, 0.1)`
 

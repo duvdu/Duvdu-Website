@@ -84,7 +84,7 @@ function OtherProfile({
                 <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
                     <div className='px-6 sm:px-10'>
                         {/* info */}
-                        <Info src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
+                        <In fo src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
                             location={user.address || 'NONE'}
                             occupation={'---'}
                             personalName={user.name}

@@ -32,7 +32,7 @@ function OTP({
 
     useEffect(() => {
         if (verify_respond) {
-            onSuccess()
+            onSuccess?.()
             verify({ username: username, code: -1 })
         }
     }, [verify_respond?.message])
