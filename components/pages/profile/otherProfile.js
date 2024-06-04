@@ -34,7 +34,7 @@ function OtherProfile({
             setUnFollow(-1)
             setFollow(-1)
         }
-    }, [username, setUnFollow_respond, follow_respond])
+    }, [username, !setUnFollow_respond, !follow_respond])
     useEffect(()=>{
         GetProjects({})     
     },[])
