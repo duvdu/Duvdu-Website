@@ -29,12 +29,15 @@ function OtherProfile({
     const route = useRouter()
     const { profile: username } = route.query
     useEffect(() => {
-        getOtherprofile(username)
-        GetProjects({})
-        setUnFollow(-1)
-        setFollow(-1)
+        if(setUnFollow_respond||follow_respond || username){
+            getOtherprofile(username)
+            setUnFollow(-1)
+            setFollow(-1)
+        }
     }, [username, setUnFollow_respond, follow_respond])
-
+    useEffect(()=>{
+        GetProjects({})     
+    },[])
 
     projects = projects?.data
 

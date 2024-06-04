@@ -16,9 +16,9 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications, GetNo
     }, [getheaderpopup == Types.SHOWNOTOFICATION])
 
 
-    useEffect(() => {
-        GetNotifications()
-    }, [MarkNotificationsAsRead_resond])
+    // useEffect(() => {
+    //     GetNotifications()
+    // }, [MarkNotificationsAsRead_resond])
 
     if (getheaderpopup != Types.SHOWNOTOFICATION) return
     return (
