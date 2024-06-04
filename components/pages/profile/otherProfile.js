@@ -28,16 +28,19 @@ function OtherProfile({
 
     const route = useRouter()
     const { profile: username } = route.query
+    console.log(setUnFollow_respond , follow_respond , username)
     useEffect(() => {
-        if(setUnFollow_respond||follow_respond || username){
-            getOtherprofile(username)
-            setUnFollow(-1)
+        if (setUnFollow_respond || follow_respond) {
+        getOtherprofile(username)
+        setUnFollow(-1)
             setFollow(-1)
         }
-    }, [username, !setUnFollow_respond, !follow_respond])
-    useEffect(()=>{
-        GetProjects({})     
-    },[])
+    }, [!setUnFollow_respond , !follow_respond])
+    
+    useEffect(() => {
+        getOtherprofile(username)
+        GetProjects({})
+    }, [])
 
     projects = projects?.data
 
