@@ -28,6 +28,7 @@ import AddToSaved from "../../components/popsup/addToSaved";
 import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
 import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
 import Link from 'next/link'
+import Share from "../../components/popsup/Share";
 
 
 const projects = ({
@@ -469,9 +470,12 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
         GetAllMessageInChat(data?.creative._id)
     };
 
-
+    const openShare = () => {
+        OpenPopUp("Share")
+    };
     return (
         <>
+            <Share url={window.location.href} title={'See that DuvDu Project 👀'} />
 
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                 <div className="sm:container flex justify-between items-end">
@@ -497,7 +501,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
                     </div> : <div className="w-1" />}
 
                     <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                        <div className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
+                        <div onClick={openShare} className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                             <Icon name={'share'} />
                         </div>
                         {auth.login &&

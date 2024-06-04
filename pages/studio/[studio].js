@@ -403,7 +403,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, auth, chat_respond }
 
     return (
         <>
-            <Share url={window.location.href} title={'See DuvDu Studuio'} />
+            <Share url={window.location.href} title={'See DuvDu Studuio 👀'} />
 
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                 <div className="sm:container flex justify-between items-end">
