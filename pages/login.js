@@ -84,15 +84,11 @@ function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
   };
 
   const verifyAccount = () => {
-     resendCode({ username: username })
+    router.push(`/register/${username}`);
+    resendCode({ username: username })
   };
   
-  useEffect(() => {
-    if(resendCode_respond)
-      router.push(`/register/${username}`);
-  }, [resendCode_respond])
-  
-  
+
   return (
     <>
       <Auth>
