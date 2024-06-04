@@ -270,7 +270,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                         name="durationUnit"
                                         required
                                     >
-                                        {['second', 'minute', 'Hours', 'days'].map((value, index) => (
+                                        {['minute','hour'].map((value, index) => (
                                             <option key={index} value={value.toLowerCase()}>{value}</option>
                                         ))}
                                     </select>

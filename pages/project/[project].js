@@ -28,8 +28,6 @@ import AddToSaved from "../../components/popsup/addToSaved";
 import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
 import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
 import Link from 'next/link'
-import Share from "../../components/popsup/Share";
-import { SwapProjectToFav } from "../../redux/action/apis/savedProject/fav/favAction";
 
 
 const projects = ({
@@ -45,9 +43,7 @@ const projects = ({
     addProjectToBoard_respond,
     getBoards_respond,
     DeleteProjectFromBoard,
-    deleteProjectFromBoard_respond,
-    swapProjectToFav_respond,
-    SwapProjectToFav
+    deleteProjectFromBoard_respond
 }) => {
 
     const router = useRouter()
@@ -62,18 +58,33 @@ const projects = ({
          if (projectId) {
              GetProject(projectId);
          }
-     }, [projectId,swapProjectToFav_respond]);
+     }, [projectId]);
 
      useEffect(() => {
         GetProjects({ limit: "4" });
     }, []);
+
+    useEffect(() => {
+        if (projectId && getBoards_respond) {
+            setLove(isFav(projectId, getBoards_respond))
+        }
+    }, [projectId, getBoards_respond]);
 
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
 
     const loveToggleAction = () => {
-        SwapProjectToFav({ projectId: projectId, action: project.isFavourite ? "remove" : "add" })
+        if (projectId && getBoards_respond.data) {
+            if (love) {
+                console.log(findProjectId(projectId,getBoards_respond.data[0]._id))
+                DeleteProjectFromBoard(getBoards_respond.data[0]._id, findProjectId(projectId,getBoards_respond.data[0]._id))
+            }
+            else {
+                AddProjectToBoard({ idboard: getBoards_respond.data[0]._id, idproject: projectId })
+            }
+            seIsFav(true)
+        }
     };
     
     useEffect(() => {
@@ -103,6 +114,7 @@ const projects = ({
         return null; 
       };
 
+
     const data = project ? ({
         _id: project._id,
         title: project.title,
@@ -112,7 +124,7 @@ const projects = ({
             profileImage: project.user?.profileImage || process.env.DEFULT_PROFILE_PATH,
             name: project.user?.name || 'NONE',
             totalRates: (project.user?.totalRates || 0).toFixed(1),
-            location: project.user?.address || 'NONE',
+            location: project.address || 'NONE',
             occupation: "professional",
             rank: "----",
             about: "----",
@@ -169,7 +181,7 @@ const projects = ({
         projectScale: project.projectScale,
 
     }) : null
-
+    console.log(data)
     return (
         <>
             <Layout >
@@ -202,7 +214,7 @@ const projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} isLove={project.isFavourite} loveToggleAction={loveToggleAction} auth={auth}/>}
+                            <Control data={data} toggleDrawer={toggleDrawer} GetAllMessageInChat={GetAllMessageInChat} isLove={love} loveToggleAction={loveToggleAction} auth={auth}/>}
                         <ProjectBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>
                 }
@@ -457,14 +469,10 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
         GetAllMessageInChat(data?.creative._id)
     };
 
-    const openShare = () => {
-        OpenPopUp("Share")
-    };
-
 
     return (
         <>
-        <Share url={window.location.href} title={'See DuvDu Project'}/>
+
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                 <div className="sm:container flex justify-between items-end">
                 {auth.login ?
@@ -489,7 +497,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
                     </div> : <div className="w-1" />}
 
                     <Controller className={"mr-auto ml-auto lg:m-0 "}>
-                        <div onClick={openShare} className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
+                        <div className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center" >
                             <Icon name={'share'} />
                         </div>
                         {auth.login &&
@@ -521,7 +529,6 @@ const mapStateToProps = (state) => ({
     projectFilters: state.projectFilters,
     chat_respond: state.api.GetAllMessageInChat,
     getBoards_respond: state.api.GetBoards,
-    swapProjectToFav_respond: state.api.SwapProjectToFav,
     auth: state.auth,
     api: state.api,
 });
@@ -531,8 +538,7 @@ const mapDidpatchToProps = {
     GetProject,
     GetAllMessageInChat,
     AddProjectToBoard,
-    DeleteProjectFromBoard,
-    SwapProjectToFav
+    DeleteProjectFromBoard
 };
 
 export default connect(mapStateToProps, mapDidpatchToProps)(projects);
