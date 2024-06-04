@@ -210,24 +210,24 @@ export const errorConvertedMessage = (error) => {
 
   try {
     const errorConverted = JSON.parse(error);
-    
+
     try {
       const errors = errorConverted.data.errors;
 
       if (errors.length === 1) {
-      
+
         return `<div class="error-msg" >${errors[0].message}</div>`;
       }
 
-      
+
       const hasFieldErrors = errors.some(error => error.field);
 
       if (hasFieldErrors) {
-        
+
         const formattedMessages = errors.map(error => `<li>${error.field}: ${error.message}</li>`).join('');
         return `<strong>Error Fields:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       } else {
-        
+
         const formattedMessages = errors.map(error => `<li>${error.message}</li>`).join('');
         return `<strong>Error Messages:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       }
@@ -352,6 +352,30 @@ export const ClosePopUp = (id) => {
   }
 }
 
+export const validatePassword = (password) => {
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters long.';
+  }
+
+  const uppercaseRegex = /[A-Z]/;
+  if (!uppercaseRegex.test(password)) {
+    return 'Password must contain at least one uppercase letter.';
+  }
+
+  const lowercaseRegex = /[a-z]/;
+  if (!lowercaseRegex.test(password)) {
+    return 'Password must contain at least one lowercase letter.';
+  }
+
+  const specialCharRegex = /[^A-Za-z0-9]/;
+  if (!specialCharRegex.test(password)) {
+    return 'Password must contain at least one special character.';
+  }
+
+  return null;
+};
+
+
 export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = '') => {
   Object.keys(obj).forEach(key => {
     if (avoidFields.includes(key)) return; // Skip processing if key is in avoidFields
@@ -395,7 +419,7 @@ export const isProjectInObject = (data, projectId) => {
 export const calculateRating = (rate) => {
   if (!rate) return 0
   if (rate.ratersCounter > 0) {
-      return rate.totalRates / rate.ratersCounter;
+    return rate.totalRates / rate.ratersCounter;
   }
   return 0;
 };

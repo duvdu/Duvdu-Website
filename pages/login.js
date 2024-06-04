@@ -6,7 +6,7 @@ import Icon from '../components/Icons';
 import { connect } from "react-redux";
 import { login } from "../redux/action/apis/auth/signin/signin";
 import { useRouter } from 'next/router';
-import { errorConvertedMessage } from "../util/util";
+import { errorConvertedMessage, validatePassword } from "../util/util";
 
 function Login({ api, login_respond, login }) {
 
@@ -22,7 +22,7 @@ function Login({ api, login_respond, login }) {
   const [showPassword, setShowPassword] = useState(false);
 
   var convertError = JSON.parse(api.error ?? null)
-  
+
   if (login_respond) {
     router.push({
       pathname: `/`,
@@ -67,25 +67,16 @@ function Login({ api, login_respond, login }) {
       eError = false
       setEmailError({ isError: false, message: '' });
     }
-    const uppercaseRegex = /[A-Z]/;
-    const lowercaseRegex = /[a-z]/;
-    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    if (password.length < 8) {
-      setPasswordError({ isError: true, message: 'Password must be at least 8 characters long.' });
-    } else if (!uppercaseRegex.test(password)) {
-        setPasswordError({ isError: true, message: 'Password must contain at least one uppercase letter.' });
-    } else if (!lowercaseRegex.test(password)) {
-        setPasswordError({ isError: true, message: 'Password must contain at least one lowercase letter.' });
-    } else if (!specialCharRegex.test(password)) {
-        setPasswordError({ isError: true, message: 'Password must contain at least one special character.' });
-    } else {
-      pError = false
-      setPasswordError({ isError: false, message: '' });
-    }
+    
+    const error = formData.password(password);
 
-    if (!eError && !pError) {
+    if (error) {
+      setPasswordError({ isError: true, message: error });
+    } else {
+      setPasswordError({ isError: false, message: '' });
       login({ username, password })
     }
+
   };
 
   const toggleShowPassword = () => {
@@ -128,12 +119,12 @@ function Login({ api, login_respond, login }) {
 
             </div>
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
-            <Link  href="/forgetPassword">
-                <div className="forgot-password cursor-pointer">Forgot password ?</div>
+            <Link href="/forgetPassword">
+              <div className="forgot-password cursor-pointer">Forgot password ?</div>
             </Link>
-            
-          {errorMSG &&
-          <div className="text-red-600 text-center">{errorMSG}</div>}
+
+            {errorMSG &&
+              <div className="text-red-600 text-center">{errorMSG}</div>}
 
           </div>
           <div className="login_footer mb-4"></div>
@@ -146,7 +137,7 @@ function Login({ api, login_respond, login }) {
           </button>
           <div className="have-account">
             <span>Don't have an account ? </span>
-              <Link  href="/register">Register now</Link>
+            <Link href="/register">Register now</Link>
           </div>
           <div className="flex items-center">
             <div className="border-t border-black opacity-20 w-full my-4"></div>

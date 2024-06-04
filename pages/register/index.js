@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { signup } from "../../redux/action/apis/auth/signup/signup";
 import { useRouter } from 'next/router';
 import { CheckUsernameExists } from "../../redux/action/apis/auth/signin/CheckUsernameExists";
+import { validatePassword } from "../../util/util";
 
 const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => {
     const [isUsernameExists, setIsUsernameExists] = useState(userExists?.isUsernameExists);
@@ -37,7 +38,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
             setIsUsernameExists(userExists?.isUsernameExists);
         }
     }, [userExists, api]);
-    
+
     // handle sending check of username isExists
 
     useEffect(() => {
@@ -87,7 +88,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        
+
     };
 
     const handleSubmit = (e) => {
@@ -122,23 +123,28 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
             errors.phone = { isError: false, message: '' };
         }
 
+        const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
+    
+        if (formData.phone.trim() === '') {
+            errors.phone =  { isError: true, message: 'Phone is required.' };
+        } else if (!egyptianPhoneRegex.test(formData.phone)) {
+            errors.phone =  { isError: true, message: 'Invalid Egyptian phone number.' };
+        } else {
+            errors.phone =  { isError: false, message: '' };
+        }
+        
+
         if (formData.username.trim() === '') {
             errors.username = { isError: true, message: 'Username is required.' };
         } else {
             errors.username = { isError: false, message: '' };
         }
-        const uppercaseRegex = /[A-Z]/;
-        const lowercaseRegex = /[a-z]/;
-        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+        
 
-        if (formData.password.length < 8) {
-            errors.password = { isError: true, message: 'Password must be at least 8 characters long.' };
-        } else if (!uppercaseRegex.test(formData.password)) {
-            errors.password = { isError: true, message: 'Password must contain at least one uppercase letter.' };
-        } else if (!lowercaseRegex.test(formData.password)) {
-            errors.password = { isError: true, message: 'Password must contain at least one lowercase letter.' };
-        } else if (!specialCharRegex.test(formData.password)) {
-            errors.password = { isError: true, message: 'Password must contain at least one special character.' };
+        const error = validatePassword(formData.password);
+
+        if (error) {
+            errors.password = ({ isError: true, message: error });
         } else {
             errors.password = { isError: false, message: '' };
         }
@@ -155,7 +161,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    console.log(formErrors)
+    
     return (
         <Auth>
             <form method="post" onSubmit={handleSubmit}>
@@ -195,23 +201,23 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                             className={formErrors.username.isError ? "app-field error" : "app-field"}
                         />
                         {formData.username.length > 5 &&
-                        <div className="absolute -right-8 top-6">
-                            {isUsernameExists === false && (
-                                <div className="bg-primary rounded-full size-6 flex items-center justify-center">
-                                    <Icon className="w-3 text-white" name="check" />
-                                </div>
-                            )}
-                            {isUsernameExists === true && (
-                                <div className="bg-red-700 rounded-full size-6 flex items-center justify-center">
-                                    <Icon className="w-3 text-white" name="xmark" />
-                                </div>
-                            )}
-                            {isUsernameExists === 'loading' && (
-                                <div className="bg-primary rounded-full size-6 flex items-center justify-center">
-                                    <Icon className="w-3 text-white" name="circle" />
-                                </div>
-                            )}
-                        </div>}
+                            <div className="absolute -right-8 top-6">
+                                {isUsernameExists === false && (
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="check" />
+                                    </div>
+                                )}
+                                {isUsernameExists === true && (
+                                    <div className="bg-red-700 rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="xmark" />
+                                    </div>
+                                )}
+                                {isUsernameExists === 'loading' && (
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="circle" />
+                                    </div>
+                                )}
+                            </div>}
                     </div>
                     {formErrors.username.isError && <p className="error-msg">{formErrors.username.message}</p>}
                 </div>
@@ -255,7 +261,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         </div>
                     </div>
                     {formErrors.termsAgreed.isError && <p className="error-msg">{formErrors.termsAgreed.message}</p>}
-                    {errorMSG && <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}   
+                    {errorMSG && <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
                 </div>
                 <button type="submit" className="mb-4 relative mb-30 w-full">
                     <Button name="login" shadow>
