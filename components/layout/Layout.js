@@ -9,6 +9,7 @@ import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
 import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
+import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
 
 const Layout = ({
     children,
@@ -22,6 +23,7 @@ const Layout = ({
     GetNotifications,
     login_respond,
     GetBoards,
+    GetFavList,
     getMyprofile_respond
 
 }) => {
@@ -47,6 +49,7 @@ const Layout = ({
     useEffect(() => {
         if (getMyprofile_respond) {
             GetBoards({})
+            GetFavList({})
             GetAllChats()
             GetNotifications()
         }
@@ -82,7 +85,8 @@ const mapDispatchToProps = {
     getMyprofile,
     GetAllChats,
     GetNotifications,
-    GetBoards
+    GetBoards,
+    GetFavList
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

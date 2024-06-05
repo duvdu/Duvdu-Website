@@ -10,7 +10,7 @@ const RightSide = () => {
         <Link href='/creative/youseff_abdulla'>
             <div className="cursor-pointer">
                 <div className='h-14 w-full flex gap-1 rounded-full border border-[#00000033] dark:border-[#FFFFFF33] ' >
-                    <img src={img} alt='user' className='rounded-full m-1' />
+                    <img src={img} alt='user' className='rounded-full m-1 object-cover object-top' />
                     <div className='flex flex-col items-start justify-center w-full pr-3'>
                         <span className='opacity-80 font-semibold'> {name} </span>
                         <span className='opacity-50'> {address} </span>
@@ -44,7 +44,7 @@ const RightSide = () => {
                 <Link href='/creative/youseff_abdulla'>
                     <div className="cursor-pointer">
                         <div className='flex gap-3 items-center'>
-                            <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
+                            <img className='w-14 h-14 rounded-full object-cover object-top' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
                             <div className='flex flex-col items-start justify-start'>
                                 <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
                                 <span className='opacity-50'>Sun - Aug 3</span>

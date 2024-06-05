@@ -46,7 +46,7 @@ function MessageTile({ GetAllMessageInChat, message, user }) {
         <div className="w-64 flex gap-4 cursor-pointer" onClick={() => GetAllMessageInChat(message._id)}>
             <div className="relative">
                 <div className="size-9 rounded-full bg-black overflow-hidden">
-                    <img src={other.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" width="37" height="37" />
+                    <img className="object-cover object-top" src={other.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" width="37" height="37" />
                 </div>
                 <div className={`absolute bottom-1 right-[2px] rounded-full size-[10px] border-[1.68px] border-white ${lastMSG.sender.isOnline ? 'bg-[#4CE417]' : 'bg-[#BDBDBD]'}`} />
             </div>

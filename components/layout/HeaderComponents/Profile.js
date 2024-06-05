@@ -6,7 +6,7 @@ import * as Types from '../../../redux/constants/actionTypes'
 import Icon from "../../Icons";
 import Link from 'next/link';
 
-function Profile({ getheaderpopup, api, user, getBoards_respond }) {
+function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) {
 
     const { t } = useTranslation();
 
@@ -23,7 +23,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
         { field: "pricePerHour", label: "Price Per Hour" }
     ]
 
-    
+
 
     const checkField = (obj, path) => {
         const value = path.split('.').reduce((o, p) => o && o[p], obj);
@@ -64,6 +64,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
         return covers;
     };
     const saved = getProjectCovers(getBoards_respond?.data || [])
+    const favCover = fav_respond?.data.length ? fav_respond.data[0].project.cover : null
 
     if (user == null) return <></>
     if (getheaderpopup != Types.SHOWPROFILE) return
@@ -83,7 +84,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                             <div className='p-5'>
                                 <div className='flex items-start gap-4 -translate-y-4 h-12'>
                                     <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                                     </div>
                                     <div className='flex-2 flex-col'>
                                         <span className='text-base font-bold capitalize'>{user.name}</span>
@@ -172,12 +173,26 @@ function Profile({ getheaderpopup, api, user, getBoards_respond }) {
                                     <Link href="/saved" className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</Link>
                                 </h4>
                                 <div className="flex justify-between gap-3">
-                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                        <img src={saved[0]} />
-                                    </div>
-                                    <div className="aspect-square rounded-[30px] w-1/2 overflow-hidden">
-                                        <img src={saved[1]} />
-                                    </div>
+                                    <Link href={`/save/favorites`} >
+                                        <div className="aspect-square w-1/2 overflow-hidden">
+                                            {
+                                                favCover ? <img className='rounded-[30px]' src={favCover} /> :
+                                                    <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
+                                                        <Icon className='w-10' name={"dvudu-image"} />
+                                                    </div>
+                                            }
+                                        </div>
+                                    </Link>
+                                    <Link href="/saved" >
+                                        <div className="aspect-square w-1/2 overflow-hidden">
+                                            {
+                                                saved[0] ? <img className='rounded-[30px]' src={saved[1]} /> :
+                                                    <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
+                                                        <Icon className='w-10' name={"dvudu-image"} />
+                                                    </div>
+                                            }
+                                        </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -195,6 +210,7 @@ const mapStateToProps = (state) => ({
     api: state.api,
     user: state.user.profile,
     getBoards_respond: state.api.GetBoards,
+    fav_respond: state.api.GetFavList,
 
 });
 

@@ -173,7 +173,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                     <div className="flex p-2 h-16 border-b border-[#00000040] dark:border-[#FFFFFF40]">
                         <Link href={`/creative/${otherUser.username || ""}`} >
                             <div className="relative cursor-pointer">
-                                <img className="h-full object-cover aspect-square rounded-full" src={otherUser.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
+                                <img className="h-full object-cover object-top aspect-square rounded-full" src={otherUser.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
                                 {otherUser.isOnline && (
                                     <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                                 )}

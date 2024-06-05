@@ -15,7 +15,7 @@ function Info({
     return <>
         <div className='flex items-end sm:items-center pb-5'>
             <div className={`w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
-                <img className='w-full h-full rounded-full' src={src} alt="profile picture" />
+                <img className='w-full h-full rounded-full object-cover object-top' src={src} alt="profile picture" />
             </div>
             <div className='flex-2 flex-col gap-1'>
                 <span className='text-3xl font-bold capitalize'>{personalName}</span>

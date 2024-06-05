@@ -17,7 +17,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
             <div className='p-5'>
                 <div className='flex items-start gap-4 -translate-y-4 h-11'>
                     <div className='w-[85px] h-[85px] bg-cover relative bg-no-repeat'>
-                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8' src={info.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={info.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                     </div>
                     <div className='flex-2 flex-col gap-1'>
                         <span className='text-2xl font-bold capitalize'>{info.name}</span>

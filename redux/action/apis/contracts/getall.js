@@ -5,7 +5,7 @@ import { mainApiInstance } from '../axiosInstances'
 export const getAllContracts = () => {
   const req= 'getAllContracts'
   return async dispatch => {
-       
+       return
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const response = await mainApiInstance.get(`api/contracts`);

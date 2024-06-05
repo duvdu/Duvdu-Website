@@ -11,6 +11,7 @@ import { DeleteSavedBoard } from "../redux/action/apis/savedProject/board/delete
 import { ClosePopUp, OpenPopUp } from "../util/util";
 import EditBoard from "../components/popsup/editBoard";
 import Link from 'next/link'
+import { GetFavList } from "../redux/action/apis/savedProject/fav/getAll";
 
 const Saved = ({
     GetBoards,
@@ -20,7 +21,9 @@ const Saved = ({
     getBoards_respond,
     createBoard_respond,
     updateBoard_respond,
-    deleteSavedBoard_respond
+    deleteSavedBoard_respond,
+    GetFavList,
+    getFavList_respond
 
 }) => {
     const Boards = ({ data, isFav }) => {
@@ -28,9 +31,8 @@ const Saved = ({
 
         const { totalProjects, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
-        const img2 = data?.projects[1]?.project?.cover
-        const img3 = data?.projects[2]?.project?.cover
 
+        
         const dropdown = [
             {
                 value: "Delete",
@@ -42,6 +44,7 @@ const Saved = ({
         const handleSelectClick = (event) => {
             event.stopPropagation();
         };
+
         return (
             <>
                 <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} />
@@ -56,19 +59,18 @@ const Saved = ({
                     </div>
                     <Link href={`/save/${id}`}>
                         <div className="projects cursor-pointer">
-                        {img1 ? 
-                            <div className="w-full rounded-[50px] img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div>:
-                            <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
-                                <Icon className="w-44" name={'dvudu-image'}/>
-                            </div>
-                        }
+                            {img1 ?
+                                <div className="w-full rounded-[50px] img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div> :
+                                <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
+                                    <Icon className="w-44" name={'dvudu-image'} />
+                                </div>
+                            }
                         </div>
                     </Link>
                     <div className="boards-info projects-num">{totalProjects} projects</div>
                     <Link href={`/save/${id}`} >
                         <div className="cursor-pointer">
                             <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
-
                             <div className="boards-info projects-name flex">
                                 {isFav && <Icon name={"favorites"} />}
                                 {title}
@@ -79,18 +81,28 @@ const Saved = ({
             </>
         );
     };
-
-
-
+    const [initFav, setInitFav] = useState({
+        _id:'favorites',
+        title: "Favorites",
+        projects: [],
+        totalProjects: 0
+    });
     useEffect(() => {
-        // console.log(getBoards_respond)
-    }, [getBoards_respond])
+        if (getFavList_respond?.data) {
+            setInitFav({
+                _id:'favorites',
+                title: "Favorites",
+                projects: getFavList_respond.data,
+                totalProjects: getFavList_respond.data.length
+            });
+        }
+    }, [getFavList_respond]);
     useEffect(() => {
-        if (createBoard_respond || updateBoard_respond || deleteSavedBoard_respond)
-            {
-                GetBoards()
-                DeleteSavedBoard(-1)
-            }
+        if (createBoard_respond || updateBoard_respond || deleteSavedBoard_respond) {
+            GetBoards()
+            GetFavList({})
+            DeleteSavedBoard(-1)
+        }
         ClosePopUp("create-new-board")
     }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])
 
@@ -99,7 +111,7 @@ const Saved = ({
         <>
             <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
             <Layout shortheader={true} isbodyWhite={true}>
-            
+
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
@@ -114,9 +126,10 @@ const Saved = ({
                             <h3>No saved Found </h3>
                         )}
                         <div className="boards-grid">
+                            <Boards isFav={true} data={initFav} />
                             {
                                 getBoards_respond?.data?.map((feature, index) => (
-                                    <Boards key={index} isFav={index == 0} data={feature} />
+                                    <Boards key={index} isFav={false} data={feature} />
                                 ))
                             }
                         </div>
@@ -132,13 +145,15 @@ const mapStateToProps = (state) => ({
     updateBoard_respond: state.api.UpdateBoard,
     deleteBoard_respond: state.api.DeleteBoard,
     deleteSavedBoard_respond: state.api.DeleteSavedBoard,
+    getFavList_respond: state.api.GetFavList,
 });
 
 const mapDispatchToProps = {
     GetBoards,
     CreateSavedBoard,
     UpdateBoard,
-    DeleteSavedBoard
+    DeleteSavedBoard,
+    GetFavList
 };
 
 

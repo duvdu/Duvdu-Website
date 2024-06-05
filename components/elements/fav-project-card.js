@@ -14,12 +14,13 @@ import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
 import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
 import Link from 'next/link';
+import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
 
-const ProjectCard = ({
+const FavCard = ({
   cardData,
   className = "",
   type = 'project',
-  DeleteProjectFromBoard,
+  SwapProjectToFav,
 }) => {
   const Router = useRouter();
   const boardId = Router.query.boardId;
@@ -57,10 +58,6 @@ const ProjectCard = ({
 
   };
 
-  const handleLoveIconClick = () => {
-    setLoveIconName(loveIconName === 'far' ? 'fas' : 'far');
-  };
-
   const handleHover = () => {
     if (videoRef.current) {
       videoRef.current.play();
@@ -76,10 +73,13 @@ const ProjectCard = ({
     }
 
   };
-  const ProjectId = cardData._id
   cardData = cardData?.project
   const handleSelectClick = (event) => {
     event.stopPropagation();
+  };
+
+  const removeSaved = () => {
+    SwapProjectToFav({ projectId: cardData._id, action: "remove" })
   };
   return (
     <>
@@ -88,63 +88,62 @@ const ProjectCard = ({
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           className='project'>
-          
           <Link href={`/${type}/${cardData._id}`}>
             <div className='cursor-pointer'>
-            <div className="absolute top-2 right-2" onClick={handleSelectClick}>
-              <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId, ProjectId)}>
-                <div className="border rounded-full size-9 flex justify-center items-center">
-                  <Icon className="size-6 text-white" name="ellipsis-vertical" />
-                </div>
-              </Selector>
-            </div>
-            {
-              false &&
-                cardData.backgroundImages.length == 1 &&
-                cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
-                <>
-                  <video
-                    className='cardvideo relative'
-                    loop
-                    ref={videoRef}
-                    onTimeUpdate={timeUpdate}
-                  >
-                    <source src={cardData.backgroundImages[0]} type='video/mp4' />
-                  </video>
-                  <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
-                    <span className="text-white">
-                      {convertDuration(Duration * 1000)}
-                    </span>
+              <div className="absolute top-2 right-2" onClick={handleSelectClick}>
+                <Selector options={dropdown} onSelect={removeSaved}>
+                  <div className="border rounded-full size-9 flex justify-center items-center">
+                    <Icon className="size-6 text-white" name="ellipsis-vertical" />
                   </div>
-                </>
-              ) : (
-                // cardData.cover.length == 1 &&
-                <img className='cardimg' src={cardData?.cover} alt="project" />
-              )
-            }
+                </Selector>
+              </div>
+              {
+                false &&
+                  cardData.backgroundImages.length == 1 &&
+                  cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
+                  <>
+                    <video
+                      className='cardvideo relative'
+                      loop
+                      ref={videoRef}
+                      onTimeUpdate={timeUpdate}
+                    >
+                      <source src={cardData.backgroundImages[0]} type='video/mp4' />
+                    </video>
+                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                      <span className="text-white">
+                        {convertDuration(Duration * 1000)}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  // cardData.cover.length == 1 &&
+                  <img className='cardimg' src={cardData?.cover} alt="project" />
+                )
+              }
 
-            {
-              false &&
-              cardData.backgroundImages.length > 1 &&
-              <Swiper
-                dir='ltr'
-                className='cardimg'
-                modules={[Autoplay, Navigation, EffectFade, Pagination]}
-                spaceBetween={0}
-                slidesPerView={1}
-                scrollbar={{ draggable: true }}
-                loop={true}
-                pagination={{
-                  clickable: true,
-                }}
-              >
-                {cardData.backgroundImages.map((source, index) => (
-                  <SwiperSlide key={index}>
-                    <img key={index} src={source} className='cardimg' alt="project" />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            }
+              {
+                false &&
+                cardData.backgroundImages.length > 1 &&
+                <Swiper
+                  dir='ltr'
+                  className='cardimg'
+                  modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                  spaceBetween={0}
+                  slidesPerView={1}
+                  scrollbar={{ draggable: true }}
+                  loop={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                >
+                  {cardData.backgroundImages.map((source, index) => (
+                    <SwiperSlide key={index}>
+                      <img key={index} src={source} className='cardimg' alt="project" />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              }
             </div>
           </Link>
           <>
@@ -164,7 +163,7 @@ const ProjectCard = ({
               <div className='cursor-pointer'>
                 <img src={cardData?.user?.profileImage ? cardData?.user?.profileImage : process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
               </div>
-            </Link> 
+            </Link>
             <Link href={`/creative/${cardData?.user?.username}`}>
               <div className='cursor-pointer' >
                 <span className='text-sm font-semibold'>{cardData?.user?.name || ''}</span>
@@ -190,8 +189,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   AddProjectToBoard,
-  DeleteProjectFromBoard,
+  SwapProjectToFav,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);
+export default connect(mapStateToProps, mapDispatchToProps)(FavCard);
 

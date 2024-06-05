@@ -237,7 +237,7 @@ const Header = ({ data }) => (
         <div className='creator-info flex mt-3 mb-12 justify-between'>
             <Link href={`/creative/${data?.user?.username || ''}`}>
                 <div className='flex items-center gap-3 cursor-pointer'>
-                    <img alt='user' className="w-16 aspect-square rounded-full" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} />
+                    <img alt='user' className="w-16 aspect-square rounded-full object-cover object-top" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} />
                     <div>
                         <span className="capitalize font-semibold text-lg">{data?.user?.name || 'NONE'}</span>
                         <div className="flex items-center gap-1 mt-1">
@@ -334,7 +334,7 @@ const About = ({ data }) => (
             <div className='flex items-center justify-center'>
                 <div className='w-32 h-32 relative'>
                     <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                    <img className='profileImgture absolute rounded-full' src={data?.creative.profileImage} alt="profile picture" />
+                    <img className='profileImgture absolute rounded-full object-cover object-top' src={data?.creative.profileImage} alt="profile picture" />
                 </div>
                 <div className='flex-2 flex-col gap-1'>
                     <h3 className="capitalize font-semibold text-lg">{data?.creative.name}</h3>
@@ -482,14 +482,13 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
                 {auth.login ?
                     <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer ">
                         <div className="relative">
-                            <img className="h-full aspect-square rounded-full" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" />
+                            <img className="h-full aspect-square rounded-full object-cover object-top" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" />
                             {online && (
                                 <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                             )}
                             {!online && (
                                 <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                             )}
-
                         </div>
                         <div className="px-3">
                             <span className="capitalize font-bold">

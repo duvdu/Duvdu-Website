@@ -7,7 +7,7 @@ const Ongoing2 = ({ type }) => {
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full object-cover object-top' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>anna jonathan</h3>
                         <span className='opacity-50 text-white'>Yesterday</span>
