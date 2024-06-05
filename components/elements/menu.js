@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { getCategory } from '../../redux/action/apis/category/getCategories';
 
-const MegaMenu = ({ language, api, getCategory,categories }) => {
+const MegaMenu = ({ language, api, categories }) => {
   
   function repeatArray(arr, count) {
     let result = [];
@@ -13,10 +13,6 @@ const MegaMenu = ({ language, api, getCategory,categories }) => {
     }
     return result;
   }
-
-  useEffect(() => {
-    getCategory()
-  }, []);
 
     return (
     <ul className='flex flex-wrap gap-x-4'>
@@ -53,7 +49,7 @@ const Category = ({ category, language }) => {
       }
     }
   }, [language]);
-  console.log(category)
+  
   return (
     <li className='header-category'>
       <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>
@@ -108,7 +104,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getCategory
+  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MegaMenu);

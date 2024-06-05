@@ -2,15 +2,16 @@ import Pending from "./Pending";
 import Pending2 from "./pending2";
 import Ongoing from "./ongoing";
 import Ongoing2 from "./ongoing2";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 
-const LeftSide = ({getAllContracts}) => {
+const LeftSide = ({ getAllContracts, respond, categories }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    useEffect(()=>{
+    
+    useEffect(() => {
         getAllContracts()
-    },[])
+    }, [])
     const handleToggleClick = (index) => {
         setActiveIndex(index);
     };
@@ -33,7 +34,7 @@ const LeftSide = ({getAllContracts}) => {
             <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
 
-                <Pending2 data={{}}/>
+                <Pending2 data={{}} />
 
             </section>
             <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
@@ -50,7 +51,7 @@ const LeftSide = ({getAllContracts}) => {
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
-                            >
+                        >
                             my clients
                         </div>
                         <div
@@ -59,7 +60,7 @@ const LeftSide = ({getAllContracts}) => {
                         >
                             my creatives
                         </div>
-                        
+
                     </section>
 
                     <section className='hidden lg:flex gap-3 mt-6 mb-2 w-full sticky py-4 top-12 p-0 z-[5] '>
@@ -83,7 +84,8 @@ const LeftSide = ({getAllContracts}) => {
     );
 };
 const mapStateToProps = (state) => ({
-    respond:state.api.getAllContracts
+    respond: state.api.getAllContracts,
+    categories: state.categories
 });
 
 const mapDispatchToProps = {

@@ -10,8 +10,10 @@ import { GetNotifications } from "../../redux/action/apis/realTime/notification/
 import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
 import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
 import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
+import { getCategory } from "../../redux/action/apis/category/getCategories";
 
 const Layout = ({
+    user,
     children,
     shortheader,
     isbodyWhite,
@@ -21,10 +23,16 @@ const Layout = ({
     getMyprofile,
     GetAllChats,
     GetNotifications,
-    login_respond,
     GetBoards,
     GetFavList,
-    getMyprofile_respond
+    categories,
+    getCategory,
+
+    GetBoards_respond,
+    GetAllChats_respond,
+    GetNotifications_respond,
+    GetFavList_respond,
+    getCategory_respond,
 
 }) => {
     const [isToggled, setToggled] = useState(1);
@@ -41,19 +49,34 @@ const Layout = ({
                 .classList.add("mobile-menu-active");
     };
 
+    useEffect(() => {
+        console.log(categories)
+    }, [categories])
 
     useEffect(() => {
-        getMyprofile()
-    }, [login_respond])
+        if (!getCategory_respond)
+            getCategory()
+    }, [getCategory_respond])
+    
+    useEffect(() => {
+        if (!user)
+            getMyprofile()
+    }, [user])
+
+
 
     useEffect(() => {
-        if (getMyprofile_respond) {
-            GetBoards({})
-            GetFavList({})
-            GetAllChats()
-            GetNotifications()
+        if (user) {
+            if (!GetBoards_respond)
+                GetBoards({})
+            if (!GetFavList_respond)
+                GetFavList({})
+            if (!GetAllChats_respond)
+                GetAllChats()
+            if (!GetNotifications_respond)
+                GetNotifications()
         }
-    }, [getMyprofile_respond])
+    }, [user])
 
     return (
         <>
@@ -77,8 +100,16 @@ const Layout = ({
     );
 };
 const mapStateToProps = (state) => ({
+    user: state.auth.user,
     login_respond: state.api.login,
-    getMyprofile_respond: state.api.getMyprofile
+    getMyprofile_respond: state.api.getMyprofile,
+    categories: state.categories,
+
+    GetAllChats_respond: state.api.GetAllChats,
+    GetNotifications_respond: state.api.GetNotifications,
+    GetBoards_respond: state.api.GetBoards,
+    GetFavList_respond: state.api.GetFavList,
+    getCategory_respond: state.api.getCategory,
 });
 
 const mapDispatchToProps = {
@@ -86,7 +117,8 @@ const mapDispatchToProps = {
     GetAllChats,
     GetNotifications,
     GetBoards,
-    GetFavList
+    GetFavList,
+    getCategory
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

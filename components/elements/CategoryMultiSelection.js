@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getCategory } from '../../redux/action/apis/category/getCategories';
 
-function CategoryMultiSelection({ categories, getCategory, onChange }) {
+function CategoryMultiSelection({ categories, onChange }) {
     const [selectedCategories, setSelectedCategories] = useState([]);
-    useEffect(() => {
-        getCategory()
-    }, [])
     const toggleCategory = (categoryId) => {
         const updatedSelection = selectedCategories.includes(categoryId)
             ? selectedCategories.filter(id => id !== categoryId)
@@ -38,7 +35,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    getCategory
+    
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryMultiSelection);
