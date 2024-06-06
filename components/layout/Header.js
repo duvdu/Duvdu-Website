@@ -119,6 +119,7 @@ const Header = ({
             setrrorReq(api.req)
         }
     }, [api.error && !exclude_error(api.req)]);
+    console.log(errorMsg , errorReq)
     useEffect(() => {
         if(errorMsg && errorReq)
             OpenPopUp('main_error_message')
@@ -127,6 +128,7 @@ const Header = ({
     const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
     const totalUnwatchedNotification = api?.GetNotifications?.data?.filter(message => !message.watched).length;
     const totalNews = totalUnreadMessages + totalUnwatchedNotification
+
     return (
         <>
             <Chat />

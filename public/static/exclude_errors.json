@@ -1,7 +1,6 @@
 [
     "CheckUsernameExists",
     "FindUser",
-    "ChangePassword",
     "ASKforgetpassword",
     "UpdatePhone",
     "_updateProfile",
