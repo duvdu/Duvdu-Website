@@ -1,10 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Icon from '../Icons';
 
-const Popup = ({ id, children, onCancel, header, className = "", img, addWhiteShadow = false }) => {
+const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, addWhiteShadow = false }) => {
+    const popupRef = useRef(null);
+
+    useEffect(() => {
+        const popupElement = popupRef.current;
+
+        if (!popupElement) return;
+
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.attributeName === 'class') {
+                    if (popupElement.classList.contains('show')) {
+                        if (onOpen) onOpen();
+                    } else {
+                        if (onCancel) onCancel();
+                    }
+                }
+            });
+        });
+
+        observer.observe(popupElement, { attributes: true });
+
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
 
     return (
-        <div id={id} className={`popup z-30 ${className}`}>
+        <div ref={popupRef} id={id} className={`popup z-30 ${className}`}>
             <div onClick={onCancel} data-popup-dismiss="popup" className="flex overlay blur" />
             <div className='card content bg-[#F7F9FB] dark:bg-[#131313] sm:w-auto sm:mx-auto w-full mx-5' style={img ? { backgroundImage: `url(${img})` } : {}}>
                 <div className='p-5 pl-[31px]'>
@@ -23,8 +48,8 @@ const Popup = ({ id, children, onCancel, header, className = "", img, addWhiteSh
                 </div>
                 {
                     addWhiteShadow &&
-                    <div className='h-0 w-full sticky bottom-0 -translate-y-32' > 
-                        <div className='bottomeffect h-32'/>
+                    <div className='h-0 w-full sticky bottom-0 -translate-y-32' >
+                        <div className='bottomeffect h-32' />
                     </div>
                 }
             </div>

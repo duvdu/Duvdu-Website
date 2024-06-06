@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { GetProjects } from "../../../redux/action/apis/cycles/projects/get";
 import { setFollow } from "../../../redux/action/apis/auth/profile/setFollow";
 import { setUnFollow } from "../../../redux/action/apis/auth/profile/setUnFollow";
+import Followers from "../../popsup/followes";
 
 function OtherProfile({
     user,
@@ -28,7 +29,7 @@ function OtherProfile({
 
     const route = useRouter()
     const { profile: username } = route.query
-    console.log(setUnFollow_respond , follow_respond , username)
+    
     useEffect(() => {
         if (setUnFollow_respond || follow_respond) {
         getOtherprofile(username)
@@ -85,6 +86,7 @@ function OtherProfile({
         user &&
         // !user ? <h1> There's No User name {username} </h1> :
         <div className='sm:container'>
+            <Followers id={"show-followers"} />
             <Conver converPic={user.coverImage || process.env.DEFULT_COVER_PATH} />
             <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                 <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
@@ -101,7 +103,7 @@ function OtherProfile({
                             }}
                             rank={'---'}
                             rates={user?.rate?.totalRates}
-                            followes={[]}
+                            isMe={false}
                         />
                         {/* -- info -- */}
                         {

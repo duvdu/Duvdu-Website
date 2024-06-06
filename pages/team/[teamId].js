@@ -171,7 +171,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
                 </div>
             </Popup>
             <div className='flex gap-4 h-12 min-w-[300px]'>
-                <img className='rounded-full h-full aspect-square' src={person.user.profileImage} alt='profile img' />
+                <img className='rounded-full h-full aspect-square object-cover object-top' src={person.user.profileImage} alt='profile img' />
                 <div className='w-full flex flex-col justify-center'>
                     <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
                     <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>

@@ -2,5 +2,6 @@
 "CheckUsernameExists",
 "FindUser",
 "GetStudios",
+"getUserFollowers",
 "GetProjects"
 ]

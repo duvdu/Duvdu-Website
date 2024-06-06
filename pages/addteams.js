@@ -172,7 +172,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     const Person = ({ person }) => {
         return (
             <div className='flex gap-4 h-12 min-w-[300px]'>
-                <img className='rounded-full h-full aspect-square' src={person.profileImage} alt='profile img' />
+                <img className='rounded-full h-full aspect-square object-cover object-top' src={person.profileImage} alt='profile img' />
                 <div className='w-full flex flex-col justify-center'>
                     <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.name || person.username}</span>
                     <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>

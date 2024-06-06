@@ -17,7 +17,6 @@ const Pending2 = ({ data }) => {
                         </h3>
                         <span className='opacity-50'>
                             {dateFormat(data.startDate, 'M/d/yyyy')}
-                            {/* {new Date(data.startDate).toLocaleDateString() || 'Unknown Date'} */}
                         </span>
                     </div>
                 </div>

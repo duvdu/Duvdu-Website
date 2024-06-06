@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
-import { convertToK } from "../../../util/util";
+import { OpenPopUp, convertToK } from "../../../util/util";
 import Icon from "../../Icons";
+import { getUserFollowers } from "../../../redux/action/apis/auth/profile/getFollowerList";
 
 function Info({
     src,
@@ -11,10 +12,10 @@ function Info({
     rates,
     popularity,
     isboronze = false,
-    followes,
+    isMe
 }) {
     const openFollowers = () => {
-
+        OpenPopUp('show-followers')
     }
     return <>
         <div className='flex items-end sm:items-center pb-5'>
@@ -41,8 +42,8 @@ function Info({
             <div className='flex justify-center'>
                 {Object.entries(popularity).map(([key, value]) => (
                     <div
-                        onClick={key === 'followers' ? openFollowers : null}
-                        className={`popularity mr-9 pr-9 last:mr-0 last:pr-0 ${key === 'followers' ? ' cursor-pointer' : ''}`}
+                        onClick={key === 'followers' && isMe ? openFollowers : null}
+                        className={`popularity mr-9 pr-9 last:mr-0 last:pr-0 ${key === 'followers' && isMe ? ' cursor-pointer' : ''}`}
                         key={key}
                     >
                         <p className='number'>{convertToK(value, 0)}</p>
@@ -55,12 +56,4 @@ function Info({
 }
 
 
-const mapStateToProps = (state) => ({
-    
-});
-
-const mapDispatchToProps = {
-    
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Info);
+export default Info;

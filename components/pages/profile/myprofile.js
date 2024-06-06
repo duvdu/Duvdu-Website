@@ -27,6 +27,7 @@ import { GetProjects } from '../../../redux/action/apis/cycles/projects/get';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
 import EquipmentAvailable from '../../popsup/create/equipmentAvailable';
+import Followers from '../../popsup/followes';
 
 
 
@@ -84,12 +85,12 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
     const [userInfo, setUserInfo] = useState(user);
-    
+
 
     useEffect(() => {
         GetProjects({})
     }, [])
-    
+
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
             route.replace({
@@ -115,7 +116,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                     break;
                 case 'add-producer':
                     return <AddProducer />
-                    
+
                     break;
                 case 'portfolio-post':
                     return <AddPost />
@@ -164,10 +165,11 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data, false)
         }
-    
+
         return (
             <>
-                <Conver converPic={userInfo.coverImage } />
+                <Followers id={"show-followers"} />
+                <Conver converPic={userInfo.coverImage} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
@@ -178,12 +180,13 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                                 occupation={userInfo.service || '---'}
                                 personalName={userInfo.name}
                                 popularity={{
-                                    likes:userInfo.likes,
-                                    followers:userInfo.followCount.followers,
-                                    views:userInfo.profileViews,
+                                    likes: userInfo.likes,
+                                    followers: userInfo.followCount.followers,
+                                    views: userInfo.profileViews,
                                 }}
                                 rank={"---"}
                                 rates={userInfo.rate.totalRates.toFixed(1)}
+                                isMe={true}
                             />
                         </div>
 
