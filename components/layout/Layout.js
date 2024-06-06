@@ -50,10 +50,6 @@ const Layout = ({
     };
 
     useEffect(() => {
-        console.log(categories)
-    }, [categories])
-
-    useEffect(() => {
         if (!getCategory_respond)
             getCategory()
     }, [getCategory_respond])

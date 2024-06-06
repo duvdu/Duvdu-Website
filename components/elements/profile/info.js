@@ -1,17 +1,21 @@
+import { connect } from "react-redux";
 import { convertToK } from "../../../util/util";
 import Icon from "../../Icons";
 
-function Info({ 
-    src, 
-    personalName, 
-    location, 
-    rank, 
-    occupation, 
-    rates, 
-    popularity, 
-    isboronze = false ,
-    followes, 
+function Info({
+    src,
+    personalName,
+    location,
+    rank,
+    occupation,
+    rates,
+    popularity,
+    isboronze = false,
+    followes,
 }) {
+    const openFollowers = () => {
+
+    }
     return <>
         <div className='flex items-end sm:items-center pb-5'>
             <div className={`w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
@@ -36,7 +40,11 @@ function Info({
         <div className='flex justify-center pt-7 items-center'>
             <div className='flex justify-center'>
                 {Object.entries(popularity).map(([key, value]) => (
-                    <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
+                    <div
+                        onClick={key === 'followers' ? openFollowers : null}
+                        className={`popularity mr-9 pr-9 last:mr-0 last:pr-0 ${key === 'followers' ? ' cursor-pointer' : ''}`}
+                        key={key}
+                    >
                         <p className='number'>{convertToK(value, 0)}</p>
                         <p className='unit'>{key}</p>
                     </div>
@@ -46,4 +54,13 @@ function Info({
     </>
 }
 
-export default Info;
+
+const mapStateToProps = (state) => ({
+    
+});
+
+const mapDispatchToProps = {
+    
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Info);

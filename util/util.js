@@ -423,3 +423,26 @@ export const calculateRating = (rate) => {
   }
   return 0;
 };
+
+export const formatRemainingTime = (milliseconds) => {
+  let remainingTime = Math.max(milliseconds, 0); // Ensure the time is non-negative
+  const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+  remainingTime %= (1000 * 60 * 60 * 24);
+  const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+  remainingTime %= (1000 * 60 * 60);
+  const minutes = Math.floor(remainingTime / (1000 * 60));
+  
+  const timeParts = [];
+  
+  if (days > 0) {
+      timeParts.push(`${days} day${days > 1 ? 's' : ''}`);
+  }
+  if (hours > 0) {
+      timeParts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+  }
+  if (minutes > 0) {
+      timeParts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+  }
+  
+  return timeParts.join(' ');
+};

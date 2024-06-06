@@ -8,7 +8,6 @@ import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 
 const LeftSide = ({ getAllContracts, respond, categories }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    
     useEffect(() => {
         getAllContracts()
     }, [])
@@ -33,9 +32,9 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
         <section className='h-full'>
             <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-
-                <Pending2 data={{}} />
-
+                {respond?.data?.map((data, index) => (
+                    <Pending2 key={index} data={data} />
+                ))}
             </section>
             <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>

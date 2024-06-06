@@ -119,7 +119,7 @@ const Header = ({
             setrrorReq(api.req)
         }
     }, [api.error && !exclude_error(api.req)]);
-    console.log(errorMsg , errorReq)
+    
     useEffect(() => {
         if(errorMsg && errorReq)
             OpenPopUp('main_error_message')
