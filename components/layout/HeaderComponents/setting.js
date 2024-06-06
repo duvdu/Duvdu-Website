@@ -8,12 +8,23 @@ import { toggleDarkMode, toggleLanguage } from "../../../redux/action/setting";
 import { logout } from "../../../redux/action/auth";
 import * as Types from '../../../redux/constants/actionTypes'
 import ContactUs from "./contactUs";
+import { LogOut } from "../../../redux/action/apis/auth/logout";
+import { useRouter } from "next/router";
 
 
-function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopup, language }) {
+function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopup, language,LogOut ,logout_respond}) {
     const { t } = useTranslation();
 
     const [open, setOpened] = useState(0);
+
+    const router = useRouter();
+    console.log(logout_respond)
+    // useEffect(() => {
+    //     if(logout_respond)
+    //     router.push({
+    //         pathname: "/login",
+    //     });
+    // }, [logout_respond]);
 
     function toggle() {
         const body = document.body;
@@ -144,7 +155,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                     </div>
                 ))
             }
-            <div onClick={() => logout()} className="flex py-4 gap-4 text-red-950 cursor-pointer">
+            <div onClick={() => LogOut()} className="flex py-4 gap-4 text-red-950 cursor-pointer">
                 <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/logout-icon.svg`} />
                 <p className="text-[12px] w-full font-semibold text-red-500"> {t('Logout')} </p>
             </div>
@@ -173,13 +184,14 @@ const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
     language: state.setting.LANGUAGE,
     getheaderpopup: state.setting.headerpopup,
+    logout_respond: state.api,
 
 });
 
 const mapDispatchToProps = {
     toggleDarkMode,
     toggleLanguage,
-    logout,
+    LogOut,
 
 };
 

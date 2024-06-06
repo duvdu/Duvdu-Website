@@ -8,16 +8,16 @@ import { toggleDarkMode, SetheaderPopUp } from "../../redux/action/setting";
 import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
 import Profile from "./HeaderComponents/Profile";
 import Setting from "./HeaderComponents/setting";
-import { logout, verify } from "../../redux/action/auth";
+import { verify } from "../../redux/action/auth";
 import * as Types from "../../redux/constants/actionTypes";
-import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { OpenPopUp, errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
-import Popup from "../elements/popup";
 import Verify_acount from "../popsup/verify_account_now";
 import Chat from "../elements/chat";
 import Link from "next/link";
 import ErrorPopUp from "../popsup/errorPopUp";
+import { LogOut } from "../../redux/action/apis/auth/logout";
+import { useRouter } from "next/router";
 
 
 // toggleDarkMode
@@ -32,24 +32,25 @@ const Header = ({
     getheaderpopup,
     toggleDarkMode,
     MarkNotificationsAsRead,
+    LogOut,
     user,
     verify }) => {
 
+    const router = useRouter();
     const { i18n, t } = useTranslation();
-
     if (api.error && JSON.parse(api.error).status == 423) {
-        logout()
+        LogOut()
     }
 
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
-
+    
     useEffect(() => {
-        if(getheaderpopup == Types.SHOWNOTOFICATION){
+        if (getheaderpopup == Types.SHOWNOTOFICATION) {
 
-        MarkNotificationsAsRead()
-    }
+            MarkNotificationsAsRead()
+        }
     }, [getheaderpopup]);
 
 
@@ -113,15 +114,15 @@ const Header = ({
     const [errorMsg, setrrorMsg] = useState(null)
     const [errorReq, setrrorReq] = useState(null)
     useEffect(() => {
-        
+
         if (api.error && !exclude_error(api.req)) {
             setrrorMsg(errorConvertedMessage(api.error))
             setrrorReq(api.req)
         }
     }, [api.error && !exclude_error(api.req)]);
-    
+
     useEffect(() => {
-        if(errorMsg && errorReq)
+        if (errorMsg && errorReq)
             OpenPopUp('main_error_message')
     }, [errorMsg && errorReq]);
 
@@ -132,14 +133,14 @@ const Header = ({
     return (
         <>
             <Chat />
-            <ErrorPopUp id="main_error_message" onCancel={clearErrors} errorReq={errorReq} errorMsg={errorMsg}/>
+            <ErrorPopUp id="main_error_message" onCancel={clearErrors} errorReq={errorReq} errorMsg={errorMsg} />
             {
                 api.loading && !exclude_loading(api.req) &&
                 <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
                     <img src="/assets/imgs/theme/loading-icon.png" />
                 </div>
             }
-            
+
             <Verify_acount />
 
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
@@ -150,13 +151,13 @@ const Header = ({
                         <div className="header-wrap">
 
                             <div className="logo logo-width-1 mr-12 cursor-pointer">
-                                    <Link href="/">
-                                        <img
-                                            src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                            className="min-h-9 cursor-pointer"
-                                            alt="main logo"
-                                        />
-                                    </Link>
+                                <Link href="/">
+                                    <img
+                                        src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                        className="min-h-9 cursor-pointer"
+                                        alt="main logo"
+                                    />
+                                </Link>
                             </div>
 
                             <div className="header-right">
@@ -203,9 +204,9 @@ const Header = ({
                                         islogin &&
                                         <div className="header-action-2 flex items-center ">
                                             <div className="header-action-icon-2 z-10" >
-                                                <div className="icon-holder cursor-pointer" onClick={() => 
+                                                <div className="icon-holder cursor-pointer" onClick={() =>
                                                     SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)
-                                                
+
                                                 }>
                                                     {totalNews > 0 &&
                                                         <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{totalNews}</span>
@@ -239,7 +240,7 @@ const Header = ({
                                                 <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</div>
                                             </Link>
                                             <Link href="/register">
-                                                <div  className="cursor-pointer px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</div>
+                                                <div className="cursor-pointer px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</div>
                                             </Link>
                                         </div>
                                     }
@@ -280,7 +281,6 @@ const Header = ({
                                     <Icon className="size-6 flex items-center justify-center" name={'burger-menu'} />
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -305,6 +305,7 @@ const mapDispatchToProps = {
     toggleDarkMode,
     SetheaderPopUp,
     MarkNotificationsAsRead,
+    LogOut,
     verify
 };
 

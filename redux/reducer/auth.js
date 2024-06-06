@@ -11,12 +11,11 @@ const initstate = {
 const auth = (state = initstate, action) => {
     switch (action.type) {
         case Types.LOGOUT:
-        case Types.USER_NONE:
-            return {
-                ...state,
-                username: Types.USER_NONE,
+        return {
+                username: null,
+                isVerify: null,
                 login: false,
-
+                user: null,
             };
 
         case Types.SET_USER:

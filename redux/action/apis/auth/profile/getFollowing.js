@@ -14,7 +14,6 @@ export const getFollowing = () => {
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
-      dispatch({ type: Types.USER_NONE })
     }
   };
 }

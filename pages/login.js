@@ -8,8 +8,9 @@ import { login } from "../redux/action/apis/auth/signin/signin";
 import { useRouter } from 'next/router';
 import { errorConvertedMessage, validatePassword } from "../util/util";
 import { resendCode } from "../redux/action/apis/auth/OTP/resend";
+import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
 
-function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
+function Login({ api, login_respond, login, resendCode, getMyprofile }) {
 
   const [errorMSG, setErrorMSG] = useState(null);
   const router = useRouter();
@@ -24,11 +25,12 @@ function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
 
   var convertError = JSON.parse(api.error ?? null)
 
-  if (login_respond) {
-    router.push({
-      pathname: `/`,
-    });
-  }
+  useEffect(() => {
+    if (login_respond?.message) {
+      getMyprofile()
+    }
+  }, [login_respond?.message])
+
 
   useEffect(() => {
     if (convertError && api.req == "login") {
@@ -38,12 +40,12 @@ function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
             case 'username':
               setUsername({ isError: true, message: message });
               break;
-              case 'password':
-                setPasswordError({ isError: true, message: message });
-                break;
-                default:
-                  break;
-                }
+            case 'password':
+              setPasswordError({ isError: true, message: message });
+              break;
+            default:
+              break;
+          }
         });
       }
       else {
@@ -54,9 +56,9 @@ function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
     else
       setErrorMSG(null)
   }, [api.error])
-  
-  
-  
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -67,18 +69,18 @@ function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
       eError = false
       setUserNameError({ isError: false, message: '' });
     }
-    
+
     const error = validatePassword(password);
-    
+
     if (error) {
       setPasswordError({ isError: true, message: error });
     } else {
       setPasswordError({ isError: false, message: '' });
       login({ username, password })
     }
-    
+
   };
-  
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -87,7 +89,7 @@ function Login({ api, login_respond, login,resendCode_respond,resendCode }) {
     router.push(`/register/${username}`);
     resendCode({ username: username })
   };
-  
+
 
   return (
     <>
@@ -180,7 +182,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   login,
-  resendCode
+  resendCode,
+  getMyprofile
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
