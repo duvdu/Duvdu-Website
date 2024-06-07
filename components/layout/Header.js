@@ -41,11 +41,14 @@ const Header = ({
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
     }
+    useEffect(() => {
+        SetheaderPopUp(Types.NONEPOPUP)
+    }, [router.events]);
 
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
-    
+
     useEffect(() => {
         if (getheaderpopup == Types.SHOWNOTOFICATION) {
 
