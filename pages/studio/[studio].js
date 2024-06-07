@@ -31,6 +31,7 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
     const { studio: studioId } = router.query;
     const projects = projects_respond?.data || []
     const project = project_respond?.data
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         if (studioId)
@@ -47,7 +48,6 @@ const projects = ({ GetStudios, projects_respond, Getstudio, project_respond, Ge
         GetStudios({ limit: 4 });
     }, []);
 
-    const [isOpen, setIsOpen] = useState(false);
 
     const toggleDrawer = () => {
         setIsOpen(!isOpen);

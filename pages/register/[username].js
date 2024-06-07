@@ -13,7 +13,7 @@ function SignupVerify() {
     return (
         <>
             <Auth>
-                <OTP username={username} onSuccess={() => window.location.href = "/login"} initcount={0}/>
+                <OTP username={username} onSuccess={() => router.push("/login")} initcount={0}/>
             </Auth>
         </>
     );

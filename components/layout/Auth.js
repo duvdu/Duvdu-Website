@@ -59,7 +59,6 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     useEffect(() => {
         if (auth.username && auth.login) {
             router.push(`/`);
-            // window.location.href = "/"
         }
         else if (auth.username && auth.login && auth.user.isVerified === false && !verify_respond) {
             // resendCode({ username: auth.username })

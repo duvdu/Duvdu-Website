@@ -38,8 +38,6 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
         }
         localStorage.setItem('darkMode', isDarkMode);
         toggleDarkMode(isDarkMode)
-
-        // window.location.reload();
     }
 
     const Language = () => {
@@ -128,13 +126,13 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                         img: 'number-icon.svg',
                         name: 'Change number',
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
-                        onClick: () => window.location.href = "/changePhoneNumber"
+                        onClick: () => router.push("/changePhoneNumber")
                     },
                     {
                         img: 'lock-icon.svg',
                         name: 'Change password',
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
-                        onClick: () => window.location.href = "/changepassword"
+                        onClick: () => router.push("/changepassword")
                     },
                     {
                         img: 'chat-icon.svg',

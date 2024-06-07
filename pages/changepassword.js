@@ -141,7 +141,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                             {formErrors.confirmPassword.isError && <p className="error-msg">{formErrors.confirmPassword.message}</p>}
                         </div>
                         <button type="submit" className="mb-4 relative mb-30 w-full">
-                            <AppButton >Change Password</AppButton>
+                            <AppButton className='z-0' >Change Password</AppButton>
                             <div className="submit-btn"></div>
                         </button>
                         

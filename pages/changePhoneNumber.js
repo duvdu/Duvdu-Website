@@ -10,11 +10,13 @@ import { askChangePhone } from "../redux/action/apis/auth/changephone/askupdateP
 import { UpdatePhone } from "../redux/action/apis/auth/changephone/updatePhone";
 import { errorConvertedMessage } from '../util/util';
 import OTP from "../components/elements/otp";
+import { useRouter } from "next/router";
 
 function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, UpdatePhone, username }) {
     const [step, setStep] = useState(0);
     const [error, setError] = useState('');
     const pages = ['', 'OTP', 'EnterPhoneNumber', 'OTP', 'PhoneChanged'];
+    const router = useRouter();
 
     useEffect(() => {
         const handlePopstate = () => {
@@ -34,7 +36,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
 
     useEffect(() => {
         if (api.error && JSON.parse(api.error).status == 423) {
-            window.location.href = "/"
+            router.push(`/`);
         }
         else if (api.error) {
             setError(api.error)
