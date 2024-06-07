@@ -512,7 +512,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, loveToggleAction, is
                             <Icon className={`${loveIconName === "far" ? 'text-white' : 'text-primary'} w-6 text-xl`} name={'heart'} type={loveIconName} />
                         </div>}
                         {auth.login &&
-                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />}
+                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-full sm:w-96 max-w-[211px]" text='book now' />}
                     </Controller>
                 </div>
             </div>

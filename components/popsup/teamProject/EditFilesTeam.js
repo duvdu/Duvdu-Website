@@ -145,7 +145,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
 
                         <section className="sticky bottom-5 z-10">
                             <div className="flex justify-center">
-                                <ArrowBtn onClick={onsubmit} className="cursor-pointer w-min sm:w-96 z-10" text='Save' isEnable={true} />
+                                <ArrowBtn onClick={onsubmit} className="cursor-pointer w-full sm:w-96 z-10" text='Save' isEnable={true} />
                             </div>
                         </section>
                     </div>}

@@ -446,7 +446,7 @@ const Control = ({ data, toggleDrawer, GetAllMessageInChat, auth, chat_respond }
                             </div>
                         }
                         {auth.login &&
-                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-min sm:w-96 max-w-[211px]" text='book now' />
+                            <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-full sm:w-96 max-w-[211px]" text='book now' />
                         }
                     </Controller>
                 </div>

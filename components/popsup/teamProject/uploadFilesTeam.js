@@ -130,7 +130,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
 
                     <section className="sticky bottom-5 z-10">
                         <div className="flex justify-center">
-                            <ArrowBtn onClick={onsubmit} className="cursor-pointer w-min sm:w-96 z-10" text='Next' isEnable={true} />
+                            <ArrowBtn onClick={onsubmit} className="cursor-pointer w-full sm:w-96 z-10" text='Next' isEnable={true} />
                         </div>
                     </section>
                 </div>}

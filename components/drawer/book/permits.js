@@ -207,7 +207,7 @@ const PermitsBooking = ({ respond, addprojectState, UpdateFormData, BookCopyrigh
                     </div>
                 }
                 <div className="flex justify-center">
-                    <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-min sm:w-96" text={preview ? 'check-out' : 'continue'} />
+                    <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={preview ? 'check-out' : 'continue'} />
                 </div>
             </section>
 
