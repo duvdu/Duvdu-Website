@@ -132,7 +132,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                         img: 'lock-icon.svg',
                         name: 'Change password',
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
-                        onClick: () => router.push("/changepassword")
+                        onClick: () => router.push("/changePassword")
                     },
                     {
                         img: 'chat-icon.svg',
