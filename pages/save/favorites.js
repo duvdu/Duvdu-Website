@@ -10,7 +10,7 @@ import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardPro
 import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
 import { SwapProjectToFav } from "../../redux/action/apis/savedProject/fav/favAction";
 import FavProjectCard from "../../components/elements/fav-project-card";
-
+import ProjectCard from "../../components/elements/project-card";
 
 const Projects = ({
     GetFavList,
@@ -35,8 +35,8 @@ const Projects = ({
         if (delete_respond || boardId || swap_respond) {
             GetFavList({});
         }
-    }, [delete_respond, boardId , swap_respond]);
-    
+    }, [delete_respond, boardId, swap_respond]);
+
     const getPaginatedProjects = allprojects;
 
     return (
@@ -57,7 +57,11 @@ const Projects = ({
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
-                                <FavProjectCard href="/project/1" key={i} cardData={item} />
+                                item.project.studioName ? (
+                                    <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio" />
+                                ) : (
+                                    <ProjectCard key={`project-${i}`} cardData={item.project} />
+                                )
                             ))}
                         </div>
                         {
@@ -90,7 +94,7 @@ const mapStateToProps = (state) => ({
     add_respond: state.api.AddProjectToBoard,
     delete_respond: state.api.DeleteProjectFromBoard,
     get_respond: state.api.GetFavList,
-  swap_respond: state.api.SwapProjectToFav,
+    swap_respond: state.api.SwapProjectToFav,
 
 });
 

@@ -108,7 +108,7 @@ const Projects = ({
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
-                                <Card href="/project/1" key={i} cardData={item} />
+                                <Card key={i} cardData={item} />
                             ))}
                         </div>
                         {

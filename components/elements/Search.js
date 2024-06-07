@@ -53,7 +53,7 @@ const Search = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => handleFocus(true)}
-                onBlur={() => setTimeout(() => handleFocus(false), 200)} // Delay to allow click on history item
+                onBlur={() => setTimeout(() => handleFocus(false), 200)}
                 onKeyDown={handleInput}
                 type="text"
                 placeholder={t("Search") + "..."}

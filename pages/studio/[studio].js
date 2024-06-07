@@ -157,7 +157,7 @@ const Header = ({ data }) => (
         <div className='creator-info flex mt-3 mb-12 justify-between'>
             <Link href={`/creative/${data.userName}`}>
                 <div className='flex items-center gap-3 cursor-pointer'>
-                    <img alt='user aspect-square rounded-full' className="w-16 aspect-square rounded-full" src={data.user.profileImage} />
+                    <img alt='user' className="w-16 aspect-square rounded-full object-cover object-top" src={data.user.profileImage} />
                     <div>
                         <span className="capitalize font-semibold text-lg">{data.user.name}</span>
                         <div className="flex items-center gap-1 mt-1">
@@ -370,7 +370,7 @@ const Recommended = ({ projects }) => {
 
             <div className="grid minmax-280 gap-5">
                 {getPaginatedProjects.map((item, i) => (
-                    <ProjectCard key={i} href="/project/1" cardData={item} />
+                    <ProjectCard key={i} cardData={item} type="studio"/>
                 ))}
             </div>
         </>

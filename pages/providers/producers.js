@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 
 const convertDataFormat = (data) => {
-    console.log(data)
+    
     return {
         _id: data._id,
         img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",

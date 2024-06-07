@@ -52,7 +52,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
         resetForm()
     };
     const onsubmit = () => {
-        console.log(formData)
+        
         router.push({
             pathname: "/addteams",
         });

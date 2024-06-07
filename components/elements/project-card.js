@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
@@ -15,7 +14,7 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 
-const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, GetProject, GetProject_respond, SwapProjectToFav }) => {
+const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
@@ -90,7 +89,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //     setLove(isFav(cardData._id, getBoards_respond))
   //   }
   // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
-
 
   return (
     <>

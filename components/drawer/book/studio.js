@@ -120,20 +120,20 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
             <Drawer name={preview ? 'Review Booking' : data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-y-scroll" padding={false}>
             {
                     creatives.length > 0 &&
-                    <section className="my-11">
+                    <section className="my-11 p-8 pt-0">
                         <h3 className="capitalize opacity-60 mb-4">team</h3>
                         <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name }))} onChange={(value) => UpdateFormData('creative', value)} />
                     </section>
                 }
                 {
                     data.booktools.length > 0 &&
-                    <section className="my-11">
+                    <section className="my-11 p-8 pt-0">
                         <h3 className="capitalize opacity-60 mb-4">equipments   </h3>
                         <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('equipments', value)} />
                     </section>
                 }
                 <div className="mt-11" />
-                <div className={preview ? ' hidden' : ''}>
+                <div className={preview ? ' hidden p-8 pt-0' : 'p-8 pt-0'}>
                     <section>
                         <h3 className="capitalize opacity-60">job details</h3>
                         <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
@@ -203,7 +203,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                     </section>
                 </div>
 
-                <div className={preview ? '' : ' hidden'}>
+                <div className={preview ? 'p-8 pt-0' : ' hidden'}>
                     <section className="w-full">
                         <h2 className='opacity-60 capitalize mb-3'> project type </h2>
                         <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>

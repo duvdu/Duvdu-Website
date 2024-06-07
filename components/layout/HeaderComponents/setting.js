@@ -18,7 +18,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
     const [open, setOpened] = useState(0);
 
     const router = useRouter();
-    console.log(logout_respond)
+    
     // useEffect(() => {
     //     if(logout_respond)
     //     router.push({
@@ -134,6 +134,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                         img: 'lock-icon.svg',
                         name: 'Change password',
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
+                        onClick: () => window.location.href = "/changepassword"
                     },
                     {
                         img: 'chat-icon.svg',

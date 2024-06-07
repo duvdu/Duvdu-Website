@@ -78,7 +78,6 @@ const projects = ({
     const loveToggleAction = () => {
         if (projectId && getBoards_respond.data) {
             if (love) {
-                console.log(findProjectId(projectId,getBoards_respond.data[0]._id))
                 DeleteProjectFromBoard(getBoards_respond.data[0]._id, findProjectId(projectId,getBoards_respond.data[0]._id))
             }
             else {
@@ -182,7 +181,7 @@ const projects = ({
         projectScale: project.projectScale,
 
     }) : null
-    console.log(data)
+    
     return (
         <>
             <Layout >
@@ -191,6 +190,7 @@ const projects = ({
                     <>
                         <Successfully_posting id="addProjectToBoard-popup" message="Add To Team" onCancel={() => ClosePopUp("addProjectToBoard-popup")} />
                         <AddToSaved />
+
                         <Report />
                         <ThanksMSG />
                         <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
@@ -450,7 +450,7 @@ const Recommended = ({ projects }) => {
 
             <div className="grid minmax-280 gap-5">
                 {getPaginatedProjects.map((item, i) => (
-                    <ProjectCard key={i} className='cursor-pointer' href="/project/1" cardData={item} />
+                    <ProjectCard key={i} className='cursor-pointer' cardData={item} />
                 ))}
             </div>
         </>
