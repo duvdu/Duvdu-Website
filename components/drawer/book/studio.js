@@ -126,7 +126,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                     </section>
                 }
                 {
-                    data.booktools.length > 0 &&
+                    data?.booktools?.length > 0 &&
                     <section className="my-11 p-8 pt-0">
                         <h3 className="capitalize opacity-60 mb-4">equipments   </h3>
                         <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('equipments', value)} />

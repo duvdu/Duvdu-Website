@@ -4,7 +4,6 @@ import Icon from '../../Icons';
 import React, { useEffect, useState } from 'react';
 import Switch from '../../elements/switcher'
 import { connect } from "react-redux";
-import Button from '../../elements/button';
 import { CreateStudio } from '../../../redux/action/apis/cycles/studio/create';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
@@ -17,6 +16,7 @@ import Successfully_posting from "../../popsup/post_successfully_posting";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
 import CategorySelection from './assets/selectCategory';
+import AppButton from '../../elements/button';
 
 
 const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
@@ -82,13 +82,29 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         
         return data;
     };
-
     const validateRequiredFields = () => {
-        return {}
         const errors = {};
+        const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
+
+        if (!formData.description) errors.description = 'Description is required';
+        if (!formData.studioEmail) errors.studioEmail = 'Studio email is required';
+        if (!formData.studioNumber) errors.studioNumber = 'Studio number is required';
+        if (!formData.studioName) errors.studioName = 'Studio name is required';
+        if (!formData.category) errors.category = 'Category is required';
+        if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
+        if (!formData.pricePerHour) errors.pricePerHour = 'Price per hour is required';
+        if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
+        if (!formData.insurance) errors.insurance = 'Insurance is required';
+                
+        if (!formData.studioNumber) {
+            errors.studioNumber = 'Studio number is required';
+        } else if (!egyptianPhoneRegex.test(formData.studioNumber)) {
+            errors.studioNumber = 'Invalid Egyptian phone number.';
+        }
 
         return errors;
-    }
+    };
+
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -240,13 +256,11 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 <p className='opacity-70'> Show on home feed & profile </p>
                             </section>
 
-                            <Button onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
-
+                            <AppButton isEnable={false} onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>
                                     Next
                                 </span>
-
-                            </Button>
+                            </AppButton>
 
                         </form>
                     )}

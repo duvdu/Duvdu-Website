@@ -7,6 +7,7 @@ import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
 import { calculateRating } from '../../util/util';
+import { useRouter } from 'next/router';
 
 
 const convertDataFormat = (data) => {
@@ -25,6 +26,7 @@ const convertDataFormat = (data) => {
 };
 
 const Permit = ({ GetCopyrights, respond }) => {
+    const Router = useRouter();
     const showLimit = 24;
     const page = 1;
     const searchTerm = Router.query.search;
@@ -32,6 +34,7 @@ const Permit = ({ GetCopyrights, respond }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
     const [permits, setPermits] = useState([]);
+    const pagganation = respond?.pagination
 
     useEffect(() => {
         if (limit)
@@ -70,7 +73,7 @@ const Permit = ({ GetCopyrights, respond }) => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [page, pagganation?.totalPages]);
-    
+
 
     const handlesetdata = (item) => {
         setdata(item)
