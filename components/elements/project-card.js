@@ -178,9 +178,8 @@ console.log(cardData)
           </div>
         </div>
         <p className='text-xl opacity-70 font-medium my-1'>{cardData.title || cardData.studioName}</p>
-        {cardData.price || cardData.pricePerHour &&
-        <div className='text-xl font-bold'>{cardData.price || cardData.pricePerHour}$</div>
-        }
+        {(cardData.projectBudget || cardData.pricePerHour) &&
+        <div className='text-xl font-bold'>{cardData.projectBudget || cardData.pricePerHour}$</div>}
       </div>
     </>
   );

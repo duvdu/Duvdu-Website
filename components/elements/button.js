@@ -16,7 +16,7 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
       break;
   }
 
-  const disabledClass = isEnabled ? '' : 'opacity-50 cursor-not-allowed';
+  const disabledClass = isEnabled ? '' : 'disable';
   const handleClick = (event) => {
     if (isEnabled && onClick) {
       onClick(event);
@@ -29,7 +29,7 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
       className={`relative h-[75px] flex rounded-full p-1 ${className} ${isEnabled ? 'cursor-pointer' : 'cursor-not-allowed'}`}
       {...rest}
     >
-      <div className={`${buttonClass} absolute left-0 app-btn h-full btn leading-10 z-10 min-w-min ${disabledClass}`}>
+      <div className={`${buttonClass} absolute left-0 app-btn h-full   leading-10 z-10 min-w-min ${disabledClass}`}>
         <div className={`flex justify-center items-center h-full text-white ${contentClassName}`}>
           {children}
         </div>

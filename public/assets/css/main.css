@@ -683,7 +683,7 @@ table p {
   color: var(--header-tab);
   font-weight: 700;
   text-transform: capitalize;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 
@@ -1644,6 +1644,16 @@ table p {
 }
 
 
+.app-btn.disable {
+  background-color: var(--gray-1);
+  cursor: not-allowed;
+}
+
+.app-btn.disable:hover {
+  background-color: var(--gray-1);
+
+}
+
 .app-btn {
   width: 100%;
   border-radius: 41.5px;
@@ -1661,10 +1671,11 @@ table p {
   background-color: var(--hover_primary);
 }
 
+
+
 .error-msg {
   color: #EB1A40;
   padding: 5px;
-
   font-size: 12px;
   font-style: normal;
   font-weight: 600;
@@ -1791,6 +1802,7 @@ table p {
 .app-field::placeholder {
   text-transform: capitalize;
 }
+
 .app-field {
   background: var(--Alabaster);
   border-radius: 33.5px;
@@ -1805,7 +1817,7 @@ table p {
   width: 100%;
   border: none;
   height: 64px;
-  padding-left: 27px;  
+  padding-left: 27px;
 }
 
 
@@ -2140,7 +2152,7 @@ table p {
   }
 }
 
-.termsBody ul{
+.termsBody ul {
   list-style: disc;
   padding: revert;
   margin: revert;
@@ -2186,12 +2198,12 @@ audio::-webkit-media-controls-panel {
 
 audio::-webkit-media-controls-play-button {
   color: white;
-  
+
 }
 
 audio::-webkit-media-controls-volume-slider-container {
   color: white;
-  
+
 }
 
 
