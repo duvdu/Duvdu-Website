@@ -88,7 +88,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //     setLove(isFav(cardData._id, getBoards_respond))
   //   }
   // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
-
+console.log(cardData)
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
@@ -177,8 +177,8 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
-        <div className='text-xl font-bold'>{cardData.price}</div>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.title || cardData.studioName}</p>
+        <div className='text-xl font-bold'>{cardData.price || cardData.pricePerHour}$</div>
       </div>
     </>
   );

@@ -68,7 +68,6 @@ const Studio = ({
         setIsOpen(!isOpen);
     };
 
-    console.log(studio)
     return (
         <>
             <Layout >
