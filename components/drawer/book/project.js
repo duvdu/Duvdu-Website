@@ -178,7 +178,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                         required
                                     >
                                         
-                                        {['minute', 'Hours'].map((value, index) => (
+                                        {['minute', 'hour'].map((value, index) => (
                                             <option key={index} value={value.toLowerCase()}>{value}</option>
                                         ))}
                                     </select>

@@ -26,10 +26,10 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
   return (
     <div
       onClick={handleClick}
-      className={`relative h-[75px] flex rounded-full p-1 ${className} ${isEnabled ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+      className={`relative h-[75px] flex rounded-full p-1 ${className}`}
       {...rest}
     >
-      <div className={`${buttonClass} absolute left-0 app-btn h-full   leading-10 z-10 min-w-min ${disabledClass}`}>
+      <div className={`${buttonClass} absolute left-0 app-btn h-full btn leading-10 z-10 min-w-min ${disabledClass}`}>
         <div className={`flex justify-center items-center h-full text-white ${contentClassName}`}>
           {children}
         </div>

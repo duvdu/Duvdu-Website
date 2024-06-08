@@ -169,6 +169,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             pathname: `/creative/${auth.username}`,
         })
     }
+    const hasErrors = Object.keys(validateRequiredFields()).length > 0;
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
     return (
         <>
@@ -256,7 +257,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 <p className='opacity-70'> Show on home feed & profile </p>
                             </section>
 
-                            <AppButton isEnable={false} onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                            <AppButton isEnabled={!hasErrors} onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>
                                     Next
                                 </span>

@@ -15,8 +15,8 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
         setActiveIndex(index);
     };
     const Clients = () =>
-        <section className='h-full'>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+        <section >
+            <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 <Pending />
                 <Pending />
@@ -29,8 +29,8 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
         </section>
 
     const Creatives = () =>
-        <section className='h-full'>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+        <section>
+            <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                 {respond?.data?.map((data, index) => (
                     <Pending2 key={index} data={data} />
@@ -62,7 +62,7 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
 
                     </section>
 
-                    <section className='hidden lg:flex gap-3 mt-6 mb-2 w-full sticky py-4 top-12 p-0 z-[5] '>
+                    <section className='hidden lg:flex gap-3 mt-6 mb-2 fixed w-full py-4 p-0 z-[5] px-4'>
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
