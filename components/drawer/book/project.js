@@ -119,7 +119,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                 {!isOpen ?
                     <></> :
                     <>
-                        <div className={preview ? ' hidden p-8 pt-0' : 'p-8 pt-0'}>
+                        <div className={preview ? ' hidden' : 'p-8 pt-0'}>
                             {
                                 creatives.length > 0 &&
                                 <section className="my-11">
@@ -262,7 +262,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     </div>
                                 </div>
                             </div>
-                            <section className={`w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
+                            
+                            <section className={`sticky bottom-0 w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                                 <div className="w-full flex px-8 justify-between">
                                     <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
                                     <span className="text-2xl font-bold">${formData.totalPrice}</span>
@@ -271,6 +272,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
                                 </div>
                             </section>
+                            
                         </div>
                     </>
 

@@ -66,6 +66,10 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
     const saved = getProjectCovers(getBoards_respond?.data || [])
     const favCover = fav_respond?.data.length ? fav_respond.data[0].project.cover : null
 
+    useEffect(()=>{
+        setShowMiddleCard(false)
+    },[hasVerificationBadge])
+
     if (user == null) return <></>
     if (getheaderpopup != Types.SHOWPROFILE) return
     else

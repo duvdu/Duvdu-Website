@@ -63,8 +63,6 @@ const Layout = ({
         init()
     }, [])
 
-
-
     useEffect(() => {
         if (user) {
             if (!GetBoards_respond)

@@ -45,14 +45,13 @@ const Header = ({
     useEffect(() => {
         SetheaderPopUp(Types.NONEPOPUP)
     }, [router.events]);
-
+console.log(getheaderpopup)
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
 
     useEffect(() => {
         if (getheaderpopup == Types.SHOWNOTOFICATION) {
-
             MarkNotificationsAsRead()
         }
     }, [getheaderpopup]);
