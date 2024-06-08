@@ -9,7 +9,7 @@ import { OpenPopUp } from '../../../util/util';
 import Icon from '../../Icons';
 import ArrowBtn from '../../elements/arrowBtn';
 
-const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, chat_respond, SwapProjectToFav, auth, swapProjectToFav_respond }) => {
+const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, messages, SwapProjectToFav, auth, swapProjectToFav_respond }) => {
     const [data, setData] = useState(initialData);
     const [loveIconName, setLoveIconName] = useState(data?.isFavourite ? 'fas' : 'far');
     const online = data?.user?.isOnline;
@@ -41,7 +41,7 @@ console.log(data)
     };
 
     return (
-        chat_respond?
+        messages.openchat?
         <></>:
         <>
             <div className='sticky h-32 bottom-0 z-20 max-w-full'>
@@ -90,7 +90,7 @@ console.log(data)
 };
 
 const mapStateToProps = (state) => ({
-    chat_respond: state.api.GetAllMessageInChat,
+    messages: state.messages,
     swapProjectToFav_respond: state.api.SwapProjectToFav,
     auth: state.auth,
 });

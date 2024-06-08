@@ -88,7 +88,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //     setLove(isFav(cardData._id, getBoards_respond))
   //   }
   // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
-console.log(cardData)
+
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >

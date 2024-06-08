@@ -11,6 +11,7 @@ import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProject
 import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
 import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
 import { getCategory } from "../../redux/action/apis/category/getCategories";
+import { init } from "../../redux/action/apis/init/getdata";
 
 const Layout = ({
     user,
@@ -25,14 +26,13 @@ const Layout = ({
     GetNotifications,
     GetBoards,
     GetFavList,
-    categories,
     getCategory,
-
     GetBoards_respond,
     GetAllChats_respond,
     GetNotifications_respond,
     GetFavList_respond,
     getCategory_respond,
+    init
 
 }) => {
     const [isToggled, setToggled] = useState(1);
@@ -58,6 +58,10 @@ const Layout = ({
         if (!user)
             getMyprofile()
     }, [user])
+
+    useEffect(() => {
+        init()
+    }, [])
 
 
 
@@ -114,6 +118,7 @@ const mapDispatchToProps = {
     GetNotifications,
     GetBoards,
     GetFavList,
+    init,
     getCategory
 
 };

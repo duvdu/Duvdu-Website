@@ -22,6 +22,7 @@ export const getMyprofile = (withloading) => {
       // socket.on("connect", () => console.log("Open Channel"));
     } catch (error) {
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
+      dispatch({ type: Types.LOGOUT })
     }
   };
 }

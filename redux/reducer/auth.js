@@ -1,4 +1,5 @@
 import * as Types from "../constants/actionTypes";
+
 // Initial state
 const initstate = {
     username: null,
@@ -7,33 +8,78 @@ const initstate = {
     user: null,
 };
 
+// Function to load state from localStorage
+const loadStateFromLocalStorage = () => {
+    if (typeof window !== "undefined") {
+        try {
+            const serializedState = localStorage.getItem('authState');
+            if (serializedState === null) {
+                return initstate;
+            }
+            return JSON.parse(serializedState);
+        } catch (err) {
+            console.error("Could not load state from localStorage", err);
+            return initstate;
+        }
+    }
+    return initstate;
+};
+
+// Function to save state to localStorage
+const saveStateToLocalStorage = (state) => {
+    if (typeof window !== "undefined") {
+        try {
+            const serializedState = JSON.stringify(state);
+            localStorage.setItem('authState', serializedState);
+        } catch (err) {
+            console.error("Could not save state to localStorage", err);
+        }
+    }
+};
+
 // Reducer function
 const auth = (state = initstate, action) => {
+    let newState;
     switch (action.type) {
         case Types.LOGOUT:
-        return {
+            newState = {
                 username: null,
                 isVerify: null,
                 login: false,
                 user: null,
             };
+            break;
 
         case Types.SET_USER:
-            return {
+            newState = {
                 ...state,
                 user: action.payload,
                 username: action.payload.username,
-                login: true
+                login: true,
             };
+            break;
+
         case Types.VERIFIED:
-            return {
+            newState = {
                 ...state,
                 isVerify: action.payload,
             };
+            break;
+
+        case Types.INIT_APP:
+            newState = loadStateFromLocalStorage();
+            break;
 
         default:
-            return state;
+            newState = state;
+            break;
     }
+
+    if (newState.login !== null) {
+        saveStateToLocalStorage(newState);
+    }
+
+    return newState;
 };
 
 export default auth;

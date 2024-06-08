@@ -165,8 +165,9 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
     const swapRecording = () => {
         setIsRecord(!isRecording)
     };
+    
     return (
-        <div className={`fixed bottom-0 z-20 ${messages.openchat == true ? '' : 'hidden'}`}>
+        <div className={`fixed bottom-0 z-20 ${messages.openchat  ? '' : 'hidden'}`}>
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
                 <div className="chat dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-DS_white shadow-xl sm:left-8">
@@ -423,6 +424,7 @@ const Other = ({ message }) => {
 const mapStateToProps = (state) => ({
     respond: state.api.SendMessages,
     getheaderpopup: state.setting.headerpopup,
+    chat_respond: state.api.GetAllMessageInChat,
     messages: state.messages,
     user: state.user,
 

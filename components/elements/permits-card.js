@@ -4,7 +4,7 @@ import Icon from '../Icons';
 
 
 const Card = ({ cardData, className = "", onClick }) => {
-  console.log(cardData)
+  
   
   return (
     <div className={`border border-50 border-solid border-gray-300 p-10 ${className}`}>

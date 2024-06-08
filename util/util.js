@@ -403,13 +403,13 @@ export const calculateRating = (rate) => {
   return 0;
 };
 
-export const formatRemainingTime = (milliseconds) => {
-  let remainingTime = Math.max(milliseconds, 0); // Ensure the time is non-negative
-  const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-  remainingTime %= (1000 * 60 * 60 * 24);
-  const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-  remainingTime %= (1000 * 60 * 60);
-  const minutes = Math.floor(remainingTime / (1000 * 60));
+export const formatRemainingTime = (seconds) => {
+  let remainingTime = seconds
+  const days = Math.floor(remainingTime / (60 * 60 * 24));
+  remainingTime %= (60 * 60 * 24);
+  const hours = Math.floor(remainingTime / ( 60 * 60));
+  remainingTime %= (60 * 60);
+  const minutes = Math.floor(remainingTime / (60));
   
   const timeParts = [];
   

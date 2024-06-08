@@ -62,7 +62,7 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
 
                     </section>
 
-                    <section className='hidden lg:flex gap-3 mt-6 mb-2 fixed w-full py-4 p-0 z-[5] px-4'>
+                    <section className='hidden lg:flex gap-3 mt-6 mb-2 fixed w-full py-4 p-0 z-[5]'>
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
