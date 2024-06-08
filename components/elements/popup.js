@@ -4,22 +4,38 @@ import Icon from '../Icons';
 const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, addWhiteShadow = false }) => {
     const popupRef = useRef(null);
 
+    const throttle = (func, delay) => {
+        let lastCall = 0;
+        return (...args) => {
+            const now = new Date().getTime();
+            if (now - lastCall < delay) {
+                return;
+            }
+            lastCall = now;
+            return func(...args);
+        };
+    };
+
+
     useEffect(() => {
         const popupElement = popupRef.current;
 
         if (!popupElement) return;
-
-        const observer = new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                if (mutation.attributeName === 'class') {
+        
+        const handleMutation = mutations => {
+            for (const mutation of mutations) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
                     if (popupElement.classList.contains('show')) {
                         if (onOpen) onOpen();
                     } else {
                         if (onCancel) onCancel();
                     }
+                    break;
                 }
-            });
-        });
+            }
+        };
+
+        const observer = new MutationObserver(throttle(handleMutation, 200));
 
         observer.observe(popupElement, { attributes: true });
 

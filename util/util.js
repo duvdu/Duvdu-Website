@@ -395,27 +395,6 @@ export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = ''
 };
 
 
-export const isFav = (idproject, FavList) => {
-  // Check if FavList has at least one element
-  FavList = FavList?.data || []
-  if (FavList.length === 0) return false;
-  // Access the first board in FavList
-  const firstBoard = FavList[0];
-  // Check if any project's ID in the first board matches the given idproject
-  return firstBoard.projects.some(project => project.project._id === idproject);
-};
-
-export const isProjectInObject = (data, projectId) => {
-  for (const board of data) {
-    for (const project of board.projects) {
-      if (project._id === projectId) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
 export const calculateRating = (rate) => {
   if (!rate) return 0
   if (rate.ratersCounter > 0) {

@@ -128,7 +128,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 </section>
                             }
                             {
-                                data.booktools.length > 0 &&
+                                data.booktools?.length > 0 &&
                                 <section className="my-11">
                                     <h3 className="capitalize opacity-60 mb-4">tools</h3>
                                     <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('tools', value)} />
@@ -210,7 +210,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     </section>
                                 }
                                 {
-                                    data.booktools.length > 0 &&
+                                    data.booktools?.length > 0 &&
                                     <section className="">
                                         <h3 className="capitalize opacity-60 mb-4">tools</h3>
                                         <BookTeam team={data.booktools.map(i => ({ ...i, removable: true }))} onChange={(value) => UpdateFormData('tools', value)} />
