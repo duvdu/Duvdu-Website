@@ -16,6 +16,7 @@ import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
 import Drawer from "../../elements/drawer";
 import CategorySelection from "./assets/selectCategory";
+import AddAttachment from "../../elements/attachment";
 
 
 const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addprojectState, UpdateFormData, resetForm, InsertToArray, respond }) => {
@@ -26,6 +27,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
+    const [attachmentValidation, setAttachmentValidation] = useState(true);
 
     categories = filterByCycle(categories, 'studio-booking')
 
@@ -52,7 +54,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
             data.append('location.lat', formData.location.lat);
             data.append('location.lng', formData.location.lng);
         }
-        data.append('category', formData.category );
+        data.append('category', formData.category);
         data.append('showOnHome', formData.showOnHome || false);
         data.append('insurance', formData.insurance);
         data.append('pricePerHour', formData.pricePerHour);
@@ -147,7 +149,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     // }, [api.data && api.data.data.createdAt, api.error]);
 
-    
+
     useEffect(() => {
         if (auth.login === false)
             router.push({
@@ -196,31 +198,8 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                     }} />
                             </div>
                             <section className="w-full ">
-
-                                <label htmlFor="attachment-upload" >
-                                    <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
-                                        <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
-                                            <Icon name={"add-file"} className='size-7' />
-                                        </div>
-                                        <span className="text-primary text-sm font-bold mt-3">Click to Upload</span>
-                                    </div>
-                                </label>
-                                <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-
-                                {
-                                    formData.attachments &&
-                                    formData.attachments.length > 0 &&
-                                    formData.attachments.map((file, key) => (
-                                        <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
-                                            <Icon name={'file'} className="size-10" />
-                                            <div>
-                                                <span className=''>{file.fileName}</span>
-                                                <br />
-                                                <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
+                                <h3 className="capitalize opacity-60 mt-11">attachments</h3>
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section >
                                 <input placeholder='equipment name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />

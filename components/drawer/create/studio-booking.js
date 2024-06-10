@@ -17,6 +17,7 @@ import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
 import CategorySelection from './assets/selectCategory';
 import AppButton from '../../elements/button';
+import AddAttachment from '../../elements/attachment';
 
 
 const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
@@ -26,6 +27,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
+    const [attachmentValidation, setAttachmentValidation] = useState(false);
     categories = filterByCycleCategory(categories, 'studio-booking')
 
     const convertToFormData = () => {
@@ -79,7 +81,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                 data.append(`attachments`, file.file);
             }
 
-        
+
         return data;
     };
     const validateRequiredFields = () => {
@@ -95,13 +97,13 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData.pricePerHour) errors.pricePerHour = 'Price per hour is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         if (!formData.insurance) errors.insurance = 'Insurance is required';
-                
+        if (!attachmentValidation) errors.insurance = 'Attachment not Valid';
+
         if (!formData.studioNumber) {
             errors.studioNumber = 'Studio number is required';
         } else if (!egyptianPhoneRegex.test(formData.studioNumber)) {
             errors.studioNumber = 'Invalid Egyptian phone number.';
         }
-console.log(errors)
         return errors;
     };
 
@@ -138,18 +140,12 @@ console.log(errors)
         UpdateFormData(arrayName, newArray);
     };
 
-    const attachmentsUpload = (e) => {
-        const files = e.target.files;
-        UpdateFormData('attachments', handleMultipleFileUpload(e))
-        // setAttachments(handleMultipleFileUpload(e))
-    };
-
     useEffect(() => {
         if (respond)
             setPost_success(true)
     }, [respond?.message])
 
-    
+
     useEffect(() => {
         if (auth.login === false)
             router.push({
@@ -196,34 +192,8 @@ console.log(errors)
                                     }} />
                             </div>
                             <section className="w-full ">
-                                {
-                                    <>
-                                        <label htmlFor="attachment-upload" >
-                                            <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
-                                                <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
-                                                    <Icon name={"add-file"} className='size-7' />
-                                                </div>
-                                                <span className="text-primary text-sm font-bold mt-3">Click to Upload</span>
-                                            </div>
-                                        </label>
-                                        <input  onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-                                    </>
-
-                                }
-                                {
-                                    formData.attachments &&
-                                    formData.attachments.length > 0 &&
-                                    formData.attachments.map((file, key) => (
-                                        <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
-                                            <Icon name={'file'} className="size-10" />
-                                            <div>
-                                                <span className=''>{file.fileName}</span>
-                                                <br />
-                                                <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
+                                <h3 className="capitalize opacity-60 mt-11">attachments</h3>
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section >
                                 <input placeholder='studio name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />

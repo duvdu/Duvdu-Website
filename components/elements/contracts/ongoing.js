@@ -1,23 +1,23 @@
 import Icon from "../../Icons";
 import Selector from "../CustomSelector";
 
-const Ongoing = ({ type }) => {
+const Ongoing = ({ data }) => {
     return (
         <div className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] sm:w-full mx-auto'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full object-cover object-top' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full object-cover object-top' src={data.targetUser.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
-                        <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>anna jonathan</h3>
-                        <span className='opacity-50 text-white'>Yesterday</span>
+                        <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>{data.targetUser.name}</h3>
+                        <span className='opacity-50 text-white'>{new Date(data.createdAt).toDateString()}</span>
                     </div>
                 </div>
                 {/*********/}
 
                 {/* type */}
                 <span className='flex flex-col h-full text-white border-2 border-white rounded-full px-3 py-[6px] capitalize mb-8 opacity-70'>
-                    wedding
+                    {data.ref}
                 </span>
                 {/*********/}
 
@@ -29,11 +29,11 @@ const Ongoing = ({ type }) => {
                         <div>
                             <span className='opacity-50 text-white'>deadline</span>
                             <br />
-                            <span className='text-white'>tue - augest 10, 12:00am</span>
+                            <span className='text-white'>{new Date(data.deadline).toDateString()}</span>
                         </div>
                     </div>
                     {/* button */}
-                    {(type === "submit-files" ?
+                    {(data.status === "submit-files" ?
                         <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
                             submit files
                         </div>
@@ -52,15 +52,15 @@ const Ongoing = ({ type }) => {
                 iconclassName={'text-white'}
                 options={[
                     {
-                        value: "oprion 1",
+                        value: "option 1",
                         onclick: () => { },
                     },
                     {
-                        value: "oprion 2",
+                        value: "option 2",
                         onclick: () => { },
                     },
                     {
-                        value: "oprion 3",
+                        value: "option 3",
                         onclick: () => { },
                     }
                 ]} className="h-min">
@@ -69,7 +69,6 @@ const Ongoing = ({ type }) => {
                 </div>
             </Selector>
         </div>
-
     );
 };
 

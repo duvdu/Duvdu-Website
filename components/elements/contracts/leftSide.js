@@ -9,8 +9,8 @@ import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 const LeftSide = ({ getAllContracts, respond, categories }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     useEffect(() => {
-        getAllContracts()
-    }, [])
+        getAllContracts({ filterby: ['i_received', 'i_created'][activeIndex] })
+    }, [activeIndex])
     const handleToggleClick = (index) => {
         setActiveIndex(index);
     };
@@ -18,13 +18,17 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
         <section >
             <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                <Pending />
-                <Pending />
+                {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
+                    <Pending key={index} data={data} />
+                ))}
+
             </section>
             <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                <Ongoing />
-                <Ongoing />
+                {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                    <Ongoing key={index} data={data} />
+                ))}
+
             </section>
         </section>
 

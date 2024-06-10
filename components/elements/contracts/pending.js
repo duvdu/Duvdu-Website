@@ -1,15 +1,15 @@
 import Selector from "../CustomSelector";
 
-const Pending = () => {
+const Pending = ({ data }) => {
     return (
         <div className='flex justify-between w-[370px] sm:w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative'>
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full object-cover object-top' src="/assets/imgs/profile/defultUser.jpg" alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full object-cover object-top' src={data.targetUser.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
-                        <h3 className='opacity-80 text-lg font-bold capitalize'>anna jonathan</h3>
-                        <span className='opacity-50'>Yesterday</span>
+                        <h3 className='opacity-80 text-lg font-bold capitalize'>{data.targetUser.name}</h3>
+                        <span className='opacity-50'>{new Date(data.createdAt).toDateString()}</span>
                     </div>
                 </div>
                 {/*********/}
@@ -31,25 +31,20 @@ const Pending = () => {
                 {/* dropdown */}
                 <Selector options={[
                     {
-                        value: "oprion 1",
+                        value: "option 1",
                         onclick: () => { },
                     },
                     {
-                        value: "oprion 2",
+                        value: "option 2",
                         onclick: () => { },
                     },
                     {
-                        value: "oprion 3",
+                        value: "option 3",
                         onclick: () => { },
                     }
                 ]} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer" />
-                {/*********/}
-                {/* button */}
-
-                {/*********/}
             </div>
         </div>
-
     );
 };
 
