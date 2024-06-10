@@ -178,7 +178,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                 </h4>
                                 <div className="flex justify-between gap-3">
                                     <Link href={`/save/favorites`} >
-                                        <div className="aspect-square w-1/2 overflow-hidden">
+                                        <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
                                                 favCover ? <img className='rounded-[30px]' src={favCover} /> :
                                                     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
@@ -188,9 +188,9 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                         </div>
                                     </Link>
                                     <Link href="/saved" >
-                                        <div className="aspect-square w-1/2 overflow-hidden">
+                                        <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
-                                                saved[0] ? <img className='rounded-[30px]' src={saved[1]} /> :
+                                                saved[0] ? <img className='rounded-[30px]' src={saved[0]} /> :
                                                     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
                                                         <Icon className='w-10' name={"dvudu-image"} />
                                                     </div>

@@ -30,7 +30,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
             formData['customRequirement[measure]']?.length > 0 &&
             formData['customRequirement[unit]']?.length > 0 &&
             formData.shootingDays?.length > 0 &&
-            
+
             formData.startDate
         ) setEnableBtn(true)
         else setEnableBtn(false)
@@ -56,7 +56,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         ontoggleDrawer()
     }
 
-    
+
 
     useEffect(() => {
         UpdateFormData('creatives', creatives.map(item => item._id))
@@ -147,8 +147,13 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                             </section>
                             <section className="my-11 gap-7 mr-24 ${ispreview">
-                                <h3 className="capitalize opacity-60 mb-4">address</h3>
-                                <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                                <h3 className="capitalize opacity-60 mb-4">location</h3>
+                                <GoogleMap width={'90%'} value={formData.location}
+                                    onsetLocation={(value) => {
+                                        UpdateFormData('location[Lat]', value.Lat)
+                                        UpdateFormData('location[Lng]', value.Lng)
+                                    }}
+                                />
                             </section>
                             <section className="my-11 gap-7 hidden">
                                 <div className="w-full">
@@ -164,7 +169,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className="w-full">
                                 <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
-                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v)=>setAttachmentValidation(v)} />
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
                                 <p className="capitalize opacity-60 mt-11">Custom requirements</p>
@@ -177,7 +182,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                         name="customRequirement[unit]"
                                         required
                                     >
-                                        
+
                                         {['minute', 'hour'].map((value, index) => (
                                             <option key={index} value={value.toLowerCase()}>{value}</option>
                                         ))}
@@ -262,7 +267,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <section className={`sticky bottom-0 w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                                 <div className="w-full flex px-8 justify-between">
                                     <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
@@ -272,7 +277,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
                                 </div>
                             </section>
-                            
+
                         </div>
                     </>
 

@@ -9,6 +9,8 @@ import Popup from "../../elements/popup";
 import AppButton from "../../elements/button";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
+    console.log(info)
+    
     return (
         <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
             <div className="flex w-full overflow-hidden h-32">
@@ -34,10 +36,10 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                 </div>
                 <div className='flex justify-center pt-25 items-center gap-3'>
                     <div className='Professional-background-decoration px-2 py-1'>
-                        <span className='Professional-text-decoration font-bold text-lg'>{info.rank || "professional"}</span>
+                        <span className='Professional-text-decoration font-bold text-lg'>{info?.rank?.ratersCounter || "---"}</span>
                     </div>
                     <span className='flex border rounded-full px-2 py-1 gap-1 text-lg'>
-                        <span>{info.occupation || "photographer"}</span>
+                        <span>{info.service || "---"}</span>
                     </span>
                     <div className='border rounded-full px-2 py-1 text-lg flex items-center gap-1'>
                         <span>{info.value || 3.7}</span>
@@ -80,7 +82,7 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
     const [amount, setAmount] = useState(null);
 
     useEffect(() => {
-        FindUser()
+        FindUser({})
     }, [])
 
     const openpopUp = (value) => {
