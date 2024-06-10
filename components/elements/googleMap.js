@@ -26,7 +26,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, value }) => {
                     }
                 },
                 () => {
-                    setMarkerPosition(defaultPosition);
+                    
                 }
             );
         }

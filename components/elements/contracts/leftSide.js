@@ -32,14 +32,16 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
         <section>
             <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                {respond?.data?.map((data, index) => (
+                {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
                     <Pending2 key={index} data={data} />
                 ))}
             </section>
             <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                 <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                <Ongoing2 />
-                <Ongoing2 />
+                {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                    <Ongoing2 key={index} data={data} />
+                ))}
+                {/* <Ongoing2 /> */}
             </section>
         </section>
     return (

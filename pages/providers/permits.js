@@ -10,49 +10,24 @@ import { calculateRating } from '../../util/util';
 import { useRouter } from 'next/router';
 
 
-const convertDataFormat = (data) => {
-    console.log(data.user.profileImage)
-    return {
-        _id: data._id,
-        img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",
-        name: data.user.name || "NONE",
-        location: data.address || "NONE",
-        rank: "----",
-        projects: data.user.acceptedProjectsCounter || 0,
-        rating: calculateRating(data.rate),
-        pricing: data.price || 0,
-        duration: parseInt(data.duration) || 0
-    };
-};
+
 
 const Permit = ({ GetCopyrights, respond }) => {
     const Router = useRouter();
-    const showLimit = 24;
+    const showLimit = 12;
     const page = 1;
     const searchTerm = Router.query.search;
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
-    const [permits, setPermits] = useState([]);
+    const permits = respond?.data || [];
+    
     const pagganation = respond?.pagination
 
     useEffect(() => {
         if (limit)
             GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
     }, [limit])
-
-    useEffect(() => {
-        if (respond) {
-            const array = respond.data
-
-            let convertedList = []
-            for (let index = 0; index < array.length; index++) {
-                const element = convertDataFormat(array[index]);
-                convertedList.push(element)
-            }
-            setPermits(convertedList)
-        }
-    }, [respond?.message])
 
     const targetRef = useRef(null);
 

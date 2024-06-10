@@ -63,11 +63,11 @@ const Ongoing = ({ type }) => {
                         value: "oprion 3",
                         onclick: () => { },
                     }
-                ]} >
-                    <div className="border rounded-full size-9 flex justify-center items-center">
+                ]} className="h-min">
+                <div className="border rounded-full size-9 flex justify-center items-center">
                     <Icon className="size-6 text-white" name="ellipsis-vertical" />
                 </div>
-                </Selector>
+            </Selector>
         </div>
 
     );

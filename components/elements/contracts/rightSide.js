@@ -25,20 +25,26 @@ const RightSide = () => {
             {/* max-w-[370px] ahmed */}
             <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
                 {/* dropdown */}
-                <Selector options={[
-                    {
-                        value: "oprion 1",
-                        onclick: () => { },
-                    },
-                    {
-                        value: "oprion 2",
-                        onclick: () => { },
-                    },
-                    {
-                        value: "oprion 3",
-                        onclick: () => { },
-                    }
-                ]} className="absolute right-6 border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer" />
+                <div className="absolute right-6">
+                    <Selector options={[
+                        {
+                            value: "oprion 1",
+                            onclick: () => { },
+                        },
+                        {
+                            value: "oprion 2",
+                            onclick: () => { },
+                        },
+                        {
+                            value: "oprion 3",
+                            onclick: () => { },
+                        }
+                    ]}>
+                        <div className="border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center size-14 cursor-pointer">
+                            <Icon name={'ellipsis-vertical'} className={" h-6"} />
+                        </div>
+                    </Selector>
+                </div>
                 {/*********/}
                 {/* profile */}
                 <Link href='/creative/youseff_abdulla'>

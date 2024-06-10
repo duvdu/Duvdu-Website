@@ -3,18 +3,17 @@ import React from 'react';
 import Icon from '../Icons';
 
 
-const Card = ({ cardData, className = "", onClick }) => {
-
+const ProducerCard = ({ cardData, className = "", onClick }) => {
   return (
     <>
       <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
       <div className='flex items-center justify-center text-center pb-5'>
-          <img className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top' src={cardData.img} alt="profile picture" />
+          <img className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top' src={cardData?.user?.profileImage} alt="profile picture" />
           <div className='flex-2 flex-col gap-1'>
-            <h3 className='opacity-80 text-lg font-bold'>{cardData.name}</h3>
+            <h3 className='opacity-80 text-lg font-bold'>{cardData?.user?.name}</h3>
             <span className='flex items-center opacity-40 gap-1'>
               <Icon className='w-3' name='location-dot' />
-              <span className="location">{cardData.location}</span>
+              <span className="location">{cardData?.user?.address || 'NONE'}</span>
             </span>
           </div>
         </div>
@@ -26,7 +25,7 @@ const Card = ({ cardData, className = "", onClick }) => {
             <span>{cardData.projects}</span> <span>projects</span>
           </span>
           <div className='info-container flex items-center gap-1'>
-            <span>{cardData.rating}</span>
+            <span>{cardData.user.rate.ratersCounter}</span>
             <div className='w-5'>
             <Icon className='text-primary' name={'rate-star'} />
             </div>
@@ -41,4 +40,4 @@ const Card = ({ cardData, className = "", onClick }) => {
   );
 };
 
-export default Card;
+export default ProducerCard;

@@ -32,20 +32,7 @@ import Followers from '../../popsup/followes';
 
 
 const profile = {
-    "cover-pic": "/assets/imgs/projects/cover.jpeg",
-    "profile-pic": "/assets/imgs/profile/defultUser.jpg",
-    "value": 3.7,
-    "price": '',
-    "location": '',
-    "occupation": "photographer",
-    "rank": "professional",
-    "about": "hello i’m Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    "popularity": {
-        "likes": 28000,
-        "followers": 514,
-        "views": 258000
-    },
-    "comments": [
+    comments: [
         {
             "id": 1,
             "userName": "jonathan donrew",
@@ -68,13 +55,6 @@ const profile = {
             "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
         },
     ],
-    "projects": [
-        {
-            "price": 23247,
-            "title": "models & performing artists",
-            "show": "/assets/imgs/profile/defultUser.jpg"
-        }
-    ]
 };
 
 function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
@@ -86,6 +66,10 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     const [showAddPanal, setShowAddPanal] = useState(false);
     const [userInfo, setUserInfo] = useState(user);
 
+
+    useEffect(() => {
+        setUserInfo(user)
+    }, [user])
 
     useEffect(() => {
         GetProjects({})
@@ -167,6 +151,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
         }
 
         return (
+        !userInfo ? <></>:
             <>
                 <Followers id={"show-followers"} />
                 <Conver converPic={userInfo.coverImage} />

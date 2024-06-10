@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Layout from "../../components/layout/Layout";
-import Card2 from "../../components/elements/permits-card";
+import ProducerCard from "../../components/elements/producers-card";
 import Filter from "../../components/elements/filter";
 import ProducerBooking from "../../components/drawer/book/producer";
 import Formsubmited from '../../components/popsup/formsubmited';
@@ -96,7 +96,7 @@ const Producers = ({ GetProducer, respond,api }) => {
                         )}
                         <div className="minmax-360">
                             {producers.map((item, i) => {
-                                return <Card2 onClick={() => handlesetdata(item)} key={i} cardData={item} />;
+                                return <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />;
 
                             })}
                         </div>

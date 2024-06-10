@@ -4,7 +4,24 @@ import dateFormat from "dateformat";
 import { formatRemainingTime } from '../../../util/util';
 
 const Pending2 = ({ data }) => {
-    
+    const { startDate } = data
+
+    const currentDate = new Date();
+    const createdAtDate = new Date(startDate);
+    const timeDifference = currentDate - createdAtDate;
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    let formattedCreatedAt;
+    if (daysDifference === 0) {
+        formattedCreatedAt = "Today";
+    } else if (daysDifference === 1) {
+        formattedCreatedAt = "Yesterday";
+    } else if (daysDifference === 2) {
+        formattedCreatedAt = "Day before yesterday";
+    } else {
+        formattedCreatedAt = dateFormat(createdAtDate, "M/d/yyyy");
+    }
+
     return (
         <div className='flex justify-between w-[370px] sm:w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6'>
             <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center sm:w-full'>
@@ -16,7 +33,7 @@ const Pending2 = ({ data }) => {
                             {data.targetUser.name || 'Unknown User'}
                         </h3>
                         <span className='opacity-50'>
-                            {dateFormat(data.startDate, 'M/d/yyyy')}
+                            {formattedCreatedAt}
                         </span>
                     </div>
                 </div>

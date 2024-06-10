@@ -28,7 +28,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
         event.stopPropagation();
     };
     
-    const ioconstyle = "rounded-full -translate-y-1/2 translate-x-1/2 border p-3 text-2xl size-11"
+    const ioconstyle = "size-11"
 
     return (
         <>
@@ -44,7 +44,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                         </div>
                     </>
                     <div
-                        className="absolute top-0 right-0 pe-12 pt-12 flex justify-center items-center"
+                        className="absolute top-5 right-5"
                         onClick={handleSelectClick}
                     >
                          <Selector
@@ -59,9 +59,9 @@ const Card = ({ data, DeleteTeamProjects }) => {
                             ]}
                         >
 
-                            {status == 'pending' && <Icon name="waiting" className={"-translate-y-1/2 translate-x-1/2"} />}
-                            {status == 'refuse' && <Icon name="circle-exclamation" className={"border-[#D72828] text-[#D72828] " + ioconstyle} />}
-                            {status == 'available' && <Icon className={"text-[#50C878] border-[#50C878]" + ioconstyle} name="circle-check" />}
+                            {status == 'pending' && <Icon name="waiting" />}
+                            {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} /> }
+                            {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
                         </Selector>
                     </div>
                     <div>

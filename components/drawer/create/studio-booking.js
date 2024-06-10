@@ -101,7 +101,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         } else if (!egyptianPhoneRegex.test(formData.studioNumber)) {
             errors.studioNumber = 'Invalid Egyptian phone number.';
         }
-
+console.log(errors)
         return errors;
     };
 

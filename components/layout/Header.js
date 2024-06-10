@@ -42,10 +42,15 @@ const Header = ({
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
     }
+    try {
     useEffect(() => {
         SetheaderPopUp(Types.NONEPOPUP)
-    }, [router.events]);
-console.log(getheaderpopup)
+    }, [window.location.href]);
+}
+catch (error) {
+
+}
+
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
