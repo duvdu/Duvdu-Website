@@ -16,37 +16,49 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
     };
     const Clients = () =>
         <section >
-            <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
-                    <Pending key={index} data={data} />
-                ))}
+            {
+                respond?.data?.filter(data => data.status === "pending").length > 0 &&
+                <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                    <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
+                    {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
+                        <Pending key={index} data={data} />
+                    ))}
+                </section>
+            }
+            {
+                respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
+                <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                    <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
+                    {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                        <Ongoing key={index} data={data} />
+                    ))}
 
-            </section>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
-                    <Ongoing key={index} data={data} />
-                ))}
-
-            </section>
+                </section>
+            }
         </section>
 
     const Creatives = () =>
         <section>
-            <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
-                    <Pending2 key={index} data={data} />
-                ))}
-            </section>
-            <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
-                    <Ongoing2 key={index} data={data} />
-                ))}
-                {/* <Ongoing2 /> */}
-            </section>
+            {
+                respond?.data?.filter(data => data.status === "pending").length > 0 &&
+                <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                    <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
+                    {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
+                        <Pending2 key={index} data={data} />
+                    ))}
+                </section>
+            }
+            {
+                respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
+                <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                    <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
+                    {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                        <Ongoing2 key={index} data={data} />
+                    ))}
+
+                    {/* <Ongoing2 /> */}
+                </section>
+            }
         </section>
     return (
         <>
