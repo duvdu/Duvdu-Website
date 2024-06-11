@@ -162,7 +162,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                             <Info
                                 src={userInfo.profileImage}
                                 location={userInfo.address || 'NONE'}
-                                occupation={userInfo.category.title || '---'}
+                                occupation={userInfo?.category?.title || '---'}
                                 personalName={userInfo.name}
                                 popularity={{
                                     likes: userInfo.likes,
