@@ -146,14 +146,14 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                                 <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                             </section>
-                            <section className="my-11 gap-7 mr-24 ${ispreview">
+                            <section className="my-11 gap-7 mr-24 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">location</h3>
-                                <GoogleMap width={'90%'} value={formData.location}
-                                    onsetLocation={(value) => {
-                                        UpdateFormData('location[Lat]', value.Lat)
-                                        UpdateFormData('location[Lng]', value.Lng)
-                                    }}
-                                />
+                                    <GoogleMap width={'90%'} value={formData.location}
+                                        onsetLocation={(value) => {
+                                            UpdateFormData('location[Lat]', value.Lat)
+                                            UpdateFormData('location[Lng]', value.Lng)
+                                        }}
+                                    />
                             </section>
                             <section className="my-11 gap-7 hidden">
                                 <div className="w-full">

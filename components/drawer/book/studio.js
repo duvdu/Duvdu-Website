@@ -15,7 +15,6 @@ import { StudopBooking } from "../../../redux/action/apis/cycles/studio/book";
 const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
 
     const formData = addprojectState.formData
-    const [openMap, setOpenMap] = useState(false);
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
@@ -34,8 +33,6 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
     function ontoggleDrawer() {
         if (preview)
             setPreview(false)
-        else if (openMap)
-            setOpenMap(false)
         else if (toggleDrawer) {
             resetForm()
             toggleDrawer()
@@ -55,7 +52,6 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
     }, [creatives.length])
 
     useEffect(() => {
-        UpdateFormData('location', {"lat": 50, "lng":50},)
         UpdateFormData('totalPrice', data.projectBudget)
         if (data.creatives)
             setCreatives([...data.creatives])
@@ -102,23 +98,11 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         return <Drawer name={data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
     }
-    if (openMap)
-        return <Drawer name={data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
-            <div className="py-10">
-                <GoogleMap width={'90%'} value={formData.location}
-                    onsetLocation={(value) => {
-                        UpdateFormData('location[Lat]', value.Lat)
-                        UpdateFormData('location[Lng]', value.Lng)
-                    }}
-                />
-            </div>
-        </Drawer >
-        
-    return (
+     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking"/>
+            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
             <Drawer name={preview ? 'Review Booking' : data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-y-scroll" padding={false}>
-            {
+                {
                     creatives.length > 0 &&
                     <section className="my-11 p-8 pt-0">
                         <h3 className="capitalize opacity-60 mb-4">team</h3>
@@ -162,6 +146,15 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             </div>
                         </div>
                     </section>
+                    <section className="my-11 gap-7 mr-24 h-96 relative overflow-hidden">
+                        <h3 className="capitalize opacity-60 mb-4">location</h3>
+                        <GoogleMap width={'90%'} value={formData.location}
+                            onsetLocation={(value) => {
+                                UpdateFormData('location[Lat]', value.Lat)
+                                UpdateFormData('location[Lng]', value.Lng)
+                            }}
+                        />
+                    </section>
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
                         <label htmlFor="attachment-upload" className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
@@ -171,7 +164,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             <span className="pl-5 w-full text-blue-600">Open gallery</span>
                             <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
                         </label>
-                        <input  onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
+                        <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
                         {
                             formData.attachments &&
                             formData.attachments.length > 0 &&
@@ -235,7 +228,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             <span className="text-[#747688] text-xs">{dateFormat(formData.deadline, 'dddd , h:mm TT')}</span>
                         </div>
                     </div>
-                        
+
 
                     <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
@@ -245,7 +238,6 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             <span className="font-normal text-base">{formData.address}</span>
                         </div>
                     </div>
-                </div>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
@@ -255,6 +247,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
                         </div>
                     </section>
+                </div>
             </Drawer >
         </>
     );

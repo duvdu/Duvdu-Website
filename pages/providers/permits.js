@@ -6,7 +6,6 @@ import Drawer from "../../components/drawer/book/permits";
 import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
-import { calculateRating } from '../../util/util';
 import { useRouter } from 'next/router';
 
 
