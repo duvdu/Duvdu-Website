@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 
-const GoogleMap = ({ width, height, google, onsetLocation, value }) => {
+const GoogleMap = ({ width, height, google, onsetLocation, value,setDefult = true }) => {
     const [markerPosition, setMarkerPosition] = useState(null);
     const defaultPosition = { lat: 30.0444, lng: 31.2357 }; // Tahrir Square, Cairo
 
@@ -13,7 +13,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, value }) => {
     useEffect(() => {
         if (value?.lat) {
             setMarkerPosition({ lat: value.lat, lng: value.lng });
-        } else {
+        } else if(setDefult){
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const userLocation = {

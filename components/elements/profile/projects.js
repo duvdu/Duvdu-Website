@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 function Projects({ projects }) {
+    console.log(projects)
     return projects?.length > 0 && (
         <div className='container sm:p-0 project-grid gap-[10px]'>
             {projects.map((data, index) => (
@@ -11,15 +12,15 @@ function Projects({ projects }) {
 }
 
 const Project = ({ data, isbig }) => (
-    <Link href={`/project/${data._id}`}>
+    <Link href={`/project/${data?.project?._id}`}>
         <div className={isbig ? 'profile-project big w-full xl:w-68% cursor-pointer' : 'profile-project small w-48% xl:w-28% cursor-pointer'}>
-            <img className='cardimg' src={data.cover} alt='project cover' />
+            <img className='cardimg' src={data?.project?.cover} alt='project cover' />
             <div className='creatives'>
                 {data.projectBudget} $
             </div>
             <div className={`title ${isbig ? 'size-big' : 'size-small'}`}>
-                {data.title}
-            </div>
+                {data?.project?.title}
+            </div>  
         </div>
     </Link>
 );

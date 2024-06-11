@@ -9,16 +9,16 @@ import Icon from "../../Icons";
 import { GetAllMessageInChat } from "../../../redux/action/apis/realTime/messages/getAllMessageInChat";
 import { getOtherprofile } from "../../../redux/action/apis/auth/profile/getOtherProfile";
 import { useRouter } from "next/router";
-import { GetProjects } from "../../../redux/action/apis/cycles/projects/get";
 import { setFollow } from "../../../redux/action/apis/auth/profile/setFollow";
 import { setUnFollow } from "../../../redux/action/apis/auth/profile/setUnFollow";
 import Followers from "../../popsup/followes";
+import { GetUserProject } from "../../../redux/action/apis/auth/profile/getUserProjects";
 
 function OtherProfile({
     user,
     getOtherprofile,
     GetAllMessageInChat,
-    GetProjects,
+    GetUserProject,
     projects,
     setFollow,
     follow_respond,
@@ -41,7 +41,7 @@ function OtherProfile({
     useEffect(() => {
         if (username) {
             getOtherprofile(username)
-            GetProjects({})
+            GetUserProject({username: username})
         }
     }, [username])
 
@@ -75,7 +75,9 @@ function OtherProfile({
 
     };
     user = user?.data
-
+    console.log("before",projects)
+    projects = projects?.projects || []
+    console.log("after",projects)
 
     const swapFollow = () => {
         if (user.isFollow || false)
@@ -158,7 +160,7 @@ const mapStateToProps = (state) => ({
     islogin: state.auth.login,
     // login_respond: state.api.login,
     user: state.api.getOtherprofile,
-    projects: state.api.GetProjects,
+    projects: state.api.GetUserProject,
     follow_respond: state.api.setFollow,
     setUnFollow_respond: state.api.setUnFollow,
 });
@@ -166,7 +168,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     GetAllMessageInChat,
     getOtherprofile,
-    GetProjects,
+    GetUserProject,
     setFollow,
     setUnFollow
 };

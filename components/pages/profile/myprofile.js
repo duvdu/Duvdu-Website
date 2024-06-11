@@ -23,11 +23,11 @@ import Projects from '../../elements/profile/projects';
 import Conver from '../../elements/profile/conver';
 import Info from '../../elements/profile/info';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
-import { GetProjects } from '../../../redux/action/apis/cycles/projects/get';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
 import EquipmentAvailable from '../../popsup/create/equipmentAvailable';
 import Followers from '../../popsup/followes';
+import { GetUserProject } from '../../../redux/action/apis/auth/profile/getUserProjects';
 
 
 
@@ -57,7 +57,7 @@ const profile = {
     ],
 };
 
-function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
 
     const route = useRouter()
 
@@ -65,14 +65,14 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
     const [userInfo, setUserInfo] = useState(user);
-
+    projects = projects?.data?.projects || []
 
     useEffect(() => {
         setUserInfo(user)
     }, [user])
 
     useEffect(() => {
-        GetProjects({})
+        GetUserProject({})
     }, [])
 
     function removeQueryParameter() {
@@ -162,7 +162,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                             <Info
                                 src={userInfo.profileImage}
                                 location={userInfo.address || 'NONE'}
-                                occupation={userInfo.service || '---'}
+                                occupation={userInfo.category.title || '---'}
                                 personalName={userInfo.name}
                                 popularity={{
                                     likes: userInfo.likes,
@@ -263,7 +263,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
 const mapStateToProps = (state) => ({
     user: state.user.profile,
     updateProfile_respond: state.api.updateProfile,
-    projects: state.projects.items
+    projects: state.api.GetUserProject
 });
 
 const mapDispatchToProps = {
@@ -271,7 +271,7 @@ const mapDispatchToProps = {
     UpdateFormData,
     updateProfile,
     getMyprofile,
-    GetProjects,
+    GetUserProject,
     InsertToArray
 };
 

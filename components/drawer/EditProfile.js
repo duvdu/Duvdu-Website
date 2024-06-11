@@ -10,6 +10,7 @@ import { UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addpro
 import Drawer from '../elements/drawer';
 import ErrorPopUp from '../popsup/errorPopUp';
 import GoogleMap from '../elements/googleMap';
+import CategorySelection from '../elements/CategorySelection';
 
 
 
@@ -21,17 +22,18 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const [profileImage, setProfileImage] = useState(null);
     const [cover, setCover] = useState(null);
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
-
+    console.log(user)
     useEffect(() => {
-
         if (isOpen) {
             UpdateFormData("profileImage", user.profileImage);
             UpdateFormData("coverImage", user.coverImage);
             UpdateFormData("name", user.name);
-            UpdateFormData("service", user.service);
+            UpdateFormData('category', user.category)
             UpdateFormData("address", user.address);
             UpdateFormData("pricePerHour", user.pricePerHour);
             UpdateFormData("about", user.about);
+            UpdateFormData("location[lat]", user.location?.lat);
+            UpdateFormData("location[lng]", user.location?.lng);
         }
         else {
             resetForm()
@@ -152,24 +154,19 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                 <form className='pb-0 flex flex-col items-center py-20' onSubmit={handleSubmit}>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
+                            services
+                        </span>
+                        <CategorySelection value={formData.category} onChange={(v) => { UpdateFormData('category', v) }} />
+
+                    </div>
+                    <div className='mb-4 w-full'>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             name
                         </span>
                         <input
                             type='text'
                             name='name'
                             value={formData.name}
-                            onChange={handleInputChange}
-                            className="edit app-field"
-                        />
-                    </div>
-                    <div className='mb-4 w-full'>
-                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                            services
-                        </span>
-                        <input
-                            type='text w-full'
-                            name='service'
-                            value={formData.service}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
@@ -213,7 +210,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                     <div className='mb-4 w-full'>
                         <section className="h-96 relative overflow-hidden">
                             <span> Set location </span>
-                            <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                            <GoogleMap width={'100%'} setDefult={false} value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }} onsetLocation={(value) => {UpdateFormData('location[lat]', value.lat) ; UpdateFormData('location[lng]', value.lng)} } />
                         </section>
                     </div>
                     <button className='w-full flex justify-center' type="submit">
