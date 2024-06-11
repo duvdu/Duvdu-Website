@@ -22,7 +22,12 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const [post_success, setPost_success] = useState(false);
     const [creatives, setCreatives] = useState([]);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
-
+    console.log(formData.address?.length > 0,
+        formData.jobDetails?.length > 5,
+        formData['customRequirement[measure]']?.length > 0,
+        formData['customRequirement[unit]']?.length > 0,
+        formData.shootingDays?.length > 0,
+        formData.startDate)
     useEffect(() => {
         if (
             formData.address?.length > 0 &&
@@ -30,7 +35,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
             formData['customRequirement[measure]']?.length > 0 &&
             formData['customRequirement[unit]']?.length > 0 &&
             formData.shootingDays?.length > 0 &&
-
             formData.startDate
         ) setEnableBtn(true)
         else setEnableBtn(false)
@@ -146,14 +150,18 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                                 <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                             </section>
+                            <section className="my-11 gap-7 mr-24 ${ispreview">
+                                <h3 className="capitalize opacity-60 mb-4">address</h3>
+                                <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                            </section>
                             <section className="my-11 gap-7 mr-24 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">location</h3>
-                                    <GoogleMap width={'90%'} value={formData.location}
-                                        onsetLocation={(value) => {
-                                            UpdateFormData('location[Lat]', value.Lat)
-                                            UpdateFormData('location[Lng]', value.Lng)
-                                        }}
-                                    />
+                                <GoogleMap width={'90%'} value={formData.location}
+                                    onsetLocation={(value) => {
+                                        UpdateFormData('location[Lat]', value.Lat)
+                                        UpdateFormData('location[Lng]', value.Lng)
+                                    }}
+                                />
                             </section>
                             <section className="my-11 gap-7 hidden">
                                 <div className="w-full">
