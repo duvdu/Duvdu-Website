@@ -22,12 +22,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const [post_success, setPost_success] = useState(false);
     const [creatives, setCreatives] = useState([]);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
-    console.log(formData.address?.length > 0,
-        formData.jobDetails?.length > 5,
-        formData['customRequirement[measure]']?.length > 0,
-        formData['customRequirement[unit]']?.length > 0,
-        formData.shootingDays?.length > 0,
-        formData.startDate)
+    
     useEffect(() => {
         if (
             formData.address?.length > 0 &&
@@ -35,7 +30,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
             formData['customRequirement[measure]']?.length > 0 &&
             formData['customRequirement[unit]']?.length > 0 &&
             formData.shootingDays?.length > 0 &&
-            formData.startDate
+            formData.startDate &&
+            attachmentValidation
         ) setEnableBtn(true)
         else setEnableBtn(false)
     }, [formData])

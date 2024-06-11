@@ -3,7 +3,7 @@ import GoogleMap from "../../elements/googleMap";
 import dateFormat from "dateformat";
 
 const Details = ({ data }) => {
-    console.log(data)
+    
 
     return (
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent w-full border-50 p-6">

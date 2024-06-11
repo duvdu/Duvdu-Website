@@ -8,23 +8,26 @@ import Share from '../../popsup/Share';
 import { OpenPopUp } from '../../../util/util';
 import Icon from '../../Icons';
 import ArrowBtn from '../../elements/arrowBtn';
+import { useRouter } from 'next/router';
 
 const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, messages, SwapProjectToFav, auth, swapProjectToFav_respond }) => {
+    const router = useRouter()
+    const { project: projectId } = router.query;
     const [data, setData] = useState(initialData);
     const [loveIconName, setLoveIconName] = useState(data?.isFavourite ? 'fas' : 'far');
     const online = data?.user?.isOnline;
     useEffect(() => {
         setLoveIconName(data?.isFavourite ? 'fas' : 'far');
     }, [data?.isFavourite]);
-
+    
     useEffect(() => {
-        if (swapProjectToFav_respond) {
+        if (swapProjectToFav_respond?.projectId == projectId ) {
             setData(prevData => ({
                 ...prevData,
                 isFavourite: !prevData?.isFavourite
             }));
         }
-    }, [swapProjectToFav_respond]);
+    }, [swapProjectToFav_respond?.projectId]);
     // console.log(swapProjectToFav_respond)
     const handleLoveIconClick = () => {
         if (data?._id)

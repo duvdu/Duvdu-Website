@@ -9,7 +9,7 @@ const ProducerCard = ({ cardData, className = "", onClick }) => {
       <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
       <div className='flex flex-col items-center justify-center text-center pb-5'>
           <img className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top' src={cardData?.user?.profileImage} alt="profile picture" />
-          <div className='flex-2 flex-col gap-1'>
+          <div className='flex-2 flex-col items-center justify-center gap-1'>
             <h3 className='opacity-80 text-lg font-bold'>{cardData?.user?.name}</h3>
             <span className='flex items-center opacity-40 gap-1'>
               <Icon className='w-3' name='location-dot' />
