@@ -12,7 +12,7 @@ const initstate = {
 const loadStateFromLocalStorage = () => {
     if (typeof window !== "undefined") {
         try {
-            const serializedState = localStorage.getItem('authState');
+            const serializedState = sessionStorage.getItem('authState');
             if (serializedState === null) {
                 return initstate;
             }
@@ -30,7 +30,7 @@ const saveStateToLocalStorage = (state) => {
     if (typeof window !== "undefined") {
         try {
             const serializedState = JSON.stringify(state);
-            localStorage.setItem('authState', serializedState);
+            sessionStorage.setItem('authState', serializedState);
         } catch (err) {
             console.error("Could not save state to localStorage", err);
         }
