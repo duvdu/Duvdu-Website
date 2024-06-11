@@ -48,7 +48,6 @@ const Projects = ({
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
-
     return (
         <>
             <Layout >

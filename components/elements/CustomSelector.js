@@ -5,7 +5,7 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
     const selectRef = useRef(null);
 
     const handleIconClick = () => {
-        selectRef.current.click();
+        selectRef?.current?.click();
     };
 
     const handleChange = (event) => {
@@ -14,7 +14,7 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
         if (selectedOption) {
             onSelect?.(selectedOption.value);
         }
-        
+
     };
 
     return (
@@ -22,13 +22,15 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
             <div onClick={handleIconClick} className="icon-container">
                 {children || <Icon name={'ellipsis-vertical'} className={iconclassName + " h-6"} />}
             </div>
-            <select ref={selectRef} onChange={handleChange} className="absolute inset-0 opacity-0 cursor-pointer">
-                {options?.map((option, index) => (
-                    <option key={index} value={option.value}>
-                        {option.value}
-                    </option>
-                ))}
-            </select>
+            {
+                options?.length > 0 &&
+                <select ref={selectRef} onChange={handleChange} className="absolute inset-0 opacity-0 cursor-pointer">
+                    {options?.map((option, index) => (
+                        <option key={index} value={option.value}>
+                            {option.value}
+                        </option>
+                    ))}
+                </select>}
         </div>
     );
 };

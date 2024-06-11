@@ -14,7 +14,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
     return (
         <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
             <div className="flex w-full overflow-hidden h-32">
-                <img className="w-full" src={info.cover || process.env.DEFULT_COVER_PATH} alt={`Profile Image`} />
+                <img className="w-full" src={info.cover} alt={`Profile Image`} />
             </div>
             <div className='p-5'>
                 <div className='flex items-start gap-4 -translate-y-4 h-11'>

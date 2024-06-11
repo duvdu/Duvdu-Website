@@ -27,8 +27,6 @@ const Card = ({ data, DeleteTeamProjects }) => {
     const handleSelectClick = (event) => {
         event.stopPropagation();
     };
-    
-    const ioconstyle = "size-11"
 
     return (
         <>
@@ -47,9 +45,9 @@ const Card = ({ data, DeleteTeamProjects }) => {
                         className="absolute top-5 right-5"
                         onClick={handleSelectClick}
                     >
-                         <Selector
+                        <Selector
                             onSelect={(v) => v.value === 'Delete' ? onDelete() : onEdit(_id)}
-                            options={[
+                            options={status == 'available' ? null : [
                                 {
                                     value: 'Delete',
                                 },
@@ -60,7 +58,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                         >
 
                             {status == 'pending' && <Icon name="waiting" />}
-                            {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} /> }
+                            {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
                             {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
                         </Selector>
                     </div>

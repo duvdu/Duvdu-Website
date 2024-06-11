@@ -9,6 +9,7 @@ import { OpenPopUp, errorConvertedMessage, gettFileURL, gettFileUploaded, handle
 import { UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
 import Drawer from '../elements/drawer';
 import ErrorPopUp from '../popsup/errorPopUp';
+import GoogleMap from '../elements/googleMap';
 
 
 
@@ -208,6 +209,12 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             className="edit app-field h-[400px]"
                             style={{ height: '120px' }}
                         />
+                    </div>
+                    <div className='mb-4 w-full'>
+                        <section className="h-96 relative overflow-hidden">
+                            <span> Set location </span>
+                            <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                        </section>
                     </div>
                     <button className='w-full flex justify-center' type="submit">
 

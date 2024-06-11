@@ -13,7 +13,6 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
     const [data, setData] = useState(initialData);
     const [loveIconName, setLoveIconName] = useState(data?.isFavourite ? 'fas' : 'far');
     const online = data?.user?.isOnline;
-console.log(data)
     useEffect(() => {
         setLoveIconName(data?.isFavourite ? 'fas' : 'far');
     }, [data?.isFavourite]);
