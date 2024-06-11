@@ -150,7 +150,6 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         <input onClick={handleRemoveEvent} onChange={profileUpload} className='hidden' id="profile-file-upload" type="file" accept="image/*" />
                     </div>
                 </div>
-
                 <form className='pb-0 flex flex-col items-center py-20' onSubmit={handleSubmit}>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
