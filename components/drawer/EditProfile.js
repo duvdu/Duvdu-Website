@@ -157,7 +157,6 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             services
                         </span>
                         <CategorySelection value={formData.category} onChange={(v) => { UpdateFormData('category', v) }} />
-
                     </div>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
