@@ -21,7 +21,7 @@ const About = ({ data }) => (
             </div>
             <div className='flex justify-center pt-25 items-center gap-3 '>
                 <p className='rank'>{data?.user?.rank?.title || "---"}</p>
-                <p className="info-container">{data?.user?.service || "---"}</p>
+                <p className="info-container">{data?.category?.title || "---"}</p>
                 <div className='info-container flex items-center gap-1 w-20'>
                     <p>{data?.user.rate.totalRates || 0}</p>
                     <Icon className='text-primary w-4' name={'rate-star'} />

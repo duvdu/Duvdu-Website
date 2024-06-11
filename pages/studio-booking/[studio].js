@@ -40,6 +40,7 @@ const Studio = ({
     studio_respond, 
     GetAllMessageInChat, 
     chat_respond, 
+    user,
     auth }) => {
 
     const router = useRouter()
@@ -67,7 +68,6 @@ const Studio = ({
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
-
     return (
         <>
             <Layout >
@@ -98,7 +98,7 @@ const Studio = ({
                                 </div>
                             </div>
                             {!chat_respond &&
-                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} />}
+                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} canBook={studio.user._id != user._id}/>}
                             <StudioBooking data={studio} isOpen={isOpen} toggleDrawer={toggleDrawer} />
 
                         </>
@@ -114,6 +114,7 @@ const Studio = ({
 const mapStateToProps = (state) => ({
     studios_respond: state.api.GetStudios,
     studio_respond: state.api.Getstudio,
+    user: state.user.profile,
 });
 
 const mapDidpatchToProps = {

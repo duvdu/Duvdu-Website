@@ -27,6 +27,7 @@ const Projects = ({
     GetProject,
     project_respond,
     chat_respond,
+    user
 }) => {
 
     const router = useRouter()
@@ -79,7 +80,7 @@ const Projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} />
+                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} canBook={project.user._id != user._id}/>
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>
@@ -92,6 +93,7 @@ const Projects = ({
 const mapStateToProps = (state) => ({
     projects_respond: state.api.GetProjects,
     project_respond: state.api.GetProject,
+    user: state.user.profile,
 });
 
 const mapDidpatchToProps = {

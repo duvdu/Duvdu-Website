@@ -10,7 +10,7 @@ import Icon from '../../Icons';
 import ArrowBtn from '../../elements/arrowBtn';
 import { useRouter } from 'next/router';
 
-const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, messages, SwapProjectToFav, auth, swapProjectToFav_respond }) => {
+const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, messages, SwapProjectToFav, auth, swapProjectToFav_respond,canBook }) => {
     const router = useRouter()
     const { project: projectId } = router.query;
     const [data, setData] = useState(initialData);
@@ -81,7 +81,10 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
                                 <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
                                     <Icon className={`${loveIconName === 'far' ? 'text-white' : 'text-primary'} w-6 text-xl`} name="heart" type={loveIconName} />
                                 </div>
+                                {
+                                canBook &&
                                 <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-full sm:w-96 max-w-[211px]" text="book now" />
+                                }
                             </>
                         )}
                     </Controller>
