@@ -93,7 +93,7 @@ const Studio = ({
                                         </section>
                                     </div>
                                     <section className="mx-7 sm:mx-0">
-                                        <Recommended projects={projects} type={"studio"}/>
+                                        <Recommended projects={projects} type={"studio-booking"}/>
                                     </section>
                                 </div>
                             </div>

@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { useState, useEffect, useRef } from "react";
 // import headerMen from '../../public/static/header_content.json';
 import { connect } from "react-redux";
 import { getCategory } from '../../redux/action/apis/category/getCategories';
+import Link from 'next/link';
 
 const MegaMenu = ({ language, api, categories }) => {
   
@@ -52,9 +52,11 @@ const Category = ({ category, language }) => {
   
   return (
     <li className='header-category'>
-      <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>
-        {category.title}
-      </div>
+      <Link href={`/${category.cycle}`}>
+        <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>
+          {category.title}
+        </div>
+      </Link>
       <ul className="hover-menu" ref={megaMenuRef}>
         <div>
           {category.subCategories.map((subcategory, subIndex) => (

@@ -58,7 +58,7 @@ const Projects = ({
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
                                 item.project.studioName ? (
-                                    <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio" />
+                                    <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio-booking" />
                                 ) : (
                                     <ProjectCard key={`project-${i}`} cardData={item.project} />
                                 )
