@@ -233,7 +233,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 </section>
                                 <section className="w-full">
                                     <h2 className='opacity-60 capitalize mb-3'> project details </h2>
-                                    <span className='capitalize mb-8 opacity-80 w-min whitespace-nowrap font-bold'>
+                                    <span className='capitalize mb-8 opacity-80 w-min font-bold'>
                                         {formData.jobDetails}
                                     </span>
                                 </section>

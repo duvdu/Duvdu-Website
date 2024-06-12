@@ -91,7 +91,7 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
 
 
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-console.log(data)
+    console.log(data)
     if (!isOpen) {
         return <Drawer name={data.name} img={data.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
@@ -99,9 +99,8 @@ console.log(data)
     return (
         <>
             <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
-            <Drawer name={preview ? 'Review Booking' : data?.user?.name} img={data?.user?.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
-                <div className="mt-11" />
-                <div className={preview ? ' hidden' : ''}>
+            <Drawer name={preview ? 'Review Booking' : data?.user?.name} img={data?.user?.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll" padding={false}>
+                <div className={preview ? ' hidden p-8 pt-8' : 'p-8 pt-8'}>
                     <section>
                         <h3 className="capitalize opacity-60">job details</h3>
                         <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
@@ -109,7 +108,7 @@ console.log(data)
                     <section className="my-11 flex justify-between gap-7">
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
-                    <section className="my-11 gap-7 mr-24 ${ispreview">
+                    <section className="my-11 gap-7 mr-24">
                         <h3 className="capitalize opacity-60 mb-4">address</h3>
                         <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
                     </section>
@@ -127,65 +126,60 @@ console.log(data)
                     </section>
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
-                        <label htmlFor="attachment-upload" className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
-                            <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                                <Icon className="text-primary w-4" name={"image"} />
+                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                    </section>
+                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
+                        <div className="flex justify-center">
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'continue'} />
+                        </div>
+                    </section>
+                </div>
+
+                <div className={preview ? ' flex flex-col gap-9 h-full justify-between' : ' hidden'}>
+                    <div className="flex flex-col gap-9 overflow-y-scroll overflow-x-hidden p-8">
+                        <section className="w-full">
+                            <h2 className='opacity-60 capitalize mb-3'> project type </h2>
+                            <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
+                                shooting permits
+                            </span>
+                        </section>
+                        <section className="w-full">
+                            <h2 className='opacity-60 capitalize mb-3'> project details </h2>
+                            <span className='capitalize mb-8 opacity-80 w-min font-bold'>
+                                {formData.jobDetails}
+                            </span>
+                        </section>
+
+                        <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
+                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                <Icon className='text-primary' name={"calendar"} />
                             </div>
-                            <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                            <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
-                        </label>
-                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v)=>setAttachmentValidation(v)} />
-                    </section>
-                </div>
-
-                <div className={preview ? '' : ' hidden'}>
-                    <section className="w-full">
-                        <h2 className='opacity-60 capitalize mb-3'> project type </h2>
-                        <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
-                            shooting permits
-                        </span>
-                    </section>
-                    <section className="w-full">
-                        <h2 className='opacity-60 capitalize mb-3'> project details </h2>
-                        <span className='capitalize mb-8 opacity-80 w-min whitespace-nowrap font-bold'>
-                            {formData.jobDetails}
-                        </span>
-                    </section>
-
-                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
-                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                            <Icon className='text-primary' name={"calendar"} />
+                            <div className="flex flex-col pl-5 w-full">
+                                <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
+                                <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
+                            </div>
                         </div>
-                        <div className="flex flex-col pl-5 w-full">
-                            <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
-                            <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
+
+                        <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
+                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                <Icon className='text-primary w-4' name={"location-dot"} />
+                            </div>
+                            <div className="flex flex-col pl-5 w-full">
+                                <span className="font-normal text-base">{formData.address}</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
-                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                            <Icon className='text-primary w-4' name={"location-dot"} />
-                        </div>
-                        <div className="flex flex-col pl-5 w-full">
-                            <span className="font-normal text-base">{formData.address}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="h-24" />
-                <section className={`absolute left-0 bottom-0 w-full flex flex-col gap-7 py-6 ${preview ? ' bg-[#F7F9FB] border-t border-[#00000033]' : ''}`}>
-                    {
-                        preview &&
+                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
                             <span className="text-2xl font-bold">${formData.totalPrice}</span>
                         </div>
-                    }
-                    <div className="flex justify-center">
-                        <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={preview ? 'check-out' : 'continue'} />
-                    </div>
-                </section>
-
+                        <div className="flex justify-center">
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
+                        </div>
+                    </section>
+                </div>
             </Drawer >
         </>
     );

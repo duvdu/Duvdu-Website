@@ -178,7 +178,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                     </section>
                 </div>
 
-                <div className={preview ? 'pt-0' : ' hidden'}>
+                <div className={preview ? '' : ' hidden'}>
                     <div className="p-8">
 
                         <section className="w-full">
@@ -189,7 +189,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                         </section>
                         <section className="w-full">
                             <h2 className='opacity-60 capitalize mb-3'> project details </h2>
-                            <span className='capitalize mb-8 opacity-80 w-min whitespace-nowrap font-bold'>
+                            <span className='capitalize mb-8 opacity-80 w-min font-bold'>
                                 {formData.jobDetails}
                             </span>
                         </section>
