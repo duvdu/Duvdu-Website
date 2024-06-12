@@ -125,15 +125,15 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                         <h3 className="capitalize opacity-60">job details</h3>
                         <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
-                    <section className="my-11 max-w-64">
+                    <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
-                    <section className="my-11 max-w-64">
+                    <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">deadline Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('deadline', value)} />
                     </section>
-                    <section className="my-11 gap-7 mr-24 ${ispreview">
+                    <section className="my-11 gap-7 mr-24">
                         <h3 className="capitalize opacity-60 mb-4">address</h3>
                         <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
                     </section>
@@ -149,13 +149,10 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             </div>
                         </div>
                     </section>
-                    <section className="my-11 gap-7 mr-24 h-96 relative overflow-hidden">
+                    <section className="my-11 gap-7 h-96 relative overflow-hidden">
                         <h3 className="capitalize opacity-60 mb-4">location</h3>
                         <GoogleMap width={'90%'} value={formData.location}
-                            onsetLocation={(value) => {
-                                UpdateFormData('location[Lat]', value.Lat)
-                                UpdateFormData('location[Lng]', value.Lng)
-                            }}
+                            onsetLocation={(value) => UpdateFormData('location', value)}
                         />
                     </section>
                     <section className="w-full">

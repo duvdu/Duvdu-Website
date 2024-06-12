@@ -122,7 +122,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
 
                         </div>
                     </section>
-                    <section className="my-11 max-w-64">
+                    <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
