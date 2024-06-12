@@ -71,7 +71,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
         Object.keys(formData).forEach(key => {
             // Append each key-value pair to the FormData instance
             if (avoidFeilds.includes(key)) return
-            if (formData[key] !== user[key]) {
+            if (formData[key] !== user[key] && formData[key]) {
                 data.append(key, formData[key]);
             }
         });

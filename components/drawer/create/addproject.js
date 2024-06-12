@@ -109,7 +109,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         }
         return errors;
     };
-    
+
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -213,16 +213,20 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <ListInput
                                     placeholder={'add tool used'}
                                     target="AddToolUsed"
+                                    name={"tools"}
                                     listdiv={formData.tools && formData.tools.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
                                     remove={(value) => removeFromArray('tools', value)}
-                                />
+                                    enable={false}
+                                    />
                             </section>
                             <section>
                                 <ListInput
                                     placeholder={'add other creatives'}
                                     target="addOtherCreatives"
+                                    name={"creatives"}
                                     listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
                                     remove={(value) => removeFromArray('creatives', value)}
+                                    enable={false}
                                 />
                             </section>
                             {/* 

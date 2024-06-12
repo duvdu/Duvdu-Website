@@ -9,7 +9,6 @@ import Popup from "../../elements/popup";
 import AppButton from "../../elements/button";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
-    console.log(info)
     
     return (
         <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>

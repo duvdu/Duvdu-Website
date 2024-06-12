@@ -115,7 +115,7 @@ const PermitsBooking = ({ respond, addprojectState, UpdateFormData, BookCopyrigh
             <div className={preview ? ' hidden' : ''}>
                 <section>
                     <h3 className="capitalize opacity-60">job details</h3>
-                    <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                    <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                 </section>
                 <section className="my-11 flex justify-between gap-7">
                     <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />

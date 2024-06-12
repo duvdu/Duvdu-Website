@@ -113,17 +113,17 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                     </section>
                 }
                 {
-                    data?.booktools?.length > 0 &&
+                    (data?.tools || data?.equipments)?.length > 0 &&
                     <section className="my-11 p-8 pt-0">
                         <h3 className="capitalize opacity-60 mb-4">equipments   </h3>
-                        <BookTeam team={data.booktools} onChange={(value) => UpdateFormData('equipments', value)} />
+                        <BookTeam team={(data?.tools || data?.equipments)} onChange={(value) => UpdateFormData('equipments', value)} />
                     </section>
                 }
                 <div className="mt-11" />
                 <div className={preview ? ' hidden p-8 pt-0' : 'p-8 pt-0'}>
                     <section>
                         <h3 className="capitalize opacity-60">job details</h3>
-                        <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <section className="my-11 max-w-64">
                         <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
@@ -171,7 +171,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                             </span>
                         </div>
                     </section>
-                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 `}>
+                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
                             <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'continue'} />
                         </div>

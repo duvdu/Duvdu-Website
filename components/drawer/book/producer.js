@@ -165,7 +165,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                             ))
                         } */}
                     </section>
-                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 `}>
+                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
                             <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'continue'} />
                         </div>

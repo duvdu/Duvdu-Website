@@ -94,7 +94,12 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
                 <>
                     <h1 className="page-header mb-8">Team Project</h1>
                     <Cover respond={respond} />
-                    
+                    {data.map((section, index) => (
+                        <div key={index}>
+                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} />
+                            {index !== data.length - 1 && <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>}
+                        </div>
+                    ))}
                 </>
             ) : (
                 <UsersToAdd goback={togglePage} />

@@ -3,6 +3,7 @@ import React, {useState } from 'react';
 import Comman from './assets/comman';
 import InputFeid from '../../elements/inputFeid';
 import AppButton from '../../elements/button';
+import { ClosePopUp } from '../../../util/util';
 
 function AddToolUsed({ onSubmit }) {
     const [name, setname] = useState('');
@@ -35,6 +36,7 @@ function AddToolUsed({ onSubmit }) {
             return
         }
         onSubmit({ name, fees });
+        ClosePopUp("AddToolUsed")
         setname('');
         setFees('');
         setError({ name: '', fees: '' });
@@ -48,7 +50,7 @@ function AddToolUsed({ onSubmit }) {
                         <InputFeid placeholder={"tool name..."} onChange={handlenameChange} errerMsg={error.name} sendValue={name}/>
                         <InputFeid placeholder={"fees"} onChange={handleFeesChange} errerMsg={error.fees } sendValue={fees}/>
                     </div>
-                    <div  data-popup-dismiss="popup" onClick={onclick}>
+                    <div  onClick={onclick}>
                         <AppButton className={'w-full'}>
                             Add
                         </AppButton>

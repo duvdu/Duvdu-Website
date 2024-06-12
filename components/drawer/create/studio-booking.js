@@ -214,6 +214,8 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                     target="addOtherCreatives"
                                     listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
                                     remove={(value) => removeFromArray('creatives', value)}
+                                    enable={false}
+
                                 />
                                 <input placeholder='price per hour' value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
                                 <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
