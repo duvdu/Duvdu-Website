@@ -5,13 +5,10 @@ import Icon from '../../../Icons';
 import { gettFileUploaded, handleFileUpload, handleRemoveEvent } from '../../../../util/util';
 import { connect } from "react-redux";
 import { UpdateFormData } from '../../../../redux/action/logic/forms/Addproject';
-import AddAttachment from '../../../elements/attachment';
 
 function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
     const formData = addprojectState.formData;
     const img = formData.coverShow;
-    const [attachmentValidation, setAttachmentValidation] = useState(true);
-
     const profileUpload = (e) => {
         UpdateFormData('cover', handleFileUpload(e)?.file)
         UpdateFormData('coverShow', gettFileUploaded(e))
@@ -28,8 +25,23 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
                 <div className='p-5 pl-[31px] w-[430px] '>
                     <div className='flex flex-col justify-between h-full'>
                         <section>
-                            <h3 className="capitalize opacity-60 mt-11">attachments</h3>
-                            <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                            <label htmlFor="file-upload" >
+                                <div className={`border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white  ${img ? "" : "aspect-square"}`}>
+                                    <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
+                                        <Icon name={"add-file"} className='size-7' />
+                                    </div>
+                                    <span className="text-primary text-sm font-bold mt-3">Click to {img ? 'Change' : 'Upload'}</span>
+                                </div>
+                                {img &&
+                                    <div className='card w-full h-52 mt-5 object-cover bg-bottom' style={img ? {
+                                        backgroundImage: `url(${img})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat'
+                                    } : {}} />}
+
+                            </label>
+                            <input  onClick={handleRemoveEvent} id="file-upload" type="file" multiple className="hidden" onChange={profileUpload} />
                         </section>
                         <section className='mt-5'>
                             <span className='opacity-40 text-base capitalize'>

@@ -29,18 +29,17 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     categories = filterByCycle(categories, 'portfolio-post')
 
     useEffect(() => {
-        UpdateFormData('location.lat', '20.4575541')
-        UpdateFormData('location.lng', '20.4575541')
+        UpdateFormData('projectScale[time]', 'minute')
     }, [])
 
     const convertToFormData = () => {
         const data = new FormData();
 
         // Append simple string and number values directly from the state
-        data.append('title', formData.projectName);
-        data.append('desc', formData.projectDescription);
+        data.append('title', formData.title);
+        data.append('desc', formData.desc);
         data.append('address', formData.address);
-        data.append('projectBudget', formData.price);
+        data.append('projectBudget', formData.projectBudget);
         data.append('projectScale[scale]', formData.durationnum);
 
         data.append('location.lat', formData['location.lat']);
@@ -90,26 +89,24 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
     const validateRequiredFields = () => {
         const errors = {};
-        const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
 
-        if (!formData.description) errors.description = 'Description is required';
-        if (!formData.studioEmail) errors.studioEmail = 'Studio email is required';
-        if (!formData.studioNumber) errors.studioNumber = 'Studio number is required';
-        if (!formData.studioName) errors.studioName = 'Studio name is required';
+        if (!formData.title) errors.title = 'Title is required';
+        if (!formData.desc) errors.desc = 'Description is required';
+        if (!formData.address) errors.address = 'Address is required';
+        if (!formData.durationnum) errors.durationnum = 'Project scale is required';
+        if (!formData.durationUnit) errors.durationUnit = 'Project time is required';
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
-        if (!formData.pricePerHour) errors.pricePerHour = 'Price per hour is required';
-        if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
-        if (!formData.insurance) errors.insurance = 'Insurance is required';
-        if (!attachmentValidation) errors.insurance = 'Attachment not Valid';
-        if (!formData.studioNumber) {
-            errors.studioNumber = 'Studio number is required';
-        } else if (!egyptianPhoneRegex.test(formData.studioNumber)) {
-            errors.studioNumber = 'Invalid Egyptian phone number.';
-        }
+        if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.tools || !formData.tools.length) errors.tools = 'Tools are required';
+        if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives are required';
+        if (!formData.attachments || !formData.attachments.length) errors.attachments = 'Attachments are required';
+        
         return errors;
     };
-
+    const isEnable = Object.keys(validateRequiredFields()).length == 0
+    
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -195,10 +192,10 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
-                                <input placeholder='Name your project' className={inputStyle} value={formData.projectName} onChange={handleInputChange} name="projectName" />
+                                <input placeholder='Name your project' className={inputStyle} value={formData.title} onChange={handleInputChange} name="title" />
                             </section>
                             <section>
-                                <input placeholder='Project description' className={inputStyle} value={formData.projectDescription} onChange={handleInputChange} name="projectDescription" />
+                                <input placeholder='Project description' className={inputStyle} value={formData.desc} onChange={handleInputChange} name="desc" />
                             </section>
                             {/* <section>
                                 <input placeholder="Add creative’s functions" className={inputStyle} value={formData.creativeFunctions} onChange={handleInputChange} name="creativeFunctions" />
@@ -217,7 +214,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     listdiv={formData.tools && formData.tools.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
                                     remove={(value) => removeFromArray('tools', value)}
                                     enable={false}
-                                    />
+                                />
                             </section>
                             <section>
                                 <ListInput
@@ -240,8 +237,8 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                          */}
                             <section>
-                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget} onChange={handleInputChange} name="price" />
-                                {errors.price && <div style={{ color: 'red' }}>{errors.price}</div>}
+                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget} onChange={handleInputChange} name="projectBudget" />
+                                {errors.projectBudget && <div style={{ color: 'red' }}>{errors.projectBudget}</div>}
                             </section>
                             <section>
                                 <div className='flex justify-center items-center gap-9'>
@@ -267,7 +264,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </div>
 
 
-                            <Button onClick={setCover} className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
+                            <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>
                                     Next
                                 </span>
