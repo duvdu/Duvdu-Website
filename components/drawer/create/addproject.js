@@ -29,9 +29,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
     categories = filterByCycle(categories, 'portfolio-post')
 
-    useEffect(() => {
-        UpdateFormData('projectScale[time]', 'minute')
-    }, [])
+    
 
     const convertToFormData = () => {
         const data = new FormData();
@@ -42,9 +40,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         data.append('address', formData.address);
         data.append('projectBudget', formData.projectBudget);
         data.append('projectScale[scale]', formData.durationnum);
-
-        data.append('location.lat', formData['location.lat']);
-        data.append('location.lng', formData['location.lng']);
 
         data.append('projectScale[time]', formData.durationUnit || "minute");
         data.append('showOnHome', formData.showOnHome || false);
@@ -85,6 +80,10 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                 data.append(`attachments`, file);
             }
 
+            if (formData.location) {
+                data.append('location.lat', formData.location.lat);
+                data.append('location.lng', formData.location.lng);
+            }
         return data;
     };
 
@@ -95,7 +94,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (!formData.desc) errors.desc = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.durationnum) errors.durationnum = 'Project scale is required';
-        if (!formData.durationUnit) errors.durationUnit = 'Project time is required';
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
         if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
@@ -103,12 +101,12 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (!formData.tools || !formData.tools.length) errors.tools = 'Tools are required';
         if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives are required';
         if (!formData.attachments || !formData.attachments.length) errors.attachments = 'Attachments are required';
-        if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
+        if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-    
+    console.log(Object.keys(validateRequiredFields()))
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {

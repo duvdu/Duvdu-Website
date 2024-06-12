@@ -107,7 +107,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     UpdateFormData('tags', value.tags)
                                 }} />
                         </div>
-                        <input placeholder='price per hour' type="number" value={formData.price} onChange={handleInputChange} name="price" className={inputStyle} />
+                        <input placeholder='price' type="number" value={formData.price} onChange={handleInputChange} name="price" className={inputStyle} />
 
                         <input type="number" placeholder='duration Days' value={formData.duration} onChange={handleInputChange} name="duration" className={inputStyle} />
 
