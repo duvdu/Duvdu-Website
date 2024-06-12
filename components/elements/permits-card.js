@@ -1,8 +1,9 @@
 import React from 'react';
 import Icon from '../Icons';
 import Link from 'next/link';
+import { connect } from 'react-redux';
 
-const Card = ({ cardData, className = "", onClick }) => {
+const Card = ({ cardData, className = "", onClick,user }) => {
 
   return (
     <div className={`border border-50 border-solid border-gray-300 p-10 ${className}`}>
@@ -35,7 +36,7 @@ const Card = ({ cardData, className = "", onClick }) => {
       <div className='flex justify-between mt-7'>
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>pricing</p>
-          <span className='text-5xl font-medium'>{cardData.pricing || 0} $</span>
+          <span className='text-5xl font-medium'>{cardData.price || 0} $</span>
         </div>
         <div className='w-[1px] bg-black opacity-15' />
         <div>
@@ -43,11 +44,24 @@ const Card = ({ cardData, className = "", onClick }) => {
           <span className='text-5xl font-medium'>{cardData.duration || 0} hours</span>
         </div>
       </div>
-      <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize">
+
+      {
+        user.profile.username != cardData.user.username &&
+        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize">
         book
       </button>
+      }
     </div>
   );
 };
 
-export default Card;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = {
+  
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

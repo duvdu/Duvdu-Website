@@ -77,9 +77,7 @@ const Permit = ({ GetCopyrights, respond, api }) => {
                         <Formsubmited />
                     </div>
                 </section>
-
                 <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
-
             </Layout>
         </>
     );
