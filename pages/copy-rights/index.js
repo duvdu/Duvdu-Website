@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Layout from "../../components/layout/Layout";
 import Card2 from "../../components/elements/permits-card";
 import Filter from "../../components/elements/filter";
-import Drawer from "../../components/drawer/book/permits";
+import CopyRigtherBooking from "../../components/drawer/book/copyRigtherBooking";
 import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
@@ -77,7 +77,7 @@ const Permit = ({ GetCopyrights, respond, api }) => {
                         <Formsubmited />
                     </div>
                 </section>
-                <Drawer data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+                <CopyRigtherBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
             </Layout>
         </>
     );
