@@ -1,11 +1,10 @@
 import React from 'react';
-import Icon from '../Icons';
+import Icon from '../../Icons';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 
-const Card = ({ cardData, className = "", onClick,user }) => {
-
-  return (
+const CopyRightCard = ({ cardData, className = "", onClick,user }) => {
+return (
     <div className={`border border-50 border-solid border-gray-300 p-10 ${className}`}>
       <Link href={`/creative/${cardData?.user?.username}`}>
         <div className='flex items-center justify-center text-center pb-5 cursor-pointer'>
@@ -21,10 +20,12 @@ const Card = ({ cardData, className = "", onClick,user }) => {
       </Link>
       <div className='flex justify-center pt-25 items-center gap-3'>
         <div className='Professional-background-decoration px-3 py-1'>
-          <span className='Professional-text-decoration font-bold text-lg'></span>
+          <span className='Professional-text-decoration font-bold text-lg'>
+          {cardData?.user?.rank?.title}
+          </span>
         </div>
         <span className='info-container flex gap-1'>
-          <span>{cardData?.projects || 0}</span> <span>projects</span>
+          <span>{cardData?.user?.projectsView || 0}</span> <span>projects</span>
         </span>
         <div className='info-container flex justify-between items-center gap-2'>
           <span>{cardData?.user?.rate?.ratersCounter}</span>
@@ -41,12 +42,12 @@ const Card = ({ cardData, className = "", onClick,user }) => {
         <div className='w-[1px] bg-black opacity-15' />
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>duration</p>
-          <span className='text-5xl font-medium'>{cardData.duration || 0} hours</span>
+          <span className='text-5xl font-medium'>{cardData.duration || 0} Days</span>
         </div>
       </div>
 
       {
-        user.profile.username != cardData.user.username &&
+        user?.profile?.username != cardData?.user?.username &&
         <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize">
         book
       </button>
@@ -64,4 +65,4 @@ const mapDispatchToProps = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(CopyRightCard);

@@ -26,15 +26,8 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
     useEffect(() => {
         if (FindUser_respond?.message == "success")
             setIsLoading(false);
-            setCreatives(FindUser_respond.data)
+            setCreatives(FindUser_respond?.data)
     }, [FindUser_respond])
-
-    // useEffect(() => {
-    //     if (searchTo && searchTo != _searchTo) {
-    //         FindUser(searchTo)
-    //         set_SearchTo(searchTo)
-    //     }
-    // }, [searchTo])
 
     useEffect(() => {
         if (api.req === "FindUser" && api.loading) {
@@ -136,7 +129,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                             </div>
                         }
                         <ul className="flex flex-wrap gap-2">
-                            {creatives.map((item, index) => (
+                            {creatives?.map((item, index) => (
                                 <li
                                     className="flex items-center text-base opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full cursor-pointer"
                                     key={index}

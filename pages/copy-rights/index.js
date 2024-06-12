@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Layout from "../../components/layout/Layout";
-import Card2 from "../../components/elements/permits-card";
 import Filter from "../../components/elements/filter";
 import CopyRigtherBooking from "../../components/drawer/book/copyRigtherBooking";
 import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
 import { useRouter } from 'next/router';
+import CopyRightCard from '../../components/pages/copy-writeer/copyRightCard';
 
 
 
@@ -69,7 +69,7 @@ const Permit = ({ GetCopyrights, respond, api }) => {
                         )}
                         <div className="minmax-360">
                             {permits.map((item, i) => {
-                                return <Card2 onClick={() => handlesetdata(item)} key={i} cardData={item} />;
+                                return <CopyRightCard onClick={() => handlesetdata(item)} key={i} cardData={item} />;
 
                             })}
                         </div>

@@ -24,7 +24,7 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
         if (
             formData.address?.length > 0 &&
             formData.jobDetails?.length > 5 &&
-            formData.startDate &&
+            formData.startDate &&   
             attachmentValidation
         ) setEnableBtn(true)
         else setEnableBtn(false)
@@ -48,8 +48,6 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
         ontoggleDrawer()
     }
     useEffect(() => {
-        UpdateFormData('location[lat]', 50)
-        UpdateFormData('location[lng]', 50)
         UpdateFormData('totalPrice', data.pricing)
     }, [isOpen])
 
@@ -81,12 +79,14 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
         BookCopyrights(data._id, converting(formData))
     }
 
-    const attachmentsUpload = (e) => {
-        UpdateFormData('attachments', handleMultipleFileUpload(e))
-    };
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         UpdateFormData(name, value)
+    };
+
+    const handlelocationChange = (location) => {
+        UpdateFormData('location[lat]', location.lat)
+        UpdateFormData('location[lng]', location.lng)
     };
 
 
@@ -127,6 +127,10 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
                         <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                    </section>
+                    <section className="h-96 relative overflow-hidden w-full">
+                        <h3 className="capitalize opacity-60 mt-11">Set location</h3>
+                        <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => handlelocationChange(value)} />
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">

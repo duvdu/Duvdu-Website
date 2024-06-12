@@ -15,19 +15,18 @@ import AddStudioBooking from '../../../components/drawer/create/studio-booking'
 import AddCopyrights from '../../../components/drawer/create/copy-rights'
 import AddPost from '../../../components/drawer/create/addproject'
 import AddProducer from '../../../components/drawer/create/producer'
-import EquipmentRental from '../../../components/drawer/create/Equipment-rental';
 import PostPopup from '../../../components/popsup/create/assets/chooseCategory';
 import SelectType from '../../../components/popsup/create/assets/selectType';
 
-import Projects from '../../elements/profile/projects';
-import Conver from '../../elements/profile/conver';
-import Info from '../../elements/profile/info';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
 import EquipmentAvailable from '../../popsup/create/equipmentAvailable';
 import Followers from '../../popsup/followes';
 import { GetUserProject } from '../../../redux/action/apis/auth/profile/getUserProjects';
+import Conver from './conver';
+import Info from './info';
+import Projects from './projects';
 
 
 

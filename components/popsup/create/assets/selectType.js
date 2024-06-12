@@ -50,14 +50,6 @@ function PostPopup({auth}) {
                             "value": "producer",
                             "url": "add-producer"
                         },
-                        // {
-                        //     "value": "music & audio",
-                        //     "url": "music-audio"
-                        // },
-                        // {
-                        //     "value": "executive producing",
-                        //     "url": "executive-producing"
-                        // }
                     ]
                         .map((item, index) => (
                             <li

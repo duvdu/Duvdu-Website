@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import AppButton from "../../elements/button";
 import Comment from "../../elements/comment";
-import Conver from "../../elements/profile/conver";
-import Info from "../../elements/profile/info";
-import Projects from "../../elements/profile/projects";
+import Conver from "./conver";
+import Info from "./info";
+import Projects from "./projects";
 import { connect } from "react-redux";
 import Icon from "../../Icons";
 import { GetAllMessageInChat } from "../../../redux/action/apis/realTime/messages/getAllMessageInChat";

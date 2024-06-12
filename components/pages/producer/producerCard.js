@@ -1,17 +1,18 @@
 
 import React from 'react';
-import Icon from '../Icons';
+import Icon from '../../Icons';
+import { connect } from 'react-redux';
 
 
-const ProducerCard = ({ cardData, className = "", onClick }) => {
+const ProducerCard = ({ cardData, className = "", onClick, user }) => {
   return (
     <>
       <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
-      <div className='flex flex-col items-center justify-center text-center pb-5'>
+        <div className='flex flex-col items-center justify-center text-center pb-5'>
           <img className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top' src={cardData?.user?.profileImage} alt="profile picture" />
           <div className='flex-2 flex-col items-center justify-center gap-1'>
             <h3 className='opacity-80 text-lg font-bold'>{cardData?.user?.name}</h3>
-            <span className='flex items-center opacity-40 gap-1'>
+            <span className='flex items-center justify-center opacity-40 gap-1 w-full'>
               <Icon className='w-3' name='location-dot' />
               <span className="location">{cardData?.user?.address || 'NONE'}</span>
             </span>
@@ -27,17 +28,29 @@ const ProducerCard = ({ cardData, className = "", onClick }) => {
           <div className='info-container flex items-center gap-1'>
             <span>{cardData.user.rate.ratersCounter}</span>
             <div className='w-5'>
-            <Icon className='text-primary' name={'rate-star'} />
+              <Icon className='text-primary' name={'rate-star'} />
             </div>
           </div>
         </div>
-        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12">
-          send pitching form
-        </button>
+        {
+          user?.profile?.username != cardData?.user?.username &&
+          <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12">
+            send pitching form
+          </button>
+        }
       </div>
 
     </>
   );
 };
 
-export default ProducerCard;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = {
+
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProducerCard);

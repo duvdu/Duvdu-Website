@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
-import Icon from '../Icons';
+import Icon from '../../Icons';
 
 const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     const DATA_COUNT = 11;

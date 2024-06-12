@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Layout from "../../components/layout/Layout";
-import ProducerCard from "../../components/elements/producers-card";
 import Filter from "../../components/elements/filter";
 import ProducerBooking from "../../components/drawer/book/producer";
 import Formsubmited from '../../components/popsup/formsubmited';
@@ -8,6 +7,7 @@ import { connect } from 'react-redux';
 import { GetProducer } from '../../redux/action/apis/cycles/producer/get';
 import { calculateRating } from '../../util/util';
 import { useRouter } from 'next/router';
+import ProducerCard from '../../components/pages/producer/producerCard';
 
 
 const convertDataFormat = (data) => {
