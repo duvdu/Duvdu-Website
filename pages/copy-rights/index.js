@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 
 
-const Permit = ({ GetCopyrights, respond }) => {
+const Permit = ({ GetCopyrights, respond, api }) => {
     const Router = useRouter();
     const showLimit = 12;
     const page = 1;
@@ -20,7 +20,7 @@ const Permit = ({ GetCopyrights, respond }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
     const permits = respond?.data || [];
-    
+
     const pagganation = respond?.pagination
 
     useEffect(() => {
@@ -73,12 +73,7 @@ const Permit = ({ GetCopyrights, respond }) => {
 
                             })}
                         </div>
-                        {
-                            permits.length === limit &&
-                            <div className="load-parent">
-                                <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
-                            </div>
-                        }
+                        <img className={(api.loading && api.req == "GetCopyrights" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                         <Formsubmited />
                     </div>
                 </section>

@@ -1,7 +1,9 @@
 [
 "CheckUsernameExists",
 "FindUser",
-"GetStudios",
 "getUserFollowers",
+"GetCopyrights",
+"GetProducer",
+"GetStudios",
 "GetProjects"
 ]

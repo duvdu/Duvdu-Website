@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetStudios } from "../../redux/action/apis/cycles/studio/get";
 
-const Studio = ({ projects , GetStudios}) => {
+const Studio = ({ projects , GetStudios,api}) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const page = 1;
@@ -95,12 +95,7 @@ const Studio = ({ projects , GetStudios}) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        {
-                            getPaginatedProjects?.length === limit &&
-                            <div className="load-parent">
-                                <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
-                            </div>
-                        }
+                        <img className={(api.loading && api.req == "GetStudios" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                     </div>
                 </section>
             </Layout>
@@ -204,6 +199,7 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
 }
 
 const mapStateToProps = (state) => ({
+    api: state.api,
     projects: state.api.GetStudios,
     projectFilters: state.projectFilters,
 });
