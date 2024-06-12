@@ -97,7 +97,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData.pricePerHour) errors.pricePerHour = 'Price per hour is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         if (!formData.insurance) errors.insurance = 'Insurance is required';
-        if (!attachmentValidation) errors.insurance = 'Attachment not Valid';
+        if (!attachmentValidation && !formData.attachments?.length) errors.insurance = 'Attachment not Valid';
 
         if (!formData.studioNumber) {
             errors.studioNumber = 'Studio number is required';

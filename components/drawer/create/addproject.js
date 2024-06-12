@@ -15,6 +15,7 @@ import Drawer from "../../elements/drawer";
 import { CreateProject } from "../../../redux/action/apis/cycles/projects/create";
 import CategorySelection from "./assets/selectCategory";
 import AddAttachment from "../../elements/attachment";
+import GoogleMap from "../../elements/googleMap";
 
 
 const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, addprojectState, categories, resetForm }) => {
@@ -102,6 +103,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (!formData.tools || !formData.tools.length) errors.tools = 'Tools are required';
         if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives are required';
         if (!formData.attachments || !formData.attachments.length) errors.attachments = 'Attachments are required';
+        if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         
         return errors;
     };
@@ -257,6 +259,10 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     </select>
                                 </div>
 
+                            </section>
+                            <section className="h-96 relative overflow-hidden">
+                                <span> Set location </span>
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                             </section>
                             <div className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
