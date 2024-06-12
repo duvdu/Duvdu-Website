@@ -28,19 +28,19 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     }, [])
     
     const handlelocationChange = (location) => {
-        UpdateFormData('location[lat]', location.lat)
-        UpdateFormData('location[lng]', location.lng)
+        UpdateFormData('location.lat', location.lat)
+        UpdateFormData('location.lng', location.lng)
     };
     const validateRequiredFields = () => {
         const errors = {};
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.subCategory) errors.subCategory = 'subCategory is required';
         if (!formData.tags?.length) errors.subCategory = 'tags is required';
-        if (!formData.pricePerHour) errors.pricePerHour = 'Price is required';
+        if (!formData.price) errors.price = 'Price is required';
         if (!formData.duration) errors.duration = 'Duration is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.searchKeywords || formData.searchKeywords.length === 0) errors.searchKeywords = 'At least one search keyword is required';
-        if (!formData['location[lat]'] || !formData['location[lng]']) errors.location = 'Location is required';
+        if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         return errors;
     };
 
@@ -107,7 +107,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     UpdateFormData('tags', value.tags)
                                 }} />
                         </div>
-                        <input placeholder='price per hour' type="number" value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
+                        <input placeholder='price per hour' type="number" value={formData.price} onChange={handleInputChange} name="price" className={inputStyle} />
 
                         <input type="number" placeholder='duration Days' value={formData.duration} onChange={handleInputChange} name="duration" className={inputStyle} />
 
@@ -116,7 +116,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                     </section>
                     <section className="h-96 relative overflow-hidden w-full">
                         <h3 className="capitalize opacity-60 mb-3">Set location</h3>
-                        <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => handlelocationChange(value)} />
+                        <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                     </section>
                     <section className='flex justify-center gap-3 mt-1'>
                         <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} id='showOnHome' />
