@@ -20,10 +20,10 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
         </div>
         <div className='flex justify-center pt-25 items-center gap-3'>
           <div className='Professional-background-decoration px-3 py-1'>
-            <span className='Professional-text-decoration font-bold text-lg'>{cardData?.rank?.title}</span>
+            <span className='Professional-text-decoration font-bold text-lg'>{cardData?.user?.rank?.title}</span>
           </div>
           <span className='info-container flex gap-1'>
-            <span>{cardData.projects}</span> <span>projects</span>
+            <span>{cardData?.user?.projectsView}</span> <span>projects</span>
           </span>
           <div className='info-container flex items-center gap-1'>
             <span>{cardData.user.rate.ratersCounter}</span>
