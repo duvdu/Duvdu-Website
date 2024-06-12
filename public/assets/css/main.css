@@ -1665,6 +1665,7 @@ table p {
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
+  filter: drop-shadow(0px 5px 11px rgba(50, 107, 239, 0.18)) drop-shadow(0px 20px 20px rgba(50, 107, 239, 0.15)) drop-shadow(0px 45px 27px rgba(50, 107, 239, 0.09)) drop-shadow(0px 79px 32px rgba(50, 107, 239, 0.03)) drop-shadow(0px 124px 35px rgba(50, 107, 239, 0.00));
 }
 
 .app-btn:hover {

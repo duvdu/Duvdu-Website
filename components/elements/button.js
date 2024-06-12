@@ -34,13 +34,7 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
           {children}
         </div>
       </div>
-      {
-        shadow && isEnabled &&
-        <div className="btn-shadows">
-          <div className={`absolute left-0 top-0 w-1/2 h-full rounded-full button-shadow-1 z-0`} />
-          <div className={`absolute left-1/2 top-0 w-1/2 h-full rounded-full button-shadow-2`} />
-        </div>
-      }
+      
     </div>
   );
 }

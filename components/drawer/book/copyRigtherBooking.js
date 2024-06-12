@@ -129,7 +129,7 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                         <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full">
-                        <h3 className="capitalize opacity-60 mt-11">Set location</h3>
+                        <h3 className="capitalize opacity-60  mb-3">Set location</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => handlelocationChange(value)} />
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
