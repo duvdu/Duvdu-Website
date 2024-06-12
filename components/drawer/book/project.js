@@ -103,10 +103,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         return <Drawer name={data.user?.name} img={data.user?.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
             <div className="py-10">
                 <GoogleMap width={'90%'} value={formData.location}
-                    onsetLocation={(value) => {
-                        UpdateFormData('location[Lat]', value.Lat)
-                        UpdateFormData('location[Lng]', value.Lng)
-                    }}
+                    onsetLocation={(value) => UpdateFormData('location', value)}
                 />
             </div>
         </Drawer >
