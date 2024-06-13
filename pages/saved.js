@@ -44,14 +44,16 @@ const Saved = ({
         const handleSelectClick = (event) => {
             event.stopPropagation();
         };
-
+        const handleDropdownSelect = (v) => {
+            v == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-" + id)
+        };
         return (
             <>
                 <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} />
                 <div className="boards-card">
                     <div className="absolute top-7 right-7" onClick={handleSelectClick}>
                         {!isFav &&
-                            <Selector options={dropdown} onSelect={(v) => v.value == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-" + id)}>
+                            <Selector options={dropdown} onSelect={handleDropdownSelect}>
                                 <div className="border rounded-full size-9 flex justify-center items-center">
                                     <Icon className="size-6 text-white" name="ellipsis-vertical" />
                                 </div>

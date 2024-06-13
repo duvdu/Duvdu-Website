@@ -9,12 +9,11 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
     };
 
     const handleChange = (event) => {
-        console.log(event.target.value)
         const selectedOption = options.find(option => option.value === event.target.value);
         if (selectedOption) {
             onSelect?.(selectedOption.value);
         }
-
+        selectRef.current.value = null;
     };
 
     return (

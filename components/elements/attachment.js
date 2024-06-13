@@ -47,7 +47,7 @@ function AddAttachment({ value, onChange, name, isValidCallback }) {
                 <span className="pl-5 w-full text-blue-600">Open gallery</span>
                 <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
             </label>
-            <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
+            <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload"  accept="image/*"  type="file" multiple />
             {
                 uploadedFiles.map((file, key) => (
                     parseFileSize(file.formattedFileSize) <= parseFileSize(maxFileSize) ?

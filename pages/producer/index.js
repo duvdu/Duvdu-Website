@@ -28,7 +28,7 @@ const convertDataFormat = (data) => {
 const Producers = ({ GetProducer, respond,api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const producers = respond?.data || []
+    const producers = respond?.data
     const pagganation = respond?.pagination
     const page = 1;
     const showLimit = 12;
@@ -90,12 +90,14 @@ const Producers = ({ GetProducer, respond,api }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
                         <Filter />
-                        <h1 className="page-header my-6">most popular on duvdu</h1>
-                        {producers.length === 0 && (
+                        {producers?.length > 0 && (
+                            <h1 className="page-header my-6">most popular on duvdu</h1>
+                        )}
+                        {producers?.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="minmax-360">
-                            {producers.map((item, i) => {
+                            {producers?.map((item, i) => {
                                 return <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />;
 
                             })}

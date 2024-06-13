@@ -81,7 +81,10 @@ const Studio = ({ projects , GetStudios,api}) => {
                             !searchTerm &&
                             <div className="h-7" />
                         }
-                        <h1 className="page-header pb-9">most popular on duvdu</h1>
+                        {getPaginatedProjects?.length > 0 && (
+                            <h1 className="page-header pb-9">most popular on duvdu</h1>
+                        )}
+                        
                         {getPaginatedProjects?.length === 0 && (
                             <h3>No projects Found </h3>
                         )}

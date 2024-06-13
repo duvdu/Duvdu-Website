@@ -34,14 +34,14 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                     </div>
                 </div>
                 <div className='flex justify-center pt-25 items-center gap-3'>
-                    <div className='Professional-background-decoration px-2 py-1'>
+                    <div className='Professional-background-decoration px-4 py-1'>
                         <span className='Professional-text-decoration font-bold text-lg'>{info?.rank?.ratersCounter || "---"}</span>
                     </div>
-                    <span className='flex border rounded-full px-2 py-1 gap-1 text-lg'>
-                        <span>{info.service || "---"}</span>
+                    <span className='flex border rounded-full px-4 py-1 gap-1 text-lg'>
+                        <span>{info.category?.title || "---"}</span>
                     </span>
-                    <div className='border rounded-full px-2 py-1 text-lg flex items-center gap-1'>
-                        <span>{info.value || 3.7}</span>
+                    <div className='border rounded-full px-4 py-1 text-lg flex items-center gap-1'>
+                        <span>{info.rate.ratersCounter || 0}</span>
                         <div className='w-5'>
                             <Icon className='text-primary' name={'rate-star'} />
                         </div>
@@ -50,9 +50,9 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                 <div className='flex justify-center pt-7 items-center'>
                     <div className='flex justify-center'>
                         {Object.entries({
-                            "likes": 28000,
-                            "followers": 514,
-                            "views": 258000
+                            "likes": info.likes||0,
+                            "followers": info.followCount?.followers||0,
+                            "views": info.projectsView||0
                         },).map(([key, value]) => (
                             <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
                                 <p className='number'>{convertToK(value, 0)}</p>
@@ -103,16 +103,16 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
 
     return (
         <>
-            <Filter />
+            {/* <Filter /> */}
             <Popup className="ADD_HOURS_TO_CREATIVE" header={'Work Details'}>
                 <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
-                    <div className='flex items-center gap-9'>
+                    <div className='flex items-center gap-9 w-64'>
                         <input type="number" onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             hours
                         </span>
                     </div>
-                    <div className='flex items-center gap-9'>
+                    <div className='flex items-center gap-9 w-64'>
                         <input type="number" onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             amount
@@ -125,7 +125,7 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
             </Popup>
             <div className="grid minmax-360 gap-5 my-6">
                 {respond?.data?.map((value, index) => (
-                    <AddToTeamCard goback={goback} info={value} key={index} className='cursor-pointer' onChoose={()=>openpopUp(value)} />
+                    <AddToTeamCard goback={goback} info={value} key={index} onChoose={()=>openpopUp(value)} />
                 ))}
             </div>
         </>

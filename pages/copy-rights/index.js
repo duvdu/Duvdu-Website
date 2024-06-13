@@ -19,7 +19,7 @@ const Permit = ({ GetCopyrights, respond, api }) => {
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
-    const permits = respond?.data || [];
+    const permits = respond?.data
 
     const pagganation = respond?.pagination
 
@@ -63,8 +63,10 @@ const Permit = ({ GetCopyrights, respond, api }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
                         <Filter />
-                        <h1 className="page-header my-6">most popular on duvdu</h1>
-                        {permits.length === 0 && (
+                        {permits?.length > 0 && (
+                            <h1 className="page-header my-6">most popular on duvdu</h1>
+                        )}
+                        {permits?.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
                         <div className="minmax-360">

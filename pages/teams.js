@@ -28,10 +28,14 @@ const Card = ({ data, DeleteTeamProjects }) => {
         event.stopPropagation();
     };
 
+    const handleDropdownSelect = (v) => {
+        v === 'Delete' ? onDelete() : onEdit(_id)
+    };
+
     return (
         <>
             <Link href={`/team/${_id}`}>
-                <div className="boards-card relative">
+                <div className="boards-card relative cursor-pointer">
                     <>
                         <div
                             className="w-full h-full rounded-[50px] img-cart-style"
@@ -46,7 +50,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                         onClick={handleSelectClick}
                     >
                         <Selector
-                            onSelect={(v) => v.value === 'Delete' ? onDelete() : onEdit(_id)}
+                            onSelect={handleDropdownSelect}
                             options={status == 'available' ? null : [
                                 {
                                     value: 'Delete',

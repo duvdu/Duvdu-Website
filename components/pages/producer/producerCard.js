@@ -34,7 +34,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
         </div>
         {
           user?.profile?.username != cardData?.user?.username &&
-          <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12">
+          <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize">
             send pitching form
           </button>
         }

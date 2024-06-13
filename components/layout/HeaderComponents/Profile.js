@@ -180,7 +180,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                     <Link href={`/save/favorites`} >
                                         <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
-                                                favCover ? <img className='rounded-[30px]' src={favCover} /> :
+                                                favCover ? <img className='rounded-[30px] h-full object-cover' src={favCover} /> :
                                                     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
                                                         <Icon className='w-10' name={"dvudu-image"} />
                                                     </div>
@@ -190,7 +190,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                     <Link href="/saved" >
                                         <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
-                                                saved[0] ? <img className='rounded-[30px]' src={saved[0]} /> :
+                                                saved[0] ? <img className='rounded-[30px] h-full object-cover' src={saved[0]} /> :
                                                     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
                                                         <Icon className='w-10' name={"dvudu-image"} />
                                                     </div>
