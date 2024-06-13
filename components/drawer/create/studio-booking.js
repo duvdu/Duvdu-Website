@@ -88,7 +88,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         const errors = {};
         const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
 
-        if (!formData.description) errors.description = 'Description is required';
+        if ((formData.description?.length||0) < 6) errors.description = 'Description is required';
         if (!formData.studioEmail) errors.studioEmail = 'Studio email is required';
         if (!formData.studioNumber) errors.studioNumber = 'Studio number is required';
         if (!formData.studioName) errors.studioName = 'Studio name is required';

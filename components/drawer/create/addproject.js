@@ -91,7 +91,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         const errors = {};
 
         if (!formData.title) errors.title = 'Title is required';
-        if (!formData.desc) errors.desc = 'Description is required';
+        if ((formData.desc?.length||0) < 6) errors.desc = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.durationnum) errors.durationnum = 'Project scale is required';
         if (!formData.category) errors.category = 'Category is required';
@@ -106,7 +106,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-    console.log(Object.keys(validateRequiredFields()))
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {

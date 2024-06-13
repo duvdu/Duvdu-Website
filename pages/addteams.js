@@ -95,15 +95,14 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             });
         });
 
+        if (formData.attachments)
+            for (let i = 0; i < formData.attachments.length; i++) {
+                const file = formData.attachments[i];
+                form.append(`attachments`, file.file);
+            }
 
-
-        for (let i = 0; i < formData?._attachments?.length; i++) {
-            const file = formData?._attachments[i];
-
-            form.append(`attachments`, file.file);
-        }
         form.append('cover', formData?.cover)
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', '_attachments', 'attachments', 'category', 'jobTitle'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', 'attachments', 'category', 'jobTitle'])
         CreateTeamProject(form)
 
         // Printing FormData for demonstration
@@ -197,8 +196,8 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     const RightSide = ({ isSolid, onClick }) => (
 
         <div className="w-full max-w-[483px] h-body py-10">
-            <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
-                <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
+            <div className="flex flex-col justify-between bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
+                <div className="p-12 pb-0 w-full flex flex-col h-full overflow-y-scroll">
                     <h2 className="opacity-80 text-2xl font-semibold capitalize">Project Details</h2>
                     <div className="w-full flex flex-col gap-8 h-full mt-9">
                         <section className="hidden">
@@ -245,13 +244,13 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                             </div>
                             <div className="flex flex-col pl-5 w-full">
                                 <span className="font-normal text-base">alike media</span>
-                                <span className="text-[#747688] text-xs">{formData._attachments?.length} files</span>
+                                <span className="text-[#747688] text-xs">{formData.attachments?.length} files</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 {!isSolid && (
-                    <div className="border-t absolute flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
+                    <div className="border-t flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
                         <div className="flex justify-between w-full">
                             <span className="font-bold">Total Amount</span>
                             <span className="font-bold">$0.0</span>

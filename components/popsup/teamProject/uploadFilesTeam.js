@@ -20,10 +20,26 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
     const router = useRouter();
     const elementRef = useRef(null);
 
-    // useEffect(() => {
-    // //    console.log(create_respond)
-    // }, [create_respond])
-    useEffect(() => {
+    const validateRequiredFields = () => {
+        const errors = {};
+
+        if (!formData.cover) errors.cover = 'cover is required';
+        if (!formData.category?.length) errors.category = 'category is required';
+        if (!formData.attachments?.length) errors.attachments = 'attachment is required';
+        if (!formData.title) errors.title = 'title is required';
+        if ((formData.desc?.length||0) < 6) errors.desc = 'description is required';
+        if (!formData.address) errors.address = 'address is required';
+        if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
+        if (!formData.shootingDays) errors.shootingDays = 'shootingDays is required';
+        if (!formData.budget) errors.budget = 'budget is required';
+        if (!formData.startDate) errors.startDate = 'startDate is required';
+        
+        return errors;
+    };
+    const isEnable = Object.keys(validateRequiredFields()).length == 0
+console.log(Object.keys(validateRequiredFields()))
+
+     useEffect(() => {
         // GetTeamProject()
         const element = document.getElementById('team_uploading_files');
         if (router.query.add) {
@@ -56,15 +72,11 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
         router.push({
             pathname: "/addteams",
         });
-        // UpdateFormData('attachments', formData?.attachment?.map((e)=> e.file))
-        // const form = new FormData()
-        // UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
     }
 
     return (
         <>
-            <Popup id='team_uploading_files' className='w-full lg:w-[600px] flex flex-col gap-9' addWhiteShadow={true} header={'upload files'} onCancel={handleCancel} ref={elementRef}>
-
+            <Popup id='team_uploading_files' className='w-full lg:w-[600px] flex flex-col gap-9' addWhiteShadow={true} header={'Create New Team'} onCancel={handleCancel} ref={elementRef}>
             {
                 isPopupVisible &&
                 <div className='lg:w-[600px]'>
@@ -77,7 +89,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     </section>
                     <section className="w-full mt-11">
                         <h3 className="capitalize opacity-60">upload alike project</h3>
-                        <AddAttachment value={formData._attachments} onChange={handleInputChange} formData={formData} />
+                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} formData={formData} />
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">team name</p>
@@ -85,7 +97,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">project details</p>
-                        <textarea onChange={handleInputChange} name='desc' placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea onChange={handleInputChange} name='desc' placeholder="requirements, conditions at least 6 characters" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <section>
                         <div className='mt-11 w-full'>
@@ -130,7 +142,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
 
                     <section className="sticky bottom-5 z-10">
                         <div className="flex justify-center">
-                            <ArrowBtn onClick={onsubmit} className="cursor-pointer w-full sm:w-96 z-10" text='Next' isEnable={true} />
+                            <ArrowBtn onClick={onsubmit} className="cursor-pointer w-full sm:w-96 z-10" text='Continue' isEnable={isEnable} />
                         </div>
                     </section>
                 </div>}
