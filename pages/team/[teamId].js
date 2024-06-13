@@ -47,7 +47,7 @@ const TheTeam = ({
         console.log(teamId)
         UpdateTeamUser(alldata, teamId)
     }
-    
+
     return (
         <Layout shortheader={true}>
             <section className="container">
@@ -89,7 +89,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
     const data = respond?.data?.creatives || [];
 
     return (
-        <div className="h-body w-full overflow-y-scroll pt-14">
+        <div className="h-body w-full overflow-y-scroll pt-14 addUserScroll">
             {!isAddToTeamPage ? (
                 <>
                     <h1 className="page-header mb-8">Team Project</h1>

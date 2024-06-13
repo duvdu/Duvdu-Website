@@ -9,7 +9,7 @@ import Popup from "../../elements/popup";
 import AppButton from "../../elements/button";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
-    
+
     return (
         <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
             <div className="flex w-full overflow-hidden h-32">
@@ -50,9 +50,9 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                 <div className='flex justify-center pt-7 items-center'>
                     <div className='flex justify-center'>
                         {Object.entries({
-                            "likes": info.likes||0,
-                            "followers": info.followCount?.followers||0,
-                            "views": info.projectsView||0
+                            "likes": info.likes || 0,
+                            "followers": info.followCount?.followers || 0,
+                            "views": info.projectsView || 0
                         },).map(([key, value]) => (
                             <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
                                 <p className='number'>{convertToK(value, 0)}</p>
@@ -74,15 +74,43 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
     );
 }
 
-const AddToTeamPage = ({ goback, FindUser, respond }) => {
+const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
     const [id, setId] = useState(null);
     const [user, setuser] = useState(null);
     const [hours, setHours] = useState(null);
     const [amount, setAmount] = useState(null);
+    const page = 1;
+    const showLimit = 12;
+    const [limit, setLimit] = useState(showLimit);
+    const pagganation = respond?.pagination
+    useEffect(() => {
+        FindUser({ limit: limit, page: page })
+    }, [limit])
 
     useEffect(() => {
-        FindUser({})
-    }, [])
+        const scrollableDiv = document.querySelector('.addUserScroll');
+
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = scrollableDiv.scrollTop;
+                const scrollHeight = scrollableDiv.scrollHeight;
+                const clientHeight = scrollableDiv.clientHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+                if (scrolledToBottom) {
+                    setLimit(showLimit + limit);
+                }
+            }
+        };
+
+        if (scrollableDiv) {
+            scrollableDiv.addEventListener('scroll', handleScroll);
+            return () => {
+                scrollableDiv.removeEventListener('scroll', handleScroll);
+            };
+        }
+    }, [page, pagganation?.totalPages, showLimit, limit, setLimit]);
+
 
     const openpopUp = (value) => {
         setId(value._id)
@@ -98,7 +126,7 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
         if (popup) {
             popup.classList.remove('show');
         }
-        goback({user:id,workHours:hours,user:user,totalAmount:amount})
+        goback({ user: id, workHours: hours, user: user, totalAmount: amount })
     }
 
     return (
@@ -118,16 +146,17 @@ const AddToTeamPage = ({ goback, FindUser, respond }) => {
                             amount
                         </span>
                     </div>
-                    <AppButton onClick={(e)=>onadd(e.target.value)} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
+                    <AppButton onClick={(e) => onadd(e.target.value)} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
                         Confirm
                     </AppButton>
                 </div>
             </Popup>
             <div className="grid minmax-360 gap-5 my-6">
                 {respond?.data?.map((value, index) => (
-                    <AddToTeamCard goback={goback} info={value} key={index} onChoose={()=>openpopUp(value)} />
+                    <AddToTeamCard goback={goback} info={value} key={index} onChoose={() => openpopUp(value)} />
                 ))}
             </div>
+            <img className={(api.loading && api.req == "FindUser" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
         </>
     )
 };
@@ -149,6 +178,7 @@ const Result = () =>
 
 const mapStateToProps = (state) => ({
     respond: state.api.FindUser,
+    api: state.api,
 
 });
 

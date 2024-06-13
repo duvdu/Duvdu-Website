@@ -3,7 +3,7 @@ import Layout from "../components/layout/Layout";
 import Selector from "../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
 import ArrowBtn from '../components/elements/arrowBtn';
-import { OpenPopUp, UpdateKeysAndValues, convertToK } from '../util/util';
+import { ClosePopUp, OpenPopUp, UpdateKeysAndValues, convertToK } from '../util/util';
 import { connect } from "react-redux";
 import UsersToAdd from "../components/layout/team/usersToAdd";
 import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
@@ -105,14 +105,6 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', 'attachments', 'category', 'jobTitle'])
         CreateTeamProject(form)
 
-        // Printing FormData for demonstration
-        // for (const pair of form.entries()) {
-        //     console.log(pair[0] + ', ' + pair[1]);
-        // }
-
-        // UpdateFormData('attachments', formData?.attachment?.map((e)=> e.file))
-        // const form = new FormData()
-        // UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
     }
     const LeftSide = ({ isSolid, respond, onAddOne }) => {
         const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
@@ -133,7 +125,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
 
 
         return (
-            <div className="h-body w-full overflow-y-scroll pt-14">
+            <div className="h-body w-full overflow-y-scroll pt-14 addUserScroll"> 
                 {!isAddToTeamPage ? (
                     <>
                         <h1 className="page-header mb-8">Team Project</h1>
@@ -275,6 +267,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     );
     
     const OnSucess = (value) => {
+        ClosePopUp("successfully-create-team")
         router.push({ pathname: "/team/" + create_respond.data._id });
     }
     useEffect(() => {
