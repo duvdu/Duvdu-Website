@@ -78,12 +78,37 @@ const Card = ({ data, DeleteTeamProjects }) => {
     );
 };
 
-const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond }) => {
+const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond, update_respond,api }) => {
     const route = useRouter()
+    const searchTerm = "";
+    const pagganation = get_respond?.pagination
+    const page = 1;
+    const showLimit = 6;
+    const [limit, setLimit] = useState(showLimit);
+
 
     useEffect(() => {
-        GetTeamProjects();
-    }, [GetTeamProjects, delete_respond, create_respond]);
+        GetTeamProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page })
+    }, [delete_respond, create_respond, update_respond, limit, searchTerm]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+                if (scrolledToBottom) {
+                    setLimit(showLimit + limit);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [page, pagganation?.totalPages]);
+
 
 
     return (
@@ -121,6 +146,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                             <Empty />
                         )}
                 </div>
+                <img className={(api.loading && api.req == "GetTeamProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
             </section>
         </Layout>
     );
@@ -142,6 +168,8 @@ const mapStateToProps = (state) => ({
     get_respond: state.api.GetTeamProjects,
     create_respond: state.api.CreateTeamProject,
     delete_respond: state.api.DeleteTeamProjects,
+    update_respond: state.api.UpdateTeamProject,
+    api: state.api,
 
 });
 

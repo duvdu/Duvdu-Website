@@ -5,6 +5,7 @@ import { mainApiInstance } from '../axiosInstances'
 export const DeleteTeamProjects = (id) => {
     const req = "DeleteTeamProjects"
     return async dispatch => {
+    dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         
         try {
             const response = await mainApiInstance.delete(`api/team/${id}`);

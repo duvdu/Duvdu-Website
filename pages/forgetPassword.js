@@ -4,7 +4,7 @@ import Button from '../components/elements/button';
 import Icon from '../components/Icons';
 import { connect } from "react-redux";
 import OTP from '../components/elements/otp';
-import { ASKforgetpassword } from "../redux/action/apis/auth/changePassword/askForgetPassword";
+import { ASKforgetpassword } from "../redux/action/apis/auth/forgetPassword/askForgetPassword";
 import { ChangePassword } from "../redux/action/apis/auth/changePassword/changePassword";
 import { errorConvertedMessage } from '../util/util';
 

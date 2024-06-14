@@ -70,7 +70,7 @@ const Permit = ({ GetCopyrights, respond, api }) => {
                             <h3>No projects Found </h3>
                         )}
                         <div className="minmax-360">
-                            {permits.map((item, i) => {
+                            {permits?.map((item, i) => {
                                 return <CopyRightCard onClick={() => handlesetdata(item)} key={i} cardData={item} />;
 
                             })}

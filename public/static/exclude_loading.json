@@ -5,5 +5,6 @@
 "GetCopyrights",
 "GetProducer",
 "GetStudios",
+"GetTeamProjects",
 "GetProjects"
 ]

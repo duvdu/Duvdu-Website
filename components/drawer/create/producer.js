@@ -6,7 +6,7 @@ import Button from '../../elements/button';
 
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
-import { filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
+import { ClosePopUp, OpenPopUp, filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import Successfully_posting from "../../popsup/post_successfully_posting";
 import Drawer from "../../elements/drawer";
 import { CreateProducer } from "../../../redux/action/apis/cycles/producer/create";
@@ -19,8 +19,7 @@ import GoogleMap from "../../elements/googleMap";
 const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth }) => {
     const formData = addprojectState.formData
     const router = useRouter();
-
-    const [post_success, setPost_success] = useState(false);
+const SuccessfullyPopupId = "Producer-Booking"
     const [attachmentValidation, setAttachmentValidation] = useState(true);
 
     const handleInputChange = (event) => {
@@ -34,7 +33,7 @@ const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth
 
     useEffect(() => {
         if (respond)
-            setPost_success(true)
+            OpenPopUp(SuccessfullyPopupId)
     }, [respond?.message])
 
 
@@ -44,7 +43,7 @@ const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth
     }, [auth.login])
 
     const toggleDrawer = () => {
-        setPost_success(false)
+        ClosePopUp(SuccessfullyPopupId)
 
         router.replace({
             pathname: `/creative/${auth.username}`,
@@ -56,7 +55,7 @@ const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <Successfully_posting id={SuccessfullyPopupId} onCancel={toggleDrawer} message="Booking" />
             <Drawer isOpen={true} name={'add producer'} toggleDrawer={toggleDrawer}>
                 <div className='flex flex-col gap-7 container mx-auto'>
 

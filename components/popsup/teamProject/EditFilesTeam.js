@@ -68,7 +68,6 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
         router.push({
             pathname: "/teams",
         });
-        GetTeamProjects()
         resetForm()
     };
 

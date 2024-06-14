@@ -74,11 +74,6 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         BookProducer(data._id, form)
     }
 
-    const attachmentsUpload = (e) => {
-        console.log(e)
-        UpdateFormData('attachments', handleMultipleFileUpload(e))
-    };
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         UpdateFormData(name, value)

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import Icon from '../../Icons';
 
-const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
+const LineChart = ({ initialDatapoints, viewRate, isUp }) => {
     const DATA_COUNT = 11;
     const labels = [];
     for (let i = 0; i < DATA_COUNT; ++i) {
@@ -185,4 +185,4 @@ const MyChart = ({ initialDatapoints, viewRate, isUp }) => {
     );
 };
 
-export default MyChart;
+export default LineChart;
