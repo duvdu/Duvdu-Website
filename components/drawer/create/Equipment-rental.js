@@ -15,7 +15,7 @@ import Successfully_posting from "../../popsup/post_successfully_posting";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
 import Drawer from "../../elements/drawer";
-import CategorySelection from "./assets/selectCategory";
+import CategorySelection from "./assets/CategorySelection";
 import AddAttachment from "../../elements/attachment";
 
 
@@ -184,13 +184,11 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
-                                    categories={categories}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,
                                         'tags': formData.tags,
                                     }}
-                                    categorie
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)

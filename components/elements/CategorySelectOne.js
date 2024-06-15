@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getCategory } from '../../redux/action/apis/category/getCategories';
 import Icon from '../Icons'; // Ensure the Icon component is correctly imported
 
-function CategorySelection({ categories, onChange, value }) {
+function CategorySelectOne({ categories, onChange, value }) {
     const [selectedCategory, setSelectedCategory] = useState({});
     value= value?._id
     useEffect(() => {
@@ -34,7 +34,7 @@ function CategorySelection({ categories, onChange, value }) {
                         <div key={item._id}
                             className={`py-1 px-2 border ${selectedCategory._id === item._id ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
                             onClick={() => handleCategorySelect(item)}>
-                            <div className={`whitespace-nowrap font-medium ${selectedCategory._id === item._id ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                            <div className={`whitespace-nowrap font-medium ${selectedCategory._id === item._id ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} font-bold`}>
                                 {item.title}
                             </div>
                         </div>
@@ -62,4 +62,4 @@ const mapDispatchToProps = {
     getCategory,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategorySelection);
+export default connect(mapStateToProps, mapDispatchToProps)(CategorySelectOne);

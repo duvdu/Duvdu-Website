@@ -10,7 +10,7 @@ import { UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addpro
 import Drawer from '../elements/drawer';
 import ErrorPopUp from '../popsup/errorPopUp';
 import GoogleMap from '../elements/googleMap';
-import CategorySelection from '../elements/CategorySelection';
+import CategorySelectOne from '../elements/CategorySelectOne';
 import { useRouter } from 'next/router';
 
 
@@ -158,7 +158,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             services
                         </span>
-                        <CategorySelection value={formData.category} onChange={(v) => { UpdateFormData('category', v) }} />
+                        <CategorySelectOne value={formData.category} onChange={(v) => { UpdateFormData('category', v) }} />
                     </div>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>

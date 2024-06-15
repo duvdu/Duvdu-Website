@@ -178,7 +178,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <input type="number" name="customRequirement[measure]" onChange={handleInputChange} value={formData['customRequirement[measure]']} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                                     <select
                                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalize"
-                                        value={formData['customRequirement[unit']}
+                                        value={formData['customRequirement[unit]']}
                                         onChange={handleInputChange}
                                         name="customRequirement[unit]"
                                         required

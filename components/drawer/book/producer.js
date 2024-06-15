@@ -19,17 +19,17 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
-    
+
     useEffect(() => {
         if (
+            formData.producer?.length > 0 &&
             formData.details?.length > 0 &&
             formData.episodeduration?.length > 0 &&
             formData.expectedbudget?.length > 0 &&
             formData.episodes?.length > 0 &&
             formData.expectedprofits?.length > 0 &&
             formData.platform?.length > 0 &&
-            attachmentValidation > 0 &&
-            formData.producer?.length > 0 
+            attachmentValidation > 0 
         ) setEnableBtn(true)
         else setEnableBtn(false)
     }, [formData])
@@ -51,12 +51,12 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         ontoggleDrawer()
     }
 
-    
+
 
     useEffect(() => {
 
         UpdateFormData('producer', data?.user?._id)
-        
+
     }, [isOpen])
 
     useEffect(() => {
@@ -65,7 +65,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
     }, [respond?.message])
 
 
-    function onsubmit() {
+    function onSubmit() {
 
         if (submit)
             submit()
@@ -80,92 +80,71 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
     };
 
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-
+    // const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
+    const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
     return (
         <>
             <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
-            <Drawer name={data.user?.username} img={data.user?.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
+            <Drawer name={data.user?.name} img={data.user?.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
+                <div className='flex flex-col gap-7 container mx-auto'>
 
-                <div className="mt-11" />
-                <div>
-                   
                     <section>
-                        <h3 className="capitalize opacity-60">details</h3>
-                        <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <h3 className="capitalize opacity-60 mt-10">Platform</h3>
+                        <input type="text" placeholder='Enter Platform...' className={inputStyle} value={formData.platform} onChange={handleInputChange} name="platform" />
                     </section>
-                    <section section className="my-11 max-w-64">
-                        <p className="capitalize opacity-60">budget</p>
-                        <div className='flex items-center justify-start gap-4'>
-                            <input type='number' value={formData.expectedbudget || ""} onChange={handleInputChange} name='expectedbudget' placeholder="Ex. 10$" className={inputStyle}/>
-                        </div>
-                    </section>
-                    <section section className="my-11 max-w-64">
-                        <p className="capitalize opacity-60">profits</p>
-                        <div className='flex items-center justify-start gap-4'>
-                            <input type='number' value={formData.expectedprofits || ""} onChange={handleInputChange} name='expectedprofits' placeholder="Ex. 10$" className={inputStyle}/>
-                        </div>
-                    </section>
-                    <section section className="my-11 max-w-64">
-                        <p className="capitalize opacity-60">episodes</p>
-                        <div className='flex items-center justify-start gap-4'>
-                            <input type='number' value={formData.episodes || ""} onChange={handleInputChange} name='episodes' placeholder="Ex. 5" className={inputStyle}/>
-                        </div>
-                    </section>
-                    <section section className="my-11 max-w-64">
-                        <p className="capitalize opacity-60">duration</p>
-                        <div className='flex items-center justify-start gap-4'>
-                            <input type='number' value={formData.episodeduration || ""} onChange={handleInputChange} name='episodeduration' placeholder="Ex. 15 minutes" className={inputStyle} />
-                        </div>
-                    </section>
-                    <section section className="my-11">
-                        <p className="capitalize opacity-60">platform</p>
-                        <textarea name='platform' value={formData.platform || ""} onChange={handleInputChange} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4" />
-                    </section>
-                    <section className="w-full">
-                        <h3 className="capitalize opacity-60 mt-11">attachments</h3>
-                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v)=>setAttachmentValidation(v)} />
-                        {/* 
-                        <label htmlFor="attachment-upload" className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
-                            <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                                <Icon className="text-primary w-4" name={"image"} />
-                            </div>
-                            <span className="pl-5 w-full text-blue-600">Open gallery</span>
-                            <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
-                        </label>
 
-                        <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-                        {
-                            formData.attachments &&
-                            formData.attachments.length > 0 &&
-                            formData.attachments.map((file, key) => (
-                                parseFileSize(file.formattedFileSize) <= parseFileSize('3 MB') ?
-                                <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
-                                    <Icon name={'file'} className="size-10" />
-                                    <div>
-                                        <span className=''>{file.fileName}</span>
-                                        <br />
-                                        <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
-                                    </div>
-                                </div>: 
-                                <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
-                                <Icon name={'file-error'} className="size-10" />
-                                <div>
-                                    <span className='text-[#C92519] font-bold'>{file.fileName}</span>
-                                    <br />
-                                    <span className='text-[#C92519]'> {"File Over Size : "}{file.formattedFileSize}</span>
-                                    <br />
-                                </div>
+                    <section>
+                        <h3 className="capitalize opacity-60">Project Details</h3>
+                        <textarea name="projectDetails" value={formData.projectDetails} onChange={handleInputChange} placeholder="Main Idea" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                    </section>
+
+                    <section className="h-96 relative overflow-hidden">
+                        <span> Project Location </span>
+                        <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                    </section>
+                    <div className="flex w-full justify-between gap-3">
+                        <section className="w-full">
+                            <p className="capitalize opacity-60">Episodes Number</p>
+                            <div className='flex items-center justify-start gap-4'>
+                                <input type='number' value={formData.episodes} onChange={handleInputChange} name='episodes' placeholder="Ex. 5" className={inputStyle} />
                             </div>
-                            ))
-                        } */}
+                        </section>
+                        <section className="w-full">
+                            <p className="capitalize opacity-60">Episode Duration</p>
+                            <div className='flex items-center justify-start gap-4'>
+                                <input type='number' value={formData.episodeDuration} onChange={handleInputChange} name='episodeDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
+                            </div>
+                        </section>
+                    </div>
+
+                    <div className="flex w-full justify-between gap-3">
+                        <section className="w-full">
+                            <p className="capitalize opacity-60">Expected Budget</p>
+                            <div className='flex items-center justify-start gap-4'>
+                                <input type='number' value={formData.expectedBudget} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                            </div>
+                        </section>
+
+                        <section className="w-full">
+                            <p className="capitalize opacity-60">Expected Profits</p>
+                            <div className='flex items-center justify-start gap-4'>
+                                <input type='number' value={formData.expectedProfits} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                            </div>
+                        </section>
+                    </div>
+
+                    <section className="w-full ">
+                        <h3 className="capitalize opacity-60">Upload Media</h3>
+                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+
                     </section>
-                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
-                        <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'continue'} />
-                        </div>
+
+                    <section className="justify-between gap-7">
+                        <h3 className="capitalize opacity-60 mb-5">Select Appointment Date</h3>
+                        <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
-                    
+                    <ArrowBtn onClick={onSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text={"Submit"} shadow={true} shadowHeight={"14"} />
+
                 </div>
             </Drawer >
         </>

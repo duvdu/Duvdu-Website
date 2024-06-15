@@ -6,7 +6,6 @@ import SelectDate from "../../elements/selectDate";
 import { connect } from "react-redux";
 import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Addproject";
 import GoogleMap from "../../elements/googleMap";
-import { handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import { BookCopyrights } from "../../../redux/action/apis/cycles/copywriter/book";
 import dateFormat from "dateformat";
 import Successfully_posting from "../../popsup/post_successfully_posting";
@@ -22,7 +21,6 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
 
     useEffect(() => {
         if (
-            formData.address?.length > 0 &&
             formData.jobDetails?.length > 5 &&
             formData.startDate &&   
             attachmentValidation
@@ -106,31 +104,24 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                         <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <section className="my-11">
+                        <h3 className="capitalize opacity-60 mb-4">select Appointment  date</h3>
+                        <SelectDate onChange={(value) => UpdateFormData('Appointment', value)} />
+                    </section>
+                    <section className="my-11">
+                        <h3 className="capitalize opacity-60 mb-4">select Start date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
-                    <section className="my-11 gap-7">
+                    <section className="my-11 gap-7 hidden">
                         <h3 className="capitalize opacity-60 mb-4">address</h3>
                         <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
-                    </section>
-                    <section className="my-11 gap-7 hidden">
-                        <div className="w-full">
-                            <h3 className="capitalize opacity-60 mb-4">location</h3>
-                            <div onClick={() => { setOpenMap(true) }} className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
-                                <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
-                                    <Icon className='text-primary w-4' name={"location-dot"} />
-                                </div>
-                                <span className="pl-5 w-full">New Yourk, USA</span>
-                                <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
-                            </div>
-                        </div>
-                    </section>
-                    <section className="w-full">
-                        <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
-                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full mt-11">
                         <h3 className="capitalize opacity-60  mb-3">location</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => handlelocationChange(value)} />
+                    </section>
+                    <section className="w-full">
+                        <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
+                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">

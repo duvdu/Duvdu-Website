@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../../Icons';
+import { connect } from 'react-redux';
 
 function CategorySelection({ categories, onChange, value }) {
     if (!categories || categories.length === 0) return <p>No categories available.</p>;
@@ -59,7 +60,7 @@ function CategorySelection({ categories, onChange, value }) {
     return (
         <>
             <section>
-                <h3 className='opacity-60 font-medium my-2 text-lg'>Service Category</h3>
+                <h3 className='opacity-60 my-2 text-lg font-bold'>Service Category</h3>
                 {!selectedCategory._id ? (
                     <div className="flex gap-3 flex-wrap">
                         {categories.map((item) =>
@@ -86,7 +87,7 @@ function CategorySelection({ categories, onChange, value }) {
 
             {selectedCategory._id && (
                 <section>
-                    <h3 className='opacity-60 font-medium my-2 text-lg'>Subcategories</h3>
+                    <h3 className='opacity-60 my-2 text-lg font-bold'>Subcategories</h3>
                     <div className="flex gap-3 flex-wrap">
                         {!selectedSubCategory._id ?
                             (
@@ -117,7 +118,7 @@ function CategorySelection({ categories, onChange, value }) {
                 selectedCategory._id &&
                 selectedSubCategory._id && (
                     <section>
-                        <h3 className='opacity-60 font-medium my-2 text-lg'>Tags</h3>
+                        <h3 className='opacity-60 my-2 text-lg font-bold'>Tags</h3>
                         <div className="flex gap-3 flex-wrap">
                             {selectedSubCategory.tags.map((tag, index) => (
                                 <div key={index}
@@ -134,5 +135,14 @@ function CategorySelection({ categories, onChange, value }) {
         </>
     );
 }
+const mapStateToProps = (state) => ({
+    categories: state.categories,
+});
 
-export default CategorySelection;
+const mapDispatchToProps = {
+
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategorySelection);
+

@@ -13,7 +13,7 @@ import SetCover from "./assets/addCover";
 import ListInput from "../../elements/listInput";
 import Drawer from "../../elements/drawer";
 import { CreateProject } from "../../../redux/action/apis/cycles/projects/create";
-import CategorySelection from "./assets/selectCategory";
+import CategorySelection from "./assets/CategorySelection";
 import AddAttachment from "../../elements/attachment";
 import GoogleMap from "../../elements/googleMap";
 
@@ -173,13 +173,11 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                         <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
                             <div className="my-5">
                                 <CategorySelection
-                                    categories={categories}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,
                                         'tags': formData.tags,
                                     }}
-                                    categorie
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)

@@ -15,7 +15,7 @@ import AddOtherCreatives from "../../popsup/create/addOtherCreatives";
 import Successfully_posting from "../../popsup/post_successfully_posting";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
-import CategorySelection from './assets/selectCategory';
+import CategorySelection from './assets/CategorySelection';
 import AppButton from '../../elements/button';
 import AddAttachment from '../../elements/attachment';
 
@@ -87,8 +87,8 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const validateRequiredFields = () => {
         const errors = {};
         const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
-
-        if ((formData.description?.length||0) < 6) errors.description = 'Description is required';
+    
+        if ((formData.description?.length || 0) < 6) errors.description = 'Description is required';
         if (!formData.studioEmail) errors.studioEmail = 'Studio email is required';
         if (!formData.studioNumber) errors.studioNumber = 'Studio number is required';
         if (!formData.studioName) errors.studioName = 'Studio name is required';
@@ -97,13 +97,15 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData.pricePerHour) errors.pricePerHour = 'Price per hour is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         if (!formData.insurance) errors.insurance = 'Insurance is required';
-        if (!attachmentValidation && !formData.attachments?.length) errors.insurance = 'Attachment not Valid';
-
+        if (!attachmentValidation && !formData.attachments?.length) errors.attachments = 'Attachment not valid';
+        if (!formData.Min) errors.Min = 'Minimum value is required';
+        if (!formData.Max) errors.Max = 'Maximum value is required';
         if (!formData.studioNumber) {
             errors.studioNumber = 'Studio number is required';
         } else if (!egyptianPhoneRegex.test(formData.studioNumber)) {
             errors.studioNumber = 'Invalid Egyptian phone number.';
         }
+    
         return errors;
     };
 
@@ -184,7 +186,6 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         'subCategory': formData.subCategory,
                                         'tags': formData.tags,
                                     }}
-                                    categories={categories}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)
@@ -195,36 +196,51 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 <h3 className="capitalize opacity-60">attachments</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
-                            <section >
-                                <input placeholder='studio name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />
-                                <input placeholder='studio number' type="tel" value={formData.studioNumber} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
-                                <input placeholder='studio email' type="email" value={formData.studioEmail} onChange={handleInputChange} name="studioEmail" className={inputStyle} />
-                                <input placeholder='description' value={formData.description} onChange={handleInputChange} name="description" className={inputStyle} />
-                                <ListInput
-                                    placeholder={'equipment available'}
-                                    target="EquipmentAvailable"
-                                    name={"EquipmentsUsed"}
-                                    listdiv={formData.equipments && formData.equipments.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
-                                    remove={(value) => removeFromArray('equipments', value)}
-                                    enable={false}
-                                />
+                            <section className='gap-8'>
+                                <input placeholder='Name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />
+                                <input placeholder='Phone number' type="tel" value={formData.studioNumber} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
+                                <input placeholder='Email' type="email" value={formData.studioEmail} onChange={handleInputChange} name="studioEmail" className={inputStyle} />
+                                <input placeholder='Description' value={formData.description} onChange={handleInputChange} name="description" className={inputStyle} />
+                                <input placeholder='Location' className={inputStyle} readOnly />
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <ListInput
-                                    placeholder={'add other creatives'}
-                                    target="addOtherCreatives"
-                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
-                                    remove={(value) => removeFromArray('creatives', value)}
-                                    enable={false}
-
-                                />
-                                <input placeholder='price per hour' value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
                                 <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
                             </section>
                             <section className="h-96 relative overflow-hidden">
-                                <span> Set location </span>
+                                <h3> location </h3>
                                 <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                             </section>
-                            <section className='flex justify-center gap-3 mt-1'>
+                            <section className="flex flex-col gap-8">
+                                <div className='flex items-center justify-between'>
+                                    <h3 className='font-bold text-lg'> Project Scale Unit </h3>
+                                    <select
+                                        className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
+                                        value={formData['customRequirement[unit]']}
+                                        onChange={handleInputChange}
+                                        name="customRequirement[unit]"
+                                        required
+                                    >
+
+                                        {['minute', 'hour', 'day', 'week', 'month'].map((value, index) => (
+                                            <option key={index} value={value.toLowerCase()}>{value}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <input placeholder={`price per ${formData['customRequirement[unit]'] || 'unit'}`} value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
+                                <div className="flex w-full justify-between gap-3">
+                                    <div className="w-full">
+                                        <div className='flex items-center justify-start gap-4'>
+                                            <input type='number' value={formData.Min} onChange={handleInputChange} name='Min' placeholder="Min" className={inputStyle} />
+                                        </div>
+                                    </div>
+
+                                    <div className="w-full">
+                                        <div className='flex items-center justify-start gap-4'>
+                                            <input type='number' value={formData.Max} onChange={handleInputChange} name='Max' placeholder="Max" className={inputStyle} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section className='flex justify-center gap-3 mt-10'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'> Show on home feed & profile </p>
                             </section>

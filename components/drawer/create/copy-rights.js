@@ -7,7 +7,7 @@ import Successfully_posting from "../../popsup/post_successfully_posting";
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import Switch from "../../elements/switcher";
 import Drawer from "../../elements/drawer";
-import CategorySelection from "./assets/selectCategory";
+import CategorySelection from "./assets/CategorySelection";
 import { filterByCycle } from "../../../util/util";
 import { CreateCopyrights } from '../../../redux/action/apis/cycles/copywriter/create';
 import GoogleMap from '../../elements/googleMap';
@@ -101,7 +101,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     'subCategory': formData.subCategory,
                                     'tags': formData.tags,
                                 }}
-                                categories={categories} onChange={(value) => {
+                                onChange={(value) => {
                                     UpdateFormData('category', value.category)
                                     UpdateFormData('subCategory', value.subCategory)
                                     UpdateFormData('tags', value.tags)
