@@ -6,7 +6,7 @@ import MobileMenu from "./MobileMenu";
 import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
-import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
+import { GetNotifications, cleanupSocket } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
 import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
 import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
@@ -32,6 +32,7 @@ const Layout = ({
     GetNotifications_respond,
     GetFavList_respond,
     getCategory_respond,
+    cleanupSocket,
     init
 
 }) => {
@@ -53,7 +54,7 @@ const Layout = ({
         if (!getCategory_respond)
             getCategory()
     }, [getCategory_respond])
-    
+
     useEffect(() => {
         if (!user)
             getMyprofile()
@@ -71,10 +72,14 @@ const Layout = ({
                 GetFavList({})
             if (!GetAllChats_respond)
                 GetAllChats()
-            if (!GetNotifications_respond)
+            if (!GetNotifications_respond) {
                 GetNotifications()
+            }
         }
-    }, [user])
+        return () => {
+            // cleanupSocket();
+        };
+    }, [user,cleanupSocket])
 
     return (
         <>
@@ -114,6 +119,7 @@ const mapDispatchToProps = {
     getMyprofile,
     GetAllChats,
     GetNotifications,
+    cleanupSocket,
     GetBoards,
     GetFavList,
     init,

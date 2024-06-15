@@ -18,10 +18,3 @@ export const SendMessages = (data) => {
     }
   };
 };
-
-/*
-let data = new FormData();
-data.append('attachments', fs.createReadStream('/C:/Users/LAPTOP SHOP/Desktop/images.jpg'));
-data.append('content', 'hello');
-data.append('receiver', 'userId');
-*/

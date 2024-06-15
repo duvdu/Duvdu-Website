@@ -14,9 +14,3 @@ export const UpdateMessageInChat = () => {
     }
   };
 };
-
-/*
-data.append('attachments', fs.createReadStream('/C:/Users/LAPTOP SHOP/Downloads/1714419091635_2d66bfb62f09.pdf'));
-data.append('content', 'updated2');
-data.append('reactions[0][type]', 'ddddd');
-*/

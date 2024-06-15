@@ -75,9 +75,7 @@ function OtherProfile({
 
     };
     user = user?.data
-    console.log("before",projects)
     projects = projects?.projects || []
-    console.log("after",projects)
 
     const swapFollow = () => {
         if (user.isFollow || false)

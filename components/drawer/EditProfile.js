@@ -11,6 +11,7 @@ import Drawer from '../elements/drawer';
 import ErrorPopUp from '../popsup/errorPopUp';
 import GoogleMap from '../elements/googleMap';
 import CategorySelection from '../elements/CategorySelection';
+import { useRouter } from 'next/router';
 
 
 
@@ -21,6 +22,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const [error, setError] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
     const [cover, setCover] = useState(null);
+    const router = useRouter();
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
     useEffect(() => {
         if (isOpen) {
@@ -91,6 +93,8 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const handleSubmit = (event) => {
         event.preventDefault();
         updateProfile(converting())
+        console.log("/creative/"+user.username)
+        router.push({pathname: "/creative/"+user.username});
     };
 
 

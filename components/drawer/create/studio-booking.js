@@ -192,7 +192,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                     }} />
                             </div>
                             <section className="w-full ">
-                                <h3 className="capitalize opacity-60 mt-11">attachments</h3>
+                                <h3 className="capitalize opacity-60">attachments</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section >

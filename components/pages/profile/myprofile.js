@@ -139,6 +139,8 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     function Allpage() {
         useEffect(() => {
             if (updateProfile_respond) {
+                updateProfile_respond.data.coverImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+ updateProfile_respond.data.coverImage
+                updateProfile_respond.data.profileImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+ updateProfile_respond.data.profileImage
                 setUserInfo(updateProfile_respond.data)
             }
         }, [updateProfile_respond])

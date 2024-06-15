@@ -17,16 +17,3 @@ export const MarkMessageAsWatched = ({id}) => {
     }
   };
 };
-
-
-
-/*
-
-
-{
-    "messages":["6630d3f4096ed4e2cb6be49d" , "6630d3f4096ed4e2cb6be499"] //array of message ids
-}
-
-// in url send the receiver id
-
-*/
