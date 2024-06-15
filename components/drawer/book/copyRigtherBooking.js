@@ -105,10 +105,10 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                         <h3 className="capitalize opacity-60">job details</h3>
                         <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
-                    <section className="my-11 flex justify-between gap-7">
+                    <section className="my-11">
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
-                    <section className="my-11 gap-7 mr-24">
+                    <section className="my-11 gap-7">
                         <h3 className="capitalize opacity-60 mb-4">address</h3>
                         <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
                     </section>
@@ -128,8 +128,8 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                         <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
                         <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                     </section>
-                    <section className="h-96 relative overflow-hidden w-full">
-                        <h3 className="capitalize opacity-60  mb-3">Set location</h3>
+                    <section className="h-96 relative overflow-hidden w-full mt-11">
+                        <h3 className="capitalize opacity-60  mb-3">location</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => handlelocationChange(value)} />
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>

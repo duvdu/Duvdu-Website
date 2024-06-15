@@ -164,7 +164,7 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
 const Result = () =>
     <div className="h-body flex flex-col justify-center">
         <div className='container flex flex-col justify-center items-center text-center w-full'>
-            <img src='/assets/imgs/theme/TeamProjects.svg' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' />
+            <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[540px] lg:h-[450px]' />
             <h3 className='text-[40px] font-semibold mt-8 mb-4'>
                 Team Projects
                 <p className="text-2xl opacity-50">

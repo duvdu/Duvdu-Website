@@ -60,7 +60,7 @@ const SelectDate = ({ onChange }) => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const monthDates = getMonthDates(year, month);
-    const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 5);
+    const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 7);
     return (
         <div className="flex flex-col gap-2 items-center date-selector">
             <div className="flex justify-between w-full mb-4">
@@ -96,8 +96,8 @@ const SelectDate = ({ onChange }) => {
                     )}
                 </div>
             ) : (
-                <div className="flex justify-between gap-3 w-72">
-                    {firstFiveNonNullDates.slice(0, 5).map((date, index) =>
+                <div className="flex justify-around gap-3 w-full">
+                    {firstFiveNonNullDates.map((date, index) =>
                         date ? (
                             <div
                                 key={index}

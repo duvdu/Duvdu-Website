@@ -5,8 +5,9 @@ import Ongoing2 from "./ongoing2";
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
+import EmptyComponent from "./emptyComponent";
 
-const LeftSide = ({ getAllContracts, respond, categories }) => {
+const LeftSide = ({ getAllContracts, respond, api }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     useEffect(() => {
         getAllContracts({ filterby: ['i_received', 'i_created'][activeIndex] })
@@ -14,52 +15,60 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
     const handleToggleClick = (index) => {
         setActiveIndex(index);
     };
+    const Empty = () => <div className="mt-10 lg:mt-32">
+        <EmptyComponent/>
+    </div>
     const Clients = () =>
-        <section >
-            {
-                respond?.data?.filter(data => data.status === "pending").length > 0 &&
-                <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                    <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                    {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
-                        <Pending key={index} data={data} />
-                    ))}
-                </section>
-            }
-            {
-                respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
-                <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                    <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                    {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
-                        <Ongoing key={index} data={data} />
-                    ))}
+        respond?.data?.length ?
+            <section>
+                {
+                    respond?.data?.filter(data => data.status === "pending").length > 0 &&
+                    <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                        <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
+                        {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
+                            <Pending key={index} data={data} />
+                        ))}
+                    </section>
+                }
+                {
+                    respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
+                    <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                        <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
+                        {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                            <Ongoing key={index} data={data} />
+                        ))}
 
-                </section>
-            }
-        </section>
+                    </section>
+                }
+            </section> : <Empty/>
+            
 
     const Creatives = () =>
-        <section>
-            {
-                respond?.data?.filter(data => data.status === "pending").length > 0 &&
-                <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                    <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                    {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
-                        <Pending2 key={index} data={data} />
-                    ))}
-                </section>
-            }
-            {
-                respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
-                <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                    <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                    {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
-                        <Ongoing2 key={index} data={data} />
-                    ))}
+        respond?.data?.length ?
+            <section>
+                {
+                    respond?.data?.filter(data => data.status === "pending").length > 0 &&
+                    <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                        <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
+                        {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
+                            <Pending2 key={index} data={data} />
+                        ))}
+                    </section>
+                }
+                {
+                    respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
+                    <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
+                        <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
+                        {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                            <Ongoing2 key={index} data={data} />
+                        ))}
 
-                    {/* <Ongoing2 /> */}
-                </section>
-            }
-        </section>
+                        {/* <Ongoing2 /> */}
+                    </section>
+                }
+            </section> : <Empty />
+            
+
     return (
         <>
             <div className='h-auto lg:h-body overflow-y-scroll'>
@@ -94,13 +103,20 @@ const LeftSide = ({ getAllContracts, respond, categories }) => {
                             my creatives
                         </div>
                     </section>
-                    {activeIndex === 0 ? <Clients /> : <Creatives />}
+                    {
+                        !(api.loading && api.req == "getAllContracts") &&
+                        (activeIndex === 0 ? <Clients /> : <Creatives />)
+                    }
+                    <div className="flex flex-col justify-center items-center h-body">
+                        <img className={(api.loading && api.req == "getAllContracts" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                    </div>
                 </div>
             </div>
         </>
     );
 };
 const mapStateToProps = (state) => ({
+    api: state.api,
     respond: state.api.getAllContracts,
     categories: state.categories
 });

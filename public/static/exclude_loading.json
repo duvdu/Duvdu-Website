@@ -6,5 +6,6 @@
 "GetProducer",
 "GetStudios",
 "GetTeamProjects",
+"getAllContracts",
 "GetProjects"
 ]

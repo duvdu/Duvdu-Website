@@ -153,9 +153,9 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
 };
 
 const Empty = () =>
-    <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet'>
-        <div className='w-[540px] h-[450]px bg-gray-600 mt-10' />
-        <img src='/assets/imgs/theme/TeamProjects.svg' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' />
+    <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p-10'>
+        <div className='bg-gray-600 mt-5' />
+        <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[540px] lg:h-[450px]' />
         <h3 className='text-[40px] font-semibold mt-8 mb-4'>
             Team Projects
             <p className="text-2xl opacity-50">
