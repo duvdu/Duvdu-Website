@@ -65,18 +65,6 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
             setPost_success(true)
     }, [respond?.message])
 
-    const converting = (formData) => {
-        const data = new FormData();
-        const avoidFeilds = ['receiver']
-        Object.keys(formData).forEach(key => {
-            // Append each key-value pair to the FormData instance
-            if (avoidFeilds.includes(key)) return
-            data.append(key, formData[key]);
-        });
-
-        return data;
-    }
-
     function onsubmit() {
         if (!preview) {
             setPreview(true)
@@ -87,9 +75,6 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         StudopBooking(data._id, formData)
     }
 
-    const attachmentsUpload = (e) => {
-        UpdateFormData('attachments', handleMultipleFileUpload(e))
-    };
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         UpdateFormData(name, value)
@@ -107,14 +92,14 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
             <Drawer name={preview ? 'Review Booking' : data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-y-scroll" padding={false}>
                 {
                     creatives.length > 0 &&
-                    <section className="my-11 p-8 pt-0">
+                    <section className="mt-11 p-8 pt-0">
                         <h3 className="capitalize opacity-60 mb-4">team</h3>
                         <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name }))} onChange={(value) => UpdateFormData('creative', value)} />
                     </section>
                 }
                 {
                     (data?.tools || data?.equipments)?.length > 0 &&
-                    <section className="my-11 p-8 pt-0">
+                    <section className="p-8 pt-0">
                         <h3 className="capitalize opacity-60 mb-4">equipments   </h3>
                         <BookTeam team={(data?.tools || data?.equipments)} onChange={(value) => UpdateFormData('equipments', value)} />
                     </section>
@@ -133,9 +118,9 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                         <h3 className="capitalize opacity-60 mb-4">deadline Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('deadline', value)} />
                     </section>
-                    <section className="my-11 gap-7 mr-24">
+                    <section className="my-11 gap-7">
                         <h3 className="capitalize opacity-60 mb-4">address</h3>
-                        <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                        <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address"  readOnly/>
                     </section>
                     <section className="my-11 gap-7 hidden">
                         <div className="w-full">
@@ -151,7 +136,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
                     </section>
                     <section className="my-11 gap-7 h-96 relative overflow-hidden">
                         <h3 className="capitalize opacity-60 mb-4">location</h3>
-                        <GoogleMap width={'90%'} value={formData.location}
+                        <GoogleMap width={'100%'} value={formData.location}
                             onsetLocation={(value) => UpdateFormData('location', value)}
                         />
                     </section>

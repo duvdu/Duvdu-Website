@@ -8,7 +8,7 @@ import { CreateStudio } from '../../../redux/action/apis/cycles/studio/create';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
 import { useRouter } from "next/router";
-import { filterByCycle as filterByCycleCategory, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
+import { convertToFormData, filterByCycle as filterByCycleCategory, printFormData } from "../../../util/util";
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
 import AddOtherCreatives from "../../popsup/create/addOtherCreatives";
@@ -30,82 +30,56 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const [attachmentValidation, setAttachmentValidation] = useState(false);
     categories = filterByCycleCategory(categories, 'studio-booking')
 
-    const convertToFormData = () => {
-        const data = new FormData();
-
-        data.append('desc', formData.description);
-        data.append('studioEmail', formData.studioEmail);
-        data.append('studioNumber', formData.studioNumber);
-        data.append('studioName', formData.studioName);
-
-        if (formData.searchKeywords)
-            formData.searchKeywords.forEach((keyword, index) => {
-                data.append(`searchKeywords[${index}]`, keyword);
-            });
+    const converting = () => {
+        const data = convertToFormData(formData, ['location', 'tags', 'attachments', 'searchKeywords'])
         if (formData.location) {
-            data.append('location.lat', formData.location.lat);
-            data.append('location.lng', formData.location.lng);
+            data.append('location[lat]', formData.location.lat);
+            data.append('location[lng]', formData.location.lng);
         }
-        data.append('category', formData.category);
-        data.append('subCategory', formData.subCategory);
-        data.append('showOnHome', formData.showOnHome || false);
-        data.append('insurance', formData.insurance);
-        data.append('pricePerHour', formData.pricePerHour);
 
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
                 data.append(`tags[${index}]`, tag);
             });
 
-        // Append equipment
-        if (formData.equipments)
-            formData.equipments.forEach((equipment, index) => {
-                data.append(`equipments[${index}][name]`, equipment.name);
-                data.append(`equipments[${index}][fees]`, equipment.fees);
+        if (formData.searchKeywords)
+            formData.searchKeywords.forEach((keyword, index) => {
+                data.append(`searchKeywords[${index}]`, keyword);
             });
-
-        // Append creatives
-        if (formData.creatives)
-            formData.creatives.forEach((creative, index) => {
-                data.append(`creatives[${index}][creative]`, creative._id);
-                data.append(`creatives[${index}][fees]`, creative.fees);
-            });
-
-        if (formData.cover) {
-            data.append('cover', formData.cover);
-        }
-
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
-                const file = formData.attachments[i];
-                data.append(`attachments`, file.file);
+                const file = formData.attachments[i].file;
+                data.append(`attachments`, file);
             }
-
-
+        printFormData(data)
         return data;
     };
     const validateRequiredFields = () => {
         const errors = {};
         const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
-    
-        if ((formData.description?.length || 0) < 6) errors.description = 'Description is required';
-        if (!formData.studioEmail) errors.studioEmail = 'Studio email is required';
-        if (!formData.studioNumber) errors.studioNumber = 'Studio number is required';
-        if (!formData.studioName) errors.studioName = 'Studio name is required';
+        
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
-        if (!formData.pricePerHour) errors.pricePerHour = 'Price per hour is required';
-        if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
-        if (!formData.insurance) errors.insurance = 'Insurance is required';
-        if (!attachmentValidation && !formData.attachments?.length) errors.attachments = 'Attachment not valid';
-        if (!formData.Min) errors.Min = 'Minimum value is required';
-        if (!formData.Max) errors.Max = 'Maximum value is required';
-        if (!formData.studioNumber) {
-            errors.studioNumber = 'Studio number is required';
-        } else if (!egyptianPhoneRegex.test(formData.studioNumber)) {
-            errors.studioNumber = 'Invalid Egyptian phone number.';
+        if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
+        if (!formData.title) errors.title = 'Studio name is required';
+        if (!formData.phoneNumber) {
+            errors.phoneNumber = 'Studio number is required';
+        } else if (!egyptianPhoneRegex.test(formData.phoneNumber)) {
+            errors.phoneNumber = 'Invalid Egyptian phone number.';
         }
-    
+        if (!formData.email) errors.email = 'Studio email is required';
+        if (!formData.description || formData.description.length < 6) errors.description = 'Description is required';
+        if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
+        // if (!formData.address) errors.address = 'Insurance is required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.insurance) errors.insurance = 'Insurance is required';
+        // showOnHome
+        if (!formData['projectScale.unit']) errors.projectScaleunit = 'Price per hour is required';
+        if (!formData['projectScale.pricerPerUnit']) errors.pricerPerUnit = 'Maximum value is required';
+        if (!formData['projectScale.minimum']) errors.minimum = 'Minimum value is required';
+        if (!formData['projectScale.maximum']) errors.maximum = 'Maximum value is required';
+        // cover
         return errors;
     };
 
@@ -127,19 +101,12 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             return;
         }
         setErrors({});
-        CreateStudio(convertToFormData());
+        CreateStudio(converting());
     };
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
         UpdateFormData(name, value);
-    };
-
-    const removeFromArray = (arrayName, index) => {
-        const newArray = [...formData[arrayName]]; // Create a new array to avoid mutating the original state
-
-        newArray.splice(index, 1); // Remove the item at the specified index
-        UpdateFormData(arrayName, newArray);
     };
 
     useEffect(() => {
@@ -155,6 +122,11 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             });
     }, [auth.login])
 
+    useEffect(() => {
+        UpdateFormData("address","Cairo (this's a defult value)")
+        UpdateFormData("projectScale.unit","minute")
+    }, [])
+
 
     const toggleDrawer = () => {
         CreateStudio(-1)
@@ -168,6 +140,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         })
     }
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
+    console.log(Object.keys(validateRequiredFields()))
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
     return (
         <>
@@ -181,6 +154,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
+                                filterIn={"studio-booking"}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,
@@ -197,26 +171,26 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section className='gap-8'>
-                                <input placeholder='Name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />
-                                <input placeholder='Phone number' type="tel" value={formData.studioNumber} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
-                                <input placeholder='Email' type="email" value={formData.studioEmail} onChange={handleInputChange} name="studioEmail" className={inputStyle} />
-                                <input placeholder='Description' value={formData.description} onChange={handleInputChange} name="description" className={inputStyle} />
-                                <input placeholder='Location' className={inputStyle} readOnly />
+                                <input placeholder='Name' name="title" value={formData.title} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder='Phone number' type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder='Email' type="email" name="email" value={formData.email} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder='Description' name="description" value={formData.description} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder='address' name="address" value={formData.address} onChange={handleInputChange} className={inputStyle} readOnly />
+                                <section className="h-96 relative overflow-hidden mt-5">
+                                    <h3> location </h3>
+                                    <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                                </section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
-                            </section>
-                            <section className="h-96 relative overflow-hidden">
-                                <h3> location </h3>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                                <input type="number" placeholder='insurance' name="insurance" value={formData.insurance} onChange={handleInputChange} className={inputStyle} />
                             </section>
                             <section className="flex flex-col gap-8">
                                 <div className='flex items-center justify-between'>
                                     <h3 className='font-bold text-lg'> Project Scale Unit </h3>
                                     <select
                                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
-                                        value={formData['customRequirement[unit]']}
+                                        value={formData.projectScale?.unit}
                                         onChange={handleInputChange}
-                                        name="customRequirement[unit]"
+                                        name="projectScale.unit"
                                         required
                                     >
 
@@ -225,17 +199,17 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         ))}
                                     </select>
                                 </div>
-                                <input placeholder={`price per ${formData['customRequirement[unit]'] || 'unit'}`} value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
+                                <input placeholder={`price per ${formData['customRequirement[unit]'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData.projectScale?.pricePerHour} onChange={handleInputChange} className={inputStyle} />
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' value={formData.Min} onChange={handleInputChange} name='Min' placeholder="Min" className={inputStyle} />
+                                            <input type='number' name='projectScale.minimum' value={formData.projectScale?.minimum} onChange={handleInputChange} placeholder="Min" className={inputStyle} />
                                         </div>
                                     </div>
 
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' value={formData.Max} onChange={handleInputChange} name='Max' placeholder="Max" className={inputStyle} />
+                                            <input type='number' name='projectScale.maximum' value={formData.projectScale?.maximum} onChange={handleInputChange} placeholder="Max" className={inputStyle} />
                                         </div>
                                     </div>
                                 </div>

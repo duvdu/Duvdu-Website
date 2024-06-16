@@ -338,6 +338,13 @@ export const convertToFormData = (data, avoidfeilds = []) => {
 
   return formData;
 }
+
+export const printFormData = (formData) => {
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
+  }
+};
+
 export const OpenPopUp = (id) => {
   const editBoardElement = document.querySelector('#' + id);
   if (editBoardElement) {

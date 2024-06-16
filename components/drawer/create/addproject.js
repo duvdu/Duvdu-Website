@@ -90,13 +90,13 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     const validateRequiredFields = () => {
         const errors = {};
 
+        if (!formData.category) errors.category = 'Category is required';
+        if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
+        if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
         if (!formData.title) errors.title = 'Title is required';
         if ((formData.desc?.length||0) < 6) errors.desc = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.durationnum) errors.durationnum = 'Project scale is required';
-        if (!formData.category) errors.category = 'Category is required';
-        if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
-        if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         if (!formData.tools || !formData.tools.length) errors.tools = 'Tools are required';
         if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives are required';

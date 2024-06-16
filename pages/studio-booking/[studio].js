@@ -2,26 +2,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
-import Icon from '../../components/Icons';
-import { OpenPopUp, convertToK } from "../../util/util";
-import ProjectCard from "../../components/elements/project-card";
-import { convertHoursTo__ } from '../../util/util';
-import Comment from '../../components/elements/comment';
-import Controller from '../../components/elements/controllers';
-import ArrowBtn from '../../components/elements/arrowBtn';
 import AddToTeam from '../../components/popsup/AddToTeam';
 import Report from '../../components/popsup/report';
 import ThanksMSG from '../../components/popsup/thanksMSG';
-import Selector from "../../components/elements/CustomSelector";
-import ProjectBooking from "../../components/drawer/book/project";
-import GoogleMap from "../../components/elements/googleMap";
-import dateFormat from "dateformat";
 import StudioBooking from "../../components/drawer/book/studio";
 import { GetStudios } from "../../redux/action/apis/cycles/studio/get";
 import { Getstudio } from "../../redux/action/apis/cycles/studio/getOne";
-import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
-import Share from './../../components/popsup/Share';
-import Link from "next/link";
 import ProjectController from "../../components/pages/stduiosAndProject/projectController";
 import Header from "../../components/pages/stduiosAndProject/header";
 import ProjectCover from "../../components/pages/stduiosAndProject/projectShow";
@@ -29,7 +15,6 @@ import About from "../../components/pages/stduiosAndProject/about";
 import Details from "../../components/pages/stduiosAndProject/details";
 import Reviews from "../../components/pages/stduiosAndProject/review";
 import Recommended from "../../components/pages/stduiosAndProject/recommend";
-import { configureStore } from "@reduxjs/toolkit";
 
 
 

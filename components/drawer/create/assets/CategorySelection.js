@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../../Icons';
 import { connect } from 'react-redux';
+import { filterByCycle as filterByCycleCategory,  } from "../../../../util/util";
 
-function CategorySelection({ categories, onChange, value }) {
+function CategorySelection({ categories, onChange, value , filterIn }) {
+    categories = filterByCycleCategory(categories, filterIn)
     if (!categories || categories.length === 0) return <p>No categories available.</p>;
-
+    
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState({});
     const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
+
         const selectedCategory = categories.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
 
