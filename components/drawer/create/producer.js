@@ -13,8 +13,9 @@ import { CreateProducer } from "../../../redux/action/apis/cycles/producer/creat
 import ArrowBtn from "../../elements/arrowBtn";
 import ListInput from "../../elements/listInput";
 import CategorySelection from "./assets/CategorySelection";
+import ProducerCategorySelection from "./assets/producerCategorySelection";
 
-const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth }) => {
+const AddProducer = ({ CreateProducer, resetForm,UpdateFormData, addprojectState, respond, auth }) => {
     const formData = addprojectState.formData
     const router = useRouter();
     const SuccessfullyPopupId = "Producer-Booking"
@@ -25,8 +26,7 @@ const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth
         UpdateFormData(name, value)
     };
     const onSubmit = (e) => {
-        return;
-        CreateProducer()
+        CreateProducer(formData)
     }
 
     useEffect(() => {
@@ -47,46 +47,44 @@ const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth
             pathname: `/creative/${auth.username}`,
         })
     }
-
-
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     return (
         <>
             <Successfully_posting id={SuccessfullyPopupId} onCancel={toggleDrawer} message="Booking" />
             <Drawer isOpen={true} name={'add producer'} toggleDrawer={toggleDrawer}>
-                <div className='flex flex-col gap-14 container mx-auto mt-20'>
+                <div className='flex flex-col gap-14 container mx-auto mt-8'>
                     <div>
-                        <CategorySelection
+                        <ProducerCategorySelection
+                            filterIn={"producer"}
                             value={{
-                                'category': formData.category,
-                                'subCategory': formData.subCategory,
-                                'tags': formData.tags,
+                                "category": formData.category,
+                                "subCategories": formData.subcategory
                             }}
-                            onChange={(value) => {
+                            onChange={(value) => {  
                                 UpdateFormData('category', value.category)
-                                UpdateFormData('subCategory', value.subCategory)
-                                UpdateFormData('tags', value.tags)
+                                UpdateFormData('subcategory', value.subCategories)
+                                // UpdateFormData('tags', value.tags)
                             }} />
                     </div>
 
                     <div className="flex w-full justify-between gap-3">
                         <section className="w-full">
-                            <p className="capitalize opacity-60">Expected Budget</p>
+                            <p className="capitalize opacity-60">Min Budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedBudget|| ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' value={formData.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
-                            <p className="capitalize opacity-60">Expected Profits</p>
+                            <p className="capitalize opacity-60">Max Budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedProfits|| ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' value={formData.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
                     </div>
                     <div>
-                    <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
+                        <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
                     </div>
 
                     <ArrowBtn onClick={onSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text={"Publish"} shadow={true} shadowHeight={"14"} />
@@ -108,6 +106,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     CreateProducer,
     resetForm,
+    UpdateFormData
 };
 
 

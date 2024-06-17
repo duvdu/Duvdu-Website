@@ -1,4 +1,4 @@
-import Selector from "../CustomSelector";
+import Selector from "../../elements/CustomSelector";
 
 const Pending = ({ data }) => {
     return (

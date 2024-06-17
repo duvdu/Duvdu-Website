@@ -1,6 +1,6 @@
 import Icon from "../../Icons";
-import Selector from "../CustomSelector";
 import dateFormat from "dateformat";
+import Selector from "../../elements/CustomSelector";
 
 // const fakedata = {
 //     "_id": "6664479cc9423563d0feb5b8",

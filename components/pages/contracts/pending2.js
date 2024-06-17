@@ -1,7 +1,7 @@
 import React from 'react';
-import Selector from "../CustomSelector";
 import dateFormat from "dateformat";
 import { formatRemainingTime } from '../../../util/util';
+import Selector from '../../elements/CustomSelector';
 
 const Pending2 = ({ data }) => {
     const { startDate } = data

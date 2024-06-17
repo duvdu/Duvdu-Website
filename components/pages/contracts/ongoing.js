@@ -1,5 +1,5 @@
 import Icon from "../../Icons";
-import Selector from "../CustomSelector";
+import Selector from "../../elements/CustomSelector";
 
 const Ongoing = ({ data }) => {
     return (

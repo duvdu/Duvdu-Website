@@ -1,8 +1,8 @@
 
 import Layout from '../components/layout/Layout';
-import LeftSide from '../components/elements/contracts/leftSide';
-import RightSide from '../components/elements/contracts/rightSide';
-import Loadingcomponent from '../components/elements/contracts/loadingcomponent';
+import LeftSide from '../components/pages/contracts/leftSide';
+import RightSide from '../components/pages/contracts/rightSide';
+import Loadingcomponent from '../components/pages/contracts/loadingcomponent';
 
 function Contracts() {
 

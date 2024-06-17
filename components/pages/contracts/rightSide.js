@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Selector from "../CustomSelector";
 import Icon from "../../Icons";
+import Selector from "../../elements/CustomSelector";
 
 const RightSide = () => {
 

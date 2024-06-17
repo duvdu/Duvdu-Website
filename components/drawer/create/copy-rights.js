@@ -20,7 +20,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     const router = useRouter();
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
-    categories = filterByCycle(categories, 'copy-rights')
+    
     useEffect(() => {
         if (categories.length)
             UpdateFormData('category', categories[0]._id)
@@ -96,6 +96,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                     <section>
                         <div className="my-5">
                             <CategorySelection
+                            filterIn={'copy-rights'}
                                 value={{
                                     'category': formData.category,
                                     'subCategory': formData.subCategory,

@@ -29,8 +29,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
 
-    categories = filterByCycle(categories, 'studio-booking')
-
+    
     useEffect(() => {
         UpdateFormData('location[lat]', 50)
         UpdateFormData('location[lng]', 50)
@@ -184,6 +183,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
+                                filterIn={'studio-booking'}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,
