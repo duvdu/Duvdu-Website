@@ -32,7 +32,7 @@ const Search = ({}) => {
                 
                 <input
                     className="searchInput border bg-[#EAEEF0] w-full text-lg placeholder:text-[#94A6C2]"
-                    value={searchTerm}
+                    value={searchTerm|| ""}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleInput}
                     type="text"

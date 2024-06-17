@@ -77,7 +77,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                         type="text"
                         placeholder="@username"
                         className={nameError.isError ? "app-field error" : "app-field"}
-                        value={userName}
+                        value={userName|| ""}
                         onChange={(e) => handleChange(e.target.value)}
                     />
                     {nameError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(nameError.message) }} />}
@@ -143,7 +143,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                     <div className="relative password-container">
                         <input
                             type={showPassword ? 'text' : 'password'}
-                            value={password}
+                            value={password|| ""}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password *"
                             autoComplete="on"
@@ -159,7 +159,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                     <div className="relative password-container">
                         <input
                             type={showConfirmPassword ? 'text' : 'password'}
-                            value={confirmPassword}
+                            value={confirmPassword|| ""}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="Confirm Password *"
                             autoComplete="on"

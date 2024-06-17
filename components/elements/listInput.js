@@ -43,7 +43,7 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
                         (<input
                             placeholder={placeholder}
                             className={`${inputStyle} pr-14`}
-                            value={word}
+                            value={word|| ""}
                             onChange={(e) => { setWord(e.target.value) }}
                             name={name}
                         />)}

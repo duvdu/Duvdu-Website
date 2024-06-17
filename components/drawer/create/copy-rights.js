@@ -107,11 +107,11 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     UpdateFormData('tags', value.tags)
                                 }} />
                         </div>
-                        <input placeholder='price' type="number" value={formData.price} onChange={handleInputChange} name="price" className={inputStyle} />
+                        <input placeholder='price' type="number" value={formData.price|| ""} onChange={handleInputChange} name="price" className={inputStyle} />
 
-                        <input type="number" placeholder='duration Days' value={formData.duration} onChange={handleInputChange} name="duration" className={inputStyle} />
+                        <input type="number" placeholder='duration Days' value={formData.duration|| ""} onChange={handleInputChange} name="duration" className={inputStyle} />
 
-                        <input placeholder='address' value={formData.address} onChange={handleInputChange} name="address" className={inputStyle} />
+                        <input placeholder='address' value={formData.address|| ""} onChange={handleInputChange} name="address" className={inputStyle} />
                         <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full">

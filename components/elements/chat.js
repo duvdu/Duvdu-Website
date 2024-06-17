@@ -280,7 +280,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                             <>
                                 {!isRecording &&
                                     <input
-                                        value={content}
+                                        value={content|| ""}
                                         onChange={onChange}
                                         name='content'
                                         onKeyDown={handleKeyPress}

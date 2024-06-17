@@ -105,7 +105,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                             <input
                                 type='text'
                                 name='address'
-                                value={formData.address}
+                                value={formData.address|| ""}
                                 onChange={handleInputChange}
                                 className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4"
                             />

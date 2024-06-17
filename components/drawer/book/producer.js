@@ -90,12 +90,12 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
                     <section>
                         <h3 className="capitalize opacity-60 mt-10">Platform</h3>
-                        <input type="text" placeholder='Enter Platform...' className={inputStyle} value={formData.platform} onChange={handleInputChange} name="platform" />
+                        <input type="text" placeholder='Enter Platform...' className={inputStyle} value={formData.platform|| ""} onChange={handleInputChange} name="platform" />
                     </section>
 
                     <section>
                         <h3 className="capitalize opacity-60">Project Details</h3>
-                        <textarea name="projectDetails" value={formData.projectDetails} onChange={handleInputChange} placeholder="Main Idea" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea name="projectDetails" value={formData.projectDetails|| ""} onChange={handleInputChange} placeholder="Main Idea" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
 
                     <section className="h-96 relative overflow-hidden">
@@ -106,13 +106,13 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episodes Number</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.episodes} onChange={handleInputChange} name='episodes' placeholder="Ex. 5" className={inputStyle} />
+                                <input type='number' value={formData.episodes|| ""} onChange={handleInputChange} name='episodes' placeholder="Ex. 5" className={inputStyle} />
                             </div>
                         </section>
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episode Duration</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.episodeDuration} onChange={handleInputChange} name='episodeDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
+                                <input type='number' value={formData.episodeDuration|| ""} onChange={handleInputChange} name='episodeDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
                             </div>
                         </section>
                     </div>
@@ -121,21 +121,21 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedBudget} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' value={formData.expectedBudget|| ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Profits</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedProfits} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' value={formData.expectedProfits|| ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
                     </div>
 
                     <section className="w-full ">
                         <h3 className="capitalize opacity-60">Upload Media</h3>
-                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                        <AddAttachment name="attachments" value={formData.attachments|| ""} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
 
                     </section>
 

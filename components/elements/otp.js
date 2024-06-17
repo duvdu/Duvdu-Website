@@ -76,7 +76,7 @@ function OTP({
                             <p className="otpnews" >Enter the verification code we just sent to your phone </p>
                         </div>
                         <OtpInput
-                            value={otp}
+                            value={otp|| ""}
                             onChange={(value) => setOtp(value)}
                             numInputs={6}
                             renderSeparator={<span style={{ width: "100%" }} > </span>}

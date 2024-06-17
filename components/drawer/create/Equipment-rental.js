@@ -200,10 +200,10 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section >
-                                <input placeholder='equipment name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />
-                                <input placeholder='phone number' type="tel" value={formData.studioNumber} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
-                                <input placeholder='description' value={formData.description} onChange={handleInputChange} name="description" className={inputStyle} />
-                                <input placeholder='address' value={formData.address} onChange={handleInputChange} name="address" className={inputStyle} />
+                                <input placeholder='equipment name' value={formData.studioName|| ""} onChange={handleInputChange} name="studioName" className={inputStyle} />
+                                <input placeholder='phone number' type="tel" value={formData.studioNumber|| ""} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
+                                <input placeholder='description' value={formData.description|| ""} onChange={handleInputChange} name="description" className={inputStyle} />
+                                <input placeholder='address' value={formData.address|| ""} onChange={handleInputChange} name="address" className={inputStyle} />
                                 <ListInput
                                     placeholder={'equipment available'}
                                     target="EquipmentAvailable"
@@ -223,8 +223,8 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                             </section>
                             <section >
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input placeholder='price per hour' value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
-                                <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
+                                <input placeholder='price per hour' value={formData.pricePerHour|| ""} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
+                                <input type="number" placeholder='insurance' value={formData.insurance|| ""} onChange={handleInputChange} name="insurance" className={inputStyle} />
                             </section>
                             <section className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />

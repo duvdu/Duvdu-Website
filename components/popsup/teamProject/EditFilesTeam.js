@@ -91,7 +91,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                         </section>
                         <section>
                             <p className="capitalize opacity-60 mt-11">team name</p>
-                            <input onChange={handleInputChange} value={formData.title} name='title' placeholder="enter platform..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
+                            <input onChange={handleInputChange} value={formData.title|| ""} name='title' placeholder="enter platform..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
                         </section>
                         <section>
                             <p className="capitalize opacity-60 mt-11">project details</p>
@@ -103,7 +103,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                                 <input
                                     type='text'
                                     name='address'
-                                    value={formData.address}
+                                    value={formData.address|| ""}
                                     onChange={handleInputChange}
                                     className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4"
                                 />
@@ -123,7 +123,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             <p className="capitalize opacity-60 mt-11">shooting days</p>
                             <div className='flex items-center justify-start gap-4'>
                                 <input type='number'
-                                    value={formData.shootingDays}
+                                    value={formData.shootingDays|| ""}
                                     onChange={handleInputChange} name='shootingDays' placeholder="Ex. 5 days" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                             </div>
                         </section>
@@ -131,7 +131,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             <p className="capitalize opacity-60 mt-11">budget</p>
                             <div className='flex items-center justify-start gap-4'>
                                 <input type='number' 
-                                    value={formData.budget}
+                                    value={formData.budget|| ""}
 
                                 onChange={handleInputChange} name='budget' placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
 

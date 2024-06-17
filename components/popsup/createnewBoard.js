@@ -24,7 +24,7 @@ function createnewBoard({onSbmit}) {
                     <div className={`mb-12 ${boardError.isError && 'error'}`}>
                         <input
                             type="text"
-                            value={board}
+                            value={board|| ""}
                             onChange={(e) => setBoardName(e.target.value)}
                             placeholder="Board name"
                             className={boardError.isError ? "app-field error" : "app-field"}

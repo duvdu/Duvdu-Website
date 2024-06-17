@@ -51,11 +51,11 @@ function ResetPassword() {
             <p className="text-lg text-[#455154]">Please type something you’ll remember</p>
           </div>
           <div className={`mb-4 ${passwordError.isError && 'error'}`}>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="New Password *" className={passwordError.isError ? "app-field error" : "app-field"} />
+            <input type="password" value={password|| ""} onChange={(e) => setPassword(e.target.value)} placeholder="New Password *" className={passwordError.isError ? "app-field error" : "app-field"} />
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
           </div>
           <div className={`mb-20 ${confirmPasswordError.isError && 'error'}`}>
-            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password *" className={confirmPasswordError.isError ? "app-field error" : "app-field"} />
+            <input type="password" value={confirmPassword|| ""} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password *" className={confirmPasswordError.isError ? "app-field error" : "app-field"} />
             {confirmPasswordError.isError && <p className="error-msg">{confirmPasswordError.message}</p>}
           </div>
           <div className="login_footer mb-11"></div>

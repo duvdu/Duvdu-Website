@@ -101,7 +101,7 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                 <div className={preview ? ' hidden p-8 pt-8' : 'p-8 pt-8'}>
                     <section>
                         <h3 className="capitalize opacity-60">job details</h3>
-                        <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea name="jobDetails" value={formData.jobDetails|| ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">select Appointment  date</h3>
@@ -113,7 +113,7 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                     </section>
                     <section className="my-11 gap-7 hidden">
                         <h3 className="capitalize opacity-60 mb-4">address</h3>
-                        <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                        <input placeholder='address' className={inputStyle} value={formData.address|| ""} onChange={handleInputChange} name="address" />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full mt-11">
                         <h3 className="capitalize opacity-60  mb-3">location</h3>

@@ -179,7 +179,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     <input
                         type="text"
                         name="name"
-                        value={formData.name}
+                        value={formData.name|| ""}
                         onChange={handleChange}
                         placeholder="Name"
                         className={formErrors.name.isError ? "app-field error" : "app-field"}
@@ -190,7 +190,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     <input
                         type="phone"
                         name="phone"
-                        value={formData.phone}
+                        value={formData.phone|| ""}
                         onChange={handleChange}
                         placeholder="Phone"
                         className={formErrors.phone.isError ? "app-field error" : "app-field"}
@@ -202,7 +202,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         <input
                             type="text"
                             name="username"
-                            value={formData.username}
+                            value={formData.username|| ""}
                             onChange={handleChange}
                             placeholder="@username"
                             className={formErrors.username.isError ? "app-field error" : "app-field"}
@@ -233,7 +233,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         <input
                             type={showPassword ? 'text' : 'password'}
                             name="password"
-                            value={formData.password}
+                            value={formData.password|| ""}
                             onChange={handleChange}
                             placeholder="Create Password"
                             className={formErrors.password.isError ? "app-field error" : "app-field"}

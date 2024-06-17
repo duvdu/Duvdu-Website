@@ -189,16 +189,13 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
-                                <input placeholder='Name your project' className={inputStyle} value={formData.title} onChange={handleInputChange} name="title" />
+                                <input placeholder='Name your project' className={inputStyle} value={formData.title|| ""} onChange={handleInputChange} name="title" />
                             </section>
                             <section>
-                                <input placeholder='Project description' className={inputStyle} value={formData.desc} onChange={handleInputChange} name="desc" />
+                                <input placeholder='Project description' className={inputStyle} value={formData.desc|| ""} onChange={handleInputChange} name="desc" />
                             </section>
-                            {/* <section>
-                                <input placeholder="Add creative’s functions" className={inputStyle} value={formData.creativeFunctions} onChange={handleInputChange} name="creativeFunctions" />
-                            </section> */}
                             <section>
-                                <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                                <input placeholder='address' className={inputStyle} value={formData.address|| ""} onChange={handleInputChange} name="address" />
                             </section>
                             <section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
@@ -234,7 +231,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                          */}
                             <section>
-                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget} onChange={handleInputChange} name="projectBudget" />
+                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget|| ""} onChange={handleInputChange} name="projectBudget" />
                                 {errors.projectBudget && <div style={{ color: 'red' }}>{errors.projectBudget}</div>}
                             </section>
                             <section>

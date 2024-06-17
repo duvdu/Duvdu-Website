@@ -41,7 +41,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
                                     } : {}} />}
 
                             </label>
-                            <input  onClick={handleRemoveEvent} id="file-upload" type="file" multiple className="hidden" onChange={profileUpload} />
+                            <input onClick={handleRemoveEvent} id="file-upload" type="file" multiple className="hidden" onChange={profileUpload} />
                         </section>
                         <section className='mt-5'>
                             <span className='opacity-40 text-base capitalize'>

@@ -102,7 +102,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     if (openMap)
         return <Drawer name={data.user?.name} img={data.user?.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
             <div className="py-10">
-                <GoogleMap width={'90%'} value={formData.location}
+                <GoogleMap width={'90%'} value={formData.location|| ""}
                     onsetLocation={(value) => UpdateFormData('location', value)}
                 />
             </div>
@@ -133,7 +133,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             }
                             <section>
                                 <h3 className="capitalize opacity-60">job details</h3>
-                                <textarea name="jobDetails" value={formData.jobDetails} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                                <textarea name="jobDetails" value={formData.jobDetails|| ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">Start Date</h3>
@@ -145,7 +145,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className="my-11 gap-7 ">
                                 <h3 className="capitalize opacity-60 mb-4">address</h3>
-                                <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                                <input placeholder='address' className={inputStyle} value={formData.address|| ""} onChange={handleInputChange} name="address" />
                             </section>
                             <section className="my-11 gap-7 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">location</h3>
@@ -175,17 +175,17 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <section>
                                 <p className="capitalize opacity-60 mt-11">Custom requirements</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" name="customRequirement[measure]" onChange={handleInputChange} value={formData['customRequirement[measure]']} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                                    <input type="number" name="customRequirement[measure]" onChange={handleInputChange} value={formData['customRequirement[measure]']|| ""} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                                     <select
                                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalize"
-                                        value={formData['customRequirement[unit]']}
+                                        value={formData['customRequirement[unit]']|| ""}
                                         onChange={handleInputChange}
                                         name="customRequirement[unit]"
                                         required
                                     >
 
                                         {['minute', 'hour'].map((value, index) => (
-                                            <option key={index} value={value.toLowerCase()}>{value}</option>
+                                            <option key={index} value={value.toLowerCase()|| ""}>{value}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -193,7 +193,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <section>
                                 <p className="capitalize opacity-60 mt-11">shooting days</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" name="shootingDays" onChange={handleInputChange} value={formData.shootingDays} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                                    <input type="number" name="shootingDays" onChange={handleInputChange} value={formData.shootingDays|| ""} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                                     <span>
                                         Days
                                     </span>

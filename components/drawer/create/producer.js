@@ -74,14 +74,14 @@ const AddProducer = ({ CreateProducer, resetForm, addprojectState, respond, auth
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedBudget} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' value={formData.expectedBudget|| ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Profits</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedProfits} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' value={formData.expectedProfits|| ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
                     </div>

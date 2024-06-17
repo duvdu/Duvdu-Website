@@ -167,7 +167,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         <input
                             type='text'
                             name='name'
-                            value={formData.name}
+                            value={formData.name|| ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
@@ -179,7 +179,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         <input
                             type='text'
                             name='address'
-                            value={formData.address}
+                            value={formData.address|| ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
@@ -191,7 +191,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         <input
                             type='text'
                             name='pricePerHour'
-                            value={formData.pricePerHour}
+                            value={formData.pricePerHour|| ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
@@ -202,7 +202,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         </span>
                         <textarea
                             name='about'
-                            value={formData.about}
+                            value={formData.about|| ""}
                             onChange={handleInputChange}
                             className="edit app-field h-[400px]"
                             style={{ height: '120px' }}

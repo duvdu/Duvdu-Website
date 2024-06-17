@@ -97,7 +97,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                                 <input
                                     type={showPasswords.oldPassword ? 'text' : 'password'}
                                     name="oldPassword"
-                                    value={formData.oldPassword}
+                                    value={formData.oldPassword|| ""}
                                     onChange={handleChange}
                                     placeholder="Old Password"
                                     className={formErrors.oldPassword.isError ? "app-field error" : "app-field"}
@@ -113,7 +113,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                                 <input
                                     type={showPasswords.newPassword ? 'text' : 'password'}
                                     name="newPassword"
-                                    value={formData.newPassword}
+                                    value={formData.newPassword|| ""}
                                     onChange={handleChange}
                                     placeholder="New Password"
                                     className={formErrors.newPassword.isError ? "app-field error" : "app-field"}
@@ -129,7 +129,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                                 <input
                                     type={showPasswords.confirmPassword ? 'text' : 'password'}
                                     name="confirmPassword"
-                                    value={formData.confirmPassword}
+                                    value={formData.confirmPassword|| ""}
                                     onChange={handleChange}
                                     placeholder="Confirm New Password"
                                     className={formErrors.confirmPassword.isError ? "app-field error" : "app-field"}

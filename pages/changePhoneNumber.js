@@ -111,7 +111,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
             <div className={`mb-8 ${numberError.isError && 'error'}`}>
                 <input
                     type="text"
-                    value={PhoneNumber}
+                    value={PhoneNumber|| ""}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     placeholder="new number"
                     className={numberError.isError ? "app-field error" : "app-field"}
