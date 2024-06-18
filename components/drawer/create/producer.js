@@ -1,9 +1,5 @@
-import Layout from "../../layout/Layout";
-import Icon from '../../Icons';
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
-import Button from '../../elements/button';
-
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
 import { ClosePopUp, OpenPopUp, filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
@@ -12,17 +8,17 @@ import Drawer from "../../elements/drawer";
 import { CreateProducer } from "../../../redux/action/apis/cycles/producer/create";
 import ArrowBtn from "../../elements/arrowBtn";
 import ListInput from "../../elements/listInput";
-import CategorySelection from "./assets/CategorySelection";
 import ProducerCategorySelection from "./assets/producerCategorySelection";
 
 const AddProducer = ({ CreateProducer, resetForm,UpdateFormData, addprojectState, respond, auth }) => {
     const formData = addprojectState.formData
     const router = useRouter();
     const SuccessfullyPopupId = "Producer-Booking"
-    const [attachmentValidation, setAttachmentValidation] = useState(true);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        if(name == "maxBudget" || name == "minBudget")
+        value = parseInt(value)
         UpdateFormData(name, value)
     };
     const onSubmit = (e) => {
@@ -42,7 +38,8 @@ const AddProducer = ({ CreateProducer, resetForm,UpdateFormData, addprojectState
 
     const toggleDrawer = () => {
         ClosePopUp(SuccessfullyPopupId)
-
+        CreateProducer(-1)
+        resetForm()
         router.replace({
             pathname: `/creative/${auth.username}`,
         })
@@ -64,7 +61,6 @@ const AddProducer = ({ CreateProducer, resetForm,UpdateFormData, addprojectState
                             onChange={(value) => {  
                                 UpdateFormData('category', value.category)
                                 UpdateFormData('subcategory', value.subCategories)
-                                // UpdateFormData('tags', value.tags)
                             }} />
                     </div>
 
