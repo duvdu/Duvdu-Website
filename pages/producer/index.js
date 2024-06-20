@@ -55,8 +55,6 @@ const Producers = ({ GetProducer, respond,api }) => {
         }
     }, [respond?.message])
 
-    const targetRef = useRef(null);
-
     useEffect(() => {
         const handleScroll = () => {
             if (pagganation?.totalPages > page) {
@@ -66,7 +64,7 @@ const Producers = ({ GetProducer, respond,api }) => {
                 const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
                 if (scrolledToBottom) {
-                    setLimit(prevPage => showLimit + limit);
+                    setLimit(showLimit + limit);
                 }
             }
         };
@@ -102,7 +100,7 @@ const Producers = ({ GetProducer, respond,api }) => {
 
                             })}
                         </div>
-                        <img className={(api.loading && api.req == "GetProducer" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
+                        <img className={(api.loading && api.req == "GetProducer" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
                         <Formsubmited />
                     </div>
                 </section>

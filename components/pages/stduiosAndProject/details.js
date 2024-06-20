@@ -11,7 +11,7 @@ const Details = ({ data }) => {
                 <span className="text-center capitalize opacity-50">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>
             </div>
 
-            {(data?.tools || data?.equipments).length > 0 &&
+            {(data?.tools || data?.equipments)?.length > 0 &&
                 <>
                     <div className="mt-9 mb-3">
                         <h3 className="capitalize opacity-50"> Tools Used </h3>
@@ -32,7 +32,7 @@ const Details = ({ data }) => {
                     </div>
                 </>
             }
-            {data?.creatives.length > 0 &&
+            {data?.creatives?.length > 0 &&
                 <>
                     <div className="mt-9 mb-3">
                         <h3 className="capitalize opacity-50"> creatives </h3>
@@ -64,7 +64,7 @@ const Details = ({ data }) => {
             <div className="mt-9">
                 <h3 className="capitalize opacity-50">description</h3>
             </div>
-            <span className="capitalize font-semibold mt-4">{data?.desc}</span>
+            <span className="capitalize font-semibold mt-4">{data?.desc || data?.description}</span>
             <div className="mt-9">
             </div>
             {

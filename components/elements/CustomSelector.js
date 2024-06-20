@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Icon from "../Icons";
 
 const Selector = ({ options, onSelect, iconclassName, className = "", children }) => {
@@ -15,6 +15,10 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
         }
         selectRef.current.value = null;
     };
+
+    useEffect(()=>{
+        selectRef.current.value = null
+    },[selectRef?.current?.value])
 
     return (
         <div className={`relative cursor-pointer ${className}`}>

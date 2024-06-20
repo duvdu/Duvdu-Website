@@ -16,52 +16,39 @@ const Studio = ({ projects , GetStudios,api}) => {
     const searchTerm = Router.query.search;
     const page = 1;
     const showLimit = 24;
+    const pagganation = projects?.pagination
     const [limit, setLimit] = useState(showLimit);
 
-    const targetRef = useRef(null);
-    
     useEffect(() => {
         GetStudios({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
     }, [limit, searchTerm,searchTerm])
+
     useEffect(() => {
-        const options = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5,
-        };
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-        const handleIntersection = (entries, observer) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        setLimit((prevLimit) => prevLimit + showLimit);
-                    }, 2000);
-                    if (targetRef.current) {
-                        targetRef.current.classList.add('active');
-                    }
-                    observer.unobserve(entry.target);
+                if (scrolledToBottom) {
+                    setLimit(showLimit + limit);
                 }
-                else {
-                    if (targetRef.current) {
-                        targetRef.current.classList.remove('active');
-                    }
-
-                }
-
-            });
+            }
         };
 
-        const observer = new IntersectionObserver(handleIntersection, options);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [page, pagganation?.totalPages]);
 
-        if (targetRef.current) {
-            observer.observe(targetRef.current);
-        }
 
-        return () => {
-            observer.disconnect();
-        };
-    }, [limit]);
-
+    const handlesetdata = (item) => {
+        setdata(item)
+        setIsOpen(!isOpen);
+    };
+    const toggleDrawer = () => {
+        setIsOpen(!isOpen);
+    };
 
     const getPaginatedProjects = projects?.data 
     
@@ -98,7 +85,7 @@ const Studio = ({ projects , GetStudios,api}) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        <img className={(api.loading && api.req == "GetStudios" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
+                        <img className={(api.loading && api.req == "GetStudios" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
                     </div>
                 </section>
             </Layout>

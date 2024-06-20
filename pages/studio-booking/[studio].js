@@ -16,17 +16,14 @@ import Details from "../../components/pages/stduiosAndProject/details";
 import Reviews from "../../components/pages/stduiosAndProject/review";
 import Recommended from "../../components/pages/stduiosAndProject/recommend";
 
-
-
-const Studio = ({ 
-    GetStudios, 
-    studios_respond, 
-    Getstudio, 
-    studio_respond, 
-    GetAllMessageInChat, 
-    chat_respond, 
-    user,
-    auth }) => {
+const Studio = ({
+    GetStudios,
+    studios_respond,
+    Getstudio,
+    studio_respond,
+    chat_respond,
+    user
+}) => {
 
     const router = useRouter()
     const { studio: studioId } = router.query;
@@ -44,7 +41,7 @@ const Studio = ({
         SwapProjectToFav({ projectId: projectId, action: studio.isFavourite ? "remove" : "add" })
     };
 
-    
+
     useEffect(() => {
         GetStudios({ limit: 4 });
     }, []);
@@ -53,6 +50,7 @@ const Studio = ({
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
+    
     return (
         <>
             <Layout >
@@ -78,16 +76,16 @@ const Studio = ({
                                         </section>
                                     </div>
                                     <section className="mx-7 sm:mx-0">
-                                        <Recommended projects={projects} type={"studio-booking"}/>
+                                        <Recommended projects={projects} type={"studio-booking"} />
                                     </section>
                                 </div>
                             </div>
                             {!chat_respond &&
-                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} canBook={studio.user._id != user._id}/>}
+                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} canBook={studio.user._id != user?._id} />}
                             <StudioBooking data={studio} isOpen={isOpen} toggleDrawer={toggleDrawer} />
 
                         </>
-                    ) 
+                    )
                 }
             </Layout>
         </>

@@ -18,23 +18,27 @@ const LeftSide = ({ getAllContracts, respond, api }) => {
     const Empty = () => <div className="mt-10 lg:mt-32">
         <EmptyComponent/>
     </div>
+    
+    const pending = (respond?.data['rental_contracts'] || []).filter(data => data.contract.status == "pending")
+    const ongoing = (respond?.data['rental_contracts'] || []).filter(data => data.contract.status == "ongoing")
+    
     const Clients = () =>
-        respond?.data?.length ?
+        (pending.length || ongoing.length) ?
             <section>
                 {
-                    respond?.data?.filter(data => data.status === "pending").length > 0 &&
+                    pending.length > 0 &&
                     <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                        {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
+                        {pending.map((data, index) => (
                             <Pending key={index} data={data} />
                         ))}
                     </section>
                 }
                 {
-                    respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
+                    ongoing.length > 0 &&
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                        {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                        {ongoing.map((data, index) => (
                             <Ongoing key={index} data={data} />
                         ))}
 
@@ -47,19 +51,19 @@ const LeftSide = ({ getAllContracts, respond, api }) => {
         respond?.data?.length ?
             <section>
                 {
-                    respond?.data?.filter(data => data.status === "pending").length > 0 &&
+                    pending.length > 0 &&
                     <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
-                        {respond?.data?.filter(data => data.status === "pending").map((data, index) => (
+                        {pending.map((data, index) => (
                             <Pending2 key={index} data={data} />
                         ))}
                     </section>
                 }
                 {
-                    respond?.data?.filter(data => data.status === "ongoing").length > 0 &&
+                    ongoing.length > 0 &&
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
-                        {respond?.data?.filter(data => data.status === "ongoing").map((data, index) => (
+                        {ongoing.map((data, index) => (
                             <Ongoing2 key={index} data={data} />
                         ))}
 

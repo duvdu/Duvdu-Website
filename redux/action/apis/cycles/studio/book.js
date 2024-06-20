@@ -11,7 +11,7 @@ export const StudopBooking = (id, data) => {
     
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.post(`api/studio-booking/book/${id}`, data);
+      const response = await mainApiInstance.post(`api/studio-booking/rental/${id}/contract`, data);
       const paymentLink = response.data.data.paymentLink;
       const response2 = await mainApiInstance.get(paymentLink);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response2.data, req: req });

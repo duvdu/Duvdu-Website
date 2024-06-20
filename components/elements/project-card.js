@@ -43,14 +43,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'portfo
     }
   }, [videoRef.current?.duration == NaN]);
 
-  // useEffect(() => {
-  //   if (swapProjectToFav_respond) {
-  //     GetProject(cardData._id)
-  //   }
-  // }, [swapProjectToFav_respond]);
-
-
-
   const loveToggleAction = () => {
     setActionID(cardData._id)
     SwapProjectToFav({ projectId: cardData._id, action: cardData.isFavourite ? "remove" : "add" })
@@ -63,7 +55,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'portfo
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
     if (videoRef.current)
       videoRef.current.muted = soundIconName === 'volume-high';
-
   };
 
   const handleHover = () => {
@@ -178,8 +169,15 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'portfo
           </div>
         </div>
         <p className='text-xl opacity-70 font-medium my-1'>{cardData.title || cardData.studioName}</p>
-        {(cardData.projectBudget || cardData.pricePerHour) &&
-        <div className='text-xl font-bold'>{cardData.projectBudget || cardData.pricePerHour}$</div>}
+        {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
+          <>
+            <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
+            {(cardData.projectScale?.unit) &&
+            <span className='text-xl ml-2 opacity-60'>
+              per {cardData.projectScale?.unit}
+            </span>}
+          </>
+        }
       </div>
     </>
   );

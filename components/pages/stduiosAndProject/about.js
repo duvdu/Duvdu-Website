@@ -22,7 +22,7 @@ const About = ({ data }) => (
             <div className='flex justify-center pt-25 items-center gap-3 '>
                 <p className='rank'>{data?.user?.rank?.title || "---"}</p>
                 <p className="info-container">{data?.category?.title || "---"}</p>
-                <div className='info-container flex items-center gap-1 w-20'>
+                <div className='info-container justify-center flex items-center gap-2 w-20'>
                     <p>{data?.user.rate.totalRates || 0}</p>
                     <Icon className='text-primary w-4' name={'rate-star'} />
                 </div>
@@ -31,7 +31,7 @@ const About = ({ data }) => (
                 <div className='flex justify-center'>
                     {[
                         { key: "likes", value: data.user.likes },
-                        { key: "followers", value: data.user.followCount.followers },
+                        { key: "followers", value: data.user?.followCount?.followers },
                         { key: "views", value: data.user.profileViews }
                     ].map(({ key, value }, index, array) => (
                         <div className={`popularity ${index === array.length - 1 ? 'last:mr-0 last:pr-0' : 'mr-9 pr-9'}`} key={key}>

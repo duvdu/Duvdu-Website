@@ -29,12 +29,11 @@ import Selector from "../../elements/CustomSelector";
 // };
 
 const Ongoing2 = ({ data }) => {
-    const { targetUser, deadline, startDate } = data;
-
-    const formattedDeadline = dateFormat(new Date(deadline), "mmmm dS, yyyy, h:MM TT");
+    
+    const formattedDeadline = dateFormat(new Date(data?.contract?.createdAt), "mmmm dS, yyyy, h:MM TT");
 
     const currentDate = new Date();
-    const createdAtDate = new Date(startDate);
+    const createdAtDate = new Date(data?.contract?.createdAt);
     const timeDifference = currentDate - createdAtDate;
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
@@ -54,9 +53,9 @@ const Ongoing2 = ({ data }) => {
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full object-cover object-top' src={targetUser.profileImage} alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full object-cover object-top' src={data.targetUser.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
-                        <h3 className='opacity-80 text-lg font-bold text-white capitalize'>{targetUser.name}</h3>
+                        <h3 className='opacity-80 text-lg font-bold text-white capitalize'>{data.targetUser.name}</h3>
                         <span className='opacity-50 text-white'>{formattedCreatedAt}</span>
                     </div>
                 </div>

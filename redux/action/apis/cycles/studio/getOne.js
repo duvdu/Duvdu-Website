@@ -7,7 +7,7 @@ export const Getstudio = (id) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.get(`api/studio-booking/${id}`);
+      const response = await mainApiInstance.get(`api/studio-booking/rental/${id}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_DATA, payload: response.data.data });
       

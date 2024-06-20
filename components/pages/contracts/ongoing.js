@@ -1,15 +1,28 @@
+import { connect } from "react-redux";
 import Icon from "../../Icons";
 import Selector from "../../elements/CustomSelector";
+import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
 
-const Ongoing = ({ data }) => {
+const Ongoing = ({ data, takeAction_respond, takeAction }) => {
+    const statuses = [
+        { value: 'accept' },
+        { value: 'reject' },
+    ];
+
+    console.log(takeAction_respond)
+
+    const handleDropdownSelect = (value) => {
+        console.log(data)
+        // takeAction({id: , value : })
+    };
     return (
         <div className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] sm:w-full mx-auto'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full object-cover object-top' src={data.targetUser.profileImage} alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full object-cover object-top' src={data.customer.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
-                        <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>{data.targetUser.name}</h3>
+                        <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>{data.customer.name}</h3>
                         <span className='opacity-50 text-white'>{new Date(data.createdAt).toDateString()}</span>
                     </div>
                 </div>
@@ -49,21 +62,10 @@ const Ongoing = ({ data }) => {
                 {/*********/}
             </div>
             <Selector
+                onSelect={handleDropdownSelect}
                 iconclassName={'text-white'}
-                options={[
-                    {
-                        value: "option 1",
-                        onclick: () => { },
-                    },
-                    {
-                        value: "option 2",
-                        onclick: () => { },
-                    },
-                    {
-                        value: "option 3",
-                        onclick: () => { },
-                    }
-                ]} className="h-min">
+                options={statuses}
+                className="h-min">
                 <div className="border rounded-full size-9 flex justify-center items-center">
                     <Icon className="size-6 text-white" name="ellipsis-vertical" />
                 </div>
@@ -71,5 +73,13 @@ const Ongoing = ({ data }) => {
         </div>
     );
 };
+const mapStateToProps = (state) => ({
+    takeAction_respond: state.api.takeAction
+});
 
-export default Ongoing;
+const mapDispatchToProps = {
+    takeAction
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Ongoing);
