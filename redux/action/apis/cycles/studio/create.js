@@ -11,7 +11,7 @@ export const CreateStudio = (data) => {
     }
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.post(`api/studio-booking/rental`, data);
+      const response = await mainApiInstance.post(`api/rentals/rental`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
         // console.log("error " , JSON.stringify(error.response))

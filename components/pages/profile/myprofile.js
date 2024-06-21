@@ -86,7 +86,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     function InputDrawer() {
         if (type) {
             switch (type) {
-                case 'studio-booking':
+                case 'rental':
                     return <AddStudioBooking />
                 case 'equipment-rental':
                     removeQueryParameter()

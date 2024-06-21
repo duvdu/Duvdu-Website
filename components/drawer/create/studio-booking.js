@@ -79,6 +79,8 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData['projectScale.pricerPerUnit']) errors.pricerPerUnit = 'Maximum value is required';
         if (!formData['projectScale.minimum']) errors.minimum = 'Minimum value is required';
         if (!formData['projectScale.maximum']) errors.maximum = 'Maximum value is required';
+        if (parseInt(formData['projectScale.minimum']) > parseInt(formData['projectScale.maximum'])) errors.minimum = 'Minimum value should not be greater than maximum value';
+        
         // cover
         return errors;
     };
@@ -146,7 +148,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
-            <Drawer isOpen={true} name={'studio booking'} toggleDrawer={toggleDrawer}>
+            <Drawer isOpen={true} name={'Create Rental'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
                     <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
                 ) :
@@ -199,17 +201,17 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         ))}
                                     </select>
                                 </div>
-                                <input placeholder={`price per ${formData['customRequirement[unit]'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData.projectScale?.pricePerHour|| ""} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit']|| ""} onChange={handleInputChange} className={inputStyle} />
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale.minimum' value={formData.projectScale?.minimum|| ""} onChange={handleInputChange} placeholder="Min" className={inputStyle} />
+                                            <input type='number' name='projectScale.minimum' value={formData['projectScale.minimum']|| ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale.unit'] || 'unit'}`} className={inputStyle} />
                                         </div>
                                     </div>
 
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale.maximum' value={formData.projectScale?.maximum|| ""} onChange={handleInputChange} placeholder="Max" className={inputStyle} />
+                                            <input type='number' name='projectScale.maximum' value={formData['projectScale.maximum']|| ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale.unit'] || 'unit'}`} className={inputStyle} />
                                         </div>
                                     </div>
                                 </div>

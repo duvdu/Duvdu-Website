@@ -19,6 +19,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
             Publish();
         }
     };
+    const isEnable = !!formData.coverShow;
     return (
         <>
             <div className='flex flex-col gap-5 mx-5 max-w-96 sm:mx-auto' >
@@ -41,7 +42,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
                                     } : {}} />}
 
                             </label>
-                            <input onClick={handleRemoveEvent} id="file-upload" type="file" multiple className="hidden" onChange={profileUpload} />
+                            <input onClick={handleRemoveEvent} id="file-upload" type="file" multiple className="hidden" onChange={profileUpload} accept="image/*"/>
                         </section>
                         <section className='mt-5'>
                             <span className='opacity-40 text-base capitalize'>
@@ -56,7 +57,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData }) {
                                 </div>
                             </div>
                         </section>
-                        <AppButton onClick={handleSubmit} className={'w-full'}>
+                        <AppButton isEnabled={isEnable} onClick={handleSubmit} className={'w-full'}>
                             Publish
                         </AppButton>
                     </div>

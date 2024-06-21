@@ -43,8 +43,8 @@ function PostPopup({auth}) {
                             "url": "copyrights-permits"
                         },
                         {
-                            "value": "studio booking",
-                            "url": "studio-booking"
+                            "value": "rental",
+                            "url": "rental"
                         },
                         {
                             "value": "producer",
