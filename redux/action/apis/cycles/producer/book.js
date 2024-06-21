@@ -15,9 +15,7 @@ export const BookProducer = (id,data) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const response = await mainApiInstance.post(`api/producers/book`, data);
-      const paymentLink = response.data.data.paymentLink;
-      const response2 = await mainApiInstance.get(paymentLink);
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response2.data, req: req });
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
         // console.log("error " , JSON.stringify(error.response))
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });

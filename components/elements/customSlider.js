@@ -18,7 +18,7 @@ function CustomSlider({ initValue = 0, values, onValueChange }) {
             let isDragging = false;
 
             const updateSlider = (left) => {
-                console.log(left)
+                
                 const sliderRect = slider.getBoundingClientRect();
                 left = Math.max(0, Math.min(left, sliderRect.width));
                 const part = sliderRect.width / (values - initValue);

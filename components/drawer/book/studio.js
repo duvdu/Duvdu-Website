@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Addproject";
 import dateFormat from "dateformat";
 import Successfully_posting from "../../popsup/post_successfully_posting";
-import { StudopBooking } from "../../../redux/action/apis/cycles/studio/book";
+import { StudopBooking } from "../../../redux/action/apis/cycles/rental/book";
 import CustomSlider from "../../elements/customSlider";
 
-const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
+const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData, StudopBooking, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
 
     const formData = addprojectState.formData
     const [preview, setPreview] = useState(false);
@@ -45,11 +45,11 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
         ontoggleDrawer()
     }
     
-
+console.log(StudopBooking_respond)
     useEffect(() => {
-        if (respond)
+        if (StudopBooking_respond)
             setPost_success(true)
-    }, [respond?.message])
+    }, [StudopBooking_respond?.message])
 
     function onsubmit() {
         if (!preview) {
@@ -153,7 +153,7 @@ const StudioBooking = ({ respond, addprojectState, UpdateFormData, StudopBooking
 };
 
 const mapStateToProps = (state) => ({
-    respond: state.api.StudopBooking,
+    StudopBooking_respond: state.api.StudopBooking,
     addprojectState: state.addproject,
 });
 

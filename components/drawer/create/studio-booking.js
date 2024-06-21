@@ -4,7 +4,7 @@ import Icon from '../../Icons';
 import React, { useEffect, useState } from 'react';
 import Switch from '../../elements/switcher'
 import { connect } from "react-redux";
-import { CreateStudio } from '../../../redux/action/apis/cycles/studio/create';
+import { CreateStudio } from '../../../redux/action/apis/cycles/rental/create';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
 import { useRouter } from "next/router";

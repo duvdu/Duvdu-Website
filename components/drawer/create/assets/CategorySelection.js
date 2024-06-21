@@ -12,7 +12,6 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
     const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
-
         const selectedCategory = categories.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
 
