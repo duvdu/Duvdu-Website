@@ -171,7 +171,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
                                                 style={{ maxHeight: isOurStation ? subcategory.tags.length * 64 : 0 }}
                                             >
                                                 {subcategory.tags.map((item, itemIndex) => (
-                                                    <li key={itemIndex} className="p-5 bg-[#E6E9ED]">{item}</li>
+                                                    <li key={itemIndex} className="p-5 bg-[#E6E9ED]">{item.title}</li>
                                                 ))}
                                             </ul>
                                         </li>

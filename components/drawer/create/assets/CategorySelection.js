@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../../Icons';
 import { connect } from 'react-redux';
-import { filterByCycle as filterByCycleCategory,  } from "../../../../util/util";
+import { filterByCycle as filterByCycleCategory, } from "../../../../util/util";
 
-function CategorySelection({ categories, onChange, value , filterIn }) {
+function CategorySelection({ categories, onChange, value, filterIn }) {
     categories = filterByCycleCategory(categories, filterIn)
     if (!categories || categories.length === 0) return <p>No categories available.</p>;
-    
+
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState({});
     const [selectedTags, setSelectedTags] = useState([]);
@@ -34,8 +34,9 @@ function CategorySelection({ categories, onChange, value , filterIn }) {
             onChange({
                 category: selectedCategory._id,
                 subCategory: selectedSubCategory._id,
-                tags: selectedTags,
+                tags: selectedTags.map(tag => tag.id),
             })
+        
     }
 
     const handleCategorySelect = (category) => {
@@ -119,16 +120,17 @@ function CategorySelection({ categories, onChange, value , filterIn }) {
 
             {
                 selectedCategory._id &&
-                selectedSubCategory._id && (
+                selectedSubCategory._id && 
+                (
                     <section>
                         <h3 className='opacity-60 my-2 text-lg font-bold'>Tags</h3>
                         <div className="flex gap-3 flex-wrap">
-                            {selectedSubCategory.tags.map((tag, index) => (
-                                <div key={index}
-                                    className={`py-1 px-2 border ${selectedTags.includes(tag) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                            {selectedSubCategory.tags.map((tag) => (
+                                <div key={tag.id}
+                                    className={`py-1 px-2 border ${selectedTags.some(t => t.id === tag.id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
                                     onClick={() => toggleTag(tag)}>
-                                    <div className={`whitespace-nowrap font-medium ${selectedTags.includes(tag) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
-                                        {tag}
+                                    <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t.id === tag.id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                        {tag.title}
                                     </div>
                                 </div>
                             ))}

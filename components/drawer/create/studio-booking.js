@@ -140,7 +140,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         })
     }
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
-    console.log(Object.keys(validateRequiredFields()))
+    
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
     return (
         <>

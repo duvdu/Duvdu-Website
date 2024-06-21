@@ -11,7 +11,6 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
 
-    // console.log(JSON.stringify(value) , value)
     useEffect(() => {
         const selectedCategory = categories.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
@@ -24,7 +23,11 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
             setSelectedSubCategories(selectedSubCategories || []);
 
             const selectedTags = value?.subCategories.reduce((acc, subCatObj) => {
-                return [...acc, ...subCatObj.tags];
+                const tags = subCatObj.tags.map(tagId => {
+                    const subCategory = selectedCategory.subCategories.find(sub => sub._id === subCatObj.subCategory);
+                    return subCategory.tags.find(tag => tag.id === tagId);
+                }).filter(Boolean);
+                return [...acc, ...tags];
             }, []);
 
             setSelectedTags(selectedTags || []);
@@ -34,12 +37,11 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
         }
     }, [JSON.stringify(value)]);
 
-
     useEffect(() => {
         if (onChange) {
             const formattedSubCategories = selectedSubCategories.map(sub => ({
                 subCategory: sub._id,
-                tags: selectedTags.filter(tag => sub.tags.includes(tag))
+                tags: selectedTags.filter(tag => sub.tags.some(t => t.id === tag.id)).map(tag => tag.id)
             }));
             onChange({
                 category: selectedCategory._id,
@@ -63,8 +65,8 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
     };
 
     const toggleTag = (tag) => {
-        if (selectedTags.includes(tag)) {
-            setSelectedTags(selectedTags.filter(t => t !== tag));
+        if (selectedTags.some(t => t.id === tag.id)) {
+            setSelectedTags(selectedTags.filter(t => t.id !== tag.id));
         } else {
             setSelectedTags([...selectedTags, tag]);
         }
@@ -119,12 +121,12 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
                 <section key={subCategory._id}>
                     <h3 className='opacity-60 my-2 text-lg font-bold'>{subCategory.title} Tags</h3>
                     <div className="flex gap-3 flex-wrap">
-                        {subCategory.tags.map((tag, index) => (
-                            <div key={index}
-                                className={`py-1 px-2 border ${selectedTags.includes(tag) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                        {subCategory.tags.map((tag) => (
+                            <div key={tag.id}
+                                className={`py-1 px-2 border ${selectedTags.some(t => t.id === tag.id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
                                 onClick={() => toggleTag(tag)}>
-                                <div className={`whitespace-nowrap font-medium ${selectedTags.includes(tag) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
-                                    {tag}
+                                <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t.id === tag.id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                    {tag.title}
                                 </div>
                             </div>
                         ))}

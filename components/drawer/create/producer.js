@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from "react-redux";
-import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
+import { UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
-import { ClosePopUp, OpenPopUp, filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
+import { ClosePopUp, OpenPopUp } from "../../../util/util";
 import Successfully_posting from "../../popsup/post_successfully_posting";
 import Drawer from "../../elements/drawer";
 import { CreateProducer } from "../../../redux/action/apis/cycles/producer/create";
@@ -10,15 +10,15 @@ import ArrowBtn from "../../elements/arrowBtn";
 import ListInput from "../../elements/listInput";
 import ProducerCategorySelection from "./assets/producerCategorySelection";
 
-const AddProducer = ({ CreateProducer, resetForm,UpdateFormData, addprojectState, respond, auth }) => {
+const AddProducer = ({ CreateProducer, resetForm, UpdateFormData, addprojectState, respond, auth }) => {
     const formData = addprojectState.formData
     const router = useRouter();
     const SuccessfullyPopupId = "Producer-Booking"
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        if(name == "maxBudget" || name == "minBudget")
-        value = parseInt(value)
+        if (name == "maxBudget" || name == "minBudget")
+            value = parseInt(value)
         UpdateFormData(name, value)
     };
     const onSubmit = (e) => {
@@ -45,7 +45,7 @@ const AddProducer = ({ CreateProducer, resetForm,UpdateFormData, addprojectState
         })
     }
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-
+    
     return (
         <>
             <Successfully_posting id={SuccessfullyPopupId} onCancel={toggleDrawer} message="Booking" />
@@ -58,7 +58,7 @@ const AddProducer = ({ CreateProducer, resetForm,UpdateFormData, addprojectState
                                 "category": formData.category,
                                 "subCategories": formData.subcategory
                             }}
-                            onChange={(value) => {  
+                            onChange={(value) => {
                                 UpdateFormData('category', value.category)
                                 UpdateFormData('subcategory', value.subCategories)
                             }} />

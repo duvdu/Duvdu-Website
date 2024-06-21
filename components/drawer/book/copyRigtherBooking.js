@@ -12,21 +12,32 @@ import Successfully_posting from "../../popsup/post_successfully_posting";
 import AddAttachment from "../../elements/attachment";
 
 
-const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
+const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const formData = addprojectState.formData
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
+    let duration = 0
+    if (formData.appointmentDate && formData.deadline)
+        duration = new Date(formData.deadline) - new Date(formData.appointmentDate)
 
-    useEffect(() => {
-        if (
-            formData.jobDetails?.length > 5 &&
-            formData.startDate &&   
-            attachmentValidation
-        ) setEnableBtn(true)
-        else setEnableBtn(false)
-    }, [formData.address?.length > 0, formData.jobDetails?.length > 5, formData.startDate])
+
+    if (
+        formData.details?.length > 5 &&
+        formData.deadline &&
+        formData.appointmentDate &&
+        formData['location.lat'] &&
+        formData['location.lng'] &&
+        duration > 0
+    ) {
+        if (!enableBtn)
+            setEnableBtn(true)
+    }
+    else {
+        if (enableBtn)
+            setEnableBtn(false)
+    }
 
     function ontoggleDrawer() {
         if (preview)
@@ -46,23 +57,27 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
         ontoggleDrawer()
     }
     useEffect(() => {
-        UpdateFormData('totalPrice', data.pricing)
+        UpdateFormData("address", "Cairo (this's a defult value)")
     }, [isOpen])
 
     useEffect(() => {
-        if (respond)
+        if (bookCopyrights_respond)
             setPost_success(true)
-    }, [respond?.message])
+    }, [bookCopyrights_respond?.message])
 
     const converting = (formData) => {
         const data = new FormData();
-        const avoidFeilds = ['receiver']
+        const avoidFeilds = ['receiver', 'attachments']
         Object.keys(formData).forEach(key => {
             // Append each key-value pair to the FormData instance
             if (avoidFeilds.includes(key)) return
             data.append(key, formData[key]);
         });
 
+        for (let i = 0; i < formData.attachments?.length; i++) {
+            const file = formData.attachments[i];
+            data.append(`attachments`, file.file);
+        }
         return data;
     }
 
@@ -83,13 +98,13 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
     };
 
     const handlelocationChange = (location) => {
-        UpdateFormData('location[lat]', location.lat)
-        UpdateFormData('location[lng]', location.lng)
+        UpdateFormData('location.lat', location.lat)
+        UpdateFormData('location.lng', location.lng)
     };
 
 
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-    console.log(data)
+
     if (!isOpen) {
         return <Drawer name={data.name} img={data.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
@@ -101,21 +116,21 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                 <div className={preview ? ' hidden p-8 pt-8' : 'p-8 pt-8'}>
                     <section>
                         <h3 className="capitalize opacity-60">job details</h3>
-                        <textarea name="jobDetails" value={formData.jobDetails|| ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">select Appointment  date</h3>
-                        <SelectDate onChange={(value) => UpdateFormData('Appointment', value)} />
+                        <h3 className="capitalize opacity-60 mb-4">select appointmentDate  date</h3>
+                        <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
                     <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">select Start date</h3>
-                        <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
+                        <h3 className="capitalize opacity-60 mb-4">select deadline</h3>
+                        <SelectDate onChange={(value) => UpdateFormData('deadline', value)} />
                     </section>
-                    <section className="my-11 gap-7 hidden">
+                    <section className="gap-7">
                         <h3 className="capitalize opacity-60 mb-4">address</h3>
-                        <input placeholder='address' className={inputStyle} value={formData.address|| ""} onChange={handleInputChange} name="address" />
+                        <input placeholder='address' className={inputStyle} value={formData.address || ""} onChange={handleInputChange} name="address" />
                     </section>
-                    <section className="h-96 relative overflow-hidden w-full mt-11">
+                    <section className="h-96 relative overflow-hidden w-full mt-5">
                         <h3 className="capitalize opacity-60  mb-3">location</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => handlelocationChange(value)} />
                     </section>
@@ -141,7 +156,7 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                         <section className="w-full">
                             <h2 className='opacity-60 capitalize mb-3'> project details </h2>
                             <span className='capitalize mb-8 opacity-80 w-min font-bold'>
-                                {formData.jobDetails}
+                                {formData.details}
                             </span>
                         </section>
 
@@ -150,8 +165,8 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                                 <Icon className='text-primary' name={"calendar"} />
                             </div>
                             <div className="flex flex-col pl-5 w-full">
-                                <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
-                                <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
+                                <span className="font-normal text-base">{dateFormat(formData.deadline, 'd mmmm , yyyy')}</span>
+                                <span className="text-[#747688] text-xs">{dateFormat(formData.deadline, 'dddd , h:mm TT')}</span>
                             </div>
                         </div>
 
@@ -168,7 +183,7 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
-                            <span className="text-2xl font-bold">${formData.totalPrice}</span>
+                            <span className="text-2xl font-bold">${data.duration * data.price}</span>
                         </div>
                         <div className="flex justify-center">
                             <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
@@ -182,7 +197,8 @@ const CopyRigtherBooking = ({ respond, addprojectState, UpdateFormData, BookCopy
 
 
 const mapStateToProps = (state) => ({
-    respond: state.api.BookCopyrights,
+    bookCopyrights_respond: state.api.BookCopyrights,
+    allstates: state.api,
     addprojectState: state.addproject,
 });
 

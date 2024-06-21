@@ -90,7 +90,7 @@ const MenuItem = ({ title, items }) => (
       {items.map((item, index) => (
         <li className='py-1 px-2 border hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
           <Link href="/">
-            <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'>{item}</div>
+            <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'>{item.title}</div>
           </Link>
         </li>
       ))}
