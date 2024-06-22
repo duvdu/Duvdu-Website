@@ -13,7 +13,7 @@ function ErrorPopUp({onCancel , errorReq , errorMsg , ...rest}) {
                 <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
                     <div className="heading_s1 mb-[88px] text-center">
                         <div className="flex w-full justify-center">
-                            <div className="size-16 bg-red-600 rounded-full flex justify-center items-center">
+                            <div className="size-16 bg-red rounded-full flex justify-center items-center">
                                 <Icon name={"xmark"} className="size-10 text-white" />
                             </div>
                         </div>

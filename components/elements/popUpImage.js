@@ -39,7 +39,7 @@ const PopUpImage = ({ children }) => {
                 <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="relative" ref={popupRef}>
                         <img src={children.props.src} alt="popup media" className="max-w-full max-h-full" />
-                        <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red-700 rounded-full size-6 flex justify-center items-center" onClick={togglePopup}>
+                        <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red rounded-full size-6 flex justify-center items-center" onClick={togglePopup}>
                             <Icon className='p-1' name={"xmark"}/>
                         </button>
                     </div>

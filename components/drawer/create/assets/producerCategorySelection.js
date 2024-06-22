@@ -3,29 +3,33 @@ import Icon from '../../../Icons';
 import { connect } from 'react-redux';
 import { filterByCycle as filterByCycleCategory } from '../../../../util/util';
 
-function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
+function ProducerCategorySelection({ categories, onChange, value, filterIn, onValidateChange }) {
     categories = filterByCycleCategory(categories, filterIn);
     if (!categories || categories.length === 0) return <p>No categories available.</p>;
 
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
+    const [validationError, setValidationError] = useState('');
+
+    useEffect(() => {
+        onValidateChange(validationError)
+    },[validationError])
 
     useEffect(() => {
         const selectedCategory = categories.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
 
         if (selectedCategory) {
-            const selectedSubCategories = value?.subCategories.map(subCatObj =>
+            const selectedSubCategories = value?.subCategories?.map(subCatObj =>
                 selectedCategory.subCategories.find(subCategory => subCategory._id === subCatObj.subCategory)
             ).filter(Boolean);
-
             setSelectedSubCategories(selectedSubCategories || []);
 
-            const selectedTags = value?.subCategories.reduce((acc, subCatObj) => {
+            const selectedTags = value?.subCategories?.reduce((acc, subCatObj) => {
                 const tags = subCatObj.tags.map(tagId => {
                     const subCategory = selectedCategory.subCategories.find(sub => sub._id === subCatObj.subCategory);
-                    return subCategory.tags.find(tag => tag.id === tagId);
+                    return subCategory?.tags.find(tag => tag._id === tagId);
                 }).filter(Boolean);
                 return [...acc, ...tags];
             }, []);
@@ -41,7 +45,7 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
         if (onChange) {
             const formattedSubCategories = selectedSubCategories.map(sub => ({
                 subCategory: sub._id,
-                tags: selectedTags.filter(tag => sub.tags.some(t => t.id === tag.id)).map(tag => tag.id)
+                tags: selectedTags.filter(tag => sub.tags.some(t => t._id === tag._id)).map(tag => tag._id)
             }));
             onChange({
                 category: selectedCategory._id,
@@ -50,10 +54,16 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
         }
     }, [selectedCategory, selectedSubCategories, selectedTags]);
 
+    useEffect(() => {
+            const error = validateTags();
+            setValidationError(error);
+    }, [selectedTags]);
+
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
         setSelectedSubCategories([]);
         setSelectedTags([]);
+        setValidationError('');
     };
 
     const toggleSubCategory = (subCategory) => {
@@ -62,15 +72,29 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
         } else {
             setSelectedSubCategories([...selectedSubCategories, subCategory]);
         }
+        setValidationError('');
     };
 
     const toggleTag = (tag) => {
-        if (selectedTags.some(t => t.id === tag.id)) {
-            setSelectedTags(selectedTags.filter(t => t.id !== tag.id));
+        if (selectedTags.some(t => t._id === tag._id)) {
+            setSelectedTags(selectedTags.filter(t => t._id !== tag._id));
         } else {
             setSelectedTags([...selectedTags, tag]);
         }
+        setValidationError('');
     };
+
+    const validateTags = () => {
+        for (const subCategory of selectedSubCategories) {
+            const subCategoryTags = selectedTags.filter(tag => subCategory.tags.some(t => t._id === tag._id));
+
+            if (subCategoryTags.length === 0) {
+                return `Please select at least one tag for the subcategory "${subCategory.title}".`;
+            }
+        }
+        return '';
+    };
+
 
     return (
         <>
@@ -122,10 +146,10 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn }) {
                     <h3 className='opacity-60 my-2 text-lg font-bold'>{subCategory.title} Tags</h3>
                     <div className="flex gap-3 flex-wrap">
                         {subCategory.tags.map((tag) => (
-                            <div key={tag.id}
-                                className={`py-1 px-2 border ${selectedTags.some(t => t.id === tag.id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                            <div key={tag._id}
+                                className={`py-1 px-2 border ${selectedTags.some(t => t._id === tag._id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
                                 onClick={() => toggleTag(tag)}>
-                                <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t.id === tag.id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t._id === tag._id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
                                     {tag.title}
                                 </div>
                             </div>

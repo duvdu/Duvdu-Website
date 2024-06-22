@@ -2231,6 +2231,7 @@ audio::-webkit-media-controls-volume-slider-container {
   --linear-popup: linear-gradient(180deg, rgba(247, 249, 251, 0.00) 0%, #F7F9FB 91.04%);
   --drop-white-arrow: url('../imgs/theme/icons/drop-arrow.svg');
   --padge: #595959;
+  --red: #EB1A40;
   --swiper-pagination-bullet-inactive-color: #fff;
   --swiper-pagination-color: #fff;
   --swiper-pagination-bullet-inactive-opacity: .4;

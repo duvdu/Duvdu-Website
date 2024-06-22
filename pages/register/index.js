@@ -215,7 +215,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                                     </div>
                                 )}
                                 {isUsernameExists === true && (
-                                    <div className="bg-red-700 rounded-full size-6 flex items-center justify-center">
+                                    <div className="bg-red rounded-full size-6 flex items-center justify-center">
                                         <Icon className="w-3 text-white" name="xmark" />
                                     </div>
                                 )}

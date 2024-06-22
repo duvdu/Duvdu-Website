@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../components/Icons';
 
-function ListInput({ onChange, name, placeholder, onClick, children, listdiv, target, remove, enable = true }) {
+function ListInput({ onChange, name, placeholder, onClick, children, listdiv, target, remove, enable = true,value }) {
     const [word, setWord] = useState('')
     const [list, setList] = useState([])
 
@@ -15,6 +15,11 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
         if (listdiv)
             setList(listdiv)
     }, [listdiv && listdiv.length])
+
+    useEffect(() => {
+        if (value)
+            setList(value);
+    }, [value]);
 
     const addword = () => {
         if (word) {
@@ -64,7 +69,7 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
                         <div key={index} className="opacity-60 border rounded-full px-3 py-1 flex gap-2 items-center justify-between">
                             <span dangerouslySetInnerHTML={{ __html: value }} />
                             <div onClick={() => removeWord(index)} className='cursor-pointer'>
-                                <Icon name='remove' className="size-4 text-white bg-red-800 rounded-full" />
+                                <Icon name='remove' className="size-4 text-white bg-red rounded-full" />
                             </div>
                         </div>
                     ))}

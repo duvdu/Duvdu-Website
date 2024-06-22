@@ -25,6 +25,7 @@ module.exports = {
         primary: "var(--primary)",
         hover_primary: "var(--hover_primary)",
         borderColor: "var(--border-color)",
+        red: "var(--red)",
       },
       container: {
         center: true,

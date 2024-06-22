@@ -258,7 +258,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                                         );
                                 }
                             })}
-                            <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red-700 rounded-full size-6 flex justify-center items-center" onClick={clearattachments}>
+                            <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red rounded-full size-6 flex justify-center items-center" onClick={clearattachments}>
                                 <Icon className='p-1' name={"xmark"} />
                             </button>
 
@@ -273,7 +273,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                         {audioSrc ? (
                             <div className="w-full max-w-md flex items-center">
                                 <audio controls controlsList="nodownload" src={audioSrc} className="w-full outline-none"></audio>
-                                <div className='cursor-pointer bg-red-500 rounded-full p-3 h-min ml-3' onClick={() => setaudioSrc(null)}>
+                                <div className='cursor-pointer bg-red rounded-full p-3 h-min ml-3' onClick={() => setaudioSrc(null)}>
                                     <Icon className='size-4 text-white' name={'xmark'} />
                                 </div>
                             </div>) :
