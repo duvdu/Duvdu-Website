@@ -129,7 +129,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         UpdateFormData("projectScale.unit","minute")
     }, [])
 
-
+console.log(formData)
     const toggleDrawer = () => {
         CreateStudio(-1)
         if (nextstep == 2) {
@@ -166,6 +166,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)
                                         UpdateFormData('tags', value.tags)
+                                        console.log(value.tags)
                                     }} />
                             </div>
                             <section className="w-full ">
@@ -182,7 +183,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                     <h3> location </h3>
                                     <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                                 </section>
-                                <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ListInput name={'searchKeyword'} placeholder={'Search keywords'} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                                 <input type="number" placeholder='insurance' name="insurance" value={formData.insurance|| ""} onChange={handleInputChange} className={inputStyle} />
                             </section>
                             <section className="flex flex-col gap-8">

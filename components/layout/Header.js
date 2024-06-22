@@ -75,6 +75,7 @@ catch (error) {
                 var headerHeight = header.offsetHeight;
                 root.style.setProperty('--header-height', headerHeight + 'px');
                 root.style.setProperty('--body-height', (window.innerHeight - headerHeight) + 'px');
+                root.style.setProperty('--drawer-height', (window.innerHeight - 160) + 'px');
             }
             catch (err) {
             }

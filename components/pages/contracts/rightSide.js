@@ -41,7 +41,7 @@ const RightSide = () => {
                         }
                     ]}>
                         <div className="border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center size-14 cursor-pointer">
-                            <Icon name={'ellipsis-vertical'} className={" h-6"} />
+                            <Icon name={'ellipsis-vertical'} className={"size-6"} />
                         </div>
                     </Selector>
                 </div>

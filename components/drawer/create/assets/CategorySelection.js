@@ -29,11 +29,12 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
         Change()
     }, [selectedCategory, selectedSubCategory, selectedTags])
     const Change = () => {
+        console.log(selectedTags)
         if (onChange)
             onChange({
                 category: selectedCategory._id,
                 subCategory: selectedSubCategory._id,
-                tags: selectedTags.map(tag => tag.id),
+                tags: selectedTags.map(tag => tag?._id || tag),
             })
         
     }
@@ -126,9 +127,9 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
                         <div className="flex gap-3 flex-wrap">
                             {selectedSubCategory.tags.map((tag) => (
                                 <div key={tag.id}
-                                    className={`py-1 px-2 border ${selectedTags.some(t => t?.id === tag.id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                                    className={`py-1 px-2 border ${selectedTags.some(t => t?._id === tag._id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
                                     onClick={() => toggleTag(tag)}>
-                                    <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t?.id === tag.id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                    <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t?._id === tag._id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
                                         {tag.title}
                                     </div>
                                 </div>

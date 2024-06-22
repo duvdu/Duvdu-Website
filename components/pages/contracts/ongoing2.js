@@ -28,7 +28,7 @@ import Selector from "../../elements/CustomSelector";
 //     "remainingTime": -12902
 // };
 
-const Ongoing2 = ({ data }) => {
+const Ongoing2 = ({ data,onClick }) => {
     
     const formattedDeadline = dateFormat(new Date(data?.contract?.createdAt), "mmmm dS, yyyy, h:MM TT");
 
@@ -49,7 +49,7 @@ const Ongoing2 = ({ data }) => {
     }
 
     return (
-        <div className='w-[370px] sm:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative'>
+        <div onClick={onClick} className='w-[370px] sm:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>

@@ -9,7 +9,7 @@ import Filter from "../../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { GetStudios } from "../../redux/action/apis/cycles/studio/get";
+import { GetStudios } from "../../redux/action/apis/cycles/rental/get";
 
 const Studio = ({ projects , GetStudios,api}) => {
     const Router = useRouter();
@@ -190,8 +190,7 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
 
 const mapStateToProps = (state) => ({
     api: state.api,
-    projects: state.api.GetStudios,
-    projectFilters: state.projectFilters,
+    projects: state.api.GetStudios
 });
 
 const mapDispatchToProps = {

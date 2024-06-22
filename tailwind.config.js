@@ -11,6 +11,7 @@ module.exports = {
       },
       height: {
         'body': 'var(--body-height)',
+        'drawer': 'var(--drawer-height)',
       },
       width: {
         '68%': '68%',

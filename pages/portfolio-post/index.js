@@ -186,8 +186,7 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
 
 const mapStateToProps = (state) => ({
     projects: state.api.GetProjects,
-    api: state.api,
-    projectFilters: state.projectFilters,
+    api: state.api
 });
 
 const mapDispatchToProps = {

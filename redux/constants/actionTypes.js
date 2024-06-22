@@ -47,7 +47,6 @@ export const ERROR_SIGNUP_VERIFY = 'SIGNUP_VERIFY';
 export const ERROR_UNKNOWN = 'UNKNOWN';
 
 // CATEGORIES
-
 export const SET_CATEGORIES = 'SET_CATEGORIES';
 
 // PROFILE
@@ -71,3 +70,6 @@ export const SET_NOTIFICATIONs = 'SET_CHATS';
 // SAVED PROJECT
 export const SAWAP_FAV = 'SAWAP_FAV';
 export const ADD_TO = 'ADD_TO';
+
+// SAVED PROJECT
+export const CONTRACT = 'CONTRACT';

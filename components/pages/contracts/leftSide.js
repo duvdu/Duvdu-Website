@@ -1,4 +1,4 @@
-import Pending from "./Pending";
+import Pending from "./pending1.js";
 import Pending2 from "./pending2";
 import Ongoing from "./ongoing";
 import Ongoing2 from "./ongoing2";
@@ -6,8 +6,9 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 import EmptyComponent from "./emptyComponent";
+import { toggleContractData } from "../../../redux/action/contractDetails";
 
-const LeftSide = ({ getAllContracts, respond, api }) => {
+const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     useEffect(() => {
         getAllContracts({ filterby: ['i_received', 'i_created'][activeIndex] })
@@ -16,46 +17,46 @@ const LeftSide = ({ getAllContracts, respond, api }) => {
         setActiveIndex(index);
     };
     const Empty = () => <div className="mt-10 lg:mt-32">
-        <EmptyComponent/>
+        <EmptyComponent />
     </div>
-    
-    const pending = (respond?.data['rental_contracts'] || []).filter(data => data.contract.status == "pending")
-    const ongoing = (respond?.data['rental_contracts'] || []).filter(data => data.contract.status == "ongoing")
-    
+
+    const pending = respond?.data?.filter(data => data.contract.status == "pending")
+    const ongoing = respond?.data?.filter(data => data.contract.status == "ongoing")
+
     const Clients = () =>
-        (pending.length || ongoing.length) ?
+        (pending?.length || ongoing?.length) ?
             <section>
                 {
                     pending.length > 0 &&
                     <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                        <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
+                        <h2 className="font-bold text-lg capitalize opacity-80">pending</h2>
                         {pending.map((data, index) => (
-                            <Pending key={index} data={data} />
+                            <Pending key={index} data={data} onClick={()=>toggleContractData(data)} />
                         ))}
                     </section>
                 }
                 {
                     ongoing.length > 0 &&
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
-                        <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
+                        <h2 className="font-bold text-lg capitalize opacity-80">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
-                            <Ongoing key={index} data={data} />
+                            <Ongoing key={index} data={data} onClick={()=>toggleContractData(data)} />
                         ))}
 
                     </section>
                 }
-            </section> : <Empty/>
-            
+            </section> : <Empty />
+
 
     const Creatives = () =>
-        respond?.data?.length ?
+        (pending?.length || ongoing?.length) ?
             <section>
                 {
                     pending.length > 0 &&
                     <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                         {pending.map((data, index) => (
-                            <Pending2 key={index} data={data} />
+                            <Pending2 key={index} data={data} onClick={()=>toggleContractData(data)} />
                         ))}
                     </section>
                 }
@@ -64,14 +65,14 @@ const LeftSide = ({ getAllContracts, respond, api }) => {
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
-                            <Ongoing2 key={index} data={data} />
+                            <Ongoing2 key={index} data={data} onClick={()=>toggleContractData(data)} />
                         ))}
 
                         {/* <Ongoing2 /> */}
                     </section>
                 }
             </section> : <Empty />
-            
+
 
     return (
         <>
@@ -122,11 +123,12 @@ const LeftSide = ({ getAllContracts, respond, api }) => {
 const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.getAllContracts,
-    categories: state.categories
+    categories: state.categories,
 });
 
 const mapDispatchToProps = {
-    getAllContracts
+    getAllContracts,
+    toggleContractData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftSide);

@@ -3,20 +3,19 @@ import Icon from "../../Icons";
 import Selector from "../../elements/CustomSelector";
 import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
 
-const Ongoing = ({ data, takeAction_respond, takeAction }) => {
+const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
     const statuses = [
         { value: 'accept' },
         { value: 'reject' },
     ];
 
-    console.log(takeAction_respond)
 
     const handleDropdownSelect = (value) => {
         console.log(data)
         // takeAction({id: , value : })
     };
     return (
-        <div className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] sm:w-full mx-auto'>
+        <div onClick={onClick} className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] sm:w-full mx-auto cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>

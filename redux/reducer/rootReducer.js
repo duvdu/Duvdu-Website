@@ -1,17 +1,16 @@
 import { combineReducers } from 'redux'
 import projects from './project'
-import projectFilters from './projectFilters'
 import setting from './setting'
 import auth from './auth'
 import counter from './test'
 import user from './user'
 import api from './api'
-import saved from './saved.js'
 import errors from './errorsType'
 import addproject from './forms/addproject'
 import categories from './categories'
 import chats from './realTime/chat'
 import messages from './realTime/messages'
+import ContractDetails from './contractDetails'
 
 const rootReducer = combineReducers({
     categories,
@@ -19,11 +18,11 @@ const rootReducer = combineReducers({
     projects,
     addproject,
     auth,
-    projectFilters,
     counter,
     user,
     chats,
     messages,
+    ContractDetails,
     api,
     errors,
 })

@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
-import { fetchProjects } from "../../redux/action/project";
 import Card from "../../components/elements/saved-project-card";
 import Icon from '../../components/Icons';
 import { Goback } from '../../util/util';
@@ -13,9 +12,7 @@ import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardPro
 
 const Projects = ({
     projects,
-    projectFilters,
-    fetchProjects,
-
+    
     AddProjectToBoard,
     DeleteProjectFromBoard,
     GetSavedBoard,
