@@ -8,11 +8,11 @@ import { toggleContractData } from '../../../redux/action/contractDetails';
 import dateFormat from "dateformat";
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 
-const getType = (value)=>{
-    if(value.includes("copyright"))
-        return "copyright"
+const getType = (value) => {
+    if (value.includes("copyright"))
+        return "copyrights"
 }
-function ReceiveProjectFiles({ contractDetails, toggleContractData, user,takeAction,takeAction_respond }) {
+function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAction, takeAction_respond }) {
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
     const sp = contractDetails?.sp;
@@ -40,16 +40,19 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user,takeAct
         return () => clearInterval(interval);
 
     }, [contract?.deadline]);
-
+    
     const handleAccept = () => {
-        takeAction({ id: contract._id, data: true })
+        if(!contractDetails?.ref) return
+        const type = getType(contractDetails.ref)
+        takeAction({ id: contract._id, data: true, type: type })
     };
     const handleRefuse = () => {
-        takeAction({ id: contract._id, data: false })
+        if(!contractDetails?.ref) return
+        const type = getType(contractDetails.ref)
+        takeAction({ id: contract._id, data: false, type: type })
     };
     // console.log(takeAction_respond)
-    if(contractDetails)
-    console.log(contractDetails)
+    // console.log(contractDetails)
     // console.log(contract)
     // console.log(customer)
     // console.log(sp)
@@ -162,7 +165,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user,takeAct
                                     </div>
                                 </div>
                             </section>
-                            <div className='h-full'/>
+                            <div className='h-full' />
                             <section className='w-full '>
                                 {
                                     sp.username == user.username ?

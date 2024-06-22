@@ -14,7 +14,7 @@ export const takeAction = ({ id, data, type }) => {
                 case "rental":
                     {
                         const response = await mainApiInstance.post(`/api/rentals/rental/contract/${id}/action`, {
-                            "status": data ? "accepted" : "rejected"
+                            "action": data ? "accepted" : "rejected"
                         });
                         dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
                     }
@@ -29,8 +29,8 @@ export const takeAction = ({ id, data, type }) => {
                     break;
                 case "copyrights":
                     {
-                        const response = await mainApiInstance.patch(`/api/copyrights/contract/${id}/action`, {
-                            "status": data ? "accept" : "reject"
+                        const response = await mainApiInstance.post(`/api/copyrights/contract/${id}/action`, {
+                            "action": data ? "accept" : "reject"
                         });
                         dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
                     }
