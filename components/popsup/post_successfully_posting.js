@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Icon from '../Icons';
 import Popup from '../elements/popup';
 
-function Successfully_posting({ id = "Report-sent-successfully",isShow, onCancel , message = 'Posted' }) {
+function SuccessfullyPosting({ id = "Report-sent-successfully",isShow, onCancel , message = 'Posted' }) {
     const [showPopup, setShowPopup] = useState(false);
     
     useEffect(() => {
@@ -38,4 +38,4 @@ function Successfully_posting({ id = "Report-sent-successfully",isShow, onCancel
     );
 }
 
-export default Successfully_posting;
+export default SuccessfullyPosting;

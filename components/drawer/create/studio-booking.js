@@ -12,7 +12,7 @@ import { convertToFormData, filterByCycle as filterByCycleCategory, printFormDat
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
 import AddOtherCreatives from "../../popsup/create/addOtherCreatives";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
 import CategorySelection from './assets/CategorySelection';
@@ -147,7 +147,7 @@ console.log(formData)
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
-            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'Create Rental'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
                     <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />

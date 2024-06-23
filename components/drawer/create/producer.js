@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { UpdateFormData, resetForm, setSubmitt } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
 import { ClosePopUp, OpenPopUp } from "../../../util/util";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import Drawer from "../../elements/drawer";
 import ArrowBtn from "../../elements/arrowBtn";
 import ListInput from "../../elements/listInput";
@@ -142,9 +142,9 @@ const AddProducer = ({
 
     return (
         <>
-            <Successfully_posting id={SuccessfullyUpdatePopupId} onCancel={toggleDrawer} message="Update" />
-            <Successfully_posting id={SuccessfullyDeletePopupId} onCancel={toggleDrawer} message="Delete" />
-            <Successfully_posting id={SuccessfullyCreatePopupId} onCancel={toggleDrawer} message="Create" />
+            <SuccessfullyPosting id={SuccessfullyUpdatePopupId} onCancel={toggleDrawer} message="Update" />
+            <SuccessfullyPosting id={SuccessfullyDeletePopupId} onCancel={toggleDrawer} message="Delete" />
+            <SuccessfullyPosting id={SuccessfullyCreatePopupId} onCancel={toggleDrawer} message="Create" />
             <Drawer isOpen={true} name={'add producer'} toggleDrawer={toggleDrawer} padding={false}>
                 <div className='flex flex-col justify-between h-full container mx-auto'>
                     <div className='flex flex-col h-full gap-14 container mx-auto mt-8'>

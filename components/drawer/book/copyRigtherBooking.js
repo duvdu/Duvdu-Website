@@ -8,7 +8,7 @@ import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Add
 import GoogleMap from "../../elements/googleMap";
 import { BookCopyrights } from "../../../redux/action/apis/cycles/copywriter/book";
 import dateFormat from "dateformat";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import AddAttachment from "../../elements/attachment";
 
 
@@ -111,7 +111,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
     }
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
             <Drawer name={preview ? 'Review Booking' : data?.user?.name} img={data?.user?.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll" padding={false}>
                 <div className={preview ? ' hidden p-8 pt-8' : 'p-8 pt-8'}>
                     <section>

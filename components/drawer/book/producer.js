@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Addproject";
 import GoogleMap from "../../elements/googleMap";
 import { UpdateKeysAndValues } from "../../../util/util";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import { BookProducer } from "../../../redux/action/apis/cycles/producer/book";
 import AddAttachment from "../../elements/attachment";
 
@@ -90,7 +90,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
     const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
             <Drawer name={data.user?.name} img={data.user?.profileImage} isOpen={isOpen} toggleDrawer={reset} className="overflow-scroll">
                 <div className='flex flex-col gap-7 container mx-auto'>
 

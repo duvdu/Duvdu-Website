@@ -36,7 +36,7 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
 
     }, [data?.contract?.deadline]);
     const status = data.contract.status
-    
+
     return (
         <div onClick={onClick} className='flex justify-between w-[370px] sm:w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
@@ -50,20 +50,22 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
                 </div>
                 {/*********/}
                 {/* time */}
+                
                 <div className='flex flex-col xl:flex-row justify-between items-center w-full'>
-                    <span className='text-4xl'> {timeLeft}
+                    <span className='text-4xl'> { status == "pending" ? timeLeft : "waiting for payment"}
+                        { status == "pending" && 
                         <span className='text-lg opacity-40 mx-2'>
-                            left
+                            {timeLeft ? "left" : "Time's up"}
                         </span>
+                        }
                     </span>
                     <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer hidden`}>
                         respond
                     </div>
-
                 </div>
                 {/*********/}
             </div>
-            {status == 'pending' && <Icon name="waiting" />}
+            {status == 'pending' || status.includes("waiting-for-pay") && <Icon name="waiting" />}
             {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
             {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
             <div className='absolute top-5 right-5 hidden'>

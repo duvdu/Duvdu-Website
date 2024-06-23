@@ -9,7 +9,7 @@ import GoogleMap from "../../elements/googleMap";
 import { UpdateKeysAndValues, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import { BookProject } from "../../../redux/action/apis/cycles/projects/book";
 import dateFormat from "dateformat";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import BookTeam from "../../elements/teams";
 import AddAttachment from "../../elements/attachment";
 
@@ -110,7 +110,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
 
             <Drawer name={preview ? 'Review Booking' : data.user?.name} img={data.user?.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} padding={false}>
                 {!isOpen ?

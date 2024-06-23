@@ -6,7 +6,7 @@ import SelectDate from "../../elements/selectDate";
 import { connect } from "react-redux";
 import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Addproject";
 import dateFormat from "dateformat";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import { StudopBooking } from "../../../redux/action/apis/cycles/rental/book";
 import CustomSlider from "../../elements/customSlider";
 
@@ -75,7 +75,7 @@ console.log(StudopBooking_respond)
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={OnSucess} message="Booking" />
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
             <Drawer name={preview ? 'Review Booking' : data.user.name} img={data.user.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-y-scroll" padding={false}>
                 <div className={preview ? ' hidden p-8 pt-0' : 'p-8 pt-0'}>
                     <div className="mt-11" />

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Button from '../../elements/button';
 import { useRouter } from "next/router";
 import ListInput from "../../elements/listInput";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import Switch from "../../elements/switcher";
 import Drawer from "../../elements/drawer";
@@ -90,7 +90,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'copy right'} toggleDrawer={toggleDrawer}>
                 <form className='flex flex-col gap-5 container mx-auto' onSubmit={handleSubmit}>
                     <section>

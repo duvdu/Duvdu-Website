@@ -20,7 +20,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
         <EmptyComponent />
     </div>
 
-    const pending = respond?.data?.filter(data => data.contract.status == "pending")
+    const pending = respond?.data?.filter(data => data.contract.status != "ongoing")
     const ongoing = respond?.data?.filter(data => data.contract.status == "ongoing")
 
     const Clients = () =>

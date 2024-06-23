@@ -7,7 +7,7 @@ import { ClosePopUp, OpenPopUp, UpdateKeysAndValues, convertToK } from '../util/
 import { connect } from "react-redux";
 import UsersToAdd from "../components/layout/team/usersToAdd";
 import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
-import Successfully_posting from "../components/popsup/post_successfully_posting";
+import SuccessfullyPosting from "../components/popsup/post_successfully_posting";
 import { useRouter } from "next/router";
 import dateFormat from "dateformat";
 
@@ -278,7 +278,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
 
     return (
         <Layout shortheader={true}>
-            <Successfully_posting id="successfully-create-team" onCancel={OnSucess} message="Create Team" />
+            <SuccessfullyPosting id="successfully-create-team" onCancel={OnSucess} message="Create Team" />
 
             <section className="container">
 

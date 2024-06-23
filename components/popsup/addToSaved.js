@@ -4,7 +4,7 @@ import { GetBoards } from '../../redux/action/apis/savedProject/board/get';
 import Button from '../elements/button';
 import Popup from '../elements/popup';
 import React, { useEffect, useState } from 'react';
-import Successfully_posting from './post_successfully_posting';
+import SuccessfullyPosting from './post_successfully_posting';
 import { ClosePopUp, OpenPopUp } from '../../util/util';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -49,7 +49,7 @@ function AddToSaved({
       }
     return (
         <>
-            <Successfully_posting id="addProjectToBoard-popup" message="Add To Team" onCancel={() => { AddProjectToBoard({ idboard: -1 }) }} />
+            <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To Team" onCancel={() => { AddProjectToBoard({ idboard: -1 }) }} />
             <Popup id="add-to-saved-project" onCancel={() => setCurrentStep("step1")} header={"Add To Saved Projects"} onOpen={init}>
                 <div className='flex flex-col h-[75vh] w-full sm:w-[565px] overflow-y-scroll'>
                     {boards?.map((board, index) => !isProjectInBoard(board, projectId) ? (

@@ -70,13 +70,22 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
                 </div>
                 {/*********/}
                 {/* deadline */}
+                
                 <div className='text-lg ml-auto mr-auto'>
+                {
+                !data.contract.status.includes("waiting-for-pay") ?
+                <>
                     <span className='opacity-50 mx-1'>
                         will respond in
                     </span>
                     <span className='text-primary'>
                         {timeLeft}
                     </span>
+                </> :
+                    <span className='opacity-50 mx-1'>
+                        wait for payment
+                    </span>
+                }
                 </div>
             </div>
             {/*********/}

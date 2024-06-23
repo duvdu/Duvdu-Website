@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { filterByCycle, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
 import Drawer from "../../elements/drawer";
@@ -173,7 +173,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'equipment rental'} toggleDrawer={toggleDrawer}>
                 {/* <SetCover isShow={post_success} /> */}
                 {nextstep == 2 ? (
