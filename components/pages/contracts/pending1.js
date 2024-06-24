@@ -65,7 +65,7 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
                 </div>
                 {/*********/}
             </div>
-            {status == 'pending' || status.includes("waiting-for-pay") && <Icon name="waiting" />}
+            {status == 'pending' || status?.includes("waiting-for-pay") && <Icon name="waiting" />}
             {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
             {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
             <div className='absolute top-5 right-5 hidden'>

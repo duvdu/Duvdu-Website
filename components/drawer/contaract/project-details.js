@@ -99,7 +99,6 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                     contract &&
                     <>
                         <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10 h-drawer'>
-
                             <section>
                                 <span className='text-4xl my-5'>{status == "pending" ? timeLeft : "waiting for payment"}
                                     {status == "pending" &&
@@ -112,7 +111,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                             <section className='w-full flex-col'>
                                 <h2 className='opacity-60 capitalize mb-3'> original gig </h2>
                                 <div className='w-full'>
-                                    <div className="h-20 w-full sm:w-[543px] rounded-full relative overflow-hidden">
+                                    <div className="h-20 w-full rounded-full relative overflow-hidden">
                                         <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
                                         <div className="absolute z-20 flex items-center w-full h-full p-7">
                                             <div className="w-full text-center p-20">
@@ -236,7 +235,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                         :
                                         <>
                                             {
-                                                status.includes("waiting-for-pay") &&
+                                                status?.includes("accept") &&
                                                 <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                         <span className='text-white font-bold capitalize text-lg'>
@@ -246,7 +245,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                                 </div>
                                             }
                                             {
-                                                !status.includes("waiting-for-pay") &&
+                                                !status?.includes("accept") &&
                                                 <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
                                                     Cancel
                                                 </button>

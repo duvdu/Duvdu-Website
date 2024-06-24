@@ -36,7 +36,6 @@ const Ongoing2 = ({ data,onClick }) => {
     const createdAtDate = new Date(data?.contract?.createdAt);
     const timeDifference = currentDate - createdAtDate;
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
     let formattedCreatedAt;
     if (daysDifference === 0) {
         formattedCreatedAt = "Today";
@@ -45,8 +44,9 @@ const Ongoing2 = ({ data,onClick }) => {
     } else if (daysDifference === 2) {
         formattedCreatedAt = "Day before yesterday";
     } else {
-        formattedCreatedAt = dateFormat(createdAtDate, "M/d/yyyy");
+        formattedCreatedAt = dateFormat(new Date(createdAtDate), "M/d/yyyy");
     }
+    console.log(createdAtDate)
 
     return (
         <div onClick={onClick} className='w-[370px] sm:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative cursor-pointer'>

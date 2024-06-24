@@ -36,7 +36,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
                     </section>
                 }
                 {
-                    ongoing.length > 0 &&
+                    ongoing.length > 0 && false &&
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
@@ -52,7 +52,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
         (pending?.length || ongoing?.length) ?
             <section>
                 {
-                    pending.length > 0 &&
+                    pending.length > 0 && false &&
                     <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                         {pending.map((data, index) => (
@@ -61,7 +61,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
                     </section>
                 }
                 {
-                    ongoing.length > 0 &&
+                    ongoing.length > 0 && false &&
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                         {ongoing.map((data, index) => (

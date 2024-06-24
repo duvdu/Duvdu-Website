@@ -18,13 +18,13 @@ export const takeAction = ({ id, data, type }) => {
             switch (type) {
                 case "rental":
                     response = await mainApiInstance.post(`/api/rentals/rental/contract/${id}/action`, {
-                        action: data ? "accepted" : "rejected"
+                        action: data ? "accept" : "reject"
                     });
                     break;
 
                 case "producer":
                     response = await mainApiInstance.patch(`/api/producers/contract/${id}`, {
-                        status: data ? "accept" : "reject"
+                        status: data ? "accepted" : "rejected"
                     });
                     break;
 

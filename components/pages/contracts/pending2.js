@@ -29,6 +29,7 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
     } else if (daysDifference === 2) {
         formattedCreatedAt = "Day before yesterday";
     } else {
+        console.log(data.contract.createdAt)
         formattedCreatedAt = dateFormat(createdAtDate, "M/d/yyyy");
     }
     useEffect(() => {
@@ -73,7 +74,7 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
                 
                 <div className='text-lg ml-auto mr-auto'>
                 {
-                !data.contract.status.includes("waiting-for-pay") ?
+                !data.contract.status?.includes("waiting-for-pay") ?
                 <>
                     <span className='opacity-50 mx-1'>
                         will respond in

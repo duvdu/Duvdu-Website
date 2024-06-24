@@ -94,7 +94,7 @@ const Producers = ({ GetProducer, respond,api }) => {
                         {producers?.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
-                        <div className="minmax-360">
+                        <div className="minmax-280">
                             {producers?.map((item, i) => {
                                 return <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />;
 
