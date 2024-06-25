@@ -52,7 +52,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
         (pending?.length || ongoing?.length) ?
             <section>
                 {
-                    pending.length > 0 && false &&
+                    pending.length > 0 &&
                     <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                         {pending.map((data, index) => (
