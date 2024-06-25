@@ -2,8 +2,8 @@ FROM node:alpine
 
 WORKDIR /app
 COPY package.json .
-RUN npm install --legacy-peer-deps --registry=https://registry.yarnpkg.com
+RUN npm install --legacy-peer-deps --registry=https://registry.npmjs.org
 COPY . .
 RUN npm run build
 
-CMD ["npm", "start"]
+CMD ["npm","start"]
