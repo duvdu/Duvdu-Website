@@ -47,7 +47,7 @@ const TheTeam = ({
         console.log(teamId)
         UpdateTeamUser(alldata, teamId)
     }
-    console.log(get_respond)
+
     return (
         <Layout shortheader={true}>
             <section className="container">
@@ -89,7 +89,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
     const data = respond?.data?.creatives || [];
 
     return (
-        <div className="h-body w-full overflow-y-scroll pt-14">
+        <div className="h-body w-full overflow-y-scroll pt-14 addUserScroll">
             {!isAddToTeamPage ? (
                 <>
                     <h1 className="page-header mb-8">Team Project</h1>
@@ -148,18 +148,20 @@ const Person = ({ person, onDelete, onUpdate }) => {
         { value: 'Edit' },
     ];
 
-
+    const handleDropdownSelect = (v) => {
+        v == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)
+    };
     return (
         <>
             <Popup id={"Edit-creative-" + person._id} header={'Work Details'} onCancel={onCancel}>
                 <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
-                    <div className='flex items-center gap-9'>
+                    <div className='flex items-center gap-9 w-64'>
                         <input type="number" defaultValue={person.workHours} onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             hours
                         </span>
                     </div>
-                    <div className='flex items-center gap-9'>
+                    <div className='flex items-center gap-9 w-64'>
                         <input type="number" defaultValue={person.totalAmount} onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             amount
@@ -171,7 +173,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
                 </div>
             </Popup>
             <div className='flex gap-4 h-12 min-w-[300px]'>
-                <img className='rounded-full h-full aspect-square' src={person.user.profileImage} alt='profile img' />
+                <img className='rounded-full h-full aspect-square object-cover object-top' src={person.user.profileImage} alt='profile img' />
                 <div className='w-full flex flex-col justify-center'>
                     <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
                     <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
@@ -182,7 +184,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
                         <Icon name={'chat'} />
                     </div>
                 </div>
-                {person.status == 'pending' && <Selector options={options} onSelect={(v) => v.value == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)}> <Icon name="waiting" className="size-12" /> </Selector>}
+                {person.status == 'pending' && <Selector options={options} onSelect={handleDropdownSelect}> <Icon name="waiting" className="size-12" /> </Selector>}
                 {person.status == 'refuse' && <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div>}
                 {person.status == 'available' && <div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div>}
             </div>

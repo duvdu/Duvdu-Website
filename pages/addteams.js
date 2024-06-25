@@ -3,11 +3,11 @@ import Layout from "../components/layout/Layout";
 import Selector from "../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
 import ArrowBtn from '../components/elements/arrowBtn';
-import { OpenPopUp, UpdateKeysAndValues, convertToK } from '../util/util';
+import { ClosePopUp, OpenPopUp, UpdateKeysAndValues, convertToK } from '../util/util';
 import { connect } from "react-redux";
 import UsersToAdd from "../components/layout/team/usersToAdd";
 import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
-import Successfully_posting from "../components/popsup/post_successfully_posting";
+import SuccessfullyPosting from "../components/popsup/post_successfully_posting";
 import { useRouter } from "next/router";
 import dateFormat from "dateformat";
 
@@ -95,25 +95,16 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             });
         });
 
+        if (formData.attachments)
+            for (let i = 0; i < formData.attachments.length; i++) {
+                const file = formData.attachments[i];
+                form.append(`attachments`, file.file);
+            }
 
-
-        for (let i = 0; i < formData?._attachments?.length; i++) {
-            const file = formData?._attachments[i];
-
-            form.append(`attachments`, file.file);
-        }
         form.append('cover', formData?.cover)
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', '_attachments', 'attachments', 'category', 'jobTitle'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', 'attachments', 'category', 'jobTitle'])
         CreateTeamProject(form)
 
-        // Printing FormData for demonstration
-        // for (const pair of form.entries()) {
-        //     console.log(pair[0] + ', ' + pair[1]);
-        // }
-
-        // UpdateFormData('attachments', formData?.attachment?.map((e)=> e.file))
-        // const form = new FormData()
-        // UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
     }
     const LeftSide = ({ isSolid, respond, onAddOne }) => {
         const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
@@ -134,7 +125,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
 
 
         return (
-            <div className="h-body w-full overflow-y-scroll pt-14">
+            <div className="h-body w-full overflow-y-scroll pt-14 addUserScroll"> 
                 {!isAddToTeamPage ? (
                     <>
                         <h1 className="page-header mb-8">Team Project</h1>
@@ -172,7 +163,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     const Person = ({ person }) => {
         return (
             <div className='flex gap-4 h-12 min-w-[300px]'>
-                <img className='rounded-full h-full aspect-square' src={person.profileImage} alt='profile img' />
+                <img className='rounded-full h-full aspect-square object-cover object-top' src={person.profileImage} alt='profile img' />
                 <div className='w-full flex flex-col justify-center'>
                     <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.name || person.username}</span>
                     <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
@@ -197,8 +188,8 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     const RightSide = ({ isSolid, onClick }) => (
 
         <div className="w-full max-w-[483px] h-body py-10">
-            <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
-                <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
+            <div className="flex flex-col justify-between bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
+                <div className="p-12 pb-0 w-full flex flex-col h-full overflow-y-scroll">
                     <h2 className="opacity-80 text-2xl font-semibold capitalize">Project Details</h2>
                     <div className="w-full flex flex-col gap-8 h-full mt-9">
                         <section className="hidden">
@@ -245,13 +236,13 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                             </div>
                             <div className="flex flex-col pl-5 w-full">
                                 <span className="font-normal text-base">alike media</span>
-                                <span className="text-[#747688] text-xs">{formData._attachments?.length} files</span>
+                                <span className="text-[#747688] text-xs">{formData.attachments?.length} files</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 {!isSolid && (
-                    <div className="border-t absolute flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
+                    <div className="border-t flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
                         <div className="flex justify-between w-full">
                             <span className="font-bold">Total Amount</span>
                             <span className="font-bold">$0.0</span>
@@ -276,6 +267,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
     );
     
     const OnSucess = (value) => {
+        ClosePopUp("successfully-create-team")
         router.push({ pathname: "/team/" + create_respond.data._id });
     }
     useEffect(() => {
@@ -286,7 +278,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
 
     return (
         <Layout shortheader={true}>
-            <Successfully_posting id="successfully-create-team" onCancel={OnSucess} message="Create Team" />
+            <SuccessfullyPosting id="successfully-create-team" onCancel={OnSucess} message="Create Team" />
 
             <section className="container">
 

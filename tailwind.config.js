@@ -11,6 +11,7 @@ module.exports = {
       },
       height: {
         'body': 'var(--body-height)',
+        'drawer': 'var(--drawer-height)',
       },
       width: {
         '68%': '68%',
@@ -25,6 +26,7 @@ module.exports = {
         primary: "var(--primary)",
         hover_primary: "var(--hover_primary)",
         borderColor: "var(--border-color)",
+        red: "var(--red)",
       },
       container: {
         center: true,

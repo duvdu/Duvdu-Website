@@ -162,7 +162,7 @@ const ProjectCard = ({
           <div className='flex items-center gap-3'>
             <Link href={`/creative/${cardData?.user?.username}`}>
               <div className='cursor-pointer'>
-                <img src={cardData?.user?.profileImage ? cardData?.user?.profileImage : process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
+                <img src={cardData?.user?.profileImage ? cardData?.user?.profileImage : process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
               </div>
             </Link> 
             <Link href={`/creative/${cardData?.user?.username}`}>

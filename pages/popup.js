@@ -14,7 +14,7 @@ import Receive from '../components/popsup/receive_project_files';
 import QrCode from '../components/popsup/QR_code';
 import Rating from '../components/popsup/rating';
 import Share from '../components/popsup/Share';
-import ProjectDetils from '../components/popsup/project-details';
+import ProjectDetils from '../components/drawer/contaract/project-details';
 import HourWorks from '../components/popsup/hourWorks';
 import ChooseCategory from '../components/popsup/create/assets/chooseCategory';
 import Dashboard from '../components/popsup/dashboard';
@@ -64,7 +64,7 @@ function Test() {
                     </div>
 
 
-                    <Dashboard />
+                    {/* <Dashboard /> */}
                     <DeleteBoard />
                     <EditProfile />
                     <CreatenewBoard />

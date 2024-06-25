@@ -1,39 +1,50 @@
 import { useEffect, useState } from "react";
 import AppButton from "../../elements/button";
 import Comment from "../../elements/comment";
-import Conver from "../../elements/profile/conver";
-import Info from "../../elements/profile/info";
-import Projects from "../../elements/profile/projects";
+import Conver from "./conver";
+import Info from "./info";
+import Projects from "./projects";
 import { connect } from "react-redux";
 import Icon from "../../Icons";
 import { GetAllMessageInChat } from "../../../redux/action/apis/realTime/messages/getAllMessageInChat";
 import { getOtherprofile } from "../../../redux/action/apis/auth/profile/getOtherProfile";
 import { useRouter } from "next/router";
-import { GetProjects } from "../../../redux/action/apis/cycles/projects/get";
 import { setFollow } from "../../../redux/action/apis/auth/profile/setFollow";
 import { setUnFollow } from "../../../redux/action/apis/auth/profile/setUnFollow";
+import Followers from "../../popsup/followes";
+import { GetUserProject } from "../../../redux/action/apis/auth/profile/getUserProjects";
 
-function OtherProfile({ 
-    user, 
-    getOtherprofile, 
-    GetAllMessageInChat, 
-    GetProjects, 
-    projects, 
-    setFollow, 
-    follow_respond, 
-    setUnFollow, 
-    setUnFollow_respond }) {
+function OtherProfile({
+    user,
+    getOtherprofile,
+    GetAllMessageInChat,
+    GetUserProject,
+    projects,
+    setFollow,
+    follow_respond,
+    setUnFollow,
+    setUnFollow_respond,
+    islogin
+}) {
 
     const route = useRouter()
     const { profile: username } = route.query
-    useEffect(() => {
-        getOtherprofile(username)
-        GetProjects({})
-        setUnFollow(-1)
-        setFollow(-1)
-    }, [username, setUnFollow_respond, follow_respond])
 
-    
+    useEffect(() => {
+        if ((setUnFollow_respond || follow_respond) && username) {
+            getOtherprofile(username)
+            setUnFollow(-1)
+            setFollow(-1)
+        }
+    }, [!setUnFollow_respond, !follow_respond])
+
+    useEffect(() => {
+        if (username) {
+            getOtherprofile(username)
+            GetUserProject({username: username})
+        }
+    }, [username])
+
     projects = projects?.data
 
     var profile = {
@@ -63,11 +74,11 @@ function OtherProfile({
         ],
 
     };
-    user = user?.data[0]
-
+    user = user?.data
+    projects = projects?.projects || []
 
     const swapFollow = () => {
-        if (user.isFollow || false) // isFollow
+        if (user.isFollow || false)
             setUnFollow(user._id)
         else
             setFollow(user._id)
@@ -77,38 +88,43 @@ function OtherProfile({
         user &&
         // !user ? <h1> There's No User name {username} </h1> :
         <div className='sm:container'>
+            <Followers id={"show-followers"} />
             <Conver converPic={user.coverImage || process.env.DEFULT_COVER_PATH} />
             <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                 <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
                     <div className='px-6 sm:px-10'>
                         {/* info */}
                         <Info src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
-                            location={user.adress || 'NONE'}
+                            location={user.address || 'NONE'}
                             occupation={'---'}
                             personalName={user.name}
                             popularity={{
-                                likes: 0,
-                                followers: user.followers || 0,
-                                views: 0,
+                                likes: user.likes,
+                                followers: user.followCount.followers,
+                                views: user.profileViews,
                             }}
                             rank={'---'}
                             rates={user?.rate?.totalRates}
+                            isMe={false}
                         />
                         {/* -- info -- */}
-                        <div className='flex gap-3 items-center'>
-                            <AppButton
-                                className={`w-full mb-7 mt-7 z-0 ${user.isFollow ? 'opacity-60' : ''}`}
-                                onClick={swapFollow}
-                            >
-                                {user.isFollow ? 'Unfollow' : 'Follow'}
-                            </AppButton>
-                            <div onClick={() => GetAllMessageInChat(user._id)} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
-                                <Icon type='far' name="chat" />
+                        {
+                            islogin &&
+                            <div className='flex gap-3 items-center mt-7'>
+                                <AppButton
+                                    className={`w-full z-0 ${user.isFollow ? 'opacity-60' : ''}`}
+                                    onClick={swapFollow}
+                                >
+                                    {user.isFollow ? 'Unfollow' : 'Follow'}
+                                </AppButton>
+                                <div onClick={() => GetAllMessageInChat(user._id)} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
+                                    <Icon type='far' name="chat" />
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
 
-                    <div className='h-divider'></div>
+                    <div className='h-divider mt-7 mb-7'></div>
                     <div className='px-10'>
                         <h3 className='pt-6' id='about-header'>about</h3>
                         <p className='pt-6' id='about-paragraph'>{user.about}</p>
@@ -139,8 +155,10 @@ function OtherProfile({
 
 
 const mapStateToProps = (state) => ({
+    islogin: state.auth.login,
+    // login_respond: state.api.login,
     user: state.api.getOtherprofile,
-    projects: state.api.GetProjects,
+    projects: state.api.GetUserProject,
     follow_respond: state.api.setFollow,
     setUnFollow_respond: state.api.setUnFollow,
 });
@@ -148,7 +166,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     GetAllMessageInChat,
     getOtherprofile,
-    GetProjects,
+    GetUserProject,
     setFollow,
     setUnFollow
 };

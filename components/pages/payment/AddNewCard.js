@@ -43,7 +43,7 @@ export default function AddNewCard() {
                         type="text"
                         id="cardNumber"
                         className={`border border-gray-300 rounded-xl w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${cardNumberError ? 'border-red-500' : ''}`}
-                        value={cardNumber}
+                        value={cardNumber|| ""}
                         onChange={(e) => setCardNumber(e.target.value)}
                         required
                     />
@@ -74,7 +74,7 @@ export default function AddNewCard() {
                         type="text"
                         id="cardOwner"
                         className={`border border-gray-300 rounded-xl w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${cardOwnerError ? 'border-red-500' : ''}`}
-                        value={cardOwner}
+                        value={cardOwner|| ""}
                         onChange={(e) => setCardOwner(e.target.value)}
                         required
                     />
@@ -92,7 +92,7 @@ export default function AddNewCard() {
                             type="text"
                             id="expiryDate"
                             className={`w-14 border border-gray-300 rounded-xl py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
-                            value={expiryDate0}
+                            value={expiryDate0|| ""}
                             onChange={(e) => setExpiryDate0(e.target.value)}
                             required
                         />
@@ -101,7 +101,7 @@ export default function AddNewCard() {
                             type="text"
                             id="expiryDate"
                             className={`w-14 border border-gray-300 rounded-xl py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
-                            value={expiryDate1}
+                            value={expiryDate1|| ""}
                             onChange={(e) => setExpiryDate1(e.target.value)}
                             required
                         />
@@ -114,7 +114,7 @@ export default function AddNewCard() {
                             type="text"
                             id="expiryDate"
                             className={`w-14 border border-gray-300 rounded-xl py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
-                            value={expiryDate2}
+                            value={expiryDate2|| ""}
                             onChange={(e) => setExpiryDate2(e.target.value)}
                             required
                         />

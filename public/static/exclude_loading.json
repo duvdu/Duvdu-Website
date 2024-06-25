@@ -1,6 +1,11 @@
 [
 "CheckUsernameExists",
 "FindUser",
+"getUserFollowers",
+"GetCopyrights",
+"GetProducer",
 "GetStudios",
+"GetTeamProjects",
+"getAllContracts",
 "GetProjects"
 ]

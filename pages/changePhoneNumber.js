@@ -10,11 +10,13 @@ import { askChangePhone } from "../redux/action/apis/auth/changephone/askupdateP
 import { UpdatePhone } from "../redux/action/apis/auth/changephone/updatePhone";
 import { errorConvertedMessage } from '../util/util';
 import OTP from "../components/elements/otp";
+import { useRouter } from "next/router";
 
 function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, UpdatePhone, username }) {
     const [step, setStep] = useState(0);
     const [error, setError] = useState('');
     const pages = ['', 'OTP', 'EnterPhoneNumber', 'OTP', 'PhoneChanged'];
+    const router = useRouter();
 
     useEffect(() => {
         const handlePopstate = () => {
@@ -34,7 +36,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
 
     useEffect(() => {
         if (api.error && JSON.parse(api.error).status == 423) {
-            window.location.href = "/"
+            router.push(`/`);
         }
         else if (api.error) {
             setError(api.error)
@@ -47,7 +49,6 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
     }, []);
 
     const handleNextStep = (value) => {
-        console.log(value)
         if (value < pages.length) { // Update this line to use the passed value
             setStep(value);
             const newURL = `${window.location.pathname}?page=${pages[value]}`; // Update this line to use the passed value
@@ -86,79 +87,85 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
 
         const handleSubmit = (e) => {
             e.preventDefault();
+            const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
 
             if (PhoneNumber.length < 1) {
                 setNumberError({ isError: true, message: 'Enter new phone number' });
-            } else {
+            }
+            else if (!egyptianPhoneRegex.test(PhoneNumber)) {
+                setNumberError( { isError: true, message: 'Invalid Egyptian phone number.' });
+
+            }
+            else {
                 setNumberError({ isError: false, message: '' });
                 UpdatePhone({ phoneNumber: PhoneNumber })
             }
-        };
+        }
+    
+
+    return (
+        <form className="w-[521px]" method="post" onSubmit={handleSubmit}>
+            <div className="heading_s1 mb-8">
+                <h1 className="auth-title capitalize">Change Phone Number</h1>
+            </div>
+            <div className={`mb-8 ${numberError.isError && 'error'}`}>
+                <input
+                    type="text"
+                    value={PhoneNumber|| ""}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="new number"
+                    className={numberError.isError ? "app-field error" : "app-field"}
+                />
+                {numberError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(numberError.message) }} />}
+            </div>
+            <button className="w-full" type="submit" >
+                <Button name="login" shadow={true} className="w-full " >
+                    confirm
+                </Button>
+            </button>
+        </form>
+    )
+}
 
 
-        return (
-            <form className="w-[521px]" method="post" onSubmit={handleSubmit}>
-                <div className="heading_s1 mb-8">
-                    <h1 className="auth-title capitalize">Change Phone Number</h1>
+function Message() {
+
+    return (
+        <div className="flex flex-col justify-center h-full">
+            <div className="heading_s1 mb-[88px] text-center">
+                <div className="flex w-full justify-center">
+                    <Icon name={"done"} className="mb-9" />
                 </div>
-                <div className={`mb-8 ${numberError.isError && 'error'}`}>
-                    <input
-                        type="text"
-                        value={PhoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="new number"
-                        className={numberError.isError ? "app-field error" : "app-field"}
-                    />
-                    {numberError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(numberError.message) }} />}
-                </div>
-                <button className="w-full" type="submit" >
-                    <Button name="login" shadow={true} className="w-full " >
-                        confirm
-                    </Button>
-                </button>
-            </form>
-        )
-    }
-
-
-    function Message() {
-
-        return (
-            <div className="flex flex-col justify-center h-full">
-                <div className="heading_s1 mb-[88px] text-center">
-                    <div className="flex w-full justify-center">
-                        <Icon name={"done"} className="mb-9" />
-                    </div>
-                    <h1 className="auth-title mb-2">number changed</h1>
-                    <p>Your phone number has been changed successfully</p>
-                </div>
-                <div className="mb-4 relative">
+                <h1 className="auth-title mb-2">number changed</h1>
+                <p>Your phone number has been changed successfully</p>
+            </div>
+            <div className="mb-4 relative">
                 <Link href={"/login"}>
                     <Button type="submit" name="login" shadow={true}>
                         Done
                     </Button>
                 </Link>
+            </div>
+        </div>
+    )
+}
+
+
+return (
+    <>
+        <Layout shortheader={true}>
+            <div className="container">
+                <div className="mx-auto flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
+                    {step === 1 && <OTP key={0} onSuccess={() => handleNextStep(2)} username={username} />}
+                    {step === 2 && <EnterNewPhone />}
+                    {step === 3 && <OTP key={1} onSuccess={() => handleNextStep(4)} username={username} />}
+                    {step === 4 && <Message />}
+                    {/* <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} /> */}
                 </div>
             </div>
-        )
-    }
-
-
-    return (
-        <>
-            <Layout shortheader={true}>
-                <div className="container">
-                    <div className="mx-auto flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
-                        {step === 1 && <OTP key={0} oNsucess={() => handleNextStep(2)} username={username} />}
-                        {step === 2 && <EnterNewPhone />}
-                        {step === 3 && <OTP key={1} oNsucess={() => handleNextStep(4)} username={username} />}
-                        {step === 4 && <Message />}
-                        <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} />
-                    </div>
-                </div>
-            </Layout>
-        </>
-    );
+        </Layout>
+    </>
+);
 }
 
 

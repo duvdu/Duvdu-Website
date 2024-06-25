@@ -1,10 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Icon from '../Icons';
 
-const Popup = ({ id, children, onCancel, header, className = "", img, addWhiteShadow = false }) => {
+const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, addWhiteShadow = false }) => {
+    const popupRef = useRef(null);
+
+    const throttle = (func, delay) => {
+        let lastCall = 0;
+        return (...args) => {
+            const now = new Date().getTime();
+            if (now - lastCall < delay) {
+                return;
+            }
+            lastCall = now;
+            return func(...args);
+        };
+    };
+
+
+    useEffect(() => {
+        const popupElement = popupRef.current;
+
+        if (!popupElement) return;
+        
+        const handleMutation = mutations => {
+            for (const mutation of mutations) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    if (popupElement.classList.contains('show')) {
+                        if (onOpen) onOpen();
+                    } else {
+                        if (onCancel) onCancel();
+                    }
+                    break;
+                }
+            }
+        };
+
+        const observer = new MutationObserver(throttle(handleMutation, 200));
+
+        observer.observe(popupElement, { attributes: true });
+
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
 
     return (
-        <div id={id} className={`popup z-30 ${className}`}>
+        <div ref={popupRef} id={id} className={`popup z-30 ${className}`}>
             <div onClick={onCancel} data-popup-dismiss="popup" className="flex overlay blur" />
             <div className='card content bg-[#F7F9FB] dark:bg-[#131313] sm:w-auto sm:mx-auto w-full mx-5' style={img ? { backgroundImage: `url(${img})` } : {}}>
                 <div className='p-5 pl-[31px]'>
@@ -23,8 +64,8 @@ const Popup = ({ id, children, onCancel, header, className = "", img, addWhiteSh
                 </div>
                 {
                     addWhiteShadow &&
-                    <div className='h-0 w-full sticky bottom-0 -translate-y-32' > 
-                        <div className='bottomeffect h-32'/>
+                    <div className='h-0 w-full sticky bottom-0 -translate-y-32' >
+                        <div className='bottomeffect h-32' />
                     </div>
                 }
             </div>

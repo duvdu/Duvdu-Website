@@ -7,9 +7,9 @@ const InternetConnection = () => {
     return (
         <>
             <Layout>
-                <div className='container flex flex-col justify-center items-center w-min'>
-                    <div className='w-[540px] h-[450]px bg-gray-600 mt-10' />
-                    <img src='/assets/imgs/theme/noInternetConnection.svg' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' />
+                <div className='container flex flex-col justify-center items-center w-min p-10'>
+                <div className='bg-gray-600 mt-5' />
+                    <img src='/assets/imgs/theme/noInternetConnection.svg' className='lg:w-[540px] lg:h-[450px]' />
                     <div className='flex flex-col justify-start items-start w-[400px]'>
                         <h3 className='text-2xl font-bold mt-8 mb-4 capitalize'>
                             no internet connection

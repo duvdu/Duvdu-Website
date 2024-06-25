@@ -4,14 +4,15 @@ import { mainApiInstance } from '../../axiosInstances';
 export const SwapProjectToFav = ({ projectId, action }) => {
     const req = "SwapProjectToFav";
     return async dispatch => {
+        console.log(projectId, action)
         if (!projectId || !action) {
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
             return;
         }
-
+        
         try {
             const response = await mainApiInstance.patch(`api/users/auth/profile/favourites/${projectId}?action=${action}`);
-            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
+            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: { ...response.data, projectId }, req: req });
         } catch (error) {
             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
         }

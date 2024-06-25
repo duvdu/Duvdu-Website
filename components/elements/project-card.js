@@ -1,9 +1,7 @@
-
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration, isFav } from '../../util/util';
-import { login } from "../../redux/action/apis/auth/signin/signin";
+import { convertDuration } from '../../util/util';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
@@ -15,24 +13,23 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 
-const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, GetProject, GetProject_respond, SwapProjectToFav }) => {
+const ProjectCard = ({ cardData: initialCardData, className = "", type = 'portfolio-post', islogin, swapProjectToFav_respond, SwapProjectToFav }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
-  const [love, setLove] = useState(false);
   const [actionID, setActionID] = useState(null);
   const [cardData, setCardData] = useState(initialCardData);
   const loveIconName = cardData.isFavourite ? 'fas' : 'far'
 
   useEffect(() => {
-    if(swapProjectToFav_respond && actionID == cardData._id)
-    {setCardData(prev => ({ 
-      ...prev, 
-      isFavourite: !prev.isFavourite 
-    }));
-    setActionID(null)
-  }
+    if (swapProjectToFav_respond && actionID == cardData._id) {
+      setCardData(prev => ({
+        ...prev,
+        isFavourite: !prev.isFavourite
+      }));
+      setActionID(null)
+    }
   }, [swapProjectToFav_respond]);
 
   useEffect(() => {
@@ -46,14 +43,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
     }
   }, [videoRef.current?.duration == NaN]);
 
-  // useEffect(() => {
-  //   if (swapProjectToFav_respond) {
-  //     GetProject(cardData._id)
-  //   }
-  // }, [swapProjectToFav_respond]);
-
-
-
   const loveToggleAction = () => {
     setActionID(cardData._id)
     SwapProjectToFav({ projectId: cardData._id, action: cardData.isFavourite ? "remove" : "add" })
@@ -66,7 +55,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
     if (videoRef.current)
       videoRef.current.muted = soundIconName === 'volume-high';
-
   };
 
   const handleHover = () => {
@@ -91,7 +79,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //     setLove(isFav(cardData._id, getBoards_respond))
   //   }
   // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
-
 
   return (
     <>
@@ -167,7 +154,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
           <div className='flex items-center gap-3'>
             <Link href={`/creative/${cardData.user.username}`} >
               <div className='cursor-pointer'>
-                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full' />
+                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
               </div>
             </Link>
             <Link href={`/creative/${cardData.user.username}`}>
@@ -181,8 +168,16 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
-        <div className='text-xl font-bold'>{cardData.price}</div>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.title || cardData.studioName}</p>
+        {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
+          <>
+            <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
+            {(cardData.projectScale?.unit) &&
+            <span className='text-xl ml-2 opacity-60'>
+              per {cardData.projectScale?.unit}
+            </span>}
+          </>
+        }
       </div>
     </>
   );

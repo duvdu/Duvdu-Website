@@ -80,7 +80,7 @@
 }
 
 .boards-card .projects .col1 {
-    flex: 300;
+    flex: 300;  
     background-color: grey;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;

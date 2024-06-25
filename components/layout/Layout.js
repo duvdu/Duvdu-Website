@@ -6,11 +6,15 @@ import MobileMenu from "./MobileMenu";
 import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
-import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
+import { GetNotifications, cleanupSocket } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
 import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
+import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
+import { getCategory } from "../../redux/action/apis/category/getCategories";
+import { init } from "../../redux/action/apis/init/getdata";
 
 const Layout = ({
+    user,
     children,
     shortheader,
     isbodyWhite,
@@ -20,9 +24,16 @@ const Layout = ({
     getMyprofile,
     GetAllChats,
     GetNotifications,
-    login_respond,
     GetBoards,
-    getMyprofile_respond
+    GetFavList,
+    getCategory,
+    GetBoards_respond,
+    GetAllChats_respond,
+    GetNotifications_respond,
+    GetFavList_respond,
+    getCategory_respond,
+    cleanupSocket,
+    init
 
 }) => {
     const [isToggled, setToggled] = useState(1);
@@ -39,18 +50,36 @@ const Layout = ({
                 .classList.add("mobile-menu-active");
     };
 
+    useEffect(() => {
+        if (!getCategory_respond)
+            getCategory()
+    }, [getCategory_respond])
 
     useEffect(() => {
-        getMyprofile()
-    }, [login_respond])
+        if (!user)
+            getMyprofile()
+    }, [user])
 
     useEffect(() => {
-        if (getMyprofile_respond) {
-            GetBoards({})
-            GetAllChats()
-            GetNotifications()
+        init()
+    }, [])
+
+    useEffect(() => {
+        if (user) {
+            if (!GetBoards_respond)
+                GetBoards({})
+            if (!GetFavList_respond)
+                GetFavList({})
+            if (!GetAllChats_respond)
+                GetAllChats()
+            if (!GetNotifications_respond) {
+                GetNotifications()
+            }
         }
-    }, [getMyprofile_respond])
+        return () => {
+            // cleanupSocket();
+        };
+    }, [user,cleanupSocket])
 
     return (
         <>
@@ -74,15 +103,27 @@ const Layout = ({
     );
 };
 const mapStateToProps = (state) => ({
+    user: state.auth.user,
     login_respond: state.api.login,
-    getMyprofile_respond: state.api.getMyprofile
+    getMyprofile_respond: state.api.getMyprofile,
+    categories: state.categories,
+
+    GetAllChats_respond: state.api.GetAllChats,
+    GetNotifications_respond: state.api.GetNotifications,
+    GetBoards_respond: state.api.GetBoards,
+    GetFavList_respond: state.api.GetFavList,
+    getCategory_respond: state.api.getCategory,
 });
 
 const mapDispatchToProps = {
     getMyprofile,
     GetAllChats,
     GetNotifications,
-    GetBoards
+    cleanupSocket,
+    GetBoards,
+    GetFavList,
+    init,
+    getCategory
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

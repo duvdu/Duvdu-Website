@@ -8,41 +8,38 @@ import Button from '../../elements/button';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
 import { filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import SetCover from "./assets/addCover";
 import ListInput from "../../elements/listInput";
 import Drawer from "../../elements/drawer";
 import { CreateProject } from "../../../redux/action/apis/cycles/projects/create";
-import CategorySelection from "./assets/selectCategory";
+import CategorySelection from "./assets/CategorySelection";
+import AddAttachment from "../../elements/attachment";
+import GoogleMap from "../../elements/googleMap";
 
 
-const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, addprojectState,categories,resetForm }) => {
+const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, addprojectState, categories, resetForm }) => {
     const router = useRouter();
     const formData = addprojectState.formData;
-    
+
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
-    
+    const [attachmentValidation, setAttachmentValidation] = useState(false);
+
     categories = filterByCycle(categories, 'portfolio-post')
+
     
-    useEffect(() => {
-        UpdateFormData('location.lat', '20.4575541')
-        UpdateFormData('location.lng', '20.4575541')
-    }, [])
 
     const convertToFormData = () => {
         const data = new FormData();
 
         // Append simple string and number values directly from the state
-        data.append('title', formData.projectName);
-        data.append('desc', formData.projectDescription);
+        data.append('title', formData.title);
+        data.append('desc', formData.desc);
         data.append('address', formData.address);
-        data.append('projectBudget', formData.price);
+        data.append('projectBudget', formData.projectBudget);
         data.append('projectScale[scale]', formData.durationnum);
-
-        data.append('location.lat', formData['location.lat']);
-        data.append('location.lng', formData['location.lng']);
 
         data.append('projectScale[time]', formData.durationUnit || "minute");
         data.append('showOnHome', formData.showOnHome || false);
@@ -83,25 +80,32 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                 data.append(`attachments`, file);
             }
 
+            if (formData.location) {
+                data.append('location.lat', formData.location.lat);
+                data.append('location.lng', formData.location.lng);
+            }
         return data;
     };
 
     const validateRequiredFields = () => {
         const errors = {};
-        return errors
-        if (!formData.durationnum) {
-            errors.durationnum = 'Duration number is required';
-        }
-        if (!formData.durationUnit) {
-            errors.durationUnit = 'Duration unit is required';
-        }
-        if (!formData.price) {
-            errors.price = 'Price is required';
-        }
 
+        if (!formData.category) errors.category = 'Category is required';
+        if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
+        if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
+        if (!formData.title) errors.title = 'Title is required';
+        if ((formData.desc?.length||0) < 6) errors.desc = 'Description is required';
+        if (!formData.address) errors.address = 'Address is required';
+        if (!formData.durationnum) errors.durationnum = 'Project scale is required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.tools || !formData.tools.length) errors.tools = 'Tools are required';
+        if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives are required';
+        if (!formData.attachments || !formData.attachments.length) errors.attachments = 'Attachments are required';
+        if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
+        
         return errors;
-    }
-
+    };
+    const isEnable = Object.keys(validateRequiredFields()).length == 0
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -126,12 +130,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         newArray.splice(index, 1); // Remove the item at the specified index
         UpdateFormData(arrayName, index);
     };
-
-    const attachmentsUpload = (e) => {
-        UpdateFormData('attachments', handleMultipleFileUpload(e))
-        // setAttachments(handleMultipleFileUpload(e))
-    };
-
     const Publish = (e) => {
         setNextstep(1)
         CreateProject(convertToFormData())
@@ -166,7 +164,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating"/>
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'add project'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
                     <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
@@ -175,13 +173,11 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                         <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
                             <div className="my-5">
                                 <CategorySelection
-                                    categories={categories}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,
                                         'tags': formData.tags,
                                     }}
-                                    categorie
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)
@@ -189,42 +185,17 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     }} />
                             </div>
                             <section>
-                                <label htmlFor="attachment-upload" >
-                                    <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
-                                        <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
-                                            <Icon name={"add-file"} className='size-7' />
-                                        </div>
-                                        <span className="text-primary text-sm font-bold mt-3">Click to Upload</span>
-                                    </div>
-                                </label>
-                                <input  onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-
-                                {
-                                    formData.attachments &&
-                                    formData.attachments.length > 0 &&
-                                    formData.attachments.map((file, key) => (
-                                        <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
-                                            <Icon name={'file'} className="size-10" />
-                                            <div>
-                                                <span className=''>{file.fileName}</span>
-                                                <br />
-                                                <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
+                                <h3 className="capitalize opacity-60 mt-11">attachments</h3>
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
-                                <input placeholder='Name your project' className={inputStyle} value={formData.projectName} onChange={handleInputChange} name="projectName" />
+                                <input placeholder='Name your project' className={inputStyle} value={formData.title|| ""} onChange={handleInputChange} name="title" />
                             </section>
                             <section>
-                                <input placeholder='Project description' className={inputStyle} value={formData.projectDescription} onChange={handleInputChange} name="projectDescription" />
+                                <input placeholder='Project description' className={inputStyle} value={formData.desc|| ""} onChange={handleInputChange} name="desc" />
                             </section>
-                            {/* <section>
-                                <input placeholder="Add creative’s functions" className={inputStyle} value={formData.creativeFunctions} onChange={handleInputChange} name="creativeFunctions" />
-                            </section> */}
                             <section>
-                                <input placeholder='address' className={inputStyle} value={formData.address} onChange={handleInputChange} name="address" />
+                                <input placeholder='address' className={inputStyle} value={formData.address|| ""} onChange={handleInputChange} name="address" />
                             </section>
                             <section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
@@ -233,16 +204,20 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <ListInput
                                     placeholder={'add tool used'}
                                     target="AddToolUsed"
+                                    name={"tools"}
                                     listdiv={formData.tools && formData.tools.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
                                     remove={(value) => removeFromArray('tools', value)}
+                                    enable={false}
                                 />
                             </section>
                             <section>
                                 <ListInput
                                     placeholder={'add other creatives'}
                                     target="addOtherCreatives"
+                                    name={"creatives"}
                                     listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
                                     remove={(value) => removeFromArray('creatives', value)}
+                                    enable={false}
                                 />
                             </section>
                             {/* 
@@ -256,8 +231,8 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                          */}
                             <section>
-                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget} onChange={handleInputChange} name="price" />
-                                {errors.price && <div style={{ color: 'red' }}>{errors.price}</div>}
+                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget|| ""} onChange={handleInputChange} name="projectBudget" />
+                                {errors.projectBudget && <div style={{ color: 'red' }}>{errors.projectBudget}</div>}
                             </section>
                             <section>
                                 <div className='flex justify-center items-center gap-9'>
@@ -270,20 +245,24 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                         name="durationUnit"
                                         required
                                     >
-                                        {['second', 'minute', 'Hours', 'days'].map((value, index) => (
+                                        {['minute', 'hour'].map((value, index) => (
                                             <option key={index} value={value.toLowerCase()}>{value}</option>
                                         ))}
                                     </select>
                                 </div>
 
                             </section>
+                            <section className="h-96 relative overflow-hidden">
+                                <span> Set location </span>
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                            </section>
                             <div className='flex justify-center gap-3 mt-1'>
-                            <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData( 'showOnHome', checked )} />
+                                <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'> Show on home feed & profile </p>
                             </div>
 
 
-                            <Button onClick={setCover} className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
+                            <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>
                                     Next
                                 </span>

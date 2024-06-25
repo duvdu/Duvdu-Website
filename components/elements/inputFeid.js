@@ -22,7 +22,7 @@ function InputFeid({placeholder , type = "text",errerMsg: errorMsg,onChange,send
             <div className={`${errorMsg && 'error'}`}>
                 <input
                     type={type}
-                    value={value}
+                    value={value|| ""}
                     onChange={handleInputChange}
                     placeholder={placeholder}
                     className={errorMsg ? "app-field error" : "app-field"}

@@ -1,7 +1,6 @@
 [
     "CheckUsernameExists",
     "FindUser",
-    "ChangePassword",
     "ASKforgetpassword",
     "UpdatePhone",
     "_updateProfile",
@@ -12,5 +11,6 @@
     "GetAllChats",
     "GetNotifications",
     "signup",
+    "GetIsLoggedProducer",
     "login"
 ]

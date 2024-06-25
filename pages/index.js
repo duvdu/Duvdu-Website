@@ -21,12 +21,12 @@ const Projects = ({ projects, GetProjects, api }) => {
     const [limit, setLimit] = useState(showLimit);
     const targetRef = useRef(null);
 
-    
+
     useEffect(() => {
-        if (limit){
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page })
+        if (limit) {
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page })
         }
-    }, [limit,searchTerm])
+    }, [limit, searchTerm])
 
 
     useEffect(() => {
@@ -65,7 +65,11 @@ const Projects = ({ projects, GetProjects, api }) => {
                             !searchTerm &&
                             <div className="h-7" />
                         }
-                        <h1 className="page-header pb-9">most popular on duvdu</h1>
+                        
+                        {projectsList?.length > 0 && (
+                            <h1 className="page-header pb-9">most popular on duvdu</h1>
+                        )}
+
                         {projectsList?.length === 0 && (
                             <h3>No projects Found </h3>
                         )}
@@ -185,8 +189,7 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
 
 const mapStateToProps = (state) => ({
     projects: state.api.GetProjects,
-    api: state.api,
-    projectFilters: state.projectFilters,
+    api: state.api
 });
 
 const mapDispatchToProps = {

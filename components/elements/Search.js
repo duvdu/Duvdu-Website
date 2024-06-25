@@ -50,10 +50,10 @@ const Search = () => {
         <>
             <input
                 className="searchInput bg-transparent border border-[#00000040] dark:border-[#3E3E3E] hover:border-transparent hover:bg-[#EAEEF0] focus:border-2 focus:border-primary focus:bg-transparent w-60 mx-6 text-sm h-9"
-                value={searchTerm}
+                value={searchTerm || ""}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => handleFocus(true)}
-                onBlur={() => setTimeout(() => handleFocus(false), 200)} // Delay to allow click on history item
+                onBlur={() => setTimeout(() => handleFocus(false), 200)}
                 onKeyDown={handleInput}
                 type="text"
                 placeholder={t("Search") + "..."}

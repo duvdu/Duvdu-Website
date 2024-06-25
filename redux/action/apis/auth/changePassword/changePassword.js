@@ -2,16 +2,18 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const ChangePassword = ({newPassword , username}) => {
+export const ChangePassword = ({ newPassword, oldPassword }) => {
+  const req = 'ChangePassword'
   return async dispatch => {
-    dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'ChangePassword' });
+    dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.post(`api/users/auth/reset-password/` + username,{
-        newPassword: newPassword
-    });
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: 'ChangePassword' });
+      const response = await mainApiInstance.patch(`api/users/auth/change-password`, {
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      });
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
-      dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: 'ChangePassword' });
+      dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
     }
   };
 };

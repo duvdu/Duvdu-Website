@@ -14,7 +14,7 @@ import PopUpImage from './popUpImage';
 const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) => {
     const chatRef = useRef(null);
     const [otherUser, setOtherUser] = useState({})
-    const [limit, setLimit] = useState(100)
+    const [limit, setLimit] = useState(50)
     const [isRecording, setIsRecord] = useState(null)
     ///////////// inputs //////////////
 
@@ -40,9 +40,9 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         setReceiver(otherUser._id)
     }, [otherUser])
 
-    // useEffect(() => {
-    //     GetAllMessageInChat(messages._id, limit)
-    // }, [limit]);
+    useEffect(() => {
+        GetAllMessageInChat(messages._id, limit)
+    }, [limit]);
 
 
     useEffect(() => {
@@ -109,7 +109,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 
 
     const loadMore = () => {
-        setLimit(prev => prev + 10)
+        setLimit(prev => prev + 50)
         console.log('Loading more messages...');
         // Your custom logic to load more messages
     };
@@ -165,15 +165,16 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
     const swapRecording = () => {
         setIsRecord(!isRecording)
     };
+    
     return (
-        <div className={`fixed bottom-0 z-20 ${messages.openchat == true ? '' : 'hidden'}`}>
+        <div className={`fixed bottom-0 z-20 ${messages.openchat  ? '' : 'hidden'}`}>
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
                 <div className="chat dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-DS_white shadow-xl sm:left-8">
                     <div className="flex p-2 h-16 border-b border-[#00000040] dark:border-[#FFFFFF40]">
                         <Link href={`/creative/${otherUser.username || ""}`} >
                             <div className="relative cursor-pointer">
-                                <img className="h-full object-cover aspect-square rounded-full" src={otherUser.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
+                                <img className="h-full object-cover object-top aspect-square rounded-full" src={otherUser.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
                                 {otherUser.isOnline && (
                                     <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                                 )}
@@ -257,7 +258,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                                         );
                                 }
                             })}
-                            <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red-700 rounded-full size-6 flex justify-center items-center" onClick={clearattachments}>
+                            <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red rounded-full size-6 flex justify-center items-center" onClick={clearattachments}>
                                 <Icon className='p-1' name={"xmark"} />
                             </button>
 
@@ -272,14 +273,14 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                         {audioSrc ? (
                             <div className="w-full max-w-md flex items-center">
                                 <audio controls controlsList="nodownload" src={audioSrc} className="w-full outline-none"></audio>
-                                <div className='cursor-pointer bg-red-500 rounded-full p-3 h-min ml-3' onClick={() => setaudioSrc(null)}>
+                                <div className='cursor-pointer bg-red rounded-full p-3 h-min ml-3' onClick={() => setaudioSrc(null)}>
                                     <Icon className='size-4 text-white' name={'xmark'} />
                                 </div>
                             </div>) :
                             <>
                                 {!isRecording &&
                                     <input
-                                        value={content}
+                                        value={content|| ""}
                                         onChange={onChange}
                                         name='content'
                                         onKeyDown={handleKeyPress}
@@ -423,6 +424,7 @@ const Other = ({ message }) => {
 const mapStateToProps = (state) => ({
     respond: state.api.SendMessages,
     getheaderpopup: state.setting.headerpopup,
+    chat_respond: state.api.GetAllMessageInChat,
     messages: state.messages,
     user: state.user,
 

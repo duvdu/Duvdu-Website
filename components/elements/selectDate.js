@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Icon from "../Icons";
 
-const SelectDate = ({ onChange }) => {
+const SelectDate = ({ onChange, value }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(value ? new Date(value) : null);
     const [isExpanded, setIsExpanded] = useState(false);
 
     useEffect(() => {
         setCurrentDate(new Date()); // Ensure the current date is set when the component mounts
     }, []);
+
+    useEffect(() => {
+        if (value) {
+            setSelectedDate(new Date(value));
+        }
+        else {
+            setSelectedDate(null);
+        }
+    }, [value]);
 
     const getMonthDates = (year, month) => {
         const dates = [];
@@ -39,19 +48,19 @@ const SelectDate = ({ onChange }) => {
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
-        if (onChange)
-            onChange(date.toISOString());
+        if (onChange) onChange(date.toISOString());
     };
 
     const handleScroll = (change) => {
         const newDate = new Date(currentDate);
         newDate.setMonth(currentDate.getMonth() + change);
-        
+
         // Check if newDate is before tomorrow, if yes, do not update the state
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const tomorrow = new Date(today);
-        
+        tomorrow.setDate(today.getDate() + 1);
+
         if (newDate >= tomorrow) {
             setCurrentDate(newDate);
         }
@@ -60,7 +69,8 @@ const SelectDate = ({ onChange }) => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const monthDates = getMonthDates(year, month);
-    const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 5);
+    const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 7);
+
     return (
         <div className="flex flex-col gap-2 items-center date-selector">
             <div className="flex justify-between w-full mb-4">
@@ -96,8 +106,8 @@ const SelectDate = ({ onChange }) => {
                     )}
                 </div>
             ) : (
-                <div className="flex justify-between gap-3 w-72">
-                    {firstFiveNonNullDates.slice(0, 5).map((date, index) =>
+                <div className="flex justify-around gap-3 w-full">
+                    {firstFiveNonNullDates.map((date, index) =>
                         date ? (
                             <div
                                 key={index}

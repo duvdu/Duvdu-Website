@@ -94,7 +94,7 @@ export function handleFileUpload(event) {
 
 export function handleMultipleFileUpload(event) {
   const files = event.target.files; // Get all selected files
-  if (!files.length) {
+  if (!files?.length) {
     return []; // No files selected, return empty array
   }
 
@@ -169,7 +169,27 @@ function formatFileSize(bytes) {
     bytes /= 1024;
     i++;
   }
-  return `${bytes.toFixed(2)}${units[i]}`;
+  return `${bytes.toFixed(2)} ${units[i]}`;
+}
+
+export function parseFileSize(sizeString) {
+  const units = ["B", "KB", "MB", "GB", "TB"];
+  const regex = /([\d.]+)\s*(B|KB|MB|GB|TB)/i;
+  const match = sizeString.match(regex);
+
+  if (!match) {
+    throw new Error("Invalid size format");
+  }
+
+  const value = parseFloat(match[1]);
+  const unit = match[2].toUpperCase();
+
+  const unitIndex = units.indexOf(unit);
+  if (unitIndex === -1) {
+    throw new Error("Invalid unit");
+  }
+
+  return value * Math.pow(1024, unitIndex);
 }
 
 export const Goback = () => {
@@ -190,15 +210,15 @@ export const errorConvertedMessage = (error) => {
 
   try {
     const errorConverted = JSON.parse(error);
-    
+
     try {
       const errors = errorConverted.data.errors;
 
       if (errors.length === 1) {
-      
-        return `<div>${errors[0].message}</div>`;
-      }
 
+        return `<div class="error-msg" >${errors[0].message}</div>`;
+      }
+      
       
       const hasFieldErrors = errors.some(error => error.field);
 
@@ -207,16 +227,16 @@ export const errorConvertedMessage = (error) => {
         const formattedMessages = errors.map(error => `<li>${error.field}: ${error.message}</li>`).join('');
         return `<strong>Error Fields:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       } else {
-        
+
         const formattedMessages = errors.map(error => `<li>${error.message}</li>`).join('');
         return `<strong>Error Messages:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       }
     } catch (err) {
       const errorMessage = errorConverted.data.message;
-      return errorMessage;
+      return `<div class="error-msg" >${errorMessage}</div>`;
+      
     }
   } catch (err) {
-    console.log("Error parsing JSON:", err);
     return error.toString();
   }
 };
@@ -318,6 +338,13 @@ export const convertToFormData = (data, avoidfeilds = []) => {
 
   return formData;
 }
+
+export const printFormData = (formData) => {
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
+  }
+};
+
 export const OpenPopUp = (id) => {
   const editBoardElement = document.querySelector('#' + id);
   if (editBoardElement) {
@@ -331,6 +358,30 @@ export const ClosePopUp = (id) => {
 
   }
 }
+
+export const validatePassword = (password) => {
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters long.';
+  }
+
+  const uppercaseRegex = /[A-Z]/;
+  if (!uppercaseRegex.test(password)) {
+    return 'Password must contain at least one uppercase letter.';
+  }
+
+  const lowercaseRegex = /[a-z]/;
+  if (!lowercaseRegex.test(password)) {
+    return 'Password must contain at least one lowercase letter.';
+  }
+
+  const specialCharRegex = /[^A-Za-z0-9]/;
+  if (!specialCharRegex.test(password)) {
+    return 'Password must contain at least one special character.';
+  }
+
+  return null;
+};
+
 
 export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = '') => {
   Object.keys(obj).forEach(key => {
@@ -351,31 +402,33 @@ export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = ''
 };
 
 
-export const isFav = (idproject, FavList) => {
-  // Check if FavList has at least one element
-  FavList = FavList?.data || []
-  if (FavList.length === 0) return false;
-  // Access the first board in FavList
-  const firstBoard = FavList[0];
-  // Check if any project's ID in the first board matches the given idproject
-  return firstBoard.projects.some(project => project.project._id === idproject);
-};
-
-export const isProjectInObject = (data, projectId) => {
-  for (const board of data) {
-    for (const project of board.projects) {
-      if (project._id === projectId) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
 export const calculateRating = (rate) => {
   if (!rate) return 0
   if (rate.ratersCounter > 0) {
-      return rate.totalRates / rate.ratersCounter;
+    return rate.totalRates / rate.ratersCounter;
   }
   return 0;
+};
+
+export const formatRemainingTime = (seconds) => {
+  let remainingTime = seconds
+  const days = Math.floor(remainingTime / (60 * 60 * 24));
+  remainingTime %= (60 * 60 * 24);
+  const hours = Math.floor(remainingTime / ( 60 * 60));
+  remainingTime %= (60 * 60);
+  const minutes = Math.floor(remainingTime / (60));
+  
+  const timeParts = [];
+  
+  if (days > 0) {
+      timeParts.push(`${days} day${days > 1 ? 's' : ''}`);
+  }
+  if (hours > 0) {
+      timeParts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+  }
+  if (minutes > 0) {
+      timeParts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+  }
+  
+  return timeParts.join(' ');
 };

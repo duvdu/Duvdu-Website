@@ -6,7 +6,7 @@ export const CheckUsernameExists = (username) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      console.log(username)
+      
       const response = await mainApiInstance.post('api/users/auth/retreive-username', {
         "username": username
     });

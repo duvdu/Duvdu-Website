@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Comman from './assets/comman';
 import InputFeid from '../../elements/inputFeid';
 import AppButton from '../../elements/button';
+import { ClosePopUp } from '../../../util/util';
 
 function EquipmentAvailable({ onSubmit }) {
     const [formData, setFormData] = useState({
@@ -45,8 +46,10 @@ function EquipmentAvailable({ onSubmit }) {
             fees: ''
         });
 
-        if(onSubmit)
+        if(onSubmit){
         onSubmit(formData);
+        ClosePopUp('EquipmentAvailable')
+    }
     };
 
     const handleCancel = () => {

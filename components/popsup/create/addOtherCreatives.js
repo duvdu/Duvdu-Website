@@ -5,10 +5,14 @@ import AppButton from '../../elements/button';
 import { connect } from 'react-redux';
 import { FindUser } from '../../../redux/action/apis/auth/profile/FindUser';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
+import { ClosePopUp } from '../../../util/util';
 
-function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
+function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
 
     const [creatives, setCreatives] = useState([]);
+    const [searchTo, setSearchTo] = useState(null);
+    const [_searchTo, _setSearchTo] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         _id: '',
@@ -21,15 +25,30 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
 
     useEffect(() => {
         if (FindUser_respond?.message == "success")
-            setCreatives(FindUser_respond.data)
+            setIsLoading(false);
+            setCreatives(FindUser_respond?.data)
     }, [FindUser_respond])
+
+    useEffect(() => {
+        if (api.req === "FindUser" && api.loading) {
+            setIsLoading(true);
+            setCreatives([])
+        } else if (_searchTo != searchTo) {
+            setIsLoading(false);
+            _setSearchTo(searchTo);
+            FindUser({search:searchTo});
+        }
+    }, [searchTo, api.req === "FindUser" && api.loading]);
+
     // Handler to manage input changes for any field
     const handleInputChange = (name, value) => {
         if (name == 'name') {
             if (value.length >= 3) {
-                FindUser(value)
+                setSearchTo(value)
             }
-            else setCreatives([])
+            else {
+            setCreatives([])
+            }
         }
         else if (name == 'fees') {
             setFormData(prev => ({ ...prev, 'fees': value }));
@@ -61,6 +80,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
 
 
         onSubmit(formData);
+        ClosePopUp("addOtherCreatives")
         setFormData({
             name: '',
             fees: ''
@@ -87,6 +107,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
         }));
         setCreatives([])
     };
+    
     return (
         <>
             <Comman id={"addOtherCreatives"} header={"Add Other Creatives"} onCancel={onCancel}>
@@ -101,8 +122,14 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
                                 sendValue={formData.name}
                             />
                         </div>
+                        {
+                            isLoading &&
+                            <div className="load-parent">
+                                <img className="h-full" src="/assets/imgs/loading.gif" alt="loading" />
+                            </div>
+                        }
                         <ul className="flex flex-wrap gap-2">
-                            {creatives.map((item, index) => (
+                            {creatives?.map((item, index) => (
                                 <li
                                     className="flex items-center text-base opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full cursor-pointer"
                                     key={index}
@@ -138,7 +165,8 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
     );
 }
 const mapStateToProps = (state) => ({
-    FindUser_respond: state.api.FindUser
+    FindUser_respond: state.api.FindUser,
+    api: state.api
 });
 
 const mapDispatchToProps = {

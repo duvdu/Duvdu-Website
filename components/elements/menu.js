@@ -1,10 +1,10 @@
-import Link from 'next/link';
 import { useState, useEffect, useRef } from "react";
 // import headerMen from '../../public/static/header_content.json';
 import { connect } from "react-redux";
 import { getCategory } from '../../redux/action/apis/category/getCategories';
+import Link from 'next/link';
 
-const MegaMenu = ({ language, api, getCategory,categories }) => {
+const MegaMenu = ({ language, api, categories }) => {
   
   function repeatArray(arr, count) {
     let result = [];
@@ -13,10 +13,6 @@ const MegaMenu = ({ language, api, getCategory,categories }) => {
     }
     return result;
   }
-
-  useEffect(() => {
-    getCategory()
-  }, []);
 
     return (
     <ul className='flex flex-wrap gap-x-4'>
@@ -53,11 +49,14 @@ const Category = ({ category, language }) => {
       }
     }
   }, [language]);
+  
   return (
     <li className='header-category'>
-      <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>
-        {category.title}
-      </div>
+      <Link href={`/${category.cycle}`}>
+        <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>
+          {category.title}
+        </div>
+      </Link>
       <ul className="hover-menu" ref={megaMenuRef}>
         <div>
           {category.subCategories.map((subcategory, subIndex) => (
@@ -91,7 +90,7 @@ const MenuItem = ({ title, items }) => (
       {items.map((item, index) => (
         <li className='py-1 px-2 border hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
           <Link href="/">
-            <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'>{item}</div>
+            <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'>{item.title}</div>
           </Link>
         </li>
       ))}
@@ -107,7 +106,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getCategory
+  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MegaMenu);

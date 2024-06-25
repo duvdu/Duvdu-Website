@@ -1,4 +1,3 @@
-import Chart from '../components/elements/lineChart';
 import Layout from '../components/layout/Layout';
 import DashboardPopup from '../components/popsup/dashboard';
 import NextBadgeCard from '../components/pages/dashboard/NextBadgeCard';
@@ -8,6 +7,7 @@ import ActivityCard from '../components/pages/dashboard/ActivityCard';
 import Icon from '../components/Icons';
 
 import React, { useState } from 'react';
+import LineChart from '../components/pages/dashboard/lineChart';
 
 const Dashboard = () => {
 
@@ -89,7 +89,7 @@ const Dashboard = () => {
                     <div className='w-full flex flex-col gap-3 sm:gap-6'>
                         <NextBadgeCard badge={badge} />
                         <ProjectViewsCard recieved={recieved} />
-                        <Chart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
+                        <LineChart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
 
                     </div>
                     <div className='w-full'>

@@ -27,13 +27,15 @@ const Card = ({ data, DeleteTeamProjects }) => {
     const handleSelectClick = (event) => {
         event.stopPropagation();
     };
-    
-    const ioconstyle = "rounded-full -translate-y-1/2 translate-x-1/2 border p-3 text-2xl size-11"
+
+    const handleDropdownSelect = (v) => {
+        v === 'Delete' ? onDelete() : onEdit(_id)
+    };
 
     return (
         <>
             <Link href={`/team/${_id}`}>
-                <div className="boards-card relative">
+                <div className="boards-card relative cursor-pointer">
                     <>
                         <div
                             className="w-full h-full rounded-[50px] img-cart-style"
@@ -44,12 +46,12 @@ const Card = ({ data, DeleteTeamProjects }) => {
                         </div>
                     </>
                     <div
-                        className="absolute top-0 right-0 pe-12 pt-12 flex justify-center items-center"
+                        className="absolute top-5 right-5"
                         onClick={handleSelectClick}
                     >
-                         <Selector
-                            onSelect={(v) => v.value === 'Delete' ? onDelete() : onEdit(_id)}
-                            options={[
+                        <Selector
+                            onSelect={handleDropdownSelect}
+                            options={status == 'available' ? null : [
                                 {
                                     value: 'Delete',
                                 },
@@ -59,9 +61,9 @@ const Card = ({ data, DeleteTeamProjects }) => {
                             ]}
                         >
 
-                            {status == 'pending' && <Icon name="waiting" className={"-translate-y-1/2 translate-x-1/2"} />}
-                            {status == 'refuse' && <Icon name="circle-exclamation" className={"border-[#D72828] text-[#D72828] " + ioconstyle} />}
-                            {status == 'available' && <Icon className={"text-[#50C878] border-[#50C878]" + ioconstyle} name="circle-check" />}
+                            {status == 'pending' && <Icon name="waiting" />}
+                            {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
+                            {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
                         </Selector>
                     </div>
                     <div>
@@ -76,12 +78,37 @@ const Card = ({ data, DeleteTeamProjects }) => {
     );
 };
 
-const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond }) => {
+const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond, update_respond,api }) => {
     const route = useRouter()
+    const searchTerm = "";
+    const pagganation = get_respond?.pagination
+    const page = 1;
+    const showLimit = 6;
+    const [limit, setLimit] = useState(showLimit);
+
 
     useEffect(() => {
-        GetTeamProjects();
-    }, [GetTeamProjects, delete_respond, create_respond]);
+        GetTeamProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page })
+    }, [delete_respond, create_respond, update_respond, limit, searchTerm]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (pagganation?.totalPages > page) {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+                if (scrolledToBottom) {
+                    setLimit(showLimit + limit);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [page, pagganation?.totalPages]);
+
 
 
     return (
@@ -119,15 +146,16 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                             <Empty />
                         )}
                 </div>
+                <img className={(api.loading && api.req == "GetTeamProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
             </section>
         </Layout>
     );
 };
 
 const Empty = () =>
-    <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet'>
-        <div className='w-[540px] h-[450]px bg-gray-600 mt-10' />
-        <img src='/assets/imgs/theme/TeamProjects.svg' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' />
+    <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p-10'>
+        <div className='bg-gray-600 mt-5' />
+        <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[540px] lg:h-[450px]' />
         <h3 className='text-[40px] font-semibold mt-8 mb-4'>
             Team Projects
             <p className="text-2xl opacity-50">
@@ -140,6 +168,8 @@ const mapStateToProps = (state) => ({
     get_respond: state.api.GetTeamProjects,
     create_respond: state.api.CreateTeamProject,
     delete_respond: state.api.DeleteTeamProjects,
+    update_respond: state.api.UpdateTeamProject,
+    api: state.api,
 
 });
 

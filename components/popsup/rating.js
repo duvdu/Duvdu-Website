@@ -33,7 +33,7 @@ function Rating() {
             <Popup id="Rating" header={"Rating Anna"}>
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
                     <div className='w-20 h-20 rounded-full overflow-hidden'>
-                        <img src="/assets/imgs/profile/defultUser.jpg" alt="user" />
+                        <img className='object-cover object-top' src="/assets/imgs/profile/defultUser.jpg" alt="user" />
                     </div>
                     <div className='flex gap-5 my-5'>
                         {renderStars()}

@@ -15,36 +15,23 @@ import AddStudioBooking from '../../../components/drawer/create/studio-booking'
 import AddCopyrights from '../../../components/drawer/create/copy-rights'
 import AddPost from '../../../components/drawer/create/addproject'
 import AddProducer from '../../../components/drawer/create/producer'
-import EquipmentRental from '../../../components/drawer/create/Equipment-rental';
 import PostPopup from '../../../components/popsup/create/assets/chooseCategory';
 import SelectType from '../../../components/popsup/create/assets/selectType';
 
-import Projects from '../../elements/profile/projects';
-import Conver from '../../elements/profile/conver';
-import Info from '../../elements/profile/info';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
-import { GetProjects } from '../../../redux/action/apis/cycles/projects/get';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
 import EquipmentAvailable from '../../popsup/create/equipmentAvailable';
+import Followers from '../../popsup/followes';
+import { GetUserProject } from '../../../redux/action/apis/auth/profile/getUserProjects';
+import Conver from './conver';
+import Info from './info';
+import Projects from './projects';
 
 
 
 const profile = {
-    "cover-pic": "/assets/imgs/projects/cover.jpeg",
-    "profile-pic": "/assets/imgs/profile/defultUser.jpg",
-    "value": 3.7,
-    "price": '',
-    "location": '',
-    "occupation": "photographer",
-    "rank": "professional",
-    "about": "hello i’m Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    "popularity": {
-        "likes": 28000,
-        "followers": 514,
-        "views": 258000
-    },
-    "comments": [
+    comments: [
         {
             "id": 1,
             "userName": "jonathan donrew",
@@ -67,29 +54,26 @@ const profile = {
             "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
         },
     ],
-    "projects": [
-        {
-            "price": 23247,
-            "title": "models & performing artists",
-            "show": "/assets/imgs/profile/defultUser.jpg"
-        }
-    ]
 };
 
-function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
 
     const route = useRouter()
 
     const { type, category, subcategory, tags, edit: goEdit } = route.query
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
-    const [showEditProfile, setShowEditProfile] = useState(false);
-
+    const [userInfo, setUserInfo] = useState(user);
+    projects = projects?.data?.projects || []
 
     useEffect(() => {
-        GetProjects({})
+        setUserInfo(user)
+    }, [user])
+
+    useEffect(() => {
+        GetUserProject({})
     }, [])
-    
+
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
             route.replace({
@@ -102,7 +86,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     function InputDrawer() {
         if (type) {
             switch (type) {
-                case 'studio-booking':
+                case 'rental':
                     return <AddStudioBooking />
                 case 'equipment-rental':
                     removeQueryParameter()
@@ -115,7 +99,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
                     break;
                 case 'add-producer':
                     return <AddProducer />
-                    
+
                     break;
                 case 'portfolio-post':
                     return <AddPost />
@@ -138,8 +122,6 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
     };
 
     const onOpenEdit = () => {
-        console.log(route)
-
         route.push({
             pathname: route.asPath,
             query: {
@@ -154,11 +136,12 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
         });
     };
 
-
     function Allpage() {
         useEffect(() => {
             if (updateProfile_respond) {
-                getMyprofile(false)
+                updateProfile_respond.data.coverImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+ updateProfile_respond.data.coverImage
+                updateProfile_respond.data.profileImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+ updateProfile_respond.data.profileImage
+                setUserInfo(updateProfile_respond.data)
             }
         }, [updateProfile_respond])
 
@@ -167,40 +150,43 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data, false)
         }
-    
+
         return (
+        !userInfo ? <></>:
             <>
-                <Conver converPic={user.coverImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.coverImage : "/assets/imgs/projects/cover.jpeg"} />
+                <Followers id={"show-followers"} />
+                <Conver converPic={userInfo.coverImage} />
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
                         <div className='relative px-6 sm:px-10'>
                             <Info
-                                src={user.profileImage ? "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + user.profileImage : process.env.DEFULT_PROFILE_PATH}
-                                location={user.adress || 'NONE'}
-                                occupation={user.service || '---'}
-                                personalName={user.name}
+                                src={userInfo.profileImage}
+                                location={userInfo.address || 'NONE'}
+                                occupation={userInfo?.category?.title || '---'}
+                                personalName={userInfo.name}
                                 popularity={{
-                                    likes:0,
-                                    followers:user.followers,
-                                    views:0,
+                                    likes: userInfo.likes,
+                                    followers: userInfo.followCount.followers,
+                                    views: userInfo.profileViews,
                                 }}
                                 rank={"---"}
-                                rates={user.rate.totalRates.toFixed(1)}
+                                rates={userInfo.rate.totalRates.toFixed(1)}
+                                isMe={true}
                             />
                         </div>
 
                         <div className='flex items-center justify-center my-7 gap-2'>
-                            <Switch onSwitchChange={updateInstantState} value={user.isAvaliableToInstantProjects} id='profile-instant' />
-                            <span className={user.isAvaliableToInstantProjects ? "" : "opacity-70"}>
-                                Instant Projects is {user.isAvaliableToInstantProjects ? "open" : "disabled"}
+                            <Switch onSwitchChange={updateInstantState} value={userInfo.isAvaliableToInstantProjects} id='profile-instant' />
+                            <span className={userInfo.isAvaliableToInstantProjects ? "" : "opacity-70"}>
+                                Instant Projects is {userInfo.isAvaliableToInstantProjects ? "open" : "disabled"}
                             </span>
                         </div>
 
                         <div className='h-divider'></div>
                         <div className='px-10'>
                             <h3 className='pt-6' id='about-header'>about</h3>
-                            <p className='pt-6' id='about-paragraph'>{user.about || '---'}</p>
+                            <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
                         </div>
                         <div className='h-divider my-7'></div>
                         <div className='px-10'>
@@ -259,7 +245,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
             <div className='sm:container'>
                 {
                     showAddPanal &&
-                    <PostSheet setShowAddPanal={setShowAddPanal} username={user.username} />
+                    <PostSheet setShowAddPanal={setShowAddPanal} username={userInfo.username} />
                 }
                 {
                     showAddPost &&
@@ -278,7 +264,7 @@ function MyProfile({ updateProfile, InsertToArray, GetProjects, projects, Update
 const mapStateToProps = (state) => ({
     user: state.user.profile,
     updateProfile_respond: state.api.updateProfile,
-    projects: state.projects.items
+    projects: state.api.GetUserProject
 });
 
 const mapDispatchToProps = {
@@ -286,7 +272,7 @@ const mapDispatchToProps = {
     UpdateFormData,
     updateProfile,
     getMyprofile,
-    GetProjects,
+    GetUserProject,
     InsertToArray
 };
 

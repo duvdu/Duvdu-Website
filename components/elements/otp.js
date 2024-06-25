@@ -10,7 +10,7 @@ function OTP({
     username,
     verify,
     resendCode,
-    oNsucess,
+    onSuccess,
     resendCode_respond,
     verify_respond,
     initcount = 100
@@ -32,7 +32,7 @@ function OTP({
 
     useEffect(() => {
         if (verify_respond) {
-            oNsucess()
+            onSuccess()
             verify({ username: username, code: -1 })
         }
     }, [verify_respond?.message])
@@ -41,13 +41,14 @@ function OTP({
     useEffect(() => {
         if (api.error && (api.req == "resendCode" || api.req == "verify")) {
             const errorMessage = errorConvertedMessage(api.error);
-            if(api.req){
-                setcount(0)
+            if(api.req == "resendCode" ) setcount(errorMessage)
+            if(api.req == "verify"){
+                setlocal_error('Invalid Code')
             }
-            setlocal_error(errorMessage)
         }
         else {
             setlocal_error(null)
+            setOtp('')
         }
     }, [api.error])
 
@@ -75,7 +76,7 @@ function OTP({
                             <p className="otpnews" >Enter the verification code we just sent to your phone </p>
                         </div>
                         <OtpInput
-                            value={otp}
+                            value={otp|| ""}
                             onChange={(value) => setOtp(value)}
                             numInputs={6}
                             renderSeparator={<span style={{ width: "100%" }} > </span>}
@@ -84,7 +85,7 @@ function OTP({
 
                         {
                             local_error &&
-                            <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(local_error) }} />
+                            <div className="error-msg text-center" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(local_error) }} />
                         }
                         <div className="mt-14 mb-28">
 
@@ -93,7 +94,10 @@ function OTP({
                                     <p className="resendMSG">
                                         <span className="msg"> Send code again </span><span className="counter"> {convertDuration(counter * 1000)} </span>
                                     </p> :
-                                    <p className="resendMSG2 text-center cursor-pointer" onClick={() => { resendCode({ username }); }}>
+                                    <p className="resendMSG2 text-center cursor-pointer" onClick={() => { 
+                                        setcount(120)
+                                        resendCode({ username });
+                                        }}>
                                         Send code again
                                     </p>
                             }

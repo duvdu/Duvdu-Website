@@ -5,6 +5,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetProjects = ({ page = "1", limit = "", search = "" }) => {
   const req = "GetProjects"
   return async dispatch => {
+    return
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const params = {};

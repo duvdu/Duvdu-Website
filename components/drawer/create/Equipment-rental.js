@@ -11,11 +11,12 @@ import { useRouter } from "next/router";
 import { filterByCycle, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
-import Successfully_posting from "../../popsup/post_successfully_posting";
+import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";
 import Drawer from "../../elements/drawer";
-import CategorySelection from "./assets/selectCategory";
+import CategorySelection from "./assets/CategorySelection";
+import AddAttachment from "../../elements/attachment";
 
 
 const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addprojectState, UpdateFormData, resetForm, InsertToArray, respond }) => {
@@ -26,9 +27,9 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
     const [errors, setErrors] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
+    const [attachmentValidation, setAttachmentValidation] = useState(true);
 
-    categories = filterByCycle(categories, 'studio-booking')
-
+    
     useEffect(() => {
         UpdateFormData('location[lat]', 50)
         UpdateFormData('location[lng]', 50)
@@ -41,7 +42,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
         data.append('studioEmail', formData.studioEmail);
         data.append('studioNumber', formData.studioNumber);
         data.append('studioName', formData.studioName);
-        data.append('adress', formData.address);
+        data.append('address', formData.address);
 
         // Append searchKeywords
         if (formData.searchKeywords)
@@ -52,7 +53,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
             data.append('location.lat', formData.location.lat);
             data.append('location.lng', formData.location.lng);
         }
-        data.append('category', formData.category );
+        data.append('category', formData.category);
         data.append('showOnHome', formData.showOnHome || false);
         data.append('insurance', formData.insurance);
         data.append('pricePerHour', formData.pricePerHour);
@@ -147,7 +148,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     // }, [api.data && api.data.data.createdAt, api.error]);
 
-    
+
     useEffect(() => {
         if (auth.login === false)
             router.push({
@@ -172,7 +173,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     return (
         <>
-            <Successfully_posting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'equipment rental'} toggleDrawer={toggleDrawer}>
                 {/* <SetCover isShow={post_success} /> */}
                 {nextstep == 2 ? (
@@ -182,13 +183,12 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
-                                    categories={categories}
+                                filterIn={'studio-booking'}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,
                                         'tags': formData.tags,
                                     }}
-                                    categorie
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)
@@ -196,37 +196,14 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                     }} />
                             </div>
                             <section className="w-full ">
-
-                                <label htmlFor="attachment-upload" >
-                                    <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-DS_white'>
-                                        <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
-                                            <Icon name={"add-file"} className='size-7' />
-                                        </div>
-                                        <span className="text-primary text-sm font-bold mt-3">Click to Upload</span>
-                                    </div>
-                                </label>
-                                <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-
-                                {
-                                    formData.attachments &&
-                                    formData.attachments.length > 0 &&
-                                    formData.attachments.map((file, key) => (
-                                        <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
-                                            <Icon name={'file'} className="size-10" />
-                                            <div>
-                                                <span className=''>{file.fileName}</span>
-                                                <br />
-                                                <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
-                                            </div>
-                                        </div>
-                                    ))
-                                }
+                                <h3 className="capitalize opacity-60 mt-11">attachments</h3>
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section >
-                                <input placeholder='equipment name' value={formData.studioName} onChange={handleInputChange} name="studioName" className={inputStyle} />
-                                <input placeholder='phone number' type="tel" value={formData.studioNumber} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
-                                <input placeholder='description' value={formData.description} onChange={handleInputChange} name="description" className={inputStyle} />
-                                <input placeholder='address' value={formData.address} onChange={handleInputChange} name="address" className={inputStyle} />
+                                <input placeholder='equipment name' value={formData.studioName|| ""} onChange={handleInputChange} name="studioName" className={inputStyle} />
+                                <input placeholder='phone number' type="tel" value={formData.studioNumber|| ""} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
+                                <input placeholder='description' value={formData.description|| ""} onChange={handleInputChange} name="description" className={inputStyle} />
+                                <input placeholder='address' value={formData.address|| ""} onChange={handleInputChange} name="address" className={inputStyle} />
                                 <ListInput
                                     placeholder={'equipment available'}
                                     target="EquipmentAvailable"
@@ -246,8 +223,8 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                             </section>
                             <section >
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input placeholder='price per hour' value={formData.pricePerHour} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
-                                <input type="number" placeholder='insurance' value={formData.insurance} onChange={handleInputChange} name="insurance" className={inputStyle} />
+                                <input placeholder='price per hour' value={formData.pricePerHour|| ""} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
+                                <input type="number" placeholder='insurance' value={formData.insurance|| ""} onChange={handleInputChange} name="insurance" className={inputStyle} />
                             </section>
                             <section className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />

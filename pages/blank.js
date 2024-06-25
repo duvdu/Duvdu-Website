@@ -1,6 +1,5 @@
 
 import Layout from '../components/layout/Layout';
-import Slider from "../components/elements/customSlider";
 import React, { useState } from 'react';
 
 function Test() {

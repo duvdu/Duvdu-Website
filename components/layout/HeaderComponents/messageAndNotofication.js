@@ -6,7 +6,7 @@ import MessageTile from "../../elements/MessageTile";
 import { GetNotifications } from "../../../redux/action/apis/realTime/notification/getAllNotification";
 
 
-function MessageAndNotofication({ getheaderpopup, chats, GetNotifications, GetNotifications_resond, MarkNotificationsAsRead_resond, chats_resond }) {
+function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond }) {
 
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
@@ -14,11 +14,6 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications, GetNo
     useEffect(() => {
         setViewAllState(0)
     }, [getheaderpopup == Types.SHOWNOTOFICATION])
-
-
-    useEffect(() => {
-        GetNotifications()
-    }, [MarkNotificationsAsRead_resond])
 
     if (getheaderpopup != Types.SHOWNOTOFICATION) return
     return (
@@ -82,7 +77,7 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
 
 const NotificationTile = ({ tile }) =>
     <div className="w-64 flex gap-4">
-        <img className="size-9 rounded-full" src={tile.sourceUser.profileImage} alt="user" width="45" height="45" />
+        <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser.profileImage} alt="user" width="45" height="45" />
         <div className="flex flex-col justify-center">
             <span className="leading-[1px]">
                 <span className="rtl:hidden font-bold">{tile.sourceUser.name || 'NONE'} </span>
@@ -97,9 +92,7 @@ const NotificationTile = ({ tile }) =>
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
     chats: state.chats.list,
-    chats_resond: state.api.GetAllChats,
     GetNotifications_resond: state.api.GetNotifications,
-    MarkNotificationsAsRead_resond: state.api.MarkNotificationsAsRead,
 });
 const mapDispatchToProps = {
     GetNotifications,

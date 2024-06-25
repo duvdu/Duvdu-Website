@@ -13,7 +13,7 @@ const BookTeam = ({ team, onChange }) => {
         localteam.map((item, i) => (
             <div key={i} className="flex">
                 <div key={i} className="team-padge">
-                    {item.profileImage&& <img src={item.creative.profileImage} alt="user" />}
+                    {item.profileImage&& <img className='object-cover object-top' src={item.creative.profileImage} alt="user" />}
                     <span className="mx-3">{item.name}</span>
                 </div>
                 {

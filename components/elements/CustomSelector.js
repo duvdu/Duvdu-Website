@@ -1,38 +1,41 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Icon from "../Icons";
 
-const Selector = ({ options, onSelect, iconclassName, className = "", invert = false , children}) => {
-    const [dropdown, setDropdown] = useState(false);
+const Selector = ({ options, onSelect, iconclassName, className = "", children }) => {
+    const selectRef = useRef(null);
 
-    const handleSelect = (option) => {
-        onSelect(option);
-        setDropdown(false); // Close the dropdown after selecting an option
+    const handleIconClick = () => {
+        selectRef?.current?.click();
     };
 
+    const handleChange = (event) => {
+        const selectedOption = options.find(option => option.value === event.target.value);
+        if (selectedOption) {
+            onSelect?.(selectedOption.value);
+        }
+        selectRef.current.value = null;
+    };
+
+    useEffect(()=>{
+        selectRef.current.value = null
+    },[selectRef?.current?.value])
+
     return (
-        <div className='relative cursor-pointer'>
-            <div onClick={() => setDropdown(!dropdown)} className={className}>
-                {
-                   children || <Icon name={'ellipsis-vertical'} className={iconclassName + " h-6"} />
-                }
-                {dropdown && (
-                    <div className="absolute top-8 right-0 z-10">
-                        <ul className="bg-DS_white rounded-sm shadow-md whitespace-nowrap">
-                            {options?.map((option, index) => (
-                                <li 
-                                    key={index} 
-                                    className="py-2 px-4 hover:bg-gray-500 cursor-pointer" 
-                                    onClick={() => handleSelect(option)}
-                                >
-                                    {option.value}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+        <div className={`relative cursor-pointer ${className}`}>
+            <div onClick={handleIconClick} className="icon-container">
+                {children || <Icon name={'ellipsis-vertical'} className={iconclassName + " h-6"} />}
             </div>
+            {
+                options?.length > 0 &&
+                <select ref={selectRef} onChange={handleChange} className="absolute inset-0 opacity-0 cursor-pointer">
+                    {options?.map((option, index) => (
+                        <option key={index} value={option.value}>
+                            {option.value}
+                        </option>
+                    ))}
+                </select>}
         </div>
     );
-}
+};
 
 export default Selector;
