@@ -197,7 +197,7 @@ console.log(formData)
                                         required
                                     >
 
-                                        {['minute', 'hour', 'day', 'week', 'month'].map((value, index) => (
+                                        {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
                                             <option key={index} value={value.toLowerCase()}>{value}</option>
                                         ))}
                                     </select>
