@@ -20,7 +20,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
     useEffect(() => {
         if (
             formData.details?.length > 5 &&
-            formData.bookingDate  &&
+            formData.startDate  &&
             formData['projectScale.numberOfUnits'] > data.projectScale.minimum
         ) setEnableBtn(true)
         else setEnableBtn(false)
@@ -99,7 +99,7 @@ console.log(StudopBooking_respond)
                     </section>
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">select Booking date</h3>
-                        <SelectDate onChange={(value) => UpdateFormData('bookingDate', value)} />
+                        <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
@@ -130,7 +130,7 @@ console.log(StudopBooking_respond)
                                         <Icon className='text-primary' name={"calendar"} />
                                     </div>
                                     <div className="flex flex-col pl-5 w-full">
-                                        <span className="font-normal text-base">{dateFormat(formData.bookingDate, 'd mmmm , yyyy')}</span>
+                                        <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
                                     </div>
                                 </div>
                             </div>
