@@ -102,7 +102,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
             }
 
         form.append('cover', formData?.cover)
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', 'attachments', 'category', 'jobTitle'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments', 'category', 'jobTitle'])
         CreateTeamProject(form)
 
     }

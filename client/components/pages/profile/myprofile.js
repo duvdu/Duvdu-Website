@@ -101,7 +101,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                     return <AddProducer />
 
                     break;
-                case 'portfolio-post':
+                case 'project':
                     return <AddPost />
                     break;
                 default:

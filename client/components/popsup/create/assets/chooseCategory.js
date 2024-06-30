@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 
 function PostPopup({ api, auth, isShow = "", categories }) {
-    categories = filterByCycle(categories, 'portfolio-post')
+    categories = filterByCycle(categories, 'project')
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
     const [selectedCategory, setselectedCategory] = useState({});

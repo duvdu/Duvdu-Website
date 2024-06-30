@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
-import { fetchProjects } from "../../redux/action/project";
 
 import ProjectCard from "../../components/elements/project-card";
 import Filter from "../../components/elements/filter";

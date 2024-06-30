@@ -35,8 +35,8 @@ function PostPopup({auth}) {
                 <div className='flex flex-col gap-3 justify-center min-w-96 mt-16'>
                     {[
                         {
-                            "value": "portfolio post",
-                            "url": "portfolio-post"
+                            "value": "project",
+                            "url": "project"
                         },
                         {
                             "value": "copy right",

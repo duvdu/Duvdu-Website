@@ -66,7 +66,8 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         if (submit)
             submit()
         const form = new FormData()
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver', 'attachments'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments'])
+        
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
                 const file = formData.attachments[i].file;

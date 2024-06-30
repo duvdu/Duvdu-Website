@@ -121,7 +121,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 
     const onSend = async () => {
         const data = new FormData
-        data.append('receiver', receiver)
+        data.append(receiver)
 
         if (attachments)
             for (let i = 0; i < attachments.length; i++) {

@@ -5,7 +5,6 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetProjects = ({ page = "1", limit = "", search = "" }) => {
   const req = "GetProjects"
   return async dispatch => {
-    return
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const params = {};
@@ -13,7 +12,7 @@ export const GetProjects = ({ page = "1", limit = "", search = "" }) => {
       if (page) params.page = page;
       if (limit) params.limit = limit;
       const queryString = new URLSearchParams(params).toString();
-      const response = await mainApiInstance.get(`api/portfolio-post?${queryString}`);
+      const response = await mainApiInstance.get(`api/projects?${queryString}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_DATA, payload: response.data.data });
 

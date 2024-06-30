@@ -76,7 +76,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
         const form = new FormData()
         if(formData.cover)
             form.append('cover', formData.cover)
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value))
         UpdateTeamProject(form,router.query.edit)
     }
 

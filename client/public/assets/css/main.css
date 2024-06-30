@@ -2207,6 +2207,28 @@ audio::-webkit-media-controls-volume-slider-container {
 
 }
 
+.trendy-section {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.trendy-section > * {
+  z-index: 2;
+}
+
+.trendy-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+
 
 /****************/
 

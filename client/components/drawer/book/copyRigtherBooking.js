@@ -67,7 +67,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
 
     const converting = (formData) => {
         const data = new FormData();
-        const avoidFeilds = ['receiver', 'attachments']
+        const avoidFeilds = ['attachments']
         Object.keys(formData).forEach(key => {
             // Append each key-value pair to the FormData instance
             if (avoidFeilds.includes(key)) return

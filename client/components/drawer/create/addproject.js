@@ -7,7 +7,7 @@ import Button from '../../elements/button';
 
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
-import { filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
+import { UpdateKeysAndValues, filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import SetCover from "./assets/addCover";
 import ListInput from "../../elements/listInput";
@@ -27,63 +27,39 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
 
-    categories = filterByCycle(categories, 'portfolio-post')
+    categories = filterByCycle(categories, 'project')
 
-    
+
 
     const convertToFormData = () => {
         const data = new FormData();
 
         // Append simple string and number values directly from the state
-        data.append('title', formData.title);
-        data.append('desc', formData.desc);
-        data.append('address', formData.address);
-        data.append('projectBudget', formData.projectBudget);
-        data.append('projectScale[scale]', formData.durationnum);
+        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments'])
+        // data.append('projectBudget', formData.projectBudget);
+        data.append('projectScale[scale]', formData.duration);
 
-        data.append('projectScale[time]', formData.durationUnit || "minute");
-        data.append('showOnHome', formData.showOnHome || false);
-
-        data.append('category', formData.category);
-        data.append('subCategory', formData.subCategory);
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
                 data.append(`tags[${index}]`, tag);
             });
 
         // Append searchKeywords
-        if (formData.searchKeywords)
-            formData.searchKeywords.forEach((keyword, index) => {
-                data.append(`searchKeywords[${index}]`, keyword);
-            });
-
-        // Append tools
-        if (formData.tools)
-            formData.tools.forEach((tool, index) => {
-                data.append(`tools[${index}][name]`, tool.name);
-                data.append(`tools[${index}][fees]`, tool.fees);
-            });
-
-        // Append creatives
-        if (formData.creatives)
-            formData.creatives.forEach((creative, index) => {
-                data.append(`creatives[${index}][creative]`, creative._id);
-                data.append(`creatives[${index}][fees]`, creative.fees);
-            });
-
+        
         if (formData.cover) {
             data.append('cover', formData.cover);
         }
+
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
-                const file = formData.attachments[i].file;
-                data.append(`attachments`, file);
+                const file = formData.attachments[i];
+                data.append(`attachments`, file.file);
             }
 
-            if (formData.location) {
-                data.append('location.lat', formData.location.lat);
-                data.append('location.lng', formData.location.lng);
-            }
+        if (formData.location) {
+            data.append('location[lat]', formData.location.lat);
+            data.append('location[lng]', formData.location.lng);
+        }
         return data;
     };
 
@@ -91,21 +67,20 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         const errors = {};
 
         if (!formData.category) errors.category = 'Category is required';
-        if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
-        if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
-        if (!formData.title) errors.title = 'Title is required';
-        if ((formData.desc?.length||0) < 6) errors.desc = 'Description is required';
+        if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
+        if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
+        if (!formData.name) errors.title = 'Title is required';
+        if ((formData.description?.length || 0) < 6) errors.desc = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
-        if (!formData.durationnum) errors.durationnum = 'Project scale is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
-        if (!formData.tools || !formData.tools.length) errors.tools = 'Tools are required';
-        if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives are required';
         if (!formData.attachments || !formData.attachments.length) errors.attachments = 'Attachments are required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
-        
+        // if (!formData.duration) errors.duration = 'Project scale is required';
+
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
+    console.log(validateRequiredFields())
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -120,7 +95,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         let { name, value } = e.target;
         UpdateFormData(name, value);
         // if (name == "durationUnit" || name == "duration") {
-        //     UpdateFormData(prevState => ({ ...prevState, ["duration"]: (formData['durationnum'] + formData['durationUnit']) }));
+        //     UpdateFormData(prevState => ({ ...prevState, ["duration"]: (formData['duration'] + formData['durationUnit']) }));
         // }
     };
 
@@ -140,6 +115,10 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
             setPost_success(true)
     }, [respond?.message])
 
+
+    useEffect(() => {
+        UpdateFormData("projectScale[unit]","minute")
+    }, [])
 
     useEffect(() => {
         if (auth.login === false)
@@ -173,71 +152,44 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                         <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
                             <div className="my-5">
                                 <CategorySelection
+                                    filterIn={'project'}
                                     value={{
                                         'category': formData.category,
-                                        'subCategory': formData.subCategory,
-                                        'tags': formData.tags,
+                                        'subCategoryId': formData.subCategory,
+                                        'tagsId': formData.tags,
                                     }}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
-                                        UpdateFormData('subCategory', value.subCategory)
-                                        UpdateFormData('tags', value.tags)
+                                        UpdateFormData('subCategoryId', value.subCategory)
+                                        UpdateFormData('tagsId', value.tags)
                                     }} />
                             </div>
                             <section>
-                                <h3 className="capitalize opacity-60 mt-11">attachments</h3>
+                                <h3 className="capitalize opacity-60">attachments</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
-                                <input placeholder='Name your project' className={inputStyle} value={formData.title|| ""} onChange={handleInputChange} name="title" />
+                                <input placeholder='Name your project' className={inputStyle} value={formData.name || ""} onChange={handleInputChange} name="name" />
                             </section>
                             <section>
-                                <input placeholder='Project description' className={inputStyle} value={formData.desc|| ""} onChange={handleInputChange} name="desc" />
+                                <input placeholder='Project description' className={inputStyle} value={formData.description || ""} onChange={handleInputChange} name="description" />
                             </section>
                             <section>
-                                <input placeholder='address' className={inputStyle} value={formData.address|| ""} onChange={handleInputChange} name="address" />
+                                <input placeholder='address' className={inputStyle} value={formData.address || ""} onChange={handleInputChange} name="address" />
                             </section>
                             <section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                             </section>
-                            <section>
-                                <ListInput
-                                    placeholder={'add tool used'}
-                                    target="AddToolUsed"
-                                    name={"tools"}
-                                    listdiv={formData.tools && formData.tools.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
-                                    remove={(value) => removeFromArray('tools', value)}
-                                    enable={false}
-                                />
-                            </section>
-                            <section>
-                                <ListInput
-                                    placeholder={'add other creatives'}
-                                    target="addOtherCreatives"
-                                    name={"creatives"}
-                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
-                                    remove={(value) => removeFromArray('creatives', value)}
-                                    enable={false}
-                                />
-                            </section>
-                            {/* 
-                            <section>
-                                <ListInput
-                                    placeholder={'equipment available'}
-                                    target="EquipmentAvailable"
-                                    listdiv={equipments}
-                                />
-                                <EquipmentAvailable onSubmit={hadleAddEQquip} />
-                            </section>
-                         */}
-                            <section>
-                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget|| ""} onChange={handleInputChange} name="projectBudget" />
-                                {errors.projectBudget && <div style={{ color: 'red' }}>{errors.projectBudget}</div>}
-                            </section>
+                            {/* <section>
+                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget || ""} onChange={handleInputChange} name="projectBudget" />
+                                {
+                                    errors.projectBudget && <div style={{ color: 'red' }}>{errors.projectBudget}</div>
+                                }
+                            </section> */}
                             <section>
                                 <div className='flex justify-center items-center gap-9'>
-                                    <input type="number" placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" value={formData.durationnum} onChange={handleInputChange} name="durationnum" />
-                                    {errors.durationnum && <div style={{ color: 'red' }}>{errors.durationnum}</div>}
+                                    <input type="number" placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" value={formData.duration} onChange={handleInputChange} name="duration" />
+                                    {errors.duration && <div style={{ color: 'red' }}>{errors.duration}</div>}
                                     <select
                                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalize"
                                         value={formData.durationUnit}
@@ -256,12 +208,39 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <span> Set location </span>
                                 <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                             </section>
+                            <section className="flex flex-col gap-8">
+                                <div className='flex items-center justify-between'>
+                                    <h3 className='font-bold text-lg'> Project Scale Unit </h3>
+                                    <select
+                                        className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
+                                        value={formData['projectScale[unit]']}
+                                        onChange={handleInputChange}
+                                        name="projectScale[unit]"
+                                        required
+                                    >
+                                        {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
+                                            <option key={index} value={value.toLowerCase()}>{value}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]']|| ""} onChange={handleInputChange} className={inputStyle} />
+                                <div className="flex w-full justify-between gap-3">
+                                    <div className="w-full">
+                                        <div className='flex items-center justify-start gap-4'>
+                                            <input type='number' name='projectScale[minimum]' value={formData['projectScale[minimum]']|| ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
+                                        </div>
+                                    </div>
+                                    <div className="w-full">
+                                        <div className='flex items-center justify-start gap-4'>
+                                            <input type='number' name='projectScale[maximum]' value={formData['projectScale[maximum]']|| ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                             <div className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'> Show on home feed & profile </p>
                             </div>
-
-
                             <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>
                                     Next

@@ -79,7 +79,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
 
     function onsubmit() {
-
         if (!preview) {
             setPreview(true)
             return
@@ -87,7 +86,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         if (submit)
             submit()
         const form = new FormData()
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['receiver'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value))
         BookProject(data._id, form)
     }
 

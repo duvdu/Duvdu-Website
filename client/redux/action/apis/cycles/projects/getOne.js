@@ -7,7 +7,7 @@ export const GetProject = (id) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.get(`api/portfolio-post/${id}`);
+      const response = await mainApiInstance.get(`api/projects/${id}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_DATA, payload: response.data.data });
       

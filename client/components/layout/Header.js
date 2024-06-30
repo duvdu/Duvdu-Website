@@ -8,7 +8,6 @@ import { toggleDarkMode, SetheaderPopUp } from "../../redux/action/setting";
 import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
 import Profile from "./HeaderComponents/Profile";
 import Setting from "./HeaderComponents/setting";
-import { verify } from "../../redux/action/auth";
 import * as Types from "../../redux/constants/actionTypes";
 import { OpenPopUp, errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
@@ -35,7 +34,7 @@ const Header = ({
     MarkNotificationsAsRead,
     LogOut,
     user,
-    verify }) => {
+    }) => {
 
     const router = useRouter();
     const { i18n, t } = useTranslation();
@@ -313,7 +312,6 @@ const mapDispatchToProps = {
     SetheaderPopUp,
     MarkNotificationsAsRead,
     LogOut,
-    verify
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

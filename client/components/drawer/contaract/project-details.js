@@ -235,11 +235,21 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                         :
                                         <>
                                             {
-                                                status?.includes("waiting-for-pay") &&
+                                                status == "waiting-for-pay-10" &&
                                                 <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                         <span className='text-white font-bold capitalize text-lg'>
-                                                            Pay Now
+                                                            Pay Now 10%
+                                                        </span>
+                                                    </Button>
+                                                </div>
+                                            }
+                                            {
+                                                status == "waiting-for-total-payment" &&
+                                                <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                                        <span className='text-white font-bold capitalize text-lg'>
+                                                            Pay Now remain ( 90 % )
                                                         </span>
                                                     </Button>
                                                 </div>
