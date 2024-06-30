@@ -70,7 +70,6 @@ const Layout = ({
     }, [])
 
     useEffect(() => {
-        console.log(user)
         if (user?.username) {
             if (!GetBoards_respond)
                 GetBoards({})

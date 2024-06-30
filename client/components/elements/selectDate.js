@@ -55,7 +55,6 @@ const SelectDate = ({ onChange, value }) => {
         const newDate = new Date(currentDate);
         newDate.setMonth(currentDate.getMonth() + change);
 
-        // Check if newDate is before tomorrow, if yes, do not update the state
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const tomorrow = new Date(today);
@@ -70,7 +69,7 @@ const SelectDate = ({ onChange, value }) => {
     const month = currentDate.getMonth();
     const monthDates = getMonthDates(year, month);
     const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 7);
-    
+
     return (
         <div className="flex flex-col gap-2 items-center date-selector">
             <div className="flex justify-between w-full mb-4">
@@ -97,7 +96,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-sm text-[#263257]">
-                                    {date.getDate()-1}
+                                    {date.getDate() - 1}
                                 </span>
                             </div>
                         ) : (
@@ -115,7 +114,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-xs text-[#263257]">
-                                    {date.getDate()-1}
+                                    {date.getDate() - 1}
                                 </span>
                                 <span className="font-medium text-xs text-[#8A96BC]">
                                     {date.toLocaleDateString('en-US', { weekday: 'short' })}
