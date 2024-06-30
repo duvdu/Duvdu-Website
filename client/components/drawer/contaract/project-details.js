@@ -264,6 +264,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                                     {
                                                         getType() == "producer" &&
                                                         appointmentDate &&
+                                                        IsImSp() &&
                                                         chnagedappointmentDate != appointmentDate &&
                                                         <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
                                                             <span className='text-white font-bold capitalize text-lg'>
