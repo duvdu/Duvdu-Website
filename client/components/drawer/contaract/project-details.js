@@ -241,6 +241,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                             {
                                 status == "pending" &&
                                 getType() == "producer" &&
+                                IsImSp() &&
                                 <section className="my-11 w-full">
                                     <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                                     <SelectDate value={chnagedappointmentDate} onChange={(value) => setChnagedAppointmentDate(value)} />
@@ -264,7 +265,6 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                                     {
                                                         getType() == "producer" &&
                                                         appointmentDate &&
-                                                        IsImSp() &&
                                                         chnagedappointmentDate != appointmentDate &&
                                                         <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
                                                             <span className='text-white font-bold capitalize text-lg'>
