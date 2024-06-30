@@ -21,9 +21,11 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
     
     // useEffect(() => {
     //     if(logout_respond)
-    //     router.push({
+    //     {
+    //         router.push({
     //         pathname: "/login",
     //     });
+    // }
     // }, [logout_respond]);
 
     function toggle() {
@@ -183,7 +185,7 @@ const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
     language: state.setting.LANGUAGE,
     getheaderpopup: state.setting.headerpopup,
-    logout_respond: state.api,
+    logout_respond: state.api.LogOut,
 
 });
 
