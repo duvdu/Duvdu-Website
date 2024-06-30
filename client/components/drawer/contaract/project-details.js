@@ -215,7 +215,9 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                             <div className='h-full' />
                             <section className='w-full '>
                                 {
-                                    sp.username == user.username ?
+                                    sp.username == user.username ||
+                                    status == "accepted with update"
+                                     ?
                                         <>
 
                                             {

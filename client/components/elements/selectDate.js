@@ -70,7 +70,7 @@ const SelectDate = ({ onChange, value }) => {
     const month = currentDate.getMonth();
     const monthDates = getMonthDates(year, month);
     const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 7);
-
+    
     return (
         <div className="flex flex-col gap-2 items-center date-selector">
             <div className="flex justify-between w-full mb-4">
@@ -97,7 +97,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-sm text-[#263257]">
-                                    {date.getDate()}
+                                    {date.getDate()-1}
                                 </span>
                             </div>
                         ) : (
@@ -115,7 +115,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-xs text-[#263257]">
-                                    {date.getDate()}
+                                    {date.getDate()-1}
                                 </span>
                                 <span className="font-medium text-xs text-[#8A96BC]">
                                     {date.toLocaleDateString('en-US', { weekday: 'short' })}
