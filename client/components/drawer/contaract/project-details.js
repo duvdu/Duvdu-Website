@@ -45,8 +45,12 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
             setAppointmentDate(contract.appointmentDate)
             setChnagedAppointmentDate(contract.appointmentDate)
         }
+        else {
+            setChnagedAppointmentDate(null)
+            setAppointmentDate(null)
+        }
 
-    }, []);
+    }, [contractDetails?._id]);
 
     useEffect(() => {
         if (payment_respond)
@@ -109,6 +113,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     // console.log(sp)
     // console.log("=============")
     const status = contract?.status
+    console.log(status)
 
     return (
         <>
@@ -233,10 +238,14 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                     </div>
                                 </div>
                             </section>
-                            <section className="my-11">
-                                <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
-                                <SelectDate value={chnagedappointmentDate} onChange={(value) => setChnagedAppointmentDate(value)} />
-                            </section>
+                            {
+                                status == "pending" &&
+                                getType() == "producer" &&
+                                <section className="my-11 w-full">
+                                    <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
+                                    <SelectDate value={chnagedappointmentDate} onChange={(value) => setChnagedAppointmentDate(value)} />
+                                </section>
+                            }
                             <div className='h-full' />
                             <section className='w-full '>
                                 {
