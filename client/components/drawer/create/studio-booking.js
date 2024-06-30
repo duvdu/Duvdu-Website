@@ -129,7 +129,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         UpdateFormData("projectScale.unit","minute")
     }, [])
 
-console.log(formData)
+
     const toggleDrawer = () => {
         CreateStudio(-1)
         if (nextstep == 2) {
