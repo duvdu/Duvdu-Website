@@ -22,7 +22,7 @@ function Info({
             <div className={`w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
                 <img className='w-full h-full rounded-full object-cover object-top' src={src} alt="profile picture" />
             </div>
-            <div className='flex-2 flex-col gap-1'>
+            <div className='flex-1 flex-col gap-1'>
                 <span className='text-3xl font-bold capitalize'>{personalName}</span>
                 <span className='flex items-center'>
                     <Icon className='opacity-50 mr-2 w-3' name='location-dot' />

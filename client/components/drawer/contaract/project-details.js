@@ -9,29 +9,48 @@ import dateFormat from "dateformat";
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import { payment } from '../../../redux/action/apis/contracts/pay';
+import SelectDate from '../../elements/selectDate';
 
-const getType = (value) => {
-    if (value.includes("copyright"))
-        return "copyrights"
-    else if (value.includes("rental"))
-        return "rental"
-    else if (value.includes("producer"))
-        return "producer"
-    else if (value.includes("project"))
-        return "project"
-}
-function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAction, takeAction_respond ,payment,payment_respond}) {
+function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
     const sp = contractDetails?.sp;
     const [timeLeft, setTimeLeft] = useState("");
     const [actionSuccess, setActionSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [appointmentDate, setAppointmentDate] = useState(null);
+    const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
 
+    console.log(contractDetails)
+    const IsImSp = () => {
+        return sp.username == user.username
+    }
+    const getType = () => {
+        if (contractDetails?.ref.includes("copyright"))
+            return "copyrights"
+        else if (contractDetails?.ref.includes("rental"))
+            return "rental"
+        else if (contractDetails?.ref.includes("producer"))
+            return "producer"
+        else if (contractDetails?.ref.includes("project"))
+            return "project"
+    }
     useEffect(() => {
         if (takeAction_respond)
             setActionSuccess(true)
     }, [takeAction_respond]);
+
+    useEffect(() => {
+        if (getType() == "producer") {
+            setAppointmentDate(contract.appointmentDate)
+            setChnagedAppointmentDate(contract.appointmentDate)
+        }
+        else {
+            setChnagedAppointmentDate(null)
+            setAppointmentDate(null)
+        }
+
+    }, [contractDetails?._id]);
 
     useEffect(() => {
         if (payment_respond)
@@ -63,17 +82,23 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
 
     const handleAccept = () => {
         if (!contractDetails?.ref) return
-        const type = getType(contractDetails.ref)
+        const type = getType()
         takeAction({ id: contract._id, data: true, type: type })
     };
 
+    const handleUpdate = () => {
+        if (!contractDetails?.ref) return
+        const type = getType()
+        takeAction({ id: contract._id, data: chnagedappointmentDate, type: type })
+    };
+
     const handlePayment = () => {
-        const type = getType(contractDetails.ref)
+        const type = getType()
         payment({ id: contract._id, type: type })
     };
     const handleRefuse = () => {
         if (!contractDetails?.ref) return
-        const type = getType(contractDetails.ref)
+        const type = getType()
         takeAction({ id: contract._id, data: false, type: type })
     };
     const toggleDrawer = () => {
@@ -88,7 +113,8 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     // console.log(sp)
     // console.log("=============")
     const status = contract?.status
-    
+    console.log(status)
+
     return (
         <>
             <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="" />
@@ -128,21 +154,21 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                 </span>
                             </section>
                             {contractDetails.ref &&
-                            <section className='w-full'>
-                                <h2 className='opacity-60 capitalize mb-3'> service type </h2>
-                                <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
-                                    {getType(contractDetails.ref)}
-                                </span>
-                            </section>}
+                                <section className='w-full'>
+                                    <h2 className='opacity-60 capitalize mb-3'> service type </h2>
+                                    <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
+                                        {getType()}
+                                    </span>
+                                </section>}
 
                             {
                                 contract.details &&
                                 <section className='w-full'>
-                                <h2 className='opacity-60 capitalize mb-3'> project details </h2>
-                                <p className='font-semibold capitalize max-w-[543px]'>
-                                    {contract.details}
-                                </p>
-                            </section>
+                                    <h2 className='opacity-60 capitalize mb-3'> project details </h2>
+                                    <p className='font-semibold capitalize max-w-[543px]'>
+                                        {contract.details}
+                                    </p>
+                                </section>
                             }
                             {contract.attachments &&
                                 <section className='w-full'>
@@ -212,10 +238,20 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                     </div>
                                 </div>
                             </section>
+                            {
+                                status == "pending" &&
+                                getType() == "producer" &&
+                                <section className="my-11 w-full">
+                                    <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
+                                    <SelectDate value={chnagedappointmentDate} onChange={(value) => setChnagedAppointmentDate(value)} />
+                                </section>
+                            }
                             <div className='h-full' />
                             <section className='w-full '>
                                 {
-                                    sp.username == user.username ?
+                                    IsImSp() ||
+                                        status == "accepted with update"
+                                        ?
                                         <>
 
                                             {
@@ -226,6 +262,15 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                                             Accept
                                                         </span>
                                                     </Button>
+                                                    {
+                                                        getType() == "producer" &&
+                                                        appointmentDate &&
+                                                        chnagedappointmentDate != appointmentDate &&
+                                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
+                                                            <span className='text-white font-bold capitalize text-lg'>
+                                                                Update Appointment
+                                                            </span>
+                                                        </Button>}
                                                     <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
                                                         refuse
                                                     </button>

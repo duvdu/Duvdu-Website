@@ -55,7 +55,6 @@ const SelectDate = ({ onChange, value }) => {
         const newDate = new Date(currentDate);
         newDate.setMonth(currentDate.getMonth() + change);
 
-        // Check if newDate is before tomorrow, if yes, do not update the state
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const tomorrow = new Date(today);
@@ -97,7 +96,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-sm text-[#263257]">
-                                    {date.getDate()}
+                                    {date.getDate() - 1}
                                 </span>
                             </div>
                         ) : (
@@ -115,7 +114,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-xs text-[#263257]">
-                                    {date.getDate()}
+                                    {date.getDate() - 1}
                                 </span>
                                 <span className="font-medium text-xs text-[#8A96BC]">
                                     {date.toLocaleDateString('en-US', { weekday: 'short' })}

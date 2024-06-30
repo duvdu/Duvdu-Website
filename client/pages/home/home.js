@@ -25,18 +25,10 @@ const Home = ({
 }) => {
 
     useEffect(() => {
-        // HomeTreny()
-        // HomeDiscover()
-        // popularSub()
+        HomeTreny()
+        HomeDiscover()
+        popularSub()
     }, [])
-
-    // useEffect(() => {
-    //     if (homeTreny_respond && homeDiscover_respond && popularSub_respond)
-    //         console.log(homeTreny_respond, homeDiscover_respond, popularSub_respond)
-    // }, [homeTreny_respond, homeDiscover_respond, popularSub_respond])
-
-    console.log(categories)
-
 
     var TheBeststyle = {
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',

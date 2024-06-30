@@ -24,7 +24,7 @@ export const takeAction = ({ id, data, type }) => {
 
                 case "producer":
                     response = await mainApiInstance.patch(`/api/producers/contract/${id}`, {
-                        status: data ? "accepted" : "rejected"
+                        ...(typeof data === 'string' ? { appointmentDate: data } : { status: data ? "accepted" : "rejected" })
                     });
                     break;
 
