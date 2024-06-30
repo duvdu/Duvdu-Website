@@ -241,6 +241,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                             {
                                 status == "pending" &&
                                 getType() == "producer" &&
+                                IsImSp() &&
                                 <section className="my-11 w-full">
                                     <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                                     <SelectDate value={chnagedappointmentDate} onChange={(value) => setChnagedAppointmentDate(value)} />
@@ -255,7 +256,6 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                         <>
 
                                             {
-                                                status == "pending" &&
                                                 <div className='flex mx-5 gap-7 mb-10 mt-16'>
                                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
                                                         <span className='text-white font-bold capitalize text-lg'>

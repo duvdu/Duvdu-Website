@@ -96,7 +96,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-sm text-[#263257]">
-                                    {date.getDate() - 1}
+                                    {date.getDate()}
                                 </span>
                             </div>
                         ) : (
@@ -114,7 +114,7 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-xs text-[#263257]">
-                                    {date.getDate() - 1}
+                                    {date.getDate()}
                                 </span>
                                 <span className="font-medium text-xs text-[#8A96BC]">
                                     {date.toLocaleDateString('en-US', { weekday: 'short' })}
