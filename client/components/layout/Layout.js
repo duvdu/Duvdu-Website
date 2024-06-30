@@ -71,7 +71,7 @@ const Layout = ({
 
     useEffect(() => {
         console.log(user)
-        if (user?.name) {
+        if (user?.username) {
             if (!GetBoards_respond)
                 GetBoards({})
             if (!GetFavList_respond)
@@ -85,7 +85,7 @@ const Layout = ({
         return () => {
             // cleanupSocket();
         };
-    }, [user?.name])
+    }, [user?.username])
 
     useEffect(() => {
         if(logout_respond) {
