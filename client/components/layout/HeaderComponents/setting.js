@@ -19,15 +19,6 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
 
     const router = useRouter();
     
-    // useEffect(() => {
-    //     if(logout_respond)
-    //     {
-    //         router.push({
-    //         pathname: "/login",
-    //     });
-    // }
-    // }, [logout_respond]);
-
     function toggle() {
         const body = document.body;
         body.classList.toggle('dark');

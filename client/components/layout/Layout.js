@@ -12,6 +12,8 @@ import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
 import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
 import { getCategory } from "../../redux/action/apis/category/getCategories";
 import { init } from "../../redux/action/apis/init/getdata";
+import { useRouter } from "next/router";
+import { LogOut } from "../../redux/action/apis/auth/logout";
 
 const Layout = ({
     user,
@@ -32,11 +34,14 @@ const Layout = ({
     GetNotifications_respond,
     GetFavList_respond,
     getCategory_respond,
+    logout_respond,
+    LogOut,
     cleanupSocket,
     init
 
 }) => {
     const [isToggled, setToggled] = useState(1);
+    const router = useRouter();
 
 
     const toggleClick = (type) => {
@@ -65,7 +70,8 @@ const Layout = ({
     }, [])
 
     useEffect(() => {
-        if (user) {
+        console.log(user)
+        if (user?.name) {
             if (!GetBoards_respond)
                 GetBoards({})
             if (!GetFavList_respond)
@@ -79,7 +85,17 @@ const Layout = ({
         return () => {
             // cleanupSocket();
         };
-    }, [user,cleanupSocket])
+    }, [user?.name])
+
+    useEffect(() => {
+        if(logout_respond) {
+            console.log(logout_respond)
+            router.push({
+            pathname: "/login",
+        });
+        LogOut(-1)
+    }
+    }, [logout_respond]);
 
     return (
         <>
@@ -112,6 +128,7 @@ const mapStateToProps = (state) => ({
     GetNotifications_respond: state.api.GetNotifications,
     GetBoards_respond: state.api.GetBoards,
     GetFavList_respond: state.api.GetFavList,
+    logout_respond: state.api.LogOut,
     getCategory_respond: state.api.getCategory,
 });
 
@@ -122,6 +139,7 @@ const mapDispatchToProps = {
     cleanupSocket,
     GetBoards,
     GetFavList,
+    LogOut,
     init,
     getCategory
 
