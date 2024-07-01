@@ -259,14 +259,14 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                         </div>
                                     )}
                                 </section>}
-                            <section className='w-full flex flex-col sm:flex-row justify-between items-center gap-10 sm:gap-3'>
+                            <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
                                 <div className='w-full'>
                                     <div className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'> custom requirements </h2>
-                                        <span className='font-semibold capitalize mt-3'> {contract.stageExpiration} minutes </span>
+                                        <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
+                                        <span className='font-semibold capitalize mt-3'> {contract.stageExpiration} Hours </span>
                                     </div>
                                     <div className='w-full mt-5'>
-                                        <h2 className='opacity-60 capitalize mb-3'> shooting days </h2>
+                                        <h2 className='opacity-60 capitalize mb-3'> Address </h2>
                                         <div className='flex gap-4'>
                                             <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
                                                 <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
@@ -288,8 +288,8 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                 </div>
                                 <div className='w-full'>
                                     <div className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'> shooting days </h2>
-                                        <span className='font-semibold capitalize mt-3'> {contract.totalPrice} days </span>
+                                        <h2 className='opacity-60 capitalize mb-3'> Total Price </h2>
+                                        <span className='font-semibold capitalize mt-3'> {contract.totalPrice} $ </span>
                                     </div>
                                     <div className='w-full mt-5'>
                                         <h2 className='opacity-60 capitalize mb-3'> start date </h2>
@@ -305,7 +305,7 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                                 </div>
                                                 <div>
                                                     <span className='text-xs text-[#747688]'>
-                                                        {dateFormat(contract.appointmentDate, 'd mmmm , yyyy')}
+                                                        {dateFormat(contract.appointmentDate, 'dddd')}
                                                     </span>
                                                 </div>
                                             </div>

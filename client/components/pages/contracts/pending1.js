@@ -69,7 +69,7 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
                     <img className='w-14 h-14 rounded-full object-cover object-top' src={data.customer?.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold capitalize'>{data.customer?.name}</h3>
-                        <span className='opacity-50'>{dateFormat(data?.contract?.createdAt, 'd mmmm , yyyy')}</span>
+                        <span className='opacity-50'>{dateFormat(data?.contract?.createdAt, 'dddd')}</span>
                     </div>
                 </div>
                 {/*********/}

@@ -40,7 +40,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
     }, [])
 
     useEffect(() => {
-        const _data = respond?.data.filter(value => activeIndex == 0 ? value.sp.username == user.username : value.sp.username != user.username )
+        const _data = respond?.data.filter(value => activeIndex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username )
         setData(_data)
     }, [activeIndex , respond?.data])
 

@@ -1,6 +1,7 @@
 import Icon from "../../Icons";
 import dateFormat from "dateformat";
 import Selector from "../../elements/CustomSelector";
+import { formattedCreatedAt, formattedDeadline } from "../../../util/format-date";
 
 // const fakedata = {
 //     "_id": "6664479cc9423563d0feb5b8",
@@ -30,23 +31,9 @@ import Selector from "../../elements/CustomSelector";
 
 const Ongoing2 = ({ data,onClick }) => {
     
-    const formattedDeadline = dateFormat(new Date(data?.contract?.createdAt), "mmmm dS, yyyy, h:MM TT");
+    const Deadline = formattedDeadline(data?.contract?.deadline)
+    const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
 
-    const currentDate = new Date();
-    const createdAtDate = new Date(data?.contract?.createdAt);
-    const timeDifference = currentDate - createdAtDate;
-    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    let formattedCreatedAt;
-    if (daysDifference === 0) {
-        formattedCreatedAt = "Today";
-    } else if (daysDifference === 1) {
-        formattedCreatedAt = "Yesterday";
-    } else if (daysDifference === 2) {
-        formattedCreatedAt = "Day before yesterday";
-    } else {
-        formattedCreatedAt = dateFormat(new Date(createdAtDate), "M/d/yyyy");
-    }
-    
     return (
         <div onClick={onClick} className='w-[370px] sm:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between'>
@@ -55,7 +42,7 @@ const Ongoing2 = ({ data,onClick }) => {
                     <img className='w-14 h-14 rounded-full object-cover object-top' src={data.targetUser?.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold text-white capitalize'>{data.targetUser?.name}</h3>
-                        <span className='opacity-50 text-white'>{formattedCreatedAt}</span>
+                        <span className='opacity-50 text-white'>{CreatedAt}</span>
                     </div>
                 </div>
                 {/*********/}
@@ -76,7 +63,7 @@ const Ongoing2 = ({ data,onClick }) => {
                     <div>
                         <span className='opacity-50 text-white'>deadline</span>
                         <br />
-                        <span className='text-white'>{formattedDeadline}</span>
+                        <span className='text-white'>{Deadline}</span>
                     </div>
                 </div>
                 {/*********/}

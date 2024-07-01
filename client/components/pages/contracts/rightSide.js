@@ -4,6 +4,7 @@ import Selector from "../../elements/CustomSelector";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
+import { formattedDeadline } from "../../../util/format-date";
 
 const RightSide = ({ getAllContracts_respond, user }) => {
     const IsImSp = () => {
@@ -50,8 +51,9 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         </Link>
     const MoreIcon = () => <Icon className='cursor-pointer' name={'more'} />
 
-    const HisTory = ({ data, isCanceled }) =>
-        <>
+    const HisTory = ({ data, isCanceled }) =>{
+        const Deadline = formattedDeadline(data?.contract?.deadline)
+        return<>
             {/* max-w-[370px] ahmed */}
             <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
                 {/* dropdown */}
@@ -114,12 +116,13 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                     <div className='text-start'>
                         <span className={`opacity-50 capitalize ${isCanceled ? 'text-[#FF4646]' : ''}`}>deadline</span>
                         <br />
-                        <span className={`capitalize line-through opacity-60 ${isCanceled ? 'text-[#FF4646]' : ''}`}>{new Date(data.contract.deadline).toDateString()}</span>
+                        <span className={`capitalize line-through opacity-60 ${isCanceled ? 'text-[#FF4646]' : ''}`}>{Deadline}</span>
                     </div>
                 </div>
                 {/*********/}
             </div>
         </>
+    }
 
 
     return (

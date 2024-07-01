@@ -4,6 +4,7 @@ import { formatRemainingTime } from '../../../util/util';
 import Selector from '../../elements/CustomSelector';
 import { connect } from 'react-redux';
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
+import { formattedCreatedAt } from '../../../util/format-date';
 
 const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
     const statuses = [
@@ -16,21 +17,7 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
         takeAction({id: data._id, data : {"action": value}})
     };
 
-    const currentDate = new Date();
-    const createdAtDate = new Date(data.contract.createdAt);
-    const timeDifference = currentDate - createdAtDate;
-    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
-    let formattedCreatedAt;
-    if (daysDifference === 0) {
-        formattedCreatedAt = "Today";
-    } else if (daysDifference === 1) {
-        formattedCreatedAt = "Yesterday";
-    } else if (daysDifference === 2) {
-        formattedCreatedAt = "Day before yesterday";
-    } else {
-        formattedCreatedAt = dateFormat(createdAtDate, "M/d/yyyy");
-    }
+    const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
     useEffect(() => {
         if (!data?.contract?.deadline) return
         const interval = setInterval(() => {
@@ -64,7 +51,7 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
                             {data.sp.name || 'Unknown User'}
                         </h3>
                         <span className='opacity-50'>
-                            {formattedCreatedAt}
+                            {CreatedAt}
                         </span>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import Icon from "../../Icons";
 import Selector from "../../elements/CustomSelector";
 import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
 import dateFormat from "dateformat";
+import { formattedCreatedAt, formattedDeadline } from './../../../util/format-date';
 
 const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
     const statuses = [
@@ -10,7 +11,8 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
         { value: 'reject' },
     ];
 
-
+    const Deadline = formattedDeadline(data?.contract?.deadline)
+    const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
     const handleDropdownSelect = (value) => {
         // takeAction({id: , value : })
     };
@@ -22,7 +24,7 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
                     <img className='w-14 h-14 rounded-full object-cover object-top' src={data.customer.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>{data.customer.name}</h3>
-                        <span className='opacity-50 text-white'>{ dateFormat(data.createdAt, 'd mmmm , yyyy') }</span>
+                        <span className='opacity-50 text-white'>{CreatedAt}</span>
                     </div>
                 </div>
                 {/*********/}
@@ -41,7 +43,7 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
                         <div>
                             <span className='opacity-50 text-white'>deadline</span>
                             <br />
-                            <span className='text-white'>{dateFormat(data.deadline, 'd mmmm , yyyy')}</span>
+                            <span className='text-white'>{Deadline}</span>
                         </div>
                     </div>
                     {/* button */}
