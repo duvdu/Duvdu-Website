@@ -11,7 +11,6 @@ import { toggleContractData } from "../../../redux/action/contractDetails";
 const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [data, setData] = useState([]);
-
     const handleStatus = (status) => {
         switch (status) {
             case 'canceled':
@@ -23,6 +22,8 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
             case 'update-after-first-Payment':
                 return 0;
             case 'waiting-for-total-payment':
+                return 0;
+            case 'waiting-for-payment':
                 return 0;
             case 'ongoing':
                 return 1;
@@ -41,7 +42,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
     useEffect(() => {
         const _data = respond?.data.filter(value => activeIndex == 0 ? value.sp.username == user.username : value.sp.username != user.username )
         setData(_data)
-    }, [activeIndex])
+    }, [activeIndex , respond?.data])
 
     const handleToggleClick = (index) => {
         setActiveIndex(index);
@@ -51,6 +52,8 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
     </div>
     const pending = data?.filter(data => handleStatus(data.contract.status) == 0)
     const ongoing = data?.filter(data => handleStatus(data.contract.status) == 1)
+
+
 
     const Clients = () =>
         (pending?.length || ongoing?.length) ?

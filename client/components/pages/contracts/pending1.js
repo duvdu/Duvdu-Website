@@ -43,6 +43,8 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
                 return "Canceled";
             case 'pending':
                 return timeLeft;
+            case 'waiting-for-payment':
+                return "Waiting For payment";
             case 'waiting-for-pay-10':
                 return "Waiting For First Payment";
             case 'update-after-first-Payment':

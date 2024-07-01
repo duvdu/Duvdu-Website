@@ -59,6 +59,8 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                 return timeLeft;
             case 'waiting-for-pay-10':
                 return "Waiting For First Payment";
+            case 'waiting-for-payment':
+                return "Waiting For payment";
             case 'update-after-first-Payment':
                 return "Update After First Payment";
             case 'waiting-for-total-payment':
@@ -404,6 +406,16 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                         <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                             <span className='text-white font-bold capitalize text-lg'>
                                                 Pay Now remain ( 90 % )
+                                            </span>
+                                        </Button>
+                                    </div>
+                                }
+                                {
+                                    !IsImSp() && status == "waiting-for-payment" &&
+                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Pay Now
                                             </span>
                                         </Button>
                                     </div>

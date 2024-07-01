@@ -16,17 +16,16 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
         selectRef.current.value = null;
     };
 
-    useEffect(()=>{
-        selectRef.current.value = null
-    },[selectRef?.current?.value])
+    
 
     return (
+        false &&
         <div className={`relative cursor-pointer ${className}`}>
             <div onClick={handleIconClick} className="icon-container">
                 {children || <Icon name={'ellipsis-vertical'} className={iconclassName + " h-6"} />}
             </div>
             {
-                options?.length > 0 &&
+                options?.length > 0 && 
                 <select ref={selectRef} onChange={handleChange} className="absolute inset-0 opacity-0 cursor-pointer">
                     {options?.map((option, index) => (
                         <option key={index} value={option.value}>
