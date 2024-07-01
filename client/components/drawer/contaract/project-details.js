@@ -10,20 +10,35 @@ import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import { payment } from '../../../redux/action/apis/contracts/pay';
 import SelectDate from '../../elements/selectDate';
+import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
 
-function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
+function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
     const sp = contractDetails?.sp;
+    const status = contract?.status
     const [timeLeft, setTimeLeft] = useState("");
     const [actionSuccess, setActionSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-    const [appointmentDate, setAppointmentDate] = useState(null);
-    const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
 
-    console.log(contractDetails)
+    const [appointmentDate, setdAppointmentDate] = useState(null);
+    const [details, setDetails] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(null);
+    const [deadline, setDeadline] = useState(null);
+
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'details') {
+            setDetails(value);
+        } else if (name === 'totalPrice') {
+            setTotalPrice(value);
+        }
+    };
+    // const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
+
     const IsImSp = () => {
-        return sp.username == user.username
+        return sp?.username == user?.username
     }
     const getType = () => {
         if (contractDetails?.ref.includes("copyright"))
@@ -35,27 +50,54 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
         else if (contractDetails?.ref.includes("project"))
             return "project"
     }
+
+    const uiStatus = () => {
+        switch (status) {
+            case 'canceled':
+                return "Canceled";
+            case 'pending':
+                return timeLeft;
+            case 'waiting-for-pay-10':
+                return "Waiting For First Payment";
+            case 'update-after-first-Payment':
+                return "Update After First Payment";
+            case 'waiting-for-total-payment':
+                return "Waiting For Total Payment";
+            case 'ongoing':
+                return "Ongoing";
+            case 'completed':
+                return "Completed";
+            case 'rejected':
+                return "Rejected";
+            default:
+                return "Unknown"; // Handle unknown cases as needed
+        }
+    }
+
     useEffect(() => {
-        if (takeAction_respond)
+        if (takeAction_respond){
+            getAllContracts()
             setActionSuccess(true)
+        }
     }, [takeAction_respond]);
 
     useEffect(() => {
+        if (payment_respond){
+            getAllContracts()
+            setPaymentSuccess(true)
+        }
+    }, [payment_respond]);
+    
+    useEffect(() => {
         if (getType() == "producer") {
-            setAppointmentDate(contract.appointmentDate)
-            setChnagedAppointmentDate(contract.appointmentDate)
+            setdAppointmentDate(contract.appointmentDate)
         }
         else {
-            setChnagedAppointmentDate(null)
-            setAppointmentDate(null)
+            setdAppointmentDate(null)
         }
 
     }, [contractDetails?._id]);
 
-    useEffect(() => {
-        if (payment_respond)
-            setPaymentSuccess(true)
-    }, [payment_respond]);
 
     useEffect(() => {
         if (!contract?.deadline) return
@@ -89,12 +131,19 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     const handleUpdate = () => {
         if (!contractDetails?.ref) return
         const type = getType()
-        takeAction({ id: contract._id, data: chnagedappointmentDate, type: type })
+
+        const data = {}
+        if (appointmentDate) data.appointmentDate = appointmentDate;
+        if (details) data.details = details;
+        if (totalPrice) data.totalPrice = totalPrice;
+        if (deadline) data.deadline = deadline;
+
+        takeAction({ id: contract._id, data: data, type: type, isUpdate: true })
     };
 
     const handlePayment = () => {
         const type = getType()
-        payment({ id: contract._id, type: type })
+        payment({ id: contract.paymentLink, type: type })
     };
     const handleRefuse = () => {
         if (!contractDetails?.ref) return
@@ -103,6 +152,12 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     };
     const toggleDrawer = () => {
         toggleContractData(null)
+        setActionSuccess(false)
+        setPaymentSuccess(false)
+        setdAppointmentDate(null)
+        setDetails(null)
+        setTotalPrice(null)
+        setDeadline(null)
         takeAction({ id: -1 })      // for remove respond state
         payment({ id: -1 })         // for remove respond state
     };
@@ -112,8 +167,26 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     // console.log(customer)
     // console.log(sp)
     // console.log("=============")
-    const status = contract?.status
-    console.log(status)
+
+    
+
+    const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
+    const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
+    const UpdateBtn =
+        (getType() === "producer" &&
+            IsImSp() &&
+            status === "pending" &&
+            appointmentDate && 
+            appointmentDate !== contract?.appointmentDate) ||
+        (getType() === "copyrights" &&
+            !IsImSp() &&
+            status === "update-after-first-Payment" &&
+            (
+                details && details !== contract?.details ||
+                totalPrice && totalPrice !== contract?.totalPrice ||
+                (deadline && deadline !== contract?.deadline && new Date(deadline) > new Date(contract.deadline))
+            ))
+
 
     return (
         <>
@@ -126,7 +199,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                     <>
                         <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10 h-drawer'>
                             <section>
-                                <span className='text-4xl my-5'>{status == "pending" ? timeLeft : "waiting for payment"}
+                                <span className='text-4xl my-5'>{uiStatus()}
                                     {status == "pending" &&
                                         <span className='text-lg opacity-40 mx-2'>
                                             {timeLeft ? "left" : "Time's up"}
@@ -244,69 +317,105 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                 IsImSp() &&
                                 <section className="my-11 w-full">
                                     <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
-                                    <SelectDate value={chnagedappointmentDate} onChange={(value) => setChnagedAppointmentDate(value)} />
+                                    <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
                                 </section>
                             }
+
+                            {
+                                status == "update-after-first-Payment" &&
+                                getType() == "copyrights" &&
+                                !IsImSp() &&
+                                <>
+                                    <section className='w-full'>
+                                        <h3 className="capitalize opacity-60">job details</h3>
+                                        <textarea
+                                            name="details"
+                                            value={details || contract.details}
+                                            onChange={handleInputChange}
+                                            placeholder="requirements, conditions At least 6 char"
+                                            className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
+                                        />
+                                    </section>
+                                    <section className="my-11 w-full">
+                                        <h3 className="capitalize opacity-60 mb-4">deadline</h3>
+                                        <SelectDate value={deadline || contract.deadline} onChange={(value) => setDeadline(value)} />
+                                        {deadline && new Date(deadline) < new Date(contract.deadline) &&
+                                        <span className="error-msg" >
+                                             Deadline must be on or after the execution day.
+                                        </span>
+                                        }
+                                    </section>
+                                    <div className='mb-4 w-full'>
+                                        <input
+                                            placeholder='Total price'
+                                            type='text'
+                                            name='totalPrice'
+                                            value={totalPrice || contract.totalPrice}
+                                            onChange={handleInputChange}
+                                            className="edit app-field"
+                                        />
+                                    </div>
+                                </>
+
+                            }
+
                             <div className='h-full' />
                             <section className='w-full '>
-                                {
-                                    IsImSp() ||
-                                        status == "accepted with update"
-                                        ?
-                                        <>
+                                <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                    {
+                                        acceptBtn &&
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Accept
+                                            </span>
+                                        </Button>
+                                    }
+                                    {
+                                        UpdateBtn &&
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Update Appointment
+                                            </span>
+                                        </Button>
+                                    }
+                                    {
+                                        refuse &&
+                                        <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            Refuse
+                                        </button>
+                                    }
+                                </div>
 
-                                            {
-                                                <div className='flex mx-5 gap-7 mb-10 mt-16'>
-                                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
-                                                        <span className='text-white font-bold capitalize text-lg'>
-                                                            Accept
-                                                        </span>
-                                                    </Button>
-                                                    {
-                                                        getType() == "producer" &&
-                                                        appointmentDate &&
-                                                        chnagedappointmentDate != appointmentDate &&
-                                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
-                                                            <span className='text-white font-bold capitalize text-lg'>
-                                                                Update Appointment
-                                                            </span>
-                                                        </Button>}
-                                                    <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                                        refuse
-                                                    </button>
-                                                </div>
-                                            }
-                                        </>
-                                        :
-                                        <>
-                                            {
-                                                status == "waiting-for-pay-10" &&
-                                                <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                        <span className='text-white font-bold capitalize text-lg'>
-                                                            Pay Now 10%
-                                                        </span>
-                                                    </Button>
-                                                </div>
-                                            }
-                                            {
-                                                status == "waiting-for-total-payment" &&
-                                                <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                        <span className='text-white font-bold capitalize text-lg'>
-                                                            Pay Now remain ( 90 % )
-                                                        </span>
-                                                    </Button>
-                                                </div>
-                                            }
-                                            {
-                                                !status?.includes("waiting-for-pay") &&
-                                                <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
-                                                    Cancel
-                                                </button>
-                                            }
-                                        </>
+
+                                {
+                                    !IsImSp() &&
+                                    status == "waiting-for-pay-10" &&
+                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Pay Now 10%
+                                            </span>
+                                        </Button>
+                                    </div>
                                 }
+                                {
+                                    !IsImSp() && status == "waiting-for-total-payment" &&
+                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Pay Now remain ( 90 % )
+                                            </span>
+                                        </Button>
+                                    </div>
+                                }
+                                {
+                                    !status?.includes("waiting-for-pay") && false &&
+                                    <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
+                                        Cancel
+                                    </button>
+                                }
+
+
                             </section>
                         </div>
                     </>
@@ -328,6 +437,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     toggleContractData,
     takeAction,
+    getAllContracts,
     payment
 };
 

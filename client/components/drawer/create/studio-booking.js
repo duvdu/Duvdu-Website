@@ -129,7 +129,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         UpdateFormData("projectScale.unit","minute")
     }, [])
 
-console.log(formData)
+
     const toggleDrawer = () => {
         CreateStudio(-1)
         if (nextstep == 2) {
@@ -166,8 +166,7 @@ console.log(formData)
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)
                                         UpdateFormData('tags', value.tags)
-                                        console.log(value.tags)
-                                    }} />
+                                        }} />
                             </div>
                             <section className="w-full ">
                                 <h3 className="capitalize opacity-60">attachments</h3>

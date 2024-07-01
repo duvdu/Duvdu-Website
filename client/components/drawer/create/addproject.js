@@ -80,7 +80,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-    console.log(validateRequiredFields())
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {

@@ -14,8 +14,7 @@ export const AddProjectToBoard = ({ idboard, idproject }) => {
             const response = await mainApiInstance.post(`api/users/saved-projects/${idboard}/project/${idproject}`,);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
         } catch (error) {
-            // console.log("error " , JSON.stringify(error.response))
-            dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
+             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
         }
     };
 };

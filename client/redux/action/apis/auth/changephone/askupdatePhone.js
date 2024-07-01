@@ -7,7 +7,7 @@ export const askChangePhone = () => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      console.log(req)
+      
       const response = await mainApiInstance.get(`api/users/auth/update-phone`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {

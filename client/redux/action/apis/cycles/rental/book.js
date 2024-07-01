@@ -15,7 +15,6 @@ export const StudopBooking = (id, data) => {
       
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
-      // console.log("error " , JSON.stringify(error.response))
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
     }
   };

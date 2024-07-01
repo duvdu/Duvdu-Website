@@ -29,7 +29,6 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
         Change()
     }, [selectedCategory, selectedSubCategory, selectedTags])
     const Change = () => {
-        console.log(selectedTags)
         if (onChange)
             onChange({
                 category: selectedCategory._id,

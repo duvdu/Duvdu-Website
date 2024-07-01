@@ -21,7 +21,7 @@ export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
         })
 
     } catch (error) {
-        console.log(error)
+        
     }
 
 }
@@ -43,7 +43,7 @@ export const fetchMoreProject = (url, total) => async dispatch => {
         })
 
     } catch (error) {
-        console.log(error)
+        
     }
 
 }
@@ -61,7 +61,7 @@ export const fetchByCatagory = async (url, filters) => {
         return filteredList
 
     } catch (error) {
-        console.log(error)
+        
     }
 }
 

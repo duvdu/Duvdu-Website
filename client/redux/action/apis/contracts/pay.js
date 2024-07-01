@@ -19,7 +19,10 @@ export const payment = ({ id, type }) => {
                     response = await mainApiInstance.patch(`/api/producers/contract/pay/${id}`);
                     break;
                 case "copyrights":
-                    response = await mainApiInstance.post(`/api/copyrights/contract/pay/${id}`);
+                    response = await mainApiInstance.get(`/api/copyrights/contract/pay/${id}`);
+                    break;
+                case "project":
+                    response = await mainApiInstance.get(`/api/project/contract/pay/${id}`);
                     break;
                 default:
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });

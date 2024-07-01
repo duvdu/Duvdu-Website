@@ -29,7 +29,7 @@ import Popup from "../elements/popup";
 
 const Share = ({ url, title }) => {
     const size = 45;
-    // console.log(url)
+    
     const shareUrl = url//'https://example.com';
     return (
         <Popup id='Share' >
