@@ -305,7 +305,7 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                                 </div>
                                                 <div>
                                                     <span className='text-xs text-[#747688]'>
-                                                        {new Date(contract.appointmentDate).toLocaleDateString('en-US', { weekday: 'long' })}
+                                                        {dateFormat(contract.appointmentDate, 'd mmmm , yyyy')}
                                                     </span>
                                                 </div>
                                             </div>
