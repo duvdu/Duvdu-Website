@@ -142,7 +142,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                     </div>
                     <Title title='history' />
                     {
-                        data.map((value) => (
+                        data?.map((value) => (
                             <HisTory key={value.id} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
                         ))
                     }
