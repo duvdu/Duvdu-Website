@@ -42,7 +42,6 @@ const Category = ({ category, language }) => {
       }
       else {
         const leftPosition = parseFloat(computedStyle.getPropertyValue('left'));
-        console.log("leftPosition ", leftPosition, megaMenuRef.current)
         if (leftPosition < 0) {
           megaMenuRef.current.style.left = '0px';
         }

@@ -36,10 +36,9 @@ function ResetPassword() {
     }
 
     // Continue with form submission or other actions if no errors
-    if (!emailError.isError && !passwordError.isError && !confirmPasswordError.isError) {
-      console.log('Form submited');
-      // Add logic for password reset here
-    }
+    // if (!emailError.isError && !passwordError.isError && !confirmPasswordError.isError) {
+    //   // Add logic for password reset here
+    // }
   };
 
   return (

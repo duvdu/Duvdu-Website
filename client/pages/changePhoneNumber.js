@@ -56,11 +56,6 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
         }
     };
 
-    if (respond_Update)
-        console.log("respond_Update = ", respond_Update);
-    else if (respond_Ask)
-        console.log("respond_Ask = ", respond_Ask);
-
     useEffect(() => {
         if (respond_Update)
             handleNextStep(3);

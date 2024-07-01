@@ -58,13 +58,13 @@ mainApiInstance.interceptors.response.use(
       // Find the 'connect.sid' cookie in the set-cookie header
       const connectSidCookie = setCookieHeader.find(cookie => cookie.startsWith('connect.sid='));
       if (connectSidCookie) {
-        console.log('connect.sid:', connectSidCookie);
+        
       }
     }
     return response;
   },
   async error => {
-    // console.log(error.response)
+    // 
     if (error.response && error.response.status === 423) {
 
       if (error.config.url == "/api/users/auth/refresh") {

@@ -110,7 +110,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
 
     const loadMore = () => {
         setLimit(prev => prev + 50)
-        console.log('Loading more messages...');
         // Your custom logic to load more messages
     };
 

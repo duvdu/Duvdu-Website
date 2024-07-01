@@ -88,7 +88,6 @@ const Layout = ({
 
     useEffect(() => {
         if(logout_respond) {
-            console.log(logout_respond)
             router.push({
             pathname: "/login",
         });

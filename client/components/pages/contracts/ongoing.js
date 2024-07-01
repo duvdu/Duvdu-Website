@@ -11,7 +11,6 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
 
 
     const handleDropdownSelect = (value) => {
-        console.log(data)
         // takeAction({id: , value : })
     };
     return (

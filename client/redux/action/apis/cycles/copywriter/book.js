@@ -9,16 +9,13 @@ export const BookCopyrights = (id,data) => {
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
       return 
     }
-    // for(let [name, value] of data) {
-    //   console.log(`${name} = ${value}`); 
-    // }
+   
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const response = await mainApiInstance.post(`api/copyrights/contract/${id}`, data);
-      console.log(response.data)
+      
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
-        // console.log("error " , JSON.stringify(error.response))
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
     }
   };

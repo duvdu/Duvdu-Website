@@ -66,12 +66,12 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     }, [api.error]);
 
     const handleApiErrors = (convertError) => {
-        console.log(convertError)
+        
         if (convertError.status === 422) {
             const updatedErrors = { ...formErrors };
             convertError.data.errors.forEach(({ field, message }) => {
                 if (updatedErrors[field]) {
-                    console.log(updatedErrors)
+                    
                     updatedErrors[field] = { isError: true, message };
                 }
             });

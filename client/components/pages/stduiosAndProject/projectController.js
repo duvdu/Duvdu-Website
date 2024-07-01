@@ -10,12 +10,13 @@ import Icon from '../../Icons';
 import ArrowBtn from '../../elements/arrowBtn';
 import { useRouter } from 'next/router';
 
-const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, messages, SwapProjectToFav, auth, swapProjectToFav_respond,canBook }) => {
+const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, messages, SwapProjectToFav, auth, swapProjectToFav_respond,canBook , api }) => {
     const router = useRouter()
-    const { project: projectId } = router.query;
+    const { studio: projectId } = router.query;
     const [data, setData] = useState(initialData);
     const [loveIconName, setLoveIconName] = useState(data?.isFavourite ? 'fas' : 'far');
     const online = data?.user?.isOnline;
+    
     useEffect(() => {
         setLoveIconName(data?.isFavourite ? 'fas' : 'far');
     }, [data?.isFavourite]);
@@ -28,7 +29,6 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
             }));
         }
     }, [swapProjectToFav_respond?.projectId]);
-    // console.log(swapProjectToFav_respond)
     const handleLoveIconClick = () => {
         if (data?._id)
             SwapProjectToFav({ projectId: data?._id, action: data?.isFavourite ? "remove" : "add" });
@@ -97,6 +97,7 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
 const mapStateToProps = (state) => ({
     messages: state.messages,
     swapProjectToFav_respond: state.api.SwapProjectToFav,
+    api: state.api,
     auth: state.auth,
 });
 

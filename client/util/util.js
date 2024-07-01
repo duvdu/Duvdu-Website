@@ -244,37 +244,31 @@ export const errorConvertedMessage = (error) => {
 function validateErrorsAsList(data) {
   // Check if 'data' is an object
   if (typeof data !== 'object' || data === null) {
-    // console.log("Invalid data: Not an object.");
     return false;
   }
 
   // Check if 'data' has a property 'errors'
   if (!data.hasOwnProperty('errors')) {
-    // console.log("Invalid data: 'errors' property missing.");
-    return false;
+     return false;
   }
 
   // Check if 'data.errors' is an array
   if (!Array.isArray(data.errors)) {
-    // console.log("Invalid data: 'errors' is not an array.");
     return false;
   }
 
   // Optional: Check if 'data.errors' array has elements
   if (data.errors.length === 0) {
-    // console.log("Warning: 'errors' array is empty.");
-    return false;  // Change to 'true' if empty array is acceptable
+     return false;  // Change to 'true' if empty array is acceptable
   }
 
   // Optional: Check each element in the array (if you expect each element to have certain properties)
   data.errors.forEach((error, index) => {
     if (!error.hasOwnProperty('message') || !error.hasOwnProperty('field')) {
-      // console.log(`Invalid format in errors array at index ${index}: Required properties missing.`);
       return false;
     }
   });
 
-  // console.log("Validation successful: data.errors[index] path is valid.");
   return true;
 }
 

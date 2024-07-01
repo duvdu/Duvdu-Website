@@ -40,7 +40,7 @@ function AddToSaved({
     const isProjectInBoard = (board, projectId) => {
           for (const project of board.projects) {
             if (project.project._id === projectId) {
-              console.log(project._id , projectId)
+              
               return true;
             }
           }

@@ -15,8 +15,7 @@ export const GetSavedBoard = ({ id = "", page="", limit="",search="" }) => {
             const response = await mainApiInstance.get(`api/users/saved-projects/${id}?${queryString}`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
         } catch (error) {
-            // console.log("error " , JSON.stringify(error.response))
-            dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
+             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
         }
     };
 };

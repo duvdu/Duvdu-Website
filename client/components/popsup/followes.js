@@ -14,8 +14,7 @@ function Followers({
     useEffect(() => {
         if (getUserFollowers_respond) {
             setLoading(false);
-            console.log(getUserFollowers_respond);
-        }
+            }
     }, [getUserFollowers_respond]);
 
     const onOpen = () => {

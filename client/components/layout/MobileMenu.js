@@ -129,7 +129,6 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
 
         const toggleSubcategory = (subcategory) => {
             {
-                console.log(subcategory, openSubCategories)
                 setOpenSubCategories(prev => prev == subcategory ? null : subcategory)
             }
         };
