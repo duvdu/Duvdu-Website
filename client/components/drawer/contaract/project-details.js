@@ -21,7 +21,6 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     const [appointmentDate, setAppointmentDate] = useState(null);
     const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
 
-    console.log(contractDetails)
     const IsImSp = () => {
         return sp.username == user.username
     }
@@ -250,8 +249,8 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                             <div className='h-full' />
                             <section className='w-full '>
                                 {
-                                    IsImSp() ||
-                                        status == "accepted with update"
+                                    IsImSp() && status == "pending" || 
+                                    !IsImSp() && status == "accepted with update"
                                         ?
                                         <>
 
@@ -266,6 +265,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                                         getType() == "producer" &&
                                                         appointmentDate &&
                                                         chnagedappointmentDate != appointmentDate &&
+                                                        IsImSp() &&
                                                         <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
                                                             <span className='text-white font-bold capitalize text-lg'>
                                                                 Update Appointment
@@ -280,7 +280,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                         :
                                         <>
                                             {
-                                                status == "waiting-for-pay-10" &&
+                                                !IsImSp() && status == "waiting-for-pay-10" &&
                                                 <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                         <span className='text-white font-bold capitalize text-lg'>
@@ -290,7 +290,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                                 </div>
                                             }
                                             {
-                                                status == "waiting-for-total-payment" &&
+                                                !IsImSp() && status == "waiting-for-total-payment" &&
                                                 <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                         <span className='text-white font-bold capitalize text-lg'>

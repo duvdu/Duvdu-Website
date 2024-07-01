@@ -18,8 +18,8 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
     const online = data?.user?.isOnline;
     // console.log(initialData)
     // console.log(data?.isFavourite)
-    // console.log(data)
     // console.log(swapProjectToFav_respond)
+    // console.log(data)
     
     useEffect(() => {
         setLoveIconName(data?.isFavourite ? 'fas' : 'far');
