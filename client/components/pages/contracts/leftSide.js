@@ -22,7 +22,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
 
     const pending = respond?.data?.filter(data => data.contract.status != "ongoing")
     const ongoing = respond?.data?.filter(data => data.contract.status == "ongoing")
-
+console.log(ongoing)
     const Clients = () =>
         (pending?.length || ongoing?.length) ?
             <section>
@@ -36,7 +36,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
                     </section>
                 }
                 {
-                    ongoing.length > 0 && false &&
+                    ongoing.length > 0 &&
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
@@ -61,7 +61,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
                     </section>
                 }
                 {
-                    ongoing.length > 0 && false &&
+                    ongoing.length > 0 &&
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                         {ongoing.map((data, index) => (

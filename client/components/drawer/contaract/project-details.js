@@ -15,6 +15,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
     const sp = contractDetails?.sp;
+    const status = contract?.status
     const [timeLeft, setTimeLeft] = useState("");
     const [actionSuccess, setActionSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -47,6 +48,30 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
         else if (contractDetails?.ref.includes("project"))
             return "project"
     }
+
+    const uiStatus = () => {
+        switch (status) {
+            case 'canceled':
+                return "Canceled";
+            case 'pending':
+                return timeLeft;
+            case 'waiting-for-pay-10':
+                return "Waiting For First Payment";
+            case 'update-after-first-Payment':
+                return "Update After First Payment";
+            case 'waiting-for-total-payment':
+                return "Waiting For Total Payment";
+            case 'ongoing':
+                return "Ongoing";
+            case 'completed':
+                return "Completed";
+            case 'rejected':
+                return "Rejected";
+            default:
+                return "Unknown"; // Handle unknown cases as needed
+        }
+    }
+    
     useEffect(() => {
         if (takeAction_respond)
             setActionSuccess(true)
@@ -120,6 +145,8 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     };
     const toggleDrawer = () => {
         toggleContractData(null)
+        setActionSuccess(false)
+        setPaymentSuccess(false)
         takeAction({ id: -1 })      // for remove respond state
         payment({ id: -1 })         // for remove respond state
     };
@@ -129,19 +156,18 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     // console.log(customer)
     // console.log(sp)
     // console.log("=============")
-    const status = contract?.status
-    console.log(status == "pending", IsImSp())
+    
 
 
-    const acceptBtn = (IsImSp() && status === "pending") || (!IsImSp() && status === "accepted with update")
-    const refuse = (IsImSp() && status === "pending") || (!IsImSp() && status === "accepted with update")
+    const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
+    const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const UpdateBtn = 
         (getType() === "producer" &&
             IsImSp() &&
             status === "pending" &&
             appointmentDate && appointmentDate !== contract?.appointmentDate) ||
         (getType() === "copyrights" &&
-            IsImSp() &&
+            !IsImSp() &&
             status === "update-after-first-Payment" &&
             (
                 details && details !== contract?.details ||
@@ -161,7 +187,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                     <>
                         <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10 h-drawer'>
                             <section>
-                                <span className='text-4xl my-5'>{status == "pending" ? timeLeft : "waiting for payment"}
+                                <span className='text-4xl my-5'>{uiStatus()}
                                     {status == "pending" &&
                                         <span className='text-lg opacity-40 mx-2'>
                                             {timeLeft ? "left" : "Time's up"}
@@ -286,7 +312,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                             {
                                 status == "update-after-first-Payment" &&
                                 getType() == "copyrights" &&
-                                IsImSp() &&
+                                !IsImSp() &&
                                 <>
                                     <section className='w-full'>
                                         <h3 className="capitalize opacity-60">job details</h3>
