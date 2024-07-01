@@ -8,20 +8,49 @@ import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 import EmptyComponent from "./emptyComponent";
 import { toggleContractData } from "../../../redux/action/contractDetails";
 
-const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
+const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [data, setData] = useState([]);
+
+    const handleStatus = (status) => {
+        switch (status) {
+            case 'canceled':
+                return -1;
+            case 'pending':
+                return 0;
+            case 'waiting-for-pay-10':
+                return 0;
+            case 'update-after-first-Payment':
+                return 0;
+            case 'waiting-for-total-payment':
+                return 0;
+            case 'ongoing':
+                return 1;
+            case 'completed':
+                return -1;
+            case 'rejected':
+                return -1;
+            default:
+                return "Unknown"; 
+        }
+    }
     useEffect(() => {
-        getAllContracts({ filterby: ['i_received', 'i_created'][activeIndex] })
+        getAllContracts()
+    }, [])
+
+    useEffect(() => {
+        const _data = respond?.data.filter(value => activeIndex == 0 ? value.sp.username == user.username : value.sp.username != user.username )
+        setData(_data)
     }, [activeIndex])
+
     const handleToggleClick = (index) => {
         setActiveIndex(index);
     };
     const Empty = () => <div className="mt-10 lg:mt-32">
         <EmptyComponent />
     </div>
-
-    const pending = respond?.data?.filter(data => data.contract.status != "ongoing")
-    const ongoing = respond?.data?.filter(data => data.contract.status == "ongoing")
+    const pending = data?.filter(data => handleStatus(data.contract.status) == 0)
+    const ongoing = data?.filter(data => handleStatus(data.contract.status) == 1)
 
     const Clients = () =>
         (pending?.length || ongoing?.length) ?
@@ -94,7 +123,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
 
                     </section>
 
-                    <section className='hidden lg:flex gap-3 mt-6 mb-2 fixed w-full py-4 p-0 z-[5]'>
+                    <section className='hidden lg:flex gap-3 mt-6 mb-2 fixed py-4 p-0 z-[5]'>
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
@@ -121,6 +150,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
     );
 };
 const mapStateToProps = (state) => ({
+    user: state.auth.user,
     api: state.api,
     respond: state.api.getAllContracts,
     categories: state.categories,

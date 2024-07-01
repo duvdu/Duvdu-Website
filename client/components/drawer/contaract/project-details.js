@@ -10,8 +10,9 @@ import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import { payment } from '../../../redux/action/apis/contracts/pay';
 import SelectDate from '../../elements/selectDate';
+import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
 
-function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
+function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
     const sp = contractDetails?.sp;
@@ -74,10 +75,19 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     }
 
     useEffect(() => {
-        if (takeAction_respond)
+        if (takeAction_respond){
+            getAllContracts()
             setActionSuccess(true)
+        }
     }, [takeAction_respond]);
 
+    useEffect(() => {
+        if (payment_respond){
+            getAllContracts()
+            setPaymentSuccess(true)
+        }
+    }, [payment_respond]);
+    
     useEffect(() => {
         if (getType() == "producer") {
             setdAppointmentDate(contract.appointmentDate)
@@ -88,10 +98,6 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
 
     }, [contractDetails?._id]);
 
-    useEffect(() => {
-        if (payment_respond)
-            setPaymentSuccess(true)
-    }, [payment_respond]);
 
     useEffect(() => {
         if (!contract?.deadline) return
@@ -152,7 +158,6 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
         setDetails(null)
         setTotalPrice(null)
         setDeadline(null)
-        
         takeAction({ id: -1 })      // for remove respond state
         payment({ id: -1 })         // for remove respond state
     };
@@ -432,6 +437,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     toggleContractData,
     takeAction,
+    getAllContracts,
     payment
 };
 
