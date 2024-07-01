@@ -93,7 +93,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
 
     const handlePayment = () => {
         const type = getType()
-        payment({ id: contract._id, type: type })
+        payment({ id: contract.paymentLink, type: type })
     };
     const handleRefuse = () => {
         if (!contractDetails?.ref) return
