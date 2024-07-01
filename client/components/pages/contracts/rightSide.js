@@ -121,6 +121,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
             </div>
         </>
 
+
     return (
         <>
             {/* <Clients /> */}
