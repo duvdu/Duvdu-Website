@@ -1,7 +1,7 @@
 import * as Types from "../../../constants/actionTypes";
 import { mainApiInstance } from '../axiosInstances';
 
-export const takeAction = ({ id, data, type }) => {
+export const takeAction = ({ id, data, type, isUpdate = false }) => {
     const req = "takeAction";
 
     return async dispatch => {
@@ -23,15 +23,23 @@ export const takeAction = ({ id, data, type }) => {
                     break;
 
                 case "producer":
-                    response = await mainApiInstance.patch(`/api/producers/contract/${id}`, {
-                        ...(typeof data === 'string' ? { appointmentDate: data } : { status: data ? "accepted" : "rejected" })
-                    });
+                    if (isUpdate) {
+                        response = await mainApiInstance.patch(`/api/producers/contract/${id}`, data);
+                    } else {
+                        response = await mainApiInstance.patch(`/api/producers/contract/${id}`, {
+                            status: data ? "accepted" : "rejected"
+                        });
+                    }
                     break;
 
                 case "copyrights":
-                    response = await mainApiInstance.post(`/api/copyrights/contract/${id}/action`, {
-                        action: data ? "accept" : "reject"
-                    });
+                    if (isUpdate) {
+                        response = await mainApiInstance.patch(`/api/copyrights/contract/${id}`, data);
+                    } else {
+                        response = await mainApiInstance.post(`/api/copyrights/contract/${id}/action`, {
+                            action: data ? "accept" : "reject"
+                        });
+                    }
                     break;
 
                 default:

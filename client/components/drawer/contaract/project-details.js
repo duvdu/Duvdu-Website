@@ -18,11 +18,24 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     const [timeLeft, setTimeLeft] = useState("");
     const [actionSuccess, setActionSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-    const [appointmentDate, setAppointmentDate] = useState(null);
-    const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
+
+    const [appointmentDate, setdAppointmentDate] = useState(null);
+    const [details, setDetails] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(null);
+    const [deadline, setDeadline] = useState(null);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'details') {
+            setDetails(value);
+        } else if (name === 'totalPrice') {
+            setTotalPrice(value);
+        }
+    };
+    // const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
 
     const IsImSp = () => {
-        return sp.username == user.username
+        return sp?.username == user?.username
     }
     const getType = () => {
         if (contractDetails?.ref.includes("copyright"))
@@ -41,12 +54,10 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
 
     useEffect(() => {
         if (getType() == "producer") {
-            setAppointmentDate(contract.appointmentDate)
-            setChnagedAppointmentDate(contract.appointmentDate)
+            setdAppointmentDate(contract.appointmentDate)
         }
         else {
-            setChnagedAppointmentDate(null)
-            setAppointmentDate(null)
+            setdAppointmentDate(null)
         }
 
     }, [contractDetails?._id]);
@@ -88,7 +99,14 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     const handleUpdate = () => {
         if (!contractDetails?.ref) return
         const type = getType()
-        takeAction({ id: contract._id, data: chnagedappointmentDate, type: type })
+
+        const data = {}
+        if (appointmentDate) data.appointmentDate = appointmentDate;
+        if (details) data.details = details;
+        if (totalPrice) data.totalPrice = totalPrice;
+        if (deadline) data.deadline = deadline;
+
+        takeAction({ id: contract._id, data: data, type: type , isUpdate: true })
     };
 
     const handlePayment = () => {
@@ -112,7 +130,25 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     // console.log(sp)
     // console.log("=============")
     const status = contract?.status
-    console.log(status)
+    console.log(status == "pending", IsImSp())
+
+
+    const acceptBtn = (IsImSp() && status === "pending") || (!IsImSp() && status === "accepted with update")
+    const refuse = (IsImSp() && status === "pending") || (!IsImSp() && status === "accepted with update")
+    const UpdateBtn = 
+        (getType() === "producer" &&
+            IsImSp() &&
+            status === "pending" &&
+            appointmentDate && appointmentDate !== contract?.appointmentDate) ||
+        (getType() === "copyrights" &&
+            IsImSp() &&
+            status === "update-after-first-Payment" &&
+            (
+                details && details !== contract?.details ||
+                totalPrice && totalPrice !== contract?.totalPrice ||
+                deadline && deadline !== contract?.deadline
+            ))
+    
 
     return (
         <>
@@ -243,70 +279,100 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                 IsImSp() &&
                                 <section className="my-11 w-full">
                                     <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
-                                    <SelectDate value={chnagedappointmentDate} onChange={(value) => setChnagedAppointmentDate(value)} />
+                                    <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
                                 </section>
                             }
+
+                            {
+                                status == "update-after-first-Payment" &&
+                                getType() == "copyrights" &&
+                                IsImSp() &&
+                                <>
+                                    <section className='w-full'>
+                                        <h3 className="capitalize opacity-60">job details</h3>
+                                        <textarea
+                                            name="details"
+                                            value={details || contract.details}
+                                            onChange={handleInputChange}
+                                            placeholder="requirements, conditions At least 6 char"
+                                            className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
+                                        />
+                                    </section>
+                                    <section className="my-11 w-full">
+                                        <h3 className="capitalize opacity-60 mb-4">deadline</h3>
+                                        <SelectDate value={deadline || contract.deadline} onChange={(value) => setDeadline(value)} />
+                                    </section>
+                                    <div className='mb-4 w-full'>
+                                        <input
+                                            placeholder='Total price'
+                                            type='text'
+                                            name='totalPrice'
+                                            value={totalPrice || contract.totalPrice}
+                                            onChange={handleInputChange}
+                                            className="edit app-field"
+                                        />
+                                    </div>
+                                </>
+
+                            }
+
                             <div className='h-full' />
                             <section className='w-full '>
-                                {
-                                    IsImSp() && status == "pending" || 
-                                    !IsImSp() && status == "accepted with update"
-                                        ?
-                                        <>
+                                <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                    {
+                                         acceptBtn &&
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Accept
+                                            </span>
+                                        </Button>
+                                    }
+                                    {
+                                        UpdateBtn &&
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Update Appointment
+                                            </span>
+                                        </Button>
+                                    }
+                                    {
+                                        refuse &&
+                                        <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            Refuse
+                                        </button>
+                                    }
+                                </div>
 
-                                            {
-                                                <div className='flex mx-5 gap-7 mb-10 mt-16'>
-                                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
-                                                        <span className='text-white font-bold capitalize text-lg'>
-                                                            Accept
-                                                        </span>
-                                                    </Button>
-                                                    {
-                                                        getType() == "producer" &&
-                                                        appointmentDate &&
-                                                        chnagedappointmentDate != appointmentDate &&
-                                                        IsImSp() &&
-                                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
-                                                            <span className='text-white font-bold capitalize text-lg'>
-                                                                Update Appointment
-                                                            </span>
-                                                        </Button>}
-                                                    <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                                        refuse
-                                                    </button>
-                                                </div>
-                                            }
-                                        </>
-                                        :
-                                        <>
-                                            {
-                                                !IsImSp() && status == "waiting-for-pay-10" &&
-                                                <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                        <span className='text-white font-bold capitalize text-lg'>
-                                                            Pay Now 10%
-                                                        </span>
-                                                    </Button>
-                                                </div>
-                                            }
-                                            {
-                                                !IsImSp() && status == "waiting-for-total-payment" &&
-                                                <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                        <span className='text-white font-bold capitalize text-lg'>
-                                                            Pay Now remain ( 90 % )
-                                                        </span>
-                                                    </Button>
-                                                </div>
-                                            }
-                                            {
-                                                !status?.includes("waiting-for-pay") &&
-                                                <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
-                                                    Cancel
-                                                </button>
-                                            }
-                                        </>
+
+                                {
+                                    !IsImSp() &&
+                                    status == "waiting-for-pay-10" &&
+                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Pay Now 10%
+                                            </span>
+                                        </Button>
+                                    </div>
                                 }
+                                {
+                                    !IsImSp() && status == "waiting-for-total-payment" &&
+                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <span className='text-white font-bold capitalize text-lg'>
+                                                Pay Now remain ( 90 % )
+                                            </span>
+                                        </Button>
+                                    </div>
+                                }
+                                {
+                                    !status?.includes("waiting-for-pay") && false &&
+                                    <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
+                                        Cancel
+                                    </button>
+                                }
+
+
                             </section>
                         </div>
                     </>
