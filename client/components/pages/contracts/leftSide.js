@@ -22,7 +22,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData }) => {
 
     const pending = respond?.data?.filter(data => data.contract.status != "ongoing")
     const ongoing = respond?.data?.filter(data => data.contract.status == "ongoing")
-console.log(ongoing)
+
     const Clients = () =>
         (pending?.length || ongoing?.length) ?
             <section>

@@ -16,10 +16,6 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
     const [data, setData] = useState(initialData);
     const [loveIconName, setLoveIconName] = useState(data?.isFavourite ? 'fas' : 'far');
     const online = data?.user?.isOnline;
-    // console.log(initialData)
-    // console.log(data?.isFavourite)
-    // console.log(swapProjectToFav_respond)
-    // console.log(data)
     
     useEffect(() => {
         setLoveIconName(data?.isFavourite ? 'fas' : 'far');
@@ -33,7 +29,6 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
             }));
         }
     }, [swapProjectToFav_respond?.projectId]);
-    // console.log(swapProjectToFav_respond)
     const handleLoveIconClick = () => {
         if (data?._id)
             SwapProjectToFav({ projectId: data?._id, action: data?.isFavourite ? "remove" : "add" });

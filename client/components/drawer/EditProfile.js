@@ -93,7 +93,6 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const handleSubmit = (event) => {
         event.preventDefault();
         updateProfile(converting())
-        console.log("/creative/"+user.username)
         router.push({pathname: "/creative/"+user.username});
     };
 

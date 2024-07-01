@@ -29,7 +29,6 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
     } else if (daysDifference === 2) {
         formattedCreatedAt = "Day before yesterday";
     } else {
-        console.log(data.contract.createdAt)
         formattedCreatedAt = dateFormat(createdAtDate, "M/d/yyyy");
     }
     useEffect(() => {

@@ -13,7 +13,7 @@ export const DeleteProducer = (data) => {
             const response = await mainApiInstance.delete(`/api/producers/producer/user`,);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: { "message": "sucess" }, req: req });
         } catch (error) {
-            // console.log("error " , JSON.stringify(error.response))
+            // 
             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
         }
     };

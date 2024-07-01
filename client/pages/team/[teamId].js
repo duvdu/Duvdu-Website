@@ -44,7 +44,7 @@ const TheTeam = ({
         DeleteTeamProjects(id)
     }
     const handleUpdate = (alldata) => {
-        console.log(teamId)
+        
         UpdateTeamUser(alldata, teamId)
     }
 

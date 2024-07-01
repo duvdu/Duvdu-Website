@@ -4,7 +4,7 @@ import { mainApiInstance } from '../../axiosInstances';
 export const SwapProjectToFav = ({ projectId, action }) => {
     const req = "SwapProjectToFav";
     return async dispatch => {
-        console.log(projectId, action)
+        
         if (!projectId || !action) {
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
             return;

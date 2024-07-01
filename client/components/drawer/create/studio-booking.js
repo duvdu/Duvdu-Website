@@ -166,8 +166,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)
                                         UpdateFormData('tags', value.tags)
-                                        console.log(value.tags)
-                                    }} />
+                                        }} />
                             </div>
                             <section className="w-full ">
                                 <h3 className="capitalize opacity-60">attachments</h3>

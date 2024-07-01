@@ -12,9 +12,7 @@ export const updateProfile = (data,withloading) => {
 
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      for (let [name, value] of data) {
-        console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
-      }
+     
       const response = await mainApiInstance.patch(`api/users/auth/profile`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {

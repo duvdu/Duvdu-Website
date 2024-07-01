@@ -25,6 +25,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     const [totalPrice, setTotalPrice] = useState(null);
     const [deadline, setDeadline] = useState(null);
 
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'details') {
@@ -71,7 +72,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                 return "Unknown"; // Handle unknown cases as needed
         }
     }
-    
+
     useEffect(() => {
         if (takeAction_respond)
             setActionSuccess(true)
@@ -131,7 +132,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
         if (totalPrice) data.totalPrice = totalPrice;
         if (deadline) data.deadline = deadline;
 
-        takeAction({ id: contract._id, data: data, type: type , isUpdate: true })
+        takeAction({ id: contract._id, data: data, type: type, isUpdate: true })
     };
 
     const handlePayment = () => {
@@ -147,6 +148,11 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
         toggleContractData(null)
         setActionSuccess(false)
         setPaymentSuccess(false)
+        setdAppointmentDate(null)
+        setDetails(null)
+        setTotalPrice(null)
+        setDeadline(null)
+        
         takeAction({ id: -1 })      // for remove respond state
         payment({ id: -1 })         // for remove respond state
     };
@@ -156,25 +162,26 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
     // console.log(customer)
     // console.log(sp)
     // console.log("=============")
-    
 
+    
 
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
-    const UpdateBtn = 
+    const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
             status === "pending" &&
-            appointmentDate && appointmentDate !== contract?.appointmentDate) ||
+            appointmentDate && 
+            appointmentDate !== contract?.appointmentDate) ||
         (getType() === "copyrights" &&
             !IsImSp() &&
             status === "update-after-first-Payment" &&
             (
                 details && details !== contract?.details ||
                 totalPrice && totalPrice !== contract?.totalPrice ||
-                deadline && deadline !== contract?.deadline
+                (deadline && deadline !== contract?.deadline && new Date(deadline) > new Date(contract.deadline))
             ))
-    
+
 
     return (
         <>
@@ -327,6 +334,11 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                     <section className="my-11 w-full">
                                         <h3 className="capitalize opacity-60 mb-4">deadline</h3>
                                         <SelectDate value={deadline || contract.deadline} onChange={(value) => setDeadline(value)} />
+                                        {deadline && new Date(deadline) < new Date(contract.deadline) &&
+                                        <span className="error-msg" >
+                                             Deadline must be on or after the execution day.
+                                        </span>
+                                        }
                                     </section>
                                     <div className='mb-4 w-full'>
                                         <input
@@ -346,7 +358,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                             <section className='w-full '>
                                 <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     {
-                                         acceptBtn &&
+                                        acceptBtn &&
                                         <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
                                             <span className='text-white font-bold capitalize text-lg'>
                                                 Accept
@@ -384,7 +396,7 @@ function ReceiveProjectFiles({ contractDetails, toggleContractData, user, takeAc
                                 {
                                     !IsImSp() && status == "waiting-for-total-payment" &&
                                     <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                        <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                             <span className='text-white font-bold capitalize text-lg'>
                                                 Pay Now remain ( 90 % )
                                             </span>
