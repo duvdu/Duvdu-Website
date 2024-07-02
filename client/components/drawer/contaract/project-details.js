@@ -11,6 +11,7 @@ import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import { payment } from '../../../redux/action/apis/contracts/pay';
 import SelectDate from '../../elements/selectDate';
 import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
+import CountdownTimer from '../../elements/CounterDownTimer';
 
 function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
     const contract = contractDetails?.contract;
@@ -263,7 +264,7 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                 <div className='w-full'>
                                     <div className='w-full'>
                                         <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
-                                        <span className='font-semibold capitalize mt-3'> {contract.stageExpiration} Hours </span>
+                                        <CountdownTimer time={contract?.actionAt}/>
                                     </div>
                                     <div className='w-full mt-5'>
                                         <h2 className='opacity-60 capitalize mb-3'> Address </h2>
