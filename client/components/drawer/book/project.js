@@ -106,7 +106,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                 />
             </div>
         </Drawer >
-
+console.log(creatives)
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
@@ -120,7 +120,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 creatives.length > 0 &&
                                 <section className="my-11">
                                     <h3 className="capitalize opacity-60 mb-4">team</h3>
-                                    <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name }))} onChange={(value) => UpdateFormData('creative', value)} />
+                                    <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} onChange={(value) => UpdateFormData('creative', value)} />
                                 </section>
                             }
                             {
@@ -211,7 +211,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     creatives.length > 0 &&
                                     <section className="">
                                         <h3 className="capitalize opacity-60 mb-4">team</h3>
-                                        <BookTeam team={creatives.map(i => ({ ...i, name: i.creative.name, removable: true }))} onChange={(value) => UpdateFormData('creative', value)} />
+                                        <BookTeam team={creatives.map(i => ({ ...i, name: i.name, removable: true }))} onChange={(value) => UpdateFormData('creative', value)} />
                                     </section>
                                 }
                                 {

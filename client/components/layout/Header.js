@@ -34,7 +34,7 @@ const Header = ({
     MarkNotificationsAsRead,
     LogOut,
     user,
-    }) => {
+}) => {
 
     const router = useRouter();
     const { i18n, t } = useTranslation();
@@ -42,13 +42,13 @@ const Header = ({
         LogOut()
     }
     try {
-    useEffect(() => {
-        SetheaderPopUp(Types.NONEPOPUP)
-    }, [window.location.href]);
-}
-catch (error) {
+        useEffect(() => {
+            SetheaderPopUp(Types.NONEPOPUP)
+        }, [window.location.href]);
+    }
+    catch (error) {
 
-}
+    }
 
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)

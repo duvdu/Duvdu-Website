@@ -27,6 +27,7 @@ import { GetUserProject } from '../../../redux/action/apis/auth/profile/getUserP
 import Conver from './conver';
 import Info from './info';
 import Projects from './projects';
+import FunctionUsed from '../../popsup/create/FunctionsUsed';
 
 
 
@@ -231,6 +232,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
 
             <EditDrawer isOpen={goEdit} onClose={() => onCloseEdit()} />
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
+            <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <AddOtherCreatives onSubmit={(value) => InsertToArray('creatives', value)} />
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <InputDrawer />

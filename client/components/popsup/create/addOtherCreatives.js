@@ -8,19 +8,17 @@ import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile
 import { ClosePopUp } from '../../../util/util';
 
 function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
-
+console.log(FindUser_respond)
     const [creatives, setCreatives] = useState([]);
     const [searchTo, setSearchTo] = useState(null);
     const [_searchTo, _setSearchTo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
-        _id: '',
-        fees: ''
+        _id: ''
     });
     const [error, setError] = useState({
-        name: '',
-        fees: ''
+        name: ''
     });
 
     useEffect(() => {
@@ -47,11 +45,8 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                 setSearchTo(value)
             }
             else {
-            setCreatives([])
+                setCreatives([])
             }
-        }
-        else if (name == 'fees') {
-            setFormData(prev => ({ ...prev, 'fees': value }));
         }
     };
 
@@ -59,46 +54,33 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
     const onclick = () => {
         // Reset errors
         setError({
-            name: '',
-            fees: ''
+            name: ''
         });
 
         // Check for errors
-        if (!formData.name || !formData.fees) {
-
-            if (!formData.name) {
-                setError(prev => ({ ...prev, name: 'Username or phone number is required.' }));
-
-            }
-
-            if (!formData.fees) {
-                setError(prev => ({ ...prev, fees: 'Fees is required.' }));
-            }
+        if (!formData.name) {
+            setError(prev => ({ ...prev, name: 'Username or phone number is required.' }));
             return
         }
+        
         // If no errors, submit data
-
-
         onSubmit(formData);
         ClosePopUp("addOtherCreatives")
         setFormData({
-            name: '',
-            fees: ''
+            name: ''
         });
-
     };
-    const onCancel = () => {
 
+    const onCancel = () => {
         setFormData({
-            name: '',
-            fees: ''
+            name: ''
         });
         setError({
-            name: '',
-            fees: ''
+            name: ''
         });
         setCreatives([])
-    }
+    };
+
     const handleCreativeSelect = (selectedCreative) => {
         setFormData(prev => ({
             ...prev,
@@ -107,7 +89,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
         }));
         setCreatives([])
     };
-    
+
     return (
         <>
             <Comman id={"addOtherCreatives"} header={"Add Other Creatives"} onCancel={onCancel}>
@@ -141,14 +123,6 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                                 </li>
                             ))}
                         </ul>
-                        <InputFeid
-                            placeholder={"fees"}
-                            name="fees"
-                            onChange={(value) => { handleInputChange('fees', value) }}
-                            errerMsg={error.fees}
-                            sendValue={formData.fees}
-                        />
-
                         <span className='text-xs font-semibold text-[#595959] hidden'>
                             This creative doesn’t have an account?
                             <span onClick={() => { }} className='text-primary font-bold'> Send Invitation</span>
@@ -164,6 +138,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
         </>
     );
 }
+
 const mapStateToProps = (state) => ({
     FindUser_respond: state.api.FindUser,
     api: state.api
@@ -172,6 +147,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     FindUser,
     getMyprofile
-
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(AddOtherCreatives);
