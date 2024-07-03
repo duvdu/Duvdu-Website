@@ -30,7 +30,7 @@ const About = ({ data }) => (
             <div className='flex justify-center pt-7 items-center'>
                 <div className='flex justify-center'>
                     {[
-                        { key: "likes", value: data.user.likes },
+                        { key: "likes", value: data.user?.likes },
                         { key: "followers", value: data.user?.followCount?.followers },
                         { key: "views", value: data.user.profileViews }
                     ].map(({ key, value }, index, array) => (

@@ -205,6 +205,12 @@ export const convertDuration = (durationInMilliseconds) => {
   return formattedDuration;
 };
 
+export const isVideo = (coverUrl) => {
+  const videoExtensions = ['.mp4', '.mov', '.avi', '.wmv', '.flv'];
+  const urlExtension = coverUrl.split('.').pop().toLowerCase();
+  return videoExtensions.includes(`.${urlExtension}`);
+};
+
 export const errorConvertedMessage = (error) => {
   if (!error) return null;
 

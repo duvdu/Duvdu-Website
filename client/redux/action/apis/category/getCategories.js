@@ -8,7 +8,7 @@ export const getCategory = () => {
        
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.get(`api/category`);
+      const response = await mainApiInstance.get(`api/category?limit=999`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_CATEGORIES, payload: response.data.data, req: req });
     } catch (error) {

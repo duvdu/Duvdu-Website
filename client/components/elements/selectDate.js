@@ -22,13 +22,13 @@ const SelectDate = ({ onChange, value }) => {
     const getMonthDates = (year, month) => {
         const dates = [];
         const firstDay = new Date(year, month, 1);
-        firstDay.setHours(10, 0, 0, 0); // Set hour to 10 AM
+        firstDay.setHours(10, 0, 0, 0); 
         const lastDay = new Date(year, month + 1, 0);
-        lastDay.setHours(10, 0, 0, 0); // Set hour to 10 AM
+        lastDay.setHours(10, 0, 0, 0); 
         const startDay = firstDay.getDay();
         const totalDays = lastDay.getDate();
         const tomorrow = new Date();
-        tomorrow.setHours(10, 0, 0, 0); // Ensure comparison is only by date, not by time
+        tomorrow.setHours(10, 0, 0, 0); 
         const tomorrowTime = tomorrow.getTime();
     
         // Add leading empty dates for days before the first day of the month
@@ -53,7 +53,6 @@ const SelectDate = ({ onChange, value }) => {
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
-        console.log(date)
         console.log(date.toISOString())
         if (onChange) onChange(date.toISOString());
     };

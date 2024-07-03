@@ -28,16 +28,20 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     const [attachmentValidation, setAttachmentValidation] = useState(false);
 
     categories = filterByCycle(categories, 'project')
+    const categoryDetails = categories.find(i => i._id == formData.category)
 
-
-
+    const listDropDown = categoryDetails?.media === 'video' || categoryDetails?.media === 'audio' ? ['minutes', 'hours'] : ['image'];
+    useEffect(() => {
+        UpdateFormData("projectScale[unit]", listDropDown[0])
+    }, [categoryDetails?.media])
+    
     const convertToFormData = () => {
         const data = new FormData();
 
         // Append simple string and number values directly from the state
-        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments'])
+        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments', 'location', 'tools', 'creatives', 'functions'])
         // data.append('projectBudget', formData.projectBudget);
-        data.append('projectScale[scale]', formData.duration);
+        // data.append('projectScale[scale]', formData.duration);
 
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
@@ -45,7 +49,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
             });
 
         // Append searchKeywords
-        
+
         if (formData.cover) {
             data.append('cover', formData.cover);
         }
@@ -59,10 +63,31 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (formData.location) {
             data.append('location[lat]', formData.location.lat);
             data.append('location[lng]', formData.location.lng);
+        };
+
+
+        if (formData.creatives) {
+            formData.creatives.forEach((item, index) => {
+                // data.append(`creatives[${index}]`, item.name);
+                data.append(`creatives[${index}]`, item._id);
+            });
+        }
+
+        if (formData.tools) {
+            formData.tools.forEach((item, index) => {
+                data.append(`tools[${index}][name]`, item.name);
+                data.append(`tools[${index}][unitPrice]`, item.fees);
+            });
+        }
+
+        if (formData.functions) {
+            formData.functions.forEach((item, index) => {
+                data.append(`functions[${index}][name]`, item.name);
+                data.append(`functions[${index}][unitPrice]`, item.fees);
+            });
         }
         return data;
-    };
-
+    }
     const validateRequiredFields = () => {
         const errors = {};
 
@@ -70,16 +95,20 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
         if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
         if (!formData.name) errors.title = 'Title is required';
+        if (!formData.tools || !formData.tools.length) errors.title = 'tools is required';
+        if (!formData.functions || !formData.functions.length) errors.title = 'functions is required';
+        if (!formData.creatives || !formData.creatives.length) errors.title = 'creatives is required';
         if ((formData.description?.length || 0) < 6) errors.desc = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
-        if (!formData.attachments || !formData.attachments.length) errors.attachments = 'Attachments are required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         // if (!formData.duration) errors.duration = 'Project scale is required';
 
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
+
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -116,7 +145,9 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
 
     useEffect(() => {
-        UpdateFormData("projectScale[unit]","minute")
+        UpdateFormData("address", "Cairo (this's a defult value)")
+        UpdateFormData("duration", 10)
+
     }, [])
 
     useEffect(() => {
@@ -139,13 +170,13 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
 
     const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-
+    // console.log(categoryDetails)
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'add project'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
-                    <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
+                    <SetCover coverType={categoryDetails?.media} Publish={Publish} oncancel={() => setNextstep(1)} />
                 ) :
                     (
                         <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
@@ -168,14 +199,42 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
-                                <input placeholder='Name your project' className={inputStyle} value={formData.name || ""} onChange={handleInputChange} name="name" />
+                                <input placeholder='name' className={inputStyle} value={formData.name || ""} onChange={handleInputChange} name="name" />
                             </section>
                             <section>
-                                <input placeholder='Project description' className={inputStyle} value={formData.description || ""} onChange={handleInputChange} name="description" />
+                                <input placeholder='description' className={inputStyle} value={formData.description || ""} onChange={handleInputChange} name="description" />
                             </section>
                             <section>
-                                <input placeholder='address' className={inputStyle} value={formData.address || ""} onChange={handleInputChange} name="address" />
+                                <ListInput
+                                    placeholder={'tools used'}
+                                    target="AddToolUsed"
+                                    name={"tools"}
+                                    listdiv={formData.tools && formData.tools.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    remove={(value) => removeFromArray('tools', value)}
+                                    enable={false}
+                                />
                             </section>
+                            <section>
+                                <ListInput
+                                    placeholder={'Functions used'}
+                                    target="Addfunctions"
+                                    name={"functions"}
+                                    listdiv={formData.functions && formData.functions.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    remove={(value) => removeFromArray('functions', value)}
+                                    enable={false}
+                                />
+                            </section>
+                            <section>
+                                <ListInput
+                                    placeholder={'tag creatives'}
+                                    target="addOtherCreatives"
+                                    name={"creatives"}
+                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/> `))}
+                                    remove={(value) => removeFromArray('creatives', value)}
+                                    enable={false}
+                                />
+                            </section>
+
                             <section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                             </section>
@@ -186,28 +245,32 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 }
                             </section> */}
                             <section>
-                                <div className='flex justify-center items-center gap-9'>
-                                    <input type="number" placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" value={formData.duration} onChange={handleInputChange} name="duration" />
-                                    {errors.duration && <div style={{ color: 'red' }}>{errors.duration}</div>}
-                                    <select
-                                        className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalize"
-                                        value={formData.durationUnit}
-                                        onChange={handleInputChange}
-                                        name="durationUnit"
-                                        required
-                                    >
-                                        {['minute', 'hour'].map((value, index) => (
-                                            <option key={index} value={value.toLowerCase()}>{value}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
+                                <input placeholder='address' name="address" value={formData.address || ""} onChange={handleInputChange} className={inputStyle} readOnly />
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span> Set location </span>
                                 <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
                             </section>
+
                             <section className="flex flex-col gap-8">
+                                <section className="hidden">
+                                    <h3 className='opacity-60 my-2 text-lg font-bold'>Select Project Media</h3>
+                                    <div className="flex gap-3 flex-wrap">
+                                        {[
+                                            'Videos',
+                                            'Photos',
+                                            'Audios'
+                                        ].map((media, index) => (
+                                            <div key={index}
+                                                className={`py-1 px-2 border ${formData.media ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                                                onClick={() => UpdateFormData('media', media)}>
+                                                <div className={`whitespace-nowrap font-medium ${formData.media ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                                    {media}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
                                 <div className='flex items-center justify-between'>
                                     <h3 className='font-bold text-lg'> Project Scale Unit </h3>
                                     <select
@@ -217,25 +280,31 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                         name="projectScale[unit]"
                                         required
                                     >
-                                        {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
+                                        {listDropDown.map((value, index) => (
                                             <option key={index} value={value.toLowerCase()}>{value}</option>
                                         ))}
                                     </select>
                                 </div>
-                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]']|| ""} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || ""} onChange={handleInputChange} className={inputStyle} />
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale[minimum]' value={formData['projectScale[minimum]']|| ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
+                                            <input type='number' name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale[maximum]' value={formData['projectScale[maximum]']|| ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
+                                            <input type='number' name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={inputStyle} />
+                                        </div>
+                                    </div>
+                                    <div className="w-full">
+                                        <div className='flex items-center justify-start gap-4'>
+                                            <input type='number' name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
                                         </div>
                                     </div>
                                 </div>
                             </section>
+
                             <div className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'> Show on home feed & profile </p>

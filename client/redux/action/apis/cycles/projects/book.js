@@ -12,7 +12,7 @@ export const BookProject = (id,data) => {
    
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.post(`api/projects/book/${id}`, data);
+      const response = await mainApiInstance.post(`api/projects/contract/${id}`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
         // 

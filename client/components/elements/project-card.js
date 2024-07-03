@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration } from '../../util/util';
+import { convertDuration, isVideo } from '../../util/util';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
@@ -53,6 +53,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }
   const handleSoundIconClick = () => {
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
+    setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark')
     if (videoRef.current)
       videoRef.current.muted = soundIconName === 'volume-high';
   };
@@ -80,6 +81,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //   }
   // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
 
+  const isVideoCover = isVideo(cardData.cover)
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
@@ -89,27 +91,30 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
           className='project'>
           <>
             {
-              false &&
-                cardData.backgroundImages.length == 1 &&
-                cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
+              // cardData.cover.length == 1 &&
+              isVideoCover ? ( // Check if source is a video
                 <Link href={`/${type}/${cardData._id}`}>
-                  <video
-                    className='cardvideo relative'
-                    ref={videoRef}
-                    onTimeUpdate={timeUpdate}
-                    loop
-                  >
-                    <source src={cardData.backgroundImages[0]} type='video/mp4' />
-                  </video>
-                  <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
-                    <span className="text-white">
-                      {convertDuration(Duration * 1000)}
-                    </span>
-                  </div>
+                  <a>
+                    <video
+                      className='cardvideo'
+                      ref={videoRef}
+                      onTimeUpdate={timeUpdate}
+                      loop
+                    >
+                      <source src={cardData.cover} type='video/mp4' />
+                    </video>
+                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                      <span className="text-white">
+                        {convertDuration(Duration * 1000)}
+                      </span>
+                    </div>
+                  </a>
                 </Link>
               ) : (
                 <Link href={`/${type}/${cardData._id}`}>
-                  <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                  <a>
+                    <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                  </a>
                 </Link>
               )
             }
@@ -144,7 +149,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             </div>
           }
           {
-            cardData.showSound &&
+            isVideoCover &&
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
@@ -173,9 +178,9 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
           <>
             <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
             {(cardData.projectScale?.unit) &&
-            <span className='text-xl ml-2 opacity-60'>
-              per {cardData.projectScale?.unit}
-            </span>}
+              <span className='text-xl ml-2 opacity-60'>
+                per {cardData.projectScale?.unit}
+              </span>}
           </>
         }
       </div>
