@@ -19,7 +19,7 @@ const Details = ({ data }) => {
                     <div className="flex flex-col gap-2">
                         {(data?.tools || data?.equipments).map(tool => [
                             { value: tool.name, isActive: false },
-                            { value: tool.fees, isActive: false }
+                            { value: tool.unitPrice, isActive: false }
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
@@ -39,7 +39,7 @@ const Details = ({ data }) => {
                     </div>
                     <div className="flex flex-col gap-2">
                         {data?.creatives.map(creative => [
-                            { value: creative?.creative?.name, isActive: false, img: creative?.creative?.profileImage },
+                            { value: creative?.name, isActive: false, img: creative?.creative?.profileImage },
                             { value: `$ ${creative.fees}`, isActive: false },
                             { value: 'CATEGOREY', isActive: false },
                         ]).map((creativeGroup, i) => (

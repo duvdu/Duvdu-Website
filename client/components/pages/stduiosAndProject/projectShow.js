@@ -25,7 +25,7 @@ const ProjectCover = ({ data }) => {
     ) : (
       <video
         ref={videoRef}
-        className='cardvideo sm:rounded-[50px] w-full'
+        className='sm:rounded-[50px] w-full'
         loop
         onClick={togglePlay} // Click to toggle play/pause
       >
