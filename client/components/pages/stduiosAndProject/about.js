@@ -1,10 +1,7 @@
 import { convertToK } from "../../../util/util"
 import Icon from "../../Icons"
 
-const About = ({ data }) => 
-    {
-        console.log(data)
-    return (
+const About = ({ data }) => (
     <div className="sticky top-header">
         <div className="h-16" />
         <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mx-7 sm:mx-0">about the creative</h2>
@@ -33,7 +30,7 @@ const About = ({ data }) =>
             <div className='flex justify-center pt-7 items-center'>
                 <div className='flex justify-center'>
                     {[
-                        { key: "likes", value: data?.user?.likes },
+                        { key: "likes", value: data.user?.likes },
                         { key: "followers", value: data.user?.followCount?.followers },
                         { key: "views", value: data.user.profileViews }
                     ].map(({ key, value }, index, array) => (
@@ -50,6 +47,6 @@ const About = ({ data }) =>
             </div>
         </div>
     </div>
-)}
+)
 
 export default About
