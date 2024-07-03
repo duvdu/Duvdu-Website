@@ -53,7 +53,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }
   const handleSoundIconClick = () => {
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
-    setSoundIconName(soundIconName === 'volume-xmark'? 'volume-high' : 'volume-xmark')
+    setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark')
     if (videoRef.current)
       videoRef.current.muted = soundIconName === 'volume-high';
   };
@@ -80,7 +80,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //     setLove(isFav(cardData._id, getBoards_respond))
   //   }
   // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
-  
+
   const isVideoCover = isVideo(cardData.cover)
   return (
     <>
@@ -94,7 +94,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
               // cardData.cover.length == 1 &&
               isVideoCover ? ( // Check if source is a video
                 <Link href={`/${type}/${cardData._id}`}>
-                  <>
+                  <a>
                     <video
                       className='cardvideo'
                       ref={videoRef}
@@ -108,11 +108,13 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
                         {convertDuration(Duration * 1000)}
                       </span>
                     </div>
-                  </>
+                  </a>
                 </Link>
               ) : (
                 <Link href={`/${type}/${cardData._id}`}>
-                  <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                  <a>
+                    <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                  </a>
                 </Link>
               )
             }

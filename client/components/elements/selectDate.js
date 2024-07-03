@@ -53,7 +53,6 @@ const SelectDate = ({ onChange, value }) => {
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
-        console.log(date)
         console.log(date.toISOString())
         if (onChange) onChange(date.toISOString());
     };

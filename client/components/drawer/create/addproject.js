@@ -101,7 +101,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if ((formData.description?.length || 0) < 6) errors.desc = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
-        if (!formData.attachments || !formData.attachments.length) errors.attachments = 'Attachments are required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         // if (!formData.duration) errors.duration = 'Project scale is required';
 
