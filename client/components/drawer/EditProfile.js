@@ -82,7 +82,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             data.append('profileImage', profileImage)
         return data;
     }
-
+console.log(formData)
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         UpdateFormData(name, value)
@@ -119,7 +119,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
 
     const reset = () => {
         setError(false);
-        resetForm()
+        // resetForm()
     };
 
     const close = () => {
@@ -171,7 +171,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             className="edit app-field"
                         />
                     </div>
-                    <div className='mb-4 w-full'>
+                    {/* <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             address
                         </span>
@@ -182,7 +182,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
-                    </div>
+                    </div> */}
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             price per hour
@@ -210,7 +210,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                     <div className='mb-4 w-full'>
                         <section className="h-96 relative overflow-hidden">
                             <span> Set location </span>
-                            <GoogleMap width={'100%'} setDefult={false} value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }} onsetLocation={(value) => {UpdateFormData('location[lat]', value.lat) ; UpdateFormData('location[lng]', value.lng)} } />
+                            <GoogleMap width={'100%'} setDefult={false} value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}  onChangeAddress={handleInputChange} onsetLocation={(value) => {UpdateFormData('location[lat]', value.lat) ; UpdateFormData('location[lng]', value.lng)} } />
                         </section>
                     </div>
                     <button className='w-full flex justify-center' type="submit">

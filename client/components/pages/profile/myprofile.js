@@ -28,6 +28,7 @@ import Conver from './conver';
 import Info from './info';
 import Projects from './projects';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
+import EmptyComponent from '../contracts/emptyComponent';
 
 
 
@@ -216,7 +217,8 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                     <div className='right-side'>
                         {
                             projects.length == 0 &&
-                            <h3>No projects Found </h3>
+                            <EmptyComponent message="No Projects Yet!" />
+
                         }
 
                         <Projects projects={projects} />

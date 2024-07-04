@@ -53,7 +53,6 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
     useEffect(() => {
         UpdateFormData('producer', data._id)
-        UpdateFormData("address", "Cairo (this's a defult value)")
     }, [isOpen])
 
     useEffect(() => {
@@ -106,21 +105,20 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                     </section>
 
                     <section className="h-96 relative overflow-hidden">
-                        <input placeholder='address' name="address" value={formData.address || ""} onChange={handleInputChange} className={inputStyle} readOnly />
                         <span> Project Location </span>
-                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={handlelocationChange} />
+                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onChangeAddress={handleInputChange} onsetLocation={handlelocationChange} />
                     </section>
                     <div className="flex w-full justify-between gap-3">
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episodes Number</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
+                                <input type='number' min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
                             </div>
                         </section>
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episode Duration</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
+                                <input type='number' min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
                             </div>
                         </section>
                     </div>
@@ -136,14 +134,14 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Profits</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type='number' min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
                     </div>

@@ -48,7 +48,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
         setActiveIndex(index);
     };
     const Empty = () => <div className="mt-10 lg:mt-32">
-        <EmptyComponent />
+        <EmptyComponent message="No Contract Yet!" />
     </div>
     const pending = data?.filter(data => handleStatus(data.contract.status) == 0)
     const ongoing = data?.filter(data => handleStatus(data.contract.status) == 1)

@@ -144,8 +144,11 @@ const Header = ({
             <ErrorPopUp id="main_error_message" onCancel={clearErrors} errorReq={errorReq} errorMsg={errorMsg} />
             {
                 api.loading && !exclude_loading(api.req) &&
-                <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
+                <div className="fixed w-screen h-screen top-0 left-0 bg-white dark:bg-black z-50 flex justify-center items-center">
+                    <div>
                     <img src="/assets/imgs/theme/loading-icon.png" />
+                    <span className="text-xl"> Loading .... </span>
+                    </div>
                 </div>
             }
             <Verify_acount />

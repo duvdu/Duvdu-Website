@@ -200,7 +200,8 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                 {
                     contract &&
                     <>
-                        <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10 h-drawer'>
+                        <div className='flex flex-col justify-between h-drawer'>
+                        <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10'>
                             <section>
                                 <span className='text-4xl my-5'>{uiStatus()}
                                     {status == "pending" &&
@@ -314,6 +315,8 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                     </div>
                                 </div>
                             </section>
+                        </div>
+                            
                             {
                                 status == "pending" &&
                                 getType() == "producer" &&
@@ -323,13 +326,12 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                     <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
                                 </section>
                             }
-
                             {
                                 status == "update-after-first-Payment" &&
                                 getType() == "copyrights" &&
                                 !IsImSp() &&
                                 <>
-                                    <section className='w-full'>
+                                    <section className='w-full '>
                                         <h3 className="capitalize opacity-60">job details</h3>
                                         <textarea
                                             name="details"
@@ -362,7 +364,6 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
 
                             }
 
-                            <div className='h-full' />
                             <section className='w-full '>
                                 <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     {

@@ -37,6 +37,8 @@ const Home = ({
         display: 'inline-block',
         padding: '61px 10px 0',
     };
+    const list = homeTreny_respond?.data || [];
+    const homeTrenyList = [...list, ...Array(3 - list.length).fill({title: '', image: '' })].slice(0, 3);
 
     return (
         <>
@@ -56,16 +58,16 @@ const Home = ({
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize"> trendy categories </h2>
                         <div className="flex gap-4 mt-7">
                             {
-                                homeTreny_respond?.data.map((data, index) =>
+                                homeTrenyList.map((data, index) =>
                                     <div key={index} className="bg-black w-full aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden" style={{ backgroundImage: `url(${data.image})` }}>
                                         <span className="text-white text-3xl font-semibold capitalize">
-                                            {data.title}
+                                            {data.title || 'Empty Title'}
                                         </span>
                                         <span className="text-white opacity-50 font-semibold text-lg text-center">
-                                            Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.
+                                            {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
                                         </span>
                                         <a className="text-lg font-semibold text-primary bg-white px-7 py-3 rounded-full">
-                                            View More
+                                            {data.title ? 'View More' : 'Add Item'}
                                         </a>
                                     </div>
                                 )
@@ -83,7 +85,7 @@ const Home = ({
                                 modules={[Autoplay, Navigation, EffectFade]}
                                 spaceBetween={150}
                                 slidesPerView={4}
-                                // loop={true}
+                            // loop={true}
                             >
                                 {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
                                     <SwiperSlide key={index}>
@@ -129,7 +131,7 @@ const Home = ({
                         <section className="mx-auto py-12">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
                             <div className="flex gap-8 w-full">
-                                {categories.slice(0,3).map((category, index) => (
+                                {categories.slice(0, 3).map((category, index) => (
                                     <div
                                         key={index}
                                         className="gap-8 w-full">
