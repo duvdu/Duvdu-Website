@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-
-const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true }) => {
+var counter = 0
+const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true, inputclass }) => {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [cameraPosition, setCameraPosition] = useState({ lat: 30.0444, lng: 31.2357 }); // Tahrir Square, Cairo
     const [address, setAddress] = useState('');
-    const [counter, setCounter] = useState(0);
     const inputRef = useRef(null);
 
     const mapStyles = {
@@ -29,14 +28,13 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                             onsetLocation(userLocation);
                         }
                     },
-                    () => {}
+                    () => { }
                 );
             }
         }
-    }, [value?.lat, onsetLocation, setDefult]);
-    
+    }, [value?.lat, setDefult]);
+
     useEffect(() => {
-        
         if (markerPosition) {
             const geocoder = new google.maps.Geocoder();
             geocoder.geocode({ location: markerPosition }, (results, status) => {
@@ -45,8 +43,6 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                         const formattedAddress = results[0].formatted_address;
                         setAddress(formattedAddress);
                         if (onChangeAddress) {
-                            setCounter(counter+1)
-                            if(counter <= 2 )
                             onChangeAddress({
                                 target: {
                                     name: 'address',
@@ -62,8 +58,8 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                 }
             });
         }
-    }, [markerPosition?.lat,google, onChangeAddress]);
-// console.log(markerPosition?.lat , markerPosition?.lng)
+    }, [markerPosition?.lat, google]);
+
     useEffect(() => {
         const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
             types: ['address'],
@@ -112,8 +108,9 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
             <input
                 placeholder='address'
                 name='address'
-                className="inputStyle1"
+                className={inputclass || "inputStyle1"}
                 ref={inputRef}
+                rows={2}
                 value={address}
                 onChange={(e) => {
                     setAddress(e.target.value);
@@ -122,6 +119,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                     }
                 }}
             />
+            <div className='h-2' />
             <Map
                 google={google}
                 zoom={17}

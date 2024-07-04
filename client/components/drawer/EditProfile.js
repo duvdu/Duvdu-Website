@@ -82,7 +82,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             data.append('profileImage', profileImage)
         return data;
     }
-console.log(formData)
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         UpdateFormData(name, value)
@@ -93,7 +93,7 @@ console.log(formData)
     const handleSubmit = (event) => {
         event.preventDefault();
         updateProfile(converting())
-        router.push({pathname: "/creative/"+user.username});
+        router.push({ pathname: "/creative/" + user.username });
     };
 
 
@@ -166,7 +166,7 @@ console.log(formData)
                         <input
                             type='text'
                             name='name'
-                            value={formData.name|| ""}
+                            value={formData.name || ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
@@ -190,7 +190,7 @@ console.log(formData)
                         <input
                             type='text'
                             name='pricePerHour'
-                            value={formData.pricePerHour|| ""}
+                            value={formData.pricePerHour || ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
@@ -201,7 +201,7 @@ console.log(formData)
                         </span>
                         <textarea
                             name='about'
-                            value={formData.about|| ""}
+                            value={formData.about || ""}
                             onChange={handleInputChange}
                             className="edit app-field h-[400px]"
                             style={{ height: '120px' }}
@@ -210,12 +210,18 @@ console.log(formData)
                     <div className='mb-4 w-full'>
                         <section className="h-96 relative overflow-hidden">
                             <span> Set location </span>
-                            <GoogleMap width={'100%'} setDefult={false} value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}  onChangeAddress={handleInputChange} onsetLocation={(value) => {UpdateFormData('location[lat]', value.lat) ; UpdateFormData('location[lng]', value.lng)} } />
+                            <GoogleMap
+                                width={'100%'}
+                                setDefult={false}
+                                value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
+                                onChangeAddress={handleInputChange}
+                                onsetLocation={(value) => { UpdateFormData('location[lat]', value.lat); UpdateFormData('location[lng]', value.lng) }}
+                                inputclass="edit app-field"
+                            />
                         </section>
                     </div>
-                    <button className='w-full flex justify-center' type="submit">
-
-                        <AppButton className='sticky bottom-10 w-full max-w-96 mt-12 z-10' shadow={true}>
+                    <button className='w-full flex justify-center mt-12 max-w-96' type="submit">
+                        <AppButton className='sticky bottom-10 w-full z-10' shadow={true}>
                             Done
                         </AppButton>
                     </button>

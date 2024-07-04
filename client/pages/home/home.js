@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import CustomSwiper from "../../components/elements/customSwiper";
 import Link from "next/link";
-
+import { gsap } from 'gsap';
 
 const Home = ({
     HomeTreny,
@@ -29,6 +29,36 @@ const Home = ({
         HomeDiscover()
         popularSub()
     }, [])
+    const [words, setWords] = useState([]);
+    const wordsRef = useRef(null);
+    const list = homeTreny_respond?.data || [];
+
+
+    useEffect(() => {
+        const words = categories.map((value) => value.title);
+        setWords(words)
+
+    }, [categories]);
+
+    useEffect(() => {
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 1, });
+
+        tl.to(wordsRef.current, {
+            y: '-=130',
+            // duration: 1,
+            // ease: 'power2.out',
+            onStart: () => {
+                setWords((prevWords) => {
+                    const newWords = [...prevWords];
+                    const firstWord = newWords.shift();
+                    newWords.push(firstWord);
+                    return newWords;
+                });
+            },
+        }).to({}, { duration: 1 });
+
+    }, []);
+
 
     var TheBeststyle = {
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',
@@ -37,8 +67,7 @@ const Home = ({
         display: 'inline-block',
         padding: '61px 10px 0',
     };
-    const list = homeTreny_respond?.data || [];
-    const homeTrenyList = [...list, ...Array(3 - list.length).fill({title: '', image: '' })].slice(0, 3);
+    const homeTrenyList = [...list, ...Array(3 - list.length).fill({ title: '', image: '' })].slice(0, 3);
 
     return (
         <>
@@ -47,8 +76,19 @@ const Home = ({
                     <section className="my-24 mx-auto w-min">
                         <h1 className="text-center my-4">
                             <span className="text-[#263257] font-black text-8xl capitalize whitespace-nowrap">explore <span style={TheBeststyle}>the best</span> of </span>
-                            <br />
-                            <span className="text-[#1A73EB] font-black text-8xl">Modeling</span>
+                            <div className="relative h-[120px]">
+                                <div className="absolute h-full w-full overflow-hidden">
+                                    <div ref={wordsRef}>
+                                        {
+                                            words?.map((i) =>
+                                                <div className="h-[120px] flex flex-col justify-center items-center my-2">
+                                                    <p className="text-[#1A73EB] font-black text-8xl h-full">{i}</p>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </h1>
                         <p className="text-xl font-bold text-[#263257] text-center mx-20">
                             consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.
