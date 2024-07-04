@@ -8,7 +8,7 @@ import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile
 import { ClosePopUp } from '../../../util/util';
 
 function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
-console.log(FindUser_respond)
+
     const [creatives, setCreatives] = useState([]);
     const [searchTo, setSearchTo] = useState(null);
     const [_searchTo, _setSearchTo] = useState(null);

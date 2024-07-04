@@ -9,7 +9,7 @@
             width: width || '1000px',
             height: height || '370px',
         };
-
+console.log(process.env.MAP_KEY)
         useEffect(() => {
             if (value?.lat) {
                 setMarkerPosition({ lat: value.lat, lng: value.lng });
@@ -64,5 +64,5 @@
     }
 
     export default GoogleApiWrapper({
-        apiKey: process.env.MAP_KEY
+        apiKey: "AIzaSyD7vp9AFu2PiRWiNPkGtcrBKp9EMm-dFbQ"//process.env.MAP_KEY
     })(GoogleMap);

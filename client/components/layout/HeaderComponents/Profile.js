@@ -64,7 +64,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
         return covers;
     };
     const saved = getProjectCovers(getBoards_respond?.data || [])
-    const favCover = fav_respond?.data.length ? fav_respond.data[0].project.cover : null
+    const favCover = fav_respond?.data.length ? fav_respond.data[0].project?.cover : null
 
     useEffect(()=>{
         setShowMiddleCard(false)
