@@ -83,7 +83,7 @@ const Home = ({
                                 modules={[Autoplay, Navigation, EffectFade]}
                                 spaceBetween={150}
                                 slidesPerView={4}
-                                loop={true}
+                                // loop={true}
                             >
                                 {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
                                     <SwiperSlide key={index}>

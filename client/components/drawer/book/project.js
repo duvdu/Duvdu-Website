@@ -96,6 +96,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         setPost_success(false)
         resetForm()
         toggleDrawer()
+        ontoggleDrawer()
     }
 
 
