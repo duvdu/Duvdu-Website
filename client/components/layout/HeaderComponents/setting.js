@@ -10,9 +10,20 @@ import * as Types from '../../../redux/constants/actionTypes'
 import ContactUs from "./contactUs";
 import { LogOut } from "../../../redux/action/apis/auth/logout";
 import { useRouter } from "next/router";
+import { updateProfile } from "../../../redux/action/apis/auth/profile/updateprofile";
 
 
-function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopup, language,LogOut ,logout_respond}) {
+function Setting({ 
+    isDark, 
+    toggleDarkMode, 
+    toggleLanguage,
+    getheaderpopup, 
+    LogOut ,
+    user,
+    updateProfile,
+    updateProfile_respond
+    
+}) {
     const { t } = useTranslation();
 
     const [open, setOpened] = useState(0);
@@ -31,6 +42,12 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
         }
         localStorage.setItem('darkMode', isDarkMode);
         toggleDarkMode(isDarkMode)
+    }
+
+    function updateInstantState(checked) {
+        const data = new FormData();
+        data.append('isAvaliableToInstantProjects', checked)
+        updateProfile(data, false)
     }
 
     const Language = () => {
@@ -89,6 +106,7 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
             </>
         );
     }
+    
     const Main = ({ }) => (
         <>
             {
@@ -102,30 +120,30 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                         img: 'power-icon.svg',
                         name: 'Instant projects',
                         subName: 'short delivery time, More money',
-                        action: <Switch onSwitchChange={() => { }} />,
+                        action: <Switch onSwitchChange={ updateInstantState } value={updateProfile_respond?.data?.isAvaliableToInstantProjects != null ? updateProfile_respond?.data?.isAvaliableToInstantProjects : user?.isAvaliableToInstantProjects} />,
                     },
                     // {
                     //     img: 'notification-icon.svg',
                     //     name: 'Notification',
-                    //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
+                    //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
                     // },
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
                         onClick: () => setOpened(2)
                     },
                     {
                         img: 'number-icon.svg',
                         name: 'Change number',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
                         onClick: () => router.push("/changePhoneNumber")
                     },
                     {
                         img: 'lock-icon.svg',
                         name: 'Change password',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
-                        onClick: () => router.push("/changePassword")
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                        onClick: () => router.push("/changepassword")
                     },
                     {
                         img: 'chat-icon.svg',
@@ -133,11 +151,11 @@ function Setting({ isDark, toggleDarkMode, toggleLanguage, logout, getheaderpopu
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => setOpened(1)
                     },
-                    {
-                        img: 'about-icon.svg',
-                        name: 'About',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} invert={true} />,
-                    },
+                    // {
+                    //     img: 'about-icon.svg',
+                    //     name: 'About',
+                    //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                    // },
 
                 ].map((e, i) => (
                     <div onClick={e.onClick} className="flex py-3 gap-4 cursor-pointer" key={i}>
@@ -177,13 +195,15 @@ const mapStateToProps = (state) => ({
     language: state.setting.LANGUAGE,
     getheaderpopup: state.setting.headerpopup,
     logout_respond: state.api.LogOut,
-
+    updateProfile_respond: state.api.updateProfile,
+    user: state.auth.user,
 });
 
 const mapDispatchToProps = {
     toggleDarkMode,
     toggleLanguage,
     LogOut,
+    updateProfile,
 
 };
 

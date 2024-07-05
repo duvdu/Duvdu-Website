@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import Icon from "../../Icons";
 
-const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
-    
+const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClick }) => {
+
     const [timeLeft, setTimeLeft] = useState("");
     const statuses = [
         { value: 'accept' },
@@ -61,6 +61,17 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
                 return "Unknown"; // Handle unknown cases as needed
         }
     }
+    const getType = () => {
+        if (data?.ref.includes("copyright"))
+            return "copyrights"
+        else if (data?.ref.includes("rental"))
+            return "rental"
+        else if (data?.ref.includes("producer"))
+            return "producer"
+        else if (data?.ref.includes("project"))
+            return "project"
+    }
+
     return (
         <div onClick={onClick} className='flex justify-between w-[370px] sm:w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
@@ -74,13 +85,13 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
                 </div>
                 {/*********/}
                 {/* time */}
-                
+
                 <div className='flex flex-col xl:flex-row justify-between items-center w-full'>
                     <span className='text-4xl'> {uiStatus()}
-                        { status == "pending" && 
-                        <span className='text-lg opacity-40 mx-2'>
-                            {timeLeft ? "left" : "Time's up"}
-                        </span>
+                        {status == "pending" &&
+                            <span className='text-lg opacity-40 mx-2'>
+                                {timeLeft ? "left" : "Time's up"}
+                            </span>
                         }
                     </span>
                     <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer hidden`}>
@@ -89,7 +100,10 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
                 </div>
                 {/*********/}
             </div>
-            {status == 'pending' || status?.includes("waiting-for-pay") && <Icon name="waiting" />}
+            <div className="bg-gray-100 text-gray-800 px-4 py-2 h-min rounded-3xl mr-3">
+                {getType()}
+            </div>
+            {(status == 'pending' || status?.includes("waiting-for-pay")) && <Icon name="waiting" />}
             {status == 'rejected' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
             {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
             <div className='absolute top-5 right-5 hidden'>
@@ -104,7 +118,8 @@ const Pending = ({ data, takeAction_respond, takeAction, onClick }) => {
 };
 
 const mapStateToProps = (state) => ({
-    takeAction_respond: state.api.takeAction
+    takeAction_respond: state.api.takeAction,
+    contractDetails: state.ContractDetails,
 });
 
 const mapDispatchToProps = {

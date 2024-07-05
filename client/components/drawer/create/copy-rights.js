@@ -86,8 +86,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
         })
     }
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-
+    
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
@@ -108,16 +107,15 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     UpdateFormData('tags', value.tags)
                                 }} />
                         </div>
-                        <input placeholder='price' type="number" value={formData.price|| ""} onChange={handleInputChange} name="price" className={inputStyle} />
+                        <input placeholder='price' type="number" min={0} value={formData.price|| ""} onChange={handleInputChange} name="price" className={"inputStyle1"} />
 
-                        <input type="number" placeholder='duration Days' value={formData.duration|| ""} onChange={handleInputChange} name="duration" className={inputStyle} />
+                        <input type="number" min={0} placeholder='duration Days' value={formData.duration|| ""} onChange={handleInputChange} name="duration" className={"inputStyle1"} />
 
-                        <input placeholder='address' value={formData.address|| ""} onChange={handleInputChange} name="address" className={inputStyle} />
                         <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full">
                         <h3 className="capitalize opacity-60 mb-3">Set location</h3>
-                        <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                        <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)}  onChangeAddress={handleInputChange}/>
                     </section>
                     <section className='flex justify-center gap-3 mt-1'>
                         <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} id='showOnHome' />

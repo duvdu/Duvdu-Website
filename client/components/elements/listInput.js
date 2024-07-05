@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../components/Icons';
 
-function ListInput({ onChange, name, placeholder, onClick, children, listdiv, target, remove, enable = true,value }) {
+function ListInput({ onChange, name, placeholder, onClick, children, listdiv, target, remove, enable = true, value }) {
     const [word, setWord] = useState('')
     const [list, setList] = useState([])
 
@@ -35,20 +35,19 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
 
     };
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     return (
         <>
             <div className="relative">
                 {
-                    !enable ? (<div className={`${inputStyle} pr-14 capitalize opacity-45`}>
+                    !enable ? (<div className={`${"inputStyle1"} pr-14 capitalize opacity-45`}>
                         {placeholder}
                     </div>
                     ) :
                         (<input
                             placeholder={placeholder}
-                            className={`${inputStyle} pr-14`}
-                            value={word|| ""}
+                            className={`${"inputStyle1"} pr-14`}
+                            value={word || ""}
                             onChange={(e) => { setWord(e.target.value) }}
                             name={name}
                         />)}

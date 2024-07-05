@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import { formattedDeadline } from "../../../util/format-date";
+import EmptyComponent from "./emptyComponent";
 
 const RightSide = ({ getAllContracts_respond, user }) => {
     const IsImSp = () => {
         return sp?.username == user?.username
     }
+    console.log(getAllContracts_respond)
     const handleStatus = (status) => {
         switch (status) {
             case 'canceled':
@@ -51,9 +53,9 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         </Link>
     const MoreIcon = () => <Icon className='cursor-pointer' name={'more'} />
 
-    const HisTory = ({ data, isCanceled }) =>{
+    const HisTory = ({ data, isCanceled }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
-        return<>
+        return <>
             {/* max-w-[370px] ahmed */}
             <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
                 {/* dropdown */}
@@ -129,28 +131,31 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         <>
             {/* <Clients /> */}
             {/* ahmed */}
-
-            <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
-                <div className='flex flex-col gap-[15px] mx-auto sm:mx-0 w-max sm:w-auto text-center mt-9'>
-                    {/* <Title title="recent clients" /> */}
-                    <div className='flex sm:flex-row gap-2 hidden'>
-                        <Recents img='/assets/imgs/profile/defultUser.jpg' name='youseff ali' address='zayed city' />
-                        <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
-                        <div className='hidden sm:block lg:hidden'>
+            {!data?.length == 0 ?
+                <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
+                    <div className='flex flex-col gap-[15px] mx-auto sm:mx-0 w-max sm:w-auto text-center mt-9'>
+                        {/* <Title title="recent clients" /> */}
+                        <div className='flex sm:flex-row gap-2 hidden'>
+                            <Recents img='/assets/imgs/profile/defultUser.jpg' name='youseff ali' address='zayed city' />
                             <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
+                            <div className='hidden sm:block lg:hidden'>
+                                <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
+                            </div>
+                            <div data-popup-toggle="popup" data-popup-target='clients'>
+                                <MoreIcon />
+                            </div>
                         </div>
-                        <div data-popup-toggle="popup" data-popup-target='clients'>
-                            <MoreIcon />
+                        <Title title='history' />
+                        <div className="min-w-80">
+                            {
+                                data?.map((value, i) => (
+                                    <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
+                                ))
+                            }
                         </div>
                     </div>
-                    <Title title='history' />
-                    {
-                        data?.map((value,i) => (
-                            <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
-                        ))
-                    }
-                </div>
-            </div>
+                </div> : <div className="w-80"/>
+            }
         </>
     );
 };

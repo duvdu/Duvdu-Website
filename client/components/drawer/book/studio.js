@@ -66,7 +66,6 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         UpdateFormData(name, value)
     };
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     if (!isOpen) {
         return <Drawer name={data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">

@@ -135,13 +135,13 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
             <Popup className="ADD_HOURS_TO_CREATIVE" header={'Work Details'}>
                 <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
                     <div className='flex items-center gap-9 w-64'>
-                        <input type="number" onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <input type="number" min={0} onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             hours
                         </span>
                     </div>
                     <div className='flex items-center gap-9 w-64'>
-                        <input type="number" onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <input type="number" min={0} onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             amount
                         </span>

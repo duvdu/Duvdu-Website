@@ -19,6 +19,7 @@
         "dateformat": "^5.0.3",
         "dotenv": "^16.4.5",
         "google-maps-react": "^2.0.6",
+        "gsap": "^3.12.5",
         "i18next": "^23.11.2",
         "lamejs": "^1.2.1",
         "leaflet": "^1.8.0",

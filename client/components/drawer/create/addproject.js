@@ -30,11 +30,17 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     categories = filterByCycle(categories, 'project')
     const categoryDetails = categories.find(i => i._id == formData.category)
 
-    const listDropDown = categoryDetails?.media === 'video' || categoryDetails?.media === 'audio' ? ['minutes', 'hours'] : ['image'];
+    const listDropDown =
+        categoryDetails?.media === 'image'
+            ? ['image']
+            : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
+                ? ['minutes', 'hours']
+                : []);
+                
     useEffect(() => {
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
-    
+
     const convertToFormData = () => {
         const data = new FormData();
 
@@ -95,14 +101,19 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
         if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
         if (!formData.name) errors.title = 'Title is required';
-        if (!formData.tools || !formData.tools.length) errors.title = 'tools is required';
-        if (!formData.functions || !formData.functions.length) errors.title = 'functions is required';
-        if (!formData.creatives || !formData.creatives.length) errors.title = 'creatives is required';
+        // if (!formData.tools || !formData.tools.length) errors.title = 'tools is required';
+        // if (!formData.functions || !formData.functions.length) errors.title = 'functions is required';
+        // if (!formData.creatives || !formData.creatives.length) errors.title = 'creatives is required';
         if ((formData.description?.length || 0) < 6) errors.desc = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
-        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.duration) errors.duration = 'duration is required';
+        // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
+        if (!formData['projectScale[unit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.location = 'projectScale is required';
+        if (formData['projectScale[minimum]'] >= formData['projectScale[current]']) errors.location = 'current should be greater than minimum';
+        if (formData['projectScale[current]'] >= formData['projectScale[maximum]']) errors.location = 'maximum should be greater than current';
+         
         // if (!formData.duration) errors.duration = 'Project scale is required';
 
         return errors;
@@ -145,8 +156,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
 
     useEffect(() => {
-        UpdateFormData("address", "Cairo (this's a defult value)")
-        UpdateFormData("duration", 10)
+        // UpdateFormData("duration", 10)
 
     }, [])
 
@@ -169,7 +179,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     }
 
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
     // console.log(categoryDetails)
     return (
         <>
@@ -199,10 +208,13 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
-                                <input placeholder='name' className={inputStyle} value={formData.name || ""} onChange={handleInputChange} name="name" />
+                                <input placeholder='name' className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
                             </section>
                             <section>
-                                <input placeholder='description' className={inputStyle} value={formData.description || ""} onChange={handleInputChange} name="description" />
+                                <input placeholder='description' className={"inputStyle1"} value={formData.description || ""} onChange={handleInputChange} name="description" />
+                            </section>
+                            <section>
+                                <input placeholder='duration' type="number" min={0} className={"inputStyle1"} value={formData.duration || ""} onChange={handleInputChange} name="duration" />
                             </section>
                             <section>
                                 <ListInput
@@ -238,18 +250,9 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             <section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                             </section>
-                            {/* <section>
-                                <input type="number" placeholder='Project budget' className={inputStyle} value={formData.projectBudget || ""} onChange={handleInputChange} name="projectBudget" />
-                                {
-                                    errors.projectBudget && <div style={{ color: 'red' }}>{errors.projectBudget}</div>
-                                }
-                            </section> */}
-                            <section>
-                                <input placeholder='address' name="address" value={formData.address || ""} onChange={handleInputChange} className={inputStyle} readOnly />
-                            </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span> Set location </span>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)}  onChangeAddress={handleInputChange}/>
                             </section>
 
                             <section className="flex flex-col gap-8">
@@ -285,21 +288,21 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                         ))}
                                     </select>
                                 </div>
-                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || ""} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || ""} onChange={handleInputChange} className={"inputStyle1"} />
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
+                                            <input type='number' min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={inputStyle} />
+                                            <input type='number' min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={inputStyle} />
+                                            <input type='number' min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                 </div>

@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import CustomSwiper from "../../components/elements/customSwiper";
 import Link from "next/link";
-
+import { gsap } from 'gsap';
 
 const Home = ({
     HomeTreny,
@@ -29,6 +29,28 @@ const Home = ({
         HomeDiscover()
         popularSub()
     }, [])
+    const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
+    const wordsRef = useRef(null);
+    const list = homeTreny_respond?.data || [];
+
+
+    // useEffect(() => {
+    //     const words = categories.map((value) => value.title);
+    //     setWords(words)
+    // }, [categories]);
+
+    // useEffect(() => {
+    //     const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+    //     tl  .to(wordsRef.current, { translateY: '-112%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-100%', duration: 0.25, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-212%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-200%', duration: 0.15, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-312%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-300%', duration: 0.15, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-412%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-400%', duration: 0.15, ease: 'power2.out', });
+    // }, []);
+
 
     var TheBeststyle = {
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',
@@ -37,6 +59,7 @@ const Home = ({
         display: 'inline-block',
         padding: '61px 10px 0',
     };
+    const homeTrenyList = [...list, ...Array(3 - list.length).fill({ title: '', image: '' })].slice(0, 3);
 
     return (
         <>
@@ -45,8 +68,20 @@ const Home = ({
                     <section className="my-24 mx-auto w-min">
                         <h1 className="text-center my-4">
                             <span className="text-[#263257] font-black text-8xl capitalize whitespace-nowrap">explore <span style={TheBeststyle}>the best</span> of </span>
-                            <br />
-                            <span className="text-[#1A73EB] font-black text-8xl">Modeling</span>
+                            <div className="relative h-[120px]">
+                                <div className="absolute h-full w-full overflow-hidden">
+                                
+                                    <div ref={wordsRef} className="slide-in">
+                                        {
+                                            words?.map((i) =>
+                                                <div className="h-[120px] flex flex-col justify-center items-center my-2">
+                                                    <p className="text-[#1A73EB] font-black text-8xl h-full">{i}</p>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </h1>
                         <p className="text-xl font-bold text-[#263257] text-center mx-20">
                             consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.
@@ -56,16 +91,16 @@ const Home = ({
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize"> trendy categories </h2>
                         <div className="flex gap-4 mt-7">
                             {
-                                homeTreny_respond?.data.map((data, index) =>
+                                homeTrenyList.map((data, index) =>
                                     <div key={index} className="bg-black w-full aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden" style={{ backgroundImage: `url(${data.image})` }}>
                                         <span className="text-white text-3xl font-semibold capitalize">
-                                            {data.title}
+                                            {data.title || 'Empty Title'}
                                         </span>
                                         <span className="text-white opacity-50 font-semibold text-lg text-center">
-                                            Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.
+                                            {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
                                         </span>
                                         <a className="text-lg font-semibold text-primary bg-white px-7 py-3 rounded-full">
-                                            View More
+                                            {data.title ? 'View More' : 'Add Item'}
                                         </a>
                                     </div>
                                 )
@@ -83,7 +118,7 @@ const Home = ({
                                 modules={[Autoplay, Navigation, EffectFade]}
                                 spaceBetween={150}
                                 slidesPerView={4}
-                                // loop={true}
+                            // loop={true}
                             >
                                 {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
                                     <SwiperSlide key={index}>
@@ -129,7 +164,7 @@ const Home = ({
                         <section className="mx-auto py-12">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
                             <div className="flex gap-8 w-full">
-                                {categories.slice(0,3).map((category, index) => (
+                                {categories.slice(0, 3).map((category, index) => (
                                     <div
                                         key={index}
                                         className="gap-8 w-full">

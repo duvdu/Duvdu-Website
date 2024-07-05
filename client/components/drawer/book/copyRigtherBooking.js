@@ -56,9 +56,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
         toggleDrawer()
         ontoggleDrawer()
     }
-    useEffect(() => {
-        UpdateFormData("address", "Cairo (this's a defult value)")
-    }, [isOpen])
+    
 
     useEffect(() => {
         if (bookCopyrights_respond)
@@ -103,8 +101,6 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
     };
 
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-
     if (!isOpen) {
         return <Drawer name={data.name} img={data.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
@@ -126,13 +122,9 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
                         <h3 className="capitalize opacity-60 mb-4">select deadline</h3>
                         <SelectDate onChange={(value) => UpdateFormData('deadline', value)} />
                     </section>
-                    <section className="gap-7">
-                        <h3 className="capitalize opacity-60 mb-4">address</h3>
-                        <input placeholder='address' className={inputStyle} value={formData.address || ""} onChange={handleInputChange} name="address" />
-                    </section>
                     <section className="h-96 relative overflow-hidden w-full mt-5">
                         <h3 className="capitalize opacity-60  mb-3">location</h3>
-                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} />
+                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange}/>
                     </section>
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>

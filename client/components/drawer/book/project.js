@@ -106,7 +106,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     }, [creatives.length])
 
     useEffect(() => {
-        UpdateFormData("address", "Cairo (this's a defult value)")
         UpdateFormData('totalPrice', data.projectBudget)
         if (data.creatives) {
             setCreatives([{ ...data.user, removable: true }])
@@ -153,17 +152,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         const { name, value } = event.target;
         UpdateFormData(name, value)
     };
-
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-    if (openMap)
-        return <Drawer name={data.user?.name} img={data.user?.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
-            <div className="py-10">
-                <GoogleMap width={'100%'} value={formData.location || ""}
-                    onsetLocation={(value) => UpdateFormData('location', value)}
-                />
-            </div>
-        </Drawer >
-
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
@@ -194,13 +182,10 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <h3 className="capitalize opacity-60">job details</h3>
                                 <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                             </section>
-                            <section className="my-11 gap-7 ">
-                                <h3 className="capitalize opacity-60 mb-4">address</h3>
-                                <input placeholder='address' className={inputStyle} value={formData.address || ""} onChange={handleInputChange} name="address" readOnly />
-                            </section>
                             <section className="my-11 gap-7 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">location</h3>
                                 <GoogleMap width={'100%'} value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
+                                 onChangeAddress={handleInputChange}
                                     onsetLocation={(value) => {
                                         UpdateFormData('location[lat]', value.lat)
                                         UpdateFormData('location[lng]', value.lng)

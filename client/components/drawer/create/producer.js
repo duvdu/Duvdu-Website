@@ -138,8 +138,6 @@ const AddProducer = ({
 
     const canDelete = true;
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-
     return (
         <>
             <SuccessfullyPosting id={SuccessfullyUpdatePopupId} onCancel={toggleDrawer} message="Update" />
@@ -168,14 +166,14 @@ const AddProducer = ({
                             <section className="w-full">
                                 <p className="capitalize opacity-60">Min Budget</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type='number' value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={inputStyle} />
+                                    <input type='number' min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={"inputStyle1"} />
                                 </div>
                             </section>
 
                             <section className="w-full">
                                 <p className="capitalize opacity-60">Max Budget</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type='number' value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                    <input type='number' min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={"inputStyle1"} />
                                 </div>
                             </section>
                         </div>

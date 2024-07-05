@@ -19,7 +19,6 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
     
 
     return (
-        false &&
         <div className={`relative cursor-pointer ${className}`}>
             <div onClick={handleIconClick} className="icon-container">
                 {children || <Icon name={'ellipsis-vertical'} className={iconclassName + " h-6"} />}
