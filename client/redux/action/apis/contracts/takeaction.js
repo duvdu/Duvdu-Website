@@ -44,7 +44,7 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
                     
                 case "project":
                     if (isUpdate) {
-                        response = await mainApiInstance.patch(`/api/project/contract/${id}`, data);
+                        response = await mainApiInstance.patch(`/api/project/contract/${id}/contract`, data);
                     } else {
                         response = await mainApiInstance.post(`/api/project/contract/${id}/action`, {
                             action: data ? "accept" : "reject"
