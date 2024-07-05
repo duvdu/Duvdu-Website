@@ -181,7 +181,7 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
             status === "pending" &&
             appointmentDate && 
             appointmentDate !== contract?.appointmentDate) ||
-        (getType() === "copyrights" &&
+        (getType() === "copyrights" || getType() === "project"&&
             !IsImSp() &&
             status === "update-after-first-Payment" &&
             (
@@ -328,7 +328,7 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                             }
                             {
                                 status == "update-after-first-Payment" &&
-                                getType() == "copyrights" &&
+                                getType() == "copyrights" || getType() === "copyrights" &&
                                 !IsImSp() &&
                                 <>
                                     <section className='w-full '>
