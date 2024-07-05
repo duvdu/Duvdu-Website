@@ -47,18 +47,18 @@ const Saved = ({
         const handleDropdownSelect = (v) => {
             v == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-" + id)
         };
-        console.log(isFav)
+        
         return (
             <>
                 <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} />
                 <div className="boards-card">
                     <div className="absolute top-7 right-7" onClick={handleSelectClick}>
-                        
+                        {!isFav &&
                             <Selector options={dropdown} onSelect={handleDropdownSelect}>
                                 <div className="border rounded-full size-9 flex justify-center items-center">
                                     <Icon className="size-6 text-white" name="ellipsis-vertical" />
                                 </div>
-                            </Selector>
+                            </Selector>}
                     </div>
                     <Link href={`/save/${id}`}>
                         <div className="projects cursor-pointer">
