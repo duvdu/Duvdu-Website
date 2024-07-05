@@ -48,7 +48,7 @@ function AddToolUsed({ onSubmit }) {
                 <div className='flex flex-col justify-between h-full'>
                     <div className='flex flex-col gap-2'>
                         <InputFeid placeholder={"tool name..."} onChange={handlenameChange} errerMsg={error.name} sendValue={name}/>
-                        <InputFeid placeholder={"fees"} onChange={handleFeesChange} errerMsg={error.fees } sendValue={fees}/>
+                        <InputFeid type='number' placeholder={"fees"} onChange={handleFeesChange} errerMsg={error.fees } sendValue={fees}/>
                     </div>
                     <div  onClick={onclick}>
                         <AppButton className={'w-full'}>

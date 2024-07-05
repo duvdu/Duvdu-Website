@@ -81,7 +81,7 @@ const Studio = ({
                                 </div>
                             </div>
                             {!chat_respond &&
-                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} canBook={studio.user._id != user?._id} />}
+                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} canBook={studio.user.username != user?.username} />}
                             <StudioBooking data={studio} isOpen={isOpen} toggleDrawer={toggleDrawer} />
 
                         </>

@@ -48,7 +48,7 @@ function FunctionUsed({ onSubmit }) {
                 <div className='flex flex-col justify-between h-full'>
                     <div className='flex flex-col gap-2'>
                         <InputFeid placeholder={"Function name..."} onChange={handleNameChange} errerMsg={error.name} sendValue={name} />
-                        <InputFeid placeholder={"Tool price per unit"} onChange={handleFeesChange} errerMsg={error.fees} sendValue={fees} />
+                        <InputFeid type='number' placeholder={"Tool price per unit"} onChange={handleFeesChange} errerMsg={error.fees} sendValue={fees} />
                     </div>
                     <div onClick={onClick}>
                         <AppButton className={'w-full'}>

@@ -80,7 +80,7 @@ const Projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} canBook={project.user._id != user?._id}/>
+                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} canBook={project.user.username != user?.username}/>
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>

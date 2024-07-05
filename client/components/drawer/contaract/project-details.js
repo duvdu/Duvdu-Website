@@ -13,7 +13,7 @@ import SelectDate from '../../elements/selectDate';
 import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
 import CountdownTimer from '../../elements/CounterDownTimer';
 
-function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
+function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
     const sp = contractDetails?.sp;
@@ -78,19 +78,19 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
     }
 
     useEffect(() => {
-        if (takeAction_respond){
+        if (takeAction_respond) {
             getAllContracts()
             setActionSuccess(true)
         }
     }, [takeAction_respond]);
 
     useEffect(() => {
-        if (payment_respond){
+        if (payment_respond) {
             getAllContracts()
             setPaymentSuccess(true)
         }
     }, [payment_respond]);
-    
+
     useEffect(() => {
         if (getType() == "producer") {
             setdAppointmentDate(contract.appointmentDate)
@@ -171,7 +171,7 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
     // console.log(sp)
     // console.log("=============")
 
-    
+
 
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
@@ -179,9 +179,9 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
         (getType() === "producer" &&
             IsImSp() &&
             status === "pending" &&
-            appointmentDate && 
+            appointmentDate &&
             appointmentDate !== contract?.appointmentDate) ||
-        (getType() === "copyrights" || getType() === "project"&&
+        (getType() === "copyrights" || getType() === "project" &&
             !IsImSp() &&
             status === "update-after-first-Payment" &&
             (
@@ -201,122 +201,128 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                     contract &&
                     <>
                         <div className='flex flex-col justify-between h-drawer'>
-                        <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10'>
-                            <section>
-                                <span className='text-4xl my-5'>{uiStatus()}
-                                    {status == "pending" &&
-                                        <span className='text-lg opacity-40 mx-2'>
-                                            {timeLeft ? "left" : "Time's up"}
-                                        </span>
-                                    }
-                                </span>
-                            </section>
-                            <section className='w-full flex-col'>
-                                <h2 className='opacity-60 capitalize mb-3'> original gig </h2>
-                                <div className='w-full'>
-                                    <div className="h-20 w-full rounded-full relative overflow-hidden">
-                                        <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
-                                        <div className="absolute z-20 flex items-center w-full h-full p-7">
-                                            <div className="w-full text-center p-20">
-                                                <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{contract.project}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            <section className='w-full hidden'>
-                                <h2 className='opacity-60 capitalize mb-3'> project type </h2>
-                                <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
-                                    {contract.details}
-                                </span>
-                            </section>
-                            {contractDetails.ref &&
-                                <section className='w-full'>
-                                    <h2 className='opacity-60 capitalize mb-3'> service type </h2>
-                                    <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
-                                        {getType()}
+                            <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10'>
+                                <section>
+                                    <span className='text-4xl my-5'>{uiStatus()}
+                                        {status == "pending" &&
+                                            <span className='text-lg opacity-40 mx-2'>
+                                                {timeLeft ? "left" : "Time's up"}
+                                            </span>
+                                        }
                                     </span>
-                                </section>}
-
-                            {
-                                contract.details &&
-                                <section className='w-full'>
-                                    <h2 className='opacity-60 capitalize mb-3'> project details </h2>
-                                    <p className='font-semibold capitalize max-w-[543px]'>
-                                        {contract.details}
-                                    </p>
                                 </section>
-                            }
-                            {contract.attachments &&
-                                <section className='w-full'>
-                                    <h2 className='opacity-60 capitalize'> alike media </h2>
-                                    {contract.attachments.map((attachment, index) =>
-                                        <div key={index} className='flex gap-3 items-start p-4 bg-DS_white rounded-md border border-[#CACACA] mt-3'>
-                                            <Icon key={index} name={'file'} className='size-5' />
-                                            <div className='flex flex-col'>
-                                                <span className='text-[#353535] text-[14px] font-medium'> {attachment.split('/').pop()} </span>
-                                                <span className='text-[#989692] text-[12px]'> </span>
-                                                <a href={attachment} target="_blank" rel="noopener noreferrer" className='text-primary font-semibold text-[14px]'> Click to view </a>
-                                            </div>
-                                        </div>
-                                    )}
-                                </section>}
-                            <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
-                                <div className='w-full'>
+                                <section className='w-full flex-col'>
+                                    <h2 className='opacity-60 capitalize mb-3'> original gig </h2>
                                     <div className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
-                                        <CountdownTimer time={contract?.actionAt}/>
-                                    </div>
-                                    <div className='w-full mt-5'>
-                                        <h2 className='opacity-60 capitalize mb-3'> Address </h2>
-                                        <div className='flex gap-4'>
-                                            <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
-                                                <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
-                                            </div>
-                                            <div>
-                                                <div>
-                                                    <span className='opacity-85 text-base'>
-                                                        {contract.address}
-                                                    </span>
-                                                </div>
-                                                <div className='hidden'>
-                                                    <span className='text-xs text-[#747688]'>
-                                                        Cairo, Egypt
-                                                    </span>
+                                        <div className="h-20 w-full rounded-full relative overflow-hidden">
+                                            <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
+                                            <div className="absolute z-20 flex items-center w-full h-full p-7">
+                                                <div className="w-full text-center p-20">
+                                                    <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{contract.project}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='w-full'>
+                                </section>
+                                <section className='w-full hidden'>
+                                    <h2 className='opacity-60 capitalize mb-3'> project type </h2>
+                                    <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
+                                        {contract.details}
+                                    </span>
+                                </section>
+                                {contractDetails.ref &&
+                                    <section className='w-full'>
+                                        <h2 className='opacity-60 capitalize mb-3'> service type </h2>
+                                        <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
+                                            {getType()}
+                                        </span>
+                                    </section>}
+
+                                {
+                                    contract.details &&
+                                    <section className='w-full'>
+                                        <h2 className='opacity-60 capitalize mb-3'> project details </h2>
+                                        <p className='font-semibold capitalize max-w-[543px]'>
+                                            {contract.details}
+                                        </p>
+                                    </section>
+                                }
+                                {contract.attachments.length > 0 &&
+                                    <section className='w-full'>
+                                        <h2 className='opacity-60 capitalize'> alike media </h2>
+                                        {contract.attachments.map((attachment, index) =>
+                                            <div key={index} className='flex gap-3 items-start p-4 bg-DS_white rounded-md border border-[#CACACA] mt-3'>
+                                                <Icon key={index} name={'file'} className='size-5' />
+                                                <div className='flex flex-col'>
+                                                    <span className='text-[#353535] text-[14px] font-medium'> {attachment.split('/').pop()} </span>
+                                                    <span className='text-[#989692] text-[12px]'> </span>
+                                                    <a href={attachment} target="_blank" rel="noopener noreferrer" className='text-primary font-semibold text-[14px]'> Click to view </a>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </section>}
+                                <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
                                     <div className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'> Total Price </h2>
-                                        <span className='font-semibold capitalize mt-3'> {contract.totalPrice} $ </span>
-                                    </div>
-                                    <div className='w-full mt-5'>
-                                        <h2 className='opacity-60 capitalize mb-3'> start date </h2>
-                                        <div className='flex gap-4'>
-                                            <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
-                                                <Icon name={"bag"} />
+                                        
+                                            <div className='w-full'>
+                                                <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
+                                                {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN" }
                                             </div>
-                                            <div>
+                                        <div className='w-full mt-5'>
+                                            <h2 className='opacity-60 capitalize mb-3'> Address </h2>
+                                            <div className='flex gap-4'>
                                                 <div>
-                                                    <span className='opacity-85 text-base'>
-                                                        {dateFormat(contract.appointmentDate, 'd mmmm , yyyy')}
-                                                    </span>
+                                                    <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
+                                                        <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
+                                                    </div>
                                                 </div>
                                                 <div>
-                                                    <span className='text-xs text-[#747688]'>
-                                                        {dateFormat(contract.appointmentDate, 'dddd')}
-                                                    </span>
+                                                    <div>
+                                                        <span className='opacity-85 text-base'>
+                                                            {contract.address}
+                                                        </span>
+                                                    </div>
+                                                    <div className='hidden'>
+                                                        <span className='text-xs text-[#747688]'>
+                                                            Cairo, Egypt
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </section>
-                        </div>
-                            
+                                    <div className='w-full'>
+                                        <div className='w-full'>
+                                            <h2 className='opacity-60 capitalize mb-3'> Total Price </h2>
+                                            <span className='font-semibold capitalize mt-3'> {contract.totalPrice} $ </span>
+                                        </div>
+                                        <div className='w-full mt-5'>
+                                            <h2 className='opacity-60 capitalize mb-3'> start date </h2>
+                                            <div className='flex gap-4'>
+                                                <div>
+
+                                                    <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
+                                                        <Icon name={"bag"} />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div>
+                                                        <span className='opacity-85 text-base'>
+                                                            {dateFormat(contract.appointmentDate, 'd mmmm , yyyy')}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span className='text-xs text-[#747688]'>
+                                                            {dateFormat(contract.appointmentDate, 'dddd')}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
                             {
                                 status == "pending" &&
                                 getType() == "producer" &&
@@ -345,9 +351,9 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                                         <h3 className="capitalize opacity-60 mb-4">deadline</h3>
                                         <SelectDate value={deadline || contract.deadline} onChange={(value) => setDeadline(value)} />
                                         {deadline && new Date(deadline) < new Date(contract.deadline) &&
-                                        <span className="error-msg" >
-                                             Deadline must be on or after the execution day.
-                                        </span>
+                                            <span className="error-msg" >
+                                                Deadline must be on or after the execution day.
+                                            </span>
                                         }
                                     </section>
                                     <div className='mb-4 w-full'>
