@@ -29,35 +29,27 @@ const Home = ({
         HomeDiscover()
         popularSub()
     }, [])
-    const [words, setWords] = useState([]);
+    const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
     const list = homeTreny_respond?.data || [];
 
 
-    useEffect(() => {
-        const words = categories.map((value) => value.title);
-        setWords(words)
+    // useEffect(() => {
+    //     const words = categories.map((value) => value.title);
+    //     setWords(words)
+    // }, [categories]);
 
-    }, [categories]);
-
-    useEffect(() => {
-        const tl = gsap.timeline({ repeat: -1, repeatDelay: 1, });
-
-        tl.to(wordsRef.current, {
-            y: '-=130',
-            // duration: 1,
-            // ease: 'power2.out',
-            onStart: () => {
-                setWords((prevWords) => {
-                    const newWords = [...prevWords];
-                    const firstWord = newWords.shift();
-                    newWords.push(firstWord);
-                    return newWords;
-                });
-            },
-        }).to({}, { duration: 1 });
-
-    }, []);
+    // useEffect(() => {
+    //     const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+    //     tl  .to(wordsRef.current, { translateY: '-112%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-100%', duration: 0.25, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-212%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-200%', duration: 0.15, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-312%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-300%', duration: 0.15, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-412%', duration: 0.1, ease: 'power2.out' })
+    //         .to(wordsRef.current, { translateY: '-400%', duration: 0.15, ease: 'power2.out', });
+    // }, []);
 
 
     var TheBeststyle = {
@@ -78,7 +70,8 @@ const Home = ({
                             <span className="text-[#263257] font-black text-8xl capitalize whitespace-nowrap">explore <span style={TheBeststyle}>the best</span> of </span>
                             <div className="relative h-[120px]">
                                 <div className="absolute h-full w-full overflow-hidden">
-                                    <div ref={wordsRef}>
+                                
+                                    <div ref={wordsRef} className="slide-in">
                                         {
                                             words?.map((i) =>
                                                 <div className="h-[120px] flex flex-col justify-center items-center my-2">
