@@ -15,6 +15,7 @@ import About from "../../components/pages/stduiosAndProject/about";
 import Details from "../../components/pages/stduiosAndProject/details";
 import Reviews from "../../components/pages/stduiosAndProject/review";
 import Recommended from "../../components/pages/stduiosAndProject/recommend";
+import AddToSaved from "../../components/popsup/addToSaved";
 
 const Studio = ({
     GetStudios,
@@ -57,7 +58,8 @@ const Studio = ({
                 {studio &&
                     (
                         <>
-                            <AddToTeam />
+                        <AddToSaved />
+                        <AddToTeam />
                             <Report />
                             <ThanksMSG />
                             <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
