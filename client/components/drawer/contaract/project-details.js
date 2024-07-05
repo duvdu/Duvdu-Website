@@ -328,7 +328,7 @@ function ReceiveProjectFiles({ getAllContracts,contractDetails, toggleContractDa
                             }
                             {
                                 status == "update-after-first-Payment" &&
-                                getType() == "copyrights" || getType() === "copyrights" &&
+                                getType() == "copyrights" || getType() === "project" &&
                                 !IsImSp() &&
                                 <>
                                     <section className='w-full '>
