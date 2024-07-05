@@ -111,15 +111,12 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         if (!formData['projectScale[unit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.location = 'projectScale is required';
-        if (formData['projectScale[minimum]'] >= formData['projectScale[current]']) errors.location = 'current should be greater than minimum';
-        if (formData['projectScale[current]'] >= formData['projectScale[maximum]']) errors.location = 'maximum should be greater than current';
-         
-        // if (!formData.duration) errors.duration = 'Project scale is required';
-
+        if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.location = 'current should be greater than minimum';
+        if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.location = 'maximum should be greater than current';
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-
+console.log(validateRequiredFields())
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -132,10 +129,10 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value);
-        // if (name == "durationUnit" || name == "duration") {
-        //     UpdateFormData(prevState => ({ ...prevState, ["duration"]: (formData['duration'] + formData['durationUnit']) }));
-        // }
     };
 
 
@@ -292,17 +289,17 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                 </div>

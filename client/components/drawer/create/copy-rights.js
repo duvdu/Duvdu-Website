@@ -59,6 +59,9 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value);
     };
 

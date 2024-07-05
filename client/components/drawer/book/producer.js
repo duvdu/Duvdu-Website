@@ -82,6 +82,9 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value)
     };
 
@@ -112,13 +115,13 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episodes Number</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
                             </div>
                         </section>
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episode Duration</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
                             </div>
                         </section>
                     </div>
@@ -134,14 +137,14 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Profits</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
                     </div>

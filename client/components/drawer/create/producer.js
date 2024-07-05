@@ -62,6 +62,9 @@ const AddProducer = ({
     const handleInputChange = useCallback(
         (event) => {
             const { name, value } = event.target;
+            if (!isNaN(value)) {
+                value = Math.abs(Number(value));
+            }
             UpdateFormData(name, name === 'maxBudget' || name === 'minBudget' ? parseInt(value) : value);
         },
         [UpdateFormData]
@@ -166,14 +169,14 @@ const AddProducer = ({
                             <section className="w-full">
                                 <p className="capitalize opacity-60">Min Budget</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type='number' min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={"inputStyle1"} />
                                 </div>
                             </section>
 
                             <section className="w-full">
                                 <p className="capitalize opacity-60">Max Budget</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type='number' min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={"inputStyle1"} />
                                 </div>
                             </section>
                         </div>

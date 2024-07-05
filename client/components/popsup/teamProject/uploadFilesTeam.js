@@ -58,6 +58,9 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
     
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value)
     };
 
@@ -112,13 +115,13 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     <section>
                         <p className="capitalize opacity-60 mt-11">shooting days</p>
                         <div className='flex items-center justify-start gap-4'>
-                            <input type='number' min={0} onChange={handleInputChange} name='shootingDays' placeholder="Ex. 5 days" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                            <input type="number" min={0} onChange={handleInputChange} name='shootingDays' placeholder="Ex. 5 days" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                         </div>
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">budget</p>
                         <div className='flex items-center justify-start gap-4'>
-                            <input type='number' min={0} onChange={handleInputChange} name='budget' placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                            <input type="number" min={0} onChange={handleInputChange} name='budget' placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
 
                         </div>
                     </section>

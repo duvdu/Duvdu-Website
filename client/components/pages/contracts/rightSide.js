@@ -57,7 +57,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
         return <>
             {/* max-w-[370px] ahmed */}
-            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
+            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4' >
                 {/* dropdown */}
                 <div className="absolute right-6 hidden">
                     <Selector options={[
@@ -148,7 +148,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                         <Title title='history' />
                         <div className="min-w-80">
                             {
-                                data?.map((value, i) => (
+                                [...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,]?.map((value, i) => (
                                     <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
                                 ))
                             }

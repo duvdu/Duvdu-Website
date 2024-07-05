@@ -117,6 +117,9 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value);
     };
 
