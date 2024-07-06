@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
-var counter = 0
-const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true, inputclass }) => {
+
+const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true, inputclass, isreadOnly = false,className }) => {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [cameraPosition, setCameraPosition] = useState({ lat: 30.0444, lng: 31.2357 }); // Tahrir Square, Cairo
     const [address, setAddress] = useState('');
@@ -15,7 +15,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
     useEffect(() => {
         if (value?.lat) {
             setMarkerPosition({ lat: value.lat, lng: value.lng });
-        } else {
+        } else if (!isreadOnly) {
             if (setDefult) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -32,7 +32,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                 );
             }
         }
-    }, [value?.lat, setDefult]);
+    }, [value?.lat, setDefult, isreadOnly]);
 
     useEffect(() => {
         if (markerPosition) {
@@ -61,45 +61,49 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
     }, [markerPosition?.lat, google]);
 
     useEffect(() => {
-        const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
-            types: ['address'],
-        });
-        autocomplete.addListener('place_changed', () => {
-            const place = autocomplete.getPlace();
-            if (place.geometry) {
-                const newLocation = {
-                    lat: place.geometry.location.lat(),
-                    lng: place.geometry.location.lng(),
-                };
-                setMarkerPosition(newLocation);
-                setCameraPosition(newLocation);
-                if (onsetLocation) {
-                    onsetLocation(newLocation);
-                }
-                if (place.formatted_address) {
-                    const formattedAddress = place.formatted_address;
-                    setAddress(formattedAddress);
-                    if (onChangeAddress) {
-                        onChangeAddress({
-                            target: {
-                                name: 'address',
-                                value: formattedAddress,
-                            },
-                        });
+        if (!isreadOnly) {
+            const autocomplete = new google.maps.places.Autocomplete(inputRef.current, {
+                types: ['address'],
+            });
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace();
+                if (place.geometry) {
+                    const newLocation = {
+                        lat: place.geometry.location.lat(),
+                        lng: place.geometry.location.lng(),
+                    };
+                    setMarkerPosition(newLocation);
+                    setCameraPosition(newLocation);
+                    if (onsetLocation) {
+                        onsetLocation(newLocation);
+                    }
+                    if (place.formatted_address) {
+                        const formattedAddress = place.formatted_address;
+                        setAddress(formattedAddress);
+                        if (onChangeAddress) {
+                            onChangeAddress({
+                                target: {
+                                    name: 'address',
+                                    value: formattedAddress,
+                                },
+                            });
+                        }
                     }
                 }
-            }
-        });
-    }, [google, onsetLocation, onChangeAddress]);
+            });
+        }
+    }, [google, onsetLocation, onChangeAddress, isreadOnly]);
 
     const onMapClicked = (mapProps, map, clickEvent) => {
-        const lat = clickEvent.latLng.lat();
-        const lng = clickEvent.latLng.lng();
+        if (!isreadOnly) {
+            const lat = clickEvent.latLng.lat();
+            const lng = clickEvent.latLng.lng();
 
-        const newLocation = { lat, lng };
-        setMarkerPosition(newLocation);
-        if (onsetLocation) {
-            onsetLocation(newLocation);
+            const newLocation = { lat, lng };
+            setMarkerPosition(newLocation);
+            if (onsetLocation) {
+                onsetLocation(newLocation);
+            }
         }
     };
 
@@ -113,13 +117,17 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                 rows={2}
                 value={address}
                 onChange={(e) => {
-                    setAddress(e.target.value);
-                    if (onChangeAddress) {
-                        onChangeAddress(e);
+                    if (!isreadOnly) {
+                        setAddress(e.target.value);
+                        if (onChangeAddress) {
+                            onChangeAddress(e);
+                        }
                     }
                 }}
+                readOnly={isreadOnly}
             />
             <div className='h-2' />
+            <div className={`${className}`}>
             <Map
                 google={google}
                 zoom={17}
@@ -127,11 +135,12 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                 initialCenter={cameraPosition}
                 center={markerPosition}
                 onClick={onMapClicked}
-            >
+                >
                 {markerPosition && (
                     <Marker position={markerPosition} />
                 )}
             </Map>
+                </div>
         </>
     );
 };

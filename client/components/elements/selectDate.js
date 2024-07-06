@@ -88,7 +88,7 @@ const SelectDate = ({ onChange, value }) => {
                 </div>
             </div>
             {isExpanded ? (
-                <div className="grid grid-cols-7 gap-1">
+                <div className="grid grid-cols-7 gap-1 w-full">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
                         <div key={index} className="text-center font-medium text-[#8A96BC]">
                             {day}
@@ -98,7 +98,7 @@ const SelectDate = ({ onChange, value }) => {
                         date ? (
                             <div
                                 key={index}
-                                className={`border-[1.5px] border-[#F7F8F8] rounded-xl p-2 flex justify-center items-center aspect-square w-full cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
+                                className={`border-[1.5px] border-[#F7F8FF] rounded-xl p-2 flex justify-center items-center aspect-square w-full cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-sm text-[#263257]">

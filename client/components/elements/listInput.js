@@ -63,12 +63,12 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
             {children}
             {
                 list.length > 0 && !children &&
-                <div className="py-2 flex flex-wrap">
+                <div className="py-2 flex flex-wrap gap-3">
                     {list.map((value, index) => (
-                        <div key={index} className="opacity-60 border rounded-full px-3 py-1 flex gap-2 items-center justify-between">
-                            <span dangerouslySetInnerHTML={{ __html: value }} />
+                        <div key={index} className="border border-primary rounded-2xl px-1 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
+                            {value}
                             <div onClick={() => removeWord(index)} className='cursor-pointer'>
-                                <Icon name='remove' className="size-4 text-white bg-red rounded-full" />
+                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
                             </div>
                         </div>
                     ))}

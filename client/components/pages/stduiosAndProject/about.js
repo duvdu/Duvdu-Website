@@ -15,7 +15,7 @@ const About = ({ data }) => (
                     <h3 className="capitalize font-semibold text-lg">{data?.user.name}</h3>
                     <span className='flex items-center'>
                         <Icon className='opacity-50 mr-2 w-3' name='location-dot' />
-                        <span className="location">{data?.user.address || "NONE"}</span>
+                        <span className="location">{data?.user.address || "UNKNOWN"}</span>
                     </span>
                 </div>
             </div>

@@ -11,7 +11,6 @@ const RightSide = ({ getAllContracts_respond, user }) => {
     const IsImSp = () => {
         return sp?.username == user?.username
     }
-    console.log(getAllContracts_respond)
     const handleStatus = (status) => {
         switch (status) {
             case 'canceled':
@@ -111,7 +110,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                     <span className='text-[40px] flex items-center ml-3 gap-2'>
                         <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>$</span>
-                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.totalPrice}</span>
+                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.expectedProfits}</span>
                         </span>
                     </span>
                     <div className='h-auto w-[1px] bg-black opacity-15' />
@@ -148,7 +147,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                         <Title title='history' />
                         <div className="min-w-80">
                             {
-                                [...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,...data,]?.map((value, i) => (
+                                data?.map((value, i) => (
                                     <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
                                 ))
                             }

@@ -15,8 +15,8 @@ const convertDataFormat = (data) => {
     return {
         _id: data._id,
         img: data.user.profileImage || "/assets/imgs/profile/defultUser.jpg",
-        name: data.user.name || "NONE",
-        location: data.user.address || "NONE",
+        name: data.user.name || "UNKNOWN",
+        location: data.user.address || "UNKNOWN",
         rank: "----",
         projects: data.user.acceptedProjectsCounter || 0,
         rating: calculateRating(data.rate),

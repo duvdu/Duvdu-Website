@@ -18,19 +18,11 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
-  const [actionID, setActionID] = useState(null);
-  const [cardData, setCardData] = useState(initialCardData);
-  const loveIconName = cardData.isFavourite ? 'fas' : 'far'
-
-  useEffect(() => {
-    if (swapProjectToFav_respond && actionID == cardData._id) {
-      setCardData(prev => ({
-        ...prev,
-        isFavourite: !prev.isFavourite
-      }));
-      setActionID(null)
-    }
-  }, [swapProjectToFav_respond]);
+  const cardData = initialCardData;
+  let fav = cardData.isFavourite
+  if (cardData?._id == (swapProjectToFav_respond?.projectId || -1)) fav =  swapProjectToFav_respond.action == "add" 
+  
+  const loveIconName =  fav ? 'fas' : 'far'
 
   useEffect(() => {
     if (videoRef.current) {
@@ -44,8 +36,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }, [videoRef.current?.duration == NaN]);
 
   const loveToggleAction = () => {
-    setActionID(cardData._id)
-    SwapProjectToFav({ projectId: cardData._id, action: cardData.isFavourite ? "remove" : "add" })
+    SwapProjectToFav({ projectId: cardData._id, action: fav ? "remove" : "add" })
   };
 
   const timeUpdate = () => {

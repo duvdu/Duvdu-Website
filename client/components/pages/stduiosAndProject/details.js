@@ -74,8 +74,8 @@ const Details = ({ data }) => {
                 <section>
                     <span className="capitalize opacity-50">location</span>
                     <div className="capitalize mt-4">
-                        <section className="h-52 relative rounded-3xl overflow-hidden">
-                            <GoogleMap width={'100%'} value={{ 'lat': data.location.lat, 'lng': data.location.lng }} />
+                        <section>
+                            <GoogleMap width={'100%'} value={{ 'lat': data.location.lat, 'lng': data.location.lng }} isreadOnly={true} className={"relative rounded-3xl overflow-hidden h-[200px]"} height={200}/>
                         </section>
                     </div>
                 </section>

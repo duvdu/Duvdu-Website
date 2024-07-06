@@ -15,24 +15,15 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
     const { studio, project } = router.query;
     const projectId = studio || project;
     const [data, setData] = useState(initialData);
-    const [loveIconName, setLoveIconName] = useState(data?.isFavourite ? 'fas' : 'far');
     const online = data?.user?.isOnline;
+    
+    let fav = data?.isFavourite
+    if (data?._id == (swapProjectToFav_respond?.projectId || -1)) fav = swapProjectToFav_respond.action == "add"
+    const loveIconName = fav ? 'fas' : 'far'
 
-    useEffect(() => {
-        setLoveIconName(data?.isFavourite ? 'fas' : 'far');
-    }, [data?.isFavourite]);
-
-    useEffect(() => {
-        if (swapProjectToFav_respond?.projectId == projectId) {
-            setData(prevData => ({
-                ...prevData,
-                isFavourite: !prevData?.isFavourite
-            }));
-        }
-    }, [swapProjectToFav_respond?.projectId]);
     const handleLoveIconClick = () => {
         if (data?._id)
-            SwapProjectToFav({ projectId: data?._id, action: data?.isFavourite ? "remove" : "add" });
+            SwapProjectToFav({ projectId: data?._id, action: fav ? "remove" : "add" });
     };
 
     const handleOpenChat = () => {

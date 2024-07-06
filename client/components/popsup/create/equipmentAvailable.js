@@ -7,11 +7,11 @@ import { ClosePopUp } from '../../../util/util';
 function EquipmentAvailable({ onSubmit }) {
     const [formData, setFormData] = useState({
         name: '',
-        fees: ''
+        unitPrice: ''
     });
     const [error, setError] = useState({
         name: '',
-        fees: ''
+        unitPrice: ''
     });
 
     // Handler to manage input changes for any field
@@ -24,7 +24,7 @@ function EquipmentAvailable({ onSubmit }) {
         // Reset errors
         setError({  
             name: '',
-            fees: ''
+            unitPrice: ''
         });
 
         // Check for errors
@@ -33,8 +33,8 @@ function EquipmentAvailable({ onSubmit }) {
             setError(prev => ({ ...prev, name: 'Equipment name is required.' }));
             hasError = true;
         }
-        if (!formData.fees) {
-            setError(prev => ({ ...prev, fees: 'Fees is required.' }));
+        if (!formData.unitPrice) {
+            setError(prev => ({ ...prev, unitPrice: 'Fees is required.' }));
             hasError = true;
         }
         if (hasError) return;
@@ -43,7 +43,7 @@ function EquipmentAvailable({ onSubmit }) {
         // Clear the form
         setFormData({
             name: '',
-            fees: ''
+            unitPrice: ''
         });
 
         if(onSubmit){
@@ -55,11 +55,11 @@ function EquipmentAvailable({ onSubmit }) {
     const handleCancel = () => {
         setFormData({
             name: '',
-            fees: ''
+            unitPrice: ''
         });
         setError({
             name: '',
-            fees: ''
+            unitPrice: ''
         });
     };
 
@@ -76,11 +76,11 @@ function EquipmentAvailable({ onSubmit }) {
                             sendValue={formData.name}
                         />
                         <InputFeid
-                            placeholder={"fees"}
-                            name="fees"
-                            onChange={(value) => { handleInputChange('fees', value) }}
-                            errerMsg={error.fees}
-                            sendValue={formData.fees}
+                            placeholder={"unitPrice"}
+                            name="unitPrice"
+                            onChange={(value) => { handleInputChange('unitPrice', value) }}
+                            errerMsg={error.unitPrice}
+                            sendValue={formData.unitPrice}
                         />
                     </div>
                     <AppButton  onClick={handleClick} className={'w-full'}>

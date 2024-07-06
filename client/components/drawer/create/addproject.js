@@ -36,7 +36,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
             : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
                 ? ['minutes', 'hours']
                 : []);
-                
+
     useEffect(() => {
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
@@ -82,14 +82,14 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (formData.tools) {
             formData.tools.forEach((item, index) => {
                 data.append(`tools[${index}][name]`, item.name);
-                data.append(`tools[${index}][unitPrice]`, item.fees);
+                data.append(`tools[${index}][unitPrice]`, item.unitPrice);
             });
         }
 
         if (formData.functions) {
             formData.functions.forEach((item, index) => {
                 data.append(`functions[${index}][name]`, item.name);
-                data.append(`functions[${index}][unitPrice]`, item.fees);
+                data.append(`functions[${index}][unitPrice]`, item.unitPrice);
             });
         }
         return data;
@@ -116,7 +116,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-console.log(validateRequiredFields())
+    console.log(validateRequiredFields())
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -176,7 +176,7 @@ console.log(validateRequiredFields())
     }
 
 
-    // console.log(categoryDetails)
+    console.log(formData.creatives)
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
@@ -218,7 +218,13 @@ console.log(validateRequiredFields())
                                     placeholder={'tools used'}
                                     target="AddToolUsed"
                                     name={"tools"}
-                                    listdiv={formData.tools && formData.tools.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    listdiv={formData.tools && formData.tools.map((e, i) => (
+                                        <span className='mx-2' key={i}>
+                                            <span><strong>tool : </strong> {e.name} </span>
+                                            <br />
+                                            <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                        </span>
+                                    ))}
                                     remove={(value) => removeFromArray('tools', value)}
                                     enable={false}
                                 />
@@ -228,7 +234,13 @@ console.log(validateRequiredFields())
                                     placeholder={'Functions used'}
                                     target="Addfunctions"
                                     name={"functions"}
-                                    listdiv={formData.functions && formData.functions.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    listdiv={formData.functions && formData.functions.map((e, i) =>
+                                        <span className='mx-2' key={i}>
+                                            <span><strong>function : </strong> {e.name} </span>
+                                            <br />
+                                            <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                        </span>
+                                    )}
                                     remove={(value) => removeFromArray('functions', value)}
                                     enable={false}
                                 />
@@ -238,7 +250,14 @@ console.log(validateRequiredFields())
                                     placeholder={'tag creatives'}
                                     target="addOtherCreatives"
                                     name={"creatives"}
-                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/> `))}
+                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (
+                                        <a href={`/creative/${e.username}`} target="_blank" rel="noopener noreferrer">
+                                            <div className="flex gap-2 items-center">
+                                                <img className="size-6 rounded-full" src={e.profileImage} alt={`${e.name}'s profile image`} />
+                                                {e.name}
+                                            </div>
+                                        </a>
+                                    ))}
                                     remove={(value) => removeFromArray('creatives', value)}
                                     enable={false}
                                 />
@@ -249,7 +268,7 @@ console.log(validateRequiredFields())
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span> Set location </span>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)}  onChangeAddress={handleInputChange}/>
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                             </section>
 
                             <section className="flex flex-col gap-8">

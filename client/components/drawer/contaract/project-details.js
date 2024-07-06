@@ -12,8 +12,26 @@ import { payment } from '../../../redux/action/apis/contracts/pay';
 import SelectDate from '../../elements/selectDate';
 import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
 import CountdownTimer from '../../elements/CounterDownTimer';
+import FunctionUsed from '../../popsup/create/FunctionsUsed';
+import AddToolUsed from '../../popsup/create/addToolUsed';
+import ListInput from '../../elements/listInput';
+import CustomSlider from '../../elements/customSlider';
+import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
-function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractData, user, takeAction, takeAction_respond, payment, payment_respond }) {
+function ReceiveProjectFiles({
+    getAllContracts,
+    contractDetails,
+    toggleContractData,
+    takeAction,
+    takeAction_respond,
+    payment,
+    payment_respond,
+    addprojectState,
+    UpdateFormData,
+    InsertToArray,
+    resetForm,
+    user }) {
+    const formData = addprojectState?.formData
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
     const sp = contractDetails?.sp;
@@ -27,15 +45,23 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
     const [totalPrice, setTotalPrice] = useState(null);
     const [deadline, setDeadline] = useState(null);
 
-
-    const handleInputChange = (e) => {
+    const handleNormalInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'details') {
             setDetails(value);
-        } else if (name === 'totalPrice') {
+        }
+        else if (name === 'totalPrice') {
             setTotalPrice(value);
         }
     };
+    const handleInputChange = (e) => {
+        const { name, value } = event.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
+        UpdateFormData(name, value)
+    };
+
     // const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
 
     const IsImSp = () => {
@@ -85,6 +111,11 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
     }, [takeAction_respond]);
 
     useEffect(() => {
+        UpdateFormData("functions", contract?.functions)
+        UpdateFormData("tools", contract?.tools)
+    }, [contract?.tools, contract?.functions]);
+
+    useEffect(() => {
         if (payment_respond) {
             getAllContracts()
             setPaymentSuccess(true)
@@ -117,7 +148,6 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
                 const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
                 days > 0 ? setTimeLeft(`${days}d ${hours}h ${minutes}m`) : setTimeLeft(`${hours}:${minutes < 10 ? "0" : ""}${minutes}`);
-
             }
         }, 1000);
 
@@ -141,6 +171,23 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
         if (totalPrice) data.totalPrice = totalPrice;
         if (deadline) data.deadline = deadline;
 
+        if (formData['numberOfUnits']) data['projectScale.numberOfUnits'] = formData['numberOfUnits'];
+        if (formData['tools'] || formData['functions']) data['equipment'] = {}
+        if (formData['tools']) {
+            data['equipment']['tools'] = formData['tools'].map((value) => ({
+              units: value.unitPrice,
+              id: value._id
+            }));
+          }
+          if (formData['functions']) {
+            data['equipment']['functions'] = formData['functions'].map((value) => ({
+              units: value.unitPrice,
+              id: value._id
+            }));
+          }
+        if (formData['duration']) data.duration = formData['duration'];
+        if (formData['unitPrice']) data.unitPrice = formData['unitPrice'];
+
         takeAction({ id: contract._id, data: data, type: type, isUpdate: true })
     };
 
@@ -163,6 +210,13 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
         setDeadline(null)
         takeAction({ id: -1 })      // for remove respond state
         payment({ id: -1 })         // for remove respond state
+        resetForm()
+    };
+
+    const removeFromArray = (arrayName, index) => {
+        const newArray = [...formData[arrayName]];
+        newArray.splice(index, 1);
+        UpdateFormData(arrayName, newArray);
     };
     // console.log(takeAction_respond)
     // console.log(contractDetails)
@@ -170,7 +224,6 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
     // console.log(customer)
     // console.log(sp)
     // console.log("=============")
-
 
 
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
@@ -181,22 +234,35 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
             status === "pending" &&
             appointmentDate &&
             appointmentDate !== contract?.appointmentDate) ||
-        (getType() === "copyrights" || getType() === "project" &&
+        (getType() === "copyrights" &&
             !IsImSp() &&
             status === "update-after-first-Payment" &&
             (
                 details && details !== contract?.details ||
                 totalPrice && totalPrice !== contract?.totalPrice ||
                 (deadline && deadline !== contract?.deadline && new Date(deadline) > new Date(contract.deadline))
+            )) ||
+        (getType() === "project" &&
+            IsImSp() &&
+            status === "update-after-first-Payment" &&
+            (
+                formData['numberOfUnits'] ||
+                formData['tools'] ||
+                formData['functions'] ||
+                formData['duration'] ||
+                formData['unitPrice']
             ))
+
+
 
 
     return (
         <>
+            <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
+            <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="" />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
             <Drawer isOpen={!!contractDetails} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
-
                 {
                     contract &&
                     <>
@@ -263,11 +329,11 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
                                     </section>}
                                 <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
                                     <div className='w-full'>
-                                        
-                                            <div className='w-full'>
-                                                <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
-                                                {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN" }
-                                            </div>
+
+                                        <div className='w-full'>
+                                            <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
+                                            {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
+                                        </div>
                                         <div className='w-full mt-5'>
                                             <h2 className='opacity-60 capitalize mb-3'> Address </h2>
                                             <div className='flex gap-4'>
@@ -327,22 +393,27 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
                                 status == "pending" &&
                                 getType() == "producer" &&
                                 IsImSp() &&
-                                <section className="my-11 w-full">
-                                    <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
-                                    <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
-                                </section>
+                                <>
+                                    <h2 className='my-5 text-xl font-bold'> You Can Update some Details </h2>
+                                    <section className="my-11 w-full">
+                                        <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
+                                        <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
+                                    </section>
+                                </>
                             }
                             {
                                 status == "update-after-first-Payment" &&
-                                (getType() == "copyrights" || getType() === "project") &&
-                                !IsImSp() &&
+                                getType() == "copyrights" &&
+                                IsImSp() &&
                                 <>
-                                    <section className='w-full '>
+                                    <h2 className='my-5 text-xl font-bold'> You Can Update some Details </h2>
+
+                                    <section className='w-full mt-4'>
                                         <h3 className="capitalize opacity-60">job details</h3>
                                         <textarea
                                             name="details"
                                             value={details || contract.details}
-                                            onChange={handleInputChange}
+                                            onChange={handleNormalInputChange}
                                             placeholder="requirements, conditions At least 6 char"
                                             className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
                                         />
@@ -362,10 +433,71 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
                                             type='text'
                                             name='totalPrice'
                                             value={totalPrice || contract.totalPrice}
+                                            onChange={handleNormalInputChange}
+                                            className="edit app-field"
+                                        />
+                                    </div>
+                                </>
+
+                            }
+                            {
+                                status == "update-after-first-Payment" &&
+                                getType() === "project" && IsImSp() &&
+                                <>
+                                    <h2 className='my-5 text-xl font-bold'> You Can Update some Details </h2>
+                                    <section className='mb-4'>
+                                        <h3 className="capitalize opacity-60 mb-4">duration</h3>
+                                        <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
+                                    </section>
+                                    <div className='mb-4 w-full'>
+                                        <h3 className="capitalize opacity-60 mb-4">unit Price</h3>
+                                        <input
+                                            placeholder='unit price'
+                                            type='text'
+                                            name='unitPrice'
+                                            value={formData["unitPrice"] || contract.projectScale.unitPrice}
                                             onChange={handleInputChange}
                                             className="edit app-field"
                                         />
                                     </div>
+                                    <section className='mb-4'>
+                                        <h3 className="capitalize opacity-60 mb-4">number Of Units</h3>
+                                        <input placeholder='number Of Units' type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
+                                    </section>
+
+                                    <section>
+                                        <ListInput
+                                            placeholder={'tools used'}
+                                            target="AddToolUsed"
+                                            name={"tools"}
+                                            listdiv={formData?.tools?.map((e, i) => (
+                                                <span className='mx-2' key={i}>
+                                                    <span><strong>tool : </strong> {e.name} </span>
+                                                    <br />
+                                                    <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                                </span>
+
+                                            ))}
+                                            remove={(value) => removeFromArray('tools', value)}
+                                            enable={false}
+                                        />
+                                    </section>
+                                    <section>
+                                        <ListInput
+                                            placeholder={'Functions used'}
+                                            target="Addfunctions"
+                                            name={"functions"}
+                                            listdiv={formData?.functions?.map((e, i) => (
+                                                <span className='mx-2' key={i}>
+                                                    <span><strong>function : </strong> {e.name} </span>
+                                                    <br />
+                                                    <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                                </span>
+                                            ))}
+                                            remove={(value) => removeFromArray('functions', value)}
+                                            enable={false}
+                                        />
+                                    </section>
                                 </>
 
                             }
@@ -434,8 +566,6 @@ function ReceiveProjectFiles({ getAllContracts, contractDetails, toggleContractD
                                         Cancel
                                     </button>
                                 }
-
-
                             </section>
                         </div>
                     </>
@@ -451,6 +581,7 @@ const mapStateToProps = (state) => ({
     contractDetails: state.ContractDetails,
     takeAction_respond: state.api.takeAction,
     payment_respond: state.api.payment,
+    addprojectState: state.addproject,
 
 });
 
@@ -458,7 +589,10 @@ const mapDispatchToProps = {
     toggleContractData,
     takeAction,
     getAllContracts,
-    payment
+    payment,
+    UpdateFormData,
+    InsertToArray,
+    resetForm
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReceiveProjectFiles);

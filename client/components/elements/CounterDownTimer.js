@@ -36,7 +36,7 @@ const CountdownTimer = ({ time }) => {
   const hours = Math.floor(timeRemaining / 3600);
   const minutes = Math.floor((timeRemaining % 3600) / 60);
   const seconds = timeRemaining % 60;
-  console.log(hours)
+  
   return (
     (hours <=0 && minutes <= 0 && seconds <=0 )?
     <span className='font-semibold capitalize mt-3'>{`Time Expire`}</span>:

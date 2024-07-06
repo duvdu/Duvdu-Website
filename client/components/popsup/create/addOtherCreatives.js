@@ -82,10 +82,12 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
     };
 
     const handleCreativeSelect = (selectedCreative) => {
+        console.log(selectedCreative)
         setFormData(prev => ({
             ...prev,
             name: selectedCreative.name,
-            _id: selectedCreative._id // Assuming the creative object has an _id field
+            profileImage: selectedCreative.profileImage,
+            username: selectedCreative.username
         }));
         setCreatives([])
     };
