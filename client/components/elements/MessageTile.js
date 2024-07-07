@@ -7,7 +7,7 @@ function MessageTile({ GetAllMessageInChat, message, user }) {
     const unreadedcount = message.unreadMessageCount;
     // Start from the last element and move backwards
     function checkIsMe(writer) {
-        return writer._id == user._id
+        return writer.username == user.username
     }
 
     function getotherdata() {

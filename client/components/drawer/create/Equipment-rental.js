@@ -62,14 +62,14 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
         if (formData.equipments)
             formData.equipments.forEach((equipment, index) => {
                 data.append(`equipments[${index}][name]`, equipment.name);
-                data.append(`equipments[${index}][fees]`, equipment.fees);
+                data.append(`equipments[${index}][unitPrice]`, equipment.unitPrice);
             });
 
         // Append creatives
         if (formData.creatives)
             formData.creatives.forEach((creative, index) => {
                 data.append(`creatives[${index}][creative]`, creative._id);
-                data.append(`creatives[${index}][fees]`, creative.fees);
+                data.append(`creatives[${index}][unitPrice]`, creative.unitPrice);
             });
 
         if (formData.cover) {
@@ -117,6 +117,9 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value);
     };
 
@@ -207,7 +210,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                     placeholder={'equipment available'}
                                     target="EquipmentAvailable"
                                     name={"EquipmentsUsed"}
-                                    listdiv={formData.equipments && formData.equipments.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    listdiv={formData.equipments && formData.equipments.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>unitPrice : </strong> ${e.unitPrice} </span>`))}
                                     remove={(value) => removeFromArray('equipments', value)}
                                     enable={false}
                                 />

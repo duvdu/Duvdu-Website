@@ -18,7 +18,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
             <h3 className='opacity-80 text-lg font-bold text-start'>{cardData?.user?.name || "Unknown User"}</h3>
             <span className='flex items-center justify-start opacity-40'>
               <Icon className='opacity-50 mr-1 w-3' name='location-dot' />
-              <span className="location">{cardData?.address || "NONE"}</span>
+              <span className="location">{cardData?.address || "UNKNOWN"}</span>
             </span>
           </div>
         </div>

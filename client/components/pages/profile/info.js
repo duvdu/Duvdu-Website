@@ -24,8 +24,10 @@ function Info({
             </div>
             <div className='flex-1 flex-col gap-1'>
                 <span className='text-3xl font-bold capitalize'>{personalName}</span>
-                <span className='flex items-center'>
-                    <Icon className='opacity-50 mr-2 w-3' name='location-dot' />
+                <span className='flex items-start'>
+                    <div>
+                        <Icon className='opacity-50 mr-2 size-4 mt-1' name='location-dot' />
+                    </div>
                     <span className="opacity-50 capitalize text-lg">{location}</span>
                 </span>
             </div>

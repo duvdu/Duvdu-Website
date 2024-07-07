@@ -13,6 +13,7 @@ import { setFollow } from "../../../redux/action/apis/auth/profile/setFollow";
 import { setUnFollow } from "../../../redux/action/apis/auth/profile/setUnFollow";
 import Followers from "../../popsup/followes";
 import { GetUserProject } from "../../../redux/action/apis/auth/profile/getUserProjects";
+import EmptyComponent from "../contracts/emptyComponent";
 
 function OtherProfile({
     user,
@@ -142,7 +143,8 @@ function OtherProfile({
                 <div className='right-side'>
                     {
                         projects?.length == 0 &&
-                        <h3>No User Found </h3>
+                        <EmptyComponent message="No Projects Yet!" />
+
                     }
 
                     <Projects projects={projects} />

@@ -36,7 +36,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
             : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
                 ? ['minutes', 'hours']
                 : []);
-                
+
     useEffect(() => {
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
@@ -82,14 +82,14 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (formData.tools) {
             formData.tools.forEach((item, index) => {
                 data.append(`tools[${index}][name]`, item.name);
-                data.append(`tools[${index}][unitPrice]`, item.fees);
+                data.append(`tools[${index}][unitPrice]`, item.unitPrice);
             });
         }
 
         if (formData.functions) {
             formData.functions.forEach((item, index) => {
                 data.append(`functions[${index}][name]`, item.name);
-                data.append(`functions[${index}][unitPrice]`, item.fees);
+                data.append(`functions[${index}][unitPrice]`, item.unitPrice);
             });
         }
         return data;
@@ -111,15 +111,12 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         if (!formData['projectScale[unit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.location = 'projectScale is required';
-        if (formData['projectScale[minimum]'] >= formData['projectScale[current]']) errors.location = 'current should be greater than minimum';
-        if (formData['projectScale[current]'] >= formData['projectScale[maximum]']) errors.location = 'maximum should be greater than current';
-         
-        // if (!formData.duration) errors.duration = 'Project scale is required';
-
+        if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.location = 'current should be greater than minimum';
+        if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.location = 'maximum should be greater than current';
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-
+    console.log(validateRequiredFields())
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -132,10 +129,10 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value);
-        // if (name == "durationUnit" || name == "duration") {
-        //     UpdateFormData(prevState => ({ ...prevState, ["duration"]: (formData['duration'] + formData['durationUnit']) }));
-        // }
     };
 
 
@@ -179,7 +176,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     }
 
 
-    // console.log(categoryDetails)
+    console.log(formData.creatives)
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
@@ -221,7 +218,13 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     placeholder={'tools used'}
                                     target="AddToolUsed"
                                     name={"tools"}
-                                    listdiv={formData.tools && formData.tools.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    listdiv={formData.tools && formData.tools.map((e, i) => (
+                                        <span className='mx-2' key={i}>
+                                            <span><strong>tool : </strong> {e.name} </span>
+                                            <br />
+                                            <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                        </span>
+                                    ))}
                                     remove={(value) => removeFromArray('tools', value)}
                                     enable={false}
                                 />
@@ -231,7 +234,13 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     placeholder={'Functions used'}
                                     target="Addfunctions"
                                     name={"functions"}
-                                    listdiv={formData.functions && formData.functions.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    listdiv={formData.functions && formData.functions.map((e, i) =>
+                                        <span className='mx-2' key={i}>
+                                            <span><strong>function : </strong> {e.name} </span>
+                                            <br />
+                                            <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                        </span>
+                                    )}
                                     remove={(value) => removeFromArray('functions', value)}
                                     enable={false}
                                 />
@@ -241,7 +250,14 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     placeholder={'tag creatives'}
                                     target="addOtherCreatives"
                                     name={"creatives"}
-                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (`<span> <strong>name : </strong> ${e.name} </span> <br/> `))}
+                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (
+                                        <a href={`/creative/${e.username}`} target="_blank" rel="noopener noreferrer">
+                                            <div className="flex gap-2 items-center">
+                                                <img className="size-6 rounded-full" src={e.profileImage} alt={`${e.name}'s profile image`} />
+                                                {e.name}
+                                            </div>
+                                        </a>
+                                    ))}
                                     remove={(value) => removeFromArray('creatives', value)}
                                     enable={false}
                                 />
@@ -252,7 +268,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span> Set location </span>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)}  onChangeAddress={handleInputChange}/>
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                             </section>
 
                             <section className="flex flex-col gap-8">
@@ -292,17 +308,17 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                 </div>

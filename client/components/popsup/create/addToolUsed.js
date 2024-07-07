@@ -7,10 +7,10 @@ import { ClosePopUp } from '../../../util/util';
 
 function AddToolUsed({ onSubmit }) {
     const [name, setname] = useState('');
-    const [fees, setFees] = useState('');
-    const [error, setError] = useState({ name: '', fees: '' });
+    const [unitPrice, setFees] = useState('');
+    const [error, setError] = useState({ name: '', unitPrice: '' });
     
-    // Handle changes to the tool name and fees inputs
+    // Handle changes to the tool name and unitPrice inputs
     const handlenameChange = (value) => {
         setname(value);
     };
@@ -22,24 +22,24 @@ function AddToolUsed({ onSubmit }) {
     const onCancel = () => {
         setname('');
         setFees('');
-        setError({ name: '', fees: '' });
+        setError({ name: '', unitPrice: '' });
     }
     const onclick = () => {
-        setError({ name: '', fees: '' });
-        if (!name || !fees) {
+        setError({ name: '', unitPrice: '' });
+        if (!name || !unitPrice) {
             if (!name) {
                 setError(prev => ({ ...prev, name: 'Tool name is required.' }));
             }
-            if (!fees) {
-                setError(prev => ({ ...prev, fees: 'Fees is required.' }));
+            if (!unitPrice) {
+                setError(prev => ({ ...prev, unitPrice: 'Fees is required.' }));
             }
             return
         }
-        onSubmit({ name, fees });
+        onSubmit({ name, unitPrice });
         ClosePopUp("AddToolUsed")
         setname('');
         setFees('');
-        setError({ name: '', fees: '' });
+        setError({ name: '', unitPrice: '' });
     };
 
     return (
@@ -48,7 +48,7 @@ function AddToolUsed({ onSubmit }) {
                 <div className='flex flex-col justify-between h-full'>
                     <div className='flex flex-col gap-2'>
                         <InputFeid placeholder={"tool name..."} onChange={handlenameChange} errerMsg={error.name} sendValue={name}/>
-                        <InputFeid placeholder={"fees"} onChange={handleFeesChange} errerMsg={error.fees } sendValue={fees}/>
+                        <InputFeid type='number' placeholder={"unitPrice"} onChange={handleFeesChange} errerMsg={error.unitPrice } sendValue={unitPrice}/>
                     </div>
                     <div  onClick={onclick}>
                         <AppButton className={'w-full'}>

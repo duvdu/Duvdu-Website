@@ -2,7 +2,7 @@ import Comment from "../../elements/comment";
 
 const Reviews = ({ data }) => (
     <>
-        <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">Reviews</h2>
+        <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4 hidden">Reviews</h2>
         <div className='flex flex-col gap-4'>
             <div className='flex flex-col gap-4'>
 

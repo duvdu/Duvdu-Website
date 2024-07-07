@@ -6,8 +6,8 @@ import { ClosePopUp } from '../../../util/util';
 
 function FunctionUsed({ onSubmit }) {
     const [name, setName] = useState('');
-    const [fees, setFees] = useState('');
-    const [error, setError] = useState({ name: '', fees: '' });
+    const [unitPrice, setFees] = useState('');
+    const [error, setError] = useState({ name: '', unitPrice: '' });
     
     // Handle changes to the function name and tool price per unit inputs
     const handleNameChange = (value) => {
@@ -21,25 +21,25 @@ function FunctionUsed({ onSubmit }) {
     const onCancel = () => {
         setName('');
         setFees('');
-        setError({ name: '', fees: '' });
+        setError({ name: '', unitPrice: '' });
     }
 
     const onClick = () => {
-        setError({ name: '', fees: '' });
-        if (!name || !fees) {
+        setError({ name: '', unitPrice: '' });
+        if (!name || !unitPrice) {
             if (!name) {
                 setError(prev => ({ ...prev, name: 'Function name is required.' }));
             }
-            if (!fees) {
-                setError(prev => ({ ...prev, fees: 'Tool price per unit is required.' }));
+            if (!unitPrice) {
+                setError(prev => ({ ...prev, unitPrice: 'Tool price per unit is required.' }));
             }
             return;
         }
-        onSubmit({ name, fees });
+        onSubmit({ name, unitPrice });
         ClosePopUp("Addfunctions");
         setName('');
         setFees('');
-        setError({ name: '', fees: '' });
+        setError({ name: '', unitPrice: '' });
     };
 
     return (
@@ -48,7 +48,7 @@ function FunctionUsed({ onSubmit }) {
                 <div className='flex flex-col justify-between h-full'>
                     <div className='flex flex-col gap-2'>
                         <InputFeid placeholder={"Function name..."} onChange={handleNameChange} errerMsg={error.name} sendValue={name} />
-                        <InputFeid placeholder={"Tool price per unit"} onChange={handleFeesChange} errerMsg={error.fees} sendValue={fees} />
+                        <InputFeid type='number' placeholder={"Tool price per unit"} onChange={handleFeesChange} errerMsg={error.unitPrice} sendValue={unitPrice} />
                     </div>
                     <div onClick={onClick}>
                         <AppButton className={'w-full'}>

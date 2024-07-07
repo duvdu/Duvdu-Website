@@ -63,9 +63,7 @@ function AddToSaved({
                                 </div>
                             </div>
                             {board.projects.length == 0 ?
-                                <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
-                                    <Icon className="w-44" name={'dvudu-image'} />
-                                </div> : <img className="absolute -translate-y-1/2 blur-sm" src={board.projects[0].project.cover} />}
+                                <div/> : <img className="absolute -translate-y-1/2 blur-sm" src={board.projects[0].project.cover} />}
                         </div>
                     ) : <></>
                     )}

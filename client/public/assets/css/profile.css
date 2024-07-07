@@ -151,20 +151,6 @@
     text-transform: capitalize;
 }
 
-.v-divider {
-    width: 1px;
-    height: 40px;
-    opacity: 0.1;
-    background: var(--black);
-    margin: 0 10px;
-}
-
-.h-divider {
-    height: 1px;
-    opacity: 0.1;
-    background: var(--black);
-
-}
 
 .popularity {
     display: flex;

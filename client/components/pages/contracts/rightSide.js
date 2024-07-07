@@ -11,7 +11,6 @@ const RightSide = ({ getAllContracts_respond, user }) => {
     const IsImSp = () => {
         return sp?.username == user?.username
     }
-    console.log(getAllContracts_respond)
     const handleStatus = (status) => {
         switch (status) {
             case 'canceled':
@@ -57,7 +56,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
         return <>
             {/* max-w-[370px] ahmed */}
-            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
+            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4' >
                 {/* dropdown */}
                 <div className="absolute right-6 hidden">
                     <Selector options={[
@@ -111,7 +110,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                     <span className='text-[40px] flex items-center ml-3 gap-2'>
                         <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>$</span>
-                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.totalPrice}</span>
+                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.expectedProfits}</span>
                         </span>
                     </span>
                     <div className='h-auto w-[1px] bg-black opacity-15' />
