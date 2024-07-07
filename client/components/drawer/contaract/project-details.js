@@ -45,24 +45,9 @@ function ReceiveProjectFiles({
     const [totalPrice, setTotalPrice] = useState(null);
     const [deadline, setDeadline] = useState(null);
 
-    const handleNormalInputChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'details') {
-            setDetails(value);
-        }
-        else if (name === 'totalPrice') {
-            setTotalPrice(value);
-        }
-    };
-    const handleInputChange = (e) => {
-        const { name, value } = event.target;
-        if (!isNaN(value)) {
-            value = Math.abs(Number(value));
-        }
-        UpdateFormData(name, value)
-    };
 
-    // const [chnagedappointmentDate, setChnagedAppointmentDate] = useState(null);
+    const [canEdit, setCanEdit] = useState(null);
+
 
     const IsImSp = () => {
         return sp?.username == user?.username
@@ -102,6 +87,45 @@ function ReceiveProjectFiles({
                 return "Unknown"; // Handle unknown cases as needed
         }
     }
+
+    const handleNormalInputChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'details') {
+            setDetails(value);
+        }
+        else if (name === 'totalPrice') {
+            setTotalPrice(value);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (!isNaN(value)) {
+            value = Math.abs(Number(value));
+        }
+        UpdateFormData(name, value)
+    };
+    const handleToolChange = (e, index) => {
+        let value = e.target.value;
+        if (!isNaN(value)) {
+          value = Math.abs(Number(value));
+        }
+        const tools = [...formData.tools];
+        tools[index]['unitPrice'] = value;
+        UpdateFormData("tools", tools);
+    };
+        
+    const handleFunctionChange = (e, index) => {
+        let value = e.target.value;
+        if (!isNaN(value)) {
+          value = Math.abs(Number(value));
+        }
+        const tools = [...formData.functions];
+        tools[index]['unitPrice'] = value;
+        UpdateFormData("functions", tools);
+      };
+      
+    console.log(formData)
 
     useEffect(() => {
         if (takeAction_respond) {
@@ -175,16 +199,16 @@ function ReceiveProjectFiles({
         if (formData['tools'] || formData['functions']) data['equipment'] = {}
         if (formData['tools']) {
             data['equipment']['tools'] = formData['tools'].map((value) => ({
-              units: value.unitPrice,
-              id: value._id
+                units: value.unitPrice,
+                id: value._id
             }));
-          }
-          if (formData['functions']) {
+        }
+        if (formData['functions']) {
             data['equipment']['functions'] = formData['functions'].map((value) => ({
-              units: value.unitPrice,
-              id: value._id
+                units: value.unitPrice,
+                id: value._id
             }));
-          }
+        }
         if (formData['duration']) data.duration = formData['duration'];
         if (formData['unitPrice']) data.unitPrice = formData['unitPrice'];
 
@@ -201,6 +225,11 @@ function ReceiveProjectFiles({
         takeAction({ id: contract._id, data: false, type: type })
     };
     const toggleDrawer = () => {
+        if (canEdit) {
+            setCanEdit(false)
+            return
+        }
+
         toggleContractData(null)
         setActionSuccess(false)
         setPaymentSuccess(false)
@@ -255,7 +284,6 @@ function ReceiveProjectFiles({
 
 
 
-
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -267,7 +295,7 @@ function ReceiveProjectFiles({
                     contract &&
                     <>
                         <div className='flex flex-col justify-between h-drawer'>
-                            <div className='flex flex-col justify-start items-center px-0 gap-6 mt-10'>
+                            <div className={`flex flex-col justify-start items-center px-0 gap-6 mt-10 ${canEdit ? 'hidden' : ''}`}>
                                 <section>
                                     <span className='text-4xl my-5'>{uiStatus()}
                                         {status == "pending" &&
@@ -296,14 +324,15 @@ function ReceiveProjectFiles({
                                         {contract.details}
                                     </span>
                                 </section>
-                                {contractDetails.ref &&
+                                {
+                                    contractDetails.ref &&
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize mb-3'> service type </h2>
                                         <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
                                             {getType()}
                                         </span>
-                                    </section>}
-
+                                    </section>
+                                }
                                 {
                                     contract.details &&
                                     <section className='w-full'>
@@ -313,7 +342,8 @@ function ReceiveProjectFiles({
                                         </p>
                                     </section>
                                 }
-                                {contract.attachments.length > 0 &&
+                                {
+                                    contract.attachments.length > 0 &&
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize'> alike media </h2>
                                         {contract.attachments.map((attachment, index) =>
@@ -326,7 +356,8 @@ function ReceiveProjectFiles({
                                                 </div>
                                             </div>
                                         )}
-                                    </section>}
+                                    </section>
+                                }
                                 <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
                                     <div className='w-full'>
 
@@ -388,190 +419,210 @@ function ReceiveProjectFiles({
                                     </div>
                                 </section>
                             </div>
-
-                            {
-                                status == "pending" &&
-                                getType() == "producer" &&
-                                IsImSp() &&
-                                <>
-                                    <h2 className='my-5 text-xl font-bold'> You Can Update some Details </h2>
-                                    <section className="my-11 w-full">
-                                        <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
-                                        <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
-                                    </section>
-                                </>
+                            <div className={'flex mx-5 gap-7 mb-10 mt-16 justify-center' + (canEdit ? ' hidden' : '')}>
+                                {
+                                    (
+                                        (status == "pending" && getType() == "producer" && IsImSp()) ||
+                                        (status == "update-after-first-Payment" && getType() == "copyrights" && IsImSp()) ||
+                                        (status == "update-after-first-Payment" && getType() === "project" && IsImSp())
+                                    ) &&
+                                    < Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={() => setCanEdit(true)}>
+                                        <span className='text-white font-bold capitalize text-lg'>
+                                            Edit some Details
+                                        </span>
+                                    </Button>
+                                }
+                            </div>
+                            {canEdit &&
+                                <div>
+                                    {
+                                        status == "pending" &&
+                                        getType() == "producer" &&
+                                        IsImSp() &&
+                                        <section className="my-11 w-full">
+                                            <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
+                                            <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
+                                        </section>
+                                    }
+                                    {
+                                        status == "update-after-first-Payment" &&
+                                        getType() == "copyrights" &&
+                                        IsImSp() &&
+                                        <>
+                                            <section className='w-full mt-4'>
+                                                <h3 className="capitalize opacity-60">job details</h3>
+                                                <textarea
+                                                    name="details"
+                                                    value={details || contract.details}
+                                                    onChange={handleNormalInputChange}
+                                                    placeholder="requirements, conditions At least 6 char"
+                                                    className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
+                                                />
+                                            </section>
+                                            <section className="my-11 w-full">
+                                                <h3 className="capitalize opacity-60 mb-4">deadline</h3>
+                                                <SelectDate value={deadline || contract.deadline} onChange={(value) => setDeadline(value)} />
+                                                {deadline && new Date(deadline) < new Date(contract.deadline) &&
+                                                    <span className="error-msg" >
+                                                        Deadline must be on or after the execution day.
+                                                    </span>
+                                                }
+                                            </section>
+                                            <div className='mb-4 w-full'>
+                                                <input
+                                                    placeholder='Total price'
+                                                    type='text'
+                                                    name='totalPrice'
+                                                    value={totalPrice || contract.totalPrice}
+                                                    onChange={handleNormalInputChange}
+                                                    className="edit app-field"
+                                                />
+                                            </div>
+                                        </>
+                                    }
+                                    {
+                                        status == "update-after-first-Payment" &&
+                                        getType() === "project" &&
+                                        IsImSp() &&
+                                        <>
+                                            <section className='mb-4 mt-14'>
+                                                <h3 className="capitalize opacity-60 mb-4">duration</h3>
+                                                <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
+                                            </section>
+                                            <div className='mb-4 w-full'>
+                                                <h3 className="capitalize opacity-60 mb-4">unit Price</h3>
+                                                <input
+                                                    placeholder='unit price'
+                                                    type='text'
+                                                    name='unitPrice'
+                                                    value={formData["unitPrice"] || contract.projectScale.unitPrice}
+                                                    onChange={handleInputChange}
+                                                    className="edit app-field"
+                                                />
+                                            </div>
+                                            <section>
+                                                <h3 className="capitalize opacity-60 mb-4">number Of Units</h3>
+                                                <input placeholder='number Of Units' type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
+                                            </section>
+                                            <div className='h-divider my-6' />
+                                            <section>
+                                                <h3 className="capitalize opacity-60 mb-4">Tools Used</h3>
+                                                {formData?.tools?.map((tool, i) => (
+                                                    <div key={i} className='mb-2'>
+                                                        <div className='flex justify-between'>
+                                                            <label><strong>Tool: {tool.name}</strong></label>
+                                                            <div onClick={() => removeFromArray('tools', i)} className='cursor-pointer'>
+                                                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
+                                                            </div>
+                                                        </div>
+                                                        <input
+                                                            type="number"
+                                                            className="edit app-field"
+                                                            value={tool.unitPrice}
+                                                            onChange={(e) => handleToolChange(e, i)}
+                                                            placeholder="Price"
+                                                            min={0}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </section>
+                                            <div className='h-divider my-6' />
+                                            <section className='mb-4'>
+                                                <h3 className="capitalize opacity-60 mb-4">Functions Used</h3>
+                                                {formData?.functions?.map((func, i) => (
+                                                    <div key={i} className='mb-2'>
+                                                        <div className='flex justify-between'>
+                                                            <label><strong>Tool: {func.name}</strong></label>
+                                                            <div onClick={() => removeFromArray('functions', i)} className='cursor-pointer'>
+                                                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
+                                                            </div>
+                                                        </div>
+                                                        <input
+                                                            type="number"
+                                                            className="edit app-field"
+                                                            value={func.unitPrice}
+                                                            onChange={(e) => handleFunctionChange(e, i, 'unitPrice')}
+                                                            placeholder="Price"
+                                                            min={0}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </section>
+                                        </>
+                                    }
+                                </div>}
+                            {canEdit &&
+                                <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                    <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
+                                        <span className='text-white font-bold capitalize text-lg'>
+                                            Update Appointment
+                                        </span>
+                                    </Button>
+                                </section>
                             }
-                            {
-                                status == "update-after-first-Payment" &&
-                                getType() == "copyrights" &&
-                                IsImSp() &&
-                                <>
-                                    <h2 className='my-5 text-xl font-bold'> You Can Update some Details </h2>
 
-                                    <section className='w-full mt-4'>
-                                        <h3 className="capitalize opacity-60">job details</h3>
-                                        <textarea
-                                            name="details"
-                                            value={details || contract.details}
-                                            onChange={handleNormalInputChange}
-                                            placeholder="requirements, conditions At least 6 char"
-                                            className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
-                                        />
-                                    </section>
-                                    <section className="my-11 w-full">
-                                        <h3 className="capitalize opacity-60 mb-4">deadline</h3>
-                                        <SelectDate value={deadline || contract.deadline} onChange={(value) => setDeadline(value)} />
-                                        {deadline && new Date(deadline) < new Date(contract.deadline) &&
-                                            <span className="error-msg" >
-                                                Deadline must be on or after the execution day.
-                                            </span>
+                            {!canEdit &&
+                                <section className="w-full">
+                                    <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                        {
+                                            acceptBtn &&
+                                            <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
+                                                <span className='text-white font-bold capitalize text-lg'>
+                                                    Accept
+                                                </span>
+                                            </Button>
                                         }
-                                    </section>
-                                    <div className='mb-4 w-full'>
-                                        <input
-                                            placeholder='Total price'
-                                            type='text'
-                                            name='totalPrice'
-                                            value={totalPrice || contract.totalPrice}
-                                            onChange={handleNormalInputChange}
-                                            className="edit app-field"
-                                        />
+                                        {
+                                            refuse &&
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                                Refuse
+                                            </button>
+                                        }
                                     </div>
-                                </>
-
-                            }
-                            {
-                                status == "update-after-first-Payment" &&
-                                getType() === "project" && IsImSp() &&
-                                <>
-                                    <h2 className='my-5 text-xl font-bold'> You Can Update some Details </h2>
-                                    <section className='mb-4'>
-                                        <h3 className="capitalize opacity-60 mb-4">duration</h3>
-                                        <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
-                                    </section>
-                                    <div className='mb-4 w-full'>
-                                        <h3 className="capitalize opacity-60 mb-4">unit Price</h3>
-                                        <input
-                                            placeholder='unit price'
-                                            type='text'
-                                            name='unitPrice'
-                                            value={formData["unitPrice"] || contract.projectScale.unitPrice}
-                                            onChange={handleInputChange}
-                                            className="edit app-field"
-                                        />
-                                    </div>
-                                    <section className='mb-4'>
-                                        <h3 className="capitalize opacity-60 mb-4">number Of Units</h3>
-                                        <input placeholder='number Of Units' type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
-                                    </section>
-
-                                    <section>
-                                        <ListInput
-                                            placeholder={'tools used'}
-                                            target="AddToolUsed"
-                                            name={"tools"}
-                                            listdiv={formData?.tools?.map((e, i) => (
-                                                <span className='mx-2' key={i}>
-                                                    <span><strong>tool : </strong> {e.name} </span>
-                                                    <br />
-                                                    <span> <strong>price : </strong> {e.unitPrice} $ </span>
-                                                </span>
-
-                                            ))}
-                                            remove={(value) => removeFromArray('tools', value)}
-                                            enable={false}
-                                        />
-                                    </section>
-                                    <section>
-                                        <ListInput
-                                            placeholder={'Functions used'}
-                                            target="Addfunctions"
-                                            name={"functions"}
-                                            listdiv={formData?.functions?.map((e, i) => (
-                                                <span className='mx-2' key={i}>
-                                                    <span><strong>function : </strong> {e.name} </span>
-                                                    <br />
-                                                    <span> <strong>price : </strong> {e.unitPrice} $ </span>
-                                                </span>
-                                            ))}
-                                            remove={(value) => removeFromArray('functions', value)}
-                                            enable={false}
-                                        />
-                                    </section>
-                                </>
-
-                            }
-
-                            <section className='w-full '>
-                                <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     {
-                                        acceptBtn &&
-                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
-                                            <span className='text-white font-bold capitalize text-lg'>
-                                                Accept
-                                            </span>
-                                        </Button>
+                                        !IsImSp() &&
+                                        status == "waiting-for-pay-10" &&
+                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                            <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                                <span className='text-white font-bold capitalize text-lg'>
+                                                    Pay Now 10%
+                                                </span>
+                                            </Button>
+                                        </div>
                                     }
                                     {
-                                        UpdateBtn &&
-                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
-                                            <span className='text-white font-bold capitalize text-lg'>
-                                                Update Appointment
-                                            </span>
-                                        </Button>
+                                        !IsImSp() && status == "waiting-for-total-payment" &&
+                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                            <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                                <span className='text-white font-bold capitalize text-lg'>
+                                                    Pay Now remain ( 90 % )
+                                                </span>
+                                            </Button>
+                                        </div>
                                     }
                                     {
-                                        refuse &&
-                                        <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                            Refuse
+                                        !IsImSp() && status == "waiting-for-payment" &&
+                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                            <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                                <span className='text-white font-bold capitalize text-lg'>
+                                                    Pay Now
+                                                </span>
+                                            </Button>
+                                        </div>
+                                    }
+                                    {
+                                        !status?.includes("waiting-for-pay") && false &&
+                                        <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
+                                            Cancel
                                         </button>
                                     }
-                                </div>
-
-
-                                {
-                                    !IsImSp() &&
-                                    status == "waiting-for-pay-10" &&
-                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                            <span className='text-white font-bold capitalize text-lg'>
-                                                Pay Now 10%
-                                            </span>
-                                        </Button>
-                                    </div>
-                                }
-                                {
-                                    !IsImSp() && status == "waiting-for-total-payment" &&
-                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                        <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                            <span className='text-white font-bold capitalize text-lg'>
-                                                Pay Now remain ( 90 % )
-                                            </span>
-                                        </Button>
-                                    </div>
-                                }
-                                {
-                                    !IsImSp() && status == "waiting-for-payment" &&
-                                    <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
-                                        <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                            <span className='text-white font-bold capitalize text-lg'>
-                                                Pay Now
-                                            </span>
-                                        </Button>
-                                    </div>
-                                }
-                                {
-                                    !status?.includes("waiting-for-pay") && false &&
-                                    <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
-                                        Cancel
-                                    </button>
-                                }
-                            </section>
+                                </section>
+                            }
                         </div>
                     </>
 
                 }
-            </Drawer>
+            </Drawer >
         </>
     );
 }
