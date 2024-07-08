@@ -13,6 +13,7 @@ import { GetProjects } from "../../redux/action/apis/cycles/projects/get";
 const Projects = ({ projects, GetProjects, api }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
+    const { subcategory, tag } = Router.query
     const projectsList = projects?.data
     const pagganation = projects?.pagination
     const page = 1;
@@ -23,8 +24,8 @@ const Projects = ({ projects, GetProjects, api }) => {
     
     useEffect(() => {
         if (limit)
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page })
-    }, [limit,searchTerm])
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page,subcategory:subcategory,tag:tag })
+    }, [limit,searchTerm,subcategory, tag])
 
 
     useEffect(() => {

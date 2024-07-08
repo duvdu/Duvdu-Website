@@ -16,17 +16,19 @@ const Permit = ({ GetCopyrights, respond, api }) => {
     const showLimit = 12;
     const page = 1;
     const searchTerm = Router.query.search;
+    const { subcategory, tag } = Router.query
+
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
-    const permits = respond?.data
+    const CopyRight = respond?.data
 
     const pagganation = respond?.pagination
 
     useEffect(() => {
         if (limit)
-            GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
-    }, [limit])
+            GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page, subcategory:subcategory,tag:tag })
+    }, [limit, subcategory, tag])
 
     const targetRef = useRef(null);
 
@@ -63,17 +65,14 @@ const Permit = ({ GetCopyrights, respond, api }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
                         <Filter />
-                        {permits?.length > 0 && (
+                        {CopyRight?.length === 0 ?
+                            <EmptyComponent message="No CopyRight Now" /> :
                             <h1 className="page-header my-6">most popular on duvdu</h1>
-                        )}
-                        {permits?.length === 0 && (
-                            <h3>No projects Found </h3>
-                        )}
+                        }
                         <div className="minmax-360">
-                            {permits?.map((item, i) => {
-                                return <CopyRightCard onClick={() => handlesetdata(item)} key={i} cardData={item} />;
-
-                            })}
+                            {CopyRight?.map((item, i) =>
+                                <CopyRightCard key={i} onClick={() => handlesetdata(item)} cardData={item} />
+                            )}
                         </div>
                         <img className={(api.loading && api.req == "GetCopyrights" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                         <Formsubmited />

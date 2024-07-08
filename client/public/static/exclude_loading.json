@@ -7,7 +7,6 @@
 "GetStudios",
 "GetTeamProjects",
 "getAllContracts",
-"setFollow",
-"setUnFollow",
+"swapFollow",
 "GetProjects"
 ]
