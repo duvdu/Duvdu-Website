@@ -214,7 +214,7 @@ const RightSide = () => {
                 <section>
                     <div className="flex justify-center mt-11">
                         <div data-popup-toggle="popup" data-popup-target="error-message">
-                            <ArrowBtn className="cursor-pointer sm:w-96" text='check-out' />
+                            <ArrowBtn className="cursor-pointer sm:w-96" text='Appointment Now' />
                         </div>
                     </div>
                 </section>

@@ -4,10 +4,13 @@ import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
 import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import Icon from "../../Icons";
+import TimeLeft from "./counter";
 
 const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClick }) => {
 
-    const [timeLeft, setTimeLeft] = useState("");
+    // const [<TimeLeft/>, setTimeLeft] = useState("");
+    const status = data.contract.status
+
     const statuses = [
         { value: 'accept' },
         { value: 'reject' },
@@ -15,52 +18,69 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
     const handleDropdownSelect = (value) => {
         takeAction({ id: data._id, data: { "action": value } })
     };
-    useEffect(() => {
-        if (!data?.contract?.deadline) return
-        const interval = setInterval(() => {
-            const now = new Date();
-            const deadline = new Date(data?.contract.deadline);
-            const timeRemaining = deadline - now;
 
-            if (timeRemaining <= 0) {
-                setTimeLeft("Time's up");
-                clearInterval(interval);
-            } else {
-                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                days > 0 ? setTimeLeft(`${days}d ${hours}h ${minutes}m`) : setTimeLeft(`${hours}:${minutes < 10 ? "0" : ""}${minutes}`);
-            }
-        }, 1000);
+    const NormalState = ({ value }) => (
+        <span className='text-4xl'>
+            {value}
+        </span>
+    );
 
-        return () => clearInterval(interval);
 
-    }, [data?.contract?.deadline]);
-    const status = data.contract.status
+    // useEffect(() => {
+    //     if (!data?.contract?.deadline) return
+    //     const interval = setInterval(() => {
+    //         const now = new Date();
+    //         const deadline = new Date(data?.contract.deadline);
+    //         const timeRemaining = deadline - now;
+
+    //         if (timeRemaining <= 0) {
+    //             setTimeLeft("Time's up");
+    //             clearInterval(interval);
+    //         } else {
+    //             const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    //             const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    //             const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    //             days > 0 ? setTimeLeft(`${days}d ${hours}h ${minutes}m`) : setTimeLeft(`${hours}:${minutes < 10 ? "0" : ""}${minutes}`);
+    //         }
+    //     }, 1000);
+
+    //     return () => clearInterval(interval);
+
+    // }, [data?.contract?.deadline]);
+
     const uiStatus = () => {
+        const items = {
+            status: status,
+            stageExpiration: data?.contract?.stageExpiration,
+            deadline: data?.contract?.deadline,
+            actionAt: data?.contract?.actionAt,
+            createdAt: data?.contract?.createdAt,
+        };
+
         switch (status) {
-            case 'canceled':
-                return "Canceled";
             case 'pending':
-                return timeLeft;
+                return <TimeLeft data={items} msgstatus={"pending"} />;
             case 'waiting-for-payment':
-                return "Waiting For payment";
+                return <TimeLeft data={items} msgstatus={"waiting for payment"} />;
             case 'waiting-for-pay-10':
-                return "Waiting For First Payment";
+                return <TimeLeft data={items} msgstatus={"waiting for pay 10"} />;
             case 'update-after-first-Payment':
-                return "Update After First Payment";
+                return <TimeLeft data={items} msgstatus={"update after first Payment"} />;
             case 'waiting-for-total-payment':
-                return "Waiting For Total Payment";
+                return <TimeLeft data={items} msgstatus={"waiting for total payment"} />;
             case 'ongoing':
-                return "Ongoing";
+                return <TimeLeft data={data} msgstatus={"complate task"} />;
             case 'completed':
-                return "Completed";
+                return <NormalState value={"Completed"} />;
             case 'rejected':
-                return "Rejected";
+                return <NormalState value={"Rejected"} />;
+            case 'canceled':
+                return <NormalState value={"Canceled"} />;
             default:
                 return "Unknown"; // Handle unknown cases as needed
         }
-    }
+    };
+
     const getType = () => {
         if (data?.ref.includes("copyright"))
             return "copyrights"
@@ -87,13 +107,7 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
                 {/* time */}
 
                 <div className='flex flex-col xl:flex-row justify-between items-center w-full'>
-                    <span className='text-4xl'> {uiStatus()}
-                        {status == "pending" &&
-                            <span className='text-lg opacity-40 mx-2'>
-                                {timeLeft ? "left" : "Time's up"}
-                            </span>
-                        }
-                    </span>
+                    {uiStatus()}
                     <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer hidden`}>
                         respond
                     </div>

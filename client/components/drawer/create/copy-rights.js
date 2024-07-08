@@ -54,6 +54,10 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
             return;
         }
         setErrors({});
+        formData.duration = {
+            value : formData.duration,
+            unit: "days"
+        }
         CreateCopyrights(formData);
     };
 

@@ -65,7 +65,7 @@ const Home = ({
         <>
             <Layout isbodyWhite={true}>
                 <div className="container w-full">
-                    <section className="my-24 mx-auto w-min">
+                    <section className="my-24 mx-auto w-min hidden lg:block">
                         <h1 className="text-center my-4">
                             <span className="text-[#263257] font-black text-8xl capitalize whitespace-nowrap">explore <span style={TheBeststyle}>the best</span> of </span>
                             <div className="relative h-[120px]">

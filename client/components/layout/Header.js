@@ -173,6 +173,7 @@ const Header = ({
                                     {fromlayout.showTabs && islogin &&
                                         <div className="header-tabs">
 
+                                            <div className="hidden">
                                             <Link href="/dashboard">
                                                 <div className="header-link">
                                                     <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
@@ -182,6 +183,7 @@ const Header = ({
                                                 </div>
                                             </Link>
 
+                                            </div>
 
                                             <Link href="/contracts">
                                                 <div className="header-link">
@@ -192,6 +194,7 @@ const Header = ({
                                                 </div>
                                             </Link>
 
+                                            <div className="hidden">
                                             <Link href="/teams" className="capitalize">
                                                 <div className="header-link whitespace-nowrap">
                                                     <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
@@ -200,7 +203,7 @@ const Header = ({
                                                     </span>
                                                 </div>
                                             </Link>
-
+                                            </div>
                                         </div>
                                     }
 

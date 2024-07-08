@@ -8,9 +8,9 @@ import { Link } from 'react-scroll';
 const ProducerCard = ({ cardData, className = "", onClick, user }) => {
   return (
     <>
-      <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
+    <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
 
-        <Link href={`/creative/${cardData?.user?.username}`}>
+        <a target='_blank' href={`/creative/${cardData?.user?.username}`}>
             <div className='flex flex-col items-center justify-center text-center pb-5'>
               <img className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top' src={cardData?.user?.profileImage} alt="profile picture" />
               <div className='flex-2 flex-col items-center justify-center gap-1'>
@@ -21,7 +21,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
                 </span>
               </div>
             </div>
-        </Link>
+        </a>
         <div className='flex justify-center pt-25 items-center gap-3'>
           <div className='Professional-background-decoration px-3 py-1'>
             <span className='Professional-text-decoration font-bold text-lg'>{cardData?.user?.rank?.title}</span>
