@@ -1,20 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-// import headerMen from '../../public/static/header_content.json';
 import { connect } from "react-redux";
 import { getCategory } from '../../redux/action/apis/category/getCategories';
 import Link from 'next/link';
+import { useRouter } from "next/router";
 
 const MegaMenu = ({ language, api, categories }) => {
-  
-  function repeatArray(arr, count) {
-    let result = [];
-    for (let i = 0; i < count; i++) {
-        result = result.concat(arr);
-    }
-    return result;
-  }
-
-    return (
+  return (
     <ul className='flex flex-wrap gap-x-4'>
       {categories &&
         categories.map((category, index) => (
@@ -24,11 +15,9 @@ const MegaMenu = ({ language, api, categories }) => {
   );
 }
 
-
-
-
 const Category = ({ category, language }) => {
   const megaMenuRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (megaMenuRef.current) {
@@ -48,26 +37,44 @@ const Category = ({ category, language }) => {
       }
     }
   }, [language]);
-  
+
+  const handleNavigation = (path, query) => {
+    const url = query ? `${path}?${query}` : path;
+    router.push(url);
+  };
+
   return (
     <li className='header-category'>
-      <Link href={`/${category.cycle}`}>
-        <div className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'>
-          {category.title}
-        </div>
-      </Link>
+      <div
+        className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'
+        onClick={() => handleNavigation(`/${category.cycle}`)}
+      >
+        {category.title}
+      </div>
       <ul className="hover-menu" ref={megaMenuRef}>
         <div>
           {category.subCategories.map((subcategory, subIndex) => (
             subIndex / category.subCategories.length < 0.5 &&
-            <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+            <MenuItem
+              key={subIndex}
+              title={subcategory.title}
+              items={subcategory.tags}
+              onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${ tagId ? "tag=" + tagId : ''}`)}
+              cycle={category.cycle}
+            />
           ))}
         </div>
         {category.subCategories.length > 1 &&
           <div>
             {category.subCategories.map((subcategory, subIndex) => (
               subIndex / category.subCategories.length >= 0.5 &&
-              <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+              <MenuItem
+                key={subIndex}
+                title={subcategory.title}
+                items={subcategory.tags}
+                onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
+                cycle={category.cycle}
+              />
             ))}
           </div>
         }
@@ -76,21 +83,24 @@ const Category = ({ category, language }) => {
   );
 }
 
-
-const MenuItem = ({ title, items }) => (
+const MenuItem = ({ title, items, onClick, cycle }) => (
   items.length > 0 &&
   <li>
-    <Link href="#">
-      <div className="cursor-pointer text-[#3E3E3E] dark:text-[#FFFFFFBF] font-semibold text-sm">
-        {title}
-      </div>
-    </Link>
+    <div
+      className="cursor-pointer text-[#3E3E3E] dark:text-[#FFFFFFBF] font-semibold text-sm"
+      onClick={() => onClick(null)}
+    >
+      {title}
+    </div>
     <ul className={"gap-1"}>
       {items.map((item, index) => (
         <li className='py-1 px-2 border hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
-          <Link href="/">
-            <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'>{item.title}</div>
-          </Link>
+          <div
+            className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'
+            onClick={() => onClick(item._id)}
+          >
+            {item.title}
+          </div>
         </li>
       ))}
     </ul>
@@ -101,12 +111,8 @@ const mapStateToProps = (state) => ({
   language: state.setting.LANGUAGE,
   api: state.api,
   categories: state.categories
-
 });
 
-const mapDispatchToProps = {
-  
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MegaMenu);
-
