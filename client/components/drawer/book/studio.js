@@ -142,7 +142,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                             <span className="text-2xl font-bold">${data.projectScale.pricerPerUnit * formData['projectScale.numberOfUnits']}</span>
                         </div>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />
                         </div>
                     </section>
                 </div>

@@ -5,6 +5,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetAllMessageInChat = (id,limit) => {
     const req = "GetAllMessageInChat"
     return async dispatch => {
+        console.log(id,limit)
         if (!id) {
             dispatch({ type: Types.RESET_CHAT });
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
@@ -16,7 +17,7 @@ export const GetAllMessageInChat = (id,limit) => {
             const params = {};
             params.limit = limit || 100;
             const queryString = new URLSearchParams(params).toString();
-            const response = await mainApiInstance.get(`api/message/${id}/chat?${queryString}`,);
+            const response = await mainApiInstance.get(`api/message/${id}/chat?${queryString}`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
             dispatch({ type: Types.SET_MESSAGES_LIST, payload: response.data.data, req: req });
         } catch (error) {

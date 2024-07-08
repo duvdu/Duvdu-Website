@@ -118,15 +118,14 @@ function ReceiveProjectFiles({
     const handleFunctionChange = (e, index) => {
         let value = e.target.value;
         if (!isNaN(value)) {
-          value = Math.abs(Number(value));
+          value = Math.abs(Number(value));  
         }
         const tools = [...formData.functions];
         tools[index]['unitPrice'] = value;
         UpdateFormData("functions", tools);
       };
       
-    console.log(formData)
-
+    
     useEffect(() => {
         if (takeAction_respond) {
             getAllContracts()
@@ -199,13 +198,13 @@ function ReceiveProjectFiles({
         if (formData['tools'] || formData['functions']) data['equipment'] = {}
         if (formData['tools']) {
             data['equipment']['tools'] = formData['tools'].map((value) => ({
-                units: value.unitPrice,
+                units: value.units,
                 id: value._id
             }));
         }
         if (formData['functions']) {
             data['equipment']['functions'] = formData['functions'].map((value) => ({
-                units: value.unitPrice,
+                units: value.units,
                 id: value._id
             }));
         }
@@ -248,7 +247,7 @@ function ReceiveProjectFiles({
         UpdateFormData(arrayName, newArray);
     };
     // console.log(takeAction_respond)
-    // console.log(contractDetails)
+    console.log(contractDetails)
     // console.log(contract)
     // console.log(customer)
     // console.log(sp)
@@ -541,7 +540,7 @@ function ReceiveProjectFiles({
                                                             type="number"
                                                             className="edit app-field"
                                                             value={func.unitPrice}
-                                                            onChange={(e) => handleFunctionChange(e, i, 'unitPrice')}
+                                                            onChange={(e) => handleFunctionChange(e, i)}
                                                             placeholder="Price"
                                                             min={0}
                                                         />

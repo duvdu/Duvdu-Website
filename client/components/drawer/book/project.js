@@ -136,13 +136,11 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         if (formData.functions)
             for (var i = 0; i < formData.functions.length; i++) {
                 form.append(`equipment[functions][${i}][id]`, formData.functions[i]);
-                form.append(`equipment[functions][${i}][units]`, formData['projectScale[numberOfUnits]']);
             }
 
         if (formData.tools)
             for (var i = 0; i < formData.tools.length; i++) {
                 form.append(`equipment[tools][${i}][id]`, formData.tools[i]);
-                form.append(`equipment[tools][${i}][units]`, formData['projectScale[numberOfUnits]']);
             }
         BookProject(data._id, form)
     }
@@ -177,7 +175,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <BookTeam team={(data?.functions)} onChange={(value) => UpdateFormData('functions', value)} />
                                 </section>
                             }
-                            <section>
+                            <section className="mt-7">
                                 <h3 className="capitalize opacity-60">job details</h3>
                                 <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                             </section>
@@ -301,7 +299,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <span className="text-2xl font-bold">${calculateTotalPrice()}</span>
                                 </div>
                                 <div className="flex justify-center">
-                                    <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
+                                    <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />
                                 </div>
                             </section>
                         </div>
