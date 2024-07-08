@@ -141,13 +141,15 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
 
                     return (
                         <li key={index} className="cursor-pointer">
-                            <div className="flex w-full justify-between items-center p-5" onClick={() => toggleCategory(category)}>
+                            <div className="flex w-full justify-between items-center p-5">
                                 <div className="w-3" />
-                                <span className="text-[#4F5E7B] font-semibold text-sm">
+                                <Link href={`/${category.cycle}`}>
+                                <span className="text-[#4F5E7B] font-semibold text-sm" >
                                     {category.title}
                                 </span>
+                                </Link>
 
-                                <div className={`transition-all duration-300 ${isOurStation ? 'rotate-90' : 'rotate-0'}`}>
+                                <div className={`transition-all duration-300 ${isOurStation ? 'rotate-90' : 'rotate-0'}`} onClick={() => toggleCategory(category)}> 
                                     <SpeficIcon name={`${isOurStation ? 'minus' : 'plus'}`} />
                                 </div>
                             </div>

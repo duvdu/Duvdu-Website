@@ -31,7 +31,7 @@ const Header = ({ data }) => (
                     value: "oprion 3",
                     onclick: () => { },
                 }
-            ]} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer" />
+            ]} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer hidden" />
         </div>
     </>
 )

@@ -25,26 +25,45 @@ function OtherProfile({
     follow_respond,
     setUnFollow,
     setUnFollow_respond,
+    api,
     islogin
 }) {
 
     const route = useRouter()
     const { profile: username } = route.query
+    const [isFollow, seIsFllow] = useState();
 
     useEffect(() => {
-        if ((setUnFollow_respond || follow_respond) && username) {
-            getOtherprofile(username)
-            setUnFollow(-1)
+        console.log(follow_respond , setUnFollow_respond , user?.isFollow)
+        if (follow_respond && username) {
+            // getOtherprofile(username)
+            seIsFllow(false)
             setFollow(-1)
         }
-    }, [!setUnFollow_respond, !follow_respond])
+        else if (setUnFollow_respond && username) {
+            // getOtherprofile(username)
+            seIsFllow(true)
+            setUnFollow(-1)
+            
+        }
+        else {
+            seIsFllow(user?.isFollow)
+        }
+    }, [!setUnFollow_respond, !follow_respond , user?.isFollow])
 
     useEffect(() => {
         if (username) {
             getOtherprofile(username)
-            GetUserProject({username: username})
+            GetUserProject({ username: username })
         }
     }, [username])
+
+    // useEffect(() => {
+    //     if (username) {
+    //         getOtherprofile(username)
+    //         GetUserProject({ username: username })
+    //     }
+    // }, [])
 
     projects = projects?.data
 
@@ -79,7 +98,8 @@ function OtherProfile({
     projects = projects?.projects || []
 
     const swapFollow = () => {
-        if (user.isFollow || false)
+        if (api.loading && (api.req == "setUnFollow" || api.req == "setFollow")) return
+        if (isFollow || user.isFollow )
             setUnFollow(user._id)
         else
             setFollow(user._id)
@@ -113,10 +133,14 @@ function OtherProfile({
                             islogin &&
                             <div className='flex gap-3 items-center mt-7'>
                                 <AppButton
-                                    className={`w-full z-0 ${user.isFollow ? 'opacity-60' : ''}`}
+                                    className={`w-full z-0 ${isFollow ? 'opacity-60' : ''}`}
                                     onClick={swapFollow}
                                 >
-                                    {user.isFollow ? 'Unfollow' : 'Follow'}
+                                    {(api.loading && (api.req == "setUnFollow" || api.req == "setFollow")) ?
+                                        <img className={"load mx-auto transition duration-500 ease-in-out w-10 h-10"} src="/assets/imgs/loading.gif" alt="loading" />
+                                        : (isFollow ? 'Unfollow' : 'Follow')
+                                    }
+
                                 </AppButton>
                                 <div onClick={() => GetAllMessageInChat(user._id)} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
                                     <Icon type='far' name="chat" />
@@ -158,6 +182,7 @@ function OtherProfile({
 
 const mapStateToProps = (state) => ({
     islogin: state.auth.login,
+    api: state.api,
     // login_respond: state.api.login,
     user: state.api.getOtherprofile,
     projects: state.api.GetUserProject,
