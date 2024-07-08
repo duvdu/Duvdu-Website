@@ -32,6 +32,28 @@ const Details = ({ data }) => {
                     </div>
                 </>
             }
+
+            {data?.functions?.length > 0 &&
+                <>
+                    <div className="mt-9 mb-3">
+                        <h3 className="capitalize opacity-50"> function Used </h3>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        {(data?.functions).map(tool => [
+                            { value: tool.name, isActive: false },
+                            { value: tool.unitPrice, isActive: false }
+                        ]).map((toolGroup, i) => (
+                            <div key={i} className="flex gap-2">
+                                {toolGroup.map((tool, j) => (
+                                    <div key={j} className={`text-white rounded-3xl py-2 px-4 ${tool.isActive ? 'bg-primary' : 'bg-[#00000040]'}`}>
+                                        {tool.value}
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </>
+            }
             {data?.creatives?.length > 0 &&
                 <>
                     <div className="mt-9 mb-3">

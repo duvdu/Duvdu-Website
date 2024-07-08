@@ -63,7 +63,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
         setOtherUser(getotherdata())
 
     }, [messages]);
-    console.log(messagesList)
+    
     const msglist = [...messagesList]
     msglist.reverse()
 

@@ -207,8 +207,8 @@ const MenuItem = ({ title, items, onClick }) => (
         <ul className={"flex flex-wrap gap-3 py-2"}>
             {items.map((item, index) => (
                 <li className='py-1 px-2 border hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
-                    <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'
-                        onClick={() => onClick(item._id)}
+                    <div clas   sName='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'
+                        onClick={() => onClick(item._id)}   
                     >{item.title}</div>
                 </li>
             ))}

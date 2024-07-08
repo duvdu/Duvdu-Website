@@ -27,13 +27,13 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     function calculateTotalPrice() {
         // Extract project scale information from formdata
         const numberOfUnits = formData['projectScale[numberOfUnits]'];
-        
+
         // Extract price per unit from data
         const pricePerUnit = data.projectScale.pricerPerUnit;
-    
+
         // Calculate the project scale cost
         const projectScaleCost = numberOfUnits * pricePerUnit;
-    
+
         // Calculate the tools cost
         let toolsCost = 0;
         if (formData.tools && formData.tools.length > 0) {
@@ -45,7 +45,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                 return total;
             }, 0);
         }
-    
+
         // Calculate the functions cost
         let functionsCost = 0;
         if (formData.functions && formData.functions.length > 0) {
@@ -57,13 +57,13 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                 return total;
             }, 0);
         }
-    
+
         // Calculate the total price
         const totalPrice = projectScaleCost + toolsCost + functionsCost;
-    
+
         return totalPrice;
     }
-    
+
     const validateRequiredFields = () => {
         const errors = {};
 
@@ -78,7 +78,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     };
 
     const enableBtn = Object.keys(validateRequiredFields()).length == 0
-    
+
     function ontoggleDrawer() {
         if (preview)
             setPreview(false)
@@ -99,7 +99,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         ontoggleDrawer()
     }
 
-
     useEffect(() => {
         UpdateFormData('creatives', creatives.map(item => item._id))
     }, [creatives.length])
@@ -109,6 +108,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         if (data.creatives) {
             setCreatives([{ ...data.user, removable: true }])
         }
+        UpdateFormData('tools', data?.tools || [])
+        UpdateFormData('functions', data?.functions || [])
     }, [isOpen])
 
 
@@ -149,6 +150,12 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         const { name, value } = event.target;
         UpdateFormData(name, value)
     };
+    const handlelocationChange = (location) => {
+        UpdateFormData('location[lat]', location.lat)
+        UpdateFormData('location[lng]', location.lng)
+    };
+    
+    
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
@@ -158,21 +165,20 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                     <></> :
                     <>
                         <div className={preview ? ' hidden' : 'p-8 pt-0'}>
-                            {
+                            {/* {
                                 false &&
                                 creatives.length > 0 &&
                                 <section className="my-11">
                                     <h3 className="capitalize opacity-60 mb-4">team</h3>
                                     <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} onChange={(value) => UpdateFormData('creative', value)} />
                                 </section>
-                            }
+                            } */}
                             {
                                 (data?.tools || data?.equipments)?.length > 0 &&
                                 <section className="my-11">
-                                    {/* <h3 className="capitalize opacity-60 mb-4">tools and functions</h3> */}
                                     <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} />
-                                    <BookTeam team={(data?.tools || data?.equipments)} onChange={(value) => UpdateFormData('tools', value)} />
-                                    <BookTeam team={(data?.functions)} onChange={(value) => UpdateFormData('functions', value)} />
+                                    <BookTeam team={(formData?.tools || formData?.equipments)} onChange={(value) => UpdateFormData('tools', value)} />
+                                    <BookTeam team={(formData?.functions)} onChange={(value) => UpdateFormData('functions', value)} />
                                 </section>
                             }
                             <section className="mt-7">
@@ -181,13 +187,11 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className="my-11 gap-7 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">location</h3>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
-                                 onChangeAddress={handleInputChange}
-                                    onsetLocation={(value) => {
-                                        UpdateFormData('location[lat]', value.lat)
-                                        UpdateFormData('location[lng]', value.lng)
-                                    }}
-                                />
+                                <GoogleMap 
+                                width={'100%'} 
+                                value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }} 
+                                onChangeAddress={handleInputChange} 
+                                onsetLocation={handlelocationChange} />
                             </section>
                             <section className="my-11 gap-7 hidden">
                                 <div className="w-full">
@@ -227,12 +231,13 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                         </div>
 
-                        <div className={preview ? ' flex flex-col gap-9 h-full' : ' hidden'}>
+                        {preview &&
+                        <div className='flex flex-col gap-9 h-full'>
                             <div className="flex flex-col gap-9 overflow-y-scroll overflow-x-hidden p-8 h-full">
                                 <section>
                                     <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} mainremovable={false} />
-                                    <BookTeam team={(data?.tools || data?.equipments)} mainremovable={false} />
-                                    <BookTeam team={(data?.functions)} mainremovable={false} />
+                                    <BookTeam team={(formData?.tools || formData?.equipments || [])} mainremovable={false} />
+                                    <BookTeam team={(formData?.functions || [])} mainremovable={false} />
                                 </section>
                                 <section className="w-full hidden">
                                     <h2 className='opacity-60 mb-3'> project type </h2>
@@ -255,41 +260,41 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                <h2 className='opacity-60 capitalize mb-3'> Custom Requirements </h2>
-                                <div className="flex items-center rounded-2xl bg-DS_white">
-                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                                        <Icon className='text-primary' name={"calendar"} />
+                                    <h2 className='opacity-60 capitalize mb-3'> Custom Requirements </h2>
+                                    <div className="flex items-center rounded-2xl bg-DS_white">
+                                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                            <Icon className='text-primary' name={"calendar"} />
+                                        </div>
+                                        <div className="flex flex-col pl-5 w-full">
+                                            <span className="font-normal text-base">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
+                                            <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'dddd , h:mm TT')}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col pl-5 w-full">
-                                        <span className="font-normal text-base">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
-                                        <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'dddd , h:mm TT')}</span>
-                                    </div>
-                                </div>
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                <h2 className='opacity-60 capitalize mb-3'> Custom Requirements </h2>
-                                <div className="flex items-center rounded-2xl bg-DS_white">
-                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                                        <Icon className='text-primary' name={"calendar"} />
+                                    <h2 className='opacity-60 capitalize mb-3'> Custom Requirements </h2>
+                                    <div className="flex items-center rounded-2xl bg-DS_white">
+                                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                            <Icon className='text-primary' name={"calendar"} />
+                                        </div>
+                                        <div className="flex flex-col pl-5 w-full">
+                                            <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
+                                            <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col pl-5 w-full">
-                                        <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
-                                        <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
-                                    </div>
-                                </div>
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                <h2 className='opacity-60 capitalize mb-3'> address </h2>
-                                <div className="flex items-center rounded-2xl bg-DS_white">
-                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                                        <Icon className='text-primary w-6' name={"location-dot"} />
+                                    <h2 className='opacity-60 capitalize mb-3'> address </h2>
+                                    <div className="flex items-center rounded-2xl bg-DS_white">
+                                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                            <Icon className='text-primary w-6' name={"location-dot"} />
+                                        </div>
+                                        <div className="flex flex-col pl-5 w-full">
+                                            <span className="font-normal text-base">{formData.address}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col pl-5 w-full">
-                                        <span className="font-normal text-base">{formData.address}</span>
-                                    </div>
-                                </div>
                                 </section>
                             </div>
 
@@ -302,7 +307,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />
                                 </div>
                             </section>
-                        </div>
+                        </div>}
                     </>
 
                 }
