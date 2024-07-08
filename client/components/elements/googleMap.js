@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true, inputclass, isreadOnly = false,className }) => {
+const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true, inputclass, isreadOnly = false, className }) => {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [cameraPosition, setCameraPosition] = useState({ lat: 30.0444, lng: 31.2357 }); // Tahrir Square, Cairo
     const [address, setAddress] = useState('');
@@ -40,13 +40,19 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
             geocoder.geocode({ location: markerPosition }, (results, status) => {
                 if (status === 'OK') {
                     if (results[0]) {
-                        const formattedAddress = results[0].formatted_address;
-                        setAddress(formattedAddress);
+                        const addressComponents = results[0].address_components;
+                        const shortAddress = addressComponents
+                            .filter(component => component.types.includes("administrative_area_level_1") || component.types.includes("administrative_area_level_2") || component.types.includes("locality"))
+                            .map(component => component.short_name)
+                            .join(', ')
+                            .replace("Governorate","");
+                            
+                        setAddress(shortAddress);
                         if (onChangeAddress) {
                             onChangeAddress({
                                 target: {
                                     name: 'address',
-                                    value: formattedAddress,
+                                    value: shortAddress,
                                 },
                             });
                         }
@@ -78,13 +84,17 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                         onsetLocation(newLocation);
                     }
                     if (place.formatted_address) {
-                        const formattedAddress = place.formatted_address;
-                        setAddress(formattedAddress);
+                        const addressComponents = place.address_components;
+                        const shortAddress = addressComponents
+                            .filter(component => component.types.includes(""))
+                            .map(component => component.short_name)
+                            .join(', ');
+                        setAddress(shortAddress);
                         if (onChangeAddress) {
                             onChangeAddress({
                                 target: {
                                     name: 'address',
-                                    value: formattedAddress,
+                                    value: shortAddress,
                                 },
                             });
                         }
@@ -128,19 +138,19 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
             />
             <div className='h-2' />
             <div className={`${className}`}>
-            <Map
-                google={google}
-                zoom={17}
-                style={mapStyles}
-                initialCenter={cameraPosition}
-                center={markerPosition}
-                onClick={onMapClicked}
+                <Map
+                    google={google}
+                    zoom={17}
+                    style={mapStyles}
+                    initialCenter={cameraPosition}
+                    center={markerPosition}
+                    onClick={onMapClicked}
                 >
-                {markerPosition && (
-                    <Marker position={markerPosition} />
-                )}
-            </Map>
-                </div>
+                    {markerPosition && (
+                        <Marker position={markerPosition} />
+                    )}
+                </Map>
+            </div>
         </>
     );
 };

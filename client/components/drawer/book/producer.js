@@ -13,7 +13,7 @@ import AddAttachment from "../../elements/attachment";
 const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProducer, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
 
     const formData = addprojectState.formData
-    const [enableBtn, setEnableBtn] = useState(false);
+    
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
 
@@ -51,7 +51,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         return missingFields
     }
 
-    enableBtn = validateForm().length == 0;
+    const enableBtn = validateForm().length == 0;
 
     function OnSucess() {
         reset()

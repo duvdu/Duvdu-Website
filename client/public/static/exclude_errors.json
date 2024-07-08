@@ -12,5 +12,6 @@
     "GetNotifications",
     "signup",
     "GetIsLoggedProducer",
+    "GetFavList",
     "login"
 ]

@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import ProducerCard from '../../components/pages/producer/producerCard';
 import EmptyComponent from '../../components/pages/contracts/emptyComponent';
 
-const Producers = ({ GetProducer, respond,api }) => {
+const Producers = ({ GetProducer, respond,api,isLogin }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const { subcategory, tag } = Router.query
@@ -76,8 +76,10 @@ const Producers = ({ GetProducer, respond,api }) => {
                         <Formsubmited />
                     </div>
                 </section>
-
-                <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+                {isLogin ? 
+                <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} /> :
+                <></>
+                }
 
             </Layout>
         </>
@@ -87,6 +89,7 @@ const Producers = ({ GetProducer, respond,api }) => {
 const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.GetProducer,
+    islogin: state.auth.login,
 });
 
 const mapDispatchToProps = {

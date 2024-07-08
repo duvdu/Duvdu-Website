@@ -13,10 +13,12 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
         if (selectedOption) {
             onSelect?.(selectedOption.value);
         }
-        selectRef.current.value = null;
     };
 
-    
+    useEffect(()=>{
+        selectRef.current.value = null;
+
+    },[])
 
     return (
         <div className={`relative cursor-pointer ${className}`}>

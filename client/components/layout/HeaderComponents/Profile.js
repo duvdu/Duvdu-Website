@@ -99,6 +99,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                             <Icon className="w-3 ml-2" name="location-dot" />
                                             </div>
                                             <span className="text-xs font-semibold capitalize">{user.address || 'NONE'}</span>
+                                            
                                         </span>
                                     </div>
                                 </div>
