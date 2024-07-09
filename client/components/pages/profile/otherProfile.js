@@ -86,10 +86,10 @@ function OtherProfile({
             <div className='sm:container'>
                 <Followers id={"show-followers"} />
                 <Conver converPic={user.coverImage || process.env.DEFULT_COVER_PATH} />
-                <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
+                <div className='flex gap-3 pt-7 flex-col lg:flex-row mb-5'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
                         <div className='px-6 sm:px-10'>
-                            <Info 
+                            <Info
                                 src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
                                 location={user.address || 'NONE'}
                                 occupation={'---'}
@@ -122,19 +122,32 @@ function OtherProfile({
                             )}
                         </div>
 
-                        <div className='h-divider mt-7 mb-7'></div>
-                        <div className='px-10'>
-                            <h3 className='pt-6' id='about-header'>about</h3>
-                            <p className='pt-6' id='about-paragraph'>{user.about}</p>
-                        </div>
-                        <div className='h-divider my-7'></div>
-                        <div className='px-10'>
-                            <div className='flex flex-col gap-4'>
-                                {profile.comments.map(comment => (
-                                    <Comment key={comment.id} comment={comment} />
-                                ))}
-                            </div>
-                        </div>
+                        {
+                            user.about &&
+                            <>
+                                <div className='h-divider mt-7 mb-7'></div>
+
+                                <div className='px-10'>
+                                    <h3 className='pt-6' id='about-header'>about</h3>
+                                    <p className='pt-6' id='about-paragraph'>{user.about}</p>
+                                </div>
+                            </>
+                        }
+
+                        {
+                            profile.comments.length && false &&
+                            <>
+                                <div className='h-divider my-7'></div>
+                                <div className='px-10'>
+                                    <div className='flex flex-col gap-4'>
+                                        {profile.comments.map(comment => (
+                                            <Comment key={comment.id} comment={comment} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        }
+
                     </div>
                     <div className='right-side'>
                         {projectData.length === 0 ? (
