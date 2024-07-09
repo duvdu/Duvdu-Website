@@ -5,12 +5,12 @@ import ProducerBooking from "../../components/drawer/book/producer";
 import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetProducer } from '../../redux/action/apis/cycles/producer/get';
-import { calculateRating } from '../../util/util';
+import { calculateRating, OpenPopUp } from '../../util/util';
 import { useRouter } from 'next/router';
 import ProducerCard from '../../components/pages/producer/producerCard';
 import EmptyComponent from '../../components/pages/contracts/emptyComponent';
 
-const Producers = ({ GetProducer, respond,api,isLogin }) => {
+const Producers = ({ GetProducer, respond,api,islogin }) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const { subcategory, tag } = Router.query
@@ -50,11 +50,17 @@ const Producers = ({ GetProducer, respond,api,isLogin }) => {
 
 
     const handlesetdata = (item) => {
-        setdata(item)
-        setIsOpen(!isOpen);
+        if (islogin) {
+            setdata(item)
+            setIsOpen(!isOpen);
+        }
+        else {
+            OpenPopUp("registration-required")
+        }
     };
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
+
     };
 
     return (
@@ -76,10 +82,8 @@ const Producers = ({ GetProducer, respond,api,isLogin }) => {
                         <Formsubmited />
                     </div>
                 </section>
-                {isLogin ? 
-                <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} /> :
-                <></>
-                }
+                {islogin && 
+                <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />  }
 
             </Layout>
         </>

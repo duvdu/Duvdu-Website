@@ -181,7 +181,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
-                            <span className="text-2xl font-bold">${durationInDays * data.price}</span>
+                            <span className="text-2xl font-bold">${data.price}</span>
                         </div>
                         <div className="flex justify-center">
                             <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />

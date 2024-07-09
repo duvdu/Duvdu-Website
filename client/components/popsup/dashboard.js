@@ -12,7 +12,7 @@ function dashboard({ islogin}) {
     const router = useRouter();
     useEffect(() => {
         if (islogin === false){
-            OpenPopUp("registration-required")
+            OpenPopUp("dashboard-registration-required")
         }
     }, [islogin])
     const onCancel = () => {
@@ -21,7 +21,7 @@ function dashboard({ islogin}) {
 
     return (
         <>
-            <Popup id='registration-required' header={'registration required'} onCancel={onCancel}>
+            <Popup id='dashboard-registration-required' header={'registration required'} onCancel={onCancel}>
                 <div className='flex h-full flex-col mt-24 items-center mb-20 max-w-[604px]'>
                     <span className='mb-12 text-center text-xl font-semibold'>
                         Register or Sign-in

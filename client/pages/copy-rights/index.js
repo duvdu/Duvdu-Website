@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
 import { useRouter } from 'next/router';
 import CopyRightCard from '../../components/pages/copy-writeer/copyRightCard';
+import { OpenPopUp } from '../../util/util';
 
 
 
@@ -52,11 +53,17 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
 
     const handlesetdata = (item) => {
-        setdata(item)
-        setIsOpen(!isOpen);
+        if (islogin) {
+            setdata(item)
+            setIsOpen(!isOpen);
+        }
+        else {
+            OpenPopUp("registration-required")
+        }
     };
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
+
     };
 
     return (
