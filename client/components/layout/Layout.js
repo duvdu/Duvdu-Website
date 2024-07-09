@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { LogOut } from "../../redux/action/apis/auth/logout";
 import Chat from "../elements/chat";
 import ErrorAndLoadingHandling from "./assets/errorAndLoadingHandling";
-import RegistrationRequired from "../popsup/booking/RegistrationRequired";
+import RegistrationRequired from "../popsup/booking/registrationRequired";
 
 
 const Layout = ({

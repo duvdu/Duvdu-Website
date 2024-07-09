@@ -158,7 +158,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             <>
                 <Followers id={"show-followers"} />
                 <Conver converPic={userInfo.coverImage} />
-                <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
+                <div className='flex gap-3 pt-7 flex-col lg:flex-row mb-5'>
                     <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
                         <div className='relative px-6 sm:px-10'>
