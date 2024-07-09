@@ -12,24 +12,30 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import AddAttachment from "../../elements/attachment";
 
 
-const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
+const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const formData = addprojectState.formData
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
-    let duration = 0
-    if (formData.appointmentDate && formData.deadline)
-        duration = new Date(formData.deadline) - new Date(formData.appointmentDate)
+    let durationInDays = 0
+    if (formData.appointmentDate && formData.startDate) {
+        const startDate = new Date(formData.startDate);
+        const appointmentDate = new Date(formData.appointmentDate);
 
+        const durationInMilliseconds = startDate - appointmentDate;
+        
+        durationInDays = durationInMilliseconds / (1000 * 60 * 60 * 24);
+    }
 
+    console.log(durationInDays)
     if (
         formData.details?.length > 5 &&
-        formData.deadline &&
+        formData.startDate &&
         formData.appointmentDate &&
         formData['location.lat'] &&
         formData['location.lng'] &&
-        duration > 0
+        durationInDays > 0
     ) {
         if (!enableBtn)
             setEnableBtn(true)
@@ -56,7 +62,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
         toggleDrawer()
         ontoggleDrawer()
     }
-    
+
 
     useEffect(() => {
         if (bookCopyrights_respond)
@@ -119,12 +125,12 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
                         <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
                     <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">select deadline</h3>
-                        <SelectDate onChange={(value) => UpdateFormData('deadline', value)} />
+                        <h3 className="capitalize opacity-60 mb-4">select start date</h3>
+                        <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full mt-5">
                         <h3 className="capitalize opacity-60  mb-3">location</h3>
-                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange}/>
+                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange} />
                     </section>
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
@@ -175,7 +181,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
-                            <span className="text-2xl font-bold">${data.duration * data.price}</span>
+                            <span className="text-2xl font-bold">${data.price}</span>
                         </div>
                         <div className="flex justify-center">
                             <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />

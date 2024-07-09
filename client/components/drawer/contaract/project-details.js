@@ -198,13 +198,13 @@ function ReceiveProjectFiles({
         if (formData['tools'] || formData['functions']) data['equipment'] = {}
         if (formData['tools']) {
             data['equipment']['tools'] = formData['tools'].map((value) => ({
-                units: value.units,
+                unitPrice: value.unitPrice,
                 id: value._id
             }));
         }
         if (formData['functions']) {
             data['equipment']['functions'] = formData['functions'].map((value) => ({
-                units: value.units,
+                unitPrice: value.unitPrice,
                 id: value._id
             }));
         }
@@ -342,7 +342,7 @@ function ReceiveProjectFiles({
                                     </section>
                                 }
                                 {
-                                    contract.attachments.length > 0 &&
+                                    contract.attachments?.length > 0 &&
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize'> alike media </h2>
                                         {contract.attachments.map((attachment, index) =>

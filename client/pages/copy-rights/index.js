@@ -7,11 +7,12 @@ import { connect } from 'react-redux';
 import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
 import { useRouter } from 'next/router';
 import CopyRightCard from '../../components/pages/copy-writeer/copyRightCard';
+import { OpenPopUp } from '../../util/util';
 
 
 
 
-const Permit = ({ GetCopyrights, respond, api }) => {
+const Permit = ({ GetCopyrights, respond, api, islogin }) => {
     const Router = useRouter();
     const showLimit = 12;
     const page = 1;
@@ -27,7 +28,7 @@ const Permit = ({ GetCopyrights, respond, api }) => {
 
     useEffect(() => {
         if (limit)
-            GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page, subcategory:subcategory,tag:tag })
+            GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page, subcategory: subcategory, tag: tag })
     }, [limit, subcategory, tag])
 
     const targetRef = useRef(null);
@@ -52,11 +53,17 @@ const Permit = ({ GetCopyrights, respond, api }) => {
 
 
     const handlesetdata = (item) => {
-        setdata(item)
-        setIsOpen(!isOpen);
+        if (islogin) {
+            setdata(item)
+            setIsOpen(!isOpen);
+        }
+        else {
+            OpenPopUp("registration-required")
+        }
     };
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
+
     };
 
     return (
@@ -78,7 +85,10 @@ const Permit = ({ GetCopyrights, respond, api }) => {
                         <Formsubmited />
                     </div>
                 </section>
-                <CopyRigtherBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+                {
+                    islogin &&
+                    <CopyRigtherBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
+                }
             </Layout>
         </>
     );
@@ -86,6 +96,7 @@ const Permit = ({ GetCopyrights, respond, api }) => {
 
 const mapStateToProps = (state) => ({
     api: state.api,
+    islogin: state.auth.login,
     respond: state.api.GetCopyrights,
 });
 

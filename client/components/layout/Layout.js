@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { LogOut } from "../../redux/action/apis/auth/logout";
 import Chat from "../elements/chat";
 import ErrorAndLoadingHandling from "./assets/errorAndLoadingHandling";
+import RegistrationRequired from "../popsup/booking/RegistrationRequired";
 
 
 const Layout = ({
@@ -109,7 +110,7 @@ const Layout = ({
 
             <Chat/>
             <ErrorAndLoadingHandling/>
-
+            <RegistrationRequired/>
             {/* {isToggled && <div className="body-overlay-1" onClick={toggleClick}></div>} */}
 
             <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite, showTabs: showTabs, iSsticky: iSsticky }} />

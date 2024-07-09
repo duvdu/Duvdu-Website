@@ -58,7 +58,8 @@ const Saved = ({
                                 <div className="border rounded-full size-9 flex justify-center items-center">
                                     <Icon className="size-6 text-white" name="ellipsis-vertical" />
                                 </div>
-                            </Selector>}
+                            </Selector>
+                        }
                     </div>
                     <Link href={`/save/${id}`}>
                         <div className="projects cursor-pointer">

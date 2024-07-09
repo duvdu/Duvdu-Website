@@ -57,10 +57,10 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
 
     const Clients = () =>
         (pending?.length || ongoing?.length) ?
-            <section>
+            <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
-                    <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
+                    <section className='flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80">pending</h2>
                         {pending.map((data, index) => (
                             <Pending key={index} data={data} onClick={()=>toggleContractData(data)} />
@@ -82,10 +82,10 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
 
     const Creatives = () =>
         (pending?.length || ongoing?.length) ?
-            <section>
+            <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
-                    <section className='mt-11 lg:mt-36 flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
+                    <section className=' flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                         {pending.map((data, index) => (
                             <Pending2 key={index} data={data} onClick={()=>toggleContractData(data)} />

@@ -5,7 +5,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetAllMessageInChat = (id,limit) => {
     const req = "GetAllMessageInChat"
     return async dispatch => {
-        console.log(id,limit)
+        
         if (!id) {
             dispatch({ type: Types.RESET_CHAT });
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });

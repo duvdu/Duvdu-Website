@@ -84,7 +84,7 @@ const Dashboard = () => {
     return (
         <>
             <Layout shortheader={true}>
-                <DashboardPopup />
+                <DashboardPopup GoBackOnCancel={true} />
                 <div className='container flex gap-6 flex-col lg:flex-row py-6 px-3'>
                     <div className='w-full flex flex-col gap-3 sm:gap-6'>
                         <NextBadgeCard badge={badge} />
