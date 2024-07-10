@@ -25,13 +25,13 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const [cover, setCover] = useState(null);
     const router = useRouter();
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
+    
     useEffect(() => {
         if (isOpen) {
-            console.log(userInfo.category)
             UpdateFormData("profileImage", userInfo.profileImage);
             UpdateFormData("coverImage", userInfo.coverImage);
             UpdateFormData("name", userInfo.name);
-            UpdateFormData('category', (userInfo.category))
+            UpdateFormData('category', userInfo.category?._id || userInfo.category)
             UpdateFormData("address", userInfo.address);
             UpdateFormData("pricePerHour", userInfo.pricePerHour);
             UpdateFormData("about", userInfo.about);
@@ -68,6 +68,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
 
     }
     const converting = () => {
+
         const data = new FormData();
         const avoidFeilds = [
             'profileImage',
@@ -87,6 +88,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                 data.append(key, formData[key]);
             }
         });
+
         if (cover)
             data.append('coverImage', cover)
         if (profileImage)

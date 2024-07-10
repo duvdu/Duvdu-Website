@@ -4,7 +4,7 @@ import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
 import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import Icon from "../../Icons";
-import TimeLeft from "./counter";
+import TimeLeft from "./TimeLeft";
 
 const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClick }) => {
 

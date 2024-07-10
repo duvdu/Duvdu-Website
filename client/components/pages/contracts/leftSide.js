@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 import EmptyComponent from "./emptyComponent";
 import { toggleContractData } from "../../../redux/action/contractDetails";
+import Loading from "../../elements/loading.js";
 
 const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, RightSidehandleToggleClick }) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -146,7 +147,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                         (activeIndex === 0 ? <Clients /> : <Creatives />)
                     }
                     <div className="flex flex-col justify-center items-center h-body">
-                        <img className={(api.loading && api.req == "getAllContracts" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                    <Loading loadingIn = {"getAllContracts"} />
                     </div>
                 </div>
             </div>

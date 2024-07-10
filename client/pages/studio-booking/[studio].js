@@ -29,13 +29,19 @@ const Studio = ({
     const router = useRouter()
     const { studio: studioId } = router.query;
     const projects = studios_respond?.data || []
-    const studio = studio_respond?.data
+    const [studio, setStudio] = useState(studio_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
 
     useEffect(() => {
-        if (studioId)
+        setStudio(studio_respond?.data);
+    }, [studio_respond?.data]);
+
+    useEffect(() => {
+        if (studioId){
+            setStudio(null)
             Getstudio(studioId);
+        }
 
     }, [studioId]);
 

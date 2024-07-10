@@ -29,6 +29,7 @@ import Info from './info';
 import Projects from './projects';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import EmptyComponent from '../contracts/emptyComponent';
+import Loading from '../../elements/loading';
 
 
 
@@ -101,7 +102,6 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                     break;
                 case 'add-producer':
                     return <AddProducer />
-
                     break;
                 case 'project':
                     return <AddPost />
@@ -141,8 +141,8 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     function Allpage() {
         useEffect(() => {
             if (updateProfile_respond) {
-                updateProfile_respond.data.coverImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.coverImage
-                updateProfile_respond.data.profileImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.profileImage
+                // updateProfile_respond.data.coverImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.coverImage
+                // updateProfile_respond.data.profileImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.profileImage
                 setUserInfo(updateProfile_respond.data)
             }
         }, [updateProfile_respond])
@@ -152,7 +152,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data)
         }
-console.log(api)
+
         return (
             !userInfo ? <></> :
                 <>
@@ -160,10 +160,7 @@ console.log(api)
                     <Conver converPic={userInfo.coverImage} />
                     <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                         <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
-
-                            {
-                                <img className={(api.loading && api.req == "updateProfile" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
-                            }
+                        <Loading loadingIn = {"updateProfile"} />
                             <div className='relative px-6 sm:px-10'>
                                 <Info
                                     src={userInfo.profileImage}
@@ -231,7 +228,7 @@ console.log(api)
                 </>
         )
     }
-
+    
     return (
         <>
 
@@ -271,7 +268,7 @@ const mapStateToProps = (state) => ({
     user: state.user.profile,
     updateProfile_respond: state.api.updateProfile,
     projects: state.api.GetUserProject,
-    api: state.api,
+    // api: state.api,
 
 });
 

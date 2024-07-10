@@ -14,8 +14,6 @@ import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
 import CountdownTimer from '../../elements/CounterDownTimer';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import AddToolUsed from '../../popsup/create/addToolUsed';
-import ListInput from '../../elements/listInput';
-import CustomSlider from '../../elements/customSlider';
 import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
 function ReceiveProjectFiles({
@@ -44,7 +42,6 @@ function ReceiveProjectFiles({
     const [details, setDetails] = useState(null);
     const [totalPrice, setTotalPrice] = useState(null);
     const [deadline, setDeadline] = useState(null);
-
 
     const [canEdit, setCanEdit] = useState(null);
 
@@ -108,24 +105,24 @@ function ReceiveProjectFiles({
     const handleToolChange = (e, index) => {
         let value = e.target.value;
         if (!isNaN(value) && parseInt(value) < 0) {
-          value = Math.abs(Number(value));
+            value = Math.abs(Number(value));
         }
         const tools = [...formData.tools];
         tools[index]['unitPrice'] = value;
         UpdateFormData("tools", tools);
     };
-        
+
     const handleFunctionChange = (e, index) => {
         let value = e.target.value;
         if (!isNaN(value) && parseInt(value) < 0) {
-          value = Math.abs(Number(value));  
+            value = Math.abs(Number(value));
         }
         const tools = [...formData.functions];
         tools[index]['unitPrice'] = value;
         UpdateFormData("functions", tools);
-      };
-      
-    
+    };
+
+
     useEffect(() => {
         if (takeAction_respond) {
             getAllContracts()
@@ -282,7 +279,6 @@ function ReceiveProjectFiles({
             ))
 
 
-
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -304,21 +300,21 @@ function ReceiveProjectFiles({
                                         }
                                     </span>
                                 </section>
-                               {
-                                (getType() == "project" || getType() == "rental") &&
-                                <section className='w-full flex-col'>
-                                    <h2 className='opacity-60 capitalize mb-3'> original gig </h2>
-                                    <div className='w-full'>
-                                        <div className="h-20 w-full rounded-full relative overflow-hidden">
-                                            <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
-                                            <div className="absolute z-20 flex items-center w-full h-full p-7">
-                                                <div className="w-full text-center p-20">
-                                                    <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{contract.project}</span>
+                                {
+                                    (getType() == "project" || getType() == "rental") &&
+                                    <section className='w-full flex-col'>
+                                        <h2 className='opacity-60 capitalize mb-3'> original gig </h2>
+                                        <div className='w-full'>
+                                            <div className="h-20 w-full rounded-full relative overflow-hidden">
+                                                <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
+                                                <div className="absolute z-20 flex items-center w-full h-full p-7">
+                                                    <div className="w-full text-center p-20">
+                                                        <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{contract.project}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </section>}
+                                    </section>}
                                 <section className='w-full hidden'>
                                     <h2 className='opacity-60 capitalize mb-3'> project type </h2>
                                     <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
@@ -366,28 +362,30 @@ function ReceiveProjectFiles({
                                             <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
                                             {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
                                         </div>
-                                        <div className='w-full mt-5'>
-                                            <h2 className='opacity-60 capitalize mb-3'> Address </h2>
-                                            <div className='flex gap-4'>
-                                                <div>
-                                                    <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
-                                                        <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
-                                                    </div>
-                                                </div>
-                                                <div>
+                                        <a
+                                            href={`https://www.google.com/maps?q=${contract.location.lat},${contract.location.lng}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className='opacity-85 text-base'
+                                        >
+                                            <div className='w-full mt-5'>
+                                                <h2 className='opacity-60 capitalize mb-3'> Address </h2>
+                                                <div className='flex gap-4'>
                                                     <div>
-                                                        <span className='opacity-85 text-base'>
-                                                            {contract.address}
-                                                        </span>
+                                                        <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
+                                                            <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
+                                                        </div>
                                                     </div>
-                                                    <div className='hidden'>
-                                                        <span className='text-xs text-[#747688]'>
-                                                            Cairo, Egypt
-                                                        </span>
+                                                    <div>
+                                                        <div>
+                                                            <span className='opacity-85 text-base'>
+                                                                {contract.address}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                     <div className='w-full'>
                                         <div className='w-full'>

@@ -7,6 +7,7 @@ import { GetTeamProject } from "../../../redux/action/apis/teamproject/getone";
 import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
 import AppButton from "../../elements/button";
+import Loading from "../../elements/loading";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
 
@@ -156,7 +157,7 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
                     <AddToTeamCard goback={goback} info={value} key={index} onChoose={() => openpopUp(value)} />
                 ))}
             </div>
-            <img className={(api.loading && api.req == "FindUser" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+            <Loading loadingIn = {"FindUser"} />
         </>
     )
 };
