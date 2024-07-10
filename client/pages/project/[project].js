@@ -35,6 +35,7 @@ const Projects = ({
     const projects = projects_respond?.data || []
     const project = project_respond?.data
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenFav, setIsOpenFav] = useState(false);
 
     useEffect(() => {
         if (projectId) {
@@ -49,12 +50,15 @@ const Projects = ({
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
+    const toggleDrawerAddFav = () => {
+        setIsOpenFav(!isOpenFav);
+    };
     return (
         <>
             <Layout >
                 {project &&
                     <>
-                        <AddToSaved />
+                        <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav}/>
                         <Report />
                         <ThanksMSG />
                         <Share url={window.location.href} title={'See that 👀'} />
@@ -80,7 +84,7 @@ const Projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} canBook={project.user.username != user?.username}/>
+                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={project.user.username != user?.username}/>
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>

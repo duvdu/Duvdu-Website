@@ -96,10 +96,9 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                         <span className='text-base font-bold capitalize'>{user.name}</span>
                                         <span className='flex items-start gap-1 opacity-40'>
                                             <div>
-                                            <Icon className="w-3 ml-2" name="location-dot" />
+                                            <Icon className="w-3" name="location-dot" />
                                             </div>
                                             <span className="text-xs font-semibold capitalize">{user.address || 'NONE'}</span>
-                                            
                                         </span>
                                     </div>
                                 </div>

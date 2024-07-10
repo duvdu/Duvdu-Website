@@ -62,7 +62,7 @@ const AddProducer = ({
     const handleInputChange = useCallback(
         (event) => {
             const { name, value } = event.target;
-            if (!isNaN(value)) {
+            if (!isNaN(value) && parseInt(value) < 0) {
                 value = Math.abs(Number(value));
             }
             UpdateFormData(name, name === 'maxBudget' || name === 'minBudget' ? parseInt(value) : value);

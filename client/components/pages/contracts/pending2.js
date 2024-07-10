@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 import { formattedCreatedAt } from '../../../util/format-date';
 
-const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
+const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
     const statuses = [
         { value: 'accept' },
         { value: 'reject' },
@@ -14,7 +14,7 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
     const [timeLeft, setTimeLeft] = useState("");
 
     const handleDropdownSelect = (value) => {
-        takeAction({id: data._id, data : {"action": value}})
+        takeAction({ id: data._id, data: { "action": value } })
     };
 
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
@@ -57,30 +57,27 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
                 </div>
                 {/*********/}
                 {/* deadline */}
-                
+
                 <div className='text-lg ml-auto mr-auto'>
-                {
-                !data.contract.status?.includes("waiting-for-pay") ?
-                <>
-                    <span className='opacity-50 mx-1'>
-                        will respond in
-                    </span>
-                    <span className='text-primary'>
-                        {timeLeft}
-                    </span>
-                </> :
-                    <span className='opacity-50 mx-1'>
-                        wait for payment
-                    </span>
-                }
+                    {
+                        !data.contract.status?.includes("waiting-for-pay") ?
+                            <>
+                                <span className='opacity-50 mx-1'>
+                                    will respond in
+                                </span>
+                                <span className='text-primary'>
+                                    {timeLeft}
+                                </span>
+                            </> :
+                            <span className='opacity-50 mx-1'>
+                                wait for payment
+                            </span>
+                    }
                 </div>
             </div>
             {/*********/}
             {/* dropdown */}
-            <Selector 
-            options={statuses} 
-            onSelect={handleDropdownSelect}
-            className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer hidden" />
+
             {/*********/}
         </div>
     );

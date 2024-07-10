@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import { formattedDeadline } from "../../../util/format-date";
-import EmptyComponent from "./emptyComponent";
+import { toggleContractData } from "../../../redux/action/contractDetails";
 
-const RightSide = ({ getAllContracts_respond, user }) => {
-    const IsImSp = () => {
-        return sp?.username == user?.username
-    }
+const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex }) => {
+
+
+
     const handleStatus = (status) => {
         switch (status) {
             case 'canceled':
@@ -34,7 +34,13 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         }
     }
 
-    const data = getAllContracts_respond?.data?.filter(data => handleStatus(data.contract.status) < 0)
+    const data = getAllContracts_respond?.
+    data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username) )
+
+    // useEffect(() => {
+    //     const _data = data.filter(value => tabindex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
+    //     setData(_data)
+    // }, [tabindex, data])
 
     const Title = ({ title }) => <h2 className="font-bold text-start text-lg capitalize opacity-80 mt-3">{title}</h2>
 
@@ -56,7 +62,9 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
         return <>
             {/* max-w-[370px] ahmed */}
-            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4' >
+            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4'
+                onClick={() => toggleContractData(data)}
+            >
                 {/* dropdown */}
                 <div className="absolute right-6 hidden">
                     <Selector options={[
@@ -153,7 +161,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                             }
                         </div>
                     </div>
-                </div> : <div className="w-80"/>
+                </div> : <div className="w-80" />
             }
         </>
     );
@@ -164,6 +172,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    toggleContractData
 
 };
 

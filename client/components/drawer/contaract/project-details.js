@@ -100,14 +100,14 @@ function ReceiveProjectFiles({
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (!isNaN(value)) {
+        if (!isNaN(value) && parseInt(value) < 0) {
             value = Math.abs(Number(value));
         }
         UpdateFormData(name, value)
     };
     const handleToolChange = (e, index) => {
         let value = e.target.value;
-        if (!isNaN(value)) {
+        if (!isNaN(value) && parseInt(value) < 0) {
           value = Math.abs(Number(value));
         }
         const tools = [...formData.tools];
@@ -117,7 +117,7 @@ function ReceiveProjectFiles({
         
     const handleFunctionChange = (e, index) => {
         let value = e.target.value;
-        if (!isNaN(value)) {
+        if (!isNaN(value) && parseInt(value) < 0) {
           value = Math.abs(Number(value));  
         }
         const tools = [...formData.functions];
@@ -247,7 +247,7 @@ function ReceiveProjectFiles({
         UpdateFormData(arrayName, newArray);
     };
     // console.log(takeAction_respond)
-    console.log(contractDetails)
+    // console.log(contractDetails)
     // console.log(contract)
     // console.log(customer)
     // console.log(sp)
@@ -304,6 +304,8 @@ function ReceiveProjectFiles({
                                         }
                                     </span>
                                 </section>
+                               {
+                                (getType() == "project" || getType() == "rental") &&
                                 <section className='w-full flex-col'>
                                     <h2 className='opacity-60 capitalize mb-3'> original gig </h2>
                                     <div className='w-full'>
@@ -316,7 +318,7 @@ function ReceiveProjectFiles({
                                             </div>
                                         </div>
                                     </div>
-                                </section>
+                                </section>}
                                 <section className='w-full hidden'>
                                     <h2 className='opacity-60 capitalize mb-3'> project type </h2>
                                     <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>

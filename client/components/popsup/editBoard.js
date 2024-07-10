@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from '../elements/popup';
 import AppButton from '../elements/button';
 
-function EditBoard({onSbmit ,id}) {
+function EditBoard({onSbmit ,id , defultValue}) {
     
     const [board, setBoardName] = useState('');
     const [boardError, setBoardError] = useState({ isError: false, message: '' });
+    useEffect(()=>{
+        setBoardName(defultValue)
+    },[defultValue])
+    
     const handleSubmit = (e) => {
         if (board.length < 8) {
             setBoardError({ isError: true, message: 'some error' });

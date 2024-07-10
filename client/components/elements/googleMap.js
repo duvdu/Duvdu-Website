@@ -120,7 +120,6 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
     return (
         <>
             <input
-                placeholder='address'
                 name='address'
                 className={inputclass || "inputStyle1"}
                 ref={inputRef}

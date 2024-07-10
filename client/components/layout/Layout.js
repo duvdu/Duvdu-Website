@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { GetNotifications, cleanupSocket } from "../../redux/action/apis/realTime/notification/getAllNotification";
-import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
 import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
 import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
 import { getCategory } from "../../redux/action/apis/category/getCategories";

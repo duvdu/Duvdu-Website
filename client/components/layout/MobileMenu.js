@@ -6,7 +6,7 @@ import Search from "../elements/SearchMobile";
 import { connect } from "react-redux";
 
 
-const MobileMenu = ({ isToggled, toggleClick, categories,islogin }) => {
+const MobileMenu = ({ isToggled, toggleClick, categories,islogin,user }) => {
 
     const [page, setpage] = useState(isToggled);
     useEffect(() => {
@@ -58,7 +58,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories,islogin }) => {
                 {
                     [
                         {
-                            url: '/creative/youseff_abdulla',
+                            url: `/creative/${user.username}`,
                             icon: 'user',
                             name: 'profile',
                         },
@@ -245,6 +245,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories,islogin }) => {
 const mapStateToProps = (state) => ({
     categories: state.api.getCategory,
     islogin: state.auth.login,
+    user: state.user.profile,
 
 });
 

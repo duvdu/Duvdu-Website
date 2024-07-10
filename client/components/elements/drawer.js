@@ -19,9 +19,9 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "", pad
         // Cleanup function
         return () => {
             noScroll(false)
-            window.removeEventListener('keydown', handleKeyDown);  // Remove the event listener when the component unmounts or isOpen changes
+            window.removeEventListener('keydown', handleKeyDown);  
         };
-    }, [isOpen, toggleDrawer]);  // Ensure effect runs when isOpen or toggleDrawer changes
+    }, [isOpen, toggleDrawer]);  
 
     return (
         <>

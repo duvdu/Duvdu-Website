@@ -62,15 +62,6 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
 
                 {/*********/}
             </div>
-            <Selector
-                onSelect={handleDropdownSelect}
-                iconclassName={'text-white'}
-                options={statuses}
-                className="h-min">
-                <div className="border rounded-full size-9 flex justify-center items-center">
-                    <Icon className="size-6 text-white" name="ellipsis-vertical" />
-                </div>
-            </Selector>
         </div>
     );
 };

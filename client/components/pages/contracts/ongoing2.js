@@ -3,32 +3,6 @@ import dateFormat from "dateformat";
 import Selector from "../../elements/CustomSelector";
 import { formattedCreatedAt, formattedDeadline } from "../../../util/format-date";
 
-// const fakedata = {
-//     "_id": "6664479cc9423563d0feb5b8",
-//     "sourceUser": "6658a16ac47d9bb1295dd6fb",
-//     "targetUser": {
-//         "_id": "6658a16ac47d9bb1295dd6fb",
-//         "name": "mos3ad",
-//         "username": "mos3ad",
-//         "profileImage": "https://duvdu-s3.s3.eu-central-1.amazonaws.com/auth/1717536748808_224f87d6b6e3.jpg",
-//         "isOnline": false,
-//         "projectsView": 0,
-//         "rank": {
-//             "nextRangPercentage": 0
-//         }
-//     },
-//     "project": "6662608350f22811283145a2",
-//     "book": "6664477ec9423563d0feb5b5",
-//     "ref": "copyrights-booking",
-//     "startDate": "2024-06-08T11:59:24.612Z",
-//     "deadline": "2024-06-30T21:00:00.000Z",
-//     "status": "pending",
-//     "createdAt": "2024-06-08T11:59:24.614Z",
-//     "updatedAt": "2024-06-08T11:59:24.614Z",
-//     "__v": 0,
-//     "remainingTime": -12902
-// };
-
 const Ongoing2 = ({ data,onClick }) => {
     
     const Deadline = formattedDeadline(data?.contract?.deadline)
@@ -68,26 +42,6 @@ const Ongoing2 = ({ data,onClick }) => {
                 </div>
                 {/*********/}
             </div>
-            <Selector
-                iconclassName={'text-white'}
-                options={[
-                    {
-                        value: "option 1",
-                        onclick: () => { },
-                    },
-                    {
-                        value: "option 2",
-                        onclick: () => { },
-                    },
-                    {
-                        value: "option 3",
-                        onclick: () => { },
-                    }
-                ]} className="h-min">
-                <div className="border rounded-full size-9 flex justify-center items-center">
-                    <Icon className="size-6 text-white" name="ellipsis-vertical" />
-                </div>
-            </Selector>
         </div>
     );
 };

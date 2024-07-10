@@ -30,7 +30,7 @@ function Info({
                     <div>
                         <Icon className='opacity-50 mr-2 size-4 mt-1' name='location-dot' />
                     </div>
-                    <span className="opacity-50 capitalize text-lg">{location}</span>
+                    <span className="opacity-50 capitalize text-lg line-clamp-2">{location}</span>
                 </span>
             </div>
         </div>

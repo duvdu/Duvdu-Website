@@ -116,7 +116,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-    console.log(validateRequiredFields())
+    
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -129,13 +129,13 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
-        if (!isNaN(value)) {
+        if (!isNaN(value) && parseInt(value) < 0) {
             value = Math.abs(Number(value));
         }
         UpdateFormData(name, value);
     };
 
-
+console.log(formData.creatives)
     const removeFromArray = (arrayName, index) => {
         const newArray = [...formData[arrayName]]; // Create a new array to avoid mutating the original state
         newArray.splice(index, 1); // Remove the item at the specified index
@@ -174,9 +174,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
             pathname: `/creative/${auth.username}`,
         })
     }
-
-
-    console.log(formData.creatives)
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
