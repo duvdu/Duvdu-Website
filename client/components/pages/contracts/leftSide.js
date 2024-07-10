@@ -8,7 +8,7 @@ import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 import EmptyComponent from "./emptyComponent";
 import { toggleContractData } from "../../../redux/action/contractDetails";
 
-const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => {
+const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, RightSidehandleToggleClick }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [data, setData] = useState([]);
     const handleStatus = (status) => {
@@ -32,7 +32,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
             case 'rejected':
                 return -1;
             default:
-                return "Unknown"; 
+                return "Unknown";
         }
     }
     useEffect(() => {
@@ -40,11 +40,12 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
     }, [])
 
     useEffect(() => {
-        const _data = respond?.data.filter(value => activeIndex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username )
+        const _data = respond?.data.filter(value => activeIndex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
         setData(_data)
-    }, [activeIndex , respond?.data])
+    }, [activeIndex, respond?.data])
 
     const handleToggleClick = (index) => {
+        RightSidehandleToggleClick(index)
         setActiveIndex(index);
     };
     const Empty = () => <div className="mt-10 lg:mt-32">
@@ -63,7 +64,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
                     <section className='flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80">pending</h2>
                         {pending.map((data, index) => (
-                            <Pending key={index} data={data} onClick={()=>toggleContractData(data)} />
+                            <Pending key={index} data={data} onClick={() => toggleContractData(data)} />
                         ))}
                     </section>
                 }
@@ -72,7 +73,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
-                            <Ongoing key={index} data={data} onClick={()=>toggleContractData(data)} />
+                            <Ongoing key={index} data={data} onClick={() => toggleContractData(data)} />
                         ))}
 
                     </section>
@@ -88,7 +89,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
                     <section className=' flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                         {pending.map((data, index) => (
-                            <Pending2 key={index} data={data} onClick={()=>toggleContractData(data)} />
+                            <Pending2 key={index} data={data} onClick={() => toggleContractData(data)} />
                         ))}
                     </section>
                 }
@@ -97,7 +98,7 @@ const LeftSide = ({ getAllContracts, respond, api,toggleContractData,user }) => 
                     <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
-                            <Ongoing2 key={index} data={data} onClick={()=>toggleContractData(data)} />
+                            <Ongoing2 key={index} data={data} onClick={() => toggleContractData(data)} />
                         ))}
 
                         {/* <Ongoing2 /> */}

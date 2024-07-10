@@ -31,6 +31,7 @@ const Studio = ({
     const projects = studios_respond?.data || []
     const studio = studio_respond?.data
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenFav, setIsOpenFav] = useState(false);
 
     useEffect(() => {
         if (studioId)
@@ -51,14 +52,16 @@ const Studio = ({
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
-    
+    const toggleDrawerAddFav = () => {
+        setIsOpenFav(!isOpenFav);
+    };
     return (
         <>
             <Layout >
                 {studio &&
                     (
                         <>
-                        <AddToSaved />
+                        <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav}/>
                         <AddToTeam />
                             <Report />
                             <ThanksMSG />
@@ -83,7 +86,7 @@ const Studio = ({
                                 </div>
                             </div>
                             {!chat_respond &&
-                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} canBook={studio.user.username != user?.username} />}
+                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={studio.user.username != user?.username} />}
                             <StudioBooking data={studio} isOpen={isOpen} toggleDrawer={toggleDrawer} />
 
                         </>

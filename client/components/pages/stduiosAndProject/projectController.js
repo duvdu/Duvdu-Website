@@ -3,14 +3,22 @@ import { connect } from 'react-redux';
 import Controller from '../../elements/controllers';
 import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/messages/getAllMessageInChat';
 import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
-import AddToSaved from '../../popsup/addToSaved';
 import Share from '../../popsup/Share';
 import { OpenPopUp } from '../../../util/util';
 import Icon from '../../Icons';
 import ArrowBtn from '../../elements/arrowBtn';
 import { useRouter } from 'next/router';
 
-const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, messages, SwapProjectToFav, auth, swapProjectToFav_respond, canBook, api }) => {
+const ProjectController = ({ initialData, 
+    toggleDrawer, 
+    GetAllMessageInChat, 
+    messages, 
+    SwapProjectToFav, 
+    auth, 
+    swapProjectToFav_respond, 
+    canBook, 
+    toggleDrawerAddFav,
+    api }) => {
     const router = useRouter()
     const { studio, project } = router.query;
     const projectId = studio || project;
@@ -67,7 +75,7 @@ const ProjectController = ({ initialData, toggleDrawer, GetAllMessageInChat, mes
                             </div>
                             {auth.login && (
                                 <>
-                                    <div data-popup-toggle="popup" data-popup-target="add-to-saved-project" className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
+                                    <div onClick={toggleDrawerAddFav} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
                                         <Icon className="text-white text-xl" name="plus" />
                                     </div>
                                     <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">

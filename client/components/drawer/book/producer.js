@@ -98,7 +98,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        if (!isNaN(value)) {
+        if (!isNaN(value) && parseInt(value) < 0) {
             value = Math.abs(Number(value));
         }
         UpdateFormData(name, value)

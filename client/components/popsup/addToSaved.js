@@ -9,15 +9,18 @@ import { ClosePopUp, OpenPopUp } from '../../util/util';
 import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 import Icon from "../../components/Icons";
+import Drawer from '../elements/drawer';
 
 
 function AddToSaved({
     getBoards_respond,
     AddProjectToBoard,
     addProjectToBoard_respond,
-    GetBoards
+    GetBoards,
+    toggleDrawerAddFav,
+    isOpen
+
 }) {
-    const [currentStep, setCurrentStep] = useState('step1');
     const router = useRouter();
     const { project: projectId } = router.query;
     const boards = getBoards_respond?.data || []
@@ -33,25 +36,31 @@ function AddToSaved({
     const handleNextStep = (id) => {
         AddProjectToBoard({ idboard: id, idproject: projectId })
     };
-
+    
     const init = () => {
         GetBoards({})
     };
     const isProjectInBoard = (board, projectId) => {
-          for (const project of board.projects) {
+        for (const project of board.projects) {
             if (project.project._id === projectId) {
-              
-              return true;
+                return true;
             }
-          }
+        }
         
         return false;
-      }
+    }
+    
+    const close = () => {
+        toggleDrawerAddFav()
+        ClosePopUp('addProjectToBoard-popup')
+    };
+    
+
     return (
         <>
-            <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To Team" onCancel={() => { AddProjectToBoard({ idboard: -1 }) }} />
-            <Popup id="add-to-saved-project" onCancel={() => setCurrentStep("step1")} header={"Add To Saved Projects"} onOpen={init}>
-                <div className='flex flex-col h-[75vh] w-full sm:w-[565px] overflow-y-scroll'>
+            <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To Team" onCancel={close} />
+            <Drawer className='z-30' toggleDrawer={toggleDrawerAddFav} name={'Add To Saved Projects'} isOpen={isOpen}>
+                <div className='flex flex-col w-full sm:w-[565px] overflow-y-scroll'>
                     {boards?.map((board, index) => !isProjectInBoard(board, projectId) ? (
                         <div key={index} className="h-20 rounded-full mt-9 relative overflow-hidden cursor-pointer" onClick={() => handleNextStep(board._id)}>
                             <div className="absolute z-20 flex items-center w-full h-full p-7">
@@ -63,7 +72,10 @@ function AddToSaved({
                                 </div>
                             </div>
                             {board.projects.length == 0 ?
-                                <div/> : <img className="absolute -translate-y-1/2 blur-sm" src={board.projects[0].project.cover} />}
+                            <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
+                            <Icon className="w-44" name={'dvudu-image'} />
+                        </div> : <img className="absolute -translate-y-1/2 blur-sm" src={board.projects[0].project.cover} />}
+                                
                         </div>
                     ) : <></>
                     )}
@@ -79,7 +91,7 @@ function AddToSaved({
                         </div>
                     )}
                 </div>
-            </Popup>
+            </Drawer>
         </>
     );
 }

@@ -15,10 +15,11 @@ import { useRouter } from 'next/router';
 
 
 
-function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, resetForm, formData }) {
+function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, resetForm, formData, updateProfile_respond }) {
 
     if (!user) return <></>
 
+    const [userInfo, setUserInfo] = useState(user);
     const [error, setError] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
     const [cover, setCover] = useState(null);
@@ -26,23 +27,33 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
     useEffect(() => {
         if (isOpen) {
-            UpdateFormData("profileImage", user.profileImage);
-            UpdateFormData("coverImage", user.coverImage);
-            UpdateFormData("name", user.name);
-            UpdateFormData('category', user.category)
-            UpdateFormData("address", user.address);
-            UpdateFormData("pricePerHour", user.pricePerHour);
-            UpdateFormData("about", user.about);
-            UpdateFormData("location[lat]", user.location?.lat);
-            UpdateFormData("location[lng]", user.location?.lng);
+            console.log(userInfo.category)
+            UpdateFormData("profileImage", userInfo.profileImage);
+            UpdateFormData("coverImage", userInfo.coverImage);
+            UpdateFormData("name", userInfo.name);
+            UpdateFormData('category', (userInfo.category))
+            UpdateFormData("address", userInfo.address);
+            UpdateFormData("pricePerHour", userInfo.pricePerHour);
+            UpdateFormData("about", userInfo.about);
+            UpdateFormData("location[lat]", userInfo.location?.lat);
+            UpdateFormData("location[lng]", userInfo.location?.lng);
         }
         else {
             resetForm()
             setProfileImage(null)
             setCover(null)
         }
-    }, [isOpen])
+    }, [isOpen,userInfo])
 
+    useEffect(() => {
+        setUserInfo(user)
+    }, [user])
+
+    useEffect(() => {
+        if (updateProfile_respond) {
+            setUserInfo(updateProfile_respond.data)
+        }
+    }, [updateProfile_respond])
 
     function UpdateKeysAndValues(obj, prefix = '') {
         Object.keys(obj).forEach(key => {
@@ -241,6 +252,7 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
     isDark: state.setting.ISDARK,
     getheaderpopup: state.setting.headerpopup,
+    updateProfile_respond: state.api.updateProfile,
     formData: state.addproject.formData,
 });
 

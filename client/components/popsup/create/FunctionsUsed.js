@@ -44,11 +44,11 @@ function FunctionUsed({ onSubmit }) {
 
     return (
         <>
-            <Comman id={"Addfunctions"} header={"Add Tool Used"} onCancel={onCancel}>
+            <Comman id={"Addfunctions"} header={"Add function Used"} onCancel={onCancel}>
                 <div className='flex flex-col justify-between h-full'>
                     <div className='flex flex-col gap-2'>
                         <InputFeid placeholder={"Function name..."} onChange={handleNameChange} errerMsg={error.name} sendValue={name} />
-                        <InputFeid type='number' placeholder={"Tool price per unit"} onChange={handleFeesChange} errerMsg={error.unitPrice} sendValue={unitPrice} />
+                        <InputFeid type='number' placeholder={"function price per unit"} onChange={handleFeesChange} errerMsg={error.unitPrice} sendValue={unitPrice} />
                     </div>
                     <div onClick={onClick}>
                         <AppButton className={'w-full'}>

@@ -87,7 +87,8 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
             ...prev,
             name: selectedCreative.name,
             profileImage: selectedCreative.profileImage,
-            username: selectedCreative.username
+            username: selectedCreative.username,
+            _id:selectedCreative._id
         }));
         setCreatives([])
     };

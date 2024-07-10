@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import Icon from "../Icons";
 import AppButton from '../elements/button';
+import { ClosePopUp } from '../../util/util';
 
-function DeleteBoard() {
-    const [showDirectorConfirmed, setShowDirectorConfirmed] = useState(false);
+function DeleteBoard({onClick,id}) {
 
     const toggleDirectorConfirmed = () => {
-        setShowDirectorConfirmed(true);
+        ClosePopUp("delete-board")
+        onClick?.(id)
     }
 
     return (
         <>
-            <Popup id='delete-board' header={"Delete Board"} >
+            <Popup id={'delete-board-'+id} header={"Delete Board"} >
                 <div method="post" className='mt-12 mx-5'>
-                    <span className="text-lg font-[#2F2F2F]"> Are you sure you want to delete <span className="text-[#2F2F2F] dark:text-white">Inspirations board?</span></span>
+                    <span className="text-lg font-[#2F2F2F]"> Are you sure you want to delete <span className="text-[#2F2F2F] dark:text-white">the board?</span></span>
                     <div className='mt-12'/>
                     <AppButton onClick={toggleDirectorConfirmed} className={'w-full'} color={"#D30000"} >
                         Delete
