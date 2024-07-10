@@ -106,11 +106,12 @@ const Saved = ({
             });
         }
     }, [getFavList_respond]);
+    console.log(createBoard_respond , updateBoard_respond , deleteSavedBoard_respond)
     useEffect(() => {
+        
         if (createBoard_respond || updateBoard_respond || deleteSavedBoard_respond) {
             GetBoards()
             GetFavList({})
-            DeleteSavedBoard(-1)
         }
         ClosePopUp("create-new-board")
     }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])
