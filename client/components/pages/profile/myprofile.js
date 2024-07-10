@@ -58,7 +58,7 @@ const profile = {
     ],
 };
 
-function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, getMyprofile, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, getMyprofile, user, updateProfile_respond, api }) {
 
     const route = useRouter()
 
@@ -141,8 +141,8 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     function Allpage() {
         useEffect(() => {
             if (updateProfile_respond) {
-                updateProfile_respond.data.coverImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+ updateProfile_respond.data.coverImage
-                updateProfile_respond.data.profileImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/"+ updateProfile_respond.data.profileImage
+                updateProfile_respond.data.coverImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.coverImage
+                updateProfile_respond.data.profileImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.profileImage
                 setUserInfo(updateProfile_respond.data)
             }
         }, [updateProfile_respond])
@@ -150,85 +150,88 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
         function updateInstantState(checked) {
             const data = new FormData();
             data.append('isAvaliableToInstantProjects', checked)
-            updateProfile(data, false)
+            updateProfile(data)
         }
-
+console.log(api)
         return (
-        !userInfo ? <></>:
-            <>
-                <Followers id={"show-followers"} />
-                <Conver converPic={userInfo.coverImage} />
-                <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
-                    <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
+            !userInfo ? <></> :
+                <>
+                    <Followers id={"show-followers"} />
+                    <Conver converPic={userInfo.coverImage} />
+                    <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
+                        <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
 
-                        <div className='relative px-6 sm:px-10'>
-                            <Info
-                                src={userInfo.profileImage}
-                                location={userInfo.address || 'NONE'}
-                                occupation={userInfo?.category?.title || '---'}
-                                personalName={userInfo.name}
-                                popularity={{
-                                    likes: userInfo.likes,
-                                    followers: userInfo.followCount.followers,
-                                    views: userInfo.profileViews,
-                                }}
-                                rank={"---"}
-                                rates={userInfo.rate.totalRates.toFixed(1)}
-                                isMe={true}
-                            />
-                        </div>
-
-                        <div className='flex items-center justify-center my-7 gap-2'>
-                            <Switch onSwitchChange={updateInstantState} value={userInfo.isAvaliableToInstantProjects} id='profile-instant' />
-                            <span className={userInfo.isAvaliableToInstantProjects ? "" : "opacity-70"}>
-                                Instant Projects is {userInfo.isAvaliableToInstantProjects ? "open" : "disabled"}
-                            </span>
-                        </div>
-
-                        <div className='h-divider'></div>
-                        <div className='px-10'>
-                            <h3 className='pt-6' id='about-header'>about</h3>
-                            <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
-                        </div>
-                        <div className='h-divider my-7'></div>
-                        <div className='px-10'>
-                            <div className='flex flex-col gap-4'>
-                                {profile.comments.map((comment) => (
-                                    <Comment key={comment.id} comment={comment} />
-                                ))}
+                            {
+                                <img className={(api.loading && api.req == "updateProfile" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                            }
+                            <div className='relative px-6 sm:px-10'>
+                                <Info
+                                    src={userInfo.profileImage}
+                                    location={userInfo.address || 'NONE'}
+                                    occupation={userInfo?.category?.title || '---'}
+                                    personalName={userInfo.name}
+                                    popularity={{
+                                        likes: userInfo.likes,
+                                        followers: userInfo.followCount.followers,
+                                        views: userInfo.profileViews,
+                                    }}
+                                    rank={"---"}
+                                    rates={userInfo.rate.totalRates.toFixed(1)}
+                                    isMe={true}
+                                />
                             </div>
+
+                            <div className='flex items-center justify-center my-7 gap-2'>
+                                <Switch onSwitchChange={updateInstantState} value={userInfo.isAvaliableToInstantProjects} id='profile-instant' />
+                                <span className={userInfo.isAvaliableToInstantProjects ? "" : "opacity-70"}>
+                                    Instant Projects is {userInfo.isAvaliableToInstantProjects ? "open" : "disabled"}
+                                </span>
+                            </div>
+
+                            <div className='h-divider'></div>
+                            <div className='px-10'>
+                                <h3 className='pt-6' id='about-header'>about</h3>
+                                <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
+                            </div>
+                            <div className='h-divider my-7'></div>
+                            <div className='px-10'>
+                                <div className='flex flex-col gap-4'>
+                                    {profile.comments.map((comment) => (
+                                        <Comment key={comment.id} comment={comment} />
+                                    ))}
+                                </div>
+                            </div>
+
+                            {
+                                !showAddPanal &&
+                                <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
+                                    <Controller>
+                                        <div data-popup-toggle="popup" data-popup-target="select-type" className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
+                                            <Icon className='text-white text-2xl' name={'plus'} />
+                                        </div>
+                                        <div onClick={() => onOpenEdit()} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
+                                            <Icon className='text-white text-2xl' name={'pen'} />
+                                        </div>
+                                    </Controller>
+                                </div>
+                            }
                         </div>
 
-                        {
-                            !showAddPanal &&
-                            <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
-                                <Controller>
-                                    <div data-popup-toggle="popup" data-popup-target="select-type" className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
-                                        <Icon className='text-white text-2xl' name={'plus'} />
-                                    </div>
-                                    <div onClick={() => onOpenEdit()} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
-                                        <Icon className='text-white text-2xl' name={'pen'} />
-                                    </div>
-                                </Controller>
-                            </div>
-                        }
+                        <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
+                            {
+                                projects.length == 0 &&
+                                <EmptyComponent message="No Projects Yet!" />
+
+                            }
+
+                            <Projects projects={projects} />
+
+                        </div>
                     </div>
-
-                    <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
-                        {
-                            projects.length == 0 &&
-                            <EmptyComponent message="No Projects Yet!" />
-
-                        }
-
-                        <Projects projects={projects} />
-
-                    </div>
-                </div>
-            </>
+                </>
         )
     }
-    
+
     return (
         <>
 
@@ -267,7 +270,9 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
 const mapStateToProps = (state) => ({
     user: state.user.profile,
     updateProfile_respond: state.api.updateProfile,
-    projects: state.api.GetUserProject
+    projects: state.api.GetUserProject,
+    api: state.api,
+
 });
 
 const mapDispatchToProps = {

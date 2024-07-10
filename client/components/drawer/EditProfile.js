@@ -194,7 +194,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             className="edit app-field"
                         />
                     </div> */}
-                    <div className='mb-4 w-full'>
+                    <div className='mb-4 w-full hidden'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             price per hour
                         </span>
