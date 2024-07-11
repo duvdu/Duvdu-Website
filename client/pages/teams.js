@@ -10,6 +10,7 @@ import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
 import { DeleteTeamProjects } from "../redux/action/apis/teamproject/deleteProject";
 import EditFilesTeam from "../components/popsup/teamProject/EditFilesTeam";
 import { useRouter } from "next/router";
+import Loading from "../components/elements/loading";
 
 const Card = ({ data, DeleteTeamProjects }) => {
     const { cover, creatives, title, _id, status } = data;
@@ -146,7 +147,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                             <Empty />
                         )}
                 </div>
-                <img className={(api.loading && api.req == "GetTeamProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                <Loading loadingIn = {"GetTeamProjects"} />
             </section>
         </Layout>
     );

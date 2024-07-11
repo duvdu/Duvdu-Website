@@ -17,7 +17,7 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
         // takeAction({id: , value : })
     };
     return (
-        <div onClick={onClick} className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] sm:w-full mx-auto cursor-pointer'>
+        <div onClick={onClick} className='flex justify-between rounded-[50px] bg-primary p-6 relative w-full mx-auto cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>

@@ -10,7 +10,7 @@ export const UpdateBoard = (data, id) => {
     try {
 
       const response = await mainApiInstance.put(`api/users/saved-projects/${id}`, data);
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: new Date().toISOString(), req: req });
     } catch (error) {
       try {
         dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });

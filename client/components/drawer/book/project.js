@@ -260,38 +260,37 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <h2 className='opacity-60 capitalize mb-3'> Custom Requirements </h2>
+                                    <h2 className='opacity-60 capitalize mb-3'>  </h2>
                                     <div className="flex items-center rounded-2xl bg-DS_white">
                                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary' name={"calendar"} />
                                         </div>
                                         <div className="flex flex-col pl-5 w-full">
-                                            <span className="font-normal text-base">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
-                                            <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'dddd , h:mm TT')}</span>
+                                            <span className="font-normal text-base capitalize">Appointment Date</span>
+                                            <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
                                         </div>
                                     </div>
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <h2 className='opacity-60 capitalize mb-3'> Custom Requirements </h2>
                                     <div className="flex items-center rounded-2xl bg-DS_white">
                                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary' name={"calendar"} />
                                         </div>
                                         <div className="flex flex-col pl-5 w-full">
-                                            <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
-                                            <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
+                                            <span className="font-normal text-base capitalize">Start Date</span>
+                                            <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
                                         </div>
                                     </div>
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <h2 className='opacity-60 capitalize mb-3'> address </h2>
                                     <div className="flex items-center rounded-2xl bg-DS_white">
                                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary w-6' name={"location-dot"} />
                                         </div>
                                         <div className="flex flex-col pl-5 w-full">
+                                            <span className="font-normal text-base capitalize">address</span>
                                             <span className="font-normal text-base">{formData.address}</span>
                                         </div>
                                     </div>

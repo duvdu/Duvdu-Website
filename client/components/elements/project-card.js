@@ -19,10 +19,22 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
   const cardData = initialCardData;
-  let fav = cardData.isFavourite
-  if (cardData?._id == (swapProjectToFav_respond?.projectId || -1)) fav =  swapProjectToFav_respond.action == "add" 
-  
-  const loveIconName =  fav ? 'fas' : 'far'
+
+  const [fav, setFav] = useState(false);
+
+  useEffect(() => {
+    if (cardData?._id === (swapProjectToFav_respond?.projectId || -1)) {
+      setFav(swapProjectToFav_respond.action === "add");
+    }
+  }, [cardData, swapProjectToFav_respond]);
+
+  useEffect(() => {
+    if(cardData?.isFavourite)
+    setFav(cardData.isFavourite);
+  }, [cardData?.isFavourite]);
+
+
+  const loveIconName = fav ? 'fas' : 'far'
 
   useEffect(() => {
     if (videoRef.current) {

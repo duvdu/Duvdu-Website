@@ -48,8 +48,8 @@ const Home = ({
     return (
         <>
             <Layout isbodyWhite={true}>
-                <div className="container w-full">
-                    <section className="my-24 mx-auto w-min hidden lg:block">
+                <section className="container w-full">
+                    <div className="my-24 mx-auto w-min hidden lg:block">
                         <h1 className="text-center my-4">
                             <span className="text-[#263257] font-black text-8xl capitalize whitespace-nowrap">explore <span style={TheBeststyle}>the best</span> of </span>
                             <div className="relative h-[120px]">
@@ -70,10 +70,10 @@ const Home = ({
                         <p className="text-xl font-bold text-[#263257] text-center mx-20">
                             consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.
                         </p>
-                    </section>
-                    <section className="mx-auto">
+                    </div>
+                    <div className="mx-auto">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize"> trendy categories </h2>
-                        <div className="flex gap-4 mt-7">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-7">
                             {
                                 homeTrenyList.map((data, index) =>
                                     <div key={index} className="bg-black w-full aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden" style={{ backgroundImage: `url(${data.image})` }}>
@@ -90,9 +90,9 @@ const Home = ({
                                 )
                             }
                         </div>
-                    </section>
-                </div>
-                <div className="my-12 py-12 bg-[#F2F2F3]">
+                    </div>
+                </section>
+                <section className="my-12 py-12 bg-[#F2F2F3]">
                     <div className="container w-full">
                         <section className="mx-auto">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> discover tags </h2>
@@ -119,10 +119,11 @@ const Home = ({
                             </Swiper>
                         </section>
                     </div>
-                </div>
-                <div className="my-12 py-12">
+                </section>
+
+                <section className="my-12 py-12">
                     <div className="container w-full">
-                        <section className="mx-auto">
+                        <div className="mx-auto">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> top categories </h2>
                             <CustomSwiper>
                                 {popularSub_respond?.data[0]?.subCategories?.map((data, index) => (
@@ -140,12 +141,13 @@ const Home = ({
                                     </div>
                                 ))}
                             </CustomSwiper>
-                        </section>
+                        </div>
                     </div>
-                </div>
-                <div className="my-12 py-12 bg-[#F2F2F3]">
+                </section>
+
+                <section className="my-12 py-12 bg-[#F2F2F3]">
                     <div className="container">
-                        <section className="mx-auto py-12">
+                        <div className="mx-auto py-12">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
                             <div className="flex gap-8 w-full">
                                 {categories.slice(0, 3).map((category, index) => (
@@ -153,29 +155,21 @@ const Home = ({
                                         key={index}
                                         className="gap-8 w-full">
                                         <img className="h-24 object-cover w-full rounded-3xl" src={category.image} />
-                                        <h2 className="text-2xl opacity-60 font-semibold mt-6 cursor-pointer" onClick={() => handleNavigation(`/${category.cycle}`)} >{category.title}</h2>
+                                        <h2 className="text-2xl opacity-60 font-semibold mt-6">{category.title}</h2>
                                         <ul>
                                             <div>
                                                 {category.subCategories?.map((subcategory, subIndex) => (
                                                     subIndex / category.subCategories.length < 0.5 && (
-                                                        <MenuItem
-                                                            key={subIndex}
-                                                            title={subcategory.title}
-                                                            items={subcategory.tags}
-                                                            onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
-                                                        />)
+                                                        <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+                                                    )
                                                 ))}
                                             </div>
                                             {category.subCategories.length > 1 && (
                                                 <div>
                                                     {category.subCategories.map((subcategory, subIndex) => (
                                                         subIndex / category.subCategories.length >= 0.5 && (
-                                                            <MenuItem
-                                                                key={subIndex}
-                                                                title={subcategory.title}
-                                                                items={subcategory.tags}
-                                                                onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
-                                                            />)
+                                                            <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+                                                        )
                                                     ))}
                                                 </div>
                                             )}
@@ -184,10 +178,11 @@ const Home = ({
                                 ))}
 
                             </div>
-                        </section>
+                        </div>
                     </div>
-                </div>
+                </section>
             </Layout>
+
         </>
     );
 };
@@ -207,8 +202,8 @@ const MenuItem = ({ title, items, onClick }) => (
         <ul className={"flex flex-wrap gap-3 py-2"}>
             {items.map((item, index) => (
                 <li className='py-1 px-2 border hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
-                    <div clas   sName='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'
-                        onClick={() => onClick(item._id)}   
+                    <div clas sName='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'
+                        onClick={() => onClick(item._id)}
                     >{item.title}</div>
                 </li>
             ))}

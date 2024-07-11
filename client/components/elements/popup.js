@@ -33,6 +33,7 @@ const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, ad
                     break;
                 }
             }
+            
         };
 
         const observer = new MutationObserver(throttle(handleMutation, 200));

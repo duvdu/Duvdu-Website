@@ -9,6 +9,7 @@ import Filter from "../../components/elements/filter";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetStudios } from "../../redux/action/apis/cycles/rental/get";
+import Loading from "../../components/elements/loading";
 
 const Studio = ({ projects , GetStudios,api}) => {
     const Router = useRouter();
@@ -85,7 +86,8 @@ const Studio = ({ projects , GetStudios,api}) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        <img className={(api.loading && api.req == "GetStudios" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                        <Loading loadingIn = {"GetStudios"} />
+
                     </div>
                 </section>
             </Layout>

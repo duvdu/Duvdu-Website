@@ -9,7 +9,7 @@ const Ongoing2 = ({ data,onClick }) => {
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
 
     return (
-        <div onClick={onClick} className='w-[370px] sm:w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative cursor-pointer'>
+        <div onClick={onClick} className='w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>

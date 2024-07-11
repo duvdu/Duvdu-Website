@@ -12,7 +12,7 @@ import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardPro
 
 const Projects = ({
     projects,
-    
+
     AddProjectToBoard,
     DeleteProjectFromBoard,
     GetSavedBoard,
@@ -34,13 +34,15 @@ const Projects = ({
     }, [get_respond]);
 
     useEffect(() => {
-        if(delete_respond)
+        if (delete_respond)
             GetSavedBoard({ id: boardId })
     }, [delete_respond]);
 
     useEffect(() => {
-        if (boardId)
+        if (boardId) {
             GetSavedBoard({ id: boardId })
+            setallProjects([])
+        }
     }, [boardId]);
 
     useEffect(() => {

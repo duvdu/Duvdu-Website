@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 import EmptyComponent from "./emptyComponent";
 import { toggleContractData } from "../../../redux/action/contractDetails";
+import Loading from "../../elements/loading.js";
 
 const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, RightSidehandleToggleClick }) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -61,7 +62,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
             <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
-                    <section className='flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
+                    <section className='flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80">pending</h2>
                         {pending.map((data, index) => (
                             <Pending key={index} data={data} onClick={() => toggleContractData(data)} />
@@ -70,7 +71,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                 }
                 {
                     ongoing.length > 0 &&
-                    <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
+                    <section className='mt-11 flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
                             <Ongoing key={index} data={data} onClick={() => toggleContractData(data)} />
@@ -86,7 +87,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
             <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
-                    <section className=' flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
+                    <section className=' flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">pending</h2>
                         {pending.map((data, index) => (
                             <Pending2 key={index} data={data} onClick={() => toggleContractData(data)} />
@@ -95,7 +96,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                 }
                 {
                     ongoing.length > 0 &&
-                    <section className='mt-11 flex flex-col gap-4 mx-auto w-min sm:w-auto mb-4'>
+                    <section className='mt-11 flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
                         <h2 className="font-bold text-lg capitalize opacity-80 ">ongoing contracts</h2>
                         {ongoing.map((data, index) => (
                             <Ongoing2 key={index} data={data} onClick={() => toggleContractData(data)} />
@@ -145,8 +146,8 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                         !(api.loading && api.req == "getAllContracts") &&
                         (activeIndex === 0 ? <Clients /> : <Creatives />)
                     }
-                    <div className="flex flex-col justify-center items-center h-body">
-                        <img className={(api.loading && api.req == "getAllContracts" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                    <div className="flex flex-col justify-center items-center lg:h-body">
+                    <Loading loadingIn = {"getAllContracts"} />
                     </div>
                 </div>
             </div>

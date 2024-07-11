@@ -33,16 +33,20 @@ const Projects = ({
     const router = useRouter()
     const { project: projectId } = router.query;
     const projects = projects_respond?.data || []
-    const project = project_respond?.data
+    const [project, setProject] = useState(project_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
 
     useEffect(() => {
+        setProject(project_respond?.data);
+    }, [project_respond?.data]);
+
+    useEffect(() => {
         if (projectId) {
+            setProject(null)
             GetProject(projectId);
         }
     }, [projectId]);
-
     useEffect(() => {
         GetProjects({ limit: "4" });
     }, []);

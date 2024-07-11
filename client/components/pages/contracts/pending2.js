@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import dateFormat from "dateformat";
-import { formatRemainingTime } from '../../../util/util';
-import Selector from '../../elements/CustomSelector';
+
 import { connect } from 'react-redux';
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 import { formattedCreatedAt } from '../../../util/format-date';
+import TimeLeft2 from './TimeLeft2';
 
 const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
     const statuses = [
@@ -40,8 +39,41 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
 
     }, [data?.contract?.deadline]);
 
+    const uiStatus = () => {
+        const items = {
+            status: data.contract.status,
+            stageExpiration: data?.contract?.stageExpiration,
+            deadline: data?.contract?.deadline,
+            actionAt: data?.contract?.actionAt,
+            createdAt: data?.contract?.createdAt,
+        };
+
+        switch (items.status) {
+            case 'pending':
+                return <TimeLeft2 data={items} msgstatus={"pending"} />;
+            case 'waiting-for-payment':
+                return <TimeLeft2 data={items} msgstatus={"waiting for payment"} />;
+            case 'waiting-for-pay-10':
+                return <TimeLeft2 data={items} msgstatus={"waiting for pay 10"} />;
+            case 'update-after-first-Payment':
+                return <TimeLeft2 data={items} msgstatus={"update after first Payment"} />;
+            case 'waiting-for-total-payment':
+                return <TimeLeft2 data={items} msgstatus={"waiting for total payment"} />;
+            case 'ongoing':
+                return <TimeLeft2 data={data} msgstatus={"complate task"} />;
+            case 'completed':
+                return <NormalState value={"Completed"} />;
+            case 'rejected':
+                return <NormalState value={"Rejected"} />;
+            case 'canceled':
+                return <NormalState value={"Canceled"} />;
+            default:
+                return "Unknown"; // Handle unknown cases as needed
+        }
+    };
+
     return (
-        <div onClick={onClick} className='flex justify-between w-[370px] sm:w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 cursor-pointer'>
+        <div onClick={onClick} className='flex justify-between w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 cursor-pointer'>
             <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center sm:w-full'>
                 {/* profile */}
                 <div className='flex gap-3 items-center'>
@@ -57,23 +89,7 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
                 </div>
                 {/*********/}
                 {/* deadline */}
-
-                <div className='text-lg ml-auto mr-auto'>
-                    {
-                        !data.contract.status?.includes("waiting-for-pay") ?
-                            <>
-                                <span className='opacity-50 mx-1'>
-                                    will respond in
-                                </span>
-                                <span className='text-primary'>
-                                    {timeLeft}
-                                </span>
-                            </> :
-                            <span className='opacity-50 mx-1'>
-                                wait for payment
-                            </span>
-                    }
-                </div>
+                {uiStatus()}
             </div>
             {/*********/}
             {/* dropdown */}

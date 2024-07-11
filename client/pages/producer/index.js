@@ -9,6 +9,7 @@ import { calculateRating, OpenPopUp } from '../../util/util';
 import { useRouter } from 'next/router';
 import ProducerCard from '../../components/pages/producer/producerCard';
 import EmptyComponent from '../../components/pages/contracts/emptyComponent';
+import Loading from '../../components/elements/loading';
 
 const Producers = ({ GetProducer, respond,api,islogin }) => {
     const Router = useRouter();
@@ -69,8 +70,11 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
                         <Filter />
-                        {producers?.length > 0 ?
-                            <h1 className="page-header my-6">most popular on duvdu</h1>:
+                        {producers?.length > 0 &&
+                            <h1 className="page-header my-6">most popular on duvdu</h1>
+                        }
+
+                        {producers && producers.length === 0 &&
                             <EmptyComponent message="No Producers Now"/>
                         }
                         <div className="grid minmax-360">
@@ -78,7 +82,7 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
                                 <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />
                             )}
                         </div>
-                        <img className={(api.loading && api.req == "GetProducer" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                        <Loading loadingIn = {"GetProducer"} />
                         <Formsubmited />
                     </div>
                 </section>

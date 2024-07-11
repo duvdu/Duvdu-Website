@@ -62,7 +62,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         const Deadline = formattedDeadline(data?.contract?.deadline)
         return <>
             {/* max-w-[370px] ahmed */}
-            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4'
+            <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4'
                 onClick={() => toggleContractData(data)}
             >
                 {/* dropdown */}
@@ -91,7 +91,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 <Link href={`/creative/${data.sp.username}`}>
                     <div className="cursor-pointer">
                         <div className='flex gap-3 items-center'>
-                            <img className='w-14 h-14 rounded-full object-cover object-top' src={data.sp.profileImage} alt="profile picture" />
+                            <img className='size-14 rounded-full object-cover object-top' src={data.sp.profileImage} alt="profile picture" />
                             <div className='flex flex-col items-start justify-start'>
                                 <h3 className='opacity-80 text-lg font-bold capitalize'>{data.sp.name}</h3>
                                 <span className='opacity-50'>{dateFormat(data.contract.appointmentDate, 'd mmmm , yyyy')}</span>
@@ -140,7 +140,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             {/* ahmed */}
             {!data?.length == 0 ?
                 <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
-                    <div className='flex flex-col gap-[15px] mx-auto sm:mx-0 w-max sm:w-auto text-center mt-9'>
+                    <div className='flex flex-col gap-[15px] mx-0 w-auto text-center mt-9'>
                         {/* <Title title="recent clients" /> */}
                         <div className='flex sm:flex-row gap-2 hidden'>
                             <Recents img='/assets/imgs/profile/defultUser.jpg' name='youseff ali' address='zayed city' />

@@ -2,14 +2,9 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const updateProfile = (data,withloading) => {
+export const updateProfile = (data) => {
   const req = "updateProfile"
   return async dispatch => {
-    if (withloading === false)
-      dispatch({ type: Types.DISABLE_LOADING, });
-    if (withloading === true)
-      dispatch({ type: Types.ENABLE_LOADING, });
-
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
      
