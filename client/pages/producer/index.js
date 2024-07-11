@@ -70,8 +70,11 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
                         <Filter />
-                        {producers?.length > 0 ?
-                            <h1 className="page-header my-6">most popular on duvdu</h1>:
+                        {producers?.length > 0 &&
+                            <h1 className="page-header my-6">most popular on duvdu</h1>
+                        }
+
+                        {producers && producers.length === 0 &&
                             <EmptyComponent message="No Producers Now"/>
                         }
                         <div className="grid minmax-360">

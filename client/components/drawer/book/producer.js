@@ -78,6 +78,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
 
     function onSubmit() {
+        if(!enableBtn) return
         if (submit)
             submit()
         const form = new FormData()
@@ -103,7 +104,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         }
         UpdateFormData(name, value)
     };
-    console.log(formData)
+    
 
 
     // const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
