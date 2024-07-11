@@ -42,11 +42,19 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                     if (results[0]) {
                         const addressComponents = results[0].address_components;
                         const shortAddress = addressComponents
-                            .filter(component => component.types.includes("administrative_area_level_1") || component.types.includes("administrative_area_level_2") || component.types.includes("locality"))
+                            .filter(component =>
+                                component.types.includes("administrative_area_level_1") ||
+                                component.types.includes("administrative_area_level_2") ||
+                                component.types.includes("locality") ||
+                                component.types.includes("street_address") || 
+                                component.types.includes("route") ||
+                                component.types.includes("premise") ||
+                                component.types.includes("subpremise")
+                            )
                             .map(component => component.short_name)
                             .join(', ')
                             .replace("Governorate","");
-                            
+                        
                         setAddress(shortAddress);
                         if (onChangeAddress) {
                             onChangeAddress({
@@ -64,6 +72,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                 }
             });
         }
+        
     }, [markerPosition?.lat, google]);
 
     useEffect(() => {
