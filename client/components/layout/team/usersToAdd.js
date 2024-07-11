@@ -7,7 +7,7 @@ import { GetTeamProject } from "../../../redux/action/apis/teamproject/getone";
 import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
 import AppButton from "../../elements/button";
-import Loading from "../../elements/loading";
+import DuvduLoading from "../../elements/duvduLoading";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
 
@@ -157,7 +157,7 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
                     <AddToTeamCard goback={goback} info={value} key={index} onChoose={() => openpopUp(value)} />
                 ))}
             </div>
-            <Loading loadingIn = {"FindUser"} />
+            <DuvduLoading loadingIn = {"FindUser"} />
         </>
     )
 };

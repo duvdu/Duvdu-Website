@@ -10,7 +10,7 @@ import { CreateTeamProject } from "../redux/action/apis/teamproject/create";
 import { DeleteTeamProjects } from "../redux/action/apis/teamproject/deleteProject";
 import EditFilesTeam from "../components/popsup/teamProject/EditFilesTeam";
 import { useRouter } from "next/router";
-import Loading from "../components/elements/loading";
+import DuvduLoading from "../components/elements/duvduLoading";
 
 const Card = ({ data, DeleteTeamProjects }) => {
     const { cover, creatives, title, _id, status } = data;
@@ -147,7 +147,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                             <Empty />
                         )}
                 </div>
-                <Loading loadingIn = {"GetTeamProjects"} />
+                <DuvduLoading loadingIn = {"GetTeamProjects"} />
             </section>
         </Layout>
     );

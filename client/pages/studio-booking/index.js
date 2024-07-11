@@ -9,7 +9,8 @@ import Filter from "../../components/elements/filter";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetStudios } from "../../redux/action/apis/cycles/rental/get";
-import Loading from "../../components/elements/loading";
+import Loading from "../../components/elements/duvduLoading";
+import DuvduLoading from "../../components/elements/duvduLoading";
 
 const Studio = ({ projects , GetStudios,api}) => {
     const Router = useRouter();
@@ -86,7 +87,7 @@ const Studio = ({ projects , GetStudios,api}) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        <Loading loadingIn = {"GetStudios"} />
+                        <DuvduLoading loadingIn = {"GetStudios"} />
 
                     </div>
                 </section>

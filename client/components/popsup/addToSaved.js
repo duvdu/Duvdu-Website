@@ -1,8 +1,6 @@
 
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
 import { GetBoards } from '../../redux/action/apis/savedProject/board/get';
-import Button from '../elements/button';
-import Popup from '../elements/popup';
 import React, { useEffect, useState } from 'react';
 import SuccessfullyPosting from './post_successfully_posting';
 import { ClosePopUp, OpenPopUp } from '../../util/util';
@@ -10,6 +8,7 @@ import { connect } from 'react-redux';
 import { useRouter } from 'next/router';
 import Icon from "../../components/Icons";
 import Drawer from '../elements/drawer';
+import DuvduLoading from '../elements/duvduLoading';
 
 
 function AddToSaved({
@@ -18,8 +17,7 @@ function AddToSaved({
     addProjectToBoard_respond,
     GetBoards,
     toggleDrawerAddFav,
-    isOpen
-
+    isOpen,
 }) {
     const router = useRouter();
     const { project: projectId } = router.query;
@@ -36,7 +34,7 @@ function AddToSaved({
     const handleNextStep = (id) => {
         AddProjectToBoard({ idboard: id, idproject: projectId })
     };
-    
+
     const init = () => {
         GetBoards({})
     };
@@ -46,22 +44,22 @@ function AddToSaved({
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     const close = () => {
         toggleDrawerAddFav()
         ClosePopUp('addProjectToBoard-popup')
     };
-    
 
     return (
         <>
-            <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To Team" onCancel={close} />
+            <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To board" onCancel={close} />
             <Drawer className='z-30' toggleDrawer={toggleDrawerAddFav} name={'Add To Saved Projects'} isOpen={isOpen}>
+                <DuvduLoading loadingIn={"AddProjectToBoard"} />
                 <div className='flex flex-col w-full sm:w-[565px] overflow-y-scroll'>
-                    {boards?.map((board, index) => !isProjectInBoard(board, projectId) ? (
+                    {boards?.filter(board => !isProjectInBoard(board, projectId)).map((board, index) => (
                         <div key={index} className="h-20 rounded-full mt-9 relative overflow-hidden cursor-pointer" onClick={() => handleNextStep(board._id)}>
                             <div className="absolute z-20 flex items-center w-full h-full p-7">
                                 <div>
@@ -72,14 +70,12 @@ function AddToSaved({
                                 </div>
                             </div>
                             {board.projects.length == 0 ?
-                            <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
-                            <Icon className="w-44" name={'dvudu-image'} />
-                        </div> : <img className="absolute -translate-y-1/2 blur-sm" src={board.projects[0].project.cover} />}
-                                
+                                <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
+                                    <Icon className="w-44" name={'dvudu-image'} />
+                                </div> : <img className="absolute -translate-y-1/2 blur-sm" src={board.projects[0].project.cover} />}
                         </div>
-                    ) : <></>
-                    )}
-                    {boards?.length === 0 && (
+                    ))}
+                    {boards?.filter(board => !isProjectInBoard(board, projectId))?.length === 0 && (
                         <div className='py-4'>
                             <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p'>
                                 <div className='w-[540px] h-[400]px bg-gray-600 mt-10' />
