@@ -24,9 +24,19 @@ const ProjectController = ({ initialData,
     const projectId = studio || project;
     const [data, setData] = useState(initialData);
     const online = data?.user?.isOnline;
+    const [fav, setFav] = useState(false);
+
+    useEffect(() => {
+        if (data?._id === (swapProjectToFav_respond?.projectId || -1)) {
+          setFav(swapProjectToFav_respond.action === "add");
+        }
+      }, [data, swapProjectToFav_respond]);
     
-    let fav = data?.isFavourite
-    if (data?._id == (swapProjectToFav_respond?.projectId || -1)) fav = swapProjectToFav_respond.action == "add"
+      useEffect(() => {
+        if(data?.isFavourite)
+        setFav(data.isFavourite);
+      }, [data?.isFavourite]);
+
     const loveIconName = fav ? 'fas' : 'far'
 
     const handleLoveIconClick = () => {
