@@ -15,6 +15,7 @@ import CountdownTimer from '../../elements/CounterDownTimer';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
+import TimeLeft from '../../pages/contracts/TimeLeft';
 
 function ReceiveProjectFiles({
     getAllContracts,
@@ -59,29 +60,37 @@ function ReceiveProjectFiles({
     }
 
     const uiStatus = () => {
+        const items = {
+            status: status,
+            stageExpiration: contract?.stageExpiration,
+            deadline: contract?.deadline,
+            actionAt: contract?.actionAt,
+            createdAt: contract?.createdAt,
+        };
+
         switch (status) {
-            case 'canceled':
-                return "Canceled";
             case 'pending':
-                return timeLeft;
-            case 'waiting-for-pay-10':
-                return "Waiting For First Payment";
+                return <TimeLeft data={items} msgstatus={"pending"} />;
             case 'waiting-for-payment':
-                return "Waiting For payment";
+                return <TimeLeft data={items} msgstatus={"waiting for payment"} />;
+            case 'waiting-for-pay-10':
+                return <TimeLeft data={items} msgstatus={"waiting for pay 10"} />;
             case 'update-after-first-Payment':
-                return "Update After First Payment";
+                return <TimeLeft data={items} msgstatus={"update after first Payment"} />;
             case 'waiting-for-total-payment':
-                return "Waiting For Total Payment";
+                return <TimeLeft data={items} msgstatus={"waiting for total payment"} />;
             case 'ongoing':
-                return "Ongoing";
+                return <TimeLeft data={items} msgstatus={"complate task"} />;
             case 'completed':
-                return "Completed";
+                return <NormalState value={"Completed"} />;
             case 'rejected':
-                return "Rejected";
+                return <NormalState value={"Rejected"} />;
+            case 'canceled':
+                return <NormalState value={"Canceled"} />;
             default:
                 return "Unknown"; // Handle unknown cases as needed
         }
-    }
+    };
 
 
     const handleInputChange = (e) => {
@@ -283,13 +292,7 @@ function ReceiveProjectFiles({
                         <div className='flex flex-col justify-between h-drawer'>
                             <div className={`flex flex-col justify-start items-center px-0 gap-6 mt-10 ${canEdit ? 'hidden' : ''}`}>
                                 <section>
-                                    <span className='text-4xl my-5'>{uiStatus()}
-                                        {status == "pending" &&
-                                            <span className='text-lg opacity-40 mx-2'>
-                                                {timeLeft ? "left" : "Time's up"}
-                                            </span>
-                                        }
-                                    </span>
+                                    {uiStatus()}
                                 </section>
                                 {
                                     (getType() == "project" || getType() == "rental") &&
