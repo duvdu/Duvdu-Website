@@ -354,9 +354,9 @@ function ReceiveProjectFiles({
                                             <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
                                             {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
                                         </div>
-                                        {contract.address &&
+                                        
                                             <a
-                                                href={`https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}`}
+                                                href={contract.address ?`https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}`:null}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className='opacity-85 text-base'
@@ -371,14 +371,15 @@ function ReceiveProjectFiles({
                                                         </div>
                                                         <div>
                                                             <div>
-                                                                <span className='opacity-85 text-base'>
-                                                                    {contract.address}
+                                                                <span className='opacity-85 text-base line-clamp-2'>
+                                                                    { contract.address ? contract.address : "No Address To show"}
+                                                                    
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </a>}
+                                            </a>
                                     </div>
                                     <div className='w-full'>
                                         <div className='w-full'>
