@@ -260,7 +260,7 @@ function ReceiveProjectFiles({
             appointmentDate &&
             appointmentDate !== contract?.appointmentDate) ||
         (getType() === "copyrights" &&
-            !IsImSp() &&
+            IsImSp() &&
             status === "update-after-first-Payment" &&
             (
                 details && details !== contract?.details ||
