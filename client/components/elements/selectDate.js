@@ -29,6 +29,7 @@ const SelectDate = ({ onChange, value }) => {
         const totalDays = lastDay.getDate();
         const tomorrow = new Date();
         tomorrow.setHours(10, 0, 0, 0); 
+        tomorrow.setDate(tomorrow.getDate() + 1);
         const tomorrowTime = tomorrow.getTime();
     
         // Add leading empty dates for days before the first day of the month
