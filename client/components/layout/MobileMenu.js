@@ -6,7 +6,7 @@ import Search from "../elements/SearchMobile";
 import { connect } from "react-redux";
 
 
-const MobileMenu = ({ isToggled, toggleClick, categories,islogin,user }) => {
+const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
     const [page, setpage] = useState(isToggled);
     useEffect(() => {
@@ -58,7 +58,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories,islogin,user }) => {
                 {
                     [
                         {
-                            url: `/creative/${user.username}`,
+                            url: `/creative/${user?.username}`,
                             icon: 'user',
                             name: 'profile',
                         },
@@ -108,8 +108,8 @@ const MobileMenu = ({ isToggled, toggleClick, categories,islogin,user }) => {
                     ].map((item, index) =>
                         <Link key={index} href={item.url}>
                             <div className="flex justify-center items-center cursor-pointer">
-                            <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
-                            <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
+                                <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
+                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
                             </div>
                         </Link>
                     )
@@ -122,7 +122,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories,islogin,user }) => {
         const [openSubCategories, setOpenSubCategories] = useState(null);
 
         const toggleCategory = (category) => {
-            setOpenCategories(prev =>  prev === category ? null : category);
+            setOpenCategories(prev => prev === category ? null : category);
 
             setOpenSubCategories(null);
         };
@@ -144,12 +144,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories,islogin,user }) => {
                             <div className="flex w-full justify-between items-center p-5">
                                 <div className="w-3" />
                                 <Link href={`/${category.cycle}`}>
-                                <span className="text-[#4F5E7B] font-semibold text-sm" >
-                                    {category.title}
-                                </span>
+                                    <span className="text-[#4F5E7B] font-semibold text-sm" >
+                                        {category.title}
+                                    </span>
                                 </Link>
 
-                                <div className={`transition-all duration-300 ${isOurStation ? 'rotate-90' : 'rotate-0'}`} onClick={() => toggleCategory(category)}> 
+                                <div className={`transition-all duration-300 ${isOurStation ? 'rotate-90' : 'rotate-0'}`} onClick={() => toggleCategory(category)}>
                                     <SpeficIcon name={`${isOurStation ? 'minus' : 'plus'}`} />
                                 </div>
                             </div>
@@ -224,13 +224,18 @@ const MobileMenu = ({ isToggled, toggleClick, categories,islogin,user }) => {
                     <Header onClick={() => toggleClick(1)} toggleOpenSearch={togglePage} openSearch={page} />
                     {page == 2 &&
                         <>
-                            <Tabs />
-                            <Tabs2 />
-                            <Menu />
                             {
-                                !islogin&&
+                                islogin &&
+                                <>
+                                    <Tabs />
+                                    <Tabs2 />
+                                    <Menu />
+                                </>
+                            }
+                            {
+                                !islogin &&
                                 <Auth />
-                                }
+                            }
                         </>
                     }
                     {page == 3 &&

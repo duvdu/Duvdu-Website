@@ -73,7 +73,7 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
     };
 
     return (
-        <div onClick={onClick} className='flex justify-between w-[370px] sm:w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 cursor-pointer'>
+        <div onClick={onClick} className='flex justify-between w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 cursor-pointer'>
             <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center sm:w-full'>
                 {/* profile */}
                 <div className='flex gap-3 items-center'>

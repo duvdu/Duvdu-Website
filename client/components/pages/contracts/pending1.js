@@ -93,7 +93,7 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
     }
 
     return (
-        <div onClick={onClick} className='flex justify-between w-[370px] sm:w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative cursor-pointer'>
+        <div onClick={onClick} className='flex justify-between w-full mx-auto border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-11 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>

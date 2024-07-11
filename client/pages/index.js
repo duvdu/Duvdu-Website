@@ -73,7 +73,7 @@ const Home = ({
                     </div>
                     <div className="mx-auto">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize"> trendy categories </h2>
-                        <div className="flex gap-4 mt-7">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-7">
                             {
                                 homeTrenyList.map((data, index) =>
                                     <div key={index} className="bg-black w-full aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden" style={{ backgroundImage: `url(${data.image})` }}>
@@ -144,7 +144,7 @@ const Home = ({
                         </div>
                     </div>
                 </section>
-                
+
                 <section className="my-12 py-12 bg-[#F2F2F3]">
                     <div className="container">
                         <div className="mx-auto py-12">

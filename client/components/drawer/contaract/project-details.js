@@ -355,6 +355,7 @@ function ReceiveProjectFiles({
                                         )}
                                     </section>
                                 }
+                                
                                 <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
                                     <div className='w-full'>
 
@@ -362,30 +363,31 @@ function ReceiveProjectFiles({
                                             <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
                                             {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
                                         </div>
-                                        <a
-                                            href={`https://www.google.com/maps?q=${contract.location.lat},${contract.location.lng}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className='opacity-85 text-base'
-                                        >
-                                            <div className='w-full mt-5'>
-                                                <h2 className='opacity-60 capitalize mb-3'> Address </h2>
-                                                <div className='flex gap-4'>
-                                                    <div>
-                                                        <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
-                                                            <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
-                                                        </div>
-                                                    </div>
-                                                    <div>
+                                        {contract.address &&
+                                            <a
+                                                href={`https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className='opacity-85 text-base'
+                                            >
+                                                <div className='w-full mt-5'>
+                                                    <h2 className='opacity-60 capitalize mb-3'> Address </h2>
+                                                    <div className='flex gap-4'>
                                                         <div>
-                                                            <span className='opacity-85 text-base'>
-                                                                {contract.address}
-                                                            </span>
+                                                            <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
+                                                                <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <span className='opacity-85 text-base'>
+                                                                    {contract.address}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </a>
+                                            </a>}
                                     </div>
                                     <div className='w-full'>
                                         <div className='w-full'>
@@ -417,6 +419,7 @@ function ReceiveProjectFiles({
                                         </div>
                                     </div>
                                 </section>
+                                
                             </div>
                             <div className={'flex mx-5 gap-7 mb-10 mt-16 justify-center' + (canEdit ? ' hidden' : '')}>
                                 {
