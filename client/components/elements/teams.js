@@ -7,7 +7,7 @@ const BookTeam = ({ team, onChange , mainremovable = true }) => {
         setLocalTeam(prevTeam => prevTeam.filter(item => item._id !== id));
     };
     useEffect(() => setLocalTeam(team) , [])
-    useEffect(() => onChange?.(localteam.map((i)=> i._id)) , [localteam])
+    useEffect(() => onChange?.(localteam?.map((i)=> i._id)) , [localteam])
     
     return (
         localteam &&
