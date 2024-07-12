@@ -18,8 +18,6 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     const [swiper, setSwiper] = useState(null);
     const [localerror, setLocalerror] = useState(true);
     const [location, setLocation] = useState(null);
-    const [swiperError, setSwiperError] = useState(null);
-    const [isAutoplay, setIsAutoplay] = useState(true);
 
     const imageSources = [
         {
