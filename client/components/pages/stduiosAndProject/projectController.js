@@ -3,20 +3,19 @@ import { connect } from 'react-redux';
 import Controller from '../../elements/controllers';
 import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/messages/getAllMessageInChat';
 import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
-import Share from '../../popsup/Share';
 import { OpenPopUp } from '../../../util/util';
 import Icon from '../../Icons';
 import ArrowBtn from '../../elements/arrowBtn';
 import { useRouter } from 'next/router';
 
-const ProjectController = ({ initialData, 
-    toggleDrawer, 
-    GetAllMessageInChat, 
-    messages, 
-    SwapProjectToFav, 
-    auth, 
-    swapProjectToFav_respond, 
-    canBook, 
+const ProjectController = ({ initialData,
+    toggleDrawer,
+    GetAllMessageInChat,
+    messages,
+    SwapProjectToFav,
+    auth,
+    swapProjectToFav_respond,
+    canBook,
     toggleDrawerAddFav,
     api }) => {
     const router = useRouter()
@@ -28,14 +27,14 @@ const ProjectController = ({ initialData,
 
     useEffect(() => {
         if (data?._id === (swapProjectToFav_respond?.projectId || -1)) {
-          setFav(swapProjectToFav_respond.action === "add");
+            setFav(swapProjectToFav_respond.action === "add");
         }
-      }, [data, swapProjectToFav_respond]);
-    
-      useEffect(() => {
-        if(data?.isFavourite)
-        setFav(data.isFavourite);
-      }, [data?.isFavourite]);
+    }, [data, swapProjectToFav_respond]);
+
+    useEffect(() => {
+        if (data?.isFavourite)
+            setFav(data.isFavourite);
+    }, [data?.isFavourite]);
 
     const loveIconName = fav ? 'fas' : 'far'
 
@@ -45,6 +44,7 @@ const ProjectController = ({ initialData,
     };
 
     const handleOpenChat = () => {
+        if(data.user.canChat)
         GetAllMessageInChat(data?.user?._id);
     };
 
@@ -52,6 +52,8 @@ const ProjectController = ({ initialData,
         OpenPopUp("Share");
     };
 
+   
+    console.log(data.user.canChat)
     return (
         messages.openchat ?
             <></> :

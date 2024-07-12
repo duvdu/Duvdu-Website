@@ -64,14 +64,14 @@ function OtherProfile({
             setIsFollow(user?.isFollow);
         }
     }, [swapFollowRespond, user?.isFollow]);
-    
+
     useEffect(() => {
         if (username) {
             getOtherprofile(username);
             GetUserProject({ username });
         }
     }, [username]);
-    
+
     useEffect(() => {
         setIsFollow(user?.isFollow);
     }, []);
@@ -82,9 +82,14 @@ function OtherProfile({
         swapFollow(user._id, isFollow != null ? isFollow : user.isFollow);
     };
 
+    const handlechat = () => {
+        if(user.canChat)
+            GetAllMessageInChat(user._id)
+    };
+
     const projectData = projects?.data?.projects || [];
     user = user?.data;
-
+    
     return (
         user && (
             <div className='sm:container'>
@@ -117,9 +122,13 @@ function OtherProfile({
                                             isFollow ? 'Unfollow' : 'Follow'
                                         )}
                                     </AppButton>
-                                    <div onClick={() => GetAllMessageInChat(user._id)} className='rounded-full border border-[#00000040] h-16 aspect-square flex items-center justify-center cursor-pointer'>
-                                        <Icon type='far' name="chat" />
+                                    <div onClick={handlechat} className={user.canChat ?"":'cursor-not-allowed'}>
+                                        {user.canChat ?
+                                            <Icon type='far' name="chat" /> :
+                                            <Icon type='far' name="chatOff" />
+                                        }
                                     </div>
+
                                 </div>
                             )}
                         </div>

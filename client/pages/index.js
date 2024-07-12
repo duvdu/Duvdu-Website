@@ -202,7 +202,7 @@ const Home = ({
                                     <SwiperSlide key={index}>
                                         <Link href={data.cycle ? `/${data.cycle}` : ''} >
                                         <div
-                                            className={`bg-black h-[347px] ${(index + 1) % 3 === 0 ? 'w-[230px]' : 'w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-7 py-10`}
+                                            className={`bg-black mx-auto h-[347px] ${(index + 1) % 3 === 0 ? 'w-[230px]' : 'w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-7 py-10`}
                                             style={{ backgroundImage: `url(${data.image})` }}
                                         >
                                             <div className="capitalize rounded-full text-lg font-medium text-white px-6 py-2 bg-black bg-opacity-50">
