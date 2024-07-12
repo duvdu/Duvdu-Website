@@ -166,14 +166,13 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                 <Info
                                     src={userInfo.profileImage}
                                     location={userInfo.address || 'NONE'}
-                                    occupation={userInfo?.category?.title || '---'}
+                                    occupation={userInfo?.category?.title }
                                     personalName={userInfo.name}
                                     popularity={{
                                         likes: userInfo.likes,
                                         followers: userInfo.followCount.followers,
                                         views: userInfo.profileViews,
                                     }}
-                                    rank={"---"}
                                     rates={userInfo.rate.totalRates.toFixed(1)}
                                     isMe={true}
                                 />
@@ -187,10 +186,11 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                             </div>
 
                             <div className='h-divider'></div>
+                            {userInfo.about &&
                             <div className='px-10'>
                                 <h3 className='pt-6' id='about-header'>about</h3>
                                 <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
-                            </div>
+                            </div>}
                             <div className='h-divider my-7'></div>
                             <div className='px-10'>
                                 <div className='flex flex-col gap-4'>
