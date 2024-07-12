@@ -9,6 +9,7 @@ import * as Types from "../../redux/constants/actionTypes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
 
+
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
 

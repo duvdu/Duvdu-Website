@@ -9,6 +9,7 @@ export const UpdatePhone = ({phoneNumber}) => {
       const response = await mainApiInstance.patch(`api/users/auth/update-phone`, {
         phoneNumber: phoneNumber
       });
+      localStorage.setItem("OTP" , JSON.stringify(response.data?.code))
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: 'UpdatePhone' });
     } catch (error) {
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: 'UpdatePhone' });
