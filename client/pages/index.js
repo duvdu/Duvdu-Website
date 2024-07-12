@@ -21,6 +21,7 @@ const Home = ({
 
     categories
 }) => {
+    const [swiper, setSwiper] = useState(null);
 
     useEffect(() => {
         HomeTreny()
@@ -44,6 +45,7 @@ const Home = ({
         const url = query ? `${path}?${query}` : path;
         router.push(url);
     };
+
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -71,25 +73,53 @@ const Home = ({
                         </p>
                     </div>
                     <div className="mx-auto">
-                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize"> trendy categories </h2>
-                        <div className="flex flex-col lg:flex-row gap-4 mt-7">
-                            {
-                                homeTrenyList.map((data, index) =>
-                                    <div key={index} className="bg-black w-full aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden" style={{ backgroundImage: `url(${data.image})` }}>
+                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-4"> trendy categories </h2>
+
+                        <Swiper
+                            modules={[Autoplay, Navigation, EffectFade]}
+                            scrollbar={{ draggable: true }}
+                            onSwiper={(swiper) => setSwiper(swiper)}
+                            speed={1500}
+                            breakpoints={{
+                                320: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 10,
+                                },
+                                640: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                                1024: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 30,
+                                },
+                            }}
+                        >
+                            {homeTrenyList.map((data, index) => (
+                                <SwiperSlide key={index}>
+                                    <div
+                                        key={index}
+                                        className="bg-black w-full max-w-[500px] mx-auto aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden"
+                                        style={{ backgroundImage: `url(${data.image})` }}
+                                    >
                                         <span className="text-white text-3xl font-semibold capitalize">
                                             {data.title || 'Empty Title'}
                                         </span>
                                         <span className="text-white opacity-50 font-semibold text-lg text-center">
                                             {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
                                         </span>
-                                        <a className="text-lg font-semibold text-primary bg-white px-7 py-3 rounded-full">
-                                            {data.title ? 'View More' : 'Add Item'}
-                                        </a>
+                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                            <a className="text-lg font-semibold text-primary bg-white px-7 py-3 rounded-full">
+                                                {data.title ? 'View More' : 'Add Item'}
+                                            </a>
+                                        </Link>
                                     </div>
-                                )
-                            }
-                        </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+
                     </div>
+
                 </section>
                 <section className="my-12 py-12 bg-[#F2F2F3]">
                     <div className="container w-full">
@@ -99,20 +129,36 @@ const Home = ({
                                 dir='ltr'
                                 className='cardimg'
                                 modules={[Autoplay, Navigation, EffectFade]}
-                                spaceBetween={150}
-                                slidesPerView={4}
+                                breakpoints={{
+                                    320: {
+                                        slidesPerView: 1,
+                                        spaceBetween: 10,
+                                    },
+                                    640: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 20,
+                                    },
+                                    1024: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 30,
+                                    },
+                                }}
                             // loop={true}
                             >
                                 {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
                                     <SwiperSlide key={index}>
-                                        <div
-                                            className="bg-black w-[330px] aspect-[3] rounded-3xl trendy-section flex flex-col gap-5 items-center justify-center overflow-hidden"
-                                            style={{ backgroundImage: `url(${data.image})` }}
-                                        >
-                                            <span className="text-white text-3xl font-semibold capitalize">
-                                                {data.title}
-                                            </span>
-                                        </div>
+                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                            <a>
+                                                <div
+                                                    className="bg-black w-full aspect-[3] rounded-3xl trendy-section flex flex-col gap-5 items-center justify-center overflow-hidden"
+                                                    style={{ backgroundImage: `url(${data.image})` }}
+                                                >
+                                                    <span className="text-white text-3xl font-semibold capitalize">
+                                                        {data.title}
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </Link>
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
@@ -124,22 +170,51 @@ const Home = ({
                     <div className="container w-full">
                         <div className="mx-auto">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> top categories </h2>
-                            <CustomSwiper>
+                            <Swiper
+                                dir='ltr'
+                                className='cardimg'
+                                modules={[Autoplay, Navigation, EffectFade]}
+                                breakpoints={{
+                                    320: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 10,
+                                    },
+
+                                    768: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 30,
+                                    },
+
+                                    1024: {
+                                        slidesPerView: 4,
+                                        spaceBetween: 40,
+                                    },
+
+                                    1280: {
+                                        slidesPerView: 5,
+                                        spaceBetween: 50,
+                                    },
+                                }}
+                                autoplay={{ delay: 3000 }}
+                            >
                                 {popularSub_respond?.data[0]?.subCategories?.map((data, index) => (
-                                    <div
-                                        key={index}
-                                        className={`bg-black h-[347px] ${(index + 1) % 3 === 0 ? 'w-[448px]' : 'w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-7 py-10`}
-                                        style={{ backgroundImage: `url(${data.image})` }}
-                                    >
-                                        <div className="capitalize rounded-full text-lg font-medium text-white px-6 py-2 bg-black bg-opacity-50">
-                                            150 creatives
+                                    <SwiperSlide key={index}>
+                                        <div
+                                            className={`bg-black h-[347px] ${(index + 1) % 3 === 0 ? 'w-[448px]' : 'w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-7 py-10`}
+                                            style={{ backgroundImage: `url(${data.image})` }}
+                                        >
+                                            <div className="capitalize rounded-full text-lg font-medium text-white px-6 py-2 bg-black bg-opacity-50">
+                                                150 creatives
+                                            </div>
+                                            <span className="text-white text-3xl font-semibold capitalize text-center w-full">
+                                                {data.title}
+                                            </span>
                                         </div>
-                                        <span className="text-white text-3xl font-semibold capitalize text-center w-full">
-                                            {data.title}
-                                        </span>
-                                    </div>
+                                    </SwiperSlide>
                                 ))}
-                            </CustomSwiper>
+                            </Swiper>
+
+
                         </div>
                     </div>
                 </section>
@@ -149,32 +224,55 @@ const Home = ({
                         <div className="mx-auto py-12">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
                             <div className="flex gap-8 w-full">
-                                {categories.slice(0, 3).map((category, index) => (
-                                    <div
-                                        key={index}
-                                        className="gap-8 w-full">
-                                        <img className="h-24 object-cover w-full rounded-3xl" src={category.image} />
-                                        <h2 className="text-2xl opacity-60 font-semibold mt-6">{category.title}</h2>
-                                        <ul>
-                                            <div>
-                                                {category.subCategories?.map((subcategory, subIndex) => (
-                                                    subIndex / category.subCategories.length < 0.5 && (
-                                                        <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
-                                                    )
-                                                ))}
+                                <Swiper
+                                    dir='ltr'
+                                    className='cardimg'
+                                    modules={[Autoplay, Navigation, EffectFade]}
+                                    breakpoints={{
+                                        320: {
+                                            slidesPerView: 1,
+                                            spaceBetween: 10,
+                                        },
+                                        500: {
+                                            slidesPerView: 2,
+                                            spaceBetween: 20,
+                                        },
+                                        850: {
+                                            slidesPerView: 3,
+                                            spaceBetween: 30,
+                                        },
+                                    }}
+                                // loop={true}
+                                >
+                                    {categories.slice(0, 3).map((category, index) => (
+                                        <SwiperSlide key={index}>
+                                            <div
+                                                className="gap-8 w-full">
+                                                <img className="h-24 object-cover w-full rounded-3xl" src={category.image} />
+                                                <h2 className="text-2xl opacity-60 font-semibold mt-6">{category.title}</h2>
+                                                <ul>
+                                                    <div>
+                                                        {category.subCategories?.map((subcategory, subIndex) => (
+                                                            subIndex / category.subCategories.length < 0.5 && (
+                                                                <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+                                                            )
+                                                        ))}
+                                                    </div>
+                                                    {category.subCategories.length > 1 && (
+                                                        <div>
+                                                            {category.subCategories.map((subcategory, subIndex) => (
+                                                                subIndex / category.subCategories.length >= 0.5 && (
+                                                                    <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+                                                                )
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </ul>
                                             </div>
-                                            {category.subCategories.length > 1 && (
-                                                <div>
-                                                    {category.subCategories.map((subcategory, subIndex) => (
-                                                        subIndex / category.subCategories.length >= 0.5 && (
-                                                            <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
-                                                        )
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </ul>
-                                    </div>
-                                ))}
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+
 
                             </div>
                         </div>

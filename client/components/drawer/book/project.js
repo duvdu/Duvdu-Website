@@ -79,7 +79,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
     const enableBtn = Object.keys(validateRequiredFields()).length == 0
 
-    function ontoggleDrawer() {
+    function ontoggleDrawer(all) {
         if (preview)
             setPreview(false)
         else if (openMap)
@@ -95,16 +95,16 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         BookProject(null)
         setPost_success(false)
         resetForm()
-        toggleDrawer()
+        // toggleDrawer()
         ontoggleDrawer()
     }
 
     useEffect(() => {
-        UpdateFormData('creatives', creatives.map(item => item._id))
+        // UpdateFormData('creatives', creatives.map(item => item._id))
     }, [creatives.length])
 
     useEffect(() => {
-        UpdateFormData('totalPrice', data.projectBudget)
+        // UpdateFormData('totalPrice', data.projectBudget)
         if (data.creatives) {
             setCreatives([{ ...data.user, removable: true }])
         }
@@ -136,12 +136,13 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
         if (formData.functions)
             for (var i = 0; i < formData.functions.length; i++) {
-                form.append(`equipment[functions][${i}][id]`, formData.functions[i]);
+        console.log(formData.functions[i])
+                form.append(`equipment[functions][${i}][id]`, formData.functions[i]._id);
             }
 
         if (formData.tools)
             for (var i = 0; i < formData.tools.length; i++) {
-                form.append(`equipment[tools][${i}][id]`, formData.tools[i]);
+                form.append(`equipment[tools][${i}][id]`, formData.tools[i]._id);
             }
         BookProject(data._id, form)
     }

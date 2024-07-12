@@ -90,21 +90,21 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
                 {
                     [
-                        {
-                            url: '/dashboard',
-                            icon: 'dashboard',
-                            name: 'dashboard',
-                        },
+                        // {
+                        //     url: '/dashboard',
+                        //     icon: 'dashboard',
+                        //     name: 'dashboard',
+                        // },
                         {
                             url: '/contracts',
                             icon: 'contracts',
                             name: 'contracts',
                         },
-                        {
-                            url: '/teams',
-                            icon: 'teams',
-                            name: 'team projects',
-                        },
+                        // {
+                        //     url: '/teams',
+                        //     icon: 'teams',
+                        //     name: 'team projects',
+                        // },
                     ].map((item, index) =>
                         <Link key={index} href={item.url}>
                             <div className="flex justify-center items-center cursor-pointer">

@@ -35,7 +35,7 @@ const Details = ({ data }) => {
 
             {data?.functions?.length > 0 &&
                 <>
-                    <div className="mt-9 mb-3">
+                    <div className="mt-4 mb-3">
                         <h3 className="capitalize opacity-50"> function Used </h3>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -56,7 +56,7 @@ const Details = ({ data }) => {
             }
             {data?.creatives?.length > 0 &&
                 <>
-                    <div className="mt-9 mb-3">
+                    <div className="mt-4 mb-3">
                         <h3 className="capitalize opacity-50"> creatives </h3>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -95,9 +95,9 @@ const Details = ({ data }) => {
                 data?.location &&
                 <section>
                     <span className="capitalize opacity-50">location</span>
-                    <div className="capitalize mt-4">
+                    <div className="capitalize">
                         <section>
-                            <GoogleMap width={'100%'} value={{ 'lat': data.location.lat, 'lng': data.location.lng }} isreadOnly={true} className={"relative rounded-3xl overflow-hidden h-[200px]"} height={200}/>
+                            <GoogleMap width={'100%'} value={{ 'lat': data.location.lat, 'lng': data.location.lng }} isreadOnly={true} className={"relative rounded-3xl overflow-hidden h-[200px]"} height={200} inputclass={"my-0 bg-transparent font-bold"}/>
                         </section>
                     </div>
                 </section>
