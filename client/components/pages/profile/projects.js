@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 function Projects({ projects }) {
+    console.log(projects)
     return projects?.length > 0 && (
         <div className='container sm:p-0 project-grid gap-[10px]'>
             {projects.map((data, index) => (
