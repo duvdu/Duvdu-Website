@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 
-const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav }) => {
+const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav , enbablelove = false  }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
@@ -29,9 +29,11 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }, [cardData, swapProjectToFav_respond]);
 
   useEffect(() => {
+    if(enbablelove)
+      setFav(true);
     if(cardData?.isFavourite)
     setFav(cardData.isFavourite);
-  }, [cardData?.isFavourite]);
+  }, [cardData?.isFavourite , enbablelove]);
 
 
   const loveIconName = fav ? 'fas' : 'far'

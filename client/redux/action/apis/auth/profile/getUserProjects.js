@@ -7,6 +7,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetUserProject = ({ page = "1", limit = "", search = "", username }) => {
   const req = "GetUserProject"
   return async dispatch => {
+    return
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
       const params = {};
@@ -16,7 +17,7 @@ export const GetUserProject = ({ page = "1", limit = "", search = "", username }
       if (limit) params.limit = limit;
       if (username) userName = `/${username}`;
       const queryString = new URLSearchParams(params).toString();
-      const response = await mainApiInstance.get(`api/users/auth/profile/projects`);
+      const response = await mainApiInstance.get(`api/users/auth/profile/projects${userName}/?${queryString}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_DATA, payload: response.data.data });
 

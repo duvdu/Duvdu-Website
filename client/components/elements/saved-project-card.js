@@ -2,7 +2,7 @@
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration } from '../../util/util';
+import { convertDuration, isVideo } from '../../util/util';
 import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -18,7 +18,6 @@ import Link from 'next/link';
 const ProjectCard = ({
   cardData,
   className = "",
-  type = 'project',
   DeleteProjectFromBoard,
 }) => {
   const Router = useRouter();
@@ -81,6 +80,10 @@ const ProjectCard = ({
   const handleSelectClick = (event) => {
     event.stopPropagation();
   };
+console.log(cardData)
+const isVideoCover = isVideo(cardData.cover)
+const type = cardData.category?.cycle
+
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
@@ -88,86 +91,84 @@ const ProjectCard = ({
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           className='project'>
-          
-          <Link href={`/${type}/${cardData._id}`}>
-            <div className='cursor-pointer'>
-            <div className="absolute top-2 right-2" onClick={handleSelectClick}>
-              <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId, ProjectId)}>
-                <div className="border rounded-full size-9 flex justify-center items-center">
-                  <Icon className="size-6 text-white" name="ellipsis-vertical" />
-                </div>
-              </Selector>
-            </div>
+          <>
             {
-              false &&
-                cardData.backgroundImages.length == 1 &&
-                cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
-                <>
-                  <video
-                    className='cardvideo relative'
-                    loop
-                    ref={videoRef}
-                    onTimeUpdate={timeUpdate}
-                  >
-                    <source src={cardData.backgroundImages[0]} type='video/mp4' />
-                  </video>
-                  <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
-                    <span className="text-white">
-                      {convertDuration(Duration * 1000)}
-                    </span>
-                  </div>
-                </>
+              // cardData.cover.length == 1 &&
+              isVideoCover ? ( // Check if source is a video
+                <Link href={`/${type}/${cardData._id}`}>
+                  <a>
+                    <video
+                      className='cardvideo'
+                      ref={videoRef}
+                      onTimeUpdate={timeUpdate}
+                      loop
+                    >
+                      <source src={cardData.cover} type='video/mp4' />
+                    </video>
+                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                      <span className="text-white">
+                        {convertDuration(Duration * 1000)}
+                      </span>
+                    </div>
+                  </a>
+                </Link>
               ) : (
-                // cardData.cover.length == 1 &&
-                <img className='cardimg' src={cardData?.cover} alt="project" />
+                <Link href={`/${type}/${cardData._id}`}>
+                  <a>
+                    <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                  </a>
+                </Link>
               )
             }
-
             {
               false &&
               cardData.backgroundImages.length > 1 &&
-              <Swiper
-                dir='ltr'
-                className='cardimg'
-                modules={[Autoplay, Navigation, EffectFade, Pagination]}
-                spaceBetween={0}
-                slidesPerView={1}
-                scrollbar={{ draggable: true }}
-                loop={true}
-                pagination={{
-                  clickable: true,
-                }}
-              >
-                {cardData.backgroundImages.map((source, index) => (
-                  <SwiperSlide key={index}>
-                    <img key={index} src={source} className='cardimg' alt="project" />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            }
-            </div>
-          </Link>
-          <>
-            {
-              false &&
-              cardData.showSound &&
-              <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
-                <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
-              </div>
+              <Link href={`/${type}/${cardData._id}`}>
+                <Swiper
+                  dir='ltr'
+                  className='cardimg'
+                  modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                  spaceBetween={0}
+                  slidesPerView={1}
+                  scrollbar={{ draggable: true }}
+                  loop={true}
+                  pagination={{
+                    clickable: true,
+                  }}
+                >
+                  {cardData.backgroundImages.map((source, index) => (
+                    <SwiperSlide key={index}>
+                      <img key={index} src={source} className='cardimg' alt="project" />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </Link>
             }
           </>
+          <div className="absolute top-2 right-2" onClick={handleSelectClick}>
+            <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId, ProjectId)}>
+              <div className="border rounded-full size-9 flex justify-center items-center">
+                <Icon className="size-6 text-white" name="ellipsis-vertical" />
+              </div>
+            </Selector>
+          </div>
+          {
+            isVideoCover &&
+            <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
+              <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
+            </div>
+          }
         </div>
-
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <Link href={`/creative/${cardData?.user?.username}`}>
+            <Link href={`/creative/${cardData.user.username}`} >
               <div className='cursor-pointer'>
-                <img src={cardData?.user?.profileImage ? cardData?.user?.profileImage : process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
+                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
               </div>
-            </Link> 
-            <Link href={`/creative/${cardData?.user?.username}`}>
+            </Link>
+            <Link href={`/creative/${cardData.user.username}`}>
               <div className='cursor-pointer' >
-                <span className='text-sm font-semibold'>{cardData?.user?.name || ''}</span>
+                <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
               </div>
             </Link>
           </div>
@@ -176,8 +177,16 @@ const ProjectCard = ({
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
-        <div className='text-xl font-bold'>{cardData.projectBudget}$</div>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.name || cardData.studioName}</p>
+        {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
+          <>
+            <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
+            {(cardData.projectScale?.unit) &&
+              <span className='text-xl ml-2 opacity-60'>
+                per {cardData.projectScale?.unit}
+              </span>}
+          </>
+        }
       </div>
     </>
   );
@@ -186,6 +195,7 @@ const ProjectCard = ({
 
 const mapStateToProps = (state) => ({
   add_respond: state.api.AddProjectToBoard,
+
 });
 
 const mapDispatchToProps = {
