@@ -8,11 +8,11 @@ import { Goback } from '../../util/util';
 import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
 import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
 import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
+import DuvduLoading from "../../components/elements/duvduLoading";
 
 
 const Projects = ({
     projects,
-
     AddProjectToBoard,
     DeleteProjectFromBoard,
     GetSavedBoard,
@@ -41,8 +41,8 @@ const Projects = ({
     useEffect(() => {
         if (boardId) {
             GetSavedBoard({ id: boardId })
-            setallProjects([])
         }
+        setallProjects(null)
     }, [boardId]);
 
     useEffect(() => {
@@ -102,12 +102,13 @@ const Projects = ({
                                 {get_respond?.data?.title}
                             </span>
                         </div>
+                        <DuvduLoading loadingIn={"GetSavedBoard"}/>
                         {getPaginatedProjects?.length === 0 && (
                             <EmptyComponent />
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
-                                <Card key={i} cardData={item} />
+                                <Card key={i} cardData={item}/>
                             ))}
                         </div>
                         {

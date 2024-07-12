@@ -10,5 +10,6 @@
 "swapFollow",
 "updateProfile",
 "AddProjectToBoard",
+"GetSavedBoard",
 "GetProjects"
 ]

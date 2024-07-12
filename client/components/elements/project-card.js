@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 
-const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav }) => {
+const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav , enbablelove = false  }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
@@ -29,9 +29,11 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }, [cardData, swapProjectToFav_respond]);
 
   useEffect(() => {
+    if(enbablelove)
+      setFav(true);
     if(cardData?.isFavourite)
     setFav(cardData.isFavourite);
-  }, [cardData?.isFavourite]);
+  }, [cardData?.isFavourite , enbablelove]);
 
 
   const loveIconName = fav ? 'fas' : 'far'
@@ -176,7 +178,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData.title || cardData.studioName}</p>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.name || cardData.studioName}</p>
         {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
           <>
             <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>

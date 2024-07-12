@@ -7,7 +7,7 @@ import { ClosePopUp } from '../../util/util';
 function DeleteBoard({onClick,id}) {
 
     const toggleDirectorConfirmed = () => {
-        ClosePopUp("delete-board")
+        ClosePopUp("delete-board-"+id)
         onClick?.(id)
     }
 

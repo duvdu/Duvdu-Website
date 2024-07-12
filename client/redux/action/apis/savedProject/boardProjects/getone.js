@@ -6,6 +6,7 @@ export const GetSavedBoard = ({ id = "", page="", limit="",search="" }) => {
     const req = "GetSavedBoard"
     return async dispatch => {
         
+        dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         try {
             const params = {};
             if (search?.length > 0) params.search = search;
