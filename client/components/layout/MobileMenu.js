@@ -63,12 +63,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                             name: 'profile',
                         },
                         {
-                            url: '#',
+                            url: '?action=settings',
                             icon: 'gear',
                             name: 'settings',
                         },
                         {
-                            url: '#',
+                            url: '?action=notifications',
                             icon: 'bell',
                             name: 'notifications',
                         },

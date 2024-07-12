@@ -161,7 +161,6 @@ const Header = ({
                                                     </span>
                                                 </div>
                                             </Link>
-
                                             <div className="hidden">
                                             <Link href="/teams" className="capitalize">
                                                 <div className="header-link whitespace-nowrap">

@@ -96,14 +96,12 @@ function OtherProfile({
                             <Info
                                 src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
                                 location={user.address || 'NONE'}
-                                occupation={'---'}
                                 personalName={user.name}
                                 popularity={{
                                     likes: user.likes,
                                     followers: user.followCount.followers,
                                     views: user.profileViews,
                                 }}
-                                rank={'---'}
                                 rates={user?.rate?.totalRates}
                                 isMe={false}
                             />

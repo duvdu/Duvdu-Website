@@ -16,6 +16,7 @@ import { LogOut } from "../../redux/action/apis/auth/logout";
 import Chat from "../elements/chat";
 import ErrorAndLoadingHandling from "./assets/errorAndLoadingHandling";
 import RegistrationRequired from "../popsup/booking/registrationRequired";
+import TestOTPCode from "../popsup/testOTPCode";
 
 
 const Layout = ({
@@ -110,6 +111,7 @@ const Layout = ({
             <Chat/>
             <ErrorAndLoadingHandling/>
             <RegistrationRequired/>
+            <TestOTPCode/>
             {/* {isToggled && <div className="body-overlay-1" onClick={toggleClick}></div>} */}
 
             <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite, showTabs: showTabs, iSsticky: iSsticky }} />

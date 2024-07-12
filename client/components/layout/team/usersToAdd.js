@@ -38,9 +38,10 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                     <div className='Professional-background-decoration px-4 py-1'>
                         <span className='Professional-text-decoration font-bold text-lg'>{info?.rank?.ratersCounter || "---"}</span>
                     </div>
+                    {info.category?.title &&
                     <span className='flex border rounded-full px-4 py-1 gap-1 text-lg'>
                         <span>{info.category?.title || "---"}</span>
-                    </span>
+                    </span>}
                     <div className='border rounded-full px-4 py-1 text-lg flex items-center gap-1'>
                         <span>{info.rate.ratersCounter || 0}</span>
                         <div className='w-5'>
