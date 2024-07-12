@@ -68,7 +68,8 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     useEffect(() => {
         setLocation(window.location.origin)
     }, []);
-
+    
+    
     return (
         <>
             <Layout isloading={isloading} shortheader={true} showTabs={false}>
@@ -78,6 +79,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                             <div className="lg:w-5/12 xl:w-5/12 ">
                                 <div className="left-side-auth lg:mt-0 h-full">
                                     <div className="flex h-full">
+
                                         <Swiper
                                             modules={[Autoplay, Navigation, EffectFade]}
                                             spaceBetween={0}
@@ -86,7 +88,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                             onSwiper={(swiper) => setSwiper(swiper)}
                                             onSlideChange={() => setActive((active + 1) % imageSources.length)}
                                             loop={true}
-                                            // autoplay={{ delay: 4000 }}
+                                            autoplay={{ delay: 4000 }}
                                             speed={1500}
                                         >
                                             {imageSources.map((source, index) => (
@@ -107,6 +109,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>
+
                                     </div>
                                     <div className="front-part absolute bottom-10">
                                         <div className="footer">
