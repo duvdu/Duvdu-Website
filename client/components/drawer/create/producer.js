@@ -125,6 +125,10 @@ const AddProducer = ({
 
     const handleUpdate = () => {
         if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
+        if (formData.minBudget || formData.maxBudget) {
+            formData.maxBudget = formData.maxBudget || producerData?.maxBudget
+            formData.minBudget = formData.minBudget || producerData?.minBudget
+        }
         UpdateProducer(formData);
     };
 
