@@ -2,7 +2,7 @@
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration, isVideo } from '../../util/util';
+import { convertDuration, isVideo, OpenPopUp } from '../../util/util';
 import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,6 +14,7 @@ import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
 import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
 import Link from 'next/link';
+import DeleteBoard from '../popsup/DeleteBoard';
 
 const ProjectCard = ({
   cardData,
@@ -80,12 +81,13 @@ const ProjectCard = ({
   const handleSelectClick = (event) => {
     event.stopPropagation();
   };
-console.log(cardData)
-const isVideoCover = isVideo(cardData.cover)
-const type = cardData.category?.cycle
+  console.log(cardData)
+  const isVideoCover = isVideo(cardData.cover)
+  const type = cardData.category?.cycle
 
   return (
     <>
+      <DeleteBoard onClick={()=> DeleteProjectFromBoard(boardId, ProjectId)} id={boardId} />
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
         <div
           onMouseEnter={handleHover}
@@ -146,7 +148,7 @@ const type = cardData.category?.cycle
             }
           </>
           <div className="absolute top-2 right-2" onClick={handleSelectClick}>
-            <Selector options={dropdown} onSelect={(v) => DeleteProjectFromBoard(boardId, ProjectId)}>
+            <Selector options={dropdown} onSelect={(v) => OpenPopUp('delete-board-' + boardId)}>
               <div className="border rounded-full size-9 flex justify-center items-center">
                 <Icon className="size-6 text-white" name="ellipsis-vertical" />
               </div>
