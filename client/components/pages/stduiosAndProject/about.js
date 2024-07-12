@@ -20,8 +20,12 @@ const About = ({ data }) => (
                 </div>
             </div>
             <div className='flex justify-center pt-25 items-center gap-3 '>
-                <p className='rank'>{data?.user?.rank?.title || "---"}</p>
-                <p className="info-container">{data?.category?.title || "---"}</p>
+                {data?.user?.rank?.title &&
+                    <p className='rank'>{data?.user?.rank?.title}</p>
+                }
+                {data?.category?.title &&
+                    <p className="info-container">{data?.category?.title}</p>
+                }
                 <div className='info-container justify-center flex items-center gap-2 w-20'>
                     <p>{data?.user?.rate?.totalRates || 0}</p>
                     <Icon className='text-primary w-4' name={'rate-star'} />
@@ -41,10 +45,12 @@ const About = ({ data }) => (
                     ))}
                 </div>
             </div>
+            {data?.user.about &&
             <div className='sm:px-10 border-[#00000040] dark:border-[#FFFFFF40] border-t mt-6 pt-6'>
                 <p id='about-header'>about</p>
                 <p className='pt-2' id='about-paragraph'>{data?.user.about}</p>
             </div>
+            }
         </div>
     </div>
 )
