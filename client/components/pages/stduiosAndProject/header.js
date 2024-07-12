@@ -4,7 +4,7 @@ import Selector from "../../elements/CustomSelector"
 
 const Header = ({ data }) => (
     <>
-        <h1 className="text-xl capitalize opacity-80 font-bold"> {data?.title || data?.studioName} </h1>
+        <h1 className="text-xl capitalize opacity-80 font-bold"> {data?.name || data?.studioName} </h1>
         <div className='creator-info flex mt-3 mb-12 justify-between'>
             <Link href={`/creative/${data?.user?.username || ''}`}>
                 <div className='flex items-center gap-3 cursor-pointer'>

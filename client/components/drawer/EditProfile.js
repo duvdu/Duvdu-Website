@@ -25,13 +25,13 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const [cover, setCover] = useState(null);
     const router = useRouter();
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
-    
+
     useEffect(() => {
         if (isOpen) {
             UpdateFormData("profileImage", userInfo.profileImage);
             UpdateFormData("coverImage", userInfo.coverImage);
             UpdateFormData("name", userInfo.name);
-            UpdateFormData('category', userInfo.category?._id || userInfo.category)
+            UpdateFormData('category', userInfo.category)
             UpdateFormData("address", userInfo.address);
             UpdateFormData("pricePerHour", userInfo.pricePerHour);
             UpdateFormData("about", userInfo.about);
@@ -43,7 +43,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             setProfileImage(null)
             setCover(null)
         }
-    }, [isOpen,userInfo])
+    }, [isOpen, userInfo])
 
     useEffect(() => {
         setUserInfo(user)
@@ -55,18 +55,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
         }
     }, [updateProfile_respond])
 
-    function UpdateKeysAndValues(obj, prefix = '') {
-        Object.keys(obj).forEach(key => {
-            const value = obj[key];
-            const prefixedKey = `${prefix}${prefix ? '.' : ''}${key}`;
-            if (value && typeof value === 'object' && !Array.isArray(value) && value !== null) {
-                UpdateKeysAndValues(value, prefixedKey);
-            } else {
-                UpdateFormData(prefixedKey, value)
-            }
-        });
-
-    }
+    
     const converting = () => {
 
         const data = new FormData();
@@ -78,9 +67,9 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             'acceptedProjectsCounter',
             'profileViews',
             'isOnline',
+            'category',
             'avaliableContracts'
         ]
-
         Object.keys(formData).forEach(key => {
             // Append each key-value pair to the FormData instance
             if (avoidFeilds.includes(key)) return
@@ -93,6 +82,8 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             data.append('coverImage', cover)
         if (profileImage)
             data.append('profileImage', profileImage)
+        
+            data.append('category', formData?.category?._id || formData?.category)
         return data;
     }
 

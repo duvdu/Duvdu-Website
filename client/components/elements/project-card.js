@@ -176,7 +176,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData.title || cardData.studioName}</p>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.name || cardData.studioName}</p>
         {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
           <>
             <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
