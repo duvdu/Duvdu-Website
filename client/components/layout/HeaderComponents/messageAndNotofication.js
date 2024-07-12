@@ -44,7 +44,7 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
 }
 
 const ViewAll = ({ Type, list, t }) =>
-    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white dark:bg-[#1A2024] p-7">
+    <div className="w-auto rounded-[45px] border-[#00000026] bg-DS_white sm:dark:bg-[#1A2024] p-7">
         <div className="flex items-center justify-between">
             <h2 className="text-base font-bold capitalize">{t(Type)}</h2>
 
