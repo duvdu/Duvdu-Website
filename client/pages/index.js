@@ -198,10 +198,11 @@ const Home = ({
                                 }}
                                 autoplay={{ delay: 3000 }}
                             >
-                                {popularSub_respond?.data[0]?.subCategories?.map((data, index) => (
+                                {categories?.map((data, index) => (
                                     <SwiperSlide key={index}>
+                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
                                         <div
-                                            className={`bg-black h-[347px] ${(index + 1) % 3 === 0 ? 'w-[448px]' : 'w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-7 py-10`}
+                                            className={`bg-black h-[347px] ${(index + 1) % 3 === 0 ? 'w-[230px]' : 'w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-7 py-10`}
                                             style={{ backgroundImage: `url(${data.image})` }}
                                         >
                                             <div className="capitalize rounded-full text-lg font-medium text-white px-6 py-2 bg-black bg-opacity-50">
@@ -211,6 +212,7 @@ const Home = ({
                                                 {data.title}
                                             </span>
                                         </div>
+                                        </Link>
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
@@ -250,12 +252,16 @@ const Home = ({
                                             <div
                                                 className="gap-8 w-full">
                                                 <img className="h-24 object-cover w-full rounded-3xl" src={category.image} />
-                                                <h2 className="text-2xl opacity-60 font-semibold mt-6">{category.title}</h2>
+                                                <h2 className="text-2xl opacity-60 font-semibold mt-6 cursor-pointer" 
+                                                onClick={() => handleNavigation(`/${category.cycle}`)}
+                                                    >{category.title}</h2>
                                                 <ul>
                                                     <div>
                                                         {category.subCategories?.map((subcategory, subIndex) => (
                                                             subIndex / category.subCategories.length < 0.5 && (
-                                                                <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+                                                                <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} 
+                                                                onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
+                                                                />
                                                             )
                                                         ))}
                                                     </div>
@@ -263,7 +269,9 @@ const Home = ({
                                                         <div>
                                                             {category.subCategories.map((subcategory, subIndex) => (
                                                                 subIndex / category.subCategories.length >= 0.5 && (
-                                                                    <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} />
+                                                                    <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} 
+                                                                    onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
+                                                                    />
                                                                 )
                                                             ))}
                                                         </div>
