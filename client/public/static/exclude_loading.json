@@ -9,5 +9,6 @@
 "getAllContracts",
 "swapFollow",
 "updateProfile",
+"AddProjectToBoard",
 "GetProjects"
 ]

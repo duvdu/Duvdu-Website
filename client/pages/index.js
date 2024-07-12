@@ -37,7 +37,6 @@ const Home = ({
         backgroundSize: 'cover',
         backgroundPosition: 'bottom',
         display: 'inline-block',
-        padding: '61px 10px 0',
     };
     const homeTrenyList = [...list, ...Array(3 - list.length).fill({ title: '', image: '' })].slice(0, 3);
 
@@ -49,17 +48,17 @@ const Home = ({
         <>
             <Layout isbodyWhite={true}>
                 <section className="container w-full">
-                    <div className="my-24 mx-auto w-min hidden lg:block">
+                    <div className="my-24 mx-auto w-min">
                         <h1 className="text-center my-4">
-                            <span className="text-[#263257] font-black text-8xl capitalize whitespace-nowrap">explore <span style={TheBeststyle}>the best</span> of </span>
-                            <div className="relative h-[120px]">
+                            <span className="text-[#263257] font-black text-4xl lg:text-8xl capitalize whitespace-nowrap">explore <span className="pt-6 lg:pt-[61px] px-[10px] pb-0" style={TheBeststyle}>the best</span> of </span>
+                            <div className="relative h-[60px] lg:h-[120px]">
                                 <div className="absolute h-full w-full overflow-hidden">
 
                                     <div ref={wordsRef} className="slide-in">
                                         {
                                             words?.map((i) =>
-                                                <div className="h-[120px] flex flex-col justify-center items-center my-2">
-                                                    <p className="text-[#1A73EB] font-black text-8xl h-full">{i}</p>
+                                                <div className="h-[60px] lg:h-[120px] flex flex-col justify-center items-center my-2">
+                                                    <p className="text-[#1A73EB] font-black text-4xl lg:text-8xl h-full">{i}</p>
                                                 </div>
                                             )
                                         }
@@ -67,13 +66,13 @@ const Home = ({
                                 </div>
                             </div>
                         </h1>
-                        <p className="text-xl font-bold text-[#263257] text-center mx-20">
+                        <p className="text-xs lg:text-xl font-bold text-[#263257] text-center lg:mx-20">
                             consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.
                         </p>
                     </div>
                     <div className="mx-auto">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize"> trendy categories </h2>
-                        <div className="flex flex-col sm:flex-row gap-4 mt-7">
+                        <div className="flex flex-col lg:flex-row gap-4 mt-7">
                             {
                                 homeTrenyList.map((data, index) =>
                                     <div key={index} className="bg-black w-full aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden" style={{ backgroundImage: `url(${data.image})` }}>

@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 import EmptyComponent from "./emptyComponent";
 import { toggleContractData } from "../../../redux/action/contractDetails";
-import Loading from "../../elements/loading.js";
+import DuvduLoading from "../../elements/duvduLoading.js";
 
 const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, RightSidehandleToggleClick }) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -147,7 +147,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                         (activeIndex === 0 ? <Clients /> : <Creatives />)
                     }
                     <div className="flex flex-col justify-center items-center lg:h-body">
-                    <Loading loadingIn = {"getAllContracts"} />
+                    <DuvduLoading loadingIn = {"getAllContracts"} />
                     </div>
                 </div>
             </div>

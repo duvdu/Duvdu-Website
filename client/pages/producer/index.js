@@ -9,7 +9,8 @@ import { calculateRating, OpenPopUp } from '../../util/util';
 import { useRouter } from 'next/router';
 import ProducerCard from '../../components/pages/producer/producerCard';
 import EmptyComponent from '../../components/pages/contracts/emptyComponent';
-import Loading from '../../components/elements/loading';
+import Loading from '../../components/elements/duvduLoading';
+import DuvduLoading from '../../components/elements/duvduLoading';
 
 const Producers = ({ GetProducer, respond,api,islogin }) => {
     const Router = useRouter();
@@ -82,7 +83,7 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
                                 <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />
                             )}
                         </div>
-                        <Loading loadingIn = {"GetProducer"} />
+                        <DuvduLoading loadingIn = {"GetProducer"} />
                         <Formsubmited />
                     </div>
                 </section>

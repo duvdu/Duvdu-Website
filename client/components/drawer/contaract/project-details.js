@@ -15,6 +15,7 @@ import CountdownTimer from '../../elements/CounterDownTimer';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
+import TimeLeft from '../../pages/contracts/TimeLeft';
 
 function ReceiveProjectFiles({
     getAllContracts,
@@ -39,9 +40,7 @@ function ReceiveProjectFiles({
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
     const [appointmentDate, setdAppointmentDate] = useState(null);
-    const [details, setDetails] = useState(null);
-    const [totalPrice, setTotalPrice] = useState(null);
-    const [deadline, setDeadline] = useState(null);
+    
 
     const [canEdit, setCanEdit] = useState(null);
 
@@ -61,39 +60,38 @@ function ReceiveProjectFiles({
     }
 
     const uiStatus = () => {
+        const items = {
+            status: status,
+            stageExpiration: contract?.stageExpiration,
+            deadline: contract?.deadline,
+            actionAt: contract?.actionAt,
+            createdAt: contract?.createdAt,
+        };
+
         switch (status) {
-            case 'canceled':
-                return "Canceled";
             case 'pending':
-                return timeLeft;
-            case 'waiting-for-pay-10':
-                return "Waiting For First Payment";
+                return <TimeLeft data={items} msgstatus={"pending"} />;
             case 'waiting-for-payment':
-                return "Waiting For payment";
+                return <TimeLeft data={items} msgstatus={"waiting for payment"} />;
+            case 'waiting-for-pay-10':
+                return <TimeLeft data={items} msgstatus={"waiting for pay 10"} />;
             case 'update-after-first-Payment':
-                return "Update After First Payment";
+                return <TimeLeft data={items} msgstatus={"update after first Payment"} />;
             case 'waiting-for-total-payment':
-                return "Waiting For Total Payment";
+                return <TimeLeft data={items} msgstatus={"waiting for total payment"} />;
             case 'ongoing':
-                return "Ongoing";
+                return <TimeLeft data={items} msgstatus={"complate task"} />;
             case 'completed':
-                return "Completed";
+                return <NormalState value={"Completed"} />;
             case 'rejected':
-                return "Rejected";
+                return <NormalState value={"Rejected"} />;
+            case 'canceled':
+                return <NormalState value={"Canceled"} />;
             default:
                 return "Unknown"; // Handle unknown cases as needed
         }
-    }
-
-    const handleNormalInputChange = (e) => {
-        const { name, value } = e.target;
-        if (name === 'details') {
-            setDetails(value);
-        }
-        else if (name === 'totalPrice') {
-            setTotalPrice(value);
-        }
     };
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -186,27 +184,32 @@ function ReceiveProjectFiles({
         const type = getType()
 
         const data = {}
-        if (appointmentDate) data.appointmentDate = appointmentDate;
-        if (details) data.details = details;
-        if (totalPrice) data.totalPrice = totalPrice;
-        if (deadline) data.deadline = deadline;
-
-        if (formData['numberOfUnits']) data['projectScale.numberOfUnits'] = formData['numberOfUnits'];
-        if (formData['tools'] || formData['functions']) data['equipment'] = {}
-        if (formData['tools']) {
-            data['equipment']['tools'] = formData['tools'].map((value) => ({
-                unitPrice: value.unitPrice,
-                id: value._id
-            }));
+        if (type == "copyrights") {
+           data['details'] = formData['details']
+           data['totalPrice'] = formData['totalPrice']
+           data['duration'] = {
+            value:formData['duration'],
+            unit:contract.duration.unit
+           }
         }
-        if (formData['functions']) {
-            data['equipment']['functions'] = formData['functions'].map((value) => ({
-                unitPrice: value.unitPrice,
-                id: value._id
-            }));
+        else {
+            if (formData['numberOfUnits']) data['projectScale.numberOfUnits'] = formData['numberOfUnits'];
+            if (formData['tools'] || formData['functions']) data['equipment'] = {}
+            if (formData['tools']) {
+                data['equipment']['tools'] = formData['tools'].map((value) => ({
+                    unitPrice: value.unitPrice,
+                    id: value._id
+                }));
+            }
+            if (formData['functions']) {
+                data['equipment']['functions'] = formData['functions'].map((value) => ({
+                    unitPrice: value.unitPrice,
+                    id: value._id
+                }));
+            }
+            if (formData['duration']) data.duration = formData['duration'];
+            if (formData['unitPrice']) data.unitPrice = formData['unitPrice'];
         }
-        if (formData['duration']) data.duration = formData['duration'];
-        if (formData['unitPrice']) data.unitPrice = formData['unitPrice'];
 
         takeAction({ id: contract._id, data: data, type: type, isUpdate: true })
     };
@@ -230,9 +233,6 @@ function ReceiveProjectFiles({
         setActionSuccess(false)
         setPaymentSuccess(false)
         setdAppointmentDate(null)
-        setDetails(null)
-        setTotalPrice(null)
-        setDeadline(null)
         takeAction({ id: -1 })      // for remove respond state
         payment({ id: -1 })         // for remove respond state
         resetForm()
@@ -263,9 +263,9 @@ function ReceiveProjectFiles({
             IsImSp() &&
             status === "update-after-first-Payment" &&
             (
-                details && details !== contract?.details ||
-                totalPrice && totalPrice !== contract?.totalPrice ||
-                (deadline && deadline !== contract?.deadline && new Date(deadline) > new Date(contract.deadline))
+                formData['totalPrice'] && formData['totalPrice'] != contract.totalPrice||
+                formData['details'] && formData['details'] != contract.details ||
+                formData['duration'] && formData['duration'] != contract.duration.value 
             )) ||
         (getType() === "project" &&
             IsImSp() &&
@@ -292,13 +292,7 @@ function ReceiveProjectFiles({
                         <div className='flex flex-col justify-between h-drawer'>
                             <div className={`flex flex-col justify-start items-center px-0 gap-6 mt-10 ${canEdit ? 'hidden' : ''}`}>
                                 <section>
-                                    <span className='text-4xl my-5'>{uiStatus()}
-                                        {status == "pending" &&
-                                            <span className='text-lg opacity-40 mx-2'>
-                                                {timeLeft ? "left" : "Time's up"}
-                                            </span>
-                                        }
-                                    </span>
+                                    {uiStatus()}
                                 </section>
                                 {
                                     (getType() == "project" || getType() == "rental") &&
@@ -355,7 +349,7 @@ function ReceiveProjectFiles({
                                         )}
                                     </section>
                                 }
-                                
+
                                 <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
                                     <div className='w-full'>
 
@@ -363,9 +357,9 @@ function ReceiveProjectFiles({
                                             <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
                                             {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
                                         </div>
-                                        {contract.address &&
+                                        
                                             <a
-                                                href={`https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}`}
+                                                href={contract.address ?`https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}`:null}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className='opacity-85 text-base'
@@ -380,14 +374,15 @@ function ReceiveProjectFiles({
                                                         </div>
                                                         <div>
                                                             <div>
-                                                                <span className='opacity-85 text-base'>
-                                                                    {contract.address}
+                                                                <span className='opacity-85 text-base line-clamp-2'>
+                                                                    { contract.address ? contract.address : "No Address To show"}
+                                                                    
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </a>}
+                                            </a>
                                     </div>
                                     <div className='w-full'>
                                         <div className='w-full'>
@@ -419,7 +414,7 @@ function ReceiveProjectFiles({
                                         </div>
                                     </div>
                                 </section>
-                                
+
                             </div>
                             <div className={'flex mx-5 gap-7 mb-10 mt-16 justify-center' + (canEdit ? ' hidden' : '')}>
                                 {
@@ -455,28 +450,37 @@ function ReceiveProjectFiles({
                                                 <h3 className="capitalize opacity-60">job details</h3>
                                                 <textarea
                                                     name="details"
-                                                    value={details || contract.details}
-                                                    onChange={handleNormalInputChange}
+                                                    value={formData.details || contract.details}
+                                                    onChange={handleInputChange}
                                                     placeholder="requirements, conditions At least 6 char"
                                                     className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
                                                 />
                                             </section>
                                             <section className="my-11 w-full">
-                                                <h3 className="capitalize opacity-60 mb-4">deadline</h3>
-                                                <SelectDate value={deadline || contract.deadline} onChange={(value) => setDeadline(value)} />
-                                                {deadline && new Date(deadline) < new Date(contract.deadline) &&
-                                                    <span className="error-msg" >
-                                                        Deadline must be on or after the execution day.
-                                                    </span>
-                                                }
+                                                <section className='mb-4 mt-14'>
+                                                    <h3 className="capitalize opacity-60 mb-4">duration by {contract.duration.unit} </h3>
+                                                    <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration.value || ""} onChange={handleInputChange} name="duration" />
+                                                </section>
+                                                <div className='mb-4 w-full hidden'>
+                                                    <h3 className="capitalize opacity-60 mb-4">unit</h3>
+                                                    <input
+                                                        placeholder='unit'
+                                                        type='text'
+                                                        name='unit'
+                                                        value={formData["unit"] || contract.duration.unit}
+                                                        onChange={handleInputChange}
+                                                        className="edit app-field"
+                                                    />
+                                                </div>
                                             </section>
                                             <div className='mb-4 w-full'>
+                                                <h3 className="capitalize opacity-60 mb-4">total price</h3>
                                                 <input
                                                     placeholder='Total price'
-                                                    type='text'
+                                                    type='number'
                                                     name='totalPrice'
-                                                    value={totalPrice || contract.totalPrice}
-                                                    onChange={handleNormalInputChange}
+                                                    value={formData.totalPrice || contract.totalPrice}
+                                                    onChange={handleInputChange}
                                                     className="edit app-field"
                                                 />
                                             </div>

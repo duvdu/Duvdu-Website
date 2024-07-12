@@ -64,13 +64,17 @@ function OtherProfile({
             setIsFollow(user?.isFollow);
         }
     }, [swapFollowRespond, user?.isFollow]);
-
+    
     useEffect(() => {
         if (username) {
             getOtherprofile(username);
             GetUserProject({ username });
         }
     }, [username]);
+    
+    useEffect(() => {
+        setIsFollow(user?.isFollow);
+    }, []);
 
     const handleSwapFollow = () => {
         if (api.loading && api.req === "swapFollow") return;

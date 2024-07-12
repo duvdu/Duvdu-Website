@@ -29,7 +29,8 @@ import Info from './info';
 import Projects from './projects';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import EmptyComponent from '../contracts/emptyComponent';
-import Loading from '../../elements/loading';
+import Loading from '../../elements/duvduLoading';
+import DuvduLoading from '../../elements/duvduLoading';
 
 
 
@@ -160,7 +161,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                     <Conver converPic={userInfo.coverImage} />
                     <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                         <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
-                        <Loading loadingIn = {"updateProfile"} />
+                        <DuvduLoading loadingIn = {"updateProfile"} />
                             <div className='relative px-6 sm:px-10'>
                                 <Info
                                     src={userInfo.profileImage}

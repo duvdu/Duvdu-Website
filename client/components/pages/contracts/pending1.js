@@ -69,7 +69,7 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
             case 'waiting-for-total-payment':
                 return <TimeLeft data={items} msgstatus={"waiting for total payment"} />;
             case 'ongoing':
-                return <TimeLeft data={data} msgstatus={"complate task"} />;
+                return <TimeLeft data={items} msgstatus={"complate task"} />;
             case 'completed':
                 return <NormalState value={"Completed"} />;
             case 'rejected':
