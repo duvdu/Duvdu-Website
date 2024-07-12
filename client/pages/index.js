@@ -176,12 +176,13 @@ const Home = ({
                                 modules={[Autoplay, Navigation, EffectFade]}
                                 breakpoints={{
                                     320: {
-                                        slidesPerView: 2,
+                                        slidesPerView: 1,
                                         spaceBetween: 10,
                                     },
+                                    
 
-                                    768: {
-                                        slidesPerView: 3,
+                                    530: {
+                                        slidesPerView: 2,
                                         spaceBetween: 30,
                                     },
 
