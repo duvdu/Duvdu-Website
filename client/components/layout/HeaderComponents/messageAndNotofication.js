@@ -15,24 +15,26 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
         setViewAllState(0)
     }, [getheaderpopup == Types.SHOWNOTOFICATION])
 
-    if (getheaderpopup != Types.SHOWNOTOFICATION) return
+    if (getheaderpopup != Types.SHOWNOTOFICATION && window.innerWidth > 1024) return
+    const isMob = window.innerWidth < 1024
     return (
-        <div className="cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active" >
-            <div className="dialog dialog-1">
+        <div className={isMob?"":"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
+            <div className={isMob?"":"dialog dialog-1"}>
                 <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2">
                     {
-                        viewAllState == 0 &&
+                        viewAllState == 0 &&!isMob&&
                         <>
                             <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
                             <ViewFew Type={'messages'} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
+                            
                         </>
                     }
                     {
-                        viewAllState == 1 &&
+                        viewAllState == 1 || isMob && 
                         <ViewAll Type={'notification'} list={GetNotifications_resond?.data || []} t={t} />
                     }
                     {
-                        viewAllState == 2 &&
+                        viewAllState == 2 && 
                         <ViewAll Type={'messages'} list={chats || []} t={t} />
                     }
                 </div>
