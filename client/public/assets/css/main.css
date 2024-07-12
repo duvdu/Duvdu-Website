@@ -78,6 +78,50 @@ input[type=number]:focus {
   box-shadow: none;
 }
 
+
+/* Remove arrows in number input (Chrome, Safari, Edge, Opera) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove arrows in number input (Firefox) */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Disable changing value by scrolling */
+input[type="number"] {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Optionally, you can add this to further ensure the scroll wheel doesn't affect the input value */
+input[type="number"] {
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+input[type=number] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+
+
 input:focus::-moz-placeholder {
   opacity: 0;
   -webkit-transition: .4s;
