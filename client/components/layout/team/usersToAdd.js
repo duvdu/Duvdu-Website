@@ -7,6 +7,7 @@ import { GetTeamProject } from "../../../redux/action/apis/teamproject/getone";
 import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
 import AppButton from "../../elements/button";
+import DuvduLoading from "../../elements/duvduLoading";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
 
@@ -37,9 +38,10 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                     <div className='Professional-background-decoration px-4 py-1'>
                         <span className='Professional-text-decoration font-bold text-lg'>{info?.rank?.ratersCounter || "---"}</span>
                     </div>
+                    {info.category?.title &&
                     <span className='flex border rounded-full px-4 py-1 gap-1 text-lg'>
                         <span>{info.category?.title || "---"}</span>
-                    </span>
+                    </span>}
                     <div className='border rounded-full px-4 py-1 text-lg flex items-center gap-1'>
                         <span>{info.rate.ratersCounter || 0}</span>
                         <div className='w-5'>
@@ -135,13 +137,13 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
             <Popup className="ADD_HOURS_TO_CREATIVE" header={'Work Details'}>
                 <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
                     <div className='flex items-center gap-9 w-64'>
-                        <input type="number" onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <input type="number" min={0} onChange={(e) => setHours(Math.abs(e.target.value))} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             hours
                         </span>
                     </div>
                     <div className='flex items-center gap-9 w-64'>
-                        <input type="number" onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <input type="number" min={0} onChange={(e) => setAmount(Math.abs(e.target.value))} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             amount
                         </span>
@@ -156,7 +158,7 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
                     <AddToTeamCard goback={goback} info={value} key={index} onChoose={() => openpopUp(value)} />
                 ))}
             </div>
-            <img className={(api.loading && api.req == "FindUser" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+            <DuvduLoading loadingIn = {"FindUser"} />
         </>
     )
 };

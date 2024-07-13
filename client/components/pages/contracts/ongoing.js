@@ -2,6 +2,8 @@ import { connect } from "react-redux";
 import Icon from "../../Icons";
 import Selector from "../../elements/CustomSelector";
 import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
+import dateFormat from "dateformat";
+import { formattedCreatedAt, formattedDeadline } from './../../../util/format-date';
 
 const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
     const statuses = [
@@ -9,19 +11,20 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
         { value: 'reject' },
     ];
 
-
+    const Deadline = formattedDeadline(data?.contract?.deadline)
+    const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
     const handleDropdownSelect = (value) => {
         // takeAction({id: , value : })
     };
     return (
-        <div onClick={onClick} className='flex justify-between rounded-[50px] bg-primary p-6 relative w-[370px] sm:w-full mx-auto cursor-pointer'>
+        <div onClick={onClick} className='flex justify-between rounded-[50px] bg-primary p-6 relative w-full mx-auto cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
                     <img className='w-14 h-14 rounded-full object-cover object-top' src={data.customer.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold  text-white capitalize'>{data.customer.name}</h3>
-                        <span className='opacity-50 text-white'>{new Date(data.createdAt).toDateString()}</span>
+                        <span className='opacity-50 text-white'>{CreatedAt}</span>
                     </div>
                 </div>
                 {/*********/}
@@ -40,7 +43,7 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
                         <div>
                             <span className='opacity-50 text-white'>deadline</span>
                             <br />
-                            <span className='text-white'>{new Date(data.deadline).toDateString()}</span>
+                            <span className='text-white'>{Deadline}</span>
                         </div>
                     </div>
                     {/* button */}
@@ -59,15 +62,6 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
 
                 {/*********/}
             </div>
-            <Selector
-                onSelect={handleDropdownSelect}
-                iconclassName={'text-white'}
-                options={statuses}
-                className="h-min">
-                <div className="border rounded-full size-9 flex justify-center items-center">
-                    <Icon className="size-6 text-white" name="ellipsis-vertical" />
-                </div>
-            </Selector>
         </div>
     );
 };

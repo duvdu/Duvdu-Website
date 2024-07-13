@@ -62,14 +62,14 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
         if (formData.equipments)
             formData.equipments.forEach((equipment, index) => {
                 data.append(`equipments[${index}][name]`, equipment.name);
-                data.append(`equipments[${index}][fees]`, equipment.fees);
+                data.append(`equipments[${index}][unitPrice]`, equipment.unitPrice);
             });
 
         // Append creatives
         if (formData.creatives)
             formData.creatives.forEach((creative, index) => {
                 data.append(`creatives[${index}][creative]`, creative._id);
-                data.append(`creatives[${index}][fees]`, creative.fees);
+                data.append(`creatives[${index}][unitPrice]`, creative.unitPrice);
             });
 
         if (formData.cover) {
@@ -117,6 +117,9 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
+        if (!isNaN(value) && parseInt(value) < 0) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value);
     };
 
@@ -169,7 +172,6 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
             pathname: `/creative/${auth.username}`,
         })
     }
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     return (
         <>
@@ -200,22 +202,22 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section >
-                                <input placeholder='equipment name' value={formData.studioName|| ""} onChange={handleInputChange} name="studioName" className={inputStyle} />
-                                <input placeholder='phone number' type="tel" value={formData.studioNumber|| ""} onChange={handleInputChange} name="studioNumber" className={inputStyle} />
-                                <input placeholder='description' value={formData.description|| ""} onChange={handleInputChange} name="description" className={inputStyle} />
-                                <input placeholder='address' value={formData.address|| ""} onChange={handleInputChange} name="address" className={inputStyle} />
+                                <input placeholder='equipment name' value={formData.studioName|| ""} onChange={handleInputChange} name="studioName" className={"inputStyle1"} />
+                                <input placeholder='phone number' type="tel" value={formData.studioNumber|| ""} onChange={handleInputChange} name="studioNumber" className={"inputStyle1"} />
+                                <input placeholder='description' value={formData.description|| ""} onChange={handleInputChange} name="description" className={"inputStyle1"} />
+                                <input placeholder='address' value={formData.address|| ""} onChange={handleInputChange} name="address" className={"inputStyle1"} />
                                 <ListInput
                                     placeholder={'equipment available'}
                                     target="EquipmentAvailable"
                                     name={"EquipmentsUsed"}
-                                    listdiv={formData.equipments && formData.equipments.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>fees : </strong> ${e.fees} </span>`))}
+                                    listdiv={formData.equipments && formData.equipments.map((e, i) => (`<span> <strong>tool : </strong> ${e.name} </span> <br/>  <span> <strong>unitPrice : </strong> ${e.unitPrice} </span>`))}
                                     remove={(value) => removeFromArray('equipments', value)}
                                     enable={false}
                                 />
                             </section>
                             <section className="h-96 relative overflow-hidden hidden">
                                 <span> Set location </span>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)}  onChange={handleInputChange}/>
                             </section>
                             <section className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.differentLocation} onSwitchChange={(checked) => UpdateFormData('differentLocation', checked)} />
@@ -223,8 +225,8 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                             </section>
                             <section >
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input placeholder='price per hour' value={formData.pricePerHour|| ""} onChange={handleInputChange} name="pricePerHour" className={inputStyle} />
-                                <input type="number" placeholder='insurance' value={formData.insurance|| ""} onChange={handleInputChange} name="insurance" className={inputStyle} />
+                                <input placeholder='price per hour' value={formData.pricePerHour|| ""} onChange={handleInputChange} name="pricePerHour" className={"inputStyle1"} />
+                                <input type="number" min={0} placeholder='insurance' value={formData.insurance|| ""} onChange={handleInputChange} name="insurance" className={"inputStyle1"} />
                             </section>
                             <section className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />

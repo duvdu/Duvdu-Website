@@ -9,6 +9,7 @@ import * as Types from "../../redux/constants/actionTypes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
 
+
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
 
@@ -18,8 +19,6 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     const [swiper, setSwiper] = useState(null);
     const [localerror, setLocalerror] = useState(true);
     const [location, setLocation] = useState(null);
-    const [swiperError, setSwiperError] = useState(null);
-    const [isAutoplay, setIsAutoplay] = useState(true);
 
     const imageSources = [
         {
@@ -69,7 +68,8 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     useEffect(() => {
         setLocation(window.location.origin)
     }, []);
-
+    
+    
     return (
         <>
             <Layout isloading={isloading} shortheader={true} showTabs={false}>
@@ -79,6 +79,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                             <div className="lg:w-5/12 xl:w-5/12 ">
                                 <div className="left-side-auth lg:mt-0 h-full">
                                     <div className="flex h-full">
+
                                         <Swiper
                                             modules={[Autoplay, Navigation, EffectFade]}
                                             spaceBetween={0}
@@ -87,16 +88,16 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                             onSwiper={(swiper) => setSwiper(swiper)}
                                             onSlideChange={() => setActive((active + 1) % imageSources.length)}
                                             loop={true}
-                                            // autoplay={{ delay: 4000 }}
+                                            autoplay={{ delay: 4000 }}
                                             speed={1500}
                                         >
                                             {imageSources.map((source, index) => (
                                                 <SwiperSlide key={index}>
                                                     <div className="relative min-h-[790px] lg:min-h-0 min-w-96 size-full">
-                                                        <div className="absolute inset-0 flex flex-col auth-gradient px-16">
+                                                        <div className="absolute inset-0 flex flex-col auth-gradient px-4 lg:px-16">
                                                             <div className="absolute bottom-20">
                                                                 <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
-                                                                <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
+                                                                <p className="text-white opacity-60 text-sm leading-6 capitalize w-full">{source.p}</p>
                                                             </div>
                                                         </div>
                                                         {
@@ -108,6 +109,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>
+
                                     </div>
                                     <div className="front-part absolute bottom-10">
                                         <div className="footer">

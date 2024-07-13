@@ -12,6 +12,7 @@ import { ClosePopUp, OpenPopUp } from "../util/util";
 import EditBoard from "../components/popsup/editBoard";
 import Link from 'next/link'
 import { GetFavList } from "../redux/action/apis/savedProject/fav/getAll";
+import DeleteBoard from "../components/popsup/DeleteBoard";
 
 const Saved = ({
     GetBoards,
@@ -32,24 +33,29 @@ const Saved = ({
         const { totalProjects, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
 
-        
+
         const dropdown = [
             {
-                value: "Delete",
+                value: "Edit",
             },
             {
-                value: "Edit",
+                value: "Delete",
             },
         ]
         const handleSelectClick = (event) => {
             event.stopPropagation();
         };
         const handleDropdownSelect = (v) => {
-            v == "Delete" ? DeleteSavedBoard(id) : OpenPopUp("edit-board-" + id)
+            v == "Delete" ? OpenPopUp('delete-board-' + id) : OpenPopUp("edit-board-" + id)
         };
+        const deleteSavedBoard = () => {
+            DeleteSavedBoard(id)
+        };
+
         return (
             <>
-                <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} />
+                <DeleteBoard onClick={deleteSavedBoard} id={id} />
+                <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} defultValue={title} />
                 <div className="boards-card">
                     <div className="absolute top-7 right-7" onClick={handleSelectClick}>
                         {!isFav &&
@@ -57,7 +63,8 @@ const Saved = ({
                                 <div className="border rounded-full size-9 flex justify-center items-center">
                                     <Icon className="size-6 text-white" name="ellipsis-vertical" />
                                 </div>
-                            </Selector>}
+                            </Selector>
+                        }
                     </div>
                     <Link href={`/save/${id}`}>
                         <div className="projects cursor-pointer">
@@ -84,7 +91,7 @@ const Saved = ({
         );
     };
     const [initFav, setInitFav] = useState({
-        _id:'favorites',
+        _id: 'favorites',
         title: "Favorites",
         projects: [],
         totalProjects: 0
@@ -92,18 +99,19 @@ const Saved = ({
     useEffect(() => {
         if (getFavList_respond?.data) {
             setInitFav({
-                _id:'favorites',
+                _id: 'favorites',
                 title: "Favorites",
                 projects: getFavList_respond.data,
                 totalProjects: getFavList_respond.data.length
             });
         }
     }, [getFavList_respond]);
+    console.log(createBoard_respond , updateBoard_respond , deleteSavedBoard_respond)
     useEffect(() => {
+        
         if (createBoard_respond || updateBoard_respond || deleteSavedBoard_respond) {
             GetBoards()
             GetFavList({})
-            DeleteSavedBoard(-1)
         }
         ClosePopUp("create-new-board")
     }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])

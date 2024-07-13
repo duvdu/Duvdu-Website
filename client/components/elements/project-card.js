@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration } from '../../util/util';
+import { convertDuration, isVideo } from '../../util/util';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
@@ -13,24 +13,30 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 
-const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav }) => {
+const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav , enbablelove = false  }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
-  const [actionID, setActionID] = useState(null);
-  const [cardData, setCardData] = useState(initialCardData);
-  const loveIconName = cardData.isFavourite ? 'fas' : 'far'
+  const cardData = initialCardData;
+
+  const [fav, setFav] = useState(false);
 
   useEffect(() => {
-    if (swapProjectToFav_respond && actionID == cardData._id) {
-      setCardData(prev => ({
-        ...prev,
-        isFavourite: !prev.isFavourite
-      }));
-      setActionID(null)
+    if (cardData?._id === (swapProjectToFav_respond?.projectId || -1)) {
+      setFav(swapProjectToFav_respond.action === "add");
     }
-  }, [swapProjectToFav_respond]);
+  }, [cardData, swapProjectToFav_respond]);
+
+  useEffect(() => {
+    if(enbablelove)
+      setFav(true);
+    if(cardData?.isFavourite)
+    setFav(cardData.isFavourite);
+  }, [cardData?.isFavourite , enbablelove]);
+
+
+  const loveIconName = fav ? 'fas' : 'far'
 
   useEffect(() => {
     if (videoRef.current) {
@@ -44,8 +50,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }, [videoRef.current?.duration == NaN]);
 
   const loveToggleAction = () => {
-    setActionID(cardData._id)
-    SwapProjectToFav({ projectId: cardData._id, action: cardData.isFavourite ? "remove" : "add" })
+    SwapProjectToFav({ projectId: cardData._id, action: fav ? "remove" : "add" })
   };
 
   const timeUpdate = () => {
@@ -53,6 +58,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }
   const handleSoundIconClick = () => {
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
+    setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark')
     if (videoRef.current)
       videoRef.current.muted = soundIconName === 'volume-high';
   };
@@ -80,6 +86,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //   }
   // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
 
+  const isVideoCover = isVideo(cardData.cover)
   return (
     <>
       <div className={`select-none project-card  ${className}`} onClick={() => { }} >
@@ -89,27 +96,30 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
           className='project'>
           <>
             {
-              false &&
-                cardData.backgroundImages.length == 1 &&
-                cardData.backgroundImages[0].endsWith('.mp4') ? ( // Check if source is a video
+              // cardData.cover.length == 1 &&
+              isVideoCover ? ( // Check if source is a video
                 <Link href={`/${type}/${cardData._id}`}>
-                  <video
-                    className='cardvideo relative'
-                    ref={videoRef}
-                    onTimeUpdate={timeUpdate}
-                    loop
-                  >
-                    <source src={cardData.backgroundImages[0]} type='video/mp4' />
-                  </video>
-                  <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
-                    <span className="text-white">
-                      {convertDuration(Duration * 1000)}
-                    </span>
-                  </div>
+                  <a>
+                    <video
+                      className='cardvideo'
+                      ref={videoRef}
+                      onTimeUpdate={timeUpdate}
+                      loop
+                    >
+                      <source src={cardData.cover} type='video/mp4' />
+                    </video>
+                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                      <span className="text-white">
+                        {convertDuration(Duration * 1000)}
+                      </span>
+                    </div>
+                  </a>
                 </Link>
               ) : (
                 <Link href={`/${type}/${cardData._id}`}>
-                  <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                  <a>
+                    <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                  </a>
                 </Link>
               )
             }
@@ -144,7 +154,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             </div>
           }
           {
-            cardData.showSound &&
+            isVideoCover &&
             <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
@@ -168,14 +178,14 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             <Icon className='text-primary size-4' name={'rate-star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData.title || cardData.studioName}</p>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.name || cardData.studioName}</p>
         {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
           <>
             <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
             {(cardData.projectScale?.unit) &&
-            <span className='text-xl ml-2 opacity-60'>
-              per {cardData.projectScale?.unit}
-            </span>}
+              <span className='text-xl ml-2 opacity-60'>
+                per {cardData.projectScale?.unit}
+              </span>}
           </>
         }
       </div>

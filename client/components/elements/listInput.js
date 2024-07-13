@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../components/Icons';
 
-function ListInput({ onChange, name, placeholder, onClick, children, listdiv, target, remove, enable = true,value }) {
+function ListInput({ onChange, name, placeholder, onClick, children, listdiv, target, remove, enable = true, value }) {
     const [word, setWord] = useState('')
     const [list, setList] = useState([])
 
@@ -35,20 +35,19 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
 
     };
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     return (
         <>
             <div className="relative">
                 {
-                    !enable ? (<div className={`${inputStyle} pr-14 capitalize opacity-45`}>
+                    !enable ? (<div className={`${"inputStyle1"} pr-14 capitalize opacity-45`}>
                         {placeholder}
                     </div>
                     ) :
                         (<input
                             placeholder={placeholder}
-                            className={`${inputStyle} pr-14`}
-                            value={word|| ""}
+                            className={`${"inputStyle1"} pr-14`}
+                            value={word || ""}
                             onChange={(e) => { setWord(e.target.value) }}
                             name={name}
                         />)}
@@ -64,12 +63,12 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
             {children}
             {
                 list.length > 0 && !children &&
-                <div className="py-2 flex flex-wrap">
+                <div className="py-2 flex flex-wrap gap-3">
                     {list.map((value, index) => (
-                        <div key={index} className="opacity-60 border rounded-full px-3 py-1 flex gap-2 items-center justify-between">
-                            <span dangerouslySetInnerHTML={{ __html: value }} />
+                        <div key={index} className="border border-primary rounded-2xl px-1 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
+                            {value}
                             <div onClick={() => removeWord(index)} className='cursor-pointer'>
-                                <Icon name='remove' className="size-4 text-white bg-red rounded-full" />
+                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
                             </div>
                         </div>
                     ))}

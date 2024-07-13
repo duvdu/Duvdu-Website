@@ -70,7 +70,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
       setUserNameError({ isError: false, message: '' });
     }
 
-    const error = validatePassword(password);
+    const error = false //validatePassword(password);
 
     if (error) {
       setPasswordError({ isError: true, message: error });

@@ -1,35 +1,37 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Icon from '../Icons';
 
-const BookTeam = ({ team, onChange }) => {
+const BookTeam = ({ team, onChange , mainremovable = true }) => {
     const [localteam, setLocalTeam] = useState(team);
     const handleRemoveItem = (id) => {
         setLocalTeam(prevTeam => prevTeam.filter(item => item._id !== id));
     };
     useEffect(() => setLocalTeam(team) , [])
-    useEffect(() => onChange?.(localteam.map((i)=> i._id)) , [localteam])
+    useEffect(() => onChange?.(localteam?.map((i)=> i._id)) , [localteam])
+    
     return (
         localteam &&
         localteam.map((item, i) => (
             <div key={i} className="flex">
                 <div key={i} className="team-padge">
-                    {item.profileImage&& <img className='object-cover object-top' src={item.creative.profileImage} alt="user" />}
+                    {item.profileImage&& <img className='object-cover object-top rounded-full aspect-square' src={item.profileImage} alt="user" />}
                     <span className="mx-3">{item.name}</span>
                 </div>
                 {
+                    item.unitPrice &&
                     <div className="team-padge">
-                        <span className="mx-3">{item.fees} $</span>
+                        <span className="mx-3">{item.unitPrice} $</span>
                     </div>
                 }
                 {
                     item.occupation &&
                     <div className="team-padge">
-                        <span className="mx-3">{item.creative.occupation||""} $</span>
+                        <span className="mx-3">{item.occupation||""} $</span>
                     </div>
                 }
                     
                 {
-                    (!item.removable) &&
+                    ( mainremovable && !item.removable) &&
                     <div className="remove-padge cursor-pointer" onClick={() => handleRemoveItem(item._id)}>
                         <span className="mx-3 capitalize">remove</span>
                         <div className="bg-[#FF4646] rounded-full aspect-square flex items-center justify-center p-1">

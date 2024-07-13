@@ -11,6 +11,7 @@ import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
 import { SwapProjectToFav } from "../../redux/action/apis/savedProject/fav/favAction";
 import FavProjectCard from "../../components/elements/fav-project-card";
 import ProjectCard from "../../components/elements/project-card";
+import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Projects = ({
     GetFavList,
@@ -52,15 +53,15 @@ const Projects = ({
                                 favorites
                             </span>
                         </div>
-                        {getPaginatedProjects?.length === 0 && (
-                            <EmptyComponent />
+                        {!getPaginatedProjects?.length && (
+                            <EmptyComponent message={"No Projects Yet!"} />
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
                                 item.project.studioName ? (
-                                    <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio-booking" />
+                                    <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio-booking" enbablelove={true}/>
                                 ) : (
-                                    <ProjectCard key={`project-${i}`} cardData={item.project} />
+                                    <ProjectCard key={`project-${i}`} cardData={item.project}  enbablelove={true}/>
                                 )
                             ))}
                         </div>
@@ -74,19 +75,6 @@ const Projects = ({
                 </section>
             </Layout>
         </>
-    );
-};
-
-const EmptyComponent = () => {
-    return (
-        <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p-10'>
-            <div className='bg-gray-600 mt-5' />
-            <img src='/assets/imgs/theme/Empty.svg' className='lg:w-[540px] lg:h-[450px]' />
-            <h3 className='text-2xl font-bold mt-8 mb-4'>
-                No Projects Yet!
-            </h3>
-        </div>
-
     );
 };
 

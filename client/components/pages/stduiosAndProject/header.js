@@ -4,8 +4,8 @@ import Selector from "../../elements/CustomSelector"
 
 const Header = ({ data }) => (
     <>
-        <h1 className="text-xl capitalize opacity-80 font-bold"> {data?.title || data?.studioName} </h1>
-        <div className='creator-info flex mt-3 mb-12 justify-between'>
+        <h1 className="text-xl capitalize opacity-80 font-bold"> {data?.name || data?.studioName} </h1>
+        <div className='creator-info flex mt-6 mb-6 justify-between'>
             <Link href={`/creative/${data?.user?.username || ''}`}>
                 <div className='flex items-center gap-3 cursor-pointer'>
                     <img alt='user' className="w-16 aspect-square rounded-full object-cover object-top" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} />
@@ -31,7 +31,7 @@ const Header = ({ data }) => (
                     value: "oprion 3",
                     onclick: () => { },
                 }
-            ]} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer" />
+            ]} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer hidden" />
         </div>
     </>
 )

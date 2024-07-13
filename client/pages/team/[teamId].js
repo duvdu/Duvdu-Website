@@ -156,13 +156,13 @@ const Person = ({ person, onDelete, onUpdate }) => {
             <Popup id={"Edit-creative-" + person._id} header={'Work Details'} onCancel={onCancel}>
                 <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
                     <div className='flex items-center gap-9 w-64'>
-                        <input type="number" defaultValue={person.workHours} onChange={(e) => setHours(e.target.value)} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <input type="number" min={0} defaultValue={person.workHours} onChange={(e) => setHours(Math.abs(e.target.value))} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             hours
                         </span>
                     </div>
                     <div className='flex items-center gap-9 w-64'>
-                        <input type="number" defaultValue={person.totalAmount} onChange={(e) => setAmount(e.target.value)} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
+                        <input type="number" min={0} defaultValue={person.totalAmount} onChange={(e) =>  setAmount(Math.abs(e.target.value))} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
                         <span className="text-xl opacity-50">
                             amount
                         </span>

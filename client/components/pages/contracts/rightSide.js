@@ -4,11 +4,13 @@ import Selector from "../../elements/CustomSelector";
 import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
+import { formattedDeadline } from "../../../util/format-date";
+import { toggleContractData } from "../../../redux/action/contractDetails";
 
-const RightSide = ({ getAllContracts_respond, user }) => {
-    const IsImSp = () => {
-        return sp?.username == user?.username
-    }
+const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex }) => {
+
+
+
     const handleStatus = (status) => {
         switch (status) {
             case 'canceled':
@@ -32,7 +34,13 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         }
     }
 
-    const data = getAllContracts_respond?.data?.filter(data => handleStatus(data.contract.status) < 0)
+    const data = getAllContracts_respond?.
+    data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username) )
+
+    // useEffect(() => {
+    //     const _data = data.filter(value => tabindex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
+    //     setData(_data)
+    // }, [tabindex, data])
 
     const Title = ({ title }) => <h2 className="font-bold text-start text-lg capitalize opacity-80 mt-3">{title}</h2>
 
@@ -50,10 +58,13 @@ const RightSide = ({ getAllContracts_respond, user }) => {
         </Link>
     const MoreIcon = () => <Icon className='cursor-pointer' name={'more'} />
 
-    const HisTory = ({ data, isCanceled }) =>
-        <>
+    const HisTory = ({ data, isCanceled }) => {
+        const Deadline = formattedDeadline(data?.contract?.deadline)
+        return <>
             {/* max-w-[370px] ahmed */}
-            <div className='w-full max-w-[370px] sm:max-w-none mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative' >
+            <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4'
+                onClick={() => toggleContractData(data)}
+            >
                 {/* dropdown */}
                 <div className="absolute right-6 hidden">
                     <Selector options={[
@@ -80,7 +91,7 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                 <Link href={`/creative/${data.sp.username}`}>
                     <div className="cursor-pointer">
                         <div className='flex gap-3 items-center'>
-                            <img className='w-14 h-14 rounded-full object-cover object-top' src={data.sp.profileImage} alt="profile picture" />
+                            <img className='size-14 rounded-full object-cover object-top' src={data.sp.profileImage} alt="profile picture" />
                             <div className='flex flex-col items-start justify-start'>
                                 <h3 className='opacity-80 text-lg font-bold capitalize'>{data.sp.name}</h3>
                                 <span className='opacity-50'>{dateFormat(data.contract.appointmentDate, 'd mmmm , yyyy')}</span>
@@ -107,47 +118,51 @@ const RightSide = ({ getAllContracts_respond, user }) => {
                     <span className='text-[40px] flex items-center ml-3 gap-2'>
                         <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>$</span>
-                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.totalPrice}</span>
+                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.expectedProfits}</span>
                         </span>
                     </span>
                     <div className='h-auto w-[1px] bg-black opacity-15' />
                     <div className='text-start'>
                         <span className={`opacity-50 capitalize ${isCanceled ? 'text-[#FF4646]' : ''}`}>deadline</span>
                         <br />
-                        <span className={`capitalize line-through opacity-60 ${isCanceled ? 'text-[#FF4646]' : ''}`}>{new Date(data.contract.deadline).toDateString()}</span>
+                        <span className={`capitalize line-through opacity-60 ${isCanceled ? 'text-[#FF4646]' : ''}`}>{Deadline}</span>
                     </div>
                 </div>
                 {/*********/}
             </div>
         </>
+    }
 
 
     return (
         <>
             {/* <Clients /> */}
             {/* ahmed */}
-
-            <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
-                <div className='flex flex-col gap-[15px] mx-auto sm:mx-0 w-max sm:w-auto text-center mt-9'>
-                    {/* <Title title="recent clients" /> */}
-                    <div className='flex sm:flex-row gap-2 hidden'>
-                        <Recents img='/assets/imgs/profile/defultUser.jpg' name='youseff ali' address='zayed city' />
-                        <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
-                        <div className='hidden sm:block lg:hidden'>
+            {!data?.length == 0 ?
+                <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
+                    <div className='flex flex-col gap-[15px] mx-0 w-auto text-center mt-9'>
+                        {/* <Title title="recent clients" /> */}
+                        <div className='flex sm:flex-row gap-2 hidden'>
+                            <Recents img='/assets/imgs/profile/defultUser.jpg' name='youseff ali' address='zayed city' />
                             <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
+                            <div className='hidden sm:block lg:hidden'>
+                                <Recents img='/assets/imgs/profile/2.jpg' name='mohamed' address='new cairo' />
+                            </div>
+                            <div data-popup-toggle="popup" data-popup-target='clients'>
+                                <MoreIcon />
+                            </div>
                         </div>
-                        <div data-popup-toggle="popup" data-popup-target='clients'>
-                            <MoreIcon />
+                        <Title title='history' />
+                        <div className="min-w-80">
+                            {
+                                data?.map((value, i) => (
+                                    <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
+                                ))
+                            }
                         </div>
                     </div>
-                    <Title title='history' />
-                    {
-                        data?.map((value) => (
-                            <HisTory key={value.id} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
-                        ))
-                    }
-                </div>
-            </div>
+                </div> : <div className="w-80" />
+            }
         </>
     );
 };
@@ -157,6 +172,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    toggleContractData
 
 };
 

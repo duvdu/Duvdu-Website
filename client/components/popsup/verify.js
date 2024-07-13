@@ -23,7 +23,7 @@ function Verify() {
                         {[
                             'Get a verified badge',
                             'Get suggested to more clients',
-                            'Instant projects with more fees',
+                            'Instant projects with more unitPrice',
                             'Increased account trust',
                         ].map((feature, index) => (
                             <div key={index} className='flex gap-3 items-center justify-center'>

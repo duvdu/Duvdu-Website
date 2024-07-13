@@ -9,18 +9,21 @@ import Filter from "../../components/elements/filter";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetStudios } from "../../redux/action/apis/cycles/rental/get";
+import Loading from "../../components/elements/duvduLoading";
+import DuvduLoading from "../../components/elements/duvduLoading";
 
 const Studio = ({ projects , GetStudios,api}) => {
     const Router = useRouter();
     const searchTerm = Router.query.search;
+    const {subcategory , tag}  = Router.query
     const page = 1;
     const showLimit = 24;
     const pagganation = projects?.pagination
     const [limit, setLimit] = useState(showLimit);
 
     useEffect(() => {
-        GetStudios({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page })
-    }, [limit, searchTerm,searchTerm])
+        GetStudios({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page ,subcategory:subcategory,tag:tag})
+    }, [limit, searchTerm,subcategory,tag])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -77,14 +80,15 @@ const Studio = ({ projects , GetStudios,api}) => {
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
-                                    {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
-                                    {i === 9 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
-                                    {i === 12 && <RelatedCategories className="hidden xl:block col-span-full" />}
+                                    {i === -1 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
+                                    {i === -1 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
+                                    {i === -1 && <RelatedCategories className="hidden xl:block col-span-full" />}
                                     <ProjectCard cardData={item} type="studio-booking"/>
                                 </React.Fragment>
                             ))}
                         </div>
-                        <img className={(api.loading && api.req == "GetStudios" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
+                        <DuvduLoading loadingIn = {"GetStudios"} />
+
                     </div>
                 </section>
             </Layout>

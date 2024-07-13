@@ -15,6 +15,7 @@ import About from "../../components/pages/stduiosAndProject/about";
 import Details from "../../components/pages/stduiosAndProject/details";
 import Reviews from "../../components/pages/stduiosAndProject/review";
 import Recommended from "../../components/pages/stduiosAndProject/recommend";
+import AddToSaved from "../../components/popsup/addToSaved";
 
 const Studio = ({
     GetStudios,
@@ -28,12 +29,19 @@ const Studio = ({
     const router = useRouter()
     const { studio: studioId } = router.query;
     const projects = studios_respond?.data || []
-    const studio = studio_respond?.data
+    const [studio, setStudio] = useState(studio_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenFav, setIsOpenFav] = useState(false);
 
     useEffect(() => {
-        if (studioId)
+        setStudio(studio_respond?.data);
+    }, [studio_respond?.data]);
+
+    useEffect(() => {
+        if (studioId){
+            setStudio(null)
             Getstudio(studioId);
+        }
 
     }, [studioId]);
 
@@ -50,14 +58,17 @@ const Studio = ({
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
-    
+    const toggleDrawerAddFav = () => {
+        setIsOpenFav(!isOpenFav);
+    };
     return (
         <>
             <Layout >
                 {studio &&
                     (
                         <>
-                            <AddToTeam />
+                        <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav}/>
+                        <AddToTeam />
                             <Report />
                             <ThanksMSG />
                             <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
@@ -81,7 +92,7 @@ const Studio = ({
                                 </div>
                             </div>
                             {!chat_respond &&
-                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} canBook={studio.user._id != user?._id} />}
+                                <ProjectController initialData={studio} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={studio.user.username != user?.username} />}
                             <StudioBooking data={studio} isOpen={isOpen} toggleDrawer={toggleDrawer} />
 
                         </>

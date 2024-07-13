@@ -64,7 +64,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
         return covers;
     };
     const saved = getProjectCovers(getBoards_respond?.data || [])
-    const favCover = fav_respond?.data.length ? fav_respond.data[0].project.cover : null
+    const favCover = fav_respond?.data.length ? fav_respond.data[0].project?.cover : null
 
     useEffect(()=>{
         setShowMiddleCard(false)
@@ -87,13 +87,17 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                             </div>
                             <div className='p-5'>
                                 <div className='flex items-start gap-4 -translate-y-4 h-12'>
+                                    <div>
                                     <div className='size-[72px] bg-cover relative bg-no-repeat'>
                                         <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                                     </div>
+                                    </div>
                                     <div className='flex-2 flex-col'>
                                         <span className='text-base font-bold capitalize'>{user.name}</span>
-                                        <span className='flex items-center gap-1 opacity-40'>
-                                            <Icon className="w-2 ml-2" name="location-dot" />
+                                        <span className='flex items-start gap-1 opacity-40'>
+                                            <div>
+                                            <Icon className="w-3" name="location-dot" />
+                                            </div>
                                             <span className="text-xs font-semibold capitalize">{user.address || 'NONE'}</span>
                                         </span>
                                     </div>

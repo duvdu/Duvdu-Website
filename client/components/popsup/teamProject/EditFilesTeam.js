@@ -61,6 +61,9 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        if (!isNaN(value) && parseInt(value) < 0) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value)
     };
 
@@ -97,24 +100,12 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             <p className="capitalize opacity-60 mt-11">project details</p>
                             <textarea onChange={handleInputChange} value={formData.desc} name='desc' placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                         </section>
-                        <section>
-                            <div className='mt-11 w-full'>
-                                <p className="capitalize opacity-60 mt-11">address</p>
-                                <input
-                                    type='text'
-                                    name='address'
-                                    value={formData.address|| ""}
-                                    onChange={handleInputChange}
-                                    className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4"
-                                />
-                            </div>
-                        </section>
                         <div className="py-10">
                             <section>
                                 <span className="capitalize opacity-50">location</span>
                                 <div className="capitalize mt-4">
                                     <section className="h-52 relative rounded-3xl overflow-hidden">
-                                        <GoogleMap width={'100%'} value={{ 'lat': formData?.location?.lat, 'lng': formData?.location?.lng }} />
+                                        <GoogleMap width={'100%'} value={{ 'lat': formData?.location?.lat, 'lng': formData?.location?.lng }} onChangeAddress={handleInputChange}/>
                                     </section>
                                 </div>
                             </section>
@@ -122,7 +113,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                         <section>
                             <p className="capitalize opacity-60 mt-11">shooting days</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number'
+                                <input type="number" min={0}
                                     value={formData.shootingDays|| ""}
                                     onChange={handleInputChange} name='shootingDays' placeholder="Ex. 5 days" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                             </div>
@@ -130,7 +121,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                         <section>
                             <p className="capitalize opacity-60 mt-11">budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' 
+                                <input type="number" min={0} 
                                     value={formData.budget|| ""}
 
                                 onChange={handleInputChange} name='budget' placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />

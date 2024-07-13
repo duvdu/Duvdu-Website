@@ -11,8 +11,9 @@ import Waveform from './audioRecordWave';
 import Link from 'next/link';
 import PopUpImage from './popUpImage';
 
-const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) => {
+const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api }) => {
     const chatRef = useRef(null);
+    const [messagesList, setMessagesList] = useState([])
     const [otherUser, setOtherUser] = useState({})
     const [limit, setLimit] = useState(50)
     const [isRecording, setIsRecord] = useState(null)
@@ -34,6 +35,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
     useEffect(() => {
         if (respond)
             ClearChatInput()
+
+        if (respond?.data)
+            setMessagesList((prevMessages) => [respond?.data,...prevMessages]);
+
     }, [respond])
 
     useEffect(() => {
@@ -44,6 +49,11 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         GetAllMessageInChat(messages._id, limit)
     }, [limit]);
 
+    useEffect(() => {
+        if(messages.list)
+        setMessagesList(messages.list)
+    }, [messages.list]);
+
 
     useEffect(() => {
         // Scroll to the bottom of the chat when component updates
@@ -53,8 +63,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
         setOtherUser(getotherdata())
 
     }, [messages]);
-    const msglist = [...messages.list]
+    
+    const msglist = [...messagesList]
     msglist.reverse()
+
     useEffect(() => {
         const handleScroll = () => {
             if (chatRef.current && chatRef.current.scrollTop === 0) {
@@ -119,16 +131,14 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
     }
 
     const onSend = async () => {
-        const data = new FormData
-        data.append(receiver)
+        const data = new FormData()
+        data.append("receiver", receiver)
 
         if (attachments)
             for (let i = 0; i < attachments.length; i++) {
                 const file = attachments[i];
                 data.append(`attachments`, file.file);
             }
-
-
 
         if (recordobject) {
             const wavFile = new File([recordobject], 'audio.wav', { type: 'audio/wav' });
@@ -164,9 +174,9 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
     const swapRecording = () => {
         setIsRecord(!isRecording)
     };
-    
+
     return (
-        <div className={`fixed bottom-0 z-20 ${messages.openchat  ? '' : 'hidden'}`}>
+        <div className={`fixed bottom-0 z-20 ${messages.openchat ? '' : 'hidden'}`}>
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
                 <div className="chat dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-DS_white shadow-xl sm:left-8">
@@ -279,7 +289,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages }) =>
                             <>
                                 {!isRecording &&
                                     <input
-                                        value={content|| ""}
+                                        value={content || ""}
                                         onChange={onChange}
                                         name='content'
                                         onKeyDown={handleKeyPress}
@@ -421,6 +431,7 @@ const Other = ({ message }) => {
 };
 
 const mapStateToProps = (state) => ({
+    api: state.api,
     respond: state.api.SendMessages,
     getheaderpopup: state.setting.headerpopup,
     chat_respond: state.api.GetAllMessageInChat,

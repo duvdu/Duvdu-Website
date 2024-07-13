@@ -27,11 +27,28 @@ const transformKeys = (obj) => {
 };
 
 function convertSubCategoryData(data) {
+    if (!Array.isArray(data)) {
+        return data;
+    }
+
+    // Check if the data is already in the desired format
+    const isAlreadyFormatted = data.every(item =>
+        item.subCategory &&
+        Array.isArray(item.tags) &&
+        item.tags.every(tag => typeof tag === 'string')
+    );
+
+    if (isAlreadyFormatted) {
+        return data;
+    }
+
+    // Convert to the desired format
     return data.map(item => ({
         subCategory: item._id,
         tags: item.tags.map(tag => tag?._id)
     }));
 }
+
 
 
 const AddProducer = ({
@@ -59,9 +76,16 @@ const AddProducer = ({
     const [validateTags, setValidateTags] = useState(false);
     const producerData = getIsLoggedProducer_respond?.data;
 
+    if (producerData && Array.isArray(producerData.subCategories)) {
+        producerData.subCategories = convertSubCategoryData(producerData.subCategories);
+    }
+
     const handleInputChange = useCallback(
         (event) => {
             const { name, value } = event.target;
+            if (!isNaN(value) && parseInt(value) < 0) {
+                value = Math.abs(Number(value));
+            }
             UpdateFormData(name, name === 'maxBudget' || name === 'minBudget' ? parseInt(value) : value);
         },
         [UpdateFormData]
@@ -74,7 +98,6 @@ const AddProducer = ({
     useEffect(() => {
         if (producerData) {
             setIsProducer(true);
-            producerData.subCategories = convertSubCategoryData(producerData?.subCategories)
         }
     }, [producerData, UpdateFormData]);
 
@@ -102,6 +125,10 @@ const AddProducer = ({
 
     const handleUpdate = () => {
         if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
+        if (formData.minBudget || formData.maxBudget) {
+            formData.maxBudget = formData.maxBudget || producerData?.maxBudget
+            formData.minBudget = formData.minBudget || producerData?.minBudget
+        }
         UpdateProducer(formData);
     };
 
@@ -127,7 +154,7 @@ const AddProducer = ({
     };
 
     const isFormValidForUpdate = () => {
-        return formData.category  ||
+        return formData.category ||
             formData.minBudget ||
             formData.maxBudget ||
             formData.searchKeywords?.length > 0 ||
@@ -138,7 +165,6 @@ const AddProducer = ({
 
     const canDelete = true;
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     return (
         <>
@@ -153,14 +179,14 @@ const AddProducer = ({
                                 filterIn={"producer"}
                                 value={{
                                     "category": formData.category || producerData?.category,
-                                    "subCategories": formData.subcategory || producerData?.subcategory
+                                    "subCategories": formData.subcategory || producerData?.subCategories
                                 }}
                                 onValidateChange={(v) => setValidateTags(v.length == 0)}
                                 onChange={(value) => {
-                                    if (producerData?.category != value.category && value.category)
+                                    if (producerData?.category != value.category && value.category || JSON.stringify(producerData?.subcategory) != JSON.stringify(value.subCategories) && value.subCategories.length) {
                                         UpdateFormData('category', value.category)
-                                    if (JSON.stringify(producerData?.subcategory) != JSON.stringify(value.subCategories) && value.subCategories.length)
                                         UpdateFormData('subcategory', value.subCategories)
+                                    }
                                 }} />
                         </div>
 
@@ -168,14 +194,14 @@ const AddProducer = ({
                             <section className="w-full">
                                 <p className="capitalize opacity-60">Min Budget</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type='number' value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={inputStyle} />
+                                    <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={"inputStyle1"} />
                                 </div>
                             </section>
 
                             <section className="w-full">
                                 <p className="capitalize opacity-60">Max Budget</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type='number' value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                    <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={"inputStyle1"} />
                                 </div>
                             </section>
                         </div>
@@ -216,7 +242,6 @@ const mapStateToProps = (state) => ({
     auth: state.auth,
     user: state.user,
     getIsLoggedProducer_respond: state.api.GetIsLoggedProducer,
-    updateProducer_respond: state.api.GetIsLoggedProducer,
     addprojectState: state.addproject,
     createProducer_respond: state.api.CreateProducer,
     updateProducer_respond: state.api.UpdateProducer,
@@ -236,4 +261,3 @@ const mapDispatchToProps = {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProducer);
-

@@ -18,6 +18,7 @@ import SetCover from "./assets/addCover";
 import CategorySelection from './assets/CategorySelection';
 import AppButton from '../../elements/button';
 import AddAttachment from '../../elements/attachment';
+import Share from '../../popsup/Share';
 
 
 const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
@@ -57,7 +58,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const validateRequiredFields = () => {
         const errors = {};
         const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
-        
+
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
         if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
@@ -80,7 +81,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData['projectScale.minimum']) errors.minimum = 'Minimum value is required';
         if (!formData['projectScale.maximum']) errors.maximum = 'Maximum value is required';
         if (parseInt(formData['projectScale.minimum']) > parseInt(formData['projectScale.maximum'])) errors.minimum = 'Minimum value should not be greater than maximum value';
-        
+
         // cover
         return errors;
     };
@@ -108,6 +109,9 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
+        if (!isNaN(value) && parseInt(value) < 0) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value);
     };
 
@@ -125,8 +129,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     }, [auth.login])
 
     useEffect(() => {
-        UpdateFormData("address","Cairo (this's a defult value)")
-        UpdateFormData("projectScale.unit","minute")
+        UpdateFormData("projectScale.unit", "minute")
     }, [])
 
 
@@ -142,12 +145,12 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         })
     }
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
-    
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
+
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <Share url={window.location.href} title={'See that 👀'} />
             <Drawer isOpen={true} name={'Create Rental'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
                     <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
@@ -156,7 +159,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
-                                filterIn={"studio-booking"}
+                                    filterIn={"studio-booking"}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,
@@ -166,24 +169,23 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategory', value.subCategory)
                                         UpdateFormData('tags', value.tags)
-                                        }} />
+                                    }} />
                             </div>
                             <section className="w-full ">
                                 <h3 className="capitalize opacity-60">attachments</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section className='gap-8'>
-                                <input placeholder='Name' name="title" value={formData.title|| ""} onChange={handleInputChange} className={inputStyle} />
-                                <input placeholder='Phone number' type="tel" name="phoneNumber" value={formData.phoneNumber|| ""} onChange={handleInputChange} className={inputStyle} />
-                                <input placeholder='Email' type="email" name="email" value={formData.email|| ""} onChange={handleInputChange} className={inputStyle} />
-                                <input placeholder='Description' name="description" value={formData.description|| ""} onChange={handleInputChange} className={inputStyle} />
-                                <input placeholder='address' name="address" value={formData.address|| ""} onChange={handleInputChange} className={inputStyle} readOnly />
+                                <input placeholder='Name' name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder='Phone number' type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder='Email' type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder='Description' name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
                                 <section className="h-96 relative overflow-hidden mt-5">
                                     <h3> location </h3>
-                                    <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} />
+                                    <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                                 </section>
                                 <ListInput name={'searchKeyword'} placeholder={'Search keywords'} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input type="number" placeholder='insurance' name="insurance" value={formData.insurance|| ""} onChange={handleInputChange} className={inputStyle} />
+                                <input type="number" min={0} placeholder='insurance' name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
                             </section>
                             <section className="flex flex-col gap-8">
                                 <div className='flex items-center justify-between'>
@@ -201,17 +203,17 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         ))}
                                     </select>
                                 </div>
-                                <input placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit']|| ""} onChange={handleInputChange} className={inputStyle} />
+                                <input placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} className={"inputStyle1"} />
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale.minimum' value={formData['projectScale.minimum']|| ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale.unit'] || 'unit'}`} className={inputStyle} />
+                                            <input type="number" min={0} name='projectScale.minimum' value={formData['projectScale.minimum'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
 
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type='number' name='projectScale.maximum' value={formData['projectScale.maximum']|| ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale.unit'] || 'unit'}`} className={inputStyle} />
+                                            <input type="number" min={0} name='projectScale.maximum' value={formData['projectScale.maximum'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                 </div>

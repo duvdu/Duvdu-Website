@@ -11,8 +11,6 @@ import Setting from "./HeaderComponents/setting";
 import * as Types from "../../redux/constants/actionTypes";
 import { OpenPopUp, errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
-import Verify_acount from "../popsup/verify_account_now";
-import Chat from "../elements/chat";
 import Link from "next/link";
 import ErrorPopUp from "../popsup/errorPopUp";
 import { LogOut } from "../../redux/action/apis/auth/logout";
@@ -34,21 +32,20 @@ const Header = ({
     MarkNotificationsAsRead,
     LogOut,
     user,
-    }) => {
+}) => {
 
-    const router = useRouter();
     const { i18n, t } = useTranslation();
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
     }
     try {
-    useEffect(() => {
-        SetheaderPopUp(Types.NONEPOPUP)
-    }, [window.location.href]);
-}
-catch (error) {
+        useEffect(() => {
+            SetheaderPopUp(Types.NONEPOPUP)
+        }, [window.location.href]);
+    }
+    catch (error) {
 
-}
+    }
 
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)
@@ -115,24 +112,6 @@ catch (error) {
         document.addEventListener('keydown', dismissPopupOnEsc);
 
     }, []);
-    const clearErrors = () => {
-        setrrorMsg(null)
-        setrrorReq(null)
-    }
-    const [errorMsg, setrrorMsg] = useState(null)
-    const [errorReq, setrrorReq] = useState(null)
-    useEffect(() => {
-
-        if (api.error && !exclude_error(api.req)) {
-            setrrorMsg(errorConvertedMessage(api.error))
-            setrrorReq(api.req)
-        }
-    }, [api.error && !exclude_error(api.req)]);
-
-    useEffect(() => {
-        if (errorMsg && errorReq)
-            OpenPopUp('main_error_message')
-    }, [errorMsg && errorReq]);
 
     const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
     const totalUnwatchedNotification = api?.GetNotifications?.data?.filter(message => !message.watched).length;
@@ -140,15 +119,7 @@ catch (error) {
 
     return (
         <>
-            <Chat />
-            <ErrorPopUp id="main_error_message" onCancel={clearErrors} errorReq={errorReq} errorMsg={errorMsg} />
-            {
-                api.loading && !exclude_loading(api.req) &&
-                <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-60 z-50 flex justify-center items-center">
-                    <img src="/assets/imgs/theme/loading-icon.png" />
-                </div>
-            }
-            <Verify_acount />
+            
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
             {
@@ -170,6 +141,7 @@ catch (error) {
                                     {fromlayout.showTabs && islogin &&
                                         <div className="header-tabs">
 
+                                            <div className="hidden">
                                             <Link href="/dashboard">
                                                 <div className="header-link">
                                                     <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
@@ -179,6 +151,7 @@ catch (error) {
                                                 </div>
                                             </Link>
 
+                                            </div>
 
                                             <Link href="/contracts">
                                                 <div className="header-link">
@@ -188,7 +161,7 @@ catch (error) {
                                                     </span>
                                                 </div>
                                             </Link>
-
+                                            <div className="hidden">
                                             <Link href="/teams" className="capitalize">
                                                 <div className="header-link whitespace-nowrap">
                                                     <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
@@ -197,7 +170,7 @@ catch (error) {
                                                     </span>
                                                 </div>
                                             </Link>
-
+                                            </div>
                                         </div>
                                     }
 

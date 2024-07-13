@@ -13,29 +13,45 @@ import AddAttachment from "../../elements/attachment";
 const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProducer, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
 
     const formData = addprojectState.formData
-    const [enableBtn, setEnableBtn] = useState(false);
+    
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
 
-    if (
-        formData.producer?.length > 0 &&
-        formData.projectDetails?.length > 0 &&
-        formData.episodesDuration?.length > 0 &&
-        formData.expectedBudget?.length > 0 &&
-        formData.episodesNumber?.length > 0 &&
-        formData.expectedProfits?.length > 0 &&
-        formData.platform?.length > 0 &&
-        formData.appointmentDate &&
-        formData.attachments &&
-        attachmentValidation > 0
-    ) {
-        if (!enableBtn)
-            setEnableBtn(true)
+    function validateForm() {
+        let missingFields = [];
+
+        if (!formData.producer || formData.producer.length === 0) {
+            missingFields.push('Producer');
+        }
+        if (!formData.projectDetails || formData.projectDetails.length === 0) {
+            missingFields.push('Project Details');
+        }
+        if (!formData.episodesDuration || formData.episodesDuration.length === 0) {
+            missingFields.push('Episodes Duration');
+        }
+        if (!formData.expectedBudget || formData.expectedBudget.length === 0) {
+            missingFields.push('Expected Budget');
+        }
+        if (!formData.episodesNumber || formData.episodesNumber.length === 0) {
+            missingFields.push('Episodes Number');
+        }
+        if (!formData.expectedProfits || formData.expectedProfits.length === 0) {
+            missingFields.push('Expected Profits');
+        }
+        if (!formData.platform || formData.platform.length === 0) {
+            missingFields.push('Platform');
+        }
+        if (!formData.appointmentDate) {
+            missingFields.push('Appointment Date');
+        }
+        if (!formData.attachments || attachmentValidation <= 0) {
+            missingFields.push('Attachments');
+        }
+
+        return missingFields
     }
-    else {
-        if (enableBtn)
-            setEnableBtn(false)
-    }
+
+    const enableBtn = validateForm().length == 0;
 
     function OnSucess() {
         reset()
@@ -44,8 +60,8 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         BookProducer(null)
         setPost_success(false)
         resetForm()
-        if(isOpen)
-        toggleDrawer()
+        if (isOpen)
+            toggleDrawer()
     }
 
 
@@ -53,7 +69,6 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
     useEffect(() => {
         UpdateFormData('producer', data._id)
-        UpdateFormData("address", "Cairo (this's a defult value)")
     }, [isOpen])
 
     useEffect(() => {
@@ -61,13 +76,14 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
             setPost_success(true)
     }, [respond?.message])
 
-    
+
     function onSubmit() {
+        if(!enableBtn) return
         if (submit)
             submit()
         const form = new FormData()
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments'])
-        
+
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
                 const file = formData.attachments[i].file;
@@ -83,12 +99,17 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        if (!isNaN(value) && parseInt(value) < 0) {
+            value = Math.abs(Number(value));
+        }
         UpdateFormData(name, value)
     };
-
     
+
+
     // const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
     const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
+    
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
@@ -106,21 +127,22 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                     </section>
 
                     <section className="h-96 relative overflow-hidden">
-                        <input placeholder='address' name="address" value={formData.address || ""} onChange={handleInputChange} className={inputStyle} readOnly />
                         <span> Project Location </span>
-                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={handlelocationChange} />
+                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange} />
+
+
                     </section>
                     <div className="flex w-full justify-between gap-3">
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episodes Number</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
                             </div>
                         </section>
                         <section className="w-full">
                             <p className="capitalize opacity-60">Episode Duration</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
                             </div>
                         </section>
                     </div>
@@ -136,14 +158,14 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Budget</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
                             <p className="capitalize opacity-60">Expected Profits</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type='number' value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
                             </div>
                         </section>
                     </div>

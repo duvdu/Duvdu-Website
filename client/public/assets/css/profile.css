@@ -96,7 +96,7 @@
 
 .rank {
     display: flex;
-    height: 35px;
+    height: 36px;
     padding: 6px 13px;
     justify-content: center;
     align-items: center;
@@ -113,11 +113,11 @@
 
 .info-container {
     padding: 5px 15px;
+    height: 36px;
     border-radius: 17.543px;
     border: 1.3px solid rgba(var(--black-rgb), .25);
     backdrop-filter: blur(4.385797023773193px);
     color: var(--black);
-
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
@@ -151,20 +151,6 @@
     text-transform: capitalize;
 }
 
-.v-divider {
-    width: 1px;
-    height: 40px;
-    opacity: 0.1;
-    background: var(--black);
-    margin: 0 10px;
-}
-
-.h-divider {
-    height: 1px;
-    opacity: 0.1;
-    background: var(--black);
-
-}
 
 .popularity {
     display: flex;

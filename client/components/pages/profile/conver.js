@@ -1,4 +1,5 @@
 import { OpenPopUp } from "../../../util/util";
+import PopUpImage from "../../elements/popUpImage";
 import Icon from "../../Icons";
 import Share from "../../popsup/Share";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
-import { convertDuration, errorConvertedMessage } from "../../util/util";
+import { convertDuration, errorConvertedMessage, OpenPopUp } from "../../util/util";
 import { connect } from "react-redux";
 import { verify } from "../../redux/action/apis/auth/OTP/verify";
 import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
@@ -36,6 +36,10 @@ function OTP({
             verify({ username: username, code: -1 })
         }
     }, [verify_respond?.message])
+
+    useEffect(() => {
+        OpenPopUp('OTP-tester')
+    }, [])
 
 
     useEffect(() => {

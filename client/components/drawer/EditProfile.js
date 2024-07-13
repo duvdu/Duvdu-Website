@@ -15,48 +15,49 @@ import { useRouter } from 'next/router';
 
 
 
-function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, resetForm, formData }) {
+function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, resetForm, formData, updateProfile_respond }) {
 
     if (!user) return <></>
 
+    const [userInfo, setUserInfo] = useState(user);
     const [error, setError] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
     const [cover, setCover] = useState(null);
     const router = useRouter();
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
+
     useEffect(() => {
         if (isOpen) {
-            UpdateFormData("profileImage", user.profileImage);
-            UpdateFormData("coverImage", user.coverImage);
-            UpdateFormData("name", user.name);
-            UpdateFormData('category', user.category)
-            UpdateFormData("address", user.address);
-            UpdateFormData("pricePerHour", user.pricePerHour);
-            UpdateFormData("about", user.about);
-            UpdateFormData("location[lat]", user.location?.lat);
-            UpdateFormData("location[lng]", user.location?.lng);
+            UpdateFormData("profileImage", userInfo.profileImage);
+            UpdateFormData("coverImage", userInfo.coverImage);
+            UpdateFormData("name", userInfo.name);
+            UpdateFormData('category', userInfo.category)
+            UpdateFormData("address", userInfo.address);
+            UpdateFormData("pricePerHour", userInfo.pricePerHour);
+            UpdateFormData("about", userInfo.about);
+            UpdateFormData("location[lat]", userInfo.location?.lat);
+            UpdateFormData("location[lng]", userInfo.location?.lng);
         }
         else {
             resetForm()
             setProfileImage(null)
             setCover(null)
         }
-    }, [isOpen])
+    }, [isOpen, userInfo])
 
+    useEffect(() => {
+        setUserInfo(user)
+    }, [user])
 
-    function UpdateKeysAndValues(obj, prefix = '') {
-        Object.keys(obj).forEach(key => {
-            const value = obj[key];
-            const prefixedKey = `${prefix}${prefix ? '.' : ''}${key}`;
-            if (value && typeof value === 'object' && !Array.isArray(value) && value !== null) {
-                UpdateKeysAndValues(value, prefixedKey);
-            } else {
-                UpdateFormData(prefixedKey, value)
-            }
-        });
+    useEffect(() => {
+        if (updateProfile_respond) {
+            setUserInfo(updateProfile_respond.data)
+        }
+    }, [updateProfile_respond])
 
-    }
+    
     const converting = () => {
+
         const data = new FormData();
         const avoidFeilds = [
             'profileImage',
@@ -66,9 +67,9 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             'acceptedProjectsCounter',
             'profileViews',
             'isOnline',
+            'category',
             'avaliableContracts'
         ]
-
         Object.keys(formData).forEach(key => {
             // Append each key-value pair to the FormData instance
             if (avoidFeilds.includes(key)) return
@@ -76,10 +77,13 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                 data.append(key, formData[key]);
             }
         });
+
         if (cover)
             data.append('coverImage', cover)
         if (profileImage)
             data.append('profileImage', profileImage)
+        
+            data.append('category', formData?.category?._id || formData?.category)
         return data;
     }
 
@@ -93,7 +97,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const handleSubmit = (event) => {
         event.preventDefault();
         updateProfile(converting())
-        router.push({pathname: "/creative/"+user.username});
+        router.push({ pathname: "/creative/" + user.username });
     };
 
 
@@ -119,7 +123,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
 
     const reset = () => {
         setError(false);
-        resetForm()
+        // resetForm()
     };
 
     const close = () => {
@@ -166,12 +170,12 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         <input
                             type='text'
                             name='name'
-                            value={formData.name|| ""}
+                            value={formData.name || ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
                     </div>
-                    <div className='mb-4 w-full'>
+                    {/* <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             address
                         </span>
@@ -182,15 +186,15 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
-                    </div>
-                    <div className='mb-4 w-full'>
+                    </div> */}
+                    <div className='mb-4 w-full hidden'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>
                             price per hour
                         </span>
                         <input
                             type='text'
                             name='pricePerHour'
-                            value={formData.pricePerHour|| ""}
+                            value={formData.pricePerHour || ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />
@@ -201,7 +205,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         </span>
                         <textarea
                             name='about'
-                            value={formData.about|| ""}
+                            value={formData.about || ""}
                             onChange={handleInputChange}
                             className="edit app-field h-[400px]"
                             style={{ height: '120px' }}
@@ -210,12 +214,18 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                     <div className='mb-4 w-full'>
                         <section className="h-96 relative overflow-hidden">
                             <span> Set location </span>
-                            <GoogleMap width={'100%'} setDefult={false} value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }} onsetLocation={(value) => {UpdateFormData('location[lat]', value.lat) ; UpdateFormData('location[lng]', value.lng)} } />
+                            <GoogleMap
+                                width={'100%'}
+                                setDefult={false}
+                                value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
+                                onChangeAddress={handleInputChange}
+                                onsetLocation={(value) => { UpdateFormData('location[lat]', value.lat); UpdateFormData('location[lng]', value.lng) }}
+                                inputclass="edit app-field"
+                            />
                         </section>
                     </div>
-                    <button className='w-full flex justify-center' type="submit">
-
-                        <AppButton className='sticky bottom-10 w-full max-w-96 mt-12 z-10' shadow={true}>
+                    <button className='w-full flex justify-center mt-12 max-w-96' type="submit">
+                        <AppButton className='sticky bottom-10 w-full z-10' shadow={true}>
                             Done
                         </AppButton>
                     </button>
@@ -235,6 +245,7 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
     isDark: state.setting.ISDARK,
     getheaderpopup: state.setting.headerpopup,
+    updateProfile_respond: state.api.updateProfile,
     formData: state.addproject.formData,
 });
 

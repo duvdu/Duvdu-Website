@@ -41,6 +41,16 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
                         });
                     }
                     break;
+                    
+                case "project":
+                    if (isUpdate) {
+                        response = await mainApiInstance.patch(`/api/projects/contract/${id}/contract`, data);
+                    } else {
+                        response = await mainApiInstance.post(`/api/projects/contract/${id}/action`, {
+                            action: data ? "accept" : "reject"
+                        });
+                    }
+                    break;
 
                 default:
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });

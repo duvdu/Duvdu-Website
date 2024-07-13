@@ -16,7 +16,7 @@ const Payment_success = () => {
                         payment successful
                     </h3>
                     <p className='text-lg font-medium opacity-90'>
-                        The creative will confirm in 24 hours. & if not, fees will be refunded immediately
+                        The creative will confirm in 24 hours. & if not, unitPrice will be refunded immediately
                     </p>
                     <AppButton className={"mt-16 mb-3 w-full max-w-[350px]"} >
                         Done

@@ -16,11 +16,11 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
-    
+
     useEffect(() => {
         if (
             formData.details?.length > 5 &&
-            formData.startDate  &&
+            formData.startDate &&
             formData['projectScale.numberOfUnits'] > data.projectScale.minimum
         ) setEnableBtn(true)
         else setEnableBtn(false)
@@ -44,7 +44,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         toggleDrawer()
         ontoggleDrawer()
     }
-    
+
 
     useEffect(() => {
         if (StudopBooking_respond)
@@ -66,7 +66,6 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         UpdateFormData(name, value)
     };
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
 
     if (!isOpen) {
         return <Drawer name={data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
@@ -92,8 +91,8 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                     </section>
                     <section className="my-11">
                         <div className="flex justify-between">
-                        <h3 className="capitalize opacity-60 mb-4">set number of {data.projectScale.unit}</h3>
-                        <span className="capitalize opacity-60 mb-4">{formData['projectScale.numberOfUnits']} {data.projectScale.unit}</span>
+                            <h3 className="capitalize opacity-60 mb-4">set number of {data.projectScale.unit}</h3>
+                            <span className="capitalize opacity-60 mb-4">{formData['projectScale.numberOfUnits']} {data.projectScale.unit}</span>
                         </div>
                         <CustomSlider initValue={data.projectScale.minimum} values={data.projectScale.maximum} onValueChange={(v) => UpdateFormData('projectScale.numberOfUnits', v)} />
                     </section>
@@ -124,16 +123,27 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                 </span>
                             </section>
                             <div className="mt-4">
-                                <h2 className='opacity-60 capitalize mb-2'> appointment date</h2>
                                 <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
                                     <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                         <Icon className='text-primary' name={"calendar"} />
                                     </div>
                                     <div className="flex flex-col pl-5 w-full">
+                                        <span className="font-normal text-base capitalize">Booking Date</span>
                                         <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
                                     </div>
                                 </div>
                             </div>
+                            <section className="w-full h-16 sm:w-96 p-2 mt-4">
+                                <div className="flex items-center rounded-2xl bg-DS_white">
+                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                        <Icon className='text-primary w-6' name={"location-dot"} />
+                                    </div>
+                                    <div className="flex flex-col pl-5 w-full">
+                                        <span className="font-normal text-base capitalize">project location</span>
+                                        <span className="font-normal text-base">{data.address}</span>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
 
@@ -143,7 +153,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                             <span className="text-2xl font-bold">${data.projectScale.pricerPerUnit * formData['projectScale.numberOfUnits']}</span>
                         </div>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />
                         </div>
                     </section>
                 </div>

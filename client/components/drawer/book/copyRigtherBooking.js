@@ -12,24 +12,29 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import AddAttachment from "../../elements/attachment";
 
 
-const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
+const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const formData = addprojectState.formData
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
-    let duration = 0
-    if (formData.appointmentDate && formData.deadline)
-        duration = new Date(formData.deadline) - new Date(formData.appointmentDate)
+    let durationInDays = 0
+    if (formData.appointmentDate && formData.startDate) {
+        const startDate = new Date(formData.startDate);
+        const appointmentDate = new Date(formData.appointmentDate);
 
+        const durationInMilliseconds = startDate - appointmentDate;
+        
+        durationInDays = durationInMilliseconds / (1000 * 60 * 60 * 24);
+    }
 
     if (
         formData.details?.length > 5 &&
-        formData.deadline &&
+        formData.startDate &&
         formData.appointmentDate &&
         formData['location.lat'] &&
         formData['location.lng'] &&
-        duration > 0
+        durationInDays > 0
     ) {
         if (!enableBtn)
             setEnableBtn(true)
@@ -56,9 +61,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
         toggleDrawer()
         ontoggleDrawer()
     }
-    useEffect(() => {
-        UpdateFormData("address", "Cairo (this's a defult value)")
-    }, [isOpen])
+
 
     useEffect(() => {
         if (bookCopyrights_respond)
@@ -103,8 +106,6 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
     };
 
 
-    const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
-
     if (!isOpen) {
         return <Drawer name={data.name} img={data.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
@@ -123,16 +124,12 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
                         <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
                     <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">select deadline</h3>
-                        <SelectDate onChange={(value) => UpdateFormData('deadline', value)} />
-                    </section>
-                    <section className="gap-7">
-                        <h3 className="capitalize opacity-60 mb-4">address</h3>
-                        <input placeholder='address' className={inputStyle} value={formData.address || ""} onChange={handleInputChange} name="address" />
+                        <h3 className="capitalize opacity-60 mb-4">select start date</h3>
+                        <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full mt-5">
                         <h3 className="capitalize opacity-60  mb-3">location</h3>
-                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} />
+                        <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange} />
                     </section>
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
@@ -165,8 +162,18 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
                                 <Icon className='text-primary' name={"calendar"} />
                             </div>
                             <div className="flex flex-col pl-5 w-full">
-                                <span className="font-normal text-base">{dateFormat(formData.deadline, 'd mmmm , yyyy')}</span>
-                                <span className="text-[#747688] text-xs">{dateFormat(formData.deadline, 'dddd , h:mm TT')}</span>
+                                <span className="font-normal text-base">Appoinment Date</span>
+                                <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'dddd , h:mm TT')}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
+                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                <Icon className='text-primary' name={"calendar"} />
+                            </div>
+                            <div className="flex flex-col pl-5 w-full">
+                                <span className="font-normal text-base">Start Date</span>
+                                <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
                             </div>
                         </div>
 
@@ -175,6 +182,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
                                 <Icon className='text-primary w-4' name={"location-dot"} />
                             </div>
                             <div className="flex flex-col pl-5 w-full">
+                                <span className="font-normal text-base capitalize">project location</span>
                                 <span className="font-normal text-base">{formData.address}</span>
                             </div>
                         </div>
@@ -183,10 +191,10 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates , addprojectStat
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
-                            <span className="text-2xl font-bold">${data.duration * data.price}</span>
+                            <span className="text-2xl font-bold">${data.price}</span>
                         </div>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'check-out'} />
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />
                         </div>
                     </section>
                 </div>

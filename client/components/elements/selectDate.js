@@ -22,29 +22,35 @@ const SelectDate = ({ onChange, value }) => {
     const getMonthDates = (year, month) => {
         const dates = [];
         const firstDay = new Date(year, month, 1);
+        firstDay.setHours(10, 0, 0, 0); 
         const lastDay = new Date(year, month + 1, 0);
-        const startDay = firstDay.getDay(); // Day of the week (0-6) for the first day of the month
-        const totalDays = lastDay.getDate(); // Total number of days in the month
+        lastDay.setHours(10, 0, 0, 0); 
+        const startDay = firstDay.getDay();
+        const totalDays = lastDay.getDate();
         const tomorrow = new Date();
+        tomorrow.setHours(10, 0, 0, 0); 
+        tomorrow.setDate(tomorrow.getDate() + 1);
         const tomorrowTime = tomorrow.getTime();
-
+    
         // Add leading empty dates for days before the first day of the month
         for (let i = 0; i < startDay; i++) {
             dates.push(null);
         }
-
+    
         // Add the dates for the current month
         for (let i = 1; i <= totalDays; i++) {
             const date = new Date(year, month, i);
+            date.setHours(10, 0, 0, 0); // Set hour to 10 AM for each date
             if (date.getTime() >= tomorrowTime) {
                 dates.push(date);
             } else {
                 dates.push(null);
             }
         }
-
+    
         return dates;
     };
+    
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
@@ -82,7 +88,7 @@ const SelectDate = ({ onChange, value }) => {
                 </div>
             </div>
             {isExpanded ? (
-                <div className="grid grid-cols-7 gap-1">
+                <div className="grid grid-cols-7 gap-1 w-full">
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
                         <div key={index} className="text-center font-medium text-[#8A96BC]">
                             {day}
@@ -92,7 +98,7 @@ const SelectDate = ({ onChange, value }) => {
                         date ? (
                             <div
                                 key={index}
-                                className={`border-[1.5px] border-[#F7F8F8] rounded-xl p-2 flex justify-center items-center aspect-square w-full cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
+                                className={`border-[1.5px] border-[#F7F8FF] rounded-xl p-2 flex justify-center items-center aspect-square w-full cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-sm text-[#263257]">

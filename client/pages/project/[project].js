@@ -7,10 +7,7 @@ import ThanksMSG from '../../components/popsup/thanksMSG';
 import ProjectBooking from "../../components/drawer/book/project";
 import { GetProjects } from "../../redux/action/apis/cycles/projects/get";
 import { GetProject } from "../../redux/action/apis/cycles/projects/getOne";
-import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
 import AddToSaved from "../../components/popsup/addToSaved";
-import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
-import { SwapProjectToFav } from "../../redux/action/apis/savedProject/fav/favAction";
 import ProjectController from "../../components/pages/stduiosAndProject/projectController";
 import Header from "../../components/pages/stduiosAndProject/header";
 import ProjectCover from "../../components/pages/stduiosAndProject/projectShow";
@@ -33,15 +30,20 @@ const Projects = ({
     const router = useRouter()
     const { project: projectId } = router.query;
     const projects = projects_respond?.data || []
-    const project = project_respond?.data
+    const [project, setProject] = useState(project_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpenFav, setIsOpenFav] = useState(false);
+
+    useEffect(() => {
+        setProject(project_respond?.data);
+    }, [project_respond?.data]);
 
     useEffect(() => {
         if (projectId) {
+            setProject(null)
             GetProject(projectId);
         }
     }, [projectId]);
-
     useEffect(() => {
         GetProjects({ limit: "4" });
     }, []);
@@ -49,12 +51,15 @@ const Projects = ({
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
+    const toggleDrawerAddFav = () => {
+        setIsOpenFav(!isOpenFav);
+    };
     return (
         <>
             <Layout >
                 {project &&
                     <>
-                        <AddToSaved />
+                        <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav}/>
                         <Report />
                         <ThanksMSG />
                         <Share url={window.location.href} title={'See that 👀'} />
@@ -80,7 +85,7 @@ const Projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} canBook={project.user._id != user?._id}/>
+                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={project.user.username != user?.username}/>
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>

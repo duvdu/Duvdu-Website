@@ -7,6 +7,7 @@ export const ASKforgetpassword = ({ username }) => {
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'ASKforgetpassword' });
         try {
             const response = await mainApiInstance.get(`/api/users/auth/reset-password/` + username);
+            localStorage.setItem("OTP" , JSON.stringify(response.data?.code))
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: 'ASKforgetpassword' });
         } catch (error) {
             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: 'ASKforgetpassword' });

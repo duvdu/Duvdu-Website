@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import dateFormat from "dateformat";
-import { formatRemainingTime } from '../../../util/util';
-import Selector from '../../elements/CustomSelector';
+
 import { connect } from 'react-redux';
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
+import { formattedCreatedAt } from '../../../util/format-date';
+import TimeLeft2 from './TimeLeft2';
 
-const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
+const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
     const statuses = [
         { value: 'accept' },
         { value: 'reject' },
@@ -13,24 +13,10 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
     const [timeLeft, setTimeLeft] = useState("");
 
     const handleDropdownSelect = (value) => {
-        takeAction({id: data._id, data : {"action": value}})
+        takeAction({ id: data._id, data: { "action": value } })
     };
 
-    const currentDate = new Date();
-    const createdAtDate = new Date(data.contract.createdAt);
-    const timeDifference = currentDate - createdAtDate;
-    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
-    let formattedCreatedAt;
-    if (daysDifference === 0) {
-        formattedCreatedAt = "Today";
-    } else if (daysDifference === 1) {
-        formattedCreatedAt = "Yesterday";
-    } else if (daysDifference === 2) {
-        formattedCreatedAt = "Day before yesterday";
-    } else {
-        formattedCreatedAt = dateFormat(createdAtDate, "M/d/yyyy");
-    }
+    const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
     useEffect(() => {
         if (!data?.contract?.deadline) return
         const interval = setInterval(() => {
@@ -53,8 +39,41 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
 
     }, [data?.contract?.deadline]);
 
+    const uiStatus = () => {
+        const items = {
+            status: data.contract.status,
+            stageExpiration: data?.contract?.stageExpiration,
+            deadline: data?.contract?.deadline,
+            actionAt: data?.contract?.actionAt,
+            createdAt: data?.contract?.createdAt,
+        };
+
+        switch (items.status) {
+            case 'pending':
+                return <TimeLeft2 data={items} msgstatus={"pending"} />;
+            case 'waiting-for-payment':
+                return <TimeLeft2 data={items} msgstatus={"waiting for payment"} />;
+            case 'waiting-for-pay-10':
+                return <TimeLeft2 data={items} msgstatus={"waiting for pay 10"} />;
+            case 'update-after-first-Payment':
+                return <TimeLeft2 data={items} msgstatus={"update after first Payment"} />;
+            case 'waiting-for-total-payment':
+                return <TimeLeft2 data={items} msgstatus={"waiting for total payment"} />;
+            case 'ongoing':
+                return <TimeLeft2 data={items} msgstatus={"complate task"} />;
+            case 'completed':
+                return <NormalState value={"Completed"} />;
+            case 'rejected':
+                return <NormalState value={"Rejected"} />;
+            case 'canceled':
+                return <NormalState value={"Canceled"} />;
+            default:
+                return "Unknown"; // Handle unknown cases as needed
+        }
+    };
+
     return (
-        <div onClick={onClick} className='flex justify-between w-[370px] sm:w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 cursor-pointer'>
+        <div onClick={onClick} className='flex justify-between w-full mx-auto items-center border border-[#00000033] dark:border-[#FFFFFF33] rounded-[50px] p-6 cursor-pointer'>
             <div className='flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center sm:w-full'>
                 {/* profile */}
                 <div className='flex gap-3 items-center'>
@@ -64,36 +83,17 @@ const Pending2 = ({ data,takeAction_respond,takeAction,onClick }) => {
                             {data.sp.name || 'Unknown User'}
                         </h3>
                         <span className='opacity-50'>
-                            {formattedCreatedAt}
+                            {CreatedAt}
                         </span>
                     </div>
                 </div>
                 {/*********/}
                 {/* deadline */}
-                
-                <div className='text-lg ml-auto mr-auto'>
-                {
-                !data.contract.status?.includes("waiting-for-pay") ?
-                <>
-                    <span className='opacity-50 mx-1'>
-                        will respond in
-                    </span>
-                    <span className='text-primary'>
-                        {timeLeft}
-                    </span>
-                </> :
-                    <span className='opacity-50 mx-1'>
-                        wait for payment
-                    </span>
-                }
-                </div>
+                {uiStatus()}
             </div>
             {/*********/}
             {/* dropdown */}
-            <Selector 
-            options={statuses} 
-            onSelect={handleDropdownSelect}
-            className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer hidden" />
+
             {/*********/}
         </div>
     );

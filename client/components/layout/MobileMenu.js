@@ -4,11 +4,15 @@ import Icon from "../Icons";
 import headerMen from '../../public/static/header_content.json';
 import Search from "../elements/SearchMobile";
 import { connect } from "react-redux";
+import { useRouter } from "next/router";
+import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
+import Setting from "./HeaderComponents/setting";
 
 
-const MobileMenu = ({ isToggled, toggleClick, categories }) => {
+const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
     const [page, setpage] = useState(isToggled);
+    const router = useRouter();
     useEffect(() => {
 
         if (isToggled != page) setpage(isToggled)
@@ -36,10 +40,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
             </div>
 
             <div className="flex items-center justify-center gap-2 ">
-                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={toggleOpenSearch}>
+                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={toggleOpenSearch}>
                     <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'} />
                 </div>
-                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={onClick}>
+                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={onClick}>
                     <Icon className="size-6 items-center justify-center" name={'x-icon'} />
                 </div>
             </div>
@@ -58,17 +62,17 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
                 {
                     [
                         {
-                            url: '/creative/youseff_abdulla',
+                            url: `/creative/${user?.username}`,
                             icon: 'user',
                             name: 'profile',
                         },
                         {
-                            url: '#',
+                            url: '?action=settings',
                             icon: 'gear',
                             name: 'settings',
                         },
                         {
-                            url: '#',
+                            url: '?action=notifications',
                             icon: 'bell',
                             name: 'notifications',
                         },
@@ -90,26 +94,26 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
 
                 {
                     [
-                        {
-                            url: '/dashboard',
-                            icon: 'dashboard',
-                            name: 'dashboard',
-                        },
+                        // {
+                        //     url: '/dashboard',
+                        //     icon: 'dashboard',
+                        //     name: 'dashboard',
+                        // },
                         {
                             url: '/contracts',
                             icon: 'contracts',
                             name: 'contracts',
                         },
-                        {
-                            url: '/teams',
-                            icon: 'teams',
-                            name: 'team projects',
-                        },
+                        // {
+                        //     url: '/teams',
+                        //     icon: 'teams',
+                        //     name: 'team projects',
+                        // },
                     ].map((item, index) =>
                         <Link key={index} href={item.url}>
                             <div className="flex justify-center items-center cursor-pointer">
-                            <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
-                            <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
+                                <Icon className="mr-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
+                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
                             </div>
                         </Link>
                     )
@@ -122,7 +126,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
         const [openSubCategories, setOpenSubCategories] = useState(null);
 
         const toggleCategory = (category) => {
-            setOpenCategories(prev =>  prev === category ? null : category);
+            setOpenCategories(prev => prev === category ? null : category);
 
             setOpenSubCategories(null);
         };
@@ -141,13 +145,15 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
 
                     return (
                         <li key={index} className="cursor-pointer">
-                            <div className="flex w-full justify-between items-center p-5" onClick={() => toggleCategory(category)}>
+                            <div className="flex w-full justify-between items-center p-5">
                                 <div className="w-3" />
-                                <span className="text-[#4F5E7B] font-semibold text-sm">
-                                    {category.title}
-                                </span>
+                                <Link href={`/${category.cycle}`}>
+                                    <span className="text-[#4F5E7B] font-semibold text-sm" >
+                                        {category.title}
+                                    </span>
+                                </Link>
 
-                                <div className={`transition-all duration-300 ${isOurStation ? 'rotate-90' : 'rotate-0'}`}>
+                                <div className={`transition-all duration-300 ${isOurStation ? 'rotate-90' : 'rotate-0'}`} onClick={() => toggleCategory(category)}>
                                     <SpeficIcon name={`${isOurStation ? 'minus' : 'plus'}`} />
                                 </div>
                             </div>
@@ -208,6 +214,17 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
             </div>
         );
     };
+    
+    useEffect(()=>{
+        if(router.query){
+            const action = router.query.action
+         if(action == "settings")   
+            setpage(5)
+        else if(action == "notifications")
+            setpage(4)
+        }
+    },[router.query])
+    
 
     return (
         <>
@@ -222,14 +239,30 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
                     <Header onClick={() => toggleClick(1)} toggleOpenSearch={togglePage} openSearch={page} />
                     {page == 2 &&
                         <>
-                            <Tabs />
-                            <Tabs2 />
-                            <Menu />
-                            <Auth />
+                            {
+                                islogin &&
+                                <>
+                                    <Tabs />
+                                    <Tabs2 />
+                                    <Menu />
+                                </>
+                            }
+                            {
+                                !islogin &&
+                                <Auth />
+                            }
                         </>
                     }
                     {page == 3 &&
                         <SearchBody />
+                    }
+
+                    {page == 4 &&
+                        <MessageAndNotofication />
+                    }
+
+                    {page == 5 &&
+                        <Setting />
                     }
                 </div>
             </div>
@@ -239,6 +272,9 @@ const MobileMenu = ({ isToggled, toggleClick, categories }) => {
 
 const mapStateToProps = (state) => ({
     categories: state.api.getCategory,
+    islogin: state.auth.login,
+    user: state.user.profile,
+
 });
 
 const mapDispatchToProps = {
