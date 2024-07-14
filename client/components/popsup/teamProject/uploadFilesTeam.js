@@ -3,7 +3,7 @@ import Popup from '../../elements/popup';
 import Icon from '../../Icons';
 import React, { useEffect, useRef, useState } from "react";
 import ArrowBtn from '../../elements/arrowBtn';
-import { UpdateKeysAndValues, handleFileUpload } from '../../../util/util';
+import { OpenPopUp, UpdateKeysAndValues, handleFileUpload } from '../../../util/util';
 import AddAttachment from '../../elements/attachment';
 import AddCoverPhoto from '../../elements/AddCoverPhoto';
 import { connect } from 'react-redux';
@@ -22,21 +22,25 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
 
     const validateRequiredFields = () => {
         const errors = {};
-
         if (!formData.cover) errors.cover = 'cover is required';
         if (!formData.category?.length) errors.category = 'category is required';
-        if (!formData.attachments?.length) errors.attachments = 'attachment is required';
+        // if (!formData.attachments?.length) errors.attachments = 'attachment is required';
         if (!formData.title) errors.title = 'title is required';
         if ((formData.desc?.length||0) < 6) errors.desc = 'description is required';
         if (!formData.address) errors.address = 'address is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
-        if (!formData.shootingDays) errors.shootingDays = 'shootingDays is required';
-        if (!formData.budget) errors.budget = 'budget is required';
-        if (!formData.startDate) errors.startDate = 'startDate is required';
+        // if (!formData.shootingDays) errors.shootingDays = 'shootingDays is required';
+        // if (!formData.budget) errors.budget = 'budget is required';
+        // if (!formData.startDate) errors.startDate = 'startDate is required';
         
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
+    useEffect(() => {
+        if (create_respond) {
+            OpenPopUp("successfully-create-team")
+        }
+    }, [create_respond])
 
 
      useEffect(() => {
@@ -70,12 +74,24 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
         });
         resetForm()
     };
-    const onsubmit = () => {
-        
-        router.push({
-            pathname: "/addteams",
-        });
-    }
+        const onsubmit = () => {
+            const form = new FormData()
+    
+            formData?.category.forEach((creative, index) => {
+                const categoryKey = `creatives[${index}][category]`;
+                form.append(categoryKey, creative);
+            });
+    
+    
+            form.append('cover', formData?.cover)
+            UpdateKeysAndValues(formData, (key, value) => form.append(key, value), [ 'category'])
+            CreateTeamProject(form)
+            handleCancel()
+        }
+    
+        // router.push({
+        //     pathname: "/addteams",
+        // });
 
     return (
         <>
@@ -87,16 +103,16 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                         <AddCoverPhoto UpdateFormData={UpdateFormData} formData={formData} />
                     </section>
                     <section>
-                        <h3 className='opacity-60 font-medium my-2 text-lg'>select Categories</h3>
+                        <h3 className='opacity-60 font-medium my-2 text-lg'>Select Categories</h3>
                         <CategoryMultiSelection onChange={(v) => { UpdateFormData('category', v) }} />
                     </section>
-                    <section className="w-full mt-11">
+                    {/* <section className="w-full mt-11">
                         <h3 className="capitalize opacity-60">upload alike project</h3>
                         <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} formData={formData} />
-                    </section>
+                    </section> */}
                     <section>
                         <p className="capitalize opacity-60 mt-11">team name</p>
-                        <input onChange={handleInputChange} name='title' placeholder="enter platform..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
+                        <input onChange={handleInputChange} name='title' placeholder="Team Name" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">project details</p>
@@ -112,7 +128,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                             </div>
                         </section>
                     </div>
-                    <section>
+                    {/* <section>
                         <p className="capitalize opacity-60 mt-11">shooting days</p>
                         <div className='flex items-center justify-start gap-4'>
                             <input type="number" min={0} onChange={handleInputChange} name='shootingDays' placeholder="Ex. 5 days" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
@@ -128,8 +144,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
-                    </section>
-
+                    </section>*/}
 
                     <section className="sticky bottom-5 z-10">
                         <div className="flex justify-center">
@@ -154,7 +169,6 @@ const mapDispatchToProps = {
     UpdateFormData,
     CreateTeamProject,
     resetForm
-
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTeam);
 

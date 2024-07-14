@@ -135,7 +135,6 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
         UpdateFormData(name, value);
     };
 
-console.log(formData.creatives)
     const removeFromArray = (arrayName, index) => {
         const newArray = [...formData[arrayName]]; // Create a new array to avoid mutating the original state
         newArray.splice(index, 1); // Remove the item at the specified index

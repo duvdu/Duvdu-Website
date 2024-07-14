@@ -15,7 +15,7 @@ import DuvduLoading from "../components/elements/duvduLoading";
 const Card = ({ data, DeleteTeamProjects }) => {
     const { cover, creatives, title, _id, status } = data;
     const route = useRouter()
-
+    console.log(creatives)
     const onDelete = () => {
         DeleteTeamProjects(_id)
     }
@@ -52,17 +52,17 @@ const Card = ({ data, DeleteTeamProjects }) => {
                     >
                         <Selector
                             onSelect={handleDropdownSelect}
-                            options={status == 'available' ? null : [
+                            options={[
                                 {
                                     value: 'Delete',
                                 },
-                                {
-                                    value: 'Edit',
-                                },
+                                // {
+                                //     value: 'Edit',
+                                // },
                             ]}
                         >
 
-                            {status == 'pending' && <Icon name="waiting" />}
+                            {<Icon name="waiting" />}
                             {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
                             {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
                         </Selector>

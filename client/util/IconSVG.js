@@ -14,6 +14,7 @@ const IsincludesSVG = [
   "bag",
   "card",
   "chat",
+  "chat24",
   "chatOff",
   "check-verify",
   "burger-menu",
@@ -59,6 +60,8 @@ const GetIconSVG = ({ name, className, ...rest }) => {
       return <Card className={className} {...rest} />
     case "chat":
       return <Chat className={className} {...rest} />
+    case "chat24":
+      return <Chat24 className={className} {...rest} />
     case "chatOff":
       return <ChatOff className={className} {...rest} />
     case "check-verify":
@@ -202,6 +205,13 @@ const Card = ({ className, ...rest }) =>
 const Chat = ({ className, ...rest }) =>
   <div className={className} {...rest}>
     <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 70 70" fill="none">
+      <circle cx="35" cy="35" r="34.25" stroke="#1A73EB" strokeWidth="1.5" />
+      <path d="M35.9257 26.0612C35.528 26.0208 35.1229 26 34.7117 26C29.3481 26 25 29.5396 25 33.9059C25 38.2722 29.3481 41.8118 34.7117 41.8118C35.5501 41.8118 36.3637 41.7253 37.1397 41.5627L40.7816 45.2V40.1176C42.4165 39.0121 43.7304 37.3508 44.2 35.6M44.2 30.2C44.2 31.8569 42.8569 33.2 41.2 33.2C39.5431 33.2 38.2 31.8569 38.2 30.2C38.2 28.5431 39.5431 27.2 41.2 27.2C42.8569 27.2 44.2 28.5431 44.2 30.2Z" stroke="#1A73EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </div>
+const Chat24 = ({ className, ...rest }) =>
+  <div className={className} {...rest}>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 70 70" fill="none">
       <circle cx="35" cy="35" r="34.25" stroke="#1A73EB" strokeWidth="1.5" />
       <path d="M35.9257 26.0612C35.528 26.0208 35.1229 26 34.7117 26C29.3481 26 25 29.5396 25 33.9059C25 38.2722 29.3481 41.8118 34.7117 41.8118C35.5501 41.8118 36.3637 41.7253 37.1397 41.5627L40.7816 45.2V40.1176C42.4165 39.0121 43.7304 37.3508 44.2 35.6M44.2 30.2C44.2 31.8569 42.8569 33.2 41.2 33.2C39.5431 33.2 38.2 31.8569 38.2 30.2C38.2 28.5431 39.5431 27.2 41.2 27.2C42.8569 27.2 44.2 28.5431 44.2 30.2Z" stroke="#1A73EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>

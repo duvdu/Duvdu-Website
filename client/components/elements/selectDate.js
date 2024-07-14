@@ -78,7 +78,7 @@ const SelectDate = ({ onChange, value }) => {
 
     return (
         <div className="flex flex-col gap-2 items-center date-selector">
-            <div className="flex justify-between w-full mb-4">
+                <div className="flex justify-between w-full mb-4">
                 <span className="opacity-60 font-medium">
                     {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                 </span>
