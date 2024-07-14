@@ -206,12 +206,12 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                                 {formData.desc}
                             </span>
                         </section>
-                        <section>
+                        {/* <section>
                             <h3 className="opacity-60 capitalize mb-4">shooting days</h3>
                             <span className="font-semibold">
                                 {formData.shootingDays} days
                             </span>
-                        </section>
+                        </section> */}
                         <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                 <Icon className='text-primary' name={"calendar"} />
@@ -230,7 +230,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                                 {/* <span className="text-[#747688] text-xs">36 Guild Street London, UK </span> */}
                             </div>
                         </div>
-                        <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                        {/* <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                 <Icon className='text-primary w-4' name={"image"} />
                             </div>
@@ -238,7 +238,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                                 <span className="font-normal text-base">alike media</span>
                                 <span className="text-[#747688] text-xs">{formData.attachments?.length} files</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {!isSolid && (

@@ -6,15 +6,16 @@ import { connect } from "react-redux";
 import { GetTeamProject } from "../../../redux/action/apis/teamproject/getone";
 import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
+import SelectDate from "../../elements/selectDate";
 import AppButton from "../../elements/button";
 import DuvduLoading from "../../elements/duvduLoading";
+import AddAttachment from "../../elements/attachment";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
-
     return (
         <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
             <div className="flex w-full overflow-hidden h-32">
-                <img className="w-full" src={info.cover} alt={`Profile Image`} />
+                <img className="w-full" src={info.coverImage} alt={`Profile Image`} />
             </div>
             <div className='p-5'>
                 <div className='flex items-start gap-4 -translate-y-4 h-11'>
@@ -36,10 +37,10 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                 </div>
                 <div className='flex justify-center pt-25 items-center gap-3'>
                     <div className='Professional-background-decoration px-4 py-1'>
-                        <span className='Professional-text-decoration font-bold text-lg'>{info?.rank?.ratersCounter || "---"}</span>
+                        <span className='Professional-text-decoration font-bold text-lg'>{info?.rank?.ratersCounter || "UNRANKED"}</span>
                     </div>
                     {info.category?.title &&
-                    <span className='flex border rounded-full px-4 py-1 gap-1 text-lg'>
+                    <span className='flex border rounded-full px-1 py-2 gap-1 text-sm'>
                         <span>{info.category?.title || "---"}</span>
                     </span>}
                     <div className='border rounded-full px-4 py-1 text-lg flex items-center gap-1'>
@@ -65,7 +66,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                 </div>
                 <div className="flex gap-3 mt-6 justify-center items-center">
 
-                    <span className="text-5xl">${info?.pricePerHour || 0}<span className="text-2xl opacity-50">/hr</span></span>
+                    {/* <span className="text-5xl">${info?.pricePerHour || 0}<span className="text-2xl opacity-50">/hr</span></span> */}
 
                     <div onClick={onChoose} className="flex items-center justify-center capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
                         <span className="text-primary font-bold text-lg my-5">add to team</span>
@@ -78,9 +79,24 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
 
 const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
     const [id, setId] = useState(null);
-    const [user, setuser] = useState(null);
     const [hours, setHours] = useState(null);
-    const [amount, setAmount] = useState(null);
+    const [price, setPrice] = useState(null);
+    const [startDate, setStartDate] = useState(null);
+    const [details, setDetails] = useState(null);
+    const [durations, setDurations] = useState(null);
+    const [attachments, setAttachments] = useState(null);
+    const validateRequiredFields = () => {
+        const errors = {};
+        if (!hours) errors.hours = 'hours is required';
+        if (!price) errors.price = 'price is required';
+        if (!durations) errors.durations = 'price is required';
+        if (!attachments?.length) errors.attachments = 'attachment is required';
+        if (!startDate) errors.startDate = 'start date is required';
+        if ((details?.length||0) < 6) errors.details = 'description is required';        
+        return errors;
+    };
+    const isEnable = Object.keys(validateRequiredFields()).length == 0
+
     const page = 1;
     const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
@@ -116,39 +132,78 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
 
     const openpopUp = (value) => {
         setId(value._id)
-        setuser(value)
         const popup = document.querySelector('.ADD_HOURS_TO_CREATIVE');
         if (popup) {
             popup.classList.add('show');
         }
     }
-    const onadd = (value) => {
-        setHours(value)
+
+
+    const onadd = () => {
+        const form = new FormData()
+        form.append('user', id)
+        form.append('details', details)
+        form.append('hourPrice', price)
+        form.append('workHours', hours)
+        form.append('startDate', startDate)
+        form.append('duration', durations)
+        form.append('attachments', attachments)
+
         const popup = document.querySelector('.ADD_HOURS_TO_CREATIVE');
         if (popup) {
             popup.classList.remove('show');
         }
-        goback({ user: id, workHours: hours, user: user, totalAmount: amount })
+        
+    
+        goback(form)
     }
-
     return (
-        <>
+        <>  
             {/* <Filter /> */}
-            <Popup className="ADD_HOURS_TO_CREATIVE" header={'Work Details'}>
-                <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
-                    <div className='flex items-center gap-9 w-64'>
-                        <input type="number" min={0} onChange={(e) => setHours(Math.abs(e.target.value))} placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
-                        <span className="text-xl opacity-50">
-                            hours
+            <Popup className="ADD_HOURS_TO_CREATIVE" header={'Add Creative'}>
+                <div className='w-full lg:w-[600px] flex flex-col gap-9 h-full justify-center mt-24'>
+                    <div className='grid grid-cols-5 items-center gap-9 full'>
+                        <span className="col-span-1 text-lg opacity-50">
+                            Details
                         </span>
+                        <input type="text" min={0} onChange={(e) => setDetails(e.target.value)} placeholder="Ex. Details" className="col-span-4 bg-[#9999991A] rounded-3xl border-black border-opacity-10 w-full h-16 p-4" />
                     </div>
-                    <div className='flex items-center gap-9 w-64'>
-                        <input type="number" min={0} onChange={(e) => setAmount(Math.abs(e.target.value))} placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
-                        <span className="text-xl opacity-50">
-                            amount
+                    <div className='grid grid-cols-5 items-center gap-9 full'>
+                        <span className="col-span-1 text-lg opacity-50">
+                            Hours
                         </span>
+                        <input type="number" min={0} onChange={(e) => setHours(Math.abs(e.target.value))} placeholder="Ex. 5" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>
-                    <AppButton onClick={(e) => onadd(e.target.value)} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
+                    <div className='grid grid-cols-5 items-center gap-9 full'>
+                        <span className="col-span-1 text-lg opacity-50">
+                            Amount
+                        </span>
+                        <input type="number" min={0} onChange={(e) => setPrice(Math.abs(e.target.value))} placeholder="Ex. 10$" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
+                    </div>  
+                    <div className='grid grid-cols-5 items-center gap-9 full'>
+                        <span className="col-span-1 text-lg opacity-50">
+                            Start Date
+                        </span>
+                        <div className="col-span-2">
+                            <SelectDate onChange={(value) => setStartDate(value)} />
+                        </div>
+                    </div>  
+                    <div className='grid grid-cols-5 items-center gap-9 full'>
+                        <span className="col-span-1 text-lg opacity-50">
+                            Duration
+                        </span>
+                        <input type="number" min={0} onChange={(e) => setDurations(e.target.value)} placeholder="Ex. 5" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
+                    </div>
+                    <div className='grid grid-cols-5 items-center gap-9 full'>
+                        <span className="col-span-1 text-lg opacity-50">
+                          Attachment
+                        </span>
+                        <div className="col-span-4">
+                            <AddAttachment name="attachments" value={attachments} onChange={(e)=> setAttachments(e.target.value)} />
+                        </div>
+                    </div>
+
+                    <AppButton isEnabled={isEnable} onClick={(e) => onadd()} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
                         Confirm
                     </AppButton>
                 </div>
@@ -185,7 +240,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    FindUser
+    FindUser,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(AddToTeamPage);
 

@@ -38,6 +38,7 @@ const TheTeam = ({
     }, [teamId, add_creative, delete_respond, update_respond]);
 
     const updateTeamProject = (data) => {
+        console.log(data)
         AddTeamProject(data, teamId);
     }
     const handleDelete = (id) => {
@@ -75,19 +76,20 @@ const TheTeam = ({
 const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) => {
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
     const [categoryId, setCategoryId] = useState();
-
+    
     const togglePage = (value) => {
 
         if (typeof (value) == 'string')
             setCategoryId(value)
-        else
-            onAddOne?.({ ...value, user: value.user._id, craetiveScope: categoryId })
-
+        else{
+            value.append('category',categoryId )
+            onAddOne?.(value)
+        }
         setIsAddToTeamPage(!isAddToTeamPage);
     };
 
     const data = respond?.data?.creatives || [];
-
+    console.log(data)
     return (
         <div className="h-body w-full overflow-y-scroll pt-14 addUserScroll">
             {!isAddToTeamPage ? (
@@ -96,13 +98,18 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
                     <Cover respond={respond} />
                     {data.map((section, index) => (
                         <div key={index}>
-                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} />
+                            <Sections isSolid={isSolid} AddTeam={() => togglePage(section.category._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} />
                             {index !== data.length - 1 && <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>}
                         </div>
                     ))}
                 </>
             ) : (
-                <UsersToAdd goback={togglePage} />
+                <>
+                    <div className='w-10 h-10 flex justify-center items-center rounded-full border px-4 cursor-pointer aspect-square' onClick={()=> setIsAddToTeamPage(!isAddToTeamPage)}>
+                        <Icon className='w-5 h-5 text-black' name={'angle-left'} />
+                    </div>
+                    <UsersToAdd goback={togglePage} />
+                </>
             )}
         </div>
     );
@@ -167,7 +174,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
                             amount
                         </span>
                     </div>
-                    <AppButton onClick={(e) => onupdate()} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
+                    <AppButton  onClick={(e) => onupdate()} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
                         Confirm
                     </AppButton>
                 </div>
@@ -178,12 +185,12 @@ const Person = ({ person, onDelete, onUpdate }) => {
                     <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
                     <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
                 </div>
-                <div className={`flex rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
+                <div className={`flex relative rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
                     <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>message</span>
                     <div className='size-5'>
-                        <Icon name={'chat'} />
+                        <Icon name={'chat24'} />
                     </div>
-                </div>
+                </div> 
                 {person.status == 'pending' && <Selector options={options} onSelect={handleDropdownSelect}> <Icon name="waiting" className="size-12" /> </Selector>}
                 {person.status == 'refuse' && <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div>}
                 {person.status == 'available' && <div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div>}
@@ -192,32 +199,32 @@ const Person = ({ person, onDelete, onUpdate }) => {
     )
 };
 
-const RightSide = ({ isSolid, data, onClick }) => (
-    <div className="w-full max-w-[483px] h-body py-10">
+const RightSide = ({ isSolid, data, onClick }) => {
+    console.log(data)
+
+    return <div className="w-full max-w-[483px] h-body py-10">
         <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
             <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
-                <h2 className="opacity-80 text-2xl font-semibold capitalize">Project Details</h2>
-                <div className="w-full flex flex-col gap-8 h-full mt-9">
-                    <section className="hidden">
-                        <h3 className="opacity-60 capitalize mb-4">project type</h3>
-                        <div className="border border-opacity-55 rounded-full w-min">
-                            <span className="text-opacity-85 text-lg px-3 py-2">
-                                videography
-                            </span>
-                        </div>
+                <h2 className="opacity-80 text-2xl font-semibold capitalize">Team Details</h2>
+                <div className="w-full flex flex-col gap-8 h-full mt-6">
+                    <section>
+                        <h3 className="opacity-60 capitalize text-base mb-2">Team Name</h3>
+                        <span className="font-bold">
+                            {data.title}
+                        </span>
                     </section>
                     <section>
-                        <h3 className="opacity-60 capitalize text-base mb-4">project details</h3>
+                        <h3 className="opacity-60 capitalize text-base mb-2">Team details</h3>
                         <span className="font-bold">
                             {data.desc}
                         </span>
                     </section>
-                    <section>
+                    {/* <section>
                         <h3 className="opacity-60 capitalize mb-4">shooting days</h3>
                         <span className="font-semibold">
                             {data.shootingDays} days
                         </span>
-                    </section>
+                    </section> */}
                     <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                             <Icon className='text-primary' name={"calendar"} />
@@ -236,7 +243,7 @@ const RightSide = ({ isSolid, data, onClick }) => (
                             {/* <span className="text-[#747688] text-xs">36 Guild Street London, UK </span> */}
                         </div>
                     </div>
-                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                    {/* <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"image"} />
                         </div>
@@ -244,21 +251,21 @@ const RightSide = ({ isSolid, data, onClick }) => (
                             <span className="font-normal text-base">alike media</span>
                             <span className="text-[#747688] text-xs">{data.attachments?.length} files</span>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {!isSolid && (
-                <div className="border-t flex flex-col gap-4 bottom-0 w-full h-48 p-6 items-center">
+                <div className="border-t flex flex-col gap-4 bottom-0 w-full h-20 p-6 items-center">
                     <div className="flex justify-between w-full">
                         <span className="font-bold">Total Amount</span>
                         <span className="font-bold">$0.0</span>
                     </div>
-                    <ArrowBtn onClick={onClick} className="cursor-pointer w-full sm:w-[388px]" text='Check-Out' isEnable={false} IconName="check" />
+                    {/* <ArrowBtn onClick={onClick} className="cursor-pointer w-full sm:w-[388px]" text='Check-Out' isEnable={false} IconName="check" /> */}
                 </div>
             )}
         </div>
     </div>
-);
+};
 
 const Cover = ({ respond }) => (
     <div className="relative h-20 w-full rounded-full overflow-hidden flex justify-center items-center mb-8">
@@ -266,7 +273,6 @@ const Cover = ({ respond }) => (
         <span className="absolute text-lg font-semibold text-white">
             {respond?.data?.title}
         </span>
-
     </div>
 );
 

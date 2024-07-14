@@ -9,7 +9,7 @@ export const AddTeamProject = (data, id) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
 
-      const response = await mainApiInstance.post(`api/team/${id}/user`, data);
+      const response = await mainApiInstance.post(`api/team/${id}/creative`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {
       try {
