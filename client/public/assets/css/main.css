@@ -1663,7 +1663,7 @@ table p {
   color: var(--white);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  
   justify-content: end;
   width: 100%;
 
