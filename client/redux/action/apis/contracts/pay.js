@@ -24,6 +24,9 @@ export const payment = ({ id, type }) => {
                 case "project":
                     response = await mainApiInstance.get(`/api/projects/contract/pay/${id}`);
                     break;
+                case "team":
+                    response = await mainApiInstance.post(`/api/team/contract/pay/${id}`);
+                    break;
                 default:
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });
                     return;

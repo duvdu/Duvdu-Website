@@ -57,6 +57,8 @@ function ReceiveProjectFiles({
             return "producer"
         else if (contractDetails?.ref.includes("project"))
             return "project"
+        else if (contractDetails?.ref.includes("team"))
+            return "team"
     }
 
     const uiStatus = () => {
@@ -278,7 +280,7 @@ function ReceiveProjectFiles({
                 formData['unitPrice']
             ))
 
-
+        console.log(contract)
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -597,11 +599,21 @@ function ReceiveProjectFiles({
                                         </div>
                                     }
                                     {
-                                        !IsImSp() && status == "waiting-for-total-payment" &&
+                                        !IsImSp()  && getType() !== 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                             <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>
                                                     Pay Now remain ( 90 % )
+                                                </span>
+                                            </Button>
+                                        </div>
+                                    }
+                                    {
+                                        !IsImSp() && getType() === 'team' && status == "waiting-for-total-payment" &&
+                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                            <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                                <span className='text-white font-bold capitalize text-lg'>
+                                                    Pay Now remain ( 100 % )
                                                 </span>
                                             </Button>
                                         </div>
