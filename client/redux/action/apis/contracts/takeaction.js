@@ -52,6 +52,12 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
                     }
                     break;
 
+                case "team":
+                    response = await mainApiInstance.post(`/api/team/contract/${id}`, {
+                        action: data ? "accept" : "reject"
+                    });
+                    break;
+
                 default:
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });
                     return;

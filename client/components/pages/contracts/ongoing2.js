@@ -7,15 +7,15 @@ const Ongoing2 = ({ data,onClick }) => {
     
     const Deadline = formattedDeadline(data?.contract?.deadline)
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
-
-    return (
+    console.log(data)
+    return (    
         <div onClick={onClick} className='w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between'>
                 {/* profile */}
                 <div className='flex gap-3 justify-between items-center'>
-                    <img className='w-14 h-14 rounded-full object-cover object-top' src={data.targetUser?.profileImage} alt="profile picture" />
+                    <img className='w-14 h-14 rounded-full object-cover object-top' src={data.sp?.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
-                        <h3 className='opacity-80 text-lg font-bold text-white capitalize'>{data.targetUser?.name}</h3>
+                        <h3 className='opacity-80 text-lg font-bold text-white capitalize'>{data.sp?.name}</h3>
                         <span className='opacity-50 text-white'>{CreatedAt}</span>
                     </div>
                 </div>
