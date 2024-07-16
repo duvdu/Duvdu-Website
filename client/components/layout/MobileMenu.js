@@ -244,9 +244,9 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                                 <>
                                     <Tabs />
                                     <Tabs2 />
-                                    <Menu />
                                 </>
                             }
+                            <Menu />
                             {
                                 !islogin &&
                                 <Auth />
