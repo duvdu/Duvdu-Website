@@ -82,7 +82,7 @@ const NotificationTile = ({ tile }) =>
         <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
         <div className="flex flex-col justify-center">
             <span className="leading-[1px]">
-                <span className="rtl:hidden font-bold">{tile.sourceUser?.name || 'NONE'} </span>
+                <span className="rtl:hidden font-bold">{tile.sourceUser?.name || 'DUVDU'} </span>
                 <span className="text-xs opacity-60">{tile.title}</span>
                 <span className="ltr:hidden font-bold">{tile.message} </span>
             </span>

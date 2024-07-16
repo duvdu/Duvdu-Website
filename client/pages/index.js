@@ -75,93 +75,52 @@ const Home = ({
                     <div className="mx-auto">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-4"> trendy categories </h2>
 
-                        <Swiper
-                            modules={[Autoplay, Navigation, EffectFade]}
-                            scrollbar={{ draggable: true }}
-                            onSwiper={(swiper) => setSwiper(swiper)}
-                            speed={1500}
-                            breakpoints={{
-                                320: {
-                                    slidesPerView: 1,
-                                    spaceBetween: 10,
-                                },
-                                640: {
-                                    slidesPerView: 2,
-                                    spaceBetween: 20,
-                                },
-                                1024: {
-                                    slidesPerView: 3,
-                                    spaceBetween: 30,
-                                },
-                            }}
-                        >
+                        <div className="flex overflow-auto gap-3" >
                             {homeTrenyList.map((data, index) => (
-                                <SwiperSlide key={index}>
-                                    <div
-                                        key={index}
-                                        className="bg-black w-full max-w-[500px] mx-auto aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden"
-                                        style={{ backgroundImage: `url(${data.image})` }}
-                                    >
-                                        <span className="text-white text-3xl font-semibold capitalize">
-                                            {data.title || 'Empty Title'}
-                                        </span>
-                                        <span className="text-white opacity-50 font-semibold text-lg text-center">
-                                            {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
-                                        </span>
-                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
-                                            <a className="text-lg font-semibold text-primary bg-white px-7 py-3 rounded-full">
-                                                {data.title ? 'View More' : 'Add Item'}
-                                            </a>
-                                        </Link>
-                                    </div>
-                                </SwiperSlide>
+                                <div
+                                    key={index}
+                                    className="bg-black min-w-[347.29px] lg:min-w-[430px] mx-auto aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden"
+                                    style={{ backgroundImage: `url(${data.image})` }}
+                                >
+                                    <span className="text-white text-3xl font-semibold capitalize">
+                                        {data.title || 'Empty Title'}
+                                    </span>
+                                    <span className="text-white opacity-50 font-semibold text-lg text-center">
+                                        {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
+                                    </span>
+                                    <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                        <a className="text-lg font-semibold text-primary bg-white px-7 py-3 rounded-full">
+                                            {data.title ? 'View More' : 'Add Item'}
+                                        </a>
+                                    </Link>
+                                </div>
                             ))}
-                        </Swiper>
 
+                        </div>
                     </div>
 
                 </section>
                 <section className="my-12 py-12 bg-[#F2F2F3]">
                     <div className="container w-full">
                         <section className="mx-auto">
-                            <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> discover tags </h2>
-                            <Swiper
-                                dir='ltr'
-                                className='cardimg'
-                                modules={[Autoplay, Navigation, EffectFade]}
-                                breakpoints={{
-                                    320: {
-                                        slidesPerView: 1,
-                                        spaceBetween: 10,
-                                    },
-                                    640: {
-                                        slidesPerView: 2,
-                                        spaceBetween: 20,
-                                    },
-                                    1024: {
-                                        slidesPerView: 3,
-                                        spaceBetween: 30,
-                                    },
-                                }}
-                            // loop={true}
-                            >
+                            <h2 className="text-start lg:text-center text-2xl font-semibold opacity-60 capitalize mb-8"> discover tags </h2>
+                            <div className="flex overflow-auto gap-3">
                                 {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
-                                    <SwiperSlide key={index}>
-                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
-                                            <a>
-                                                <div
-                                                    className="bg-black w-full aspect-[3] rounded-3xl trendy-section flex flex-col gap-5 items-center justify-center overflow-hidden"
-                                                    style={{ backgroundImage: `url(${data.image})` }}
-                                                >
-                                                    <span className="text-white text-3xl font-semibold capitalize">
-                                                        {data.title}
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </Link>
-                                    </SwiperSlide>
+                                    <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                        <a key={index} href={data.link || "#"}>
+                                            <div
+                                                className="bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] h-[65px] lg:w-[314px] lg:h-[108px]"
+                                                style={{ backgroundImage: `url(${data.image})` }}
+                                            >
+                                                <span className="text-white text-xs lg:text-3xl font-semibold capitalize">
+                                                    {data.title}
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </Link>
                                 ))}
-                            </Swiper>
+                            </div>
+
                         </section>
                     </div>
                 </section>
@@ -170,56 +129,23 @@ const Home = ({
                     <div className="container w-full">
                         <div className="mx-auto">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> top categories </h2>
-                            <Swiper
-                                dir='ltr'
-                                className='cardimg'
-                                modules={[Autoplay, Navigation, EffectFade]}
-                                breakpoints={{
-                                    320: {
-                                        slidesPerView: 1,
-                                        spaceBetween: 10,
-                                    },
-                                    
-
-                                    530: {
-                                        slidesPerView: 2,
-                                        spaceBetween: 30,
-                                    },
-
-                                    770: {
-                                        slidesPerView: 3,
-                                        spaceBetween: 30,
-                                    },
-                                    1024: {
-                                        slidesPerView: 4,
-                                        spaceBetween: 40,
-                                    },
-
-                                    1280: {
-                                        slidesPerView: 5,
-                                        spaceBetween: 50,
-                                    },
-                                }}
-                                autoplay={{ delay: 3000 }}
-                            >
+                            <div className="flex overflow-auto gap-3">
                                 {categories?.map((data, index) => (
-                                    <SwiperSlide key={index}>
-                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                    <Link href={data.cycle ? `/${data.cycle}` : ''} >
                                         <div
-                                            className={`bg-black mx-auto h-[347px] ${(index + 1) % 3 === 0 ? 'w-[230px]' : 'w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-7 py-10`}
+                                            className={`bg-black mx-auto h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
                                             style={{ backgroundImage: `url(${data.image})` }}
                                         >
-                                            <div className="capitalize rounded-full text-lg font-medium text-white px-6 py-2 bg-black bg-opacity-50">
+                                            <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 py-2 bg-black bg-opacity-50">
                                                 150 creatives
                                             </div>
-                                            <span className="text-white text-3xl font-semibold capitalize text-center w-full">
+                                            <span className="text-white text-[14px] lg:text-3xl font-semibold capitalize text-center w-full">
                                                 {data.title}
                                             </span>
                                         </div>
-                                        </Link>
-                                    </SwiperSlide>
+                                    </Link>
                                 ))}
-                            </Swiper>
+                            </div>
 
 
                         </div>
@@ -256,15 +182,15 @@ const Home = ({
                                             <div
                                                 className="gap-8 w-full">
                                                 <img className="h-24 object-cover w-full rounded-3xl" src={category.image} />
-                                                <h2 className="text-2xl opacity-60 font-semibold mt-6 cursor-pointer" 
-                                                onClick={() => handleNavigation(`/${category.cycle}`)}
-                                                    >{category.title}</h2>
+                                                <h2 className="text-2xl opacity-60 font-semibold mt-6 cursor-pointer"
+                                                    onClick={() => handleNavigation(`/${category.cycle}`)}
+                                                >{category.title}</h2>
                                                 <ul>
                                                     <div>
                                                         {category.subCategories?.map((subcategory, subIndex) => (
                                                             subIndex / category.subCategories.length < 0.5 && (
-                                                                <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} 
-                                                                onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
+                                                                <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags}
+                                                                    onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
                                                                 />
                                                             )
                                                         ))}
@@ -273,8 +199,8 @@ const Home = ({
                                                         <div>
                                                             {category.subCategories.map((subcategory, subIndex) => (
                                                                 subIndex / category.subCategories.length >= 0.5 && (
-                                                                    <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags} 
-                                                                    onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
+                                                                    <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags}
+                                                                        onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
                                                                     />
                                                                 )
                                                             ))}
