@@ -24,6 +24,8 @@ const IsincludesSVG = [
   "calendar",
   "waiting",
   "delete",
+  "rate-star",
+  "rate-star-off",
   "dvudu-image",
   "file-error"
 ];
@@ -82,6 +84,10 @@ const GetIconSVG = ({ name, className, ...rest }) => {
       return <Delete className={className} {...rest} />
     case "dvudu-image":
       return <EmptyImage className={className} {...rest} />
+    case "rate-star":
+      return <Star className={className} {...rest} />
+    case "rate-star-off":
+      return <StarOff className={className} {...rest} />
     default:
       return <Temp />
   }
@@ -328,6 +334,23 @@ const EmptyImage = ({ className, ...rest }) =>
       </g>
     </svg>
   </div>
+
+const Star = ({ className, ...rest }) =>
+  <div className={className} {...rest}>
+    <svg width="43" height="41" viewBox="0 0 43 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.484 1.62512C20.8996 0.7913 22.1004 0.7913 22.516 1.62512L27.8959 12.419C28.0609 12.7502 28.3799 12.9797 28.7489 13.0327L40.7787 14.7636C41.708 14.8973 42.0791 16.0282 41.4066 16.6772L32.7018 25.0791C32.4348 25.3368 32.3129 25.7082 32.3759 26.0721L34.4309 37.9358C34.5896 38.8522 33.6182 39.5511 32.787 39.1184L22.0272 33.5171C21.6972 33.3453 21.3028 33.3453 20.9728 33.5171L10.213 39.1184C9.38183 39.5511 8.41038 38.8522 8.56912 37.9358L10.6241 26.0721C10.6871 25.7082 10.5652 25.3368 10.2982 25.0791L1.59338 16.6772C0.920943 16.0282 1.292 14.8973 2.2213 14.7636L14.2511 13.0327C14.6201 12.9797 14.9391 12.7502 15.1041 12.419L20.484 1.62512Z" fill="#1A73EB" stroke="#1A73EB" strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+
+  </div>
+
+const StarOff = ({ className, ...rest }) =>
+  <div className={className} {...rest}>
+    <svg width="44" height="41" viewBox="0 0 44 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.984 1.62512C21.3996 0.7913 22.6004 0.7913 23.016 1.62512L28.3959 12.419C28.5609 12.7502 28.8799 12.9797 29.2489 13.0327L41.2787 14.7636C42.208 14.8973 42.5791 16.0282 41.9066 16.6772L33.2018 25.0791C32.9348 25.3368 32.8129 25.7082 32.8759 26.0721L34.9309 37.9358C35.0896 38.8522 34.1182 39.5511 33.287 39.1184L22.5272 33.5171C22.1972 33.3453 21.8028 33.3453 21.4728 33.5171L10.713 39.1184C9.88183 39.5511 8.91038 38.8522 9.06912 37.9358L11.1241 26.0721C11.1871 25.7082 11.0652 25.3368 10.7982 25.0791L2.09338 16.6772C1.42094 16.0282 1.792 14.8973 2.7213 14.7636L14.7511 13.0327C15.1201 12.9797 15.4391 12.7502 15.6041 12.419L20.984 1.62512Z"  fill="#DEE8F5" stroke="#4491FF" strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+
+  </div>
+
 
 const Temp = ({ className, ...rest }) =>
   <div className={className} {...rest}>
