@@ -79,7 +79,6 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                             <div className="lg:w-5/12 xl:w-5/12 ">
                                 <div className="left-side-auth lg:mt-0 h-full">
                                     <div className="flex h-full">
-
                                         <Swiper
                                             modules={[Autoplay, Navigation, EffectFade]}
                                             spaceBetween={0}
@@ -90,6 +89,8 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                             loop={true}
                                             autoplay={{ delay: 4000 }}
                                             speed={1500}
+
+                                            
                                         >
                                             {imageSources.map((source, index) => (
                                                 <SwiperSlide key={index}>
@@ -109,9 +110,8 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>
-
                                     </div>
-                                    <div className="front-part absolute bottom-10">
+                                    <div className="front-part absolute bottom-10 h-10">
                                         <div className="footer">
                                             <div className="dots flex px-16">
                                                 {imageSources.map((source, index) => (

@@ -41,11 +41,11 @@ function Info({
             {occupation &&
                 <div className="info-container flex items-center justify-center">
                     <p className="whitespace-nowrap" >{occupation}</p>
-                </div>}
+                </div>
+            }
             <div className='info-container flex justify-between items-center gap-1 w-auto'>
                 <p>{rates}</p>
                 <Icon className='text-primary w-4' name={'star'} />
-
             </div>
         </div>
         <div className='flex justify-center pt-7 items-center'>

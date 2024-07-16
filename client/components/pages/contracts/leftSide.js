@@ -8,6 +8,7 @@ import { getAllContracts } from "../../../redux/action/apis/contracts/getall";
 import EmptyComponent from "./emptyComponent";
 import { toggleContractData } from "../../../redux/action/contractDetails";
 import DuvduLoading from "../../elements/duvduLoading.js";
+import Rating from "../../popsup/rating.js";
 
 const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, RightSidehandleToggleClick }) => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -101,15 +102,12 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                         {ongoing.map((data, index) => (
                             <Ongoing2 key={index} data={data} onClick={() => toggleContractData(data)} />
                         ))}
-
-                        {/* <Ongoing2 /> */}
                     </section>
                 }
             </section> : <Empty />
-
-
     return (
         <>
+
             <div className='h-auto lg:h-body overflow-y-scroll'>
                 <div className='flex flex-col h-full mt-24 lg:mt-0'>
                     <section className='flex left-0 lg:hidden gap-3 mt-6 mb-2 fixed w-full py-4 top-16 p-0 z-[5] px-4'>
@@ -147,7 +145,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                         (activeIndex === 0 ? <Clients /> : <Creatives />)
                     }
                     <div className="flex flex-col justify-center items-center lg:h-body">
-                    <DuvduLoading loadingIn = {"getAllContracts"} />
+                        <DuvduLoading loadingIn={"getAllContracts"} />
                     </div>
                 </div>
             </div>
