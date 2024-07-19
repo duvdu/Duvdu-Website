@@ -39,7 +39,7 @@ const Projects = ({
     }, [delete_respond, boardId, swap_respond]);
 
     const getPaginatedProjects = allprojects;
-
+    console.log(getPaginatedProjects)
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -58,10 +58,12 @@ const Projects = ({
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
-                                item.project.studioName ? (
-                                    <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio-booking" enbablelove={true}/>
-                                ) : (
-                                    <ProjectCard key={`project-${i}`} cardData={item.project}  enbablelove={true}/>
+                                item?.project && (
+                                    item?.project?.studioName ? (
+                                        <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio-booking" enbablelove={true}/>
+                                    ) : (
+                                        <ProjectCard key={`project-${i}`} cardData={item.project}  enbablelove={true}/>
+                                    )
                                 )
                             ))}
                         </div>
