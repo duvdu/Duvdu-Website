@@ -8,6 +8,7 @@ import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
 import { useRouter } from 'next/router';
 import CopyRightCard from '../../components/pages/copy-writeer/copyRightCard';
 import { OpenPopUp } from '../../util/util';
+import EmptyComponent from './../../components/pages/contracts/emptyComponent';
 
 
 
