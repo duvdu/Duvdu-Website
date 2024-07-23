@@ -207,7 +207,7 @@ export const convertDuration = (durationInMilliseconds) => {
 
 export const isVideo = (coverUrl) => {
   const videoExtensions = ['.mp4', '.mov', '.avi', '.wmv', '.flv'];
-  const urlExtension = coverUrl.split('.').pop().toLowerCase();
+  const urlExtension = coverUrl?.split('.').pop().toLowerCase();
   return videoExtensions.includes(`.${urlExtension}`);
 };
 

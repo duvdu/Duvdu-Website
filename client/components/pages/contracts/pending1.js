@@ -90,6 +90,8 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
             return "producer"
         else if (data?.ref.includes("project"))
             return "project"
+        else if (data?.ref.includes("team"))
+            return "team"
     }
 
     return (

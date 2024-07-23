@@ -32,7 +32,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
     if(enbablelove)
       setFav(true);
     if(cardData?.isFavourite)
-    setFav(cardData.isFavourite);
+    setFav(cardData?.isFavourite);
   }, [cardData?.isFavourite , enbablelove]);
 
 
@@ -50,7 +50,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }, [videoRef.current?.duration == NaN]);
 
   const loveToggleAction = () => {
-    SwapProjectToFav({ projectId: cardData._id, action: fav ? "remove" : "add" })
+    SwapProjectToFav({ projectId: cardData?._id, action: fav ? "remove" : "add" })
   };
 
   const timeUpdate = () => {
@@ -81,12 +81,12 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
 
 
   // useEffect(() => {
-  //   if (cardData._id) {
-  //     setLove(isFav(cardData._id, getBoards_respond))
+  //   if (cardData?._id) {
+  //     setLove(isFav(cardData?._id, getBoards_respond))
   //   }
-  // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
+  // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
 
-  const isVideoCover = isVideo(cardData.cover)
+  const isVideoCover = isVideo(cardData?.cover)
   return (
     <>
       <div className={`select-none project-card ${className}`} onClick={() => { }} >
@@ -96,9 +96,9 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
           className='project'>
           <>
             {
-              // cardData.cover.length == 1 &&
+              // cardData?.cover.length == 1 &&
               isVideoCover ? ( // Check if source is a video
-                <Link href={`/${type}/${cardData._id}`}>
+                <Link href={`/${type}/${cardData?._id}`}>
                   <a>
                     <video
                       className='cardvideo'
@@ -106,7 +106,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
                       onTimeUpdate={timeUpdate}
                       loop
                     >
-                      <source src={cardData.cover} type='video/mp4' />
+                      <source src={cardData?.cover} type='video/mp4' />
                     </video>
                     <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
                       <span className="text-white">
@@ -116,17 +116,17 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
                   </a>
                 </Link>
               ) : (
-                <Link href={`/${type}/${cardData._id}`}>
+                <Link href={`/${type}/${cardData?._id}`}>
                   <a>
-                    <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                    <img className='cardimg cursor-pointer' src={cardData?.cover} alt="project" />
                   </a>
                 </Link>
               )
             }
             {
               false &&
-              cardData.backgroundImages.length > 1 &&
-              <Link href={`/${type}/${cardData._id}`}>
+              cardData?.backgroundImages.length > 1 &&
+              <Link href={`/${type}/${cardData?._id}`}>
                 <Swiper
                   dir='ltr'
                   className='cardimg'
@@ -139,7 +139,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
                     clickable: true,
                   }}
                 >
-                  {cardData.backgroundImages.map((source, index) => (
+                  {cardData?.backgroundImages.map((source, index) => (
                     <SwiperSlide key={index}>
                       <img key={index} src={source} className='cardimg' alt="project" />
                     </SwiperSlide>
@@ -162,14 +162,14 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
         </div>
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <Link href={`/creative/${cardData.user.username}`} >
+            <Link href={`/creative/${cardData?.user.username}`} >
               <div className='cursor-pointer'>
-                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
+                <img src={cardData?.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
               </div>
             </Link>
-            <Link href={`/creative/${cardData.user.username}`}>
+            <Link href={`/creative/${cardData?.user.username}`}>
               <div className='cursor-pointer' >
-                <span className='text-sm font-semibold'>{cardData.user.name || 'NONE'}</span>
+                <span className='text-sm font-semibold'>{cardData?.user.name || 'NONE'}</span>
               </div>
             </Link>
           </div>
@@ -178,13 +178,13 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             <Icon className='text-primary size-4' name={'star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData.name || cardData.studioName}</p>
-        {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData?.name || cardData?.studioName}</p>
+        {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
           <>
-            <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
-            {(cardData.projectScale?.unit) &&
+            <span className='text-xl font-bold'>{cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit}$</span>
+            {(cardData?.projectScale?.unit) &&
               <span className='text-xl ml-2 opacity-60'>
-                per {cardData.projectScale?.unit}
+                per {cardData?.projectScale?.unit}
               </span>}
           </>
         }
