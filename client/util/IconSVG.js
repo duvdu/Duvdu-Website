@@ -85,7 +85,7 @@ const GetIconSVG = ({ name, className, ...rest }) => {
     case "dvudu-image":
       return <EmptyImage className={className} {...rest} />
     case "rate-star":
-      return <Star className={className} {...rest} />
+      return <StarRate className={className} {...rest} />
     case "rate-star-off":
       return <StarOff className={className} {...rest} />
     default:
@@ -335,12 +335,11 @@ const EmptyImage = ({ className, ...rest }) =>
     </svg>
   </div>
 
-const Star = ({ className, ...rest }) =>
+const StarRate = ({ className, ...rest }) =>
   <div className={className} {...rest}>
     <svg width="43" height="41" viewBox="0 0 43 41" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M20.484 1.62512C20.8996 0.7913 22.1004 0.7913 22.516 1.62512L27.8959 12.419C28.0609 12.7502 28.3799 12.9797 28.7489 13.0327L40.7787 14.7636C41.708 14.8973 42.0791 16.0282 41.4066 16.6772L32.7018 25.0791C32.4348 25.3368 32.3129 25.7082 32.3759 26.0721L34.4309 37.9358C34.5896 38.8522 33.6182 39.5511 32.787 39.1184L22.0272 33.5171C21.6972 33.3453 21.3028 33.3453 20.9728 33.5171L10.213 39.1184C9.38183 39.5511 8.41038 38.8522 8.56912 37.9358L10.6241 26.0721C10.6871 25.7082 10.5652 25.3368 10.2982 25.0791L1.59338 16.6772C0.920943 16.0282 1.292 14.8973 2.2213 14.7636L14.2511 13.0327C14.6201 12.9797 14.9391 12.7502 15.1041 12.419L20.484 1.62512Z" fill="#1A73EB" stroke="#1A73EB" strokeWidth="2" strokeLinejoin="round" />
     </svg>
-
   </div>
 
 const StarOff = ({ className, ...rest }) =>

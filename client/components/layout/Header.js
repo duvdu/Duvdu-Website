@@ -35,6 +35,10 @@ const Header = ({
 }) => {
 
     const { i18n, t } = useTranslation();
+    
+    const [width, setWidth] = useState(0);
+
+    
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
     }
@@ -113,13 +117,15 @@ const Header = ({
 
     }, []);
 
+    
     const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
     const totalUnwatchedNotification = api?.GetNotifications?.data?.filter(message => !message.watched).length;
     const totalNews = totalUnreadMessages + totalUnwatchedNotification
 
+
     return (
         <>
-            
+
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-10`} />
             {
@@ -127,7 +133,7 @@ const Header = ({
                 <header className={`bg-DS_white w-full z-10 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
                     <div className="py-3 hidden lg:block">
                         <div className="container">
-                            <div className="header-wrap">
+                            <div className="header-wrap" >
                                 <div className="logo logo-width-1 mr-12 cursor-pointer">
                                     <Link href="/">
                                         <img
@@ -142,14 +148,14 @@ const Header = ({
                                         <div className="header-tabs">
 
                                             <div className="hidden">
-                                            <Link href="/dashboard">
-                                                <div className="header-link">
-                                                    <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
-                                                    <span className="text-nowrap">
-                                                        {t('dashboard')}
-                                                    </span>
-                                                </div>
-                                            </Link>
+                                                <Link href="/dashboard">
+                                                    <div className="header-link">
+                                                        <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                                        <span className="text-nowrap">
+                                                            {t('dashboard')}
+                                                        </span>
+                                                    </div>
+                                                </Link>
 
                                             </div>
 
@@ -162,14 +168,14 @@ const Header = ({
                                                 </div>
                                             </Link>
                                             <div className="hidden">
-                                            <Link href="/teams" className="capitalize">
-                                                <div className="header-link whitespace-nowrap">
-                                                    <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
-                                                    <span>
-                                                        {t('team projects')}
-                                                    </span>
-                                                </div>
-                                            </Link>
+                                                <Link href="/teams" className="capitalize">
+                                                    <div className="header-link whitespace-nowrap">
+                                                        <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
+                                                        <span>
+                                                            {t('team projects')}
+                                                        </span>
+                                                    </div>
+                                                </Link>
                                             </div>
                                         </div>
                                     }

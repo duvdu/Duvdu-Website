@@ -5,6 +5,7 @@ module.exports = {
     './pages/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
+    
     extend: {
       fontSize: {
 
@@ -33,6 +34,9 @@ module.exports = {
         padding: '1.5rem',
       },
     },
+    fontFamily: {
+        trap: ['Trap', 'sans-serif'],
+      },
     container: {
       screens: {
         '2xl': '1328px'

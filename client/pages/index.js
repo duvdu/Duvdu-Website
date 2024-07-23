@@ -8,6 +8,8 @@ import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper
 import CustomSwiper from "../components/elements/customSwiper";
 import Link from "next/link";
 import { gsap } from 'gsap';
+import SectionProjects from "../components/pages/home/sectionProjects";
+import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 
 const Home = ({
     HomeTreny,
@@ -19,15 +21,20 @@ const Home = ({
     popularSub,
     popularSub_respond,
 
+    GetProjects,
+    projects,
+
     categories
 }) => {
-    const [swiper, setSwiper] = useState(null);
 
     useEffect(() => {
-        HomeTreny()
-        HomeDiscover()
-        popularSub()
+        // HomeTreny()
+        // HomeDiscover()
+        // popularSub()
+        GetProjects({limit:99})
     }, [])
+    const projectData = Array(30).fill(projects?.data).flat();
+    
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
     const list = homeTreny_respond?.data || [];
@@ -52,15 +59,14 @@ const Home = ({
                 <section className="container w-full">
                     <div className="my-24 mx-auto w-min">
                         <h1 className="text-center my-4">
-                            <span className="text-[#263257] font-black text-4xl lg:text-8xl capitalize whitespace-nowrap">explore <span className="pt-6 lg:pt-[61px] px-[10px] pb-0" style={TheBeststyle}>the best</span> of </span>
-                            <div className="relative h-[60px] lg:h-[120px]">
+                            <span className="font-black text-3xl lg:text-8xl capitalize whitespace-nowrap trap">explore<span className="pt-5 lg:pt-[69px] px-[10px] pb-0 trap" style={TheBeststyle}>the best</span>of</span>
+                            <div className="relative h-[50px] lg:h-[120px]">
                                 <div className="absolute h-full w-full overflow-hidden">
-
                                     <div ref={wordsRef} className="slide-in">
                                         {
                                             words?.map((i) =>
-                                                <div className="h-[60px] lg:h-[120px] flex flex-col justify-center items-center my-2">
-                                                    <p className="text-[#1A73EB] font-black text-4xl lg:text-8xl h-full">{i}</p>
+                                                <div className="h-[50px] lg:h-[120px] flex flex-col justify-center items-center my-2">
+                                                    <p className="text-[#1A73EB] font-black text-3xl lg:text-8xl h-full trap">{i}</p>
                                                 </div>
                                             )
                                         }
@@ -68,43 +74,60 @@ const Home = ({
                                 </div>
                             </div>
                         </h1>
-                        <p className="text-xs lg:text-xl font-bold text-[#263257] text-center lg:mx-20">
+                        <p className="text-xs lg:text-xl font-bold text-[#263257] text-center lg:mx-20 trap">
                             consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.
                         </p>
                     </div>
                     <div className="mx-auto">
-                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-4"> trendy categories </h2>
+                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> trendy categories </h2>
+                        <Swiper
+                            modules={[Navigation]}
+                            spaceBetween={1}
+                            breakpoints={{
+                                320: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 10,
+                                },
+                                640: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                                1024: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 30,
+                                },
+                            }}
 
-                        <div className="flex overflow-auto gap-3" >
+                        >
                             {homeTrenyList.map((data, index) => (
-                                <div
-                                    key={index}
-                                    className="bg-black min-w-[347.29px] lg:min-w-[430px] mx-auto aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-11 overflow-hidden"
-                                    style={{ backgroundImage: `url(${data.image})` }}
-                                >
-                                    <span className="text-white text-3xl font-semibold capitalize">
-                                        {data.title || 'Empty Title'}
-                                    </span>
-                                    <span className="text-white opacity-50 font-semibold text-lg text-center">
-                                        {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
-                                    </span>
-                                    <Link href={data.cycle ? `/${data.cycle}` : ''} >
-                                        <a className="text-lg font-semibold text-primary bg-white px-7 py-3 rounded-full">
-                                            {data.title ? 'View More' : 'Add Item'}
-                                        </a>
-                                    </Link>
-                                </div>
+                                <SwiperSlide key={index}>
+                                    <div
+                                        className="bg-black  mx-auto aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 lg:p-11 overflow-hidden"
+                                        style={{ backgroundImage: `url(${data.image})` }}
+                                    >
+                                        <span className="text-white text-xl lg:text-3xl font-semibold capitalize">
+                                            {data.title || 'Empty Title'}
+                                        </span>
+                                        <span className="text-white opacity-50 font-semibold text-xs lg:text-lg text-center">
+                                            {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
+                                        </span>
+                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                            <a className="text-xs font-semibold text-primary bg-white px-5 lg:px-7 py-2 lg:py-3 rounded-full">
+                                                {data.title ? 'View More' : 'Add Item'}
+                                            </a>
+                                        </Link>
+                                    </div>
+                                </SwiperSlide>
                             ))}
-
-                        </div>
+                        </Swiper>
                     </div>
 
                 </section>
-                <section className="my-12 py-12 bg-[#F2F2F3]">
+                <section className="my-12 py-8 bg-[#F2F2F3]">
                     <div className="container w-full">
                         <section className="mx-auto">
                             <h2 className="text-start lg:text-center text-2xl font-semibold opacity-60 capitalize mb-8"> discover tags </h2>
-                            <div className="flex overflow-auto gap-3">
+                            <div className="flex overflow-auto gap-2 lg:gap-3">
                                 {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
                                     <Link href={data.cycle ? `/${data.cycle}` : ''} >
                                         <a key={index} href={data.link || "#"}>
@@ -125,18 +148,18 @@ const Home = ({
                     </div>
                 </section>
 
-                <section className="my-12 py-12">
-                    <div className="container w-full">
+                <section className="my-12 py-8">
+                    <div className="container w-full pr-0">
                         <div className="mx-auto">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> top categories </h2>
-                            <div className="flex overflow-auto gap-3">
+                            <div className="flex overflow-auto gap-2 lg:gap-3">
                                 {categories?.map((data, index) => (
                                     <Link href={data.cycle ? `/${data.cycle}` : ''} >
                                         <div
-                                            className={`bg-black mx-auto h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
+                                            className={`bg-black h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
                                             style={{ backgroundImage: `url(${data.image})` }}
                                         >
-                                            <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 py-2 bg-black bg-opacity-50">
+                                            <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
                                                 150 creatives
                                             </div>
                                             <span className="text-white text-[14px] lg:text-3xl font-semibold capitalize text-center w-full">
@@ -147,12 +170,11 @@ const Home = ({
                                 ))}
                             </div>
 
-
                         </div>
                     </div>
                 </section>
 
-                <section className="my-12 py-12 bg-[#F2F2F3]">
+                <section className="my-12 py-8 bg-[#F2F2F3]">
                     <div className="container">
                         <div className="mx-auto py-12">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
@@ -217,6 +239,10 @@ const Home = ({
                         </div>
                     </div>
                 </section>
+                <section className="my-12 py-8">
+                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> explore recommended projects</h2>
+                    <SectionProjects projects={projectData} />
+                </section>
             </Layout>
 
         </>
@@ -262,12 +288,14 @@ const mapStateToProps = (state) => ({
     homeTreny_respond: state.api.HomeTreny,
     homeDiscover_respond: state.api.HomeDiscover,
     popularSub_respond: state.api.popularSub,
+    projects: state.api.GetProjects,
 
 });
 
 const mapDispatchToProps = {
     HomeTreny,
     HomeDiscover,
+    GetProjects,
     popularSub
 };
 

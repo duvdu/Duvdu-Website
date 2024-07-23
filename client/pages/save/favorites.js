@@ -61,7 +61,7 @@ const Projects = ({
                                 item.project.studioName ? (
                                     <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio-booking" enbablelove={true}/>
                                 ) : (
-                                    <ProjectCard key={`project-${i}`} cardData={item.project}  enbablelove={true}/>
+                                    <ProjectCard key={`project-${i}`} cardData={item.project} enbablelove={true}/>
                                 )
                             ))}
                         </div>

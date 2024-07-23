@@ -18,9 +18,11 @@
     border-radius: 25px;
     aspect-ratio: calc(313/225);
     overflow: hidden;
-    /* height: 225px; */
   }
-  
+
+  .home_project{
+    height: 100%
+  }  
   .project-card .sound,
   .project-card .love {
     position: absolute;

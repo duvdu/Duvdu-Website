@@ -193,7 +193,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
 
     const Auth = () =>
-        <div className="flex mx-5 gap-3 my-8 max-w-[470px] mx-auto">
+        <div className="flex px-5 gap-3 my-8 max-w-[470px] mx-auto">
             <Link href="/login">
                 <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold"> log-in </div>
             </Link>
