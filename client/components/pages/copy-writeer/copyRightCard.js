@@ -39,7 +39,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
         <div className='info-container flex justify-between items-center gap-2'>
           <span>{cardData?.user?.rate?.ratersCounter || 0}</span>
           <div className='w-5'>
-            <Icon className='text-primary' name={'rate-star'} />
+            <Icon className='text-primary' name={'star'} />
           </div>
         </div>
       </div>

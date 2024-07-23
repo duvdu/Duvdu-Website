@@ -45,6 +45,17 @@ TABLE CONTENT
   font-family: 'Cairo';
   src: url('https://fonts.googleapis.com/css2?family=Cairo&display=swap') format('woff2');
 }
+/* src/styles/fonts.css */
+@font-face {
+  font-family: 'trap';
+  src: url('../fonts/trap/Trap-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.trap {
+  font-family: 'trap', 'Cairo', sans-serif;
+}
 
 * {
   font-family: "Urbanist", 'Cairo', sans-serif;

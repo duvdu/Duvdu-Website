@@ -32,7 +32,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
           <div className='info-container flex items-center gap-1'>
             <span>{cardData.user.rate.ratersCounter}</span>
             <div className='w-5'>
-              <Icon className='text-primary' name={'rate-star'} />
+              <Icon className='text-primary' name={'star'} />
             </div>
           </div>
         </div>
