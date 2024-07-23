@@ -6,11 +6,17 @@ import TopProjects from '../components/pages/dashboard/topProjects';
 import ActivityCard from '../components/pages/dashboard/ActivityCard';
 import Icon from '../components/Icons';
 
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import LineChart from '../components/pages/dashboard/lineChart';
+import { getUserAnalysis } from '../redux/action/apis/dashboard/getUserAnalysis';
+import { connect } from "react-redux";
 
-const Dashboard = () => {
-
+const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
+    console.log(user_analysis)
+    useEffect(()=>{
+        getUserAnalysis()
+    },[])
+    const data = user_analysis?.data
     const isUp = true
     const badge = 63;
     const viewRate = 2.6
@@ -142,7 +148,7 @@ const Dashboard = () => {
                                 <ActivityCard activity={activity} />
                             </div>
                         </div>
-                        <TopProjects projects={projects} />
+                        <TopProjects projects={data?.topProjectViews} />
                     </div>
                 </div>
             </Layout>
@@ -150,4 +156,13 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+    user_analysis: state.api.getUserAnalysis,
+    api: state.api
+});
+
+const mapDidpatchToProps = {
+    getUserAnalysis,
+    
+};
+export default connect(mapStateToProps, mapDidpatchToProps)(Dashboard);
