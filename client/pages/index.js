@@ -28,13 +28,13 @@ const Home = ({
 }) => {
 
     useEffect(() => {
-        // HomeTreny()
-        // HomeDiscover()
-        // popularSub()
-        GetProjects({limit:99})
+        HomeTreny()
+        HomeDiscover()
+        popularSub()
+        GetProjects({ limit: 99 })
     }, [])
     const projectData = Array(30).fill(projects?.data).flat();
-    
+
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
     const list = homeTreny_respond?.data || [];
@@ -240,8 +240,10 @@ const Home = ({
                     </div>
                 </section>
                 <section className="my-12 py-8">
-                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> explore recommended projects</h2>
-                    <SectionProjects projects={projectData} />
+                    <div className='container'>
+                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> explore recommended projects</h2>
+                        <SectionProjects projects={projectData} />
+                    </div>
                 </section>
             </Layout>
 

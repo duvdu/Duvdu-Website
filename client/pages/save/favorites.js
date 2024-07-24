@@ -39,7 +39,6 @@ const Projects = ({
     }, [delete_respond, boardId, swap_respond]);
 
     const getPaginatedProjects = allprojects;
-    console.log(getPaginatedProjects)
     return (
         <>
             <Layout isbodyWhite={true}>

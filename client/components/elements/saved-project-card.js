@@ -88,7 +88,7 @@ const ProjectCard = ({
   return (
     <>
       <DeleteBoard onClick={()=> DeleteProjectFromBoard(boardId, ProjectId)} id={boardId} />
-      <div className={`select-none project-card  ${className}`} onClick={() => { }} >
+      <div className={`select-none project-card ${className}`} onClick={() => { }} >
         <div
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
@@ -156,7 +156,7 @@ const ProjectCard = ({
           </div>
           {
             isVideoCover &&
-            <div onClick={handleSoundIconClick} className="blur-container sound z-[1]">
+            <div onClick={handleSoundIconClick} className="blur-container sound left-[15px] z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
           }
