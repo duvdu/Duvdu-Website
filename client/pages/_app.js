@@ -37,7 +37,6 @@ function MyApp({ Component, pageProps }) {
         const messaging = getMessaging(firebaseApp);
 
         const unsubscribe = onMessage(messaging, (payload) => {
-            console.log('Message received. ', payload);
             setPayload(payload);
             setTimeout(()=>{
                 setPayload(null);
