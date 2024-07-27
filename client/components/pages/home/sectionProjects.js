@@ -27,7 +27,7 @@ function SectionProjects({ projects }) {
         <div className='container'>
             <div className="grid minmax-280 gap-5">
                 {projects?.map((item, i) => (
-                    <React.Fragment key={item.id || i}>
+                    <React.Fragment key={item?.id || i}>
                         {i === -1 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                         {i === -1 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                         {i === -1 && <RelatedCategories className="hidden xl:block col-span-full" />}
