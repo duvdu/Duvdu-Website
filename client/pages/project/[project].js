@@ -16,6 +16,7 @@ import Details from "../../components/pages/stduiosAndProject/details";
 import Reviews from "../../components/pages/stduiosAndProject/review";
 import Recommended from "../../components/pages/stduiosAndProject/recommend";
 import Share from "../../components/popsup/Share";
+import { OpenPopUp } from "../../util/util";
 
 
 const Projects = ({
@@ -24,6 +25,7 @@ const Projects = ({
     GetProject,
     project_respond,
     chat_respond,
+    auth,
     user
 }) => {
 
@@ -49,8 +51,11 @@ const Projects = ({
     }, []);
 
     const toggleDrawer = () => {
+        if(auth.login)
         setIsOpen(!isOpen);
+        else OpenPopUp("registration-required")
     };
+    
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
@@ -99,6 +104,7 @@ const mapStateToProps = (state) => ({
     projects_respond: state.api.GetProjects,
     project_respond: state.api.GetProject,
     user: state.user.profile,
+    auth: state.auth,
 });
 
 const mapDidpatchToProps = {

@@ -1,48 +1,68 @@
 import Link from "next/link";
 import { isVideo } from "../../../util/util";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ProjectItem from "./projectItem";
-
-function isInSequence(i) {
-    let current = 6;
-    let add7 = true;
-    
-    while (current <= i) {
-        if (current === i) {
-            return true;
-        }
-        if (add7) {
-            current += 7;
-        } else {
-            current += 11;
-        }
-        add7 = !add7;
-    }
-    
-    return false;
-}
+import SmallProjectItem from "./smallProjectItem";
 
 function SectionProjects({ projects }) {
+    const [windowWidth, setWindowWidth] = useState();
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+        handleResize()
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    function isInSequence(i) {
+        let current, stepSmall, stepLarge;
+
+        if (windowWidth < 959) {
+            current = 2;
+            stepSmall = 3;
+            stepLarge = 0;
+        } else if (windowWidth <= 1267) {
+            current = 4;
+            stepSmall = 5;
+            stepLarge = 7;
+        } else {
+            current = 6;
+            stepSmall = 7;
+            stepLarge = 11;
+        }
+
+        let addLarge = true;
+
+        while (current <= i) {
+            if (current === i) return true;
+            current += addLarge ? stepSmall : stepLarge;
+            addLarge = !addLarge;
+        }
+
+        return false;
+    }
+
     return projects?.length > 0 && (
-        <div className='container'>
-            <div className="grid minmax-280 gap-5">
+        <div>
+            <div className="sm:hidden grid minmax-150 gap-3">
                 {projects?.map((item, i) => (
-                    <React.Fragment key={item?.id || i}>
-                        {i === -1 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
-                        {i === -1 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
-                        {i === -1 && <RelatedCategories className="hidden xl:block col-span-full" />}
-                        {/* ProjectCard */}
-                        <ProjectItem cardData={item} className={isInSequence(i) ? 'col-span-2 row-span-2 ' : ''} >
-                            {i}
-                        </ProjectItem>
-                    </React.Fragment>
+                    item &&
+                    <SmallProjectItem key={i} cardData={item} className={i % 3 === 0 ? 'col-span-2 row-span-2' : ''} isbig={i % 3 === 0} />
+                ))}
+            </div>
+            <div className="hidden sm:grid minmax-280 gap-4">
+                {projects?.map((item, i) => (
+                    item &&
+                    <ProjectItem key={i} cardData={item} className={isInSequence(i) ? 'col-span-2 row-span-2' : ''} />
                 ))}
             </div>
         </div>
     );
 }
-
-
-
 
 export default SectionProjects;

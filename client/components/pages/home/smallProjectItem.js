@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 
-const ProjectItem = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false, isbig }) => {
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
     const [Duration, setDuration] = useState(0);
@@ -32,7 +32,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
         if (enbablelove)
             setFav(true);
         if (cardData?.isFavourite)
-            setFav(cardData?.isFavourite);
+            setFav(cardData.isFavourite);
     }, [cardData?.isFavourite, enbablelove]);
 
 
@@ -50,7 +50,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
     }, [videoRef.current?.duration == NaN]);
 
     const loveToggleAction = () => {
-        SwapProjectToFav({ projectId: cardData?._id, action: fav ? "remove" : "add" })
+        SwapProjectToFav({ projectId: cardData._id, action: fav ? "remove" : "add" })
     };
 
     const timeUpdate = () => {
@@ -81,24 +81,24 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
 
 
     // useEffect(() => {
-    //   if (cardData?._id) {
-    //     setLove(isFav(cardData?._id, getBoards_respond))
+    //   if (cardData._id) {
+    //     setLove(isFav(cardData._id, getBoards_respond))
     //   }
-    // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
+    // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
 
-    const isVideoCover = isVideo(cardData?.cover)
+    const isVideoCover = isVideo(cardData.cover)
     return (
         <>
             <div className={`select-none project-card flex flex-col ${className}`} onClick={() => { }} >
                 <div
                     onMouseEnter={handleHover}
                     onMouseLeave={handleLeave}
-                    className='project home_project'>
+                    className={(isbig ? 'home_project_big' : 'home_project_small') + ' home_project'}>
                     <>
                         {
-                            // cardData?.cover.length == 1 &&
+                            // cardData.cover.length == 1 &&
                             isVideoCover ? ( // Check if source is a video
-                                <Link href={`/${type}/${cardData?._id}`}>
+                                <Link href={`/${type}/${cardData._id}`}>
                                     <a>
                                         <video
                                             className='cardvideo h-full'
@@ -106,7 +106,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                                             onTimeUpdate={timeUpdate}
                                             loop
                                         >
-                                            <source src={cardData?.cover} type='video/mp4' />
+                                            <source src={cardData.cover} type='video/mp4' />
                                         </video>
                                         <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
                                             <span className="text-white">
@@ -116,17 +116,17 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                                     </a>
                                 </Link>
                             ) : (
-                                <Link href={`/${type}/${cardData?._id}`}>
+                                <Link href={`/${type}/${cardData._id}`}>
                                     <a>
-                                        <img className='cardimg cursor-pointer' src={cardData?.cover} alt="project" />
+                                        <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
                                     </a>
                                 </Link>
                             )
                         }
                         {
                             false &&
-                            cardData?.backgroundImages.length > 1 &&
-                            <Link href={`/${type}/${cardData?._id}`}>
+                            cardData.backgroundImages.length > 1 &&
+                            <Link href={`/${type}/${cardData._id}`}>
                                 <Swiper
                                     dir='ltr'
                                     className='cardimg'
@@ -139,7 +139,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                                         clickable: true,
                                     }}
                                 >
-                                    {cardData?.backgroundImages.map((source, index) => (
+                                    {cardData.backgroundImages.map((source, index) => (
                                         <SwiperSlide key={index}>
                                             <img key={index} src={source} className='cardimg' alt="project" />
                                         </SwiperSlide>
@@ -148,48 +148,25 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                             </Link>
                         }
                     </>
-                    {islogin &&
-                        <div onClick={loveToggleAction} className="blur-container love z-[1]">
-                            <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
-                        </div>
-                    }
+
+                    <div className='absolute top-[15px] left-4 flex items-center gap-3 z-[1]'>
+                        <Link href={`/creative/${cardData.user.username}`} >
+                            <div className='cursor-pointer'>
+                                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-8 rounded-full object-cover object-top' />
+                            </div>
+                        </Link>
+                    </div>
+                    <div className='absolute bottom-[15px] left-1/2 -translate-x-1/2 flex items-center gap-3 z-[1]'>
+                        <h2 className='font-medium text-xl text-white text-center'>
+                            {cardData.name}
+                        </h2>
+                    </div>
                     {
                         isVideoCover &&
-                        <div onClick={handleSoundIconClick} className="blur-container sound left-[15px] z-[1]">
-                            <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
+                        <div onClick={handleSoundIconClick} className="blur-container small sound z-[1]">
+                            <Icon className={`cursor-pointer h-3 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
                         </div>
                     }
-                </div>
-                <div className='mt-3 flex justify-between items-center'>
-                    <div className='flex gap-2'>
-                        <div className='flex items-center gap-3'>
-                            <Link href={`/creative/${cardData?.user.username}`} >
-                                <div className='cursor-pointer'>
-                                    <img src={cardData?.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
-                                </div>
-                            </Link>
-                            <Link href={`/creative/${cardData?.user.username}`}>
-                                <div className='cursor-pointer' >
-                                    <span className='text-sm font-semibold'>{cardData?.user.name || 'NONE'}</span>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className='flex items-center gap-1'>
-                            <Icon className='text-primary size-4' name={'star'} />
-                            <span className='text-xs text-primary font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
-                        </div>
-                    </div>
-                    <div>
-                        {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
-                            <>
-                                <span className='text-xs opacity-60 '>from {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} L.E</span>
-                                {(cardData?.projectScale?.unit) &&
-                                    <span className='text-xs ml-1 opacity-60'>
-                                        per {cardData?.projectScale?.unit}
-                                    </span>}
-                            </>
-                        }
-                    </div>
                 </div>
             </div>
         </>
@@ -213,4 +190,4 @@ const mapDispatchToProps = {
     GetProject
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectItem);
+export default connect(mapStateToProps, mapDispatchToProps)(SmallProjectItem);

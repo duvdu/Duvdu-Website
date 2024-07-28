@@ -15,6 +15,11 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
     const handleDropdownSelect = (value) => {
         takeAction({ id: data._id, data: { "action": value } })
     };
+    const NormalState = ({ value }) => (
+        <span className='text-4xl'>
+            {value}
+        </span>
+    );
 
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
     useEffect(() => {

@@ -2,12 +2,15 @@
   grid-template-columns: repeat(auto-fill, minmax(293px, 1fr));
 }
 
+.minmax-150 {
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+}
+
 .minmax-360 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 20px;
 }
-
 
 .page-header {
   font-size: 25px;

@@ -16,6 +16,7 @@ import Details from "../../components/pages/stduiosAndProject/details";
 import Reviews from "../../components/pages/stduiosAndProject/review";
 import Recommended from "../../components/pages/stduiosAndProject/recommend";
 import AddToSaved from "../../components/popsup/addToSaved";
+import { OpenPopUp } from "../../util/util";
 
 const Studio = ({
     GetStudios,
@@ -23,7 +24,8 @@ const Studio = ({
     Getstudio,
     studio_respond,
     chat_respond,
-    user
+    user,
+    auth
 }) => {
 
     const router = useRouter()
@@ -56,8 +58,11 @@ const Studio = ({
 
 
     const toggleDrawer = () => {
+        if(auth.login)
         setIsOpen(!isOpen);
+        else OpenPopUp("registration-required")
     };
+    
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
@@ -109,6 +114,7 @@ const mapStateToProps = (state) => ({
     studios_respond: state.api.GetStudios,
     studio_respond: state.api.Getstudio,
     user: state.user.profile,
+    auth: state.auth,
 });
 
 const mapDidpatchToProps = {

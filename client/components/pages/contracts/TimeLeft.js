@@ -29,17 +29,17 @@ const TimeLeft = ({ data, msgstatus }) => {
         const nowTime = new Date().getTime();
         calculatedTimeLeft = Math.floor((deadlineTime - nowTime) / 1000); // Convert to seconds
     }
-
-    if (calculatedTimeLeft < 0) {
-        return (
-            <span className='text-4xl'>
-                <span className='font-semibold capitalize mt-3'>Time Expired</span>
-                <span className='text-lg opacity-40 mx-2'>
-                    for {msgstatus}
-                </span>
-            </span>
-        );
-    }
+console.log(calculatedTimeLeft)
+    // if (calculatedTimeLeft < 0) {
+    //     return (
+    //         <span className='text-4xl'>
+    //             <span className='font-semibold capitalize mt-3'>Time Expired</span>
+    //             <span className='text-lg opacity-40 mx-2'>
+    //                 for {msgstatus}
+    //             </span>
+    //         </span>
+    //     );
+    // }
 
     const seconds = calculatedTimeLeft % 60;
     const minutes = Math.floor((calculatedTimeLeft % 3600) / 60);

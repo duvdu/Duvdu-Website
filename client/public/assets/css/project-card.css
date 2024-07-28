@@ -9,6 +9,26 @@
         max-width: 100%;
     }
 
+  .home_project_small ,
+  .home_project_big
+  {
+    position: relative;
+    background: lightgray 50% / cover no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 25px;
+    overflow: hidden;
+  }
+
+  .home_project_small{
+    aspect-ratio: .7;
+  }
+
+  .home_project_big{
+    aspect-ratio: calc(313/225);
+  }
+
   .project-card>.project {
     position: relative;
     background: lightgray 50% / cover no-repeat;
@@ -19,6 +39,8 @@
     aspect-ratio: calc(313/225);
     overflow: hidden;
   }
+  
+
 
   .home_project{
     height: 100%
@@ -29,12 +51,16 @@
     width: 44px;
     height: 44px;
     top: 15px;
-  
   }
-  
-  .project-card .sound {
-    left: 15px;
+  .project-card .small,
+  .project-card .small {
+    width: 33px;
+    height: 33px;
+    left: 55px;
+
   }
+
+  
   
   .project-card .love {
     right: 15px;

@@ -28,13 +28,13 @@ const Home = ({
 }) => {
 
     useEffect(() => {
-        // HomeTreny()
-        // HomeDiscover()
-        // popularSub()
-        GetProjects({limit:99})
+        HomeTreny()
+        HomeDiscover()
+        popularSub()
+        GetProjects({ limit: 99 })
     }, [])
     const projectData = Array(30).fill(projects?.data).flat();
-    
+
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
     const list = homeTreny_respond?.data || [];
@@ -124,13 +124,15 @@ const Home = ({
 
                 </section>
                 <section className="my-12 py-8 bg-[#F2F2F3]">
-                    <div className="container w-full">
+                    <div className="w-full">
                         <section className="mx-auto">
-                            <h2 className="text-start lg:text-center text-2xl font-semibold opacity-60 capitalize mb-8"> discover tags </h2>
-                            <div className="flex overflow-auto gap-2 lg:gap-3">
+                            <div className="sm:container">
+                                <h2 className="text-start lg:text-center text-2xl font-semibold opacity-60 capitalize mb-8"> discover tags </h2>
+                            </div>
+                            <div className="flex overflow-auto lg:gap-3">
                                 {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
                                     <Link href={data.cycle ? `/${data.cycle}` : ''} >
-                                        <a key={index} href={data.link || "#"}>
+                                        <a key={index} href={data.link || "#"} className="ml-2">
                                             <div
                                                 className="bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] h-[65px] lg:w-[314px] lg:h-[108px]"
                                                 style={{ backgroundImage: `url(${data.image})` }}
@@ -149,14 +151,14 @@ const Home = ({
                 </section>
 
                 <section className="my-12 py-8">
-                    <div className="container w-full pr-0">
+                    <div className="w-full pr-0">
                         <div className="mx-auto">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> top categories </h2>
-                            <div className="flex overflow-auto gap-2 lg:gap-3">
-                                {categories?.map((data, index) => (
+                            <div className="flex overflow-auto lg:gap-3">
+                                {[...categories,...categories]?.map((data, index) => (
                                     <Link href={data.cycle ? `/${data.cycle}` : ''} >
                                         <div
-                                            className={`bg-black h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
+                                            className={`bg-black ml-2 h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
                                             style={{ backgroundImage: `url(${data.image})` }}
                                         >
                                             <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
@@ -175,7 +177,7 @@ const Home = ({
                 </section>
 
                 <section className="my-12 py-8 bg-[#F2F2F3]">
-                    <div className="container">
+                    <div className="sm:container">
                         <div className="mx-auto py-12">
                             <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
                             <div className="flex gap-8 w-full">
@@ -240,8 +242,10 @@ const Home = ({
                     </div>
                 </section>
                 <section className="my-12 py-8">
-                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> explore recommended projects</h2>
-                    <SectionProjects projects={projectData} />
+                    <div className='container'>
+                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> explore recommended projects</h2>
+                        <SectionProjects projects={projectData} />
+                    </div>
                 </section>
             </Layout>
 
