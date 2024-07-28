@@ -9,8 +9,12 @@ import { useRouter } from 'next/router';
 import { errorConvertedMessage, validatePassword } from "../util/util";
 import { resendCode } from "../redux/action/apis/auth/OTP/resend";
 import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
+import useFcmToken from "../util/hooks/useFcmToken";
 
 function Login({ api, login_respond, login, resendCode, getMyprofile }) {
+  const { fcmToken,notificationPermissionStatus } = useFcmToken();
+  fcmToken && console.log('FCM token:', fcmToken);
+  notificationPermissionStatus && console.log('notificationPermissionStatus:', notificationPermissionStatus);
 
   const [errorMSG, setErrorMSG] = useState(null);
   const router = useRouter();
@@ -76,7 +80,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
       setPasswordError({ isError: true, message: error });
     } else {
       setPasswordError({ isError: false, message: '' });
-      login({ username, password })
+      login({ username, password , notificationToken:fcmToken ?? null })
     }
 
   };
