@@ -16,20 +16,20 @@ const TimeLeft = ({ data, msgstatus }) => {
     const actionOrCreateAt = actionAt || createdAt;
 
     if (!actionOrCreateAt) return null;
-
+console.log(data)
     let calculatedTimeLeft;
     if (status !== 'ongoing') {
         const actionAtTime = new Date(actionOrCreateAt).getTime();
         const nowTime = new Date().getTime();
         const stageExpirationHours = stageExpiration || 0;
         const expirationTime = actionAtTime + stageExpirationHours * 3600000;
-        calculatedTimeLeft = Math.floor((expirationTime - nowTime) / 1000); // Convert to seconds
+        calculatedTimeLeft = Math.floor((Math.abs(expirationTime - nowTime)) / 1000); // Convert to seconds
     } else {
         const deadlineTime = (deadline ? new Date(deadline) : new Date()).getTime();
         const nowTime = new Date().getTime();
         calculatedTimeLeft = Math.floor((deadlineTime - nowTime) / 1000); // Convert to seconds
     }
-console.log(calculatedTimeLeft)
+// console.log(calculatedTimeLeft)
     // if (calculatedTimeLeft < 0) {
     //     return (
     //         <span className='text-4xl'>
@@ -41,13 +41,16 @@ console.log(calculatedTimeLeft)
     //     );
     // }
 
-    const seconds = calculatedTimeLeft % 60;
+    const days = Math.floor(calculatedTimeLeft / (3600 * 24));
+    const hours = Math.floor((calculatedTimeLeft % (3600 * 24)) / 3600);
     const minutes = Math.floor((calculatedTimeLeft % 3600) / 60);
-    const hours = Math.floor(calculatedTimeLeft / 3600);
+    const seconds = calculatedTimeLeft % 60;
 
     return (
         <span className='text-4xl'>
-            <span className='font-semibold capitalize mt-3'>{`${hours}h ${minutes}m ${seconds}s`}</span>
+            <span className='font-semibold capitalize mt-3'>
+                {`${days}d ${hours}h ${minutes}m ${seconds}s`}
+            </span>
             <span className='text-lg opacity-40 mx-2'>
                 left for {msgstatus}
             </span>
