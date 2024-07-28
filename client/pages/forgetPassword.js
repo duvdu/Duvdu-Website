@@ -5,10 +5,10 @@ import Icon from '../components/Icons';
 import { connect } from "react-redux";
 import OTP from '../components/elements/otp';
 import { ASKforgetpassword } from "../redux/action/apis/auth/forgetPassword/askForgetPassword";
-import { ChangePassword } from "../redux/action/apis/auth/changePassword/changePassword";
 import { errorConvertedMessage } from '../util/util';
+import { resetpassword } from '../redux/action/apis/auth/forgetPassword/resetPassword';
 
-function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_respond }) {
+function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpassword }) {
     const [step, setStep] = useState(1);
     const [username, setUsername] = useState(null);
     const pages = ['', 'OTP', 'ResetPassword', 'PasswordChanged'];
@@ -117,7 +117,7 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
                 setPasswordError({ isError: false, message: '' });
                  setConfirmPasswordError({ isError: pcError, message: pcError ? 'Passwords do not match' : '' });
               }else {
-                    ChangePassword({ newPassword: password, username: username });
+                resetpassword({ newPassword: password, username: username });
                     setConfirmPasswordError({ isError: false, message: '' });
               }
 
@@ -203,12 +203,12 @@ function Page({ api, ASKforgetpassword, ChangePassword, ask_respond, Change_resp
 const mapStateToProps = (state) => ({
     api: state.api,
     ask_respond: state.api.ASKforgetpassword,
-    Change_respond: state.api.ChangePassword
+    Change_respond: state.api.resetpassword
 });
 
 const mapDispatchToProps = {
     ASKforgetpassword,
-    ChangePassword
+    resetpassword
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);
