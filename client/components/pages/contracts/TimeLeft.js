@@ -16,7 +16,7 @@ const TimeLeft = ({ data, msgstatus }) => {
     const actionOrCreateAt = actionAt || createdAt;
 
     if (!actionOrCreateAt) return null;
-console.log(data)
+    
     let calculatedTimeLeft;
     if (status !== 'ongoing') {
         const actionAtTime = new Date(actionOrCreateAt).getTime();
@@ -29,7 +29,7 @@ console.log(data)
         const nowTime = new Date().getTime();
         calculatedTimeLeft = Math.floor((deadlineTime - nowTime) / 1000); // Convert to seconds
     }
-// console.log(calculatedTimeLeft)
+    // console.log(calculatedTimeLeft) 
     // if (calculatedTimeLeft < 0) {
     //     return (
     //         <span className='text-4xl'>
