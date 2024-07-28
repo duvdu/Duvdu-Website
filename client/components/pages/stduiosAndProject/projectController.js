@@ -44,16 +44,15 @@ const ProjectController = ({ initialData,
     };
 
     const handleOpenChat = () => {
-        if(data.user.canChat)
-        GetAllMessageInChat(data?.user?._id);
+        if (data.user.canChat)
+            GetAllMessageInChat(data?.user?._id);
     };
 
     const openShare = () => {
         OpenPopUp("Share");
     };
 
-   
-    console.log(data.user.canChat)
+
     return (
         messages.openchat ?
             <></> :
@@ -93,12 +92,12 @@ const ProjectController = ({ initialData,
                                     <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
                                         <Icon className={`${loveIconName === 'far' ? 'text-white' : 'text-primary'} w-6 text-xl`} name="heart" type={loveIconName} />
                                     </div>
-                                    {
-                                        canBook &&
-                                        <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-full sm:w-96 max-w-[211px]" text="book now" />
-                                    }
                                 </>
                             )}
+                            {
+                                canBook &&
+                                <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-full sm:w-96 max-w-[211px]" text="book now" />
+                            }
                         </Controller>
                     </div>
                 </div>

@@ -5,13 +5,13 @@ import ProjectItem from "./projectItem";
 import SmallProjectItem from "./smallProjectItem";
 
 function SectionProjects({ projects }) {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [windowWidth, setWindowWidth] = useState();
 
     useEffect(() => {
         function handleResize() {
             setWindowWidth(window.innerWidth);
         }
-
+        handleResize()
         window.addEventListener('resize', handleResize);
 
         return () => {
