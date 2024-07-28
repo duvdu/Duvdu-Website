@@ -35,13 +35,13 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
     }
 
     const data = getAllContracts_respond?.
-    data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username) )
+        data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username))
 
     // useEffect(() => {
     //     const _data = data.filter(value => tabindex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
     //     setData(_data)
     // }, [tabindex, data])
-
+console.log(data)
     const Title = ({ title }) => <h2 className="font-bold text-start text-lg capitalize opacity-80 mt-3">{title}</h2>
 
     const Recents = ({ img, name, address }) =>
@@ -87,13 +87,14 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                     </Selector>
                 </div>
                 {/*********/}
+                
                 {/* profile */}
-                <Link href={`/creative/${data.sp.username}`}>
+                <Link href={`/creative/${tabindex == 0 ? data.customer.username : data.sp.username}`}>
                     <div className="cursor-pointer">
                         <div className='flex gap-3 items-center'>
-                            <img className='size-14 rounded-full object-cover object-top' src={data.sp.profileImage} alt="profile picture" />
+                            <img className='size-14 rounded-full object-cover object-top' src={tabindex == 0 ? data.customer.profileImage : data.sp.profileImage} alt="profile picture" />
                             <div className='flex flex-col items-start justify-start'>
-                                <h3 className='opacity-80 text-lg font-bold capitalize'>{data.sp.name}</h3>
+                                <h3 className='opacity-80 text-lg font-bold capitalize'>{tabindex == 0 ? data.customer.name : data.sp.name}</h3>
                                 <span className='opacity-50'>{dateFormat(data.contract.appointmentDate, 'd mmmm , yyyy')}</span>
                             </div>
                         </div>

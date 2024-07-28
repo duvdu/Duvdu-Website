@@ -17,6 +17,8 @@ import AddToolUsed from '../../popsup/create/addToolUsed';
 import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import TimeLeft from '../../pages/contracts/TimeLeft';
 
+
+
 function ReceiveProjectFiles({
     getAllContracts,
     contractDetails,
@@ -40,11 +42,15 @@ function ReceiveProjectFiles({
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
     const [appointmentDate, setdAppointmentDate] = useState(null);
-    
+
 
     const [canEdit, setCanEdit] = useState(null);
 
-
+    const NormalState = ({ value }) => (
+        <span className='text-4xl'>
+            {value}
+        </span>
+    );
     const IsImSp = () => {
         return sp?.username == user?.username
     }
@@ -187,12 +193,12 @@ function ReceiveProjectFiles({
 
         const data = {}
         if (type == "copyrights") {
-           data['details'] = formData['details']
-           data['totalPrice'] = formData['totalPrice']
-           data['duration'] = {
-            value:formData['duration'],
-            unit:contract.duration.unit
-           }
+            data['details'] = formData['details']
+            data['totalPrice'] = formData['totalPrice']
+            data['duration'] = {
+                value: formData['duration'],
+                unit: contract.duration.unit
+            }
         }
         else {
             if (formData['numberOfUnits']) data['projectScale.numberOfUnits'] = formData['numberOfUnits'];
@@ -265,9 +271,9 @@ function ReceiveProjectFiles({
             IsImSp() &&
             status === "update-after-first-Payment" &&
             (
-                formData['totalPrice'] && formData['totalPrice'] != contract.totalPrice||
+                formData['totalPrice'] && formData['totalPrice'] != contract.totalPrice ||
                 formData['details'] && formData['details'] != contract.details ||
-                formData['duration'] && formData['duration'] != contract.duration.value 
+                formData['duration'] && formData['duration'] != contract.duration.value
             )) ||
         (getType() === "project" &&
             IsImSp() &&
@@ -280,7 +286,7 @@ function ReceiveProjectFiles({
                 formData['unitPrice']
             ))
 
-        console.log(contract)
+    console.log(contract)
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -359,32 +365,32 @@ function ReceiveProjectFiles({
                                             <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
                                             {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
                                         </div>
-                                        
-                                            <a
-                                                href={contract.address ?`https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}`:null}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className='opacity-85 text-base'
-                                            >
-                                                <div className='w-full mt-5'>
-                                                    <h2 className='opacity-60 capitalize mb-3'> Address </h2>
-                                                    <div className='flex gap-4'>
-                                                        <div>
-                                                            <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
-                                                                <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
-                                                            </div>
+
+                                        <a
+                                            href={contract.address ? `https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}` : null}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className='opacity-85 text-base'
+                                        >
+                                            <div className='w-full mt-5'>
+                                                <h2 className='opacity-60 capitalize mb-3'> Address </h2>
+                                                <div className='flex gap-4'>
+                                                    <div>
+                                                        <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
+                                                            <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
                                                         </div>
+                                                    </div>
+                                                    <div>
                                                         <div>
-                                                            <div>
-                                                                <span className='opacity-85 text-base line-clamp-2'>
-                                                                    { contract.address ? contract.address : "No Address To show"}
-                                                                    
-                                                                </span>
-                                                            </div>
+                                                            <span className='opacity-85 text-base line-clamp-2'>
+                                                                {contract.address ? contract.address : "No Address To show"}
+
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </a>
+                                            </div>
+                                        </a>
                                     </div>
                                     <div className='w-full'>
                                         <div className='w-full'>
@@ -590,16 +596,19 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() &&
                                         status == "waiting-for-pay-10" &&
-                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>
                                                     Pay Now 10%
                                                 </span>
                                             </Button>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                                Refuse
+                                            </button>
                                         </div>
                                     }
                                     {
-                                        !IsImSp()  && getType() !== 'team' && status == "waiting-for-total-payment" &&
+                                        !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                             <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>
@@ -620,13 +629,17 @@ function ReceiveProjectFiles({
                                     }
                                     {
                                         !IsImSp() && status == "waiting-for-payment" &&
-                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>
                                                     Pay Now
                                                 </span>
                                             </Button>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                                Refuse
+                                            </button>
                                         </div>
+
                                     }
                                     {
                                         !status?.includes("waiting-for-pay") && false &&
