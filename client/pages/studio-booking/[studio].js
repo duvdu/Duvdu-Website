@@ -40,7 +40,7 @@ const Studio = ({
     }, [studio_respond?.data]);
 
     useEffect(() => {
-        if (studioId){
+        if (studioId) {
             setStudio(null)
             Getstudio(studioId);
         }
@@ -58,11 +58,11 @@ const Studio = ({
 
 
     const toggleDrawer = () => {
-        if(auth.login)
-        setIsOpen(!isOpen);
+        if (auth.login)
+            setIsOpen(!isOpen);
         else OpenPopUp("registration-required")
     };
-    
+
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
@@ -72,8 +72,8 @@ const Studio = ({
                 {studio &&
                     (
                         <>
-                        <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav}/>
-                        <AddToTeam />
+                            <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav} />
+                            <AddToTeam />
                             <Report />
                             <ThanksMSG />
                             <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
@@ -113,6 +113,7 @@ const Studio = ({
 const mapStateToProps = (state) => ({
     studios_respond: state.api.GetStudios,
     studio_respond: state.api.Getstudio,
+    projectReview_respond: state.api.projectReview,
     user: state.user.profile,
     auth: state.auth,
 });

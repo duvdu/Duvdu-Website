@@ -31,6 +31,7 @@ import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import EmptyComponent from '../contracts/emptyComponent';
 import Loading from '../../elements/duvduLoading';
 import DuvduLoading from '../../elements/duvduLoading';
+import { userReview } from '../../../redux/action/apis/reviews/users';
 
 
 
@@ -60,7 +61,7 @@ const profile = {
     ],
 };
 
-function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, getMyprofile, user, updateProfile_respond, api }) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview,userReview_respond, user, updateProfile_respond}) {
 
     const route = useRouter()
 
@@ -77,7 +78,11 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     useEffect(() => {
         GetUserProject({})
     }, [])
-
+    useEffect(() => {
+        if(user?.username)
+        userReview({ username: user.username })
+    }, [user?.username])
+    
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
             route.replace({
@@ -161,12 +166,12 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                     <Conver converPic={userInfo.coverImage} />
                     <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
                         <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
-                        <DuvduLoading loadingIn = {"updateProfile"} />
+                            <DuvduLoading loadingIn={"updateProfile"} />
                             <div className='relative px-6 sm:px-10'>
                                 <Info
                                     src={userInfo.profileImage}
                                     location={userInfo.address || 'NONE'}
-                                    occupation={userInfo?.category?.title }
+                                    occupation={userInfo?.category?.title}
                                     personalName={userInfo.name}
                                     popularity={{
                                         likes: userInfo.likes,
@@ -187,14 +192,14 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
 
                             <div className='h-divider'></div>
                             {userInfo.about &&
-                            <div className='px-10'>
-                                <h3 className='pt-6' id='about-header'>about</h3>
-                                <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
-                            </div>}
+                                <div className='px-10'>
+                                    <h3 className='pt-6' id='about-header'>about</h3>
+                                    <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
+                                </div>}
                             <div className='h-divider my-7'></div>
                             <div className='px-10'>
                                 <div className='flex flex-col gap-4'>
-                                    {profile.comments.map((comment) => (
+                                    {userReview_respond?.data?.map((comment) => (
                                         <Comment key={comment.id} comment={comment} />
                                     ))}
                                 </div>
@@ -229,7 +234,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                 </>
         )
     }
-    
+
     return (
         <>
 
@@ -269,6 +274,7 @@ const mapStateToProps = (state) => ({
     user: state.user.profile,
     updateProfile_respond: state.api.updateProfile,
     projects: state.api.GetUserProject,
+    userReview_respond: state.api.userReview,
     // api: state.api,
 
 });
@@ -279,7 +285,8 @@ const mapDispatchToProps = {
     updateProfile,
     getMyprofile,
     GetUserProject,
-    InsertToArray
+    InsertToArray,
+    userReview
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfile);

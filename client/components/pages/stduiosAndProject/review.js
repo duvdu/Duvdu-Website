@@ -1,42 +1,49 @@
+import { useEffect } from "react";
+import { projectReview } from "../../../redux/action/apis/reviews/project";
 import Comment from "../../elements/comment";
+import { connect } from "react-redux";
 
-const Reviews = ({ data }) => (
-    <>
-        <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4 hidden">Reviews</h2>
-        <div className='flex flex-col gap-4'>
+const Reviews = ({ projectReview, projectReview_respond, data }) => {
+    
+    useEffect(() => {
+        projectReview({ projectID: data._id });
+    }, [projectReview, data._id]);
+
+    const renderComments = () => {
+        if (!projectReview_respond || !projectReview_respond.data) {
+            return <div>Loading...</div>;
+        }
+
+        return projectReview_respond.data.map((review) => ({
+            id: review._id,
+            userName: review.user.username,
+            name: review.user.name,
+            date: new Date(review.createdAt).toDateString(),
+            avatar: review.user.profileImage,
+            commentText: review.comment,
+        })).map((comment) => (
+            <Comment key={comment.id} comment={comment} />
+        ));
+    };
+
+    return (
+        <>
+            <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4 hidden">Reviews</h2>
             <div className='flex flex-col gap-4'>
-
-                {/* {data?.comments?.map((comment) => (
-                    <Comment key={comment.id} comment={comment} />
-                ))} */}
-                {[
-                    {
-                        "id": 1,
-                        "userName": "jonathan donrew",
-                        "date": "Sun - Aug 3",
-                        "avatar": "/assets/imgs/profile/defultUser?.jpg",
-                        "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-                    },
-                    {
-                        "id": 2,
-                        "userName": "jonathan donrew",
-                        "date": "Sun - Aug 3",
-                        "avatar": "/assets/imgs/profile/defultUser?.jpg",
-                        "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-                    },
-                    {
-                        "id": 3,
-                        "userName": "jonathan donrew",
-                        "date": "Sun - Aug 3",
-                        "avatar": "/assets/imgs/profile/defultUser?.jpg",
-                        "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-                    },
-                ].map((comment) => (
-                    <Comment key={comment.id} comment={comment} />
-                ))}
+                <div className='flex flex-col gap-4'>
+                    {renderComments()}
+                </div>
             </div>
-        </div>
-    </>
-);
+        </>
+    );
+};
 
-export default Reviews
+const mapStateToProps = (state) => ({
+    projectReview_respond: state.api.projectReview,
+});
+
+const mapDispatchToProps = {
+    projectReview,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reviews);
