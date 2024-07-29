@@ -7,7 +7,7 @@ export const Rate = (data) => {
     return async dispatch => {
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         try {
-            const response = await mainApiInstance.post(`api/users/tickets`, data);
+            const response = await mainApiInstance.post(`api/analysis/project-review`, data);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
         } catch (error) {
             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });

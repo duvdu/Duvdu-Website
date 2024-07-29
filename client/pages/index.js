@@ -33,7 +33,6 @@ const Home = ({
         popularSub()
         GetProjects({ limit: 99 })
     }, [])
-    const projectData = Array(30).fill(projects?.data).flat();
 
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
@@ -244,7 +243,7 @@ const Home = ({
                 <section className="my-12 py-8">
                     <div className='container'>
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> explore recommended projects</h2>
-                        <SectionProjects projects={projectData} />
+                        <SectionProjects projects={projects?.data} />
                     </div>
                 </section>
             </Layout>

@@ -1,39 +1,59 @@
-import Link from "next/link"
-import Icon from "../../Icons"
-import Selector from "../../elements/CustomSelector"
+import Link from "next/link";
+import Icon from "../../Icons";
+import Selector from "../../elements/CustomSelector";
+import RatingProject from "../../popsup/ratingProject";
+import { OpenPopUp } from "../../../util/util";
+import ReportProject from "../../popsup/report-project";
 
-const Header = ({ data }) => (
-    <>
-        <h1 className="text-xl capitalize opacity-80 font-bold"> {data?.name || data?.studioName} </h1>
-        <div className='creator-info flex mt-6 mb-6 justify-between'>
-            <Link href={`/creative/${data?.user?.username || ''}`}>
-                <div className='flex items-center gap-3 cursor-pointer'>
-                    <img alt='user' className="w-16 aspect-square rounded-full object-cover object-top" src={data?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} />
-                    <div>
-                        <span className="capitalize font-semibold text-lg">{data?.user?.name || 'NONE'}</span>
-                        <div className="flex items-center gap-1 mt-1">
-                            <p>{data?.user?.totalRates || 0}</p>
-                            <Icon className='text-primary size-4' name={'star'} />
+const Header = ({ data }) => {
+
+    const handleDropdownSelect = (v) => {
+        if(v == "Rate") OpenPopUp("Rating-project")
+        else if(v == "Report") OpenPopUp("report-project2")
+    };
+
+    return (
+        <>
+            <RatingProject data={data} />
+            <ReportProject data={data}/>
+            <h1 className="text-xl capitalize opacity-80 font-bold">
+                {data?.name || data?.studioName}
+            </h1>
+            <div className="creator-info flex mt-6 mb-6 justify-between">
+                <Link href={`/creative/${data?.user?.username || ''}`}>
+                    <div className="flex items-center gap-3 cursor-pointer">
+                        <img
+                            alt="user"
+                            className="w-16 aspect-square rounded-full object-cover object-top"
+                            src={data?.user?.profileImage || process.env.DEFAULT_PROFILE_PATH}
+                        />
+                        <div>
+                            <span className="capitalize font-semibold text-lg">
+                                {data?.user?.name || 'NONE'}
+                            </span>
+                            <div className="flex items-center gap-1 mt-1">
+                                <p>{data?.user?.totalRates || 0}</p>
+                                <Icon className="text-primary size-4" name="star" />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Link>
-            <Selector options={[
-                {
-                    value: "oprion 1",
-                    onclick: () => { },
-                },
-                {
-                    value: "oprion 2",
-                    onclick: () => { },
-                },
-                {
-                    value: "oprion 3",
-                    onclick: () => { },
-                }
-            ]} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer hidden" />
-        </div>
-    </>
-)
+                </Link>
+                <Selector
+                    options={[
+                        {
+                            value: "Rate",
+                        },
+                        {
+                            value: "Report",
+                        },
+                    ]}
+                    onSelect={handleDropdownSelect}
+                    className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer"
+                />
+            </div>
+        </>
+    );
+};
 
-export default Header
+
+export default Header;
