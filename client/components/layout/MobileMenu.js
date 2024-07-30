@@ -26,18 +26,20 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
             isDarkMode = localStorage.getItem('darkMode') === 'true';
             setIsDarkMode(isDarkMode)
         }, [])
-        return <div className="flex items-center px-5 py-2 border-b">
+        return <div className="container">
+        <div className="flex items-center py-2 border-b">
             <div className="flex justify-start w-full">
                 <Link href="/">
                     <a>
                         <img key={isDarkMode}
                             src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                            className="min-h-9"
+                            className="w-32"
                             alt="main logo"
                         />
                     </a>
                 </Link>
             </div>
+
 
             <div className="flex items-center justify-center gap-2 ">
                 <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={toggleOpenSearch}>
@@ -48,6 +50,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                 </div>
             </div>
         </div>
+</div>
     }
 
     const SearchBody = () => <div className="h-body bg-[#F7F9FB]" >
@@ -214,17 +217,17 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
             </div>
         );
     };
-    
-    useEffect(()=>{
-        if(router.query){
+
+    useEffect(() => {
+        if (router.query) {
             const action = router.query.action
-         if(action == "settings")   
-            setpage(5)
-        else if(action == "notifications")
-            setpage(4)
+            if (action == "settings")
+                setpage(5)
+            else if (action == "notifications")
+                setpage(4)
         }
-    },[router.query])
-    
+    }, [router.query])
+
 
     return (
         <>

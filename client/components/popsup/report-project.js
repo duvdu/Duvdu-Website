@@ -10,7 +10,7 @@ import DuvduLoading from '../elements/duvduLoading';
 import { projectReport } from '../../redux/action/apis/report/project';
 import { ClosePopUp, UpdateKeysAndValues } from '../../util/util';
 
-function ReportProject({ data, UpdateFormData,resetForm, formData, projectReport ,report_respond}) {
+function ReportProject({ data, UpdateFormData, resetForm, formData, projectReport, report_respond }) {
 
     const [attachmentValidation, setAttachmentValidation] = useState(false);
     const handleInputChange = (event) => {
@@ -37,14 +37,14 @@ function ReportProject({ data, UpdateFormData,resetForm, formData, projectReport
                 const file = formData.attachments[i];
                 form.append(`attachments`, file.file);
             }
-        form.append('project' , data._id)
-        projectReport({data:form})
+        form.append('project', data._id)
+        projectReport({ data: form })
     }
-    
-    useEffect(()=>{
-        if(report_respond?.data?.createdAt) 
+
+    useEffect(() => {
+        if (report_respond?.data?.createdAt)
             ClosePopUp("report-project2")
-    },[report_respond?.data?.createdAt])
+    }, [report_respond?.data?.createdAt])
 
     const isEnable = Object.keys(validateRequiredFields()).length == 0
     return (

@@ -243,6 +243,7 @@ const Header = ({
                                         <div className="cursor-pointer">
                                             <img
                                                 src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                                className="min-w-32"
                                                 alt="main logo"
                                             />
                                         </div>
