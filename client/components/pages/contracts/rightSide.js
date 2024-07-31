@@ -41,7 +41,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
     //     const _data = data.filter(value => tabindex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
     //     setData(_data)
     // }, [tabindex, data])
-console.log(data)
+
     const Title = ({ title }) => <h2 className="font-bold text-start text-lg capitalize opacity-80 mt-3">{title}</h2>
 
     const Recents = ({ img, name, address }) =>

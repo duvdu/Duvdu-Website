@@ -49,7 +49,7 @@ TABLE CONTENT
 /* src/styles/fonts.css */
 @font-face {
   font-family: 'trap';
-  src: url('../fonts/trap/Trap-black.otf') format('opentype');
+  src: url('../fonts/trap/Trap-Black.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }

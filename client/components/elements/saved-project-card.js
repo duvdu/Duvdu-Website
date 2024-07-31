@@ -81,7 +81,7 @@ const ProjectCard = ({
   const handleSelectClick = (event) => {
     event.stopPropagation();
   };
-  console.log(cardData)
+  
   const isVideoCover = isVideo(cardData.cover)
   const type = cardData.category?.cycle
 
