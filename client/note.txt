@@ -156,4 +156,4 @@ width notification empty
 
 
 ----------------------------------
-react query
+remove Home bar Desktop

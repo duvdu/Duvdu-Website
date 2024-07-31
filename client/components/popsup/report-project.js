@@ -49,7 +49,7 @@ function ReportProject({ data, UpdateFormData, resetForm, formData, projectRepor
     const isEnable = Object.keys(validateRequiredFields()).length == 0
     return (
         <>
-            <Popup id='report-project2' className={'w-full lg:w-[942px] h-fu'} header={'Report Project'} onCancel={handlereset}>
+            <Popup id='report-project2' className={'w-full lg:w-[942px] '} header={'Report Project'} onCancel={handlereset}>
                 <section className='mt-6'>
                     <span className='font-semibold text-2xl capitalize'>what happened ?</span>
                     <br />

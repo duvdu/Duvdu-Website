@@ -10,6 +10,7 @@ import Link from "next/link";
 import { gsap } from 'gsap';
 import SectionProjects from "../components/pages/home/sectionProjects";
 import { GetProjects } from "../redux/action/apis/cycles/projects/get";
+import DraggableList from "../components/pages/home/dragList";
 
 const Home = ({
     HomeTreny,
@@ -79,10 +80,10 @@ const Home = ({
                     </div>
                     <div className="mx-auto w-full py-12">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> trendy categories </h2>
-                        <div className="flex overflow-auto">
+                        <div className="flex overflow-auto lg:container">
                             {homeTrenyList.map((data, index) => (
                                 <div
-                                    className="bg-black ml-4 aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[350px] lg:min-w-[430px] lg:w-[430px] lg:p-11 overflow-hidden"
+                                    className="bg-black ml-3 aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
                                     style={{ backgroundImage: `url(${data.image})` }}
                                     key={index}
                                 >
@@ -94,77 +95,79 @@ const Home = ({
                                     </span>
                                     <Link href={data.cycle ? `/${data.cycle}` : ''} >
                                         <a className="text-xs font-semibold text-primary bg-white px-5 lg:px-7 py-2 lg:py-3 rounded-full">
-                                            {data.title ? 'View More' : 'Add Item'}
+                                            View More
                                         </a>
                                     </Link>
                                 </div>
                             ))}
-
                         </div>
                     </div>
-
                 </section>
                 <section className="bg-[#F2F2F3] py-12">
-                    <div className="w-full">
-                        <section className="mx-auto">
+                    <div className="w-full ">
+                        <section className="mx-auto lg:container relative">
                             <div className="sm:container">
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> discover tags </h2>
                             </div>
-                            <div className="flex overflow-auto lg:gap-3">
-                                {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
-                                    <Link href={data.cycle ? `/${data.cycle}` : ''} >
-                                        <a key={index} href={data.link || "#"} className="ml-4">
-                                            <div
-                                                className="bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] h-[65px] lg:w-[314px] lg:h-[108px]"
-                                                style={{ backgroundImage: `url(${data.image})` }}
-                                            >
-                                                <span className="text-white text-xs lg:text-3xl font-semibold capitalize">
-                                                    {data.title}
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </Link>
-                                ))}
+                            <div className="overflow-auto hide-scrollable-container">
+                                <div className="flex">
+                                <DraggableList>
+                                    {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
+                                        <Link key={index} href={data.cycle ? `/${data.cycle}` : ''}  >
+                                                <div
+                                                    className="bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] lg:w-[314px] ml-3"
+                                                    style={{ backgroundImage: `url(${data.image})` }}
+                                                >
+                                                    <span className="text-white text-xs lg:text-xl font-semibold capitalize">
+                                                        {data.title}
+                                                    </span>
+                                                </div>
+                                        </Link>
+                                    ))}
+                                    <div className="hidden lg:block absolute z-10 h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 right-6" dir="rtl" />
+                                </DraggableList>
+                                </div>
                             </div>
                         </section>
                     </div>
                 </section>
-
                 <section className="py-12">
                     <div className="w-full pr-0">
-                        <div className="mx-auto">
-                            <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> top categories </h2>
-                            <div className="flex overflow-auto">
-                                {categories?.map((data, index) => (
-                                    <Link href={data.cycle ? `/${data.cycle}` : ''} >
-                                        <div
-                                            className={`bg-black ml-4 h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
-                                            style={{ backgroundImage: `url(${data.image})` }}
-                                        >
-                                            <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
-                                                150 creatives
+                        <div className="mx-auto lg:container relative">
+                            <div className=" ">
+                                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> top categories </h2>
+                                <DraggableList>
+                                    {categories?.map((data, index) => (
+                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                            <div
+                                                className={`bg-black ml-3 h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
+                                                style={{ backgroundImage: `url(${data.image})` }}
+                                            >
+                                                <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
+                                                    150 creatives
+                                                </div>
+                                                <span className="text-white text-[14px] lg:text-3xl font-semibold capitalize text-center w-full">
+                                                    {data.title}
+                                                </span>
                                             </div>
-                                            <span className="text-white text-[14px] lg:text-3xl font-semibold capitalize text-center w-full">
-                                                {data.title}
-                                            </span>
-                                        </div>
-                                    </Link>
-                                ))}
+                                        </Link>
+                                    ))}
+                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint right-6" dir="rtl">  </div>
+                                </DraggableList>
                             </div>
-
                         </div>
                     </div>
                 </section>
-
-                <section className="py-12 bg-[#F2F2F3]">                    
-                        <div className="mx-auto">
-                            <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
-                            <div className="flex gap-8 w-full">
-                                <div className="flex overflow-auto">
+                <section className="py-12 bg-[#F2F2F3]">
+                    <div className="mx-auto">
+                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
+                        <div className="flex gap-8 w-full lg:container relative">
+                            <div className="overflow-auto hide-scrollable-container">
+                                <DraggableList>
                                     {categories.map((category, index) => (
                                         <div key={index}>
                                             <div className="ml-3">
-                                                <img className="h-24 object-cover min-w-[330px] lg:w-full rounded-3xl" src={category.image} />
+                                                <img className="h-24 object-cover min-w-[300px] lg:w-full rounded-3xl" src={category.image} />
                                                 <h2 className="text-2xl opacity-60 font-semibold mt-6 cursor-pointer"
                                                     onClick={() => handleNavigation(`/${category.cycle}`)}
                                                 >{category.title}</h2>
@@ -193,9 +196,12 @@ const Home = ({
                                             </div>
                                         </div>
                                     ))}
-                                </div>
+                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint2 right-6" dir="rtl">  </div>
+                                </DraggableList>
                             </div>
+
                         </div>
+                    </div>
                 </section>
                 <section className="py-12">
                     <div className='container'>

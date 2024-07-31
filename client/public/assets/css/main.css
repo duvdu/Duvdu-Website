@@ -1144,18 +1144,51 @@ table p {
   z-index: 99999;
 }
 
+.home-list-gradaint {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+}
 
+.home-list-gradaint2 {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F2F2F3 100%);
+}
 
+.hide-scrollable-container {
+  overflow: hidden; /* Hide the scrollbar */
+}
 
+.hide-scrollable-container::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for Webkit browsers */
+}
+
+.hide-scrollable-container {
+  scrollbar-width: none; /* Hide the scrollbar */
+  -ms-overflow-style: none;  /* Hide the scrollbar for IE and Edge */
+}
+
+.scrollableContainer {
+  
+  overflow: hidden; /* Hide the scrollbar */
+  cursor: grab; /* Change cursor to grab */
+  margin-bottom: 20px; /* Add some space between lists */
+}
+
+.scrollableContainer:active {
+  cursor: grabbing; /* Change cursor to grabbing when active */
+}
+
+.listScroll {
+  list-style: none; /* Remove list item bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+  display: flex; /* Display list items in a row */
+}
 
 /* Container */
 /* .container {
   max-width: 1328px;
 } */
 
-
-
-/*LAYOUT -> NAVIGATION STYLE*/
+/* LAYOUT -> NAVIGATION STYLE */
 
 .main-menu>nav>ul>li>a {
   font-size: 16px;
