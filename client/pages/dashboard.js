@@ -99,6 +99,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                     </div>
                     <div className='w-full'>
                         <div className='flex flex-row gap-2'>
+                            {data?.userCategoryRank && 
                             <div className='flex flex-col w-full gap-2'>
                                 <div className='card cardborder-3 bg-white dark:bg-[#1A2024] w-full h-full p-7 pt-16'>
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
@@ -126,7 +127,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                                     <Icon className='text-[#289C34] dark:text-[#2DB03A]' name={'arrow-up-long'} />
                                                 }
                                             </span>
-                                            <span className={`${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {viewRate}%</span>
+                                            <span className={`${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {data?.userCategoryRank?.rank}%</span>
                                         </div>
 
                                         {/* <span className='bg-[#D9D9D9] dark:bg-[#333333] rounded-2xl w-5 h-5 flex justify-center cursor-pointer aspect-s?are items-center'>
@@ -143,6 +144,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                     </div>
                                 </div>
                             </div>
+                            }
                             <div className='w-full'>
                                 <ActivityCard data={data} />
                             </div>
