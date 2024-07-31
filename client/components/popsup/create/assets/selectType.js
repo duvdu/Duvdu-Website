@@ -31,8 +31,8 @@ function PostPopup({auth}) {
         };
 
         return (
-            <div className='mx-28'>
-                <div className='flex flex-col gap-3 justify-center min-w-96 mt-16'>
+            <div className='mx-28 w-full lg:w-auto'>
+                <div className='flex flex-col gap-3 justify-center lg:min-w-96 mt-8'>
                     {[
                         {
                             "value": "project",
@@ -53,7 +53,7 @@ function PostPopup({auth}) {
                     ]
                         .map((item, index) => (
                             <li
-                                className={`flex items-center justify-center capitalize border border-[#00000040] rounded-3xl h-[90px] cursor-pointer ${selectedCycle === item.url ? 'border-primary hover:border-2' : 'hover:border-2 hover:border-primary'}`}
+                                className={`flex  items-center justify-center capitalize border border-[#00000040] rounded-3xl h-[90px] cursor-pointer ${selectedCycle === item.url ? 'border-primary hover:border-2' : 'hover:border-2 hover:border-primary'}`}
                                 key={index}
                                 onClick={() => handleCycleSelect(item.url)}
                             >
@@ -73,7 +73,6 @@ function PostPopup({auth}) {
             <Popup id="select-type" onCancel={reset} header={"Select Type"}>
                 <div className='flex flex-col items-center mb-11'>
                     <ServiceType />
-                    
                 </div>
             </Popup>
 

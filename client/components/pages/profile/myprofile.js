@@ -61,7 +61,7 @@ const profile = {
     ],
 };
 
-function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview,userReview_respond, user, updateProfile_respond}) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
 
     const route = useRouter()
 
@@ -76,13 +76,13 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     }, [user])
 
     useEffect(() => {
-        GetUserProject({})
+        // GetUserProject({})
     }, [])
     useEffect(() => {
-        if(user?.username)
-        userReview({ username: user.username })
+        if (user?.username)
+            userReview({ username: user.username })
     }, [user?.username])
-    
+
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
             route.replace({
@@ -204,10 +204,9 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                     ))}
                                 </div>
                             </div>
-
                             {
                                 !showAddPanal &&
-                                <div className='sticky h-32 left-10 bottom-0 flex justify-center items-center'>
+                                <div className='hidden sticky bottom-0 h-32 lg:flex justify-center items-center mx-auto'>
                                     <Controller>
                                         <div data-popup-toggle="popup" data-popup-target="select-type" className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
                                             <Icon className='text-white text-2xl' name={'plus'} />
@@ -218,8 +217,23 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                     </Controller>
                                 </div>
                             }
-                        </div>
 
+                        </div>
+                        {
+                            !showAddPanal &&
+
+                            <div className='fixed bottom-0 h-32 flex lg:hidden justify-center items-center mx-auto w-full z-10'>
+                                <Controller>
+                                    <div data-popup-toggle="popup" data-popup-target="select-type" className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
+                                        <Icon className='text-white text-2xl' name={'plus'} />
+                                    </div>
+                                    <div onClick={() => onOpenEdit()} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center">
+                                        <Icon className='text-white text-2xl' name={'pen'} />
+                                    </div>
+                                </Controller>
+                            </div>
+
+                        }
                         <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
                             {
                                 projects.length == 0 &&

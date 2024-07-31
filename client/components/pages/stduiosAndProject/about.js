@@ -5,7 +5,7 @@ const About = ({ data }) => (
     <div className="sticky top-header">
         <div className="h-16" />
         <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mx-7 sm:mx-0">about the creative</h2>
-        <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] p-10">
+        <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] p-10 mx-5">
             <div className='flex items-center justify-center'>
                 <div className='w-32 h-32 relative'>
                     <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />

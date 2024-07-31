@@ -6,7 +6,7 @@ const Details = ({ data }) => {
     
 
     return (
-        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent w-full border-50 p-6">
+        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-6 mx-5">
             <div className="w-full flex justify-center my-10">
                 <span className="text-center capitalize opacity-50">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>
             </div>
@@ -97,7 +97,7 @@ const Details = ({ data }) => {
                     <span className="capitalize opacity-50">location</span>
                     <div className="capitalize">
                         <section>
-                            <GoogleMap width={'100%'} value={{ 'lat': data.location.lat, 'lng': data.location.lng }} isreadOnly={true} className={"relative rounded-3xl overflow-hidden h-[200px]"} height={200} inputclass={"my-0 bg-transparent font-bold"}/>
+                            <GoogleMap width={'100%'} value={{ 'lat': data.location.lat, 'lng': data.location.lng }} isreadOnly={true} className={"relative rounded-3xl overflow-hidden h-[200px] border-2 border-primary"} height={200} inputclass={"my-0 bg-transparent font-bold"}/>
                         </section>
                     </div>
                 </section>

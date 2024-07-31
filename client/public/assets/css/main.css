@@ -1165,8 +1165,7 @@ table p {
   -ms-overflow-style: none;  /* Hide the scrollbar for IE and Edge */
 }
 
-.scrollableContainer {
-  
+.scrollableContainer {  
   overflow: hidden; /* Hide the scrollbar */
   cursor: grab; /* Change cursor to grab */
   margin-bottom: 20px; /* Add some space between lists */
@@ -1182,6 +1181,8 @@ table p {
   margin: 0; /* Remove margin */
   display: flex; /* Display list items in a row */
 }
+
+
 
 /* Container */
 /* .container {
