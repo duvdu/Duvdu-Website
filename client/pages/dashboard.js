@@ -134,7 +134,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                         </span> */}
                                     </div>
                                     <br />
-                                    <span className='text-4xl text-DS_black font-medium capitalize'>top {data.userCategoryRank.percentile}%</span>
+                                    <span className='text-4xl text-DS_black font-medium capitalize'>top {data?.userCategoryRank?.percentile}%</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
