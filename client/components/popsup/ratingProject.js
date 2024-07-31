@@ -4,22 +4,35 @@ import Icon from '../Icons'
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Rate } from '../../redux/action/apis/rate';
+import { ClosePopUp } from '../../util/util';
+import DuvduLoading from '../elements/duvduLoading';
+import DuvduError from '../elements/duvduError';
 
-function Rating({ data = {} , rate_respond , Rate}) {
-    const [rate, setRate] = useState(2);
+function ratingProject({ data = {} , rate_respond , Rate}) {
+    const [rate, setRate] = useState(0);
     const [desc, setDesc] = useState("");
 
     const handleSubmitRate = () => {
         Rate({
-            project: data.project || "", 
-            cycle: data.cycle || "",     
+            project: data._id || "", 
+            cycle: data.cycle || "studio-booking",
             rate,
-            desc,
+            comment:desc,
         });
     };
+    useEffect(()=>{
+        if(rate_respond?.data?.createdAt) 
+            ClosePopUp("Rating-project")
+    },[rate_respond?.data?.createdAt])
+    
 
     const handleStarClick = (rating) => {
         setRate(rating);
+    };
+
+    const handlereset = () => {
+        setRate(0);
+        setDesc("");
     };
 
     const renderStars = () => {
@@ -35,13 +48,11 @@ function Rating({ data = {} , rate_respond , Rate}) {
         return stars;
     };
 
+    const isEnabled = rate > 0 && desc.length > 5
     return (
         <>
-            <Popup id="Rating" header={`Rating ${data.name || ""}`} >
+            <Popup id="Rating-project" header={`Rating ${data.name || ""}`} onCancel={handlereset}>
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
-                    <div className='w-20 h-20 rounded-full overflow-hidden'>
-                        <img className='object-cover object-top' src={data.profileImage} alt="user" />
-                    </div>
                     <div className='flex gap-5 my-5'>
                         {renderStars()}
                     </div>
@@ -54,7 +65,9 @@ function Rating({ data = {} , rate_respond , Rate}) {
                             onChange={(e) => setDesc(e.target.value)} 
                         />
                     </div>
-                    <Button onClick={handleSubmitRate} className="mb-7 mx-4 font-bold text-lg w-full max-w-[345px] mt-20" shadow={true}>
+                    <DuvduError req={"Rate"}/>
+                    <DuvduLoading loadingIn={"Rate"} />
+                    <Button isEnabled={isEnabled} onClick={handleSubmitRate} className="mb-7 mx-4 font-bold text-lg w-full max-w-[345px] mt-20" shadow={true}>
                         <span className='text-white font-bold capitalize text-lg'>
                             Done
                         </span>
@@ -73,4 +86,4 @@ const mapDispatchToProps = {
     Rate
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Rating);
+export default connect(mapStateToProps, mapDispatchToProps)(ratingProject);

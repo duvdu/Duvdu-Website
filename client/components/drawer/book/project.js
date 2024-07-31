@@ -136,7 +136,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
         if (formData.functions)
             for (var i = 0; i < formData.functions.length; i++) {
-        console.log(formData.functions[i])
+        
                 form.append(`equipment[functions][${i}][id]`, formData.functions[i]._id);
             }
 

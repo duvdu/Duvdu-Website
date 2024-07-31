@@ -6,10 +6,30 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
     const [cameraPosition, setCameraPosition] = useState({ lat: 30.0444, lng: 31.2357 }); // Tahrir Square, Cairo
     const [address, setAddress] = useState('');
     const inputRef = useRef(null);
-
-    const mapStyles = {
+    const markerIcon = "/assets/imgs/theme/googlemarker.svg"
+    const containerStyles = {
         width: width || '1000px',
         height: height || '370px',
+    };
+
+    const mapStyles = [
+        {
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }]
+        },
+
+    ];
+    
+    const mapOptions = {
+        disableDefaultUI: false, // Disables all default UI
+        zoomControl: false, // Disables zoom control
+        mapTypeControl: false, // Disables map type control
+        scaleControl: false, // Disables scale control
+        streetViewControl: false, // Disables Street View Pegman
+        rotateControl: false, // Disables rotate control
+        fullscreenControl: false, // Disables fullscreen control
+        styles: mapStyles
     };
 
     useEffect(() => {
@@ -149,13 +169,15 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                 <Map
                     google={google}
                     zoom={17}
-                    style={mapStyles}
+                    style={containerStyles}
                     initialCenter={cameraPosition}
                     center={markerPosition}
                     onClick={onMapClicked}
+                    {...mapOptions}
+                    
                 >
                     {markerPosition && (
-                        <Marker position={markerPosition} />
+                        <Marker position={markerPosition} icon={markerIcon} />
                     )}
                 </Map>
             </div>

@@ -45,10 +45,11 @@ TABLE CONTENT
   font-family: 'Cairo';
   src: url('https://fonts.googleapis.com/css2?family=Cairo&display=swap') format('woff2');
 }
+
 /* src/styles/fonts.css */
 @font-face {
   font-family: 'trap';
-  src: url('../fonts/trap/Trap-Regular.otf') format('opentype');
+  src: url('../fonts/trap/Trap-black.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -93,42 +94,44 @@ input[type=number]:focus {
 /* Remove arrows in number input (Chrome, Safari, Edge, Opera) */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Remove arrows in number input (Firefox) */
 input[type="number"] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 /* Disable changing value by scrolling */
 input[type="number"] {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
+
 input[type=number] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 /* Optionally, you can add this to further ensure the scroll wheel doesn't affect the input value */
 input[type="number"] {
-    -moz-user-select: text;
-    -webkit-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 input[type=number] {
-    appearance: textfield;
-    -moz-appearance: textfield;
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 /* styles/SlickSlider.module.css */
@@ -1131,8 +1134,8 @@ table p {
   left: 0;
   visibility: hidden;
   opacity: 0;
-  -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  /* -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1); */
+  /* transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1); */
   -webkit-transform: translate(-200px, 0);
   transform: translate(-200px, 0);
   background-color: var(--white);
@@ -1141,7 +1144,43 @@ table p {
   z-index: 99999;
 }
 
+.home-list-gradaint {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+}
 
+.home-list-gradaint2 {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F2F2F3 100%);
+}
+
+.hide-scrollable-container {
+  overflow: hidden; /* Hide the scrollbar */
+}
+
+.hide-scrollable-container::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for Webkit browsers */
+}
+
+.hide-scrollable-container {
+  scrollbar-width: none; /* Hide the scrollbar */
+  -ms-overflow-style: none;  /* Hide the scrollbar for IE and Edge */
+}
+
+.scrollableContainer {  
+  overflow: hidden; /* Hide the scrollbar */
+  cursor: grab; /* Change cursor to grab */
+  margin-bottom: 20px; /* Add some space between lists */
+}
+
+.scrollableContainer:active {
+  cursor: grabbing; /* Change cursor to grabbing when active */
+}
+
+.listScroll {
+  list-style: none; /* Remove list item bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+  display: flex; /* Display list items in a row */
+}
 
 
 
@@ -1150,9 +1189,7 @@ table p {
   max-width: 1328px;
 } */
 
-
-
-/*LAYOUT -> NAVIGATION STYLE*/
+/* LAYOUT -> NAVIGATION STYLE */
 
 .main-menu>nav>ul>li>a {
   font-size: 16px;
@@ -1674,7 +1711,7 @@ table p {
   color: var(--white);
   display: flex;
   flex-direction: column;
-  
+
   justify-content: end;
   width: 100%;
 
@@ -2315,7 +2352,7 @@ audio::-webkit-media-controls-volume-slider-container {
 }
 
 @keyframes slideIn {
-  
+
   10% {
     transform: translateY(1%);
   }

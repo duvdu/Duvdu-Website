@@ -46,17 +46,18 @@ function SectionProjects({ projects }) {
 
         return false;
     }
-
+    // const repeatedProjects = Array(90).fill(projects).flat();
+    const repeatedProjects = projects
     return projects?.length > 0 && (
         <div>
             <div className="sm:hidden grid minmax-150 gap-3">
-                {projects?.map((item, i) => (
+                {repeatedProjects?.map((item, i) => (
                     item &&
                     <SmallProjectItem key={i} cardData={item} className={i % 3 === 0 ? 'col-span-2 row-span-2' : ''} isbig={i % 3 === 0} />
                 ))}
             </div>
             <div className="hidden sm:grid minmax-280 gap-4">
-                {projects?.map((item, i) => (
+                {repeatedProjects?.map((item, i) => (
                     item &&
                     <ProjectItem key={i} cardData={item} className={isInSequence(i) ? 'col-span-2 row-span-2' : ''} />
                 ))}

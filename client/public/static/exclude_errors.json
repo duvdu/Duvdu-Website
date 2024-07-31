@@ -12,5 +12,7 @@
     "GetNotifications",
     "signup",
     "GetIsLoggedProducer",
+    "Rate",
+    "projectReport",
     "login"
 ]

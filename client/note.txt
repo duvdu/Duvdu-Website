@@ -156,4 +156,8 @@ width notification empty
 
 
 ----------------------------------
-react query
+Change Map Marker
+Change Map theme color
+Hide All places and controller in Map Make it clear 
+get Video File
+look at booking

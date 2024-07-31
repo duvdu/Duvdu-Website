@@ -127,10 +127,10 @@ const Header = ({
         <>
 
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
-            left-0 right-0 fixed z-10`} />
+            left-0 right-0 fixed z-20`} />
             {
                 islogin != null &&
-                <header className={`bg-DS_white w-full z-10 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
+                <header className={`bg-DS_white w-full z-20 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
                     <div className="py-3 hidden lg:block">
                         <div className="container">
                             <div className="header-wrap" >
@@ -243,6 +243,7 @@ const Header = ({
                                         <div className="cursor-pointer">
                                             <img
                                                 src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                                className="min-w-32"
                                                 alt="main logo"
                                             />
                                         </div>

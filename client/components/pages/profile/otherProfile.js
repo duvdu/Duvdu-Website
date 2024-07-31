@@ -160,7 +160,7 @@ function OtherProfile({
                         }
 
                     </div>
-                    <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
+                    <div className='right-side my-10 -translate-y-[80px] sm:-translate-y-0'>
                         {projectData.length === 0 ? (
                             <EmptyComponent message="No Projects Yet!" />
                         ) : (

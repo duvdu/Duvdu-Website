@@ -12,7 +12,7 @@ function TestOTPCode() {
 
     return (
         <>
-            <Popup id='OTP-tester' className={'w-full lg:w-[942px] h-fu'} header={'OTP Tester'} onOpen={handleOpen}>
+            <Popup id='OTP-tester' className={'w-full lg:w-[942px]'} header={'OTP Tester'} onOpen={handleOpen}>
                 <section className='mt-6 flex items-center justify-center w-72 h-36'>
                     <span className='font-medium text-lg text-center'>
                         Your Test OTP is <br />

@@ -23,14 +23,16 @@ const ProjectCover = ({ data }) => {
         alt="Project Cover"
       />
     ) : (
+      <div className='px-5'>
       <video
         ref={videoRef}
-        className='sm:rounded-[50px] w-full'
+        className='sm:rounded-[50px] border border-50 w-full'
         loop
         onClick={togglePlay} // Click to toggle play/pause
       >
         <source src={data.cover} type='video/mp4' />
       </video>
+      </div>
     )
   );
 }

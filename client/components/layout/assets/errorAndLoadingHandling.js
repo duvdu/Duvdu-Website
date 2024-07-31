@@ -6,7 +6,7 @@ import ErrorPopUp from "../../popsup/errorPopUp";
 import { errorConvertedMessage, exclude_error, exclude_loading, OpenPopUp } from "../../../util/util";
 import { LogOut } from "../../../redux/action/apis/auth/logout";
 
-const Layout = ({
+const ErrorAndLoadingHandling = ({
     logout_respond,
     LogOut,
     api // Assuming `api` is being passed as a prop
@@ -14,7 +14,7 @@ const Layout = ({
     const [errorMsg, setErrorMsg] = useState(null);
     const [errorReq, setErrorReq] = useState(null);
     const router = useRouter();
-    
+
     const clearErrors = () => {
         setErrorMsg(null);
         setErrorReq(null);
@@ -46,10 +46,7 @@ const Layout = ({
             <ErrorPopUp id="main_error_message" onCancel={clearErrors} errorReq={errorReq} errorMsg={errorMsg} />
             {api.loading && !exclude_loading(api.req) && (
                 <div className="fixed w-screen h-screen top-0 left-0 bg-white dark:bg-black z-50 flex justify-center items-center">
-                    <div>
-                        <img src="/assets/imgs/theme/loading-icon.png" alt="Loading" />
-                        <span className="text-xl"> Loading .... </span>
-                    </div>
+                    <img className="animate-pulse" src="/assets/imgs/theme/loading-icon.svg" alt="Loading" />
                 </div>
             )}
         </>
@@ -65,4 +62,4 @@ const mapDispatchToProps = {
     LogOut
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorAndLoadingHandling);
