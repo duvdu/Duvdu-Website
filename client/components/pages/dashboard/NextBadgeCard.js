@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NextBadgeCard = ({ badge }) => (
+const NextBadgeCard = ({ badge , next , title }) => (
     <div className='card flex flex-col justify-around blue-gradient w-full text-DS_white text-lg p-6 min-h-36'>
         <div className='capitalize text-lg opacity-70 text-white'>
-            next badge
+            next {next}
         </div>
         <div className='flex items-center'>
             <div className="progress-bar w-full">
@@ -13,7 +13,7 @@ const NextBadgeCard = ({ badge }) => (
                 </div>
             </div>
             <div className='text-[#F5D16B] text-center text-lg rounded-full min-w-max px-3 mx-3 border border-white border-opacity-50 capitalize'>
-                mid level
+                {title}
             </div>
         </div>
     </div>

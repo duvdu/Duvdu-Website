@@ -3,7 +3,7 @@ import React from 'react';
 import { convertToK } from '../../../util/util';
 import Icon from '../../Icons';
 
-const ProjectViewsCard = ({ recieved }) => (
+const ProjectViewsCard = ({ recieved  , userData}) => (
     <div className='flex flex-col justify-around card green-gradient recieved w-full p-4 sm:p-8 border border-[#97C39E] dark:border-[#577E61] '>
         <div className='flex items-center gap-5'>
             <div className='text-lg capitalize font-semibold opacity-70'>
@@ -26,15 +26,22 @@ const ProjectViewsCard = ({ recieved }) => (
 
         </div>
         <div className='flex flex-row justify-between items-center pt-5'>
-            {
-                recieved.data.map((e, index) => (
-                    <div className='text-center' key={index}>
-                        <span className='text-4xl sm:text-6xl text-DS_black font-semibold sm:font-normal'>{convertToK(e.number, 2)}</span>
+                    <div className='text-center' >
+                        <span className='text-4xl sm:text-6xl text-DS_black font-semibold sm:font-normal'>{convertToK(userData?.projectsView, 2)}</span>
                         <br />
-                        <span className='text-DS_black font-semibold sm:font-normal'>{e.title}</span>
+                        <span className='text-DS_black font-semibold sm:font-normal'>project views</span>
+                    </div>
+                    <div className='text-center' >
+                        <span className='text-4xl sm:text-6xl text-DS_black font-semibold sm:font-normal'>{convertToK(userData?.likes, 2)}</span>
+                        <br />
+                        <span className='text-DS_black font-semibold sm:font-normal'>likes</span>
+                    </div>
+                    <div className='text-center' >
+                        <span className='text-4xl sm:text-6xl text-DS_black font-semibold sm:font-normal'>{convertToK(userData?.profileViews, 2)}</span>
+                        <br />
+                        <span className='text-DS_black font-semibold sm:font-normal'>profile views</span>
                     </div>
 
-                ))}
         </div>
         <div className='flex'>
             <div className="gap-1 rounded-full px-4 flex sm:hidden items-center dashboard_padge mt-2">

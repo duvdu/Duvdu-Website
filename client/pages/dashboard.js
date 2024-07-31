@@ -93,10 +93,9 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                 <DashboardPopup GoBackOnCancel={true} />
                 <div className='container flex gap-6 flex-col lg:flex-row py-6 px-3'>
                     <div className='w-full flex flex-col gap-3 sm:gap-6'>
-                        <NextBadgeCard badge={badge} />
-                        <ProjectViewsCard recieved={recieved} />
+                        <NextBadgeCard next={data?.userData[0]?.rank?.nextRankTitle} title={data?.userData[0]?.rank?.title} badge={data?.userData[0]?.rank?.nextRankPercentage} />
+                        <ProjectViewsCard recieved={recieved} userData={data?.userData[0]} />
                         <LineChart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
-
                     </div>
                     <div className='w-full'>
                         <div className='flex flex-row gap-2'>
@@ -105,7 +104,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                     <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
                                     <br />
                                     <br />
-                                    <span className='text-4xl text-DS_black font-medium capitalize'>1530</span>
+                                    <span className='text-4xl text-DS_black font-medium capitalize'>{data?.userCategoryRank.projectsToday}</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
@@ -135,7 +134,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                         </span> */}
                                     </div>
                                     <br />
-                                    <span className='text-4xl text-DS_black font-medium capitalize'>top 30%</span>
+                                    <span className='text-4xl text-DS_black font-medium capitalize'>top {data.userCategoryRank.percentile}%</span>
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
@@ -145,7 +144,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                 </div>
                             </div>
                             <div className='w-full'>
-                                <ActivityCard activity={activity} />
+                                <ActivityCard data={data} />
                             </div>
                         </div>
                         <TopProjects projects={data?.topProjectViews} />
