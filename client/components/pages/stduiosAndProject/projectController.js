@@ -81,16 +81,16 @@ const ProjectController = ({ initialData,
                         )}
 
                         <Controller className="mr-auto ml-auto lg:m-0">
-                            <div onClick={openShare} className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
-                                <Icon name="share" />
+                            <div onClick={openShare} className="bg-[#0000001A] dark:bg-[#3028281a] border border-transparent dark:border-[#FFFFFF4D] size-16 sm:size-20 aspect-square rounded-full cursor-pointer flex justify-center items-center">
+                                <Icon className='w-4 sm:w-6' name="share" />
                             </div>
                             {auth.login && (
                                 <>
-                                    <div onClick={toggleDrawerAddFav} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer hidden sm:flex justify-center items-center">
-                                        <Icon className="text-white text-xl" name="plus" />
+                                    <div onClick={toggleDrawerAddFav} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-16 sm:size-20 aspect-square rounded-full cursor-pointer hidden sm:flex justify-center items-center">
+                                        <Icon className="text-white w-4 sm:w-6" name="plus" />
                                     </div>
-                                    <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-20 rounded-full cursor-pointer flex justify-center items-center">
-                                        <Icon className={`${loveIconName === 'far' ? 'text-white' : 'text-primary'} w-6 text-xl`} name="heart" type={loveIconName} />
+                                    <div onClick={handleLoveIconClick} className="bg-[#0000001A] dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] size-16 sm:size-20 aspect-square rounded-full cursor-pointer flex justify-center items-center">
+                                        <Icon className={`${loveIconName === 'far' ? 'text-white' : 'text-primary'} w-4 sm:w-6 text-xl`} name="heart" type={loveIconName} />
                                     </div>
                                 </>
                             )}
