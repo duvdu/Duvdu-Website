@@ -5,6 +5,7 @@ import Verify_account_now from "../../popsup/verify_account_now";
 import ErrorPopUp from "../../popsup/errorPopUp";
 import { errorConvertedMessage, exclude_error, exclude_loading, OpenPopUp } from "../../../util/util";
 import { LogOut } from "../../../redux/action/apis/auth/logout";
+import DuvduLoading from "../../elements/duvduLoading";
 
 const ErrorAndLoadingHandling = ({
     logout_respond,
@@ -49,6 +50,7 @@ const ErrorAndLoadingHandling = ({
                     <img className="animate-pulse" src="/assets/imgs/theme/loading-icon.svg" alt="Loading" />
                 </div>
             )}
+            
         </>
     );
 };
