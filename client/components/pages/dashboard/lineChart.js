@@ -2,12 +2,7 @@ import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import Icon from '../../Icons';
 
-const LineChart = ({ initialDatapoints, viewRate, isUp }) => {
-    const DATA_COUNT = 11;
-    const labels = [];
-    for (let i = 0; i < DATA_COUNT; ++i) {
-        labels.push(i.toString());
-    }
+const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
 
     const chartRef = useRef(null);
     const gradientRef = useRef(null);
@@ -30,7 +25,7 @@ const LineChart = ({ initialDatapoints, viewRate, isUp }) => {
                 chartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: labels,
+                        labels: Months,
                         datasets: [
                             {
                                 label: 'project views',
@@ -157,7 +152,7 @@ const LineChart = ({ initialDatapoints, viewRate, isUp }) => {
             clearTimeout(timeoutId);
         };
 
-    }, [labels, initialDatapoints]);
+    }, [Months, initialDatapoints]);
 
     return (
         <div className='relative h-full '>

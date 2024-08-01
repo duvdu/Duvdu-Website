@@ -86,6 +86,8 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
         ]
     }
 
+    const charData = data?.userProjectViews.map((item)=> item.totalViews)
+    const months = data?.userProjectViews.map((item)=> item.month.toString())
 
     return (
         <>
@@ -95,7 +97,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                     <div className='w-full flex flex-col gap-3 sm:gap-6'>
                         <NextBadgeCard next={data?.userData[0]?.rank?.nextRankTitle} title={data?.userData[0]?.rank?.title} badge={data?.userData[0]?.rank?.nextRankPercentage} />
                         <ProjectViewsCard recieved={recieved} userData={data?.userData[0]} />
-                        <LineChart initialDatapoints={chart.initialDatapoints} viewRate={chart.viewRate} isUp={chart.isUp} />
+                        <LineChart initialDatapoints={charData} Months={months} viewRate={chart.viewRate} isUp={chart.isUp} />
                     </div>
                     <div className='w-full'>
                         <div className='flex flex-row gap-2'>
