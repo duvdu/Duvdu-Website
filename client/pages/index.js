@@ -80,10 +80,10 @@ const Home = ({
                     </div>
                     <div className="mx-auto w-full py-12">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> trendy categories </h2>
-                        <div className="flex overflow-auto lg:container">
+                        <div className="flex gap-3 px-3 overflow-auto lg:container">
                             {homeTrenyList.map((data, index) => (
                                 <div
-                                    className="bg-black ml-3 aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
+                                    className="bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
                                     style={{ backgroundImage: `url(${data.image})` }}
                                     key={index}
                                 >
@@ -100,6 +100,7 @@ const Home = ({
                                     </Link>
                                 </div>
                             ))}
+
                         </div>
                     </div>
                 </section>
@@ -111,9 +112,9 @@ const Home = ({
                             </div>
                             <div className="overflow-auto hide-scrollable-container">
                                 <div className="flex">
-                                <DraggableList>
-                                    {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
-                                        <Link key={index} href={data.cycle ? `/${data.cycle}` : ''}  >
+                                    <DraggableList>
+                                        {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
+                                            <Link key={index} href={data.cycle ? `/${data.cycle}` : ''}  >
                                                 <div
                                                     className="bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] lg:w-[314px] ml-3"
                                                     style={{ backgroundImage: `url(${data.image})` }}
@@ -122,10 +123,11 @@ const Home = ({
                                                         {data.title}
                                                     </span>
                                                 </div>
-                                        </Link>
-                                    ))}
-                                    <div className="hidden lg:block absolute z-10 h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 right-6" dir="rtl" />
-                                </DraggableList>
+                                            </Link>
+                                        ))}
+                                        <div className="hidden lg:block absolute z-10 h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 right-6" dir="rtl" />
+                                        <div className="size-3"></div>
+                                    </DraggableList>
                                 </div>
                             </div>
                         </section>
@@ -153,6 +155,8 @@ const Home = ({
                                         </Link>
                                     ))}
                                     <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint right-6" dir="rtl">  </div>
+                                    <div className="size-3"></div>
+
                                 </DraggableList>
                             </div>
                         </div>
@@ -197,6 +201,8 @@ const Home = ({
                                         </div>
                                     ))}
                                     <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint2 right-6" dir="rtl">  </div>
+                                    <div className="size-3"></div>
+
                                 </DraggableList>
                             </div>
 

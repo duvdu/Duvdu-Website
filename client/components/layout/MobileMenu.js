@@ -27,30 +27,30 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
             setIsDarkMode(isDarkMode)
         }, [])
         return <div className="container">
-        <div className="flex items-center py-2 border-b">
-            <div className="flex justify-start w-full">
-                <Link href="/">
-                    <a>
-                        <img key={isDarkMode}
-                            src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                            className="w-32"
-                            alt="main logo"
-                        />
-                    </a>
-                </Link>
-            </div>
-
-
-            <div className="flex items-center justify-center gap-2 ">
-                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={toggleOpenSearch}>
-                    <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'} />
+            <div className="flex items-center py-2 border-b">
+                <div className="flex justify-start w-full">
+                    <Link href="/">
+                        <a>
+                            <img key={isDarkMode}
+                                src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
+                                className="w-32"
+                                alt="main logo"
+                            />
+                        </a>
+                    </Link>
                 </div>
-                <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={onClick}>
-                    <Icon className="size-6 items-center justify-center" name={'x-icon'} />
+
+
+                <div className="flex items-center justify-center gap-2 ">
+                    <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={toggleOpenSearch}>
+                        <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'} />
+                    </div>
+                    <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={onClick}>
+                        <Icon className="size-6 items-center justify-center" name={'x-icon'} />
+                    </div>
                 </div>
             </div>
         </div>
-</div>
     }
 
     const SearchBody = () => <div className="h-body bg-[#F7F9FB]" >
@@ -204,6 +204,16 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                 <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm">register </div>
             </Link>
         </div>
+
+    const DownLoadApp = () =>
+        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-6 mx-5">
+            <div className="flex flex-col gap-3">
+            <h3 className="font-bold text-xl"> Get <span className="text-primary"> duvdu </span> on your mobile phone Now! </h3>
+            
+                <img src="/assets/imgs/theme/tab/android.png"/>
+                <img src="/assets/imgs/theme/tab/IOS.png"/>
+            </div>
+        </div>
     const SpeficIcon = ({ name }) => {
         return (
             <div className="size-4 flex justify-center items-center">
@@ -254,6 +264,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                                 !islogin &&
                                 <Auth />
                             }
+                            <DownLoadApp />
                         </>
                     }
                     {page == 3 &&

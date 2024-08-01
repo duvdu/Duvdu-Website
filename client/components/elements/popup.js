@@ -56,7 +56,7 @@ const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, ad
                         </div>
                         {
                             header &&
-                            <span className='flex rounded-full header-border px-7 py-4 text-lg font-medium'>
+                            <span className='flex rounded-full header-border px-7 py-4 text-sm sm:text-lg font-medium'>
                                 {header}
                             </span>
                         }
