@@ -20,7 +20,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
         },
 
     ];
-    
+
     const mapOptions = {
         disableDefaultUI: false, // Disables all default UI
         zoomControl: false, // Disables zoom control
@@ -66,15 +66,15 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                                 component.types.includes("administrative_area_level_1") ||
                                 component.types.includes("administrative_area_level_2") ||
                                 component.types.includes("locality") ||
-                                component.types.includes("street_address") || 
+                                component.types.includes("street_address") ||
                                 component.types.includes("route") ||
                                 component.types.includes("premise") ||
                                 component.types.includes("subpremise")
                             )
                             .map(component => component.short_name)
                             .join(', ')
-                            .replace("Governorate","");
-                        
+                            .replace("Governorate", "");
+
                         setAddress(shortAddress);
                         if (onChangeAddress) {
                             onChangeAddress({
@@ -92,7 +92,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                 }
             });
         }
-        
+
     }, [markerPosition?.lat, google]);
 
     useEffect(() => {
@@ -166,6 +166,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
             />
             <div className='h-2' />
             <div className={`${className}`}>
+                {isreadOnly && <a target='_blank' href={`https://www.google.com/maps?q=${markerPosition?.lat},${markerPosition?.lng}`} className={`absolute w-[500px] h-[1000px] z-10 cursor-pointer`} />}
                 <Map
                     google={google}
                     zoom={17}
@@ -174,7 +175,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
                     center={markerPosition}
                     onClick={onMapClicked}
                     {...mapOptions}
-                    
+
                 >
                     {markerPosition && (
                         <Marker position={markerPosition} icon={markerIcon} />
