@@ -111,7 +111,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
-                                            <span className='text-sm font-medium opacity-70'>videography</span>
+                                            <span className='text-sm font-medium opacity-70'>{data?.userData[0]?.category?.title}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                     <br />
                                     <div className='flex mt-2'>
                                         <div className='dashboard_padge px-2 py-1'>
-                                            <span className='text-sm font-medium opacity-70'>videography</span>
+                                            <span className='text-sm font-medium opacity-70'>{data.userData[0].category.title}</span>
                                         </div>
                                     </div>
                                 </div>
