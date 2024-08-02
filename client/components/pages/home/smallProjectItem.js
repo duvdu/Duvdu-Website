@@ -78,7 +78,17 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
         }
 
     };
+    const handleTouchStart = () => {
+        const timeout = setTimeout(() => {
+            handleHover(); // Trigger hover behavior on long press
+            handleSoundIconClick()
+        }, 500); // Adjust duration for long press
+        
+    };
 
+    const handleTouchEnd = () => {
+        
+    };
 
     // useEffect(() => {
     //   if (cardData._id) {
@@ -93,6 +103,8 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                 <div
                     onMouseEnter={handleHover}
                     onMouseLeave={handleLeave}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
                     className={(isbig ? 'home_project_big' : 'home_project_small') + ' home_project'}>
                     <>
                         {

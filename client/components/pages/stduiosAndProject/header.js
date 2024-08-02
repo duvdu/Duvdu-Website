@@ -4,18 +4,25 @@ import Selector from "../../elements/CustomSelector";
 import RatingProject from "../../popsup/ratingProject";
 import { OpenPopUp } from "../../../util/util";
 import ReportProject from "../../popsup/report-project";
+import { connect } from "react-redux";
 
-const Header = ({ data }) => {
+const Header = ({ data, islogin }) => {
 
     const handleDropdownSelect = (v) => {
-        if(v == "Rate") OpenPopUp("Rating-project")
-        else if(v == "Report") OpenPopUp("report-project2")
+        if(!islogin) {
+            OpenPopUp("registration-required")
+            return
+        }
+        if (v == "Rate") OpenPopUp("Rating-project")
+        else if (v == "Report") OpenPopUp("report-project2")
     };
 
     return (
         <>
             <RatingProject data={data} />
-            <ReportProject data={data}/>
+            {islogin &&
+                <ReportProject data={data} />
+            }
             <h1 className="text-xl capitalize opacity-80 font-bold">
                 {data?.name || data?.studioName}
             </h1>
@@ -55,5 +62,12 @@ const Header = ({ data }) => {
     );
 };
 
+const mapStateToProps = (state) => ({
+    islogin: state.auth.login,
+});
 
-export default Header;
+const mapDispatchToProps = {
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
