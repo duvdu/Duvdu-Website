@@ -24,7 +24,7 @@ const DraggableList = ({ children }) => {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 3; // Adjust the scroll speed as needed
+    const walk = (x - startX) ; // Adjust the scroll speed as needed
     containerRef.current.scrollLeft = scrollLeft - walk;
   };
   const handleTouchStart = (e) => {
@@ -37,7 +37,7 @@ const DraggableList = ({ children }) => {
     if (!isDown) return;
     e.preventDefault();
     const x = e.touches[0].pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 3; // Adjust the scroll speed as needed
+    const walk = (x - startX) ; // Adjust the scroll speed as needed
     containerRef.current.scrollLeft = scrollLeft - walk;
   };
 
