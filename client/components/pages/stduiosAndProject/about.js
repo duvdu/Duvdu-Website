@@ -19,7 +19,7 @@ const About = ({ data }) => (
                     </span>
                 </div>
             </div>
-            <div className='flex justify-center pt-25 items-center gap-3 '>
+            <div className='flex justify-center pt-25 items-center gap-1 sm:gap-3'>
                 {data?.user?.rank?.title &&
                     <p className='rank'>{data?.user?.rank?.title}</p>
                 }
