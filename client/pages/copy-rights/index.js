@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import CopyRightCard from '../../components/pages/copy-writeer/copyRightCard';
 import { OpenPopUp } from '../../util/util';
 import EmptyComponent from './../../components/pages/contracts/emptyComponent';
+import DuvduLoading from '../../components/elements/duvduLoading';
 
 
 
@@ -82,7 +83,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                                 <CopyRightCard key={i} onClick={() => handlesetdata(item)} cardData={item} />
                             )}
                         </div>
-                        <img className={(api.loading && api.req == "GetCopyrights" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
+                        <DuvduLoading loadingIn={"GetCopyrights"}/>
                         <Formsubmited />
                     </div>
                 </section>

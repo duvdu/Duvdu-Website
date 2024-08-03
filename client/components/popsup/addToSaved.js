@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import Icon from "../../components/Icons";
 import Drawer from '../elements/drawer';
 import DuvduLoading from '../elements/duvduLoading';
+import EmptyComponent from '../pages/contracts/emptyComponent';
 
 
 function AddToSaved({
@@ -58,10 +59,10 @@ function AddToSaved({
             <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To board" onCancel={close} />
             <Drawer className='z-30' toggleDrawer={toggleDrawerAddFav} name={'Add To Saved Projects'} isOpen={isOpen}>
                 <DuvduLoading loadingIn={"AddProjectToBoard"} />
-                <div className='flex flex-col w-full sm:w-[565px] overflow-y-scroll'>
+                <div className='flex flex-col w-full overflow-y-scroll'>
                     {boards?.filter(board => !isProjectInBoard(board, projectId)).map((board, index) => (
                         <div key={index} className="h-20 rounded-full mt-9 relative overflow-hidden cursor-pointer" onClick={() => handleNextStep(board._id)}>
-                            <div className="absolute z-20 flex items-center w-full h-full p-7">
+                            <div className="absolute z-20 flex items-center size-full p-7">
                                 <div>
                                     <span className="text-white whitespace-nowrap border border-opacity-20 rounded-full px-3 py-1">{board.projects.length} projects</span>
                                 </div>
@@ -70,20 +71,14 @@ function AddToSaved({
                                 </div>
                             </div>
                             {board.projects.length == 0 ?
-                                <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
+                                <div className="w-full img-cart-style flex justify-center items-center" >
                                     <Icon className="w-44" name={'dvudu-image'} />
                                 </div> : <img className="absolute -translate-y-1/2 blur-sm" src={board.projects[0].project.cover} />}
                         </div>
                     ))}
                     {boards?.filter(board => !isProjectInBoard(board, projectId))?.length === 0 && (
-                        <div className='py-4'>
-                            <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p'>
-                                <div className='w-[540px] h-[400]px bg-gray-600 mt-10' />
-                                <img src='/assets/imgs/theme/Empty.svg' className='lg:w-[540px] lg:h-[450px]' />
-                                <h3 className='text-2xl font-bold mt-8 mb-4'>
-                                    There's No Boards Yet
-                                </h3>
-                            </div>
+                        <div className='mt-4 mx-auto'>
+                            <EmptyComponent message={"There's No Boards Yet"} />
                         </div>
                     )}
                 </div>

@@ -89,16 +89,14 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                             loop={true}
                                             autoplay={{ delay: 4000 }}
                                             speed={1500}
-
-                                            
                                         >
                                             {imageSources.map((source, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <div className="relative min-h-[790px] lg:min-h-0 min-w-96 size-full">
-                                                        <div className="absolute inset-0 flex flex-col auth-gradient px-4 lg:px-16">
-                                                            <div className="absolute bottom-20">
+                                                    <div className="relative min-h-[790px] lg:min-h-0 lg:min-w-96 size-full">
+                                                        <div className="absolute inset-0 flex flex-col auth-gradient px-[7px] sm:px-4 lg:px-16">
+                                                            <div className="absolute bottom-20 ">
                                                                 <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>
-                                                                <p className="text-white opacity-60 text-sm leading-6 capitalize w-full">{source.p}</p>
+                                                                <p className="text-white opacity-60 text-sm leading-6 capitalize">{source.p}</p>
                                                             </div>
                                                         </div>
                                                         {

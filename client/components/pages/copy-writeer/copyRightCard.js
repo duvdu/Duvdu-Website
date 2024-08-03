@@ -46,12 +46,12 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
       <div className='flex justify-between mt-7'>
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>pricing</p>
-          <span className='text-5xl font-medium'>{cardData?.price || 0} $</span>
+          <span className='text-4xl lg:text-5xl font-medium'>{cardData?.price || 0} $</span>
         </div>
         <div className='w-[1px] bg-black opacity-15' />
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>duration</p>
-          <span className='text-5xl font-medium'>{cardData?.duration?.value || 0} Days</span>
+          <span className='text-4xl lg:text-5xl font-medium'>{cardData?.duration?.value || 0} Days</span>
         </div>
       </div>
 
