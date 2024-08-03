@@ -78,7 +78,18 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
         }
 
     };
+    const handleTouchStart = () => {
+        console.log("???")
+        const timeout = setTimeout(() => {
+            handleHover(); // Trigger hover behavior on long press
+        }, 500); // Adjust duration for long press
+        setLongPressTimeout(timeout);
+    };
 
+    const handleTouchEnd = () => {
+        clearTimeout(longPressTimeout);
+        handleLeave(); // Trigger leave behavior when touch ends
+    };
 
     // useEffect(() => {
     //   if (cardData?._id) {
@@ -93,6 +104,8 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                 <div
                     onMouseEnter={handleHover}
                     onMouseLeave={handleLeave}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
                     className='project home_project'>
                     <>
                         {

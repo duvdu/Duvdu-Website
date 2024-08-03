@@ -24,7 +24,7 @@ const About = ({ data }) => (
                     <p className='rank'>{data?.user?.rank?.title}</p>
                 }
                 {data?.category?.title &&
-                    <p className="info-container">{data?.category?.title}</p>
+                    <p className="info-container whitespace-nowrap">{data?.category?.title}</p>
                 }
                 <div className='info-container justify-center flex items-center gap-2 w-20'>
                     <p>{data?.user?.rate?.totalRates || 0}</p>
