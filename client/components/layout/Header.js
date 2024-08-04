@@ -35,10 +35,10 @@ const Header = ({
 }) => {
 
     const { i18n, t } = useTranslation();
-    
+
     const [width, setWidth] = useState(0);
 
-    
+
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
     }
@@ -117,7 +117,7 @@ const Header = ({
 
     }, []);
 
-    
+
     const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
     const totalUnwatchedNotification = api?.GetNotifications?.data?.filter(message => !message.watched).length;
     const totalNews = totalUnreadMessages + totalUnwatchedNotification
@@ -259,6 +259,9 @@ const Header = ({
                                     </div>
                                 }
                                 <div className="flex lg:hidden items-center justify-center gap-2">
+                                        <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
+                                            <Icon className="items-center justify-center" name={'bell'} />
+                                        </div>
                                     <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={() => toggleClick(3)}>
                                         <Icon className="size-6 flex items-center justify-center" name={'search-menu'} />
                                     </div>

@@ -250,7 +250,7 @@ const RelatedCategoriesCard = ({ className, title, count }) => {
     return (
         <div className={`flex flex-col items-center justify-around border border-[#1A73EBB2] rounded-3xl w-full py-2 cursor-pointer ${className}`}>
             <span className="text-primary text-lg font-semibold opacity-80 capitalize">{title}</span>
-            <span className="text-base font-medium opacity-50 capitalize">{count} creative</span>
+            <span className="text-base font-medium opacity-50 capitalize">{count} {creative}</span>
         </div>
     );
 }

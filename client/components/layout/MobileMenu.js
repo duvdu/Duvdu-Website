@@ -42,6 +42,11 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
 
                 <div className="flex items-center justify-center gap-2 ">
+                <Link href={"?action=notifications"}>
+                    <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] cursor-pointer flex items-center justify-center" >
+                        <Icon className="items-center justify-center" name={'bell'} />
+                    </div>
+                    </Link>
                     <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={toggleOpenSearch}>
                         <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'} />
                     </div>
@@ -73,11 +78,6 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                             url: '?action=settings',
                             icon: 'gear',
                             name: 'settings',
-                        },
-                        {
-                            url: '?action=notifications',
-                            icon: 'bell',
-                            name: 'notifications',
                         },
                     ].map((item, index) =>
                         <Link key={index} href={item.url}>
