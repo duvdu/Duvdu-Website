@@ -27,6 +27,8 @@ const IsincludesSVG = [
   "rate-star",
   "rate-star-off",
   "dvudu-image",
+  "pause-video",
+  "play-video",
   "file-error"
 ];
 
@@ -88,6 +90,10 @@ const GetIconSVG = ({ name, className, ...rest }) => {
       return <StarRate className={className} {...rest} />
     case "rate-star-off":
       return <StarOff className={className} {...rest} />
+    case "pause-video":
+      return <PauseVieo className={className} {...rest} />
+    case "play-video":
+      return <PlayVieo className={className} {...rest} />
     default:
       return <Temp />
   }
@@ -345,11 +351,25 @@ const StarRate = ({ className, ...rest }) =>
 const StarOff = ({ className, ...rest }) =>
   <div className={className} {...rest}>
     <svg width="44" height="41" viewBox="0 0 44 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.984 1.62512C21.3996 0.7913 22.6004 0.7913 23.016 1.62512L28.3959 12.419C28.5609 12.7502 28.8799 12.9797 29.2489 13.0327L41.2787 14.7636C42.208 14.8973 42.5791 16.0282 41.9066 16.6772L33.2018 25.0791C32.9348 25.3368 32.8129 25.7082 32.8759 26.0721L34.9309 37.9358C35.0896 38.8522 34.1182 39.5511 33.287 39.1184L22.5272 33.5171C22.1972 33.3453 21.8028 33.3453 21.4728 33.5171L10.713 39.1184C9.88183 39.5511 8.91038 38.8522 9.06912 37.9358L11.1241 26.0721C11.1871 25.7082 11.0652 25.3368 10.7982 25.0791L2.09338 16.6772C1.42094 16.0282 1.792 14.8973 2.7213 14.7636L14.7511 13.0327C15.1201 12.9797 15.4391 12.7502 15.6041 12.419L20.984 1.62512Z"  fill="#DEE8F5" stroke="#4491FF" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M20.984 1.62512C21.3996 0.7913 22.6004 0.7913 23.016 1.62512L28.3959 12.419C28.5609 12.7502 28.8799 12.9797 29.2489 13.0327L41.2787 14.7636C42.208 14.8973 42.5791 16.0282 41.9066 16.6772L33.2018 25.0791C32.9348 25.3368 32.8129 25.7082 32.8759 26.0721L34.9309 37.9358C35.0896 38.8522 34.1182 39.5511 33.287 39.1184L22.5272 33.5171C22.1972 33.3453 21.8028 33.3453 21.4728 33.5171L10.713 39.1184C9.88183 39.5511 8.91038 38.8522 9.06912 37.9358L11.1241 26.0721C11.1871 25.7082 11.0652 25.3368 10.7982 25.0791L2.09338 16.6772C1.42094 16.0282 1.792 14.8973 2.7213 14.7636L14.7511 13.0327C15.1201 12.9797 15.4391 12.7502 15.6041 12.419L20.984 1.62512Z" fill="#DEE8F5" stroke="#4491FF" strokeWidth="2" strokeLinejoin="round" />
     </svg>
 
   </div>
 
+
+const PauseVieo = ({ className, ...rest }) =>
+  <div className={className} {...rest}>
+    <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.7419 8.42188C14.0687 9.16128 14.0735 10.0914 12.7419 10.9274L2.45234 17.8668C1.15948 18.5568 0.281404 18.1494 0.18923 16.6565L0.145569 2.13231C0.116461 0.757125 1.24923 0.368589 2.32864 1.02792L12.7419 8.42188Z" fill="white" />
+    </svg>
+  </div>  
+  
+const PlayVieo = ({ className, ...rest }) =>
+  <div className={className} {...rest}>
+    <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.7419 8.42188C14.0687 9.16128 14.0735 10.0914 12.7419 10.9274L2.45234 17.8668C1.15948 18.5568 0.281404 18.1494 0.18923 16.6565L0.145569 2.13231C0.116461 0.757125 1.24923 0.368589 2.32864 1.02792L12.7419 8.42188Z" fill="white" />
+    </svg>
+  </div>
 
 const Temp = ({ className, ...rest }) =>
   <div className={className} {...rest}>
