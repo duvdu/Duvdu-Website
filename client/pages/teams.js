@@ -154,15 +154,22 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
 };
 
 const Empty = () =>
-    <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p-10'>
+    <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet  md:p-10'>
         <div className='bg-gray-600 mt-5' />
-        <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[540px] lg:h-[450px]' />
-        <h3 className='text-[40px] font-semibold mt-8 mb-4'>
-            Team Projects
-            <p className="text-2xl opacity-50">
-                “Team Projects” are a great way to build teams for your project.
-            </p>
-        </h3>
+        <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[430px] lg:h-[450px]' />
+        {/* <div className='flex flex-col gap-2'>
+            <h3 className='font-bold text-4xl text-center'>Team Projects</h3>
+        </div> */}
+        <div className='felx flex-col gap-2 text-center w-[20rem] md:w-[27rem]'>
+            <h3 className='text-[40px] font-semibold opacity-80 mt-8 mb-4 px-'>
+                Team Projects
+            </h3>
+                <p className="text-2xl opacity-50 text-center font-medium  ">
+                    “Team Projects” are a great way to build teams for your project.
+                </p>
+        </div>
+        
+
     </div>
 
 const mapStateToProps = (state) => ({

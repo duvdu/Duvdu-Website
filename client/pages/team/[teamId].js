@@ -91,7 +91,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
     const data = respond?.data?.creatives || [];
     console.log(data)
     return (
-        <div className="h-body w-full overflow-y-scroll pt-14 addUserScroll">
+        <div className="md:h-body w-full overflow-y-scroll pt-14 addUserScroll">
             {!isAddToTeamPage ? (
                 <>
                     <h1 className="page-header mb-8">Team Project</h1>
@@ -117,7 +117,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
 
 const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => (
     <>
-        <div className="flex justify-between my-3">
+        <div className="flex justify-between m-[10px]">
             <span className="opacity-60 capitalize font-medium">
                 {section?.category?.title}
             </span>
@@ -183,7 +183,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
                 <img className='rounded-full h-full aspect-square object-cover object-top' src={person.user.profileImage} alt='profile img' />
                 <div className='w-full flex flex-col justify-center'>
                     <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
-                    <span className='text-DS_black text-[13px] opacity-50'>{person.totalAmount}</span>
+                    <span className='text-DS_black text-[13px] font-bold opacity-50'>${person.totalAmount}</span>
                 </div>
                 <div className={`flex relative rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
                     <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>message</span>
@@ -202,14 +202,14 @@ const Person = ({ person, onDelete, onUpdate }) => {
 const RightSide = ({ isSolid, data, onClick }) => {
     console.log(data)
 
-    return <div className="w-full max-w-[483px] h-body py-10">
+    return <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
         <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
             <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
                 <h2 className="opacity-80 text-2xl font-semibold capitalize">Team Details</h2>
                 <div className="w-full flex flex-col gap-8 h-full mt-6">
                     <section>
                         <h3 className="opacity-60 capitalize text-base mb-2">Team Name</h3>
-                        <span className="font-bold">
+                        <span className="font-bold capitalize">
                             {data.title}
                         </span>
                     </section>
@@ -254,7 +254,7 @@ const RightSide = ({ isSolid, data, onClick }) => {
                     </div> */}
                 </div>
             </div>
-            {!isSolid && (
+            {!isSolid && false && (
                 <div className="border-t flex flex-col gap-4 bottom-0 w-full h-20 p-6 items-center">
                     <div className="flex justify-between w-full">
                         <span className="font-bold">Total Amount</span>

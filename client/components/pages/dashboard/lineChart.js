@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import Icon from '../../Icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
 
@@ -153,7 +154,8 @@ const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
         };
 
     }, [Months, initialDatapoints]);
-
+    const isDown = initialDatapoints?.slice(-2)[0]>initialDatapoints?.slice(-2)[1]
+    console.log(isDown)
     return (
         <div className='relative h-full '>
             <div className='absolute h-24 w-full flex items-center px-10 gap-5'>
@@ -164,15 +166,15 @@ const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
 
                     <span >
                         {
-                            !isUp && <Icon className='text-[#B41D38]' name={'arrow-down-long'} />
+                            isDown && <FontAwesomeIcon className='text-[#B41D38]' icon="fa-solid fa-arrow-up-long" />
                         }
                         {
-                            isUp && <Icon className='text-[#289C34] dark:text-[#2DB03A]' name={'arrow-up-long'} />
+                            !isDown && <FontAwesomeIcon className='text-[#289C34] dark:text-[#2DB03A]' icon="fa-solid fa-arrow-up-long" /> 
                         }
-
+ 
                     </span>
 
-                    <span className={`${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {viewRate}%</span>
+                    <span className={`${!isDown ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}> {viewRate}%</span>
                 </div>
             </div>
             <canvas className='card red-gradient border-2 border-[#CABEC1] dark:border-[#6B5A61]' id="chart" ref={chartRef} style={{ minHeight: '100%', maxWidth: "100%" }} />

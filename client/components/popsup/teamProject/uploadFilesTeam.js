@@ -95,7 +95,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
 
     return (
         <>
-            <Popup id='team_uploading_files' className='w-full lg:w-[600px] flex flex-col gap-9' addWhiteShadow={true} header={'Create New Team'} onCancel={handleCancel} ref={elementRef}>
+            <Popup id='team_uploading_files' className='' addWhiteShadow={true} header={'Create New Team'} onCancel={handleCancel} ref={elementRef}>
             {
                 isPopupVisible &&
                 <div className='lg:w-[600px]'>

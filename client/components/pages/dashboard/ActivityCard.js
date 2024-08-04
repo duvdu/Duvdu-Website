@@ -12,8 +12,8 @@ const ActivityCard = ({  data }) => (
         </div>
                 <div>
                     <div className='mb-2'>
-                        <span className='text-4xl font-medium'>{convertToK(data?.contracts[0]?.completedCount,2)} </span>
-                        <span className='text-xl capitalize font-medium opacity-50'>Contracts</span>
+                        <span className='text-5xl font-medium'>{convertToK(data?.contracts[0]?.completedCount,2)} </span>
+                        <span className='text-3xl capitalize font-medium opacity-50'>Contracts</span>
                     </div>
                     <div className='flex'>
                         <div className='dashboard_padge text-sm mx-1 px-2 text-DS_black opacity-70'>Done</div>
@@ -21,8 +21,8 @@ const ActivityCard = ({  data }) => (
                 </div>
                 <div>
                     <div className='mb-2'>
-                        <span className='text-4xl font-medium'>{convertToK(data?.contracts[0]?.pendingCount,2)} </span>
-                        <span className='text-xl capitalize font-medium opacity-50'>Contracts</span>
+                        <span className='text-5xl font-medium'>{convertToK(data?.contracts[0]?.pendingCount,2)} </span>
+                        <span className='text-3xl capitalize font-medium opacity-50'>Contracts</span>
                     </div>
                     <div className='flex'>
                         <div className='dashboard_padge text-sm mx-1 px-2 text-DS_black opacity-70'>Pending</div>
@@ -30,8 +30,8 @@ const ActivityCard = ({  data }) => (
                 </div>
                 <div>
                     <div className='mb-2'>
-                        <span className='text-4xl font-medium'>{convertToK(data?.contracts[0]?.ongoingCount,2)} </span>
-                        <span className='text-xl capitalize font-medium opacity-50'>Contracts</span>
+                        <span className='text-5xl font-medium'>{convertToK(data?.contracts[0]?.ongoingCount,2)} </span>
+                        <span className='text-3xl capitalize font-medium opacity-50'>Contracts</span>
                     </div>
                     <div className='flex'>
                         <div className='dashboard_padge text-sm mx-1 px-2 text-DS_black opacity-70'>Ongoing</div>

@@ -96,7 +96,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                 <div className='container flex gap-6 flex-col lg:flex-row py-6 px-3'>
                     <div className='w-full flex flex-col gap-3 sm:gap-6'>
                         <NextBadgeCard next={data?.userData[0]?.rank?.nextRankTitle} title={data?.userData[0]?.rank?.title} badge={data?.userData[0]?.rank?.nextRankPercentage} />
-                        <ProjectViewsCard recieved={recieved} userData={data?.userData[0]} />
+                        <ProjectViewsCard recieved={chart.viewRate} userData={data?.userData[0]} />
                         <LineChart initialDatapoints={charData} Months={months} viewRate={chart.viewRate} isUp={chart.isUp} />
                     </div>
                     <div className='w-full'>

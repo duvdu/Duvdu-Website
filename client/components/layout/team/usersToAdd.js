@@ -1,9 +1,8 @@
 import Icon from "../../../components/Icons";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Filter from "../../../components/elements/filter";
 import { convertToK } from '../../../util/util';
 import { connect } from "react-redux";
-import { GetTeamProject } from "../../../redux/action/apis/teamproject/getone";
 import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
 import SelectDate from "../../elements/selectDate";
@@ -27,7 +26,6 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                         {info.location && (
                             <span className='flex items-center gap-2 opacity-40'>
                                 <div className='w-3'>
-                                    {/* Assuming Icon is a component that renders an icon */}
                                     <Icon name="location-dot" />
                                 </div>
                                 <span className="location">{info.location}</span>
@@ -46,7 +44,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                     <div className='border rounded-full px-4 py-1 text-lg flex items-center gap-1'>
                         <span>{info.rate.ratersCounter || 0}</span>
                         <div className='w-5'>
-                            <Icon className='text-primary' name={'rate-star'} />
+                            <Icon className='text-primary' name={'star'} />
                         </div>
                     </div>
                 </div>
@@ -65,9 +63,6 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                     </div>
                 </div>
                 <div className="flex gap-3 mt-6 justify-center items-center">
-
-                    {/* <span className="text-5xl">${info?.pricePerHour || 0}<span className="text-2xl opacity-50">/hr</span></span> */}
-
                     <div onClick={onChoose} className="flex items-center justify-center capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
                         <span className="text-primary font-bold text-lg my-5">add to team</span>
                     </div>
@@ -100,66 +95,53 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
     const page = 1;
     const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
-    const pagganation = respond?.pagination
-    useEffect(() => {
-        FindUser({ limit: limit, page: page })
-    }, [limit])
+    const pagganation = respond?.pagination;
+    const observerRef = useRef();
 
     useEffect(() => {
-        const scrollableDiv = document.querySelector('.addUserScroll');
+        FindUser({ limit: limit, page: page });
+    }, [limit]);
 
-        const handleScroll = () => {
-            if (pagganation?.totalPages > page) {
-                const scrollTop = scrollableDiv.scrollTop;
-                const scrollHeight = scrollableDiv.scrollHeight;
-                const clientHeight = scrollableDiv.clientHeight;
-                const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-
-                if (scrolledToBottom) {
-                    setLimit(showLimit + limit);
-                }
+    useEffect(() => {
+        if (!observerRef.current) return;
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                setLimit(prevLimit => prevLimit + showLimit);
             }
-        };
+        });
+        observer.observe(observerRef.current);
 
-        if (scrollableDiv) {
-            scrollableDiv.addEventListener('scroll', handleScroll);
-            return () => {
-                scrollableDiv.removeEventListener('scroll', handleScroll);
-            };
-        }
-    }, [page, pagganation?.totalPages, showLimit, limit, setLimit]);
-
+        return () => observer.disconnect();
+    }, [showLimit]);
 
     const openpopUp = (value) => {
-        setId(value._id)
+        setId(value._id);
         const popup = document.querySelector('.ADD_HOURS_TO_CREATIVE');
         if (popup) {
             popup.classList.add('show');
         }
-    }
-
+    };
 
     const onadd = () => {
-        const form = new FormData()
-        form.append('user', id)
-        form.append('details', details)
-        form.append('hourPrice', price)
-        form.append('workHours', hours)
-        form.append('startDate', startDate)
-        form.append('duration', durations)
-        form.append('attachments', attachments)
+        const form = new FormData();
+        form.append('user', id);
+        form.append('details', details);
+        form.append('hourPrice', price);
+        form.append('workHours', hours);
+        form.append('startDate', startDate);
+        form.append('duration', durations);
+        form.append('attachments', attachments);
 
         const popup = document.querySelector('.ADD_HOURS_TO_CREATIVE');
         if (popup) {
             popup.classList.remove('show');
         }
         
-    
-        goback(form)
-    }
+        goback(form);
+    };
+
     return (
         <>  
-            {/* <Filter /> */}
             <Popup className="ADD_HOURS_TO_CREATIVE" header={'Add Creative'}>
                 <div className='w-full lg:w-[600px] flex flex-col gap-9 h-full justify-center mt-24'>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
@@ -208,12 +190,13 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
                     </AppButton>
                 </div>
             </Popup>
-            <div className="grid minmax-360 gap-5 my-6">
+            <div className="grid minmax-360 gap-5 my-6 addUserScroll">
                 {respond?.data?.map((value, index) => (
                     <AddToTeamCard goback={goback} info={value} key={index} onChoose={() => openpopUp(value)} />
                 ))}
             </div>
-            <DuvduLoading loadingIn = {"FindUser"} />
+            <div ref={observerRef}></div>
+            <DuvduLoading loadingIn={"FindUser"} />
         </>
     )
 };
@@ -229,19 +212,15 @@ const Result = () =>
                 </p>
             </h3>
         </div>
-    </div>
-
-
+    </div>;
 
 const mapStateToProps = (state) => ({
     respond: state.api.FindUser,
     api: state.api,
-
 });
 
 const mapDispatchToProps = {
     FindUser,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(AddToTeamPage);
-
-
