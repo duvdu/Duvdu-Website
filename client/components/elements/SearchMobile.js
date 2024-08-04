@@ -50,15 +50,17 @@ const Search = () => {
 
     return (
         <>
-          <div className="flex gap-2 h-14">
-                
+            <div className="flex gap-2 h-14">
+
                 <input
                     className="searchInput border bg-[#EAEEF0] w-full text-lg placeholder:text-[#94A6C2]"
-                    value={searchTerm|| ""}
+                    value={searchTerm || ""}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onFocus={() => handleFocus(true)}
+                    onBlur={() => setTimeout(() => handleFocus(false), 200)}
                     onKeyDown={handleInput}
                     type="text"
-                    placeholder="Search..."
+                    placeholder={`${t("Search")}...`}
                 />
             </div>
             <div >
@@ -68,7 +70,7 @@ const Search = () => {
                 <ul className="flex flex-wrap gap-2">
                     {searchDropdownVisible && searchHistory.map((item, index) => (
                         <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full" key={index}>
-                            <Link href="/">
+                            <Link href={item ? `/project?search=${item}` : '/project'}>
                                 <div className="cursor-pointer text-[#000000BF] capitalize">{item}</div>
                             </Link>
                         </li>
@@ -76,29 +78,6 @@ const Search = () => {
                 </ul>
             </div>
 
-            <input
-                className="searchInput bg-transparent border border-[#00000040] dark:border-[#3E3E3E] hover:border-transparent hover:bg-[#EAEEF0] focus:border-2 focus:border-primary focus:bg-transparent w-60 mx-6 text-sm h-9"
-                value={searchTerm || ""}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onFocus={() => handleFocus(true)}
-                onBlur={() => setTimeout(() => handleFocus(false), 200)}
-                onKeyDown={handleInput}
-                type="text"
-                placeholder={`${t("Search")}...`}
-            />
-            {searchDropdownVisible && searchHistory.length > 0 && (
-                <div className="dialog-history max-w-[300px] active">
-                    <ul className="gap-1">
-                        {searchHistory.map((item, index) => (
-                            <li className="py-1 px-2 border border-[#0000004D] dark:border-[#FFFFFF4D] rounded-full" key={index}>
-                                <Link href={item ? `/project?search=${item}` : '/project'}>
-                                    <div className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</div>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
         </>
     );
 };
