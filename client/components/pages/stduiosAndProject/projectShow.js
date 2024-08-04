@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { isVideo } from '../../../util/util';
 import Icon from '../../Icons';
+import { useEffect } from 'react';
 
 const ProjectCover = ({ data }) => {
   const videoRef = useRef(null);
@@ -41,14 +42,14 @@ const ProjectCover = ({ data }) => {
           className={`absolute top-0 left-0 size-full flex flex-row items-center justify-center ${isAnimating ? 'animate-ping' : ''}`}
           onClick={togglePulse}
         >
-          {videoRef.current && (isAnimating && isPlaying) &&
-            <div className='top-1/2 left-1/2 bg-[#CADED333] rounded-full p-7 flex flex-row items-center justify-center'>
+          {(isAnimating && isPlaying) &&
+            <div className='top-1/2 left-1/2 bg-[#CADED333] rounded-full p-7 size-16   flex flex-row items-center justify-center'>
               <Icon className='text-white' name={"play-video"} />
             </div>
           }
 
-          {videoRef.current && (!isPlaying) &&
-            <div className='top-1/2 left-1/2 bg-[#CADED333] rounded-full p-7 flex flex-row items-center justify-center'>
+          {(!isPlaying) &&
+            <div className='top-1/2 left-1/2 bg-[#CADED333] rounded-full p-7 size-16 flex flex-row items-center justify-center'>
               <Icon className='text-white' name={"pause-video"} />
             </div>
           }

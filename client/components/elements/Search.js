@@ -30,7 +30,7 @@ const Search = () => {
         const query = searchTerm ? { search: searchTerm } : {};
 
         router.push({
-            pathname: "/",
+            pathname: "project/",
             query: query,
         });
     };

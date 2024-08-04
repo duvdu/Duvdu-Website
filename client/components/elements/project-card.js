@@ -85,7 +85,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //     setLove(isFav(cardData?._id, getBoards_respond))
   //   }
   // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
-
+console.log(cardData)
   const isVideoCover = isVideo(cardData?.cover)
   return (
     <>
@@ -178,7 +178,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
             <Icon className='text-primary size-4' name={'star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData?.title || cardData?.studioName}</p>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData?.name || cardData?.studioName}</p>
         {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
           <>
             <span className='text-xl font-bold'>{cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit}$</span>
