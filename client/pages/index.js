@@ -104,7 +104,7 @@ const Home = ({
                         </div>
                     </div>
                 </section>
-                <section className="bg-[#F2F2F3] py-12">
+                <section className="bg-[#F2F2F3] dark:bg-[#1A1A1C] py-12">
                     <div className="w-full ">
                         <section className="mx-auto lg:container relative">
                             <div className="sm:container">
@@ -162,7 +162,7 @@ const Home = ({
                         </div>
                     </div>
                 </section>
-                <section className="py-12 bg-[#F2F2F3]">
+                <section className="py-12 bg-[#F2F2F3] dark:bg-[#1A1A1C]">
                     <div className="mx-auto">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8"> popular sub-sub categories</h2>
                         <div className="flex gap-8 w-full lg:container relative">
