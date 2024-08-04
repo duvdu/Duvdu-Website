@@ -30,7 +30,7 @@ const Search = () => {
         const query = searchTerm ? { search: searchTerm } : {};
 
         router.push({
-            pathname: "/",
+            pathname: "project/",
             query: query,
         });
     };
@@ -62,7 +62,7 @@ const Search = () => {
                 <div className="dialog-history max-w-[300px] active">
                     <ul className="gap-1">
                         {searchHistory.map((item, index) => (
-                            <li className="py-1 px-2 border border-[#0000004D] dark:border-[#FFFFFF4D] rounded-full" key={index}>
+                            <li className="py-1 px-2 border border-[#0000004D] dark:border-[#FFFFFF4D] rounded-full cursor-pointer" key={index}>
                                 <Link href={item ? `/project?search=${item}` : '/project'}>
                                     <div className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</div>
                                 </Link>
