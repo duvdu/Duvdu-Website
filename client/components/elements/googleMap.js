@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true, inputclass, isreadOnly = false, className }) => {
+const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, value, setDefult = true, inputclass, isreadOnly = false, className, fullscreenControl = true }) => {
     const [markerPosition, setMarkerPosition] = useState(null);
     const [cameraPosition, setCameraPosition] = useState({ lat: 30.0444, lng: 31.2357 }); // Tahrir Square, Cairo
     const [address, setAddress] = useState('');
@@ -18,7 +18,6 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
             elementType: 'labels',
             stylers: [{ visibility: 'off' }]
         },
-
     ];
 
     const mapOptions = {
@@ -28,7 +27,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
         scaleControl: false, // Disables scale control
         streetViewControl: false, // Disables Street View Pegman
         rotateControl: false, // Disables rotate control
-        fullscreenControl: false, // Disables fullscreen control
+        fullscreenControl: fullscreenControl, // Disables fullscreen control
         styles: mapStyles
     };
 
