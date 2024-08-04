@@ -233,10 +233,10 @@ const MenuItem = ({ title, items, onClick }) => (
             {title}
         </div>
 
-        <ul className={"flex flex-wrap gap-3 py-2"}>
+        <ul className={"flex flex-wrap gap-2 py-2"}>
             {items.map((item, index) => (
-                <li className='py-1 px-2 border hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
-                    <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#3E3E3E] hover:text-[#3E3E3E]'
+                <li className='py-1 px-2 border-[1.5px] border-[#00000033] hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
+                    <div className='cursor-pointer dark:text-[#FFFFFFBF] text-[#00000099] hover:text-[#3E3E3E] font-medium'
                         onClick={() => onClick(item._id)}
                     >{item.title}</div>
                 </li>
