@@ -13,23 +13,37 @@ import { useRouter } from "next/router";
 import { updateProfile } from "../../../redux/action/apis/auth/profile/updateprofile";
 
 
-function Setting({ 
-    isDark, 
-    toggleDarkMode, 
+function Setting({
+    isDark,
+    toggleDarkMode,
     toggleLanguage,
-    getheaderpopup, 
-    LogOut ,
+    getheaderpopup,
+    LogOut,
     user,
     updateProfile,
     updateProfile_respond
-    
+
 }) {
+    const [open, setOpened] = useState(0);
+    const [isMob, setIsMob] = useState(window.innerWidth < 1024);
+
+    function handleResize() {
+        setIsMob(window.innerWidth < 1024);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     const { t } = useTranslation();
 
-    const [open, setOpened] = useState(0);
 
     const router = useRouter();
-    
+
     function toggle() {
         const body = document.body;
         body.classList.toggle('dark');
@@ -106,7 +120,7 @@ function Setting({
             </>
         );
     }
-    
+
     const Main = ({ }) => (
         <>
             {
@@ -120,7 +134,7 @@ function Setting({
                         img: 'power-icon.svg',
                         name: 'Instant projects',
                         subName: 'short delivery time, More money',
-                        action: <Switch onSwitchChange={ updateInstantState } value={updateProfile_respond?.data?.isAvaliableToInstantProjects != null ? updateProfile_respond?.data?.isAvaliableToInstantProjects : user?.isAvaliableToInstantProjects} />,
+                        action: <Switch onSwitchChange={updateInstantState} value={updateProfile_respond?.data?.isAvaliableToInstantProjects != null ? updateProfile_respond?.data?.isAvaliableToInstantProjects : user?.isAvaliableToInstantProjects} />,
                     },
                     // {
                     //     img: 'notification-icon.svg',
@@ -130,19 +144,19 @@ function Setting({
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => setOpened(2)
                     },
                     {
                         img: 'number-icon.svg',
                         name: 'Change number',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => router.push("/changePhoneNumber")
                     },
                     {
                         img: 'lock-icon.svg',
                         name: 'Change password',
-                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => router.push("/changepassword")
                     },
                     {
@@ -172,22 +186,22 @@ function Setting({
         </>
     )
 
-if(getheaderpopup != Types.SHOWSETTING && window.innerWidth > 1024) return
-const isMob = window.innerWidth < 1024
+    if (getheaderpopup != Types.SHOWSETTING && window.innerWidth > 1024) return
+ 
+
     return (
-        <div className={isMob?"":"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"}   >
-            <div className={isMob?"":"dialog flex flex-col"}>
+        <div className={isMob ? "" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"}>
+            <div className={isMob ? "" : "dialog flex flex-col"}>
                 <div className={"overflow-y-scroll rounded-b-[60px] p-3"}>
-                    <div className="p-6 sm:bg-white sm:dark:bg-[#1A2024] w-full sm:w-72 rounded-[45px]" >
-                        {open == 0 && <Main />}
-                        {open == 1 && <ContactUs setOpened={setOpened} />}
-                        {open == 2 && <Language />}
-                        {/* <Main /> */}
+                    <div className="p-6 sm:bg-white sm:dark:bg-[#1A2024] w-full sm:w-72 rounded-[45px]">
+                        {open === 0 && <Main />}
+                        {open === 1 && <ContactUs setOpened={setOpened} />}
+                        {open === 2 && <Language />}
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 
