@@ -10,13 +10,27 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
 
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
-    
+    const [isMob, setIsMob] = useState(window.innerWidth < 1024);
+
+    function handleResize() {
+        setIsMob(window.innerWidth < 1024);
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     useEffect(() => {
         setViewAllState(0)
     }, [getheaderpopup == Types.SHOWNOTOFICATION])
 
     if (getheaderpopup != Types.SHOWNOTOFICATION && window.innerWidth > 1024) return
-    const isMob = window.innerWidth < 1024
+    
+
     return (
         <div className={isMob?"":"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
             <div className={isMob?"":"dialog dialog-1"}>

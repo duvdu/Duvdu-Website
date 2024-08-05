@@ -36,7 +36,7 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "", pad
                             {img &&
                                 <img className="size-11 m-1 rounded-full object-cover object-top" src={img} alt='user' />}
                             {name &&
-                                <span className='capitalize mx-5 text-lg'>{name}</span>}
+                                <span className='capitalize mx-5 text-lg whitespace-nowrap'>{name}</span>}
                         </div>
                     </div>
 

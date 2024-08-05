@@ -6,10 +6,10 @@ import { OpenPopUp } from "../../../util/util";
 import ReportProject from "../../popsup/report-project";
 import { connect } from "react-redux";
 
-const Header = ({ data, islogin }) => {
+const Header = ({ data, islogin,toggleDrawerAddFav }) => {
 
     const handleDropdownSelect = (v) => {
-        if(!islogin) {
+        if (!islogin) {
             OpenPopUp("registration-required")
             return
         }
@@ -45,6 +45,11 @@ const Header = ({ data, islogin }) => {
                         </div>
                     </div>
                 </Link>
+                <div className="block sm:hidden">
+                    <div onClick={toggleDrawerAddFav} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer">
+                        <Icon className="text-black " name="plus" />
+                    </div>
+                </div>
                 <Selector
                     options={[
                         {

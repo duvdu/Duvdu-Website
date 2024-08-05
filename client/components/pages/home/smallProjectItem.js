@@ -125,29 +125,23 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                         {
                             // cardData.cover.length == 1 &&
                             isVideoCover ? ( // Check if source is a video
-                                <Link href={`/${type}/${cardData._id}`}>
-                                    <a>
-                                        <video
-                                            className='cardvideo h-full'
-                                            ref={videoRef}
-                                            onTimeUpdate={timeUpdate}
-                                            loop
-                                        >
-                                            <source src={cardData.cover} type='video/mp4' />
-                                        </video>
-                                        <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
-                                            <span className="text-white">
-                                                {convertDuration(Duration * 1000)}
-                                            </span>
-                                        </div>
-                                    </a>
-                                </Link>
+                                <>
+                                    <video
+                                        className='cardvideo h-full'
+                                        ref={videoRef}
+                                        onTimeUpdate={timeUpdate}
+                                        loop
+                                    >
+                                        <source src={cardData.cover} type='video/mp4' />
+                                    </video>
+                                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                                        <span className="text-white">
+                                            {convertDuration(Duration * 1000)}
+                                        </span>
+                                    </div>
+                                </>
                             ) : (
-                                <Link href={`/${type}/${cardData._id}`}>
-                                    <a>
-                                        <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
-                                    </a>
-                                </Link>
+                                <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
                             )
                         }
                         {
@@ -184,19 +178,22 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                         </Link>
                     </div>
                     <div className='absolute bottom-[15px] left-1/2 -translate-x-1/2 flex flex-col items-center w-full gap-3 z-[2]'>
-                    <div className='w-full flex gap-2   px-2'>
-                        <span className='blur-container font-medium text-sm text-white px-3 py-2 whitespace-nowrap'>
-                            {cardData.projectScale.current} {cardData.projectScale.unit}
-                        </span>
-                    </div>
+                        <div className='w-full flex gap-2   px-2'>
+                            <span className='blur-container font-medium text-sm text-white px-3 py-2 whitespace-nowrap'>
+                                {cardData.projectScale.current} {cardData.projectScale.unit}
+                            </span>
+                        </div>
                         <h2 className='font-medium text-xl text-white text-center'>
                             {cardData.name}
                         </h2>
                     </div>
-                    
-                    
-                    
-                    <div className='absolute bottom-0 home-card-shadow size-full z-[1]'/>
+
+
+                    <Link href={`/${type}/${cardData._id}`}>
+                        <a>
+                            <div className='absolute bottom-0 home-card-shadow size-full z-[1]' />
+                        </a>
+                    </Link>
                     {
                         isVideoCover &&
                         <div>
