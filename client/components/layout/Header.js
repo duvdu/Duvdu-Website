@@ -258,9 +258,11 @@ const Header = ({
                                     </div>
                                 }
                                 <div className="flex lg:hidden items-center justify-center gap-2">
+                                    {islogin &&
                                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
                                             <Icon className="items-center justify-center" name={'bell'} />
-                                        </div>
+                                        </div>}
+
                                     <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={() => toggleClick(3)}>
                                         <Icon className="size-6 flex items-center justify-center" name={'search-menu'} />
                                     </div>
