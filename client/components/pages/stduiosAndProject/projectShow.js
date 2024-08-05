@@ -24,7 +24,7 @@ const ProjectCover = ({ data }) => {
   return (
     !isVideo(data.cover) ? (
       <img
-        className="sm:rounded-[50px] w-full"
+        className="sm:rounded-[50px] w-full aspect-square object-cover"
         src={data?.cover}
         alt="Project Cover"
       />
