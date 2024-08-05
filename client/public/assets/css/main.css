@@ -2208,6 +2208,10 @@ table p {
 }
 
 
+.home-card-shadow {
+  background: linear-gradient(180deg, rgba(28, 28, 30, 0) 26.13%, rgba(28, 28, 30, 0.8) 93.22%);
+
+}
 .button-shadow-1 {
   -webkit-box-shadow: 0px 25px 80px 0px rgba(101, 88, 249, 0.5);
   -moz-box-shadow: 0px 25px 80px 0px rgba(101, 88, 249, 0.5);

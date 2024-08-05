@@ -71,7 +71,7 @@ const Projects = ({
                         <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
                             <div className="sm:container mt-6">
                                 <section className="mx-7 sm:mx-0" >
-                                    <Header data={project} />
+                                    <Header data={project} toggleDrawerAddFav={toggleDrawerAddFav}/>
                                 </section>
                                 <div className="lg:flex gap-6">
                                     <section className="lg:w-2/3">

@@ -146,7 +146,6 @@ const Header = ({
                                 <div className="header-right">
                                     {fromlayout.showTabs && islogin &&
                                         <div className="header-tabs">
-
                                             <div className="">
                                                 <Link href="/dashboard">
                                                     <div className="header-link">

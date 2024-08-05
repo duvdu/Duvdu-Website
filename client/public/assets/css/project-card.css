@@ -52,12 +52,12 @@
     height: 44px;
     top: 15px;
   }
-  .project-card .small,
   .project-card .small {
     width: 33px;
     height: 33px;
+  }
+  .project-card .small.sound{
     left: 55px;
-
   }
 
   

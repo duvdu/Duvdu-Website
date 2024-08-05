@@ -21,6 +21,7 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
     const cardData = initialCardData;
 
     const [fav, setFav] = useState(false);
+    const [startLongPress, setStartLongPress] = useState(false);
 
     useEffect(() => {
         if (cardData?._id === (swapProjectToFav_respond?.projectId || -1)) {
@@ -78,16 +79,29 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
         }
 
     };
+
+    useEffect(() => {
+        let timer;
+        if (startLongPress) {
+            timer = setTimeout(() => {
+                handleHover();
+                handleSoundIconClick();
+            }, 1000);
+        } else {
+            clearTimeout(timer);
+        }
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [startLongPress]);
+
     const handleTouchStart = () => {
-        const timeout = setTimeout(() => {
-            handleHover(); // Trigger hover behavior on long press
-            handleSoundIconClick()
-        }, 500); // Adjust duration for long press
-        
+        setStartLongPress(true);
     };
 
     const handleTouchEnd = () => {
-        
+        setStartLongPress(false);
     };
 
     // useEffect(() => {
@@ -97,6 +111,7 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
     // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
 
     const isVideoCover = isVideo(cardData.cover)
+    console.log(cardData)
     return (
         <>
             <div className={`select-none project-card flex flex-col ${className}`} onClick={() => { }} >
@@ -110,29 +125,23 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                         {
                             // cardData.cover.length == 1 &&
                             isVideoCover ? ( // Check if source is a video
-                                <Link href={`/${type}/${cardData._id}`}>
-                                    <a>
-                                        <video
-                                            className='cardvideo h-full'
-                                            ref={videoRef}
-                                            onTimeUpdate={timeUpdate}
-                                            loop
-                                        >
-                                            <source src={cardData.cover} type='video/mp4' />
-                                        </video>
-                                        <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
-                                            <span className="text-white">
-                                                {convertDuration(Duration * 1000)}
-                                            </span>
-                                        </div>
-                                    </a>
-                                </Link>
+                                <>
+                                    <video
+                                        className='cardvideo h-full'
+                                        ref={videoRef}
+                                        onTimeUpdate={timeUpdate}
+                                        loop
+                                    >
+                                        <source src={cardData.cover} type='video/mp4' />
+                                    </video>
+                                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                                        <span className="text-white">
+                                            {convertDuration(Duration * 1000)}
+                                        </span>
+                                    </div>
+                                </>
                             ) : (
-                                <Link href={`/${type}/${cardData._id}`}>
-                                    <a>
-                                        <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
-                                    </a>
-                                </Link>
+                                <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
                             )
                         }
                         {
@@ -168,15 +177,35 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                             </div>
                         </Link>
                     </div>
-                    <div className='absolute bottom-[15px] left-1/2 -translate-x-1/2 flex items-center gap-3 z-[1]'>
+                    <div className='absolute bottom-[15px] left-1/2 -translate-x-1/2 flex flex-col items-center w-full gap-3 z-[2]'>
+                        <div className='w-full flex gap-2   px-2'>
+                            <span className='blur-container font-medium text-sm text-white px-3 py-2 whitespace-nowrap'>
+                                {cardData.projectScale.current} {cardData.projectScale.unit}
+                            </span>
+                        </div>
                         <h2 className='font-medium text-xl text-white text-center'>
                             {cardData.name}
                         </h2>
                     </div>
+
+
+                    <Link href={`/${type}/${cardData._id}`}>
+                        <a>
+                            <div className='absolute bottom-0 home-card-shadow size-full z-[1]' />
+                        </a>
+                    </Link>
                     {
                         isVideoCover &&
-                        <div onClick={handleSoundIconClick} className="blur-container small sound z-[1]">
-                            <Icon className={`cursor-pointer h-3 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
+                        <div>
+                            <div onClick={handleSoundIconClick} className="blur-container small sound z-[1]">
+                                <Icon className={`cursor-pointer h-3 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
+                            </div>
+                        </div>
+                    }
+
+                    {islogin &&
+                        <div onClick={loveToggleAction} className="blur-container small love z-[1]">
+                            <Icon className={`cursor-pointer h-3 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
                         </div>
                     }
                 </div>

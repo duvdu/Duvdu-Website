@@ -3,18 +3,18 @@ import Button from '../elements/button';
 import Icon from '../Icons'
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Rate } from '../../redux/action/apis/rate';
 import { ClosePopUp } from '../../util/util';
 import DuvduLoading from '../elements/duvduLoading';
 import DuvduError from '../elements/duvduError';
+import { RateContract } from '../../redux/action/apis/rateContract';
 
-function ratingProject({ data = {} , rate_respond , Rate}) {
+function RatingProject({ data = {} , rate_respond , RateContract}) {
     const [rate, setRate] = useState(0);
     const [desc, setDesc] = useState("");
 
     const handleSubmitRate = () => {
-        Rate({
-            project: data._id || "", 
+        RateContract({
+            contract: data._id || "", 
             cycle: data.cycle || "studio-booking",
             rate,
             comment:desc,
@@ -51,7 +51,7 @@ function ratingProject({ data = {} , rate_respond , Rate}) {
     const isEnabled = rate > 0 && desc.length > 5
     return (
         <>
-            <Popup id="Rating-project" header={`Rating ${data.name || ""}`} onCancel={handlereset}>
+            <Popup id="Rating-contract" header={`Rating ${data.name || ""}`} onCancel={handlereset}>
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
                     <div className='flex gap-5 my-5'>
                         {renderStars()}
@@ -79,11 +79,11 @@ function ratingProject({ data = {} , rate_respond , Rate}) {
 }
 
 const mapStateToProps = (state) => ({
-    rate_respond: state.api.Rate
+    rate_respond: state.api.RateContract
 });
 
 const mapDispatchToProps = {
-    Rate
+    RateContract
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ratingProject);
+export default connect(mapStateToProps, mapDispatchToProps)(RatingProject);
