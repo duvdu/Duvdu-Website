@@ -2,7 +2,7 @@ import * as Types from "../../constants/actionTypes";
 import { mainApiInstance } from './axiosInstances'
 
 
-export const Rate = (data) => {
+export const RateContract = (data) => {
     const req = "Rate"
     return async dispatch => {
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
@@ -14,3 +14,4 @@ export const Rate = (data) => {
         }
     };
 };
+

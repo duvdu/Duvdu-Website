@@ -16,6 +16,9 @@ import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import TimeLeft from '../../pages/contracts/TimeLeft';
+import { RateContract } from '../../../redux/action/apis/rateContract';
+import RatingProject from '../../popsup/ratingProject';
+import { OpenPopUp } from '../../../util/util';
 
 
 
@@ -226,6 +229,11 @@ function ReceiveProjectFiles({
         const type = getType()
         payment({ id: contract.paymentLink, type: type })
     };
+
+    const handleReview = () => {
+        OpenPopUp('Rating-contract')
+    };
+
     const handleRefuse = () => {
         if (!contractDetails?.ref) return
         const type = getType()
@@ -261,6 +269,7 @@ function ReceiveProjectFiles({
 
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
+    const canReview = (IsImSp() && status === "ongoing")
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -286,13 +295,14 @@ function ReceiveProjectFiles({
                 formData['unitPrice']
             ))
 
-    console.log(contract)
+    
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
-            <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="" />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
+            <RatingProject />
+            
             <Drawer isOpen={!!contractDetails} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
                 {
                     contract &&
@@ -384,7 +394,6 @@ function ReceiveProjectFiles({
                                                         <div>
                                                             <span className='opacity-85 text-base line-clamp-2'>
                                                                 {contract.address ? contract.address : "No Address To show"}
-
                                                             </span>
                                                         </div>
                                                     </div>
@@ -565,6 +574,15 @@ function ReceiveProjectFiles({
                                         </>
                                     }
                                 </div>}
+                            {
+                                <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleReview}>
+                                        <span className='text-white font-bold capitalize text-lg'>
+                                            review
+                                        </span>
+                                    </Button>
+                                </section>
+                            }
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
@@ -664,6 +682,7 @@ const mapStateToProps = (state) => ({
     takeAction_respond: state.api.takeAction,
     payment_respond: state.api.payment,
     addprojectState: state.addproject,
+    rateContract_respond: state.api.RateContract,
 
 });
 
@@ -674,6 +693,7 @@ const mapDispatchToProps = {
     payment,
     UpdateFormData,
     InsertToArray,
+    RateContract,
     resetForm
 };
 
