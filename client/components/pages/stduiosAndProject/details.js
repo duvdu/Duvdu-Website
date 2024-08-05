@@ -3,7 +3,7 @@ import GoogleMap from "../../elements/googleMap";
 import dateFormat from "dateformat";
 
 const Details = ({ data }) => {
-
+console.log(data)
 
     return (
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-6 mx-5">
@@ -109,23 +109,27 @@ const Details = ({ data }) => {
                     </div>
                 </section>
             }
-            <section className="hidden">
+            
+            {
+                data.duration &&
+                <section>
                 <div className="mt-9">
-                    <span className="capitalize opacity-50">shooting time</span>
+                    <span className="capitalize opacity-50">duration</span>
                 </div>
                 <div>
-                    <span className="capitalize font-semibold">{convertHoursTo__(data?.shooting_time)}</span>
+                    <span className="capitalize font-semibold">{data.duration} Days</span>
                 </div>
-            </section>
-            <section className="hidden">
-
+            </section>}
+{data.insurance &&
+            <section>
                 <div className="mt-9">
-                    <span className="capitalize opacity-50">delivery time</span>
+                    <span className="capitalize opacity-50">insurance</span>
                 </div>
                 <div>
-                    <span className="capitalize font-semibold">{convertHoursTo__(data?.delivery_time)}</span>
+                    <span className="capitalize font-semibold">{data.insurance}</span>
                 </div>
             </section>
+            }
         </div>
     )
 }
