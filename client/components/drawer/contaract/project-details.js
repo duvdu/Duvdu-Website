@@ -19,6 +19,7 @@ import TimeLeft from '../../pages/contracts/TimeLeft';
 import { RateContract } from '../../../redux/action/apis/rateContract';
 import RatingProject from '../../popsup/ratingProject';
 import { OpenPopUp } from '../../../util/util';
+import ReportContract from '../../popsup/report-contract';
 
 
 
@@ -230,8 +231,11 @@ function ReceiveProjectFiles({
         payment({ id: contract.paymentLink, type: type })
     };
 
-    const handleReview = () => {
+    const openReview = () => {
         OpenPopUp('Rating-contract')
+    };
+    const openComplain = () => {
+        OpenPopUp('report-contract')
     };
 
     const handleRefuse = () => {
@@ -302,6 +306,7 @@ function ReceiveProjectFiles({
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
             <RatingProject />
+            <ReportContract data={contract} />
             
             <Drawer isOpen={!!contractDetails} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
                 {
@@ -574,11 +579,20 @@ function ReceiveProjectFiles({
                                         </>
                                     }
                                 </div>}
-                            {
-                                <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
-                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleReview}>
+                            {canReview &&
+                                <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={openReview}>
                                         <span className='text-white font-bold capitalize text-lg'>
                                             review
+                                        </span>
+                                    </Button>
+                                </section>
+                            }
+                            {
+                                <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} color={"#D30000"}  onClick={openComplain}>
+                                        <span className='text-white font-bold capitalize text-lg'>
+                                            Report
                                         </span>
                                     </Button>
                                 </section>
