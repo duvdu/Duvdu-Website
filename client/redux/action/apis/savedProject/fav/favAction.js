@@ -9,6 +9,7 @@ export const SwapProjectToFav = ({ projectId, action }) => {
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
             return;
         }
+        dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         
         try {
             const response = await mainApiInstance.patch(`api/users/auth/profile/favourites/${projectId}?action=${action}`);

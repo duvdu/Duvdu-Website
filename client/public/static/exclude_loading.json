@@ -13,5 +13,6 @@
     "GetSavedBoard",
     "Rate",
     "projectReport",
+    "SwapProjectToFav",
     "GetProjects"
 ]
