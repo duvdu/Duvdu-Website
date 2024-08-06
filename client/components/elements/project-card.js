@@ -5,15 +5,16 @@ import { convertDuration, isVideo } from '../../util/util';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
+import Link from 'next/link';
 
 import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
 import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
-import Link from 'next/link';
 import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
+import DuvduLoading from './duvduLoading';
 
-const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav , enbablelove = false  }) => {
+const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
@@ -29,11 +30,11 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }, [cardData, swapProjectToFav_respond]);
 
   useEffect(() => {
-    if(enbablelove)
+    if (enbablelove)
       setFav(true);
-    if(cardData?.isFavourite)
-    setFav(cardData?.isFavourite);
-  }, [cardData?.isFavourite , enbablelove]);
+    if (cardData?.isFavourite)
+      setFav(cardData?.isFavourite);
+  }, [cardData?.isFavourite, enbablelove]);
 
 
   const loveIconName = fav ? 'fas' : 'far'
@@ -85,7 +86,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   //     setLove(isFav(cardData?._id, getBoards_respond))
   //   }
   // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
-console.log(cardData)
+
   const isVideoCover = isVideo(cardData?.cover)
   return (
     <>
@@ -151,6 +152,7 @@ console.log(cardData)
           {islogin &&
             <div onClick={loveToggleAction} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
+              <DuvduLoading loadingIn={"SwapProjectToFav"} />
             </div>
           }
           {
@@ -178,7 +180,7 @@ console.log(cardData)
             <Icon className='text-primary size-4' name={'star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData?.name || cardData?.studioName}</p>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData?.name || cardData?.title}</p>
         {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
           <>
             <span className='text-xl font-bold'>{cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit}$</span>
