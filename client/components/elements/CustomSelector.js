@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import Icon from "../Icons";
+import { useTranslation } from 'react-i18next';
 
 const Selector = ({ options, onSelect, iconclassName, className = "", children }) => {
+    const { t } = useTranslation();
+
     const selectRef = useRef(null);
 
     const handleIconClick = () => {

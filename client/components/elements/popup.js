@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Icon from '../Icons';
 
 const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, addWhiteShadow = false }) => {
+    const { t } = useTranslation();
+
     const popupRef = useRef(null);
 
     const throttle = (func, delay) => {
@@ -57,7 +60,7 @@ const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, ad
                         {
                             header &&
                             <span className='flex rounded-full header-border px-7 py-4 text-sm sm:text-lg font-medium'>
-                                {header}
+                                {t(header)}
                             </span>
                         }
                     </div>

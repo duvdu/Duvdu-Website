@@ -228,10 +228,10 @@ const AddProducer = ({
 
                     {
                         !isProducer ?
-                            <ArrowBtn isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text={"Publish"} shadow={true} shadowHeight={"14"} /> :
+                            <ArrowBtn isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
                             <div className='flex flex-col left-0 bottom-10 sticky w-auto mx-14 gap-3'>
-                                <ArrowBtn isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text={"delete"} shadow={true} shadowHeight={"14"} />
-                                <ArrowBtn isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text={"update"} shadow={true} shadowHeight={"14"} />
+                                <ArrowBtn isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text="delete" shadow={true} shadowHeight={"14"} />
+                                <ArrowBtn isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text="update" shadow={true} shadowHeight={"14"} />
                             </div>
                     }
 

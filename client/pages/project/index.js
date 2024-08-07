@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetProjects } from "../../redux/action/apis/cycles/projects/get";
 import RelatedCategories from "../../components/elements/relatedCategories";
+import DuvduLoading from "../../components/elements/duvduLoading";
 
 const Projects = ({ projects, GetProjects, api }) => {
     const { t } = useTranslation();
@@ -84,7 +85,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                             ))}
                         </div>
                         <div className="w-0 h-0" />
-                        <img className={(api.loading && api.req == "GetProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
+                        <DuvduLoading loadingIn = {"GetProjects"} />
                     </div>
                 </section>
             </Layout>

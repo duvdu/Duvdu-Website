@@ -138,7 +138,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'continue'} />
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
                         </div>
                     </section>
                 </div>
@@ -193,7 +193,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                             <span className="text-2xl font-bold">${data.price}</span>
                         </div>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
                         </div>
                     </section>
                 </div>

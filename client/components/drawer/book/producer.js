@@ -182,7 +182,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <h3 className="capitalize opacity-60 mb-5">{t("Select Appointment Date")}</h3>
                         <SelectDate value={formData.appointmentDate} onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
-                    <ArrowBtn isEnable={enableBtn} onClick={onSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text={"Submit"} shadow={true} shadowHeight={"14"} />
+                    <ArrowBtn isEnable={enableBtn} onClick={onSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Submit" shadow={true} shadowHeight={"14"} />
 
                 </div>
             </Drawer >

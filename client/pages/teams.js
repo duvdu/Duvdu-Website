@@ -81,7 +81,9 @@ const Card = ({ data, DeleteTeamProjects }) => {
     );
 };
 
-const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond, update_respond,api }) => {
+const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond, update_respond, api }) => {
+    const { t } = useTranslation();
+
     const route = useRouter()
     const searchTerm = "";
     const pagganation = get_respond?.pagination
@@ -133,7 +135,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                                 });
                             }}
                             className="flex gap-5 items-center py-[21px] px-[35px] rounded-full bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
-                            New Project
+                            {t("New Project")}
                             <Icon className="w-4 text-white" name="plus" />
                         </div>
                     </div>
@@ -149,28 +151,29 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                             <Empty />
                         )}
                 </div>
-                <DuvduLoading loadingIn = {"GetTeamProjects"} />
+                <DuvduLoading loadingIn={"GetTeamProjects"} />
             </section>
         </Layout>
     );
 };
 
-const Empty = () =>
-    <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet  md:p-10'>
+const Empty = () => {
+    const { t } = useTranslation();
+    return <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet md:p-10'>
         <div className='bg-gray-600 mt-5' />
         <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[430px] lg:h-[450px]' />
         {/* <div className='flex flex-col gap-2'>
             <h3 className='font-bold text-4xl text-center'>{t("Team Projects")}</h3>
         </div> */}
         <div className='felx flex-col gap-2 text-center w-[20rem] md:w-[27rem]'>
-            <h3 className='text-[40px] font-semibold opacity-80 mt-8 mb-4 px-'>{t("Team Projects")}</h3>
-                <p className="text-2xl opacity-50 text-center font-medium  ">
-                    “Team Projects” are a great way to build teams for your project.
-                </p>
-        </div>
-        
+            <h3 className='text-[40px] font-semibold opacity-80 mt-8 mb-4'>{t("Team Projects")}</h3>
+            <p className="text-2xl opacity-50 text-center font-medium  ">
+                {t("“Team Projects” are a great way to build teams for your project.")}
 
+            </p>
+        </div>
     </div>
+}
 
 const mapStateToProps = (state) => ({
     get_respond: state.api.GetTeamProjects,
