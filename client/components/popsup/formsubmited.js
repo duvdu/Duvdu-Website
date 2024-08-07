@@ -25,6 +25,8 @@ function FormSubmitted() {
 }
 
 function SuccessBody({ toggleDirectorConfirmed }) {
+    const { t } = useTranslation();
+
     return (
         <div className="flex flex-col items-center justify-center w-full sm:w-[604px] h-full my-14">
             <div className="heading_s1 mb-[88px] text-center">
@@ -45,6 +47,8 @@ function SuccessBody({ toggleDirectorConfirmed }) {
 }
 
 function Directorconfirmed() {
+    const { t } = useTranslation();
+
     return (
         <div className="flex flex-col items-center justify-center w-full sm:w-[604px] h-full my-14">
             <div className="heading_s1 mb-[88px] text-center">

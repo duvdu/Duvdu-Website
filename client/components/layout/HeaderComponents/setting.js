@@ -75,7 +75,7 @@ function Setting({
             i18n.changeLanguage(selectedLanguage);
             toggleLanguage(selectedLanguage)
             document.documentElement.dir = selectedLanguage === 'Arabic' ? 'rtl' : 'ltr';
-            // window.location.reload();
+            window.location.reload();
         };
 
         useEffect(() => {

@@ -152,7 +152,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
         ClosePopUp(`Edit-creative-${person._id}`)
     }
     const options = [
-        { value: 'delete' },
+        { value: 'Delete' },
         { value: 'Edit' },
     ];
 

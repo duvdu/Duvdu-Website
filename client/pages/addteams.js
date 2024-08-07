@@ -179,7 +179,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
                 </div>
                 <Selector options={[
                     {
-                        value: "delete",
+                        value: "Delete",
                     },
                 ]} onSelect={() => removeUser(person._id)} />
                 {person.status == 'refuse' && <Selector options={options} onSelect={() => removeUser(person._id)}> <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div> </Selector>}
