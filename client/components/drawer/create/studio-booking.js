@@ -8,7 +8,7 @@ import { CreateStudio } from '../../../redux/action/apis/cycles/rental/create';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
 import { useRouter } from "next/router";
-import { convertToFormData, filterByCycle as filterByCycleCategory, printFormData, t } from "../../../util/util";
+import { convertToFormData, filterByCycle as filterByCycleCategory, printFormData} from "../../../util/util";
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
 import AddOtherCreatives from "../../popsup/create/addOtherCreatives";

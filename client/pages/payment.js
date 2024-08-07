@@ -25,6 +25,8 @@ const Payment = () => {
 };
 
 const LeftSide = () => {
+    const { t } = useTranslation();
+
     const [showAddCard, setShowAddCard] = useState(false);
     const [cardData, setCardData] = useState([
         {
@@ -138,6 +140,7 @@ const LeftSide = () => {
 
 
 const RightSide = () => {
+    const { t } = useTranslation();
     
     return (
         <>
@@ -218,6 +221,7 @@ const RightSide = () => {
 
 
 const Card = ({ isSelected, data, isLast , onClick }) => {
+    const { t } = useTranslation();
 
     return (
         <div onClick={onClick} className={`mx-6 my-4 pb-4 ${isLast ? "" : "   "}`}>
