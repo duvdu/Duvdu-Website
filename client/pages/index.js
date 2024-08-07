@@ -28,7 +28,7 @@ const Home = ({
 
     categories
 }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         HomeTreny()
@@ -41,8 +41,8 @@ const Home = ({
     const wordsRef = useRef(null);
     const list = homeTreny_respond?.data || [];
     const router = useRouter();
-
-    var TheBeststyle = {
+    console.log(i18n.language)
+    var TheBeststyle = i18n.language == "Arabic" ?{}:{
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'bottom',
@@ -61,12 +61,8 @@ const Home = ({
                 <section className="w-full">
                     <div className="my-12 lg:my-24 mx-auto w-min">
                         <h1 className="text-center my-4">
-                            <span className="font-black text-[#263257] text-3xl lg:text-8xl capitalize whitespace-nowrap trap">
-                                {t("explore")}
-                                <span className="text-[#263257] pt-[25px] lg:pt-[80px] px-[10px] pb-0 trap" style={TheBeststyle}>
-                                    {t("the best")}
-                                </span>
-                                {t("of")}
+                            <span className="font-black text-[#263257] text-3xl lg:text-8xl capitalize whitespace-nowrap trap">{t("explore")} <span className="text-[#263257] pt-[25px] lg:pt-[80px] px-[10px] pb-0 trap" style={TheBeststyle}>
+                                {t("the best")} </span> {t("of")}
                             </span>
                             <div className="relative h-[50px] lg:h-[120px]">
                                 <div className="absolute h-full w-full overflow-hidden">
