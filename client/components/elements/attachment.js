@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { handleMultipleFileUpload, handleRemoveEvent, parseFileSize } from '../../util/util';
+import { handleMultipleFileUpload, handleRemoveEvent, parseFileSize,  } from '../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import Icon from '../Icons';
 
 function AddAttachment({ value, onChange, name, isValidCallback }) {
+    const { t } = useTranslation();
     const [uploadedFiles, setUploadedFiles] = useState(value || []);
     const maxFileSize = '3 MB';
 
@@ -44,7 +47,7 @@ function AddAttachment({ value, onChange, name, isValidCallback }) {
                 <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                     <Icon className="text-primary w-4" name={"image"} />
                 </div>
-                <span className="pl-5 w-full text-blue-600">Open gallery</span>
+                <span className="ltr:pl-5 rtl:pr-5 w-full text-blue-600">{t("Open gallery")}</span>
                 <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
             </label>
             <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload"  accept="image/*"  type="file" multiple />
@@ -70,9 +73,7 @@ function AddAttachment({ value, onChange, name, isValidCallback }) {
                                 <br />
                                 <span className='text-[#C92519]'>{file.formattedFileSize}</span>
                             </div>
-                            <div className='text-[#C92519] mx-auto'>
-                                Exceeds maximum size (3 MB).
-                            </div>
+                            <div className='text-[#C92519] mx-auto'>{t("Exceeds maximum size (3 MB).")}</div>
                             <button className='ml-auto' onClick={() => removeAttachment(file.id)}>
                                 <Icon name={"delete"} className="size-6 text-[#C92519]" />
                             </button>

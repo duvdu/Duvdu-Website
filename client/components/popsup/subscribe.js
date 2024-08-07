@@ -1,9 +1,12 @@
 
+
 import Button from '../elements/button';
 import Icon from '../Icons'
+import { useTranslation } from 'react-i18next';
 import Link from "next/link";
 
 function Popup({ isfree = false }) {
+    const { t } = useTranslation();
     return (
         <>
             <div id={`subscribe-${isfree ? 'free' : 'notfree'}`} className="popup z-30 ">
@@ -30,24 +33,18 @@ const StartFree = () => {
     return (
         <div className='p-7 flex flex-col justify-center items-center'>
             <div className='max-w-[450px] flex flex-col justify-center items-center'>
-                <h1 className='text-primary text-3xl font-extrabold capitalize text-center'>access 5 free contracts</h1>
-                <p className='opacity-60 text-lg font-semibold mt-3 text-center'>
-                    Enjoy 5 contracts for free, and then we have a subscription plan to access more.
-                </p>
+                <h1 className='text-primary text-3xl font-extrabold capitalize text-center'>{t("access 5 free contracts")}</h1>
+                <p className='opacity-60 text-lg font-semibold mt-3 text-center'>{t("Enjoy 5 contracts for free, and then we have a subscription plan to access more.")}</p>
                 <span className='text-primary text-lg capitalize line-through text-center mt-11 mb-4'>
                     $17.99
-                    <span className='opacity-70 text-primary'>
-                        /for 5 contracts
-                    </span>
+                    <span className='opacity-70 text-primary'>{t("/for 5 contracts")}</span>
                 </span>
                 <Button className="w-full mb-7" shadow={true} shadowHeight={"14"}>
-                    <span className='text-white font-bold capitalize text-lg'>
-                        start free trial
-                    </span>
+                    <span className='text-white font-bold capitalize text-lg'>{t("start free trial")}</span>
                 </Button>
             </div>
             <Link href="/terms_conditions">
-                <span className="text-DS_black text-sm opacity-50 cursor-pointer" >terms & conditions</span>
+                <span className="text-DS_black text-sm opacity-50 cursor-pointer" >{t("terms & conditions")}</span>
             </Link>
         </div>
 
@@ -57,24 +54,18 @@ const Subscribe = () => {
     return (
         <div className='p-7 flex flex-col justify-center items-center'>
             <div className='max-w-[450px] flex flex-col justify-center items-center'>
-                <h1 className='text-primary text-3xl font-extrabold capitalize text-center'>access 5 free contracts</h1>
-                <p className='opacity-60 text-lg font-semibold mt-3 text-center'>
-                    Enjoy 5 contracts for free, and then we have a subscription plan to access more.
-                </p>
+                <h1 className='text-primary text-3xl font-extrabold capitalize text-center'>{t("access 5 free contracts")}</h1>
+                <p className='opacity-60 text-lg font-semibold mt-3 text-center'>{t("Enjoy 5 contracts for free, and then we have a subscription plan to access more.")}</p>
                 <span className='text-primary text-lg capitalize text-center mt-11 mb-4'>
                     $17.99
-                    <span className='opacity-70 text-primary'>
-                        /for 5 contracts
-                    </span>
+                    <span className='opacity-70 text-primary'>{t("/for 5 contracts")}</span>
                 </span>
                 <Button className="w-full mb-7" shadow={true} shadowHeight={"14"}>
-                    <span className='text-white font-bold capitalize text-lg'>
-                        subscribe now
-                    </span>
+                    <span className='text-white font-bold capitalize text-lg'>{t("subscribe now")}</span>
                 </Button>
             </div>
             <Link href="/terms_conditions">
-                <span className="text-DS_black text-sm opacity-50 cursor-pointer" >terms & conditions</span>
+                <span className="text-DS_black text-sm opacity-50 cursor-pointer" >{t("terms & conditions")}</span>
             </Link>
         </div>
 

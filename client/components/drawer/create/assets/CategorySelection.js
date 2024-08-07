@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Icon from '../../../Icons';
 import { connect } from 'react-redux';
 import { filterByCycle as filterByCycleCategory, } from "../../../../util/util";
+import { useTranslation } from 'react-i18next';
+
 
 function CategorySelection({ categories, onChange, value, filterIn }) {
+    const { t } = useTranslation();
     categories = filterByCycleCategory(categories, filterIn)
-    if (!categories || categories.length === 0) return <p>No categories available.</p>;
+    if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
 
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState({});
@@ -63,7 +66,7 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
     return (
         <>
             <section>
-                <h3 className='opacity-60 my-2 text-lg font-bold'>Service Category</h3>
+                <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Service Category")}</h3>
                 {!selectedCategory._id ? (
                     <div className="flex gap-3 flex-wrap">
                         {categories.map((item) =>
@@ -90,7 +93,7 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
 
             {selectedCategory._id && (
                 <section>
-                    <h3 className='opacity-60 my-2 text-lg font-bold'>Subcategories</h3>
+                    <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Subcategories")}</h3>
                     <div className="flex gap-3 flex-wrap">
                         {!selectedSubCategory._id ?
                             (
@@ -122,7 +125,7 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
                 selectedSubCategory._id && 
                 (
                     <section>
-                        <h3 className='opacity-60 my-2 text-lg font-bold'>Tags</h3>
+                        <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Tags")}</h3>
                         <div className="flex gap-3 flex-wrap">
                             {selectedSubCategory.tags.map((tag) => (
                                 <div key={tag.id}

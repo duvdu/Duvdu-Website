@@ -8,12 +8,14 @@ import { connect } from "react-redux";
 import * as Types from "../../redux/constants/actionTypes";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
+import { useTranslation } from 'react-i18next';
 
 
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
 
 function Auth({ children, isloading, errors, auth, api, resendCode }) {
+    const { t } = useTranslation();
 
     const [active, setActive] = useState(-1);
     const [swiper, setSwiper] = useState(null);
@@ -124,7 +126,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                 <div className="padding_eight_all bg-DS_white relative flex flex-col justify-center items-center rounded-lg h-auto sm:h-full">
                                     <Link href="/">
                                         <span className="as-Guest flex items-center cursor-pointer">
-                                            Continue as a Guest
+                                            {t("Continue as a Guest")}
                                             <Icon name="arrow-right-long" className="ml-3 text-xl w-6 text-primary" />
                                         </span>
                                     </Link>
@@ -134,7 +136,6 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                                 <div className="h-full min-h-36 lg:min-h-14" />
                                                 {children}
                                                 <div className="h-full  min-h-28 lg:min-h-8" />
-
                                             </div>
                                         </div>
                                     </div>

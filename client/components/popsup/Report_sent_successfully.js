@@ -1,8 +1,10 @@
 
 import Icon from '../Icons';
 import Popup from '../elements/popup';
+import { useTranslation } from 'react-i18next';
 
 function Report_sent_successfully() {
+    const { t } = useTranslation();
 
     return (
         <>
@@ -12,14 +14,12 @@ function Report_sent_successfully() {
                         <div className="flex w-full justify-center">
                             <Icon name={"done"} className="mb-9" />
                         </div>
-                        <h1 className="text-3xl font-semibold my-5">Report sent successfully</h1>
+                        <h1 className="text-3xl font-semibold my-5">{t("Report sent successfully")}</h1>
                         <p className=''>Your report will be revised manually by one
                             of our team & we’ll get back to you soon.</p>
                     </div>
                     <div className="flex justify-center items-center">
-                        <button data-popup-dismiss="popup" className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">
-                            close
-                        </button>
+                        <button data-popup-dismiss="popup" className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">{t("close")}</button>
                     </div>
                 </div>
             </Popup>

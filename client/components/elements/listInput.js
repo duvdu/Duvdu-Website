@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../components/Icons';
+import { useTranslation } from 'react-i18next';
 
 function ListInput({ onChange, name, placeholder, onClick, children, listdiv, target, remove, enable = true, value }) {
+    const { t } = useTranslation();
     const [word, setWord] = useState('')
     const [list, setList] = useState([])
 
@@ -53,7 +55,7 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
                         />)}
                 <div data-popup-toggle="popup" data-popup-target={target}>
                     <div data-popup-toggle="popup" data-popup-target={target} className="absolute flex items-center w-auto right-0 top-1/2 transform -translate-y-1/2 cursor-pointer" onClick={addword ? addword : onClick}>
-                        <span className="text-[#08D335] text-xs font-semibold">Add</span>
+                        <span className="text-[#08D335] text-xs font-semibold">{t("Add")}</span>
                         <div className="size-5 p-1">
                             <Icon className="text-[#08D335] w-full text-sm" name="plus" />
                         </div>

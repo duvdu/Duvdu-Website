@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import Switch from "./switcher2";
+import { useTranslation } from 'react-i18next';
 
 
 const Filter = ({ hideSwitch = false }) => {
+    const { t } = useTranslation();
     const data = [
         [
             {
@@ -117,9 +119,9 @@ const Filter = ({ hideSwitch = false }) => {
                 !hideSwitch &&
                 <div className="flex items-center justify-end gap-2">
                     <Switch defaultValue={() => { }} onSwitchChange={() => { }} />
-                    <span className="opacity-70 mr-6">instant project</span>
+                    <span className="opacity-70 mr-6">{t("instant project")}</span>
                     <Switch defaultValue={() => { }} onSwitchChange={() => { }} />
-                    <span className="opacity-70">price is inclusive</span>
+                    <span className="opacity-70">{t("price is inclusive")}</span>
                 </div>
             }
         </div>

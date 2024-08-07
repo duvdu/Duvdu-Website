@@ -6,6 +6,8 @@ import Formsubmited from '../../components/popsup/formsubmited';
 import { connect } from 'react-redux';
 import { GetProducer } from '../../redux/action/apis/cycles/producer/get';
 import { calculateRating, OpenPopUp } from '../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import { useRouter } from 'next/router';
 import ProducerCard from '../../components/pages/producer/producerCard';
 import EmptyComponent from '../../components/pages/contracts/emptyComponent';
@@ -13,6 +15,7 @@ import Loading from '../../components/elements/duvduLoading';
 import DuvduLoading from '../../components/elements/duvduLoading';
 
 const Producers = ({ GetProducer, respond,api,islogin }) => {
+    const { t } = useTranslation();
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const { subcategory, tag } = Router.query
@@ -72,7 +75,7 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
                     <div className="container mb-30">
                         <Filter />
                         {producers?.length > 0 &&
-                            <h1 className="page-header my-6">most popular on duvdu</h1>
+                            <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }
 
                         {producers && producers.length === 0 &&

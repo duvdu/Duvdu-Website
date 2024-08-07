@@ -28,6 +28,7 @@ function MessageTile({ GetAllMessageInChat, message, user }) {
         }
 
         const media = lastMSG.media[0];
+        if(!media) return ''
         if (media.type.startsWith('image/')) {
             return '📷 Image';
         }

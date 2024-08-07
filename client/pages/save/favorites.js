@@ -12,6 +12,7 @@ import { SwapProjectToFav } from "../../redux/action/apis/savedProject/fav/favAc
 import FavProjectCard from "../../components/elements/fav-project-card";
 import ProjectCard from "../../components/elements/project-card";
 import EmptyComponent from "../../components/pages/contracts/emptyComponent";
+import { useTranslation } from 'react-i18next';
 
 const Projects = ({
     GetFavList,
@@ -19,6 +20,7 @@ const Projects = ({
     get_respond,
     swap_respond
 }) => {
+    const { t } = useTranslation();
     const Router = useRouter();
     const boardId = Router.query.boardId;
     const showLimit = 24;
@@ -48,9 +50,7 @@ const Projects = ({
                             <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={Goback}>
                                 <Icon className='w-5 h-5 text-black' name={'angle-left'} />
                             </div>
-                            <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
-                                favorites
-                            </span>
+                            <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>{t("favorites")}</span>
                         </div>
                         {!getPaginatedProjects?.length && (
                             <EmptyComponent message={"No Projects Yet!"} />

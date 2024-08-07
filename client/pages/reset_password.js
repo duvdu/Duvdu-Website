@@ -2,9 +2,11 @@ import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import { useState } from 'react';
 import Button from '../components/elements/button';
+import { useTranslation } from 'react-i18next';
 
 function ResetPassword() {
-  const [email, setEmail] = useState('');
+    const { t } = useTranslation();
+    const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [emailError, setEmailError] = useState({ isError: false, message: '' });
@@ -46,22 +48,20 @@ function ResetPassword() {
       <Auth>
         <form method="post" action="/password_changed" onSubmit={handleSubmit}>
           <div className="heading_s1 mb-20 text-center">
-            <h1 className="auth-title">Reset Password</h1>
-            <p className="text-lg text-[#455154]">Please type something you’ll remember</p>
+            <h1 className="auth-title">{t("Reset Password")}</h1>
+            <p className="text-lg text-[#455154]">{t("Please type something you’ll remember")}</p>
           </div>
           <div className={`mb-4 ${passwordError.isError && 'error'}`}>
-            <input type="password" value={password|| ""} onChange={(e) => setPassword(e.target.value)} placeholder="New Password *" className={passwordError.isError ? "app-field error" : "app-field"} />
+            <input type="password" value={password|| ""} onChange={(e) => setPassword(e.target.value)} placeholder={t("New Password *")} className={passwordError.isError ? "app-field error" : "app-field"} />
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
           </div>
           <div className={`mb-20 ${confirmPasswordError.isError && 'error'}`}>
-            <input type="password" value={confirmPassword|| ""} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password *" className={confirmPasswordError.isError ? "app-field error" : "app-field"} />
+            <input type="password" value={confirmPassword|| ""} onChange={(e) => setConfirmPassword(e.target.value)} placeholder={t("Confirm Password *")} className={confirmPasswordError.isError ? "app-field error" : "app-field"} />
             {confirmPasswordError.isError && <p className="error-msg">{confirmPasswordError.message}</p>}
           </div>
           <div className="login_footer mb-11"></div>
           <div className="mb-4 relative mb-30">
-            <Button type="submit" name="reset-password" shadow={true} >
-              Login
-            </Button>
+            <Button type="submit" name="reset-password" shadow={true} >{t("Login")}</Button>
             <div className="submit-btn"></div>
           </div>
         </form>

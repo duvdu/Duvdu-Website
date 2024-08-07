@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import Icon from '../../Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useTranslation } from 'react-i18next';
 
 const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
+    const { t } = useTranslation();
 
     const chartRef = useRef(null);
     const gradientRef = useRef(null);
@@ -159,9 +161,7 @@ const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
     return (
         <div className='relative h-full '>
             <div className='absolute h-24 w-full flex items-center px-10 gap-5'>
-                <div className='text-lg opacity-70 capitalize font-semibold'>
-                    project views
-                </div>
+                <div className='text-lg opacity-70 capitalize font-semibold'>{t("project views")}</div>
                 <div className={`gap-1 rounded-full px-4 flex items-center dashboard_padge`}>
 
                     <span >

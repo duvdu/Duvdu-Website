@@ -8,9 +8,11 @@ import GoogleMap from "../../elements/googleMap";
 import { UpdateKeysAndValues } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import { BookProducer } from "../../../redux/action/apis/cycles/producer/book";
+import { useTranslation } from 'react-i18next';
 import AddAttachment from "../../elements/attachment";
 
 const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProducer, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
+    const { t } = useTranslation();
 
     const formData = addprojectState.formData
     
@@ -117,38 +119,38 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                 <div className='flex flex-col gap-7 container mx-auto'>
 
                     <section>
-                        <h3 className="capitalize opacity-60 mt-10">Platform</h3>
-                        <input type="text" placeholder='Enter Platform...' className={inputStyle} value={formData.platform || ""} onChange={handleInputChange} name="platform" />
+                        <h3 className="capitalize opacity-60 mt-10">{t("Platform")}</h3>
+                        <input type="text" placeholder={t("Enter Platform...")} className={inputStyle} value={formData.platform || ""} onChange={handleInputChange} name="platform" />
                     </section>
 
                     <section>
-                        <h3 className="capitalize opacity-60">Project Details</h3>
-                        <textarea name="projectDetails" value={formData.projectDetails || ""} onChange={handleInputChange} placeholder="Main Idea" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <h3 className="capitalize opacity-60">{t("Project Details")}</h3>
+                        <textarea name="projectDetails" value={formData.projectDetails || ""} onChange={handleInputChange} placeholder={t("Main Idea")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
 
                     <section className="h-96 relative overflow-hidden">
-                        <span> Project Location </span>
+                        <span>{t("Project Location")}</span>
                         <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange} />
 
 
                     </section>
                     <div className="flex w-full justify-between gap-3">
                         <section className="w-full">
-                            <p className="capitalize opacity-60">Episodes Number</p>
+                            <p className="capitalize opacity-60">{t("Episodes Number")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder={t("Ex. 5")} className={inputStyle} />
                             </div>
                         </section>
                         <section className="w-full">
-                            <p className="capitalize opacity-60">Episode Duration</p>
+                            <p className="capitalize opacity-60">{t("Episode Duration")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder={t("Ex. 15 minutes")} className={inputStyle} />
                             </div>
                         </section>
                     </div>
 
                     <section>
-                        <h3 className="capitalize opacity-60 mb-4">budget range</h3>
+                        <h3 className="capitalize opacity-60 mb-4">{t("budget range")}</h3>
                         <div className="flex gap-2">
                             <div className="border border-[#00000040] px-3 py-1 rounded-full"> {data.minBudget} to {data.maxBudget} </div>
                         </div>
@@ -156,31 +158,31 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
                     <div className="flex w-full justify-between gap-3">
                         <section className="w-full">
-                            <p className="capitalize opacity-60">Expected Budget</p>
+                            <p className="capitalize opacity-60">{t("Expected Budget")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder={t("Ex. 10$")} className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
-                            <p className="capitalize opacity-60">Expected Profits</p>
+                            <p className="capitalize opacity-60">{t("Expected Profits")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder={t("Ex. 10$")} className={inputStyle} />
                             </div>
                         </section>
                     </div>
 
                     <section className="w-full ">
-                        <h3 className="capitalize opacity-60">Upload Media</h3>
+                        <h3 className="capitalize opacity-60">{t("Upload Media")}</h3>
                         <AddAttachment name="attachments" value={formData.attachments || ""} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
 
                     </section>
 
                     <section className="justify-between gap-7">
-                        <h3 className="capitalize opacity-60 mb-5">Select Appointment Date</h3>
+                        <h3 className="capitalize opacity-60 mb-5">{t("Select Appointment Date")}</h3>
                         <SelectDate value={formData.appointmentDate} onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
-                    <ArrowBtn isEnable={enableBtn} onClick={onSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text={"Submit"} shadow={true} shadowHeight={"14"} />
+                    <ArrowBtn isEnable={enableBtn} onClick={onSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Submit" shadow={true} shadowHeight={"14"} />
 
                 </div>
             </Drawer >

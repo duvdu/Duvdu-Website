@@ -359,11 +359,14 @@ const StarOff = ({ className, ...rest }) =>
 
 const PauseVieo = ({ className, ...rest }) =>
   <div className={className} {...rest}>
-    <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12.7419 8.42188C14.0687 9.16128 14.0735 10.0914 12.7419 10.9274L2.45234 17.8668C1.15948 18.5568 0.281404 18.1494 0.18923 16.6565L0.145569 2.13231C0.116461 0.757125 1.24923 0.368589 2.32864 1.02792L12.7419 8.42188Z" fill="white" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" id="pause">
+      <path fill-rule="evenodd" d="M1 0a1 1 0 0 0-1 1v6a1 1 0 0 0 2 0V1a1 1 0 0 0-1-1m5 1v6a1 1 0 0 1-2 0V1a1 1 0 0 1 2 0"
+        fill="white"
+      >
+      </path>
     </svg>
-  </div>  
-  
+  </div>
+
 const PlayVieo = ({ className, ...rest }) =>
   <div className={className} {...rest}>
     <svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">

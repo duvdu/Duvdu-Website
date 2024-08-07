@@ -18,7 +18,9 @@ import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/
 import TimeLeft from '../../pages/contracts/TimeLeft';
 import { RateContract } from '../../../redux/action/apis/rateContract';
 import RatingProject from '../../popsup/ratingProject';
-import { OpenPopUp } from '../../../util/util';
+import { OpenPopUp,  } from '../../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import ReportContract from '../../popsup/report-contract';
 
 
@@ -36,6 +38,7 @@ function ReceiveProjectFiles({
     InsertToArray,
     resetForm,
     user }) {
+    const { t } = useTranslation();
     const formData = addprojectState?.formData
     const contract = contractDetails?.contract;
     const customer = contractDetails?.customer;
@@ -320,7 +323,7 @@ function ReceiveProjectFiles({
                                 {
                                     (getType() == "project" || getType() == "rental") &&
                                     <section className='w-full flex-col'>
-                                        <h2 className='opacity-60 capitalize mb-3'> original gig </h2>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("original gig")}</h2>
                                         <div className='w-full'>
                                             <div className="h-20 w-full rounded-full relative overflow-hidden">
                                                 <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
@@ -333,7 +336,7 @@ function ReceiveProjectFiles({
                                         </div>
                                     </section>}
                                 <section className='w-full hidden'>
-                                    <h2 className='opacity-60 capitalize mb-3'> project type </h2>
+                                    <h2 className='opacity-60 capitalize mb-3'>{t("project type")}</h2>
                                     <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
                                         {contract.details}
                                     </span>
@@ -341,7 +344,7 @@ function ReceiveProjectFiles({
                                 {
                                     contractDetails.ref &&
                                     <section className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'> service type </h2>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("service type")}</h2>
                                         <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
                                             {getType()}
                                         </span>
@@ -350,7 +353,7 @@ function ReceiveProjectFiles({
                                 {
                                     contract.details &&
                                     <section className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'> project details </h2>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
                                         <p className='font-semibold capitalize max-w-[543px]'>
                                             {contract.details}
                                         </p>
@@ -359,14 +362,14 @@ function ReceiveProjectFiles({
                                 {
                                     contract.attachments?.length > 0 &&
                                     <section className='w-full'>
-                                        <h2 className='opacity-60 capitalize'> alike media </h2>
+                                        <h2 className='opacity-60 capitalize'>{t("alike media")}</h2>
                                         {contract.attachments.map((attachment, index) =>
                                             <div key={index} className='flex gap-3 items-start p-4 bg-DS_white rounded-md border border-[#CACACA] mt-3'>
                                                 <Icon key={index} name={'file'} className='size-5' />
                                                 <div className='flex flex-col'>
                                                     <span className='text-[#353535] text-[14px] font-medium'> {attachment.split('/').pop()} </span>
                                                     <span className='text-[#989692] text-[12px]'> </span>
-                                                    <a href={attachment} target="_blank" rel="noopener noreferrer" className='text-primary font-semibold text-[14px]'> Click to view </a>
+                                                    <a href={attachment} target="_blank" rel="noopener noreferrer" className='text-primary font-semibold text-[14px]'>{t("Click to view")}</a>
                                                 </div>
                                             </div>
                                         )}
@@ -377,7 +380,7 @@ function ReceiveProjectFiles({
                                     <div className='w-full'>
 
                                         <div className='w-full'>
-                                            <h2 className='opacity-60 capitalize mb-3'> Stage Expiration </h2>
+                                            <h2 className='opacity-60 capitalize mb-3'>{t("Stage Expiration")}</h2>
                                             {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
                                         </div>
 
@@ -388,7 +391,7 @@ function ReceiveProjectFiles({
                                             className='opacity-85 text-base'
                                         >
                                             <div className='w-full mt-5'>
-                                                <h2 className='opacity-60 capitalize mb-3'> Address </h2>
+                                                <h2 className='opacity-60 capitalize mb-3'>{t("Address")}</h2>
                                                 <div className='flex gap-4'>
                                                     <div>
                                                         <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
@@ -408,11 +411,11 @@ function ReceiveProjectFiles({
                                     </div>
                                     <div className='w-full'>
                                         <div className='w-full'>
-                                            <h2 className='opacity-60 capitalize mb-3'> Total Price </h2>
+                                            <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
                                             <span className='font-semibold capitalize mt-3'> {contract.totalPrice} $ </span>
                                         </div>
                                         <div className='w-full mt-5'>
-                                            <h2 className='opacity-60 capitalize mb-3'> start date </h2>
+                                            <h2 className='opacity-60 capitalize mb-3'>{t("start date")}</h2>
                                             <div className='flex gap-4'>
                                                 <div>
 
@@ -446,9 +449,7 @@ function ReceiveProjectFiles({
                                         (status == "update-after-first-Payment" && getType() === "project" && IsImSp())
                                     ) &&
                                     < Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={() => setCanEdit(true)}>
-                                        <span className='text-white font-bold capitalize text-lg'>
-                                            Edit some Details
-                                        </span>
+                                        <span className='text-white font-bold capitalize text-lg'>{t("Edit some Details")}</span>
                                     </Button>
                                 }
                             </div>
@@ -459,7 +460,7 @@ function ReceiveProjectFiles({
                                         getType() == "producer" &&
                                         IsImSp() &&
                                         <section className="my-11 w-full">
-                                            <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
+                                            <h3 className="capitalize opacity-60 mb-4">{t("appointment Date")}</h3>
                                             <SelectDate value={appointmentDate} onChange={(value) => setdAppointmentDate(value)} />
                                         </section>
                                     }
@@ -469,24 +470,24 @@ function ReceiveProjectFiles({
                                         IsImSp() &&
                                         <>
                                             <section className='w-full mt-4'>
-                                                <h3 className="capitalize opacity-60">job details</h3>
+                                                <h3 className="capitalize opacity-60">{t("job details")}</h3>
                                                 <textarea
                                                     name="details"
                                                     value={formData.details || contract.details}
                                                     onChange={handleInputChange}
-                                                    placeholder="requirements, conditions At least 6 char"
+                                                    placeholder={t("requirements, conditions At least 6 char")}
                                                     className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
                                                 />
                                             </section>
                                             <section className="my-11 w-full">
                                                 <section className='mb-4 mt-14'>
                                                     <h3 className="capitalize opacity-60 mb-4">duration by {contract.duration.unit} </h3>
-                                                    <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration.value || ""} onChange={handleInputChange} name="duration" />
+                                                    <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration.value || ""} onChange={handleInputChange} name="duration" />
                                                 </section>
                                                 <div className='mb-4 w-full hidden'>
-                                                    <h3 className="capitalize opacity-60 mb-4">unit</h3>
+                                                    <h3 className="capitalize opacity-60 mb-4">{t("unit")}</h3>
                                                     <input
-                                                        placeholder='unit'
+                                                        placeholder={t("unit")}
                                                         type='text'
                                                         name='unit'
                                                         value={formData["unit"] || contract.duration.unit}
@@ -496,9 +497,9 @@ function ReceiveProjectFiles({
                                                 </div>
                                             </section>
                                             <div className='mb-4 w-full'>
-                                                <h3 className="capitalize opacity-60 mb-4">total price</h3>
+                                                <h3 className="capitalize opacity-60 mb-4">{t("total price")}</h3>
                                                 <input
-                                                    placeholder='Total price'
+                                                    placeholder={t("Total price")}
                                                     type='number'
                                                     name='totalPrice'
                                                     value={formData.totalPrice || contract.totalPrice}
@@ -514,13 +515,13 @@ function ReceiveProjectFiles({
                                         IsImSp() &&
                                         <>
                                             <section className='mb-4 mt-14'>
-                                                <h3 className="capitalize opacity-60 mb-4">duration</h3>
-                                                <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
+                                                <h3 className="capitalize opacity-60 mb-4">{t("duration")}</h3>
+                                                <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
                                             </section>
                                             <div className='mb-4 w-full'>
-                                                <h3 className="capitalize opacity-60 mb-4">unit Price</h3>
+                                                <h3 className="capitalize opacity-60 mb-4">{t("unit Price")}</h3>
                                                 <input
-                                                    placeholder='unit price'
+                                                    placeholder={t("unit price")}
                                                     type='text'
                                                     name='unitPrice'
                                                     value={formData["unitPrice"] || contract.projectScale.unitPrice}
@@ -529,12 +530,12 @@ function ReceiveProjectFiles({
                                                 />
                                             </div>
                                             <section>
-                                                <h3 className="capitalize opacity-60 mb-4">number Of Units</h3>
-                                                <input placeholder='number Of Units' type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
+                                                <h3 className="capitalize opacity-60 mb-4">{t("number Of Units")}</h3>
+                                                <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
                                             </section>
                                             <div className='h-divider my-6' />
                                             <section>
-                                                <h3 className="capitalize opacity-60 mb-4">Tools Used</h3>
+                                                <h3 className="capitalize opacity-60 mb-4">{t("Tools Used")}</h3>
                                                 {formData?.tools?.map((tool, i) => (
                                                     <div key={i} className='mb-2'>
                                                         <div className='flex justify-between'>
@@ -548,7 +549,7 @@ function ReceiveProjectFiles({
                                                             className="edit app-field"
                                                             value={tool.unitPrice}
                                                             onChange={(e) => handleToolChange(e, i)}
-                                                            placeholder="Price"
+                                                            placeholder={t("Price")}
                                                             min={0}
                                                         />
                                                     </div>
@@ -556,7 +557,7 @@ function ReceiveProjectFiles({
                                             </section>
                                             <div className='h-divider my-6' />
                                             <section className='mb-4'>
-                                                <h3 className="capitalize opacity-60 mb-4">Functions Used</h3>
+                                                <h3 className="capitalize opacity-60 mb-4">{t("Functions Used")}</h3>
                                                 {formData?.functions?.map((func, i) => (
                                                     <div key={i} className='mb-2'>
                                                         <div className='flex justify-between'>
@@ -570,7 +571,7 @@ function ReceiveProjectFiles({
                                                             className="edit app-field"
                                                             value={func.unitPrice}
                                                             onChange={(e) => handleFunctionChange(e, i)}
-                                                            placeholder="Price"
+                                                            placeholder={t("Price")}
                                                             min={0}
                                                         />
                                                     </div>
@@ -582,27 +583,21 @@ function ReceiveProjectFiles({
                             {canReview &&
                                 <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={openReview}>
-                                        <span className='text-white font-bold capitalize text-lg'>
-                                            review
-                                        </span>
+                                        <span className='text-white font-bold capitalize text-lg'>{t("review")}</span>
                                     </Button>
                                 </section>
                             }
                             {
                                 <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} color={"#D30000"}  onClick={openComplain}>
-                                        <span className='text-white font-bold capitalize text-lg'>
-                                            Report
-                                        </span>
+                                        <span className='text-white font-bold capitalize text-lg'>{t("Report")}</span>
                                     </Button>
                                 </section>
                             }
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
-                                        <span className='text-white font-bold capitalize text-lg'>
-                                            Update Appointment
-                                        </span>
+                                        <span className='text-white font-bold capitalize text-lg'>{t("Update Appointment")}</span>
                                     </Button>
                                 </section>
                             }
@@ -613,16 +608,12 @@ function ReceiveProjectFiles({
                                         {
                                             acceptBtn &&
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
-                                                <span className='text-white font-bold capitalize text-lg'>
-                                                    Accept
-                                                </span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Accept")}</span>
                                             </Button>
                                         }
                                         {
                                             refuse &&
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                                Refuse
-                                            </button>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>{t("Refuse")}</button>
                                         }
                                     </div>
                                     {
@@ -630,22 +621,16 @@ function ReceiveProjectFiles({
                                         status == "waiting-for-pay-10" &&
                                         <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                <span className='text-white font-bold capitalize text-lg'>
-                                                    Pay Now 10%
-                                                </span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now 10%")}</span>
                                             </Button>
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                                Refuse
-                                            </button>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>{t("Refuse")}</button>
                                         </div>
                                     }
                                     {
                                         !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                             <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                <span className='text-white font-bold capitalize text-lg'>
-                                                    Pay Now remain ( 90 % )
-                                                </span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 90 % )")}</span>
                                             </Button>
                                         </div>
                                     }
@@ -653,9 +638,7 @@ function ReceiveProjectFiles({
                                         !IsImSp() && getType() === 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
                                             <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                <span className='text-white font-bold capitalize text-lg'>
-                                                    Pay Now remain ( 100 % )
-                                                </span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 100 % )")}</span>
                                             </Button>
                                         </div>
                                     }
@@ -663,21 +646,15 @@ function ReceiveProjectFiles({
                                         !IsImSp() && status == "waiting-for-payment" &&
                                         <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                <span className='text-white font-bold capitalize text-lg'>
-                                                    Pay Now
-                                                </span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now")}</span>
                                             </Button>
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                                Refuse
-                                            </button>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>{t("Refuse")}</button>
                                         </div>
 
                                     }
                                     {
                                         !status?.includes("waiting-for-pay") && false &&
-                                        <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">
-                                            Cancel
-                                        </button>
+                                        <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">{t("Cancel")}</button>
                                     }
                                 </section>
                             }

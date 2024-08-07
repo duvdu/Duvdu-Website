@@ -10,9 +10,10 @@ import { BookCopyrights } from "../../../redux/action/apis/cycles/copywriter/boo
 import dateFormat from "dateformat";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import AddAttachment from "../../elements/attachment";
-
+import { useTranslation } from 'react-i18next';
 
 const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
+    const { t } = useTranslation();
     const formData = addprojectState.formData
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
@@ -116,28 +117,28 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
             <Drawer name={preview ? 'Review Booking' : data?.user?.name} img={data?.user?.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll" padding={false}>
                 <div className={preview ? ' hidden p-8 pt-8' : 'p-8 pt-8'}>
                     <section>
-                        <h3 className="capitalize opacity-60">job details</h3>
-                        <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <h3 className="capitalize opacity-60">{t("job details")}</h3>
+                        <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder={t("requirements, conditions At least 6 char")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">select appointmentDate  date</h3>
+                        <h3 className="capitalize opacity-60 mb-4">{t("select appointmentDate  date")}</h3>
                         <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
                     </section>
                     <section className="my-11">
-                        <h3 className="capitalize opacity-60 mb-4">select start date</h3>
+                        <h3 className="capitalize opacity-60 mb-4">{t("select start date")}</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full mt-5">
-                        <h3 className="capitalize opacity-60  mb-3">location</h3>
+                        <h3 className="capitalize opacity-60  mb-3">{t("location")}</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange} />
                     </section>
                     <section className="w-full">
-                        <h3 className="capitalize opacity-60 mt-11">upload alike project</h3>
+                        <h3 className="capitalize opacity-60 mt-11">{t("upload alike project")}</h3>
                         <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'continue'} />
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
                         </div>
                     </section>
                 </div>
@@ -145,13 +146,11 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                 <div className={preview ? ' flex flex-col gap-9 h-full justify-between' : ' hidden'}>
                     <div className="flex flex-col gap-9 overflow-y-scroll overflow-x-hidden p-8">
                         <section className="w-full">
-                            <h2 className='opacity-60 capitalize mb-3'> project type </h2>
-                            <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
-                                shooting permits
-                            </span>
+                            <h2 className='opacity-60 capitalize mb-3'>{t("project type")}</h2>
+                            <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>{t("shooting permits")}</span>
                         </section>
                         <section className="w-full">
-                            <h2 className='opacity-60 capitalize mb-3'> project details </h2>
+                            <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
                             <span className='capitalize mb-8 opacity-80 w-min font-bold'>
                                 {formData.details}
                             </span>
@@ -162,7 +161,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                                 <Icon className='text-primary' name={"calendar"} />
                             </div>
                             <div className="flex flex-col pl-5 w-full">
-                                <span className="font-normal text-base">Appoinment Date</span>
+                                <span className="font-normal text-base">{t("Appoinment Date")}</span>
                                 <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'dddd , h:mm TT')}</span>
                             </div>
                         </div>
@@ -172,7 +171,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                                 <Icon className='text-primary' name={"calendar"} />
                             </div>
                             <div className="flex flex-col pl-5 w-full">
-                                <span className="font-normal text-base">Start Date</span>
+                                <span className="font-normal text-base">{t("Start Date")}</span>
                                 <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'dddd , h:mm TT')}</span>
                             </div>
                         </div>
@@ -182,7 +181,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                                 <Icon className='text-primary w-4' name={"location-dot"} />
                             </div>
                             <div className="flex flex-col pl-5 w-full">
-                                <span className="font-normal text-base capitalize">project location</span>
+                                <span className="font-normal text-base capitalize">{t("project location")}</span>
                                 <span className="font-normal text-base">{formData.address}</span>
                             </div>
                         </div>
@@ -190,11 +189,11 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
 
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
                         <div className="w-full flex px-8 justify-between">
-                            <span className="text-2xl opacity-50 font-semibold">Total Amount</span>
+                            <span className="text-2xl opacity-50 font-semibold">{t("Total Amount")}</span>
                             <span className="text-2xl font-bold">${data.price}</span>
                         </div>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text={'Appointment Now'} />
+                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
                         </div>
                     </section>
                 </div>

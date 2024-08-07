@@ -1519,7 +1519,7 @@ table p {
   font-weight: 400;
   line-height: 18px;
   letter-spacing: 0em;
-  text-align: left;
+ 
 }
 
 .boronze-frame {
@@ -1827,10 +1827,10 @@ table p {
 
 .password-container>.icon {
   position: absolute;
-  right: 25px;
   top: 50%;
   cursor: pointer;
   transform: translateY(-50%);
+  @apply ltr:right-[25px] rtl:left-[25px] 
 }
 
 .OTP:focus {
@@ -1923,6 +1923,7 @@ table p {
   border: none;
   height: 64px;
   padding-left: 27px;
+  padding-right: 27px;
 }
 
 

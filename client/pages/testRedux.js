@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { increment, decrement } from "../redux/action/test";
+import { useTranslation } from 'react-i18next';
 
 const mapStateToProps = (state) => {
+    const { t } = useTranslation();
     return {
         count: state.counter.count
     };
@@ -21,12 +23,12 @@ function Show({ count }) {
 
 // Define Button1 component
 function Button1({ increment }) {
-    return <button onClick={increment}>Increment</button>;
+    return <button onClick={increment}>{t("Increment")}</button>;
 }
 
 // Define Button2 component
 function Button2({ decrement }) {
-    return <button onClick={decrement}>Decrement</button>;
+    return <button onClick={decrement}>{t("Decrement")}</button>;
 }
 
 const Counter = () => {

@@ -1,9 +1,12 @@
-import { convertHoursTo__ } from "../../../util/util";
+import { convertHoursTo__,  } from "../../../util/util";
+import { useTranslation } from 'react-i18next';
+
 import GoogleMap from "../../elements/googleMap";
 import dateFormat from "dateformat";
 
 const Details = ({ data }) => {
-    
+    const { t } = useTranslation();
+
     return (
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-6 mx-5">
             <div className="w-full flex justify-center my-10">
@@ -13,7 +16,7 @@ const Details = ({ data }) => {
             {(data?.tools || data?.equipments)?.length > 0 &&
                 <>
                     <div className="mt-9 mb-3">
-                        <h3 className="capitalize opacity-50"> Tools Used </h3>
+                        <h3 className="capitalize opacity-50">{t("Tools Used")}</h3>
                     </div>
                     <div className="flex flex-col gap-2">
                         {(data?.tools || data?.equipments).map(tool => [
@@ -35,7 +38,7 @@ const Details = ({ data }) => {
             {data?.functions?.length > 0 &&
                 <>
                     <div className="mt-4 mb-3">
-                        <h3 className="capitalize opacity-50"> function Used </h3>
+                        <h3 className="capitalize opacity-50">{t("function Used")}</h3>
                     </div>
                     <div className="flex flex-col gap-2">
                         {(data?.functions).map(tool => [
@@ -56,7 +59,7 @@ const Details = ({ data }) => {
             {data?.creatives?.length > 0 &&
                 <>
                     <div className="mt-4 mb-3">
-                        <h3 className="capitalize opacity-50"> creatives </h3>
+                        <h3 className="capitalize opacity-50">{t("creatives")}</h3>
                     </div>
                     <div className="flex flex-col gap-2">
                         {data?.creatives.map(creative => [
@@ -85,7 +88,7 @@ const Details = ({ data }) => {
             }
 
             <div className="mt-9">
-                <h3 className="capitalize opacity-50">description</h3>
+                <h3 className="capitalize opacity-50">{t("description")}</h3>
             </div>
             <span className="capitalize font-semibold mt-4">{data?.desc || data?.description}</span>
             <div className="mt-9">
@@ -93,7 +96,7 @@ const Details = ({ data }) => {
             {
                 data?.location &&
                 <section>
-                    <span className="capitalize opacity-50">location</span>
+                    <span className="capitalize opacity-50">{t("location")}</span>
                     <div className="capitalize">
                         <section >
                             <GoogleMap
@@ -113,7 +116,7 @@ const Details = ({ data }) => {
                 data.duration &&
                 <section>
                     <div className="mt-9">
-                        <span className="capitalize opacity-50">duration</span>
+                        <span className="capitalize opacity-50">{t("duration")}</span>
                     </div>
                     <div>
                         <span className="capitalize font-semibold">{data.duration} Days</span>
@@ -122,7 +125,7 @@ const Details = ({ data }) => {
             {data.insurance &&
                 <section>
                     <div className="mt-9">
-                        <span className="capitalize opacity-50">insurance</span>
+                        <span className="capitalize opacity-50">{t("insurance")}</span>
                     </div>
                     <div>
                         <span className="capitalize font-semibold">{data.insurance}</span>

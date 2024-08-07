@@ -1,9 +1,11 @@
 import React from 'react';
 import Icon from '../../Icons';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
+  const { t } = useTranslation();
 
   return (
     <div className={`border border-50 border-solid border-gray-300 p-10 h-min ${className}`}>
@@ -34,7 +36,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
           </span>
         </div>
         <span className='info-container flex gap-1'>
-          <span>{cardData?.user?.projectsView || 0}</span> <span>projects</span>
+          <span>{cardData?.user?.projectsView || 0}</span> <span>{t("projects")}</span>
         </span>
         <div className='info-container flex justify-between items-center gap-2'>
           <span>{cardData?.user?.rate?.ratersCounter || 0}</span>
@@ -45,23 +47,19 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
       </div>
       <div className='flex justify-between mt-7'>
         <div>
-          <p className='text-sm capitalize opacity-50 leading-8'>pricing</p>
+          <p className='text-sm capitalize opacity-50 leading-8'>{t("pricing")}</p>
           <span className='text-4xl lg:text-5xl font-medium'>{cardData?.price || 0} $</span>
         </div>
         <div className='w-[1px] bg-black opacity-15' />
         <div>
-          <p className='text-sm capitalize opacity-50 leading-8'>duration</p>
+          <p className='text-sm capitalize opacity-50 leading-8'>{t("duration")}</p>
           <span className='text-4xl lg:text-5xl font-medium'>{cardData?.duration?.value || 0} Days</span>
         </div>
       </div>
 
       {user?.profile?.username !== cardData?.user?.username ?
-        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize">
-          book
-        </button> :
-        <button style={{ cursor: 'not-allowed' }} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold mt-12 capitalize">
-          Book
-        </button>
+        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize">{t("book")}</button> :
+        <button style={{ cursor: 'not-allowed' }} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold mt-12 capitalize">{t("Book")}</button>
       }
     </div>
   );

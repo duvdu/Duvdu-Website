@@ -2,8 +2,10 @@ import Icon from "../../Icons";
 import dateFormat from "dateformat";
 import Selector from "../../elements/CustomSelector";
 import { formattedCreatedAt, formattedDeadline } from "../../../util/format-date";
+import { useTranslation } from 'react-i18next';
 
 const Ongoing2 = ({ data,onClick }) => {
+    const { t } = useTranslation();
     
     const Deadline = formattedDeadline(data?.contract?.deadline)
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
@@ -31,11 +33,11 @@ const Ongoing2 = ({ data,onClick }) => {
                 <div className='flex gap-3'>
                     <span className='text-[40px] flex items-center ml-3 gap-2'>
                         <span className='opacity-50 text-white'>$</span>
-                        <span className='text-white'>490</span>
+                        <span className='text-white'>{490}</span>
                     </span>
                     <div className='h-auto w-[1px] bg-white opacity-15' />
                     <div>
-                        <span className='opacity-50 text-white'>deadline</span>
+                        <span className='opacity-50 text-white'>{t("deadline")}</span>
                         <br />
                         <span className='text-white'>{Deadline}</span>
                     </div>

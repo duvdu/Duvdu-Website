@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import Icon from "../Icons";
+import { useTranslation } from 'react-i18next';
 
 const Selector = ({ options, onSelect, iconclassName, className = "", children }) => {
+    const { t } = useTranslation();
+
     const selectRef = useRef(null);
 
     const handleIconClick = () => {
@@ -30,7 +33,7 @@ const Selector = ({ options, onSelect, iconclassName, className = "", children }
                 <select ref={selectRef} onChange={handleChange} className="absolute inset-0 opacity-0 cursor-pointer">
                     {options?.map((option, index) => (
                         <option key={index} value={option.value}>
-                            {option.value}
+                            {t(option.value)}
                         </option>
                     ))}
                 </select>}

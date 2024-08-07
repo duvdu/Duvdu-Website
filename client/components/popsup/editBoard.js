@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Popup from '../elements/popup';
 import AppButton from '../elements/button';
+import { useTranslation } from 'react-i18next';
 
 function EditBoard({onSbmit ,id , defultValue}) {
     
+    const { t } = useTranslation();
     const [board, setBoardName] = useState('');
     const [boardError, setBoardError] = useState({ isError: false, message: '' });
     useEffect(()=>{
@@ -30,14 +32,12 @@ function EditBoard({onSbmit ,id , defultValue}) {
                             type="text"
                             value={board|| ""}
                             onChange={(e) => setBoardName(e.target.value)}
-                            placeholder="New Board name"
+                            placeholder={t("New Board name")}
                             className={boardError.isError ? "app-field error" : "app-field"}
                         />
                         {boardError.isError && <p className="error-msg">{boardError.message}</p>}
                     </div>
-                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>  
-                        Edit
-                    </AppButton>
+                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>{t("Edit")}</AppButton>
                     <div className='mb-4'/>
                 </div>
             </Popup>

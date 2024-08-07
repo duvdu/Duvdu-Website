@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import AppButton from '../elements/button';
+import { useTranslation } from 'react-i18next';
 
 function createnewBoard({onSbmit}) {
+    const { t } = useTranslation();
     const [board, setBoardName] = useState('');
     const [boardError, setBoardError] = useState({ isError: false, message: '' });
     const handleSubmit = (e) => {
@@ -26,14 +28,12 @@ function createnewBoard({onSbmit}) {
                             type="text"
                             value={board|| ""}
                             onChange={(e) => setBoardName(e.target.value)}
-                            placeholder="Board name"
+                            placeholder={t("Board name")}
                             className={boardError.isError ? "app-field error" : "app-field"}
                         />
                         {boardError.isError && <p className="error-msg">{boardError.message}</p>}
                     </div>
-                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>  
-                        Create
-                    </AppButton>
+                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>{t("Create")}</AppButton>
                     <div className='mb-4'/>
                 </div>
             </Popup>

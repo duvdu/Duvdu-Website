@@ -5,8 +5,10 @@ import ArrowBtn from '../components/elements/arrowBtn';
 import Popup from '../components/elements/popup';
 import AppButton from '../components/elements/button';
 import AddNewCard from '../components/pages/payment/AddNewCard';
+import { useTranslation } from 'react-i18next';
 
 const Payment = () => {
+    const { t } = useTranslation();
 
 
     return (
@@ -110,7 +112,7 @@ const LeftSide = () => {
                 <div className='rounded-2xl bg-DS_white dark:border-[#3D3D3D]'>
                     <div className='flex rounded-xl gap-4 p-6'>
                         <Icon name={"card"} />
-                        <p className='font-medium text-base'>Registered cards</p>
+                        <p className='font-medium text-base'>{t("Registered cards")}</p>
                     </div>
                     <div className='border-b-2' />
                     {cardData.map((card, index) => (
@@ -122,7 +124,7 @@ const LeftSide = () => {
                         <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px]'>
                             <Icon name={"check"} />
                         </div>
-                        <span>Add new card</span>
+                        <span>{t("Add new card")}</span>
                     </div>
                 )}
                 {showAddCard && (
@@ -145,29 +147,27 @@ const RightSide = () => {
                         <div className='bg-[#EB1A40] rounded-full h-min  w-7 flex justify-center items-center aspect-square'>
                             <Icon className='text-white' name={'xmark'} invert={true} />
                         </div>
-                        <span className='text-center text-lg font-medium opacity-80 text-[#EB1A40]'>payment failed</span>
+                        <span className='text-center text-lg font-medium opacity-80 text-[#EB1A40]'>{t("payment failed")}</span>
                     </div>
 
-                    <span className='mb-24 text-center text-lg font-medium opacity-80'>Invalid payment data</span>
-                    <AppButton data-popup-dismiss="popup" className={"mb-40 mx-16 md:mx-32 w-52"} >
-                    Try Again
-                    </AppButton>
+                    <span className='mb-24 text-center text-lg font-medium opacity-80'>{t("Invalid payment data")}</span>
+                    <AppButton data-popup-dismiss="popup" className={"mb-40 mx-16 md:mx-32 w-52"} >{t("Try Again")}</AppButton>
                 </div>
             </Popup>
             <div className='rounded-2xl bg-DS_white border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>
                 <section>
-                    <h3 className="capitalize opacity-60 mb-4">project type</h3>
-                    <span className="rounded-full border border-black border-opacity-55 px-3 py-1"> videography </span>
+                    <h3 className="capitalize opacity-60 mb-4">{t("project type")}</h3>
+                    <span className="rounded-full border border-black border-opacity-55 px-3 py-1">{t("videography")}</span>
                 </section>
 
                 <section className='my-9'>
-                    <h3 className="capitalize opacity-60 mb-4">project details</h3>
-                    <span className="font-bold"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt </span>
+                    <h3 className="capitalize opacity-60 mb-4">{t("project details")}</h3>
+                    <span className="font-bold">{t("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt")}</span>
                 </section>
 
                 <section>
-                    <h3 className="capitalize opacity-60 mb-4">shooting days</h3>
-                    <span className="font-bold"> 5 days </span>
+                    <h3 className="capitalize opacity-60 mb-4">{t("shooting days")}</h3>
+                    <span className="font-bold">{t("5 days")}</span>
                 </section>
 
                 <section className='my-9'>
@@ -177,14 +177,10 @@ const RightSide = () => {
                         </div>
                         <div>
                             <div>
-                                <span className='opacity-85 text-base'>
-                                    14 December, 2021
-                                </span>
+                                <span className='opacity-85 text-base'>{t("14 December, 2021")}</span>
                             </div>
                             <div>
-                                <span className='text-xs text-[#747688]'>
-                                    Tuesday, 4:00PM - 9:00PM
-                                </span>
+                                <span className='text-xs text-[#747688]'>{t("Tuesday, 4:00PM - 9:00PM")}</span>
                             </div>
                         </div>
                     </div>
@@ -194,22 +190,18 @@ const RightSide = () => {
                         </div>
                         <div>
                             <div>
-                                <span className='opacity-85 text-base'>
-                                    Gala Convention Center
-                                </span>
+                                <span className='opacity-85 text-base'>{t("Gala Convention Center")}</span>
                             </div>
                             <div>
-                                <span className='text-xs text-[#747688]'>
-                                    36 Guild Street London, UK
-                                </span>
+                                <span className='text-xs text-[#747688]'>{t("36 Guild Street London, UK")}</span>
                             </div>
                         </div>
                     </div>
                 </section>
                 <div className='h-12' />
                 <div className='flex font-bold justify-between'>
-                    <span>Total Amount</span>
-                    <span>₹6,699.0</span>
+                    <span>{t("Total Amount")}</span>
+                    <span>{t("₹6,699.0")}</span>
                 </div>
                 <section>
                     <div className="flex justify-center mt-11">

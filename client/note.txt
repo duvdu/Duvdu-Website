@@ -152,12 +152,5 @@ change names search project name , paganation , clean header of grid services
 check team project length
 change icon down down 
 width notification empty
-
-
-
 ----------------------------------
-Change Map Marker
-Change Map theme color
-Hide All places and controller in Map Make it clear 
-get Video File
-look at booking
+<Selctor

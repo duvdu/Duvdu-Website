@@ -139,7 +139,7 @@ function OtherProfile({
                                 <div className='h-divider mt-7 mb-7'></div>
 
                                 <div className='px-10'>
-                                    <h3 className='pt-6' id='about-header'>about</h3>
+                                    <h3 className='pt-6' id='about-header'>{t("about")}</h3>
                                     <p className='pt-6' id='about-paragraph'>{user.about}</p>
                                 </div>
                             </>

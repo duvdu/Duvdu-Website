@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import { formattedDeadline } from "../../../util/format-date";
 import { toggleContractData } from "../../../redux/action/contractDetails";
+import { useTranslation } from 'react-i18next';
 
 const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex }) => {
-
+    const { t } = useTranslation();
 
 
     const handleStatus = (status) => {
@@ -124,7 +125,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                     </span>
                     <div className='h-auto w-[1px] bg-black opacity-15' />
                     <div className='text-start'>
-                        <span className={`opacity-50 capitalize ${isCanceled ? 'text-[#FF4646]' : ''}`}>deadline</span>
+                        <span className={`opacity-50 capitalize ${isCanceled ? 'text-[#FF4646]' : ''}`}>{t("deadline")}</span>
                         <br />
                         <span className={`capitalize line-through opacity-60 ${isCanceled ? 'text-[#FF4646]' : ''}`}>{Deadline}</span>
                     </div>

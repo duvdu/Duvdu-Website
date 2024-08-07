@@ -8,6 +8,8 @@ import { GetCopyrights } from '../../redux/action/apis/cycles/copywriter/get';
 import { useRouter } from 'next/router';
 import CopyRightCard from '../../components/pages/copy-writeer/copyRightCard';
 import { OpenPopUp } from '../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import EmptyComponent from './../../components/pages/contracts/emptyComponent';
 import DuvduLoading from '../../components/elements/duvduLoading';
 
@@ -15,6 +17,7 @@ import DuvduLoading from '../../components/elements/duvduLoading';
 
 
 const Permit = ({ GetCopyrights, respond, api, islogin }) => {
+    const { t } = useTranslation();
     const Router = useRouter();
     const showLimit = 12;
     const page = 1;
@@ -76,7 +79,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                         <Filter />
                         {CopyRight?.length === 0 ?
                             <EmptyComponent message="No CopyRight Now" /> :
-                            <h1 className="page-header my-6">most popular on duvdu</h1>
+                            <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }
                         <div className="minmax-360">
                             {CopyRight?.map((item, i) =>

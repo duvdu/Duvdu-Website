@@ -2,10 +2,12 @@ import Link from "next/link";
 import Button from '../components/elements/button';
 import Auth from '../components/layout/Auth';
 import Icon from '../components/Icons';
+import { useTranslation } from 'react-i18next';
 
 
 function PasswordChanged() {
-  return (
+    const { t } = useTranslation();
+    return (
     <>
       <Auth>
         <div className="flex flex-col justify-center h-full">
@@ -13,14 +15,12 @@ function PasswordChanged() {
             <div className="flex w-full justify-center">
               <Icon name={"done"} className="mb-9" />
             </div>
-            <h1 className="auth-title mb-2">Password changed</h1>
-            <p>Your password has been changed successfully</p>
+            <h1 className="auth-title mb-2">{t("Password changed")}</h1>
+            <p>{t("Your password has been changed successfully")}</p>
           </div>
           <div className="mb-4 relative">
             <Link href={"/login"}>
-              <Button type="submit" name="login" shadow={true}>
-                Back to Login
-              </Button>
+              <Button type="submit" name="login" shadow={true}>{t("Back to Login")}</Button>
             </Link>
           </div>
         </div>

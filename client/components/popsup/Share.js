@@ -26,8 +26,10 @@ import {
 
 } from "react-share";
 import Popup from "../elements/popup";
+import { useTranslation } from 'react-i18next';
 
 const Share = ({ url, title }) => {
+    const { t } = useTranslation();
     const size = 45;
     
     const shareUrl = url//'https://example.com';
@@ -35,9 +37,7 @@ const Share = ({ url, title }) => {
         <Popup id='Share' >
 
             <div className="m-6">
-                <h1 className="my-6 text-xl">
-                    share via
-                </h1>
+                <h1 className="my-6 text-xl">{t("share via")}</h1>
 
                 <div className="grid grid-cols-3 gap-5">
                     <EmailShareButton url={shareUrl}>

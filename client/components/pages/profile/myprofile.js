@@ -32,36 +32,11 @@ import EmptyComponent from '../contracts/emptyComponent';
 import Loading from '../../elements/duvduLoading';
 import DuvduLoading from '../../elements/duvduLoading';
 import { userReview } from '../../../redux/action/apis/reviews/users';
+import { useTranslation } from 'react-i18next';
 
-
-
-const profile = {
-    comments: [
-        {
-            "id": 1,
-            "userName": "jonathan donrew",
-            "date": "Sun - Aug 3",
-            "avatar": "/assets/imgs/profile/defultUser.jpg",
-            "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-        },
-        {
-            "id": 2,
-            "userName": "jonathan donrew",
-            "date": "Sun - Aug 3",
-            "avatar": "/assets/imgs/profile/defultUser.jpg",
-            "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-        },
-        {
-            "id": 3,
-            "userName": "jonathan donrew",
-            "date": "Sun - Aug 3",
-            "avatar": "/assets/imgs/profile/defultUser.jpg",
-            "commentText": "This project is Lorem a ipsum dolor sit amet, consectetur adipiscing elit, sed do ei..."
-        },
-    ],
-};
 
 function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
+    const { t } = useTranslation();
 
     const route = useRouter()
 
@@ -86,7 +61,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
             route.replace({
-                pathname: `/creative/${profile}`,
+                pathname: `/creative/${user.username}`,
             })
             resetForm()
         }
@@ -193,7 +168,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                             <div className='h-divider'></div>
                             {userInfo.about &&
                                 <div className='px-10'>
-                                    <h3 className='pt-6' id='about-header'>about</h3>
+                                    <h3 className='pt-6' id='about-header'>{t("about")}</h3>
                                     <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
                                 </div>}
                             <div className='h-divider my-7'></div>

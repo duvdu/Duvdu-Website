@@ -3,9 +3,11 @@ import { useEffect } from 'react';
 import $ from 'jquery';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useTranslation } from 'react-i18next';
 
 const SlickSlider = () => {
-  useEffect(() => {
+    const { t } = useTranslation();
+    useEffect(() => {
 
     if (typeof window !== 'undefined') {
     
@@ -22,11 +24,11 @@ const SlickSlider = () => {
 
   return (
     <div className="slick-slider">
-      <div><h3 className='w-2/3 mx-5'>Slide 1</h3></div>
-      <div><h3 className='w-2/3 mx-5'>Slide 1</h3></div>
-      <div><h3 className='w-2/3 mx-5'>Slide 1</h3></div>
-      <div><h3 className='w-2/3 mx-5'>Slide 1</h3></div>
-      <div><h3 className='w-2/3 mx-5'>Slide 1</h3></div>
+      <div><h3 className='w-2/3 mx-5'>{t("Slide 1")}</h3></div>
+      <div><h3 className='w-2/3 mx-5'>{t("Slide 1")}</h3></div>
+      <div><h3 className='w-2/3 mx-5'>{t("Slide 1")}</h3></div>
+      <div><h3 className='w-2/3 mx-5'>{t("Slide 1")}</h3></div>
+      <div><h3 className='w-2/3 mx-5'>{t("Slide 1")}</h3></div>
       
       
     </div>

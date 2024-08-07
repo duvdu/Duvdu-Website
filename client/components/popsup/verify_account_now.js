@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { resendCode } from '../../redux/action/apis/auth/OTP/resend';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 function Verify({ auth, showpopup, resendCode }) {
+    const { t } = useTranslation();
 
     const router = useRouter();
 
@@ -34,13 +36,9 @@ function Verify({ auth, showpopup, resendCode }) {
                 <div className='flex h-full flex-col mt-24 items-center mb-20 max-w-[604px]'>
                     <span className='mb-12 text-center text-xl font-semibold'>
                         Your account hasn't been verified.
-                        <br />
-                        Please verify your account now.
-                    </span>
+                        <br />{t("Please verify your account now.")}</span>
                     <div className="max-w-96 w-full" onClick={handleverifyClick}>
-                        <AppButton>
-                            Verify
-                        </AppButton>
+                        <AppButton>{t("Verify")}</AppButton>
                     </div>
                 </div>
             </Popup>

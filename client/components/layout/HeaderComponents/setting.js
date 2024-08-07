@@ -24,6 +24,8 @@ function Setting({
     updateProfile_respond
 
 }) {
+    const { t } = useTranslation();
+
     const [open, setOpened] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
 
@@ -38,9 +40,6 @@ function Setting({
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
-    const { t } = useTranslation();
-
 
     const router = useRouter();
 
@@ -76,7 +75,7 @@ function Setting({
             i18n.changeLanguage(selectedLanguage);
             toggleLanguage(selectedLanguage)
             document.documentElement.dir = selectedLanguage === 'Arabic' ? 'rtl' : 'ltr';
-            // window.location.reload();
+            window.location.reload();
         };
 
         useEffect(() => {

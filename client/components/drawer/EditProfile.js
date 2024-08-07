@@ -5,10 +5,12 @@ import Icon from '../Icons';
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import { updateProfile } from "../../redux/action/apis/auth/profile/updateprofile";
-import { OpenPopUp, errorConvertedMessage, gettFileURL, gettFileUploaded, handleFileUpload, handleRemoveEvent, parseFileSize } from '../../util/util';
+import { OpenPopUp, errorConvertedMessage, gettFileURL, gettFileUploaded, handleFileUpload, handleRemoveEvent, parseFileSize, } from '../../util/util';
 import { UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
 import Drawer from '../elements/drawer';
 import ErrorPopUp from '../popsup/errorPopUp';
+import { useTranslation } from 'react-i18next';
+
 import GoogleMap from '../elements/googleMap';
 import CategorySelectOne from '../elements/CategorySelectOne';
 import { useRouter } from 'next/router';
@@ -18,6 +20,7 @@ import { useRouter } from 'next/router';
 function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, resetForm, formData, updateProfile_respond }) {
 
     if (!user) return <></>
+    const { t } = useTranslation();
 
     const [userInfo, setUserInfo] = useState(user);
     const [error, setError] = useState(false);
@@ -106,7 +109,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
         if (parseFileSize(image.formattedFileSize) <= parseFileSize("3 MB"))
             setProfileImage(image.file ?? null)
         else {
-            setError(errorConvertedMessage(`<div class="error-msg" >Sorry, the image you're trying to upload exceeds the maximum file size limit of 3 MB. Please choose a smaller image and try again.</div>`))
+            setError(errorConvertedMessage(`<div class="error-msg" >{t("Sorry, the image you're trying to upload exceeds the maximum file size limit of 3 MB. Please choose a smaller image and try again.")}</div>`))
             OpenPopUp("image_size_error")
         }
     };
@@ -115,7 +118,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
         if (parseFileSize(image.formattedFileSize) <= parseFileSize("3 MB"))
             setCover(image.file ?? null)
         else {
-            setError(errorConvertedMessage(`<div class="error-msg" >Sorry, the image you're trying to upload exceeds the maximum file size limit of 3 MB. Please choose a smaller image and try again.</div>`))
+            setError(errorConvertedMessage(`<div class="error-msg" >{t("Sorry, the image you're trying to upload exceeds the maximum file size limit of 3 MB. Please choose a smaller image and try again.")}</div>`))
             OpenPopUp("image_size_error")
         }
     };
@@ -158,15 +161,11 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                 </div>
                 <form className='pb-0 flex flex-col items-center py-20' onSubmit={handleSubmit}>
                     <div className='mb-4 w-full'>
-                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                            services
-                        </span>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("services")}</span>
                         <CategorySelectOne value={formData.category} onChange={(v) => { UpdateFormData('category', v) }} />
                     </div>
                     <div className='mb-4 w-full'>
-                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                            name
-                        </span>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("name")}</span>
                         <input
                             type='text'
                             name='name'
@@ -176,9 +175,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         />
                     </div>
                     {/* <div className='mb-4 w-full'>
-                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                            address
-                        </span>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("address")}</span>
                         <input
                             type='text'
                             name='address'
@@ -188,9 +185,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         />
                     </div> */}
                     <div className='mb-4 w-full hidden'>
-                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                            price per hour
-                        </span>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("price per hour")}</span>
                         <input
                             type='text'
                             name='pricePerHour'
@@ -200,9 +195,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         />
                     </div>
                     <div className='mb-4 w-full'>
-                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>
-                            about
-                        </span>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("about")}</span>
                         <textarea
                             name='about'
                             value={formData.about || ""}
@@ -213,7 +206,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                     </div>
                     <div className='mb-4 w-full'>
                         <section className="h-96 relative overflow-hidden">
-                            <span> Set location </span>
+                            <span>{t("Set location")}</span>
                             <GoogleMap
                                 width={'100%'}
                                 setDefult={false}
@@ -225,9 +218,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         </section>
                     </div>
                     <button className='w-full flex justify-center mt-12 max-w-96' type="submit">
-                        <AppButton className='sticky bottom-10 w-full z-10' shadow={true}>
-                            Done
-                        </AppButton>
+                        <AppButton className='sticky bottom-10 w-full z-10' shadow={true}>{t("Done")}</AppButton>
                     </button>
 
                 </form>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Icon from '../Icons';
 import Popup from '../elements/popup';
+import { useTranslation } from 'react-i18next';
 
 function SuccessfullyPosting({ id = "Report-sent-successfully",isShow, onCancel , message = 'Posted' }) {
+    const { t } = useTranslation();
     const [showPopup, setShowPopup] = useState(false);
     
     useEffect(() => {
@@ -28,9 +30,7 @@ function SuccessfullyPosting({ id = "Report-sent-successfully",isShow, onCancel 
                         <h1 className="text-3xl font-semibold my-5">Successfully {message}</h1>
                     </div>
                     <div className="flex justify-center items-center">
-                        <button onClick={Cancel} className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">
-                            Close
-                        </button>
+                        <button onClick={Cancel} className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">{t("Close")}</button>
                     </div>
                 </div>
             </Popup>

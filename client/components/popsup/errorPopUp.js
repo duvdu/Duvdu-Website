@@ -4,9 +4,12 @@ import Popup from '../elements/popup';
 import Button from '../elements/button';
 import Icon from '../Icons'
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 function ErrorPopUp({onCancel , errorReq , errorMsg , ...rest}) {
+    const { t } = useTranslation();
+
     return (
         <>
             <Popup onCancel={onCancel} {...rest}>
@@ -17,11 +20,11 @@ function ErrorPopUp({onCancel , errorReq , errorMsg , ...rest}) {
                                 <Icon name={"xmark"} className="size-10 text-white" />
                             </div>
                         </div>
-                        <h1 className="text-3xl font-semibold my-5">Someting went wrong</h1>
+                        <h1 className="text-3xl font-semibold my-5">{t("Someting went wrong")}</h1>
                         <span dangerouslySetInnerHTML={{ __html: errorMsg }} />
                         {errorReq &&
                         <span >
-                            <strong>function : </strong>
+                            <strong>{t("function :")}</strong>
                             {errorReq}
                         </span>}
                     </div>

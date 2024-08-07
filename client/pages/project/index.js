@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
-
+import { useTranslation } from 'react-i18next';
 import ProjectCard from "../../components/elements/project-card";
 import Filter from "../../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
@@ -10,8 +10,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetProjects } from "../../redux/action/apis/cycles/projects/get";
 import RelatedCategories from "../../components/elements/relatedCategories";
+import DuvduLoading from "../../components/elements/duvduLoading";
 
 const Projects = ({ projects, GetProjects, api }) => {
+    const { t } = useTranslation();
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const { subcategory, tag } = Router.query
@@ -66,11 +68,11 @@ const Projects = ({ projects, GetProjects, api }) => {
                             <div className="h-7" />
                         }
                          {projectsList?.length > 0 && (
-                            <h1 className="page-header pb-9">most popular on duvdu</h1>
+                            <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}
                         
                         {projectsList?.length === 0 && (
-                            <h3>No projects Found </h3>
+                            <h3>{t("No projects Found")}</h3>
                         )}
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (
@@ -83,7 +85,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                             ))}
                         </div>
                         <div className="w-0 h-0" />
-                        <img className={(api.loading && api.req == "GetProjects" ? "w-10 h-10" : "w-0 h-0") + "load mx-auto transition duration-500 ease-in-out"} ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
+                        <DuvduLoading loadingIn = {"GetProjects"} />
                     </div>
                 </section>
             </Layout>

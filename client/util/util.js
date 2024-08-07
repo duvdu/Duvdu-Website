@@ -78,9 +78,9 @@ export function handleFileUpload(event) {
   const formattedFileSize = formatFileSize(fileSize);
 
   const fileInfoText = `
-  <b>File Name:</b> ${fileName}<br>
-  <b>File Type:</b> ${fileType}<br>
-  <b>File Size:</b> ${formattedFileSize}
+  <b>{t("File Name:")}</b> ${fileName}<br>
+  <b>{t("File Type:")}</b> ${fileType}<br>
+  <b>{t("File Size:")}</b> ${formattedFileSize}
   `;
 
   // Display the file information in the specified element
@@ -231,11 +231,11 @@ export const errorConvertedMessage = (error) => {
       if (hasFieldErrors) {
         
         const formattedMessages = errors.map(error => `<li>${error.field}: ${error.message}</li>`).join('');
-        return `<strong>Error Fields:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
+        return `<strong>{t("Error Fields:")}</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       } else {
 
         const formattedMessages = errors.map(error => `<li>${error.message}</li>`).join('');
-        return `<strong>Error Messages:</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
+        return `<strong>{t("Error Messages:")}</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       }
     } catch (err) {
       const errorMessage = errorConverted.data.message;

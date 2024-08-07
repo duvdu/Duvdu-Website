@@ -8,7 +8,8 @@ import { UpdateBoard } from "../redux/action/apis/savedProject/board/update";
 import { CreateSavedBoard } from "../redux/action/apis/savedProject/board/create";
 import { connect } from "react-redux";
 import { DeleteSavedBoard } from "../redux/action/apis/savedProject/board/deleteboard";
-import { ClosePopUp, OpenPopUp } from "../util/util";
+import { ClosePopUp, OpenPopUp, } from "../util/util";
+import { useTranslation } from 'react-i18next';
 import EditBoard from "../components/popsup/editBoard";
 import Link from 'next/link'
 import { GetFavList } from "../redux/action/apis/savedProject/fav/getAll";
@@ -125,7 +126,7 @@ const Saved = ({
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
-                            <h1 className="text-2xl opacity-80 font-semibold capitalize">mood boards</h1>
+                            <h1 className="text-2xl opacity-80 font-semibold capitalize">{t("mood boards")}</h1>
                             <div className="mr-6"></div>
                             <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board ">
                                 new board
@@ -133,7 +134,7 @@ const Saved = ({
                             </div>
                         </div>
                         {false && (
-                            <h3>No saved Found </h3>
+                            <h3>{t("No saved Found")}</h3>
                         )}
                         <div className="boards-grid">
                             <Boards isFav={true} data={initFav} />

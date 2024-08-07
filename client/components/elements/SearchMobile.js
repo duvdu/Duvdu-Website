@@ -64,9 +64,7 @@ const Search = () => {
                 />
             </div>
             <div >
-                <h4 className="text-lg font-medium opacity-80 mt-12 mb-5" href="#">
-                    Search History
-                </h4>
+                <h4 className="text-lg font-medium opacity-80 mt-12 mb-5" href="#">{t("Search History")}</h4>
                 <ul className="flex flex-wrap gap-2">
                     {searchDropdownVisible && searchHistory.map((item, index) => (
                         <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full" key={index}>

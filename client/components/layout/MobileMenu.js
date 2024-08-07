@@ -7,9 +7,11 @@ import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
 import Setting from "./HeaderComponents/setting";
+import { useTranslation } from 'react-i18next';
 
 
 const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
+    const { t } = useTranslation();
 
     const [page, setpage] = useState(isToggled);
     const router = useRouter();
@@ -198,17 +200,17 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
     const Auth = () =>
         <div className="flex px-5 gap-3 my-8 max-w-[470px] mx-auto">
             <Link href="/login">
-                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold"> log-in </div>
+                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold">{t("log-in")}</div>
             </Link>
             <Link href="/register">
-                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm">register </div>
+                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm">{t("register")}</div>
             </Link>
         </div>
 
     const DownLoadApp = () =>
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-6 mx-5">
             <div className="flex flex-col gap-3">
-            <h3 className="font-bold text-xl"> Get <span className="text-primary"> duvdu </span> on your mobile phone Now! </h3>
+            <h3 className="font-bold text-xl"> Get <span className="text-primary">{t("duvdu")}</span> on your mobile phone Now! </h3>
             
                 <img src="/assets/imgs/theme/tab/android.png"/>
                 <img src="/assets/imgs/theme/tab/IOS.png"/>

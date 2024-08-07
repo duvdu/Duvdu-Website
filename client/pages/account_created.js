@@ -2,9 +2,11 @@ import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import Icon from '../components/Icons';
 import Button from '../components/elements/button';
+import { useTranslation } from 'react-i18next';
 
 function ResetPassword() {
-  return (
+    const { t } = useTranslation();
+    return (
     <>
       <Auth>
         <form>
@@ -12,14 +14,12 @@ function ResetPassword() {
             <div className="flex w-full justify-center">
               <Icon name={"done"} className="mb-9" />
             </div>
-            <h1 className="auth-title">Account Created</h1>
-            <p>Now choose a category to view the best creatives in this field</p>
+            <h1 className="auth-title">{t("Account Created")}</h1>
+            <p>{t("Now choose a category to view the best creatives in this field")}</p>
           </div>
           <div className="mb-4 relative">
             <Link href={"/"}>
-              <Button type="submit" name="login" shadow={true}>
-                home screen
-              </Button>
+              <Button type="submit" name="login" shadow={true}>{t("home screen")}</Button>
             </Link>
           </div>
         </form>

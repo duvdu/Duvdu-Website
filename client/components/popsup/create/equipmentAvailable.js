@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import Comman from './assets/comman';
 import InputFeid from '../../elements/inputFeid';
 import AppButton from '../../elements/button';
-import { ClosePopUp } from '../../../util/util';
+import { ClosePopUp, } from '../../../util/util';
+import { useTranslation } from 'react-i18next';
+
 
 function EquipmentAvailable({ onSubmit }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         unitPrice: ''
@@ -69,23 +72,21 @@ function EquipmentAvailable({ onSubmit }) {
                 <div className='flex flex-col justify-between gap-2 h-full'>
                     <div className='flex flex-col gap-2 h-full'>
                         <InputFeid
-                            placeholder={"equipment name..."}
+                            placeholder={t("equipment name...")}
                             name="equipmentName"
                             onChange={(value) => { handleInputChange('name', value) }}
                             errerMsg={error.name}
                             sendValue={formData.name}
                         />
                         <InputFeid
-                            placeholder={"unitPrice"}
+                            placeholder={t("unitPrice")}
                             name="unitPrice"
                             onChange={(value) => { handleInputChange('unitPrice', value) }}
                             errerMsg={error.unitPrice}
                             sendValue={formData.unitPrice}
                         />
                     </div>
-                    <AppButton  onClick={handleClick} className={'w-full'}>
-                        Add
-                    </AppButton>
+                    <AppButton  onClick={handleClick} className={'w-full'}>{t("Add")}</AppButton>
                 </div>
             </Comman>
         </>

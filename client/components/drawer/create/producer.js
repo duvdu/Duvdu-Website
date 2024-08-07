@@ -6,6 +6,8 @@ import { ClosePopUp, OpenPopUp } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import Drawer from "../../elements/drawer";
 import ArrowBtn from "../../elements/arrowBtn";
+import { useTranslation } from 'react-i18next';
+
 import ListInput from "../../elements/listInput";
 import ProducerCategorySelection from "./assets/producerCategorySelection";
 import { GetIsLoggedProducer } from '../../../redux/action/apis/cycles/producer/islogged';
@@ -67,6 +69,7 @@ const AddProducer = ({
     DeleteProducer,
     deleteProducer_respond,
     auth }) => {
+    const { t } = useTranslation();
     const formData = addprojectState.formData
     const router = useRouter();
     const SuccessfullyCreatePopupId = "Producer-Booking"
@@ -192,23 +195,23 @@ const AddProducer = ({
 
                         <div className="flex w-full justify-between gap-3">
                             <section className="w-full">
-                                <p className="capitalize opacity-60">Min Budget</p>
+                                <p className="capitalize opacity-60">{t("Min Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder={t("Ex. 5$")} className={"inputStyle1"} />
                                 </div>
                             </section>
 
                             <section className="w-full">
-                                <p className="capitalize opacity-60">Max Budget</p>
+                                <p className="capitalize opacity-60">{t("Max Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder={t("Ex. 10$")} className={"inputStyle1"} />
                                 </div>
                             </section>
                         </div>
                         <div>
                             <ListInput
                                 name={'searchKeywords'}
-                                placeholder={'Search keywords'}
+                                placeholder={t("Search keywords")}
                                 onChange={(keys) =>
                                     JSON.stringify(keys) !== JSON.stringify(producerData?.searchKeywords) && keys.length
                                         ? UpdateFormData('searchKeywords', keys)
@@ -225,10 +228,10 @@ const AddProducer = ({
 
                     {
                         !isProducer ?
-                            <ArrowBtn isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text={"Publish"} shadow={true} shadowHeight={"14"} /> :
+                            <ArrowBtn isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
                             <div className='flex flex-col left-0 bottom-10 sticky w-auto mx-14 gap-3'>
-                                <ArrowBtn isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text={"delete"} shadow={true} shadowHeight={"14"} />
-                                <ArrowBtn isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text={"update"} shadow={true} shadowHeight={"14"} />
+                                <ArrowBtn isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text="delete" shadow={true} shadowHeight={"14"} />
+                                <ArrowBtn isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text="update" shadow={true} shadowHeight={"14"} />
                             </div>
                     }
 

@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import dateFormat from "dateformat";
 import Icon from "../../Icons";
 import TimeLeft from "./TimeLeft";
+import { useTranslation } from 'react-i18next';
 
 const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClick }) => {
+    const { t } = useTranslation();
 
     // const [<TimeLeft/>, setTimeLeft] = useState("");
     const status = data.contract.status
@@ -110,9 +112,7 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
 
                 <div className='flex flex-col xl:flex-row justify-between items-center w-full'>
                     {uiStatus()}
-                    <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer hidden`}>
-                        respond
-                    </div>
+                    <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer hidden`}>{t("respond")}</div>
                 </div>
                 {/*********/}
             </div>
