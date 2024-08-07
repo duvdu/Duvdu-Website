@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { useRouter } from 'next/router';
 import { errorConvertedMessage, validatePassword } from '../util/util';
+import { useTranslation } from 'react-i18next';
+
 import Icon from '../components/Icons';
 import AppButton from '../components/elements/button';
 import Layout from '../components/layout/Layout';
 import { ChangePassword } from '../redux/action/apis/auth/changePassword/changePassword';
 
 const ChangePasswordPage = ({ ChangePassword, respond }) => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         oldPassword: '',
         newPassword: '',
@@ -90,7 +93,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                 <div className="mx-auto flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
                     <form className='min-w-96' method="post" onSubmit={handleSubmit}>
                         <div className="heading_s1 mb-11">
-                            <h1 className="auth-title">Change Password</h1>
+                            <h1 className="auth-title">{t("Change Password")}</h1>
                         </div>
                         <div className={`mb-4 ${formErrors.oldPassword.isError ? 'error' : ''}`}>
                             <div className='relative password-container'>
@@ -141,7 +144,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                             {formErrors.confirmPassword.isError && <p className="error-msg">{formErrors.confirmPassword.message}</p>}
                         </div>
                         <button type="submit" className="mb-4 relative mb-30 w-full">
-                            <AppButton className='z-0' >Change Password</AppButton>
+                            <AppButton className='z-0' >{t("Change Password")}</AppButton>
                             <div className="submit-btn"></div>
                         </button>
                         

@@ -11,8 +11,10 @@ import { DeleteTeamProjects } from "../redux/action/apis/teamproject/deleteProje
 import EditFilesTeam from "../components/popsup/teamProject/EditFilesTeam";
 import { useRouter } from "next/router";
 import DuvduLoading from "../components/elements/duvduLoading";
+import { useTranslation } from 'react-i18next';
 
 const Card = ({ data, DeleteTeamProjects }) => {
+    const { t } = useTranslation();
     const { cover, creatives, title, _id, status } = data;
     const route = useRouter()
     console.log(creatives)
@@ -122,7 +124,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
             <section className="mt-3 mb-12">
                 <div className="container mb-7">
                     <div className="flex gap-6 alignCenter mb-7 items-center">
-                        <h1 className="text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">Team Projects</h1>
+                        <h1 className="text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">{t("Team Projects")}</h1>
                         <div
                             onClick={() => {
                                 route.push({
@@ -158,12 +160,10 @@ const Empty = () =>
         <div className='bg-gray-600 mt-5' />
         <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[430px] lg:h-[450px]' />
         {/* <div className='flex flex-col gap-2'>
-            <h3 className='font-bold text-4xl text-center'>Team Projects</h3>
+            <h3 className='font-bold text-4xl text-center'>{t("Team Projects")}</h3>
         </div> */}
         <div className='felx flex-col gap-2 text-center w-[20rem] md:w-[27rem]'>
-            <h3 className='text-[40px] font-semibold opacity-80 mt-8 mb-4 px-'>
-                Team Projects
-            </h3>
+            <h3 className='text-[40px] font-semibold opacity-80 mt-8 mb-4 px-'>{t("Team Projects")}</h3>
                 <p className="text-2xl opacity-50 text-center font-medium  ">
                     “Team Projects” are a great way to build teams for your project.
                 </p>

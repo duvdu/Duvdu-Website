@@ -6,6 +6,8 @@ import { ClosePopUp, OpenPopUp } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import Drawer from "../../elements/drawer";
 import ArrowBtn from "../../elements/arrowBtn";
+import { useTranslation } from 'react-i18next';
+
 import ListInput from "../../elements/listInput";
 import ProducerCategorySelection from "./assets/producerCategorySelection";
 import { GetIsLoggedProducer } from '../../../redux/action/apis/cycles/producer/islogged';
@@ -67,6 +69,7 @@ const AddProducer = ({
     DeleteProducer,
     deleteProducer_respond,
     auth }) => {
+    const { t } = useTranslation();
     const formData = addprojectState.formData
     const router = useRouter();
     const SuccessfullyCreatePopupId = "Producer-Booking"
@@ -192,14 +195,14 @@ const AddProducer = ({
 
                         <div className="flex w-full justify-between gap-3">
                             <section className="w-full">
-                                <p className="capitalize opacity-60">Min Budget</p>
+                                <p className="capitalize opacity-60">{t("Min Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
                                     <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={"inputStyle1"} />
                                 </div>
                             </section>
 
                             <section className="w-full">
-                                <p className="capitalize opacity-60">Max Budget</p>
+                                <p className="capitalize opacity-60">{t("Max Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
                                     <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={"inputStyle1"} />
                                 </div>
@@ -208,7 +211,7 @@ const AddProducer = ({
                         <div>
                             <ListInput
                                 name={'searchKeywords'}
-                                placeholder={'Search keywords'}
+                                placeholder='Search keywords'
                                 onChange={(keys) =>
                                     JSON.stringify(keys) !== JSON.stringify(producerData?.searchKeywords) && keys.length
                                         ? UpdateFormData('searchKeywords', keys)

@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import Card from "../../components/elements/saved-project-card";
 import Icon from '../../components/Icons';
-import { Goback } from '../../util/util';
+import { Goback} from '../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
 import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
 import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
@@ -20,6 +22,7 @@ const Projects = ({
     get_respond
 
 }) => {
+    const { t } = useTranslation();
     const Router = useRouter();
     const boardId = Router.query.boardId;
     const showLimit = 24;
@@ -129,9 +132,7 @@ const EmptyComponent = () => {
         <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p-10'>
             <div className='bg-gray-600 mt-5' />
             <img src='/assets/imgs/theme/Empty.svg' className='lg:w-[540px] lg:h-[450px]' />
-            <h3 className='text-2xl font-bold mt-8 mb-4'>
-                No Projects Yet!
-            </h3>
+            <h3 className='text-2xl font-bold mt-8 mb-4'>{t("No Projects Yet!")}</h3>
         </div>
 
     );

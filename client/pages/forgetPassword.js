@@ -5,10 +5,12 @@ import Icon from '../components/Icons';
 import { connect } from "react-redux";
 import OTP from '../components/elements/otp';
 import { ASKforgetpassword } from "../redux/action/apis/auth/forgetPassword/askForgetPassword";
-import { errorConvertedMessage } from '../util/util';
+import { errorConvertedMessage} from '../util/util';
+import { useTranslation } from 'react-i18next';
 import { resetpassword } from '../redux/action/apis/auth/forgetPassword/resetPassword';
 
 function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpassword }) {
+    const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [username, setUsername] = useState(null);
     const pages = ['', 'OTP', 'ResetPassword', 'PasswordChanged'];
@@ -70,7 +72,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
         return (
             <form method="post" onSubmit={handleSubmit}>
                 <div className="heading_s1 mb-8">
-                    <h1 className="auth-title text-center">Enter your username</h1>
+                    <h1 className="auth-title text-center">{t("Enter your username")}</h1>
                 </div>
                 <div className={`mb-8 ${nameError.isError && 'error'}`}>
                     <input
@@ -84,7 +86,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                 </div>
                 <div className="h-10" />
                 <button className="w-full" type="submit">
-                    <Button name="reset-password" shadow={true}>Next</Button>
+                    <Button name="reset-password" shadow={true}>{t("Next")}</Button>
                 </button>
             </form>
         );
@@ -136,8 +138,8 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
         return (
             <form method="post" onSubmit={handleSubmit}>
                 <div className="heading_s1 mb-20 text-center">
-                    <h1 className="auth-title">Reset Password</h1>
-                    <p className="text-lg text-[#455154]">Please type something you’ll remember</p>
+                    <h1 className="auth-title">{t("Reset Password")}</h1>
+                    <p className="text-lg text-[#455154]">{t("Please type something you’ll remember")}</p>
                 </div>
                 <div className={`mb-4 ${passwordError.isError && 'error'}`}>
                     <div className="relative password-container">
@@ -172,7 +174,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                     {confirmPasswordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(confirmPasswordError.message) }} />}
                 </div>
                 <button className="w-full" type="submit">
-                    <Button name="reset-password" shadow={true}>Next</Button>
+                    <Button name="reset-password" shadow={true}>{t("Next")}</Button>
                 </button>
             </form>
         );
@@ -184,8 +186,8 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                 <div className="flex w-full justify-center">
                     <Icon name={"done"} className="mb-9" />
                 </div>
-                <h1 className="auth-title mb-2">Password changed</h1>
-                <p>Your password has been changed successfully</p>
+                <h1 className="auth-title mb-2">{t("Password changed")}</h1>
+                <p>{t("Your password has been changed successfully")}</p>
             </div>
         </div>
     );

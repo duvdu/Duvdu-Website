@@ -11,10 +11,12 @@ import CategorySelection from "./assets/CategorySelection";
 import { filterByCycle } from "../../../util/util";
 import { CreateCopyrights } from '../../../redux/action/apis/cycles/copywriter/create';
 import GoogleMap from '../../elements/googleMap';
+import { useTranslation } from 'react-i18next';
 
 
 
 const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState, UpdateFormData, InsertToArray, categories, resetForm }) => {
+    const { t } = useTranslation();
 
     const formData = addprojectState.formData;
     const router = useRouter();
@@ -118,20 +120,18 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
 
                         <input type="number" min={0} placeholder='duration Days' value={formData.duration|| ""} onChange={handleInputChange} name="duration" className={"inputStyle1"} />
 
-                        <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
+                        <ListInput name={'searchKeyword'} placeholder='Search keywords' onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full">
-                        <h3 className="capitalize opacity-60 mb-3">Set location</h3>
+                        <h3 className="capitalize opacity-60 mb-3">{t("Set location")}</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)}  onChangeAddress={handleInputChange}/>
                     </section>
                     <section className='flex justify-center gap-3 mt-1'>
                         <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} id='showOnHome' />
-                        <p className='opacity-70'> Show on home feed & profile </p>
+                        <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </section>
                     <Button isEnabled={isEnable} onClick={handleSubmit} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
-                        <span className='text-white font-bold capitalize text-lg'>
-                            Publish
-                        </span>
+                        <span className='text-white font-bold capitalize text-lg'>{t("Publish")}</span>
                     </Button>
                 </form>
             </Drawer>

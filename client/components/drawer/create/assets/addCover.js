@@ -4,8 +4,11 @@ import Icon from '../../../Icons';
 import { gettFileUploaded, handleFileUpload, handleRemoveEvent } from '../../../../util/util';
 import { connect } from "react-redux";
 import { UpdateFormData } from '../../../../redux/action/logic/forms/Addproject';
+import { useTranslation } from 'react-i18next';
+
 
 function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverType = "image" }) {
+    const { t } = useTranslation();
     const formData = addprojectState.formData;
     const media = formData.coverShow;
 
@@ -48,7 +51,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
     return (
         <>
             <section className='mt-10'>
-                <h3 className='opacity-60 my-2 text-lg font-bold'>media Type</h3>
+                <h3 className='opacity-60 my-2 text-lg font-bold'>{t("media Type")}</h3>
                 <div className='flex'>
                     <span className='flex flex-col h-full border-[1.5px] border-[#000000D9] dark:border-[#FFFFFFD9] rounded-full px-3 py-[6px] text-[#000000D9] dark:text-[#FFFFFFD9] capitalize'>
                         {coverType}
@@ -72,9 +75,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
                             <input onClick={handleRemoveEvent} id="file-upload" type="file" className="hidden" onChange={profileUpload} accept={coverType === 'image' ? 'image/*' : coverType === 'video' ? 'video/*' : 'audio/*'} />
                         </section>
                         <section className='mt-5'>
-                            <span className='opacity-40 text-base capitalize'>
-                                preview
-                            </span>
+                            <span className='opacity-40 text-base capitalize'>{t("preview")}</span>
                             <div className='flex gap-3 mb-14'>
                                 <div className='w-1/3'>
                                     <Preview title={"test title"} price={"500"} media={media} coverType={coverType} />
@@ -84,9 +85,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
                                 </div>
                             </div>
                         </section>
-                        <AppButton isEnabled={isEnable} onClick={handleSubmit} className={'w-full'}>
-                            Publish
-                        </AppButton>
+                        <AppButton isEnabled={isEnable} onClick={handleSubmit} className={'w-full'}>{t("Publish")}</AppButton>
                     </div>
                 </div>
             </div>

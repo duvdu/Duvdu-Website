@@ -2,10 +2,13 @@
 import Popup from '../elements/popup';
 import AppButton from '../elements/button';
 import Icon from '../Icons';
-import { handleFileUpload, handleRemoveEvent } from '../../util/util';
+import { handleFileUpload, handleRemoveEvent, } from '../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import React, { useState } from "react";
 
 function Report() {
+    const { t } = useTranslation();
 
     const [file, setfile] = useState(null);
 
@@ -18,30 +21,24 @@ function Report() {
         <>
             <Popup id='report-project' className={'w-full lg:w-[942px]'} header={'Report Project'}>
                 <section className='mt-6'>
-                    <span className='font-semibold text-2xl capitalize'>what happened?</span>
+                    <span className='font-semibold text-2xl capitalize'>{t("what happened?")}</span>
                     <br />
-                    <span className='font-medium text-lg'>Tell us about the copyright violation happened</span>
+                    <span className='font-medium text-lg'>{t("Tell us about the copyright violation happened")}</span>
                     <textarea placeholder="Start typing..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5 h-20" />
                 </section>
                 <section className='mt-9'>
-                    <span className='font-semibold text-2xl capitalize'>send evidence</span>
+                    <span className='font-semibold text-2xl capitalize'>{t("send evidence")}</span>
                     <br />
-                    <span className='font-medium text-lg'>Behind the scenes shots, raw files, ...etc.</span>
+                    <span className='font-medium text-lg'>{t("Behind the scenes shots, raw files, ...etc.")}</span>
                     {
                         !file &&
                         <div className='bg-DS_white border-dashed border-4 border-[#CBD0DC] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 p-4'>
                             <div className='rounded-full p-4 bg-[#F5F5F5]'>
                                 <Icon name={"add-file"} />
                             </div>
-                            <span className="text-black text-3xl">
-                                Choose a file or drag & drop it here
-                            </span>
-                            <span className="text-[#A9ACB4] text-xl">
-                                JPEG, PNG, PDG, and MP4 formats, up to 50MB
-                            </span>
-                            <label htmlFor="file-upload" className='text-[#54575C] rounded-2xl border-2 border-[#CBD0DC] text-3xl px-8 py-4 my-4'>
-                                Browse File
-                            </label>
+                            <span className="text-black text-3xl">{t("Choose a file or drag & drop it here")}</span>
+                            <span className="text-[#A9ACB4] text-xl">{t("JPEG, PNG, PDG, and MP4 formats, up to 50MB")}</span>
+                            <label htmlFor="file-upload" className='text-[#54575C] rounded-2xl border-2 border-[#CBD0DC] text-3xl px-8 py-4 my-4'>{t("Browse File")}</label>
                             <input  onClick={handleRemoveEvent} onChange={FileUpload} className='hidden' id="file-upload" type="file" />
                         </div>
                     }
@@ -58,9 +55,7 @@ function Report() {
                     }
                 </section>
                 <div className='flex justify-center w-full '>
-                    <AppButton className={'mt-9 mb-3 w-full'} color={"#D30000"} >
-                        Done
-                    </AppButton>
+                    <AppButton className={'mt-9 mb-3 w-full'} color={"#D30000"} >{t("Done")}</AppButton>
                 </div>
             </Popup>
         </>

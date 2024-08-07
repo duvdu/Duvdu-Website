@@ -5,14 +5,15 @@ import ProjectViewsCard from '../components/pages/dashboard/ProjectViewsCard';
 import TopProjects from '../components/pages/dashboard/topProjects';
 import ActivityCard from '../components/pages/dashboard/ActivityCard';
 import Icon from '../components/Icons';
-
+import { useTranslation } from 'react-i18next';
 import React, { useState , useEffect } from 'react';
 import LineChart from '../components/pages/dashboard/lineChart';
 import { getUserAnalysis } from '../redux/action/apis/dashboard/getUserAnalysis';
 import { connect } from "react-redux";
 
 const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
-    console.log(user_analysis)
+    const { t } = useTranslation();
+
     useEffect(()=>{
         getUserAnalysis()
     },[])
@@ -104,7 +105,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                             {data?.userCategoryRank && 
                             <div className='flex flex-col w-full gap-2'>
                                 <div className='card cardborder-3 bg-white dark:bg-[#1A2024] w-full h-full p-7 pt-16'>
-                                    <span className='text-lg font-semibold capitalize opacity-70'>projects today</span>
+                                    <span className='text-lg font-semibold capitalize opacity-70'>{t("projects today")}</span>
                                     <br />
                                     <br />
                                     <span className='text-4xl text-DS_black font-medium capitalize'>{data?.userCategoryRank.projectsToday}</span>
@@ -117,7 +118,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                 </div>
                                 <div className='card border border-[#97C39E] dark:border-[#577E61] green-gradient w-full h-full p-7 pt-16'>
                                     <div className='flex items-center'>
-                                        <span className='text-lg font-semibold capitalize opacity-70'>rank</span>
+                                        <span className='text-lg font-semibold capitalize opacity-70'>{t("rank")}</span>
                                         <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}>
                                             <span >
                                                 {

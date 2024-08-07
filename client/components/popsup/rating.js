@@ -4,8 +4,10 @@ import Icon from '../Icons'
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Rate } from '../../redux/action/apis/rate';
+import { useTranslation } from 'react-i18next';
 
 function Rating({ data = {} , rate_respond , Rate}) {
+    const { t } = useTranslation();
     const [rate, setRate] = useState(2);
     const [desc, setDesc] = useState("");
 
@@ -46,7 +48,7 @@ function Rating({ data = {} , rate_respond , Rate}) {
                         {renderStars()}
                     </div>
                     <div>
-                        <div className="capitalize opacity-60">rating</div>
+                        <div className="capitalize opacity-60">{t("rating")}</div>
                         <textarea 
                             placeholder="Rating will show on creative’s profile..." 
                             className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none" 
@@ -55,9 +57,7 @@ function Rating({ data = {} , rate_respond , Rate}) {
                         />
                     </div>
                     <Button onClick={handleSubmitRate} className="mb-7 mx-4 font-bold text-lg w-full max-w-[345px] mt-20" shadow={true}>
-                        <span className='text-white font-bold capitalize text-lg'>
-                            Done
-                        </span>
+                        <span className='text-white font-bold capitalize text-lg'>{t("Done")}</span>
                     </Button>
                 </div>
             </Popup>

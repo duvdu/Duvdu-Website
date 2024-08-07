@@ -3,7 +3,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { GetAllMessageInChat } from '../../redux/action/apis/realTime/messages/getAllMessageInChat';
 import { SendMessages } from '../../redux/action/apis/realTime/messages/sendmessage';
-import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent } from '../../util/util';
+import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent,  } from '../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import dateFormat from "dateformat";
 import ChatComponent from './recording';
 import AudioRecorder from './recording';
@@ -12,6 +14,7 @@ import Link from 'next/link';
 import PopUpImage from './popUpImage';
 
 const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api }) => {
+    const { t } = useTranslation();
     const chatRef = useRef(null);
     const [messagesList, setMessagesList] = useState([])
     const [otherUser, setOtherUser] = useState({})
@@ -199,7 +202,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
                                 </div>
                             </Link>
                             <div />
-                            <span className="capitalize">away . Avg. response time : <span className="font-bold"> 1 Hour</span> </span>
+                            <span className="capitalize">away . Avg. response time : <span className="font-bold">{t("1 Hour")}</span> </span>
                         </div>
                     </div>
                     <div onClick={onClose} className='absolute right-4 top-4 cursor-pointer'>
@@ -255,9 +258,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
                                         return (
                                             <div key={index} className="size-48 text-gray-400">
                                                 <video controls>
-                                                    <source src={URL.createObjectURL(file.file)} type={file.fileType} />
-                                                    Your browser does not support the video tag.
-                                                </video>
+                                                    <source src={URL.createObjectURL(file.file)} type={file.fileType} />{t("Your browser does not support the video tag.")}</video>
                                             </div>
                                         );
 
@@ -330,9 +331,7 @@ const Me = ({ message }) => {
         (message?.media[0]?.type === "audio/wav") ?
             <div className="ml-20 mt-2">
                 <audio controls controlsList="nodownload">
-                    <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />
-                    Your browser does not support the audio element.
-                </audio>
+                    <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
             </div> :
             <div className="message me">
                 <div className="flex-col">
@@ -355,9 +354,7 @@ const Me = ({ message }) => {
                                 } else if (media.type.includes("video")) {
                                     return (
                                         <video key={`video-${index}`} controls className='size-48'>
-                                            <source src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} type={media.type} />
-                                            Your browser does not support the video tag.
-                                        </video>
+                                            <source src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
                                     );
                                 } else {
                                     return (
@@ -387,9 +384,7 @@ const Other = ({ message }) => {
     return ((message?.media[0]?.type === "audio/wav") ?
         <div className="ml-20 mt-2">
             <audio controls controlsList="nodownload">
-                <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />
-                Your browser does not support the audio element.
-            </audio>
+                <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
         </div> : <div className="message other bg-DS_white">
             {
                 !message.content != "NULL" &&
@@ -406,9 +401,7 @@ const Other = ({ message }) => {
                         if (media.type === "audio/wav") {
                             return (
                                 <audio key={`audio-${index}`} controls controlsList="nodownload">
-                                    <source src={process.env.ASSETS_URL + media.url} controlsList="nodownload" type="audio/wav" />
-                                    Your browser does not support the audio element.
-                                </audio>
+                                    <source src={process.env.ASSETS_URL + media.url} controlsList="nodownload" type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
                             );
                         } else if (media.type === "image/png") {
                             return (

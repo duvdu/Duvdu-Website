@@ -2,8 +2,10 @@
 import Button from '../elements/button';
 import Popup from '../elements/popup';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function AddToTeam() {
+    const { t } = useTranslation();
     const [currentStep, setCurrentStep] = useState('step1');
 
     const steps = {
@@ -74,9 +76,7 @@ function Step2() {
         <div className='flex gap-9 h-full justify-center items-center flex-col mt-24'>
             <div className='flex items-center gap-9'>
                 <input placeholder="Ex. 5" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 p-4" />
-                <span className="text-xl opacity-50 capitalize">
-                    hours
-                </span>
+                <span className="text-xl opacity-50 capitalize">{t("hours")}</span>
             </div>
         </div>
     )

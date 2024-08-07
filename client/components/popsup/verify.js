@@ -4,19 +4,21 @@ import Popup from '../elements/popup';
 import Button from '../elements/button';
 import Icon from '../Icons'
 import Link from "next/link";
+import { useTranslation } from 'react-i18next';
 
 
 function Verify() {
+    const { t } = useTranslation();
     return (
         <>
             <Popup id="verify" >
                 <div className='flex flex-col justify-center items-center w-full lg:w-[828px]'>
-                    <h1 className='text-primary text-3xl capitalize font-extrabold mt-7 mb-12'> verify your account </h1>
+                    <h1 className='text-primary text-3xl capitalize font-extrabold mt-7 mb-12'>{t("verify your account")}</h1>
                     <div className='w-36 h-36 bg-cover relative p-3 bg-no-repeat boronze-frame'>
                         <img className='w-full h-full rounded-full object-cover object-top' src={"/assets/imgs/profile/defultUser.jpg"} alt="profile picture" />
                     </div>
                     <div className='flex gap-1 items-center justify-center mt-9'>
-                        <span className='capitalize text-xl font-bold'> yousseff Abdulla </span>
+                        <span className='capitalize text-xl font-bold'>{t("yousseff Abdulla")}</span>
                         <Icon name={"check-verify"} />
                     </div>
                     <div className='flex flex-col items-start gap-5 mt-9'>
@@ -36,17 +38,15 @@ function Verify() {
                     <div >
                         <span className='text-primary opacity-70 text-lg'>$17.99</span>
                         <span className='text-primary opacity-70 text-lg'>/</span>
-                        <span className='text-primary opacity-70 text-lg'>year</span>
+                        <span className='text-primary opacity-70 text-lg'>{t("year")}</span>
                     </div>
                     <div className="flex justify-center items-center">
                         <div className='flex justify-center my-2'>
-                            <Button className='my-5 w-[400px] text-white' type="submit" name="login" shadow={true} shadowHeight="14">
-                                Verify Now
-                            </Button>
+                            <Button className='my-5 w-[400px] text-white' type="submit" name="login" shadow={true} shadowHeight="14">{t("Verify Now")}</Button>
                         </div>
                     </div>
                     <Link href="/terms_conditions">
-                    <span className="text-DS_black text-sm opacity-50 mt-3 cursor-pointer" >terms & conditions</span>
+                    <span className="text-DS_black text-sm opacity-50 mt-3 cursor-pointer" >{t("terms & conditions")}</span>
                     </Link>
                 </div>
             </Popup>

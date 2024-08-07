@@ -6,8 +6,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-
-
 const Icon = ({ name, type = "fas", useinvert, invert, className = "", ...rest }) => {
 
 

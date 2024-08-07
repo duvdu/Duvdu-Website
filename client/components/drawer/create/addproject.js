@@ -7,10 +7,12 @@ import Button from '../../elements/button';
 
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
-import { UpdateKeysAndValues, filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
+import { UpdateKeysAndValues, filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent, } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import SetCover from "./assets/addCover";
 import ListInput from "../../elements/listInput";
+import { useTranslation } from 'react-i18next';
+
 import Drawer from "../../elements/drawer";
 import { CreateProject } from "../../../redux/action/apis/cycles/projects/create";
 import CategorySelection from "./assets/CategorySelection";
@@ -19,6 +21,7 @@ import GoogleMap from "../../elements/googleMap";
 
 
 const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, addprojectState, categories, resetForm }) => {
+    const { t } = useTranslation();
     const router = useRouter();
     const formData = addprojectState.formData;
 
@@ -197,7 +200,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     }} />
                             </div>
                             <section>
-                                <h3 className="capitalize opacity-60">attachments</h3>
+                                <h3 className="capitalize opacity-60">{t("attachments")}</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
@@ -211,14 +214,14 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                             <section>
                                 <ListInput
-                                    placeholder={'tools used'}
+                                    placeholder='tools used'
                                     target="AddToolUsed"
                                     name={"tools"}
                                     listdiv={formData.tools && formData.tools.map((e, i) => (
                                         <span className='mx-2' key={i}>
-                                            <span><strong>tool : </strong> {e.name} </span>
+                                            <span><strong>{t("tool :")}</strong> {e.name} </span>
                                             <br />
-                                            <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                            <span> <strong>{t("price :")}</strong> {e.unitPrice} $ </span>
                                         </span>
                                     ))}
                                     remove={(value) => removeFromArray('tools', value)}
@@ -227,14 +230,14 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                             <section>
                                 <ListInput
-                                    placeholder={'Functions used'}
+                                    placeholder='Functions used'
                                     target="Addfunctions"
                                     name={"functions"}
                                     listdiv={formData.functions && formData.functions.map((e, i) =>
                                         <span className='mx-2' key={i}>
-                                            <span><strong>function : </strong> {e.name} </span>
+                                            <span><strong>{t("function :")}</strong> {e.name} </span>
                                             <br />
-                                            <span> <strong>price : </strong> {e.unitPrice} $ </span>
+                                            <span> <strong>{t("price :")}</strong> {e.unitPrice} $ </span>
                                         </span>
                                     )}
                                     remove={(value) => removeFromArray('functions', value)}
@@ -243,7 +246,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                             <section>
                                 <ListInput
-                                    placeholder={'tag creatives'}
+                                    placeholder='tag creatives'
                                     target="addOtherCreatives"
                                     name={"creatives"}
                                     listdiv={formData.creatives && formData.creatives.map((e, i) => (
@@ -260,16 +263,16 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
 
                             <section>
-                                <ListInput name={'searchKeyword'} placeholder={'Search keywords'} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ListInput name={'searchKeyword'} placeholder='Search keywords' onChange={(value) => UpdateFormData('searchKeywords', value)} />
                             </section>
                             <section className="h-96 relative overflow-hidden">
-                                <span> Set location </span>
+                                <span>{t("Set location")}</span>
                                 <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                             </section>
 
                             <section className="flex flex-col gap-8">
                                 <section className="hidden">
-                                    <h3 className='opacity-60 my-2 text-lg font-bold'>Select Project Media</h3>
+                                    <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Select Project Media")}</h3>
                                     <div className="flex gap-3 flex-wrap">
                                         {[
                                             'Videos',
@@ -287,7 +290,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     </div>
                                 </section>
                                 <div className='flex items-center justify-between'>
-                                    <h3 className='font-bold text-lg'> Project Scale Unit </h3>
+                                    <h3 className='font-bold text-lg'>{t("Project Scale Unit")}</h3>
                                     <select
                                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
                                         value={formData['projectScale[unit]']}
@@ -309,7 +312,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={`current`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder="current" className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
@@ -322,12 +325,10 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
 
                             <div className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
-                                <p className='opacity-70'> Show on home feed & profile </p>
+                                <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
                             <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
-                                <span className='text-white font-bold capitalize text-lg'>
-                                    Next
-                                </span>
+                                <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                             </Button>
 
                         </form>

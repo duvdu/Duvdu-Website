@@ -1,7 +1,7 @@
 import Icon from "../../../components/Icons";
 import React, { useEffect, useState, useRef } from 'react';
 import Filter from "../../../components/elements/filter";
-import { convertToK } from '../../../util/util';
+import { convertToK} from '../../../util/util';
 import { connect } from "react-redux";
 import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
@@ -9,8 +9,11 @@ import SelectDate from "../../elements/selectDate";
 import AppButton from "../../elements/button";
 import DuvduLoading from "../../elements/duvduLoading";
 import AddAttachment from "../../elements/attachment";
+import { useTranslation } from 'react-i18next';
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
+    const { t } = useTranslation();
+
     return (
         <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
             <div className="flex w-full overflow-hidden h-32">
@@ -64,7 +67,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                 </div>
                 <div className="flex gap-3 mt-6 justify-center items-center">
                     <div onClick={onChoose} className="flex items-center justify-center capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
-                        <span className="text-primary font-bold text-lg my-5">add to team</span>
+                        <span className="text-primary font-bold text-lg my-5">{t("add to team")}</span>
                     </div>
                 </div>
             </div>
@@ -145,41 +148,29 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
             <Popup className="ADD_HOURS_TO_CREATIVE" header={'Add Creative'}>
                 <div className='w-full lg:w-[600px] flex flex-col gap-9 h-full justify-center mt-24'>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
-                        <span className="col-span-1 text-lg opacity-50">
-                            Details
-                        </span>
+                        <span className="col-span-1 text-lg opacity-50">{t("Details")}</span>
                         <input type="text" min={0} onChange={(e) => setDetails(e.target.value)} placeholder="Ex. Details" className="col-span-4 bg-[#9999991A] rounded-3xl border-black border-opacity-10 w-full h-16 p-4" />
                     </div>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
-                        <span className="col-span-1 text-lg opacity-50">
-                            Hours
-                        </span>
+                        <span className="col-span-1 text-lg opacity-50">{t("Hours")}</span>
                         <input type="number" min={0} onChange={(e) => setHours(Math.abs(e.target.value))} placeholder="Ex. 5" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
-                        <span className="col-span-1 text-lg opacity-50">
-                            Amount
-                        </span>
+                        <span className="col-span-1 text-lg opacity-50">{t("Amount")}</span>
                         <input type="number" min={0} onChange={(e) => setPrice(Math.abs(e.target.value))} placeholder="Ex. 10$" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>  
                     <div className='grid grid-cols-5 items-center gap-9 full'>
-                        <span className="col-span-1 text-lg opacity-50">
-                            Start Date
-                        </span>
+                        <span className="col-span-1 text-lg opacity-50">{t("Start Date")}</span>
                         <div className="col-span-2">
                             <SelectDate onChange={(value) => setStartDate(value)} />
                         </div>
                     </div>  
                     <div className='grid grid-cols-5 items-center gap-9 full'>
-                        <span className="col-span-1 text-lg opacity-50">
-                            Duration
-                        </span>
+                        <span className="col-span-1 text-lg opacity-50">{t("Duration")}</span>
                         <input type="number" min={0} onChange={(e) => setDurations(e.target.value)} placeholder="Ex. 5" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
-                        <span className="col-span-1 text-lg opacity-50">
-                          Attachment
-                        </span>
+                        <span className="col-span-1 text-lg opacity-50">{t("Attachment")}</span>
                         <div className="col-span-4">
                             <AddAttachment name="attachments" value={attachments} onChange={(e)=> setAttachments(e.target.value)} />
                         </div>
@@ -205,9 +196,7 @@ const Result = () =>
     <div className="h-body flex flex-col justify-center">
         <div className='container flex flex-col justify-center items-center text-center w-full'>
             <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[540px] lg:h-[450px]' />
-            <h3 className='text-[40px] font-semibold mt-8 mb-4'>
-                Team Projects
-                <p className="text-2xl opacity-50">
+            <h3 className='text-[40px] font-semibold mt-8 mb-4'>{t("Team Projects")}<p className="text-2xl opacity-50">
                     “Team Projects” are a great way to build teams for your project.
                 </p>
             </h3>

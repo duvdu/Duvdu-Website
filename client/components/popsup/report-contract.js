@@ -8,9 +8,12 @@ import { resetForm, UpdateFormData } from '../../redux/action/logic/forms/Addpro
 import DuvduError from '../elements/duvduError';
 import DuvduLoading from '../elements/duvduLoading';
 import { ClosePopUp, UpdateKeysAndValues } from '../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import { contractReport } from '../../redux/action/apis/report/contract';
 
 function ReportContract({ data, UpdateFormData, resetForm, formData, report_respond ,contractReport}) {
+    const { t } = useTranslation();
 
     const [attachmentValidation, setAttachmentValidation] = useState(false);
     const handleInputChange = (event) => {
@@ -51,21 +54,19 @@ function ReportContract({ data, UpdateFormData, resetForm, formData, report_resp
         <>
             <Popup id='report-contract' className={'w-full lg:w-[942px] '} header={'Report contract'} onCancel={handlereset}>
                 <section className='mt-6'>
-                    <span className='font-semibold text-2xl capitalize'>what happened ?</span>
+                    <span className='font-semibold text-2xl capitalize'>{t("what happened ?")}</span>
                     <br />
-                    <span className='font-medium text-lg'>Why did you reject the final contract ?</span>
+                    <span className='font-medium text-lg'>{t("Why did you reject the final contract ?")}</span>
                     <textarea name='desc' value={formData.desc || ""} onChange={handleInputChange} placeholder="Start typing..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5 h-20" />
                 </section>
                 <section className="w-full ">
-                    <h3 className="capitalize opacity-60">attachments</h3>
+                    <h3 className="capitalize opacity-60">{t("attachments")}</h3>
                     <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                 </section>
                 <DuvduError req={"contractReport"} />
                 <DuvduLoading loadingIn={"contractReport"} />
                 <div className='flex justify-center w-full '>
-                    <AppButton onClick={onsubmit} className={'mt-9 mb-3 w-full'} color={"#D30000"} isEnabled={isEnable}>
-                        Send Report
-                    </AppButton>
+                    <AppButton onClick={onsubmit} className={'mt-9 mb-3 w-full'} color={"#D30000"} isEnabled={isEnable}>{t("Send Report")}</AppButton>
                 </div>
             </Popup>
         </>

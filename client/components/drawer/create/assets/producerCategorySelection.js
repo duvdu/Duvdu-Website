@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '../../../Icons';
 import { connect } from 'react-redux';
-import { filterByCycle as filterByCycleCategory } from '../../../../util/util';
+import { filterByCycle as filterByCycleCategory, } from '../../../../util/util';
+import { useTranslation } from 'react-i18next';
+
 
 function ProducerCategorySelection({ categories, onChange, value, filterIn, onValidateChange }) {
+    const { t } = useTranslation();
     categories = filterByCycleCategory(categories, filterIn);
-    if (!categories || categories.length === 0) return <p>No categories available.</p>;
+    if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
 
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
@@ -99,7 +102,7 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
     return (
         <>
             <section>
-                <h3 className='opacity-60 my-2 text-lg font-bold'>Service Category</h3>
+                <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Service Category")}</h3>
                 {!selectedCategory._id ? (
                     <div className="flex gap-3 flex-wrap">
                         {categories.map((item) =>
@@ -126,7 +129,7 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
 
             {selectedCategory._id && (
                 <section>
-                    <h3 className='opacity-60 my-2 text-lg font-bold'>Subcategories</h3>
+                    <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Subcategories")}</h3>
                     <div className="flex gap-3 flex-wrap">
                         {selectedCategory.subCategories.map((subCategory) => (
                             <div key={subCategory._id}

@@ -8,8 +8,11 @@ import { signup } from "../../redux/action/apis/auth/signup/signup";
 import { useRouter } from 'next/router';
 import { CheckUsernameExists } from "../../redux/action/apis/auth/signin/CheckUsernameExists";
 import { validatePassword } from "../../util/util";
+import { useTranslation } from 'react-i18next';
+
 
 const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => {
+    const { t } = useTranslation();
     const [isUsernameExists, setIsUsernameExists] = useState(userExists?.isUsernameExists);
     const [errorMSG, setErrorMSG] = useState(null);
     const [formData, setFormData] = useState({
@@ -173,7 +176,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
         <Auth>
             <form method="post" onSubmit={handleSubmit}>
                 <div className="heading_s1 mb-11">
-                    <h1 className="auth-title">Create an Account</h1>
+                    <h1 className="auth-title">{t("Create an Account")}</h1>
                 </div>
                 <div className={`mb-4 ${formErrors.name.isError ? 'error' : ''}`}>
                     <input
@@ -258,9 +261,9 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                                 />
                                 <label className="form-check-label terms-submit flex gap-1 items-center" htmlFor="termsAgreed">
                                     <span className="capitalize text-xs">
-                                        <span>I agree to </span>
+                                        <span>{t("I agree to")}</span>
                                         <Link href="/terms_conditions">
-                                            <span className="font-bold text-primary cursor-pointer">terms and conditions</span>
+                                            <span className="font-bold text-primary cursor-pointer">{t("terms and conditions")}</span>
                                         </Link>
                                     </span>
                                 </label>
@@ -271,14 +274,12 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     {errorMSG && <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
                 </div>
                 <button type="submit" className="mb-4 relative mb-30 w-full">
-                    <Button name="login" shadow>
-                        Create Account
-                    </Button>
+                    <Button name="login" shadow>{t("Create Account")}</Button>
                     <div className="submit-btn"></div>
                 </button>
                 <div className="have-account">
-                    <span>Already have an account? </span>
-                    <Link href="/login">Log in</Link>
+                    <span>{t("Already have an account?")}</span>
+                    <Link href="/login">{t("Log in")}</Link>
                 </div>
             </form>
         </Auth>

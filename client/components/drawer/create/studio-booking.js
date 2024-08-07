@@ -8,7 +8,7 @@ import { CreateStudio } from '../../../redux/action/apis/cycles/rental/create';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 
 import { useRouter } from "next/router";
-import { convertToFormData, filterByCycle as filterByCycleCategory, printFormData } from "../../../util/util";
+import { convertToFormData, filterByCycle as filterByCycleCategory, printFormData, t } from "../../../util/util";
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
 import AddOtherCreatives from "../../popsup/create/addOtherCreatives";
@@ -172,7 +172,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                     }} />
                             </div>
                             <section className="w-full ">
-                                <h3 className="capitalize opacity-60">attachments</h3>
+                                <h3 className="capitalize opacity-60">{t("attachments")}</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section className='gap-8'>
@@ -181,15 +181,15 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 <input placeholder='Email' type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
                                 <input placeholder='Description' name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
                                 <section className="h-96 relative overflow-hidden mt-5">
-                                    <h3> location </h3>
+                                    <h3>{t("location")}</h3>
                                     <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                                 </section>
-                                <ListInput name={'searchKeyword'} placeholder={'Search keywords'} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ListInput name={'searchKeyword'} placeholder='Search keywords' value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                                 <input type="number" min={0} placeholder='insurance' name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
                             </section>
                             <section className="flex flex-col gap-8">
                                 <div className='flex items-center justify-between'>
-                                    <h3 className='font-bold text-lg'> Project Scale Unit </h3>
+                                    <h3 className='font-bold text-lg'>{t("Project Scale Unit")}</h3>
                                     <select
                                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
                                         value={formData.projectScale?.unit}
@@ -220,13 +220,11 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                             </section>
                             <section className='flex justify-center gap-3 mt-10'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
-                                <p className='opacity-70'> Show on home feed & profile </p>
+                                <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </section>
 
                             <AppButton isEnabled={!hasErrors} onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
-                                <span className='text-white font-bold capitalize text-lg'>
-                                    Next
-                                </span>
+                                <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                             </AppButton>
 
                         </form>

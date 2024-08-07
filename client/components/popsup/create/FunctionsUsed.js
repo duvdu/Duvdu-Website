@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import Comman from './assets/comman';
 import InputFeid from '../../elements/inputFeid';
 import AppButton from '../../elements/button';
-import { ClosePopUp } from '../../../util/util';
+import { ClosePopUp, } from '../../../util/util';
+import { useTranslation } from 'react-i18next';
+
 
 function FunctionUsed({ onSubmit }) {
+    const { t } = useTranslation();
     const [name, setName] = useState('');
     const [unitPrice, setFees] = useState('');
     const [error, setError] = useState({ name: '', unitPrice: '' });
@@ -47,13 +50,11 @@ function FunctionUsed({ onSubmit }) {
             <Comman id={"Addfunctions"} header={"Add function Used"} onCancel={onCancel}>
                 <div className='flex flex-col justify-between h-full'>
                     <div className='flex flex-col gap-2'>
-                        <InputFeid placeholder={"Function name..."} onChange={handleNameChange} errerMsg={error.name} sendValue={name} />
-                        <InputFeid type='number' placeholder={"function price per unit"} onChange={handleFeesChange} errerMsg={error.unitPrice} sendValue={unitPrice} />
+                        <InputFeid placeholder="Function name..." onChange={handleNameChange} errerMsg={error.name} sendValue={name} />
+                        <InputFeid type='number' placeholder="function price per unit" onChange={handleFeesChange} errerMsg={error.unitPrice} sendValue={unitPrice} />
                     </div>
                     <div onClick={onClick}>
-                        <AppButton className={'w-full'}>
-                            Add
-                        </AppButton>
+                        <AppButton className={'w-full'}>{t("Add")}</AppButton>
                     </div>
                 </div>
             </Comman>

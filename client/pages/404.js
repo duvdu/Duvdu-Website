@@ -1,6 +1,9 @@
 import Layout from "../components/layout/Layout";
 import Link from "next/link"
+import { useTranslation } from 'react-i18next';
+
 function Custom404() {
+    const { t } = useTranslation();
     return (
         <>
             <Layout
@@ -21,9 +24,7 @@ function Custom404() {
                                             className="hover-up"
                                         />
                                     </p>
-                                    <h1 className="display-2 mb-30">
-                                        Page Not Found
-                                    </h1>
+                                    <h1 className="display-2 mb-30">{t("Page Not Found")}</h1>
                                     <p className="font-lg text-grey-700 mb-30">
                                         The link you clicked may be broken or
                                         the page may have been removed.
@@ -39,9 +40,7 @@ function Custom404() {
                                             <span className="text-primary cursor-pointer">
                                                 Contact us{" "}
                                             </span>
-                                        </Link>
-                                        about the problem
-                                    </p>
+                                        </Link>{t("about the problem")}</p>
 
                                     <Link href="/">
                                         <span className="text-primary cursor-pointer">

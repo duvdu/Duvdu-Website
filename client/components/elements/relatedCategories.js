@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-scroll';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import DraggableList from '../pages/home/dragList';
+import { useTranslation } from 'react-i18next';
 
 const RelatedCategories = ({ className, NeedTranslate = true, categories }) => {
+    const { t } = useTranslation();
     const router = useRouter();
     const cycle = router.pathname.substring(1)
 
@@ -19,9 +21,7 @@ const RelatedCategories = ({ className, NeedTranslate = true, categories }) => {
 
     return (
         <div className={className + (NeedTranslate ? " h-26 -translate-y-8" : "")}>
-            <h2 className="opacity-70 font-semibold text-lg lg:mt-6 capitalize">
-                related categories
-            </h2>
+            <h2 className="opacity-70 font-semibold text-lg lg:mt-6 capitalize">{t("related categories")}</h2>
             <div className="mt-4 relative">
                 <DraggableList>
                     {allTags.map((item, index) =>

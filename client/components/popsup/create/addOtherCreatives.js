@@ -5,9 +5,12 @@ import AppButton from '../../elements/button';
 import { connect } from 'react-redux';
 import { FindUser } from '../../../redux/action/apis/auth/profile/FindUser';
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
-import { ClosePopUp } from '../../../util/util';
+import { ClosePopUp,  } from '../../../util/util';
+import { useTranslation } from 'react-i18next';
+
 
 function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
+    const { t } = useTranslation();
 
     const [creatives, setCreatives] = useState([]);
     const [searchTo, setSearchTo] = useState(null);
@@ -100,7 +103,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                     <div className='flex flex-col gap-2'>
                         <div className='w-full'>
                             <InputFeid
-                                placeholder={"username or phone number"}
+                                placeholder="username or phone number"
                                 name="name"
                                 onChange={(value) => { handleInputChange('name', value) }}
                                 errerMsg={error.name}
@@ -132,9 +135,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                         </span>
                     </div>
                     <div>
-                        <AppButton onClick={onclick} className={'w-full'}>
-                            Add
-                        </AppButton>
+                        <AppButton onClick={onclick} className={'w-full'}>{t("Add")}</AppButton>
                     </div>
                 </div>
             </Comman>

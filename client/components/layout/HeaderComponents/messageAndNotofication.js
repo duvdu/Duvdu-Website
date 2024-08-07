@@ -6,6 +6,7 @@ import MessageTile from "../../elements/MessageTile";
 import { GetNotifications } from "../../../redux/action/apis/realTime/notification/getAllNotification";
 
 
+
 function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond }) {
 
     const { t } = useTranslation();
@@ -68,7 +69,7 @@ const ViewAll = ({ Type, list, t }) =>
                 {list.map((tile, index) => (
                     Type == 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} />
                 ))}
-            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">There's No Messages</span></div>}
+            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
 
     </div>
 
@@ -86,7 +87,7 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
                 {list.slice(0, 4).map((tile, index) => (
                     Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} />
                 ))}
-            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">There's No Notification</span> </div>}
+            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Notification")}</span> </div>}
     </div>
 );
 

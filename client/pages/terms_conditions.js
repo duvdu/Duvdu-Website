@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { GetTerms } from '../redux/action/apis/terms/getterms';
 import Layout from '../components/layout/Layout';
+import { useTranslation } from 'react-i18next';
 
-const htmlTerms = `<p>This Terms &amp; Conditions describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.<br>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a target="_blank" rel="noopener noreferrer" href="https://example.com">Free Privacy Policy Generator</a>.<br>Interpretation and Definitions<br>Interpretation<br>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.<br>Definitions<br>For the purposes of this Privacy Policy:</p>
+const htmlTerms = `<p>This Terms &amp; Conditions describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.<br>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a target="_blank" rel="noopener noreferrer" href="https://example.com">{t("Free Privacy Policy Generator")}</a>.<br>Interpretation and Definitions<br>Interpretation<br>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.<br>Definitions<br>{t("For the purposes of this Privacy Policy:")}</p>
 <ul>
     <li>Account means a unique account created for You to access our Service or parts of our Service.</li>
     <li>Affiliate means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</li>
@@ -23,6 +24,7 @@ const htmlTerms = `<p>This Terms &amp; Conditions describes Our policies and pro
 `
 
 const Page = ({ api, GetTerms , respond }) => {
+    const { t } = useTranslation();
     const [terms, setTerms] = useState('');
     useEffect(() => {
         GetTerms()
@@ -37,13 +39,8 @@ const Page = ({ api, GetTerms , respond }) => {
         <Layout>
             <div className='container py-10'>
 
-                <h1 className='text-3xl font-medium'>
-                    Terms & Conditions
-
-                </h1>
-                <span className='opacity-80 text-xs'>
-                    Last updated: December 22, 2023
-                </span>
+                <h1 className='text-3xl font-medium'>{t("Terms & Conditions")}</h1>
+                <span className='opacity-80 text-xs'>{t("Last updated: December 22, 2023")}</span>
 
                 <section className='termsBody mt-8 text-lg font-medium' dangerouslySetInnerHTML={{ __html: terms }} />
             </div>

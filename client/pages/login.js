@@ -10,9 +10,11 @@ import { errorConvertedMessage, validatePassword } from "../util/util";
 import { resendCode } from "../redux/action/apis/auth/OTP/resend";
 import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
 import useFcmToken from "../util/hooks/useFcmToken";
+import { useTranslation } from 'react-i18next';
 
 function Login({ api, login_respond, login, resendCode, getMyprofile }) {
-  const { fcmToken,notificationPermissionStatus } = useFcmToken();
+    const { t } = useTranslation();
+    const { fcmToken,notificationPermissionStatus } = useFcmToken();
   fcmToken && console.log('FCM token:', fcmToken);
   notificationPermissionStatus && console.log('notificationPermissionStatus:', notificationPermissionStatus);
 
@@ -100,7 +102,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
       <Auth>
         <form method="post" onSubmit={handleSubmit}>
           <div className="heading_s1 mb-8">
-            <h1 className="auth-title">Welcome Back !!</h1>
+            <h1 className="auth-title">{t("Welcome Back !!")}</h1>
           </div>
           <div className={`mb-4 ${userNameError.isError && 'error'}`}>
             <input autoComplete="on" type="text" value={username|| ""} onChange={(e) => setUsername(e.target.value)} placeholder="@username" className={userNameError.isError ? "app-field error" : "app-field"} />
@@ -132,13 +134,13 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             </div>
             {passwordError.isError && <p className="error-msg">{passwordError.message}</p>}
             <Link href="/forgetPassword">
-              <div className="forgot-password cursor-pointer">Forgot password ?</div>
+              <div className="forgot-password cursor-pointer">{t("Forgot password ?")}</div>
             </Link>
 
             {errorMSG && (errorMSG.includes("Account not verified") ?
               <div className="flex whitespace-nowrap">
                 <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(errorMSG) }} />
-                <button className="text-primary" onClick={verifyAccount}>Verify Now</button>
+                <button className="text-primary" onClick={verifyAccount}>{t("Verify Now")}</button>
               </div>
               : <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(errorMSG) }} />
             )}
@@ -147,28 +149,26 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
           <div className="login_footer mb-4"></div>
 
           <button type="submit" className="mb-4 relative mb-30 w-full">
-            <Button name="login" shadow={true}>
-              Login
-            </Button>
+            <Button name="login" shadow={true}>{t("Login")}</Button>
             <div className="submit-btn"></div>
           </button>
           <div className="have-account">
-            <span>Don't have an account ? </span>
-            <Link href="/register">Register now</Link>
+            <span>{t("Don't have an account ?")}</span>
+            <Link href="/register">{t("Register now")}</Link>
           </div>
           <div className="flex items-center">
             <div className="border-t border-black opacity-20 w-full my-4"></div>
-            <p className="px-4 font-bold my-10 ">OR</p>
+            <p className="px-4 font-bold my-10 ">{t("OR")}</p>
             <div className="border-t border-black opacity-20 w-full my-4"></div>
           </div>
           <div className="flex flex-col sm:flex-row justify-center gap-8 ">
             <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer">
               <img src="/assets/imgs/theme/google-icon.svg" />
-              <p className="text-lg font-bold"> Google </p>
+              <p className="text-lg font-bold">{t("Google")}</p>
             </div>
             <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer">
               <img src="/assets/imgs/theme/apple-logo.png" className="w-9 dark:invert" />
-              <p className="text-lg font-bold"> Apple </p>
+              <p className="text-lg font-bold">{t("Apple")}</p>
             </div>
           </div>
         </form>

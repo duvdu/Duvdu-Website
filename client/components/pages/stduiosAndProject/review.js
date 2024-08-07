@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { projectReview } from "../../../redux/action/apis/reviews/project";
 import Comment from "../../elements/comment";
 import { connect } from "react-redux";
+import { useTranslation } from 'react-i18next';
 
 const Reviews = ({ projectReview, projectReview_respond, data }) => {
+    const { t } = useTranslation();
     
     useEffect(() => {
         projectReview({ projectID: data._id });
@@ -11,7 +13,7 @@ const Reviews = ({ projectReview, projectReview_respond, data }) => {
 
     const renderComments = () => {
         if (!projectReview_respond || !projectReview_respond.data) {
-            return <div>Loading...</div>;
+            return <div>{t("Loading...")}</div>;
         }
 
         return projectReview_respond.data.map((review) => ({
@@ -28,7 +30,7 @@ const Reviews = ({ projectReview, projectReview_respond, data }) => {
 
     return (
         <>
-            <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4 hidden">Reviews</h2>
+            <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4 hidden">{t("Reviews")}</h2>
             <div className='flex flex-col gap-4'>
                 <div className='flex flex-col gap-4'>
                     {renderComments()}

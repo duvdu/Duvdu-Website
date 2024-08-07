@@ -4,17 +4,14 @@ import { connect } from 'react-redux';
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 import { formattedCreatedAt } from '../../../util/format-date';
 import TimeLeft2 from './TimeLeft2';
+import { useTranslation } from 'react-i18next';
 
 const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
-    const statuses = [
-        { value: 'accept' },
-        { value: 'reject' },
-    ];
+  
+    const { t } = useTranslation();
     const [timeLeft, setTimeLeft] = useState("");
 
-    const handleDropdownSelect = (value) => {
-        takeAction({ id: data._id, data: { "action": value } })
-    };
+
     const NormalState = ({ value }) => (
         <span className='text-4xl'>
             {value}

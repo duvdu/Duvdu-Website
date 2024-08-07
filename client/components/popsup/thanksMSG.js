@@ -1,8 +1,10 @@
 
 import Icon from '../Icons';
 import Popup from '../elements/popup';
+import { useTranslation } from 'react-i18next';
 
 function Thanks() {
+    const { t } = useTranslation();
 
     return (
         <>
@@ -11,12 +13,10 @@ function Thanks() {
                             <div className="flex w-full justify-center">
                                <Icon name={"done"} />
                             </div>
-                            <h1 className="text-3xl font-semibold my-5">Thanks for letting us know</h1>
-                            <p className='text-[#404040] text-lg'>Your copyright violation report will be revised manually by one of our team.</p>
+                            <h1 className="text-3xl font-semibold my-5">{t("Thanks for letting us know")}</h1>
+                            <p className='text-[#404040] text-lg'>{t("Your copyright violation report will be revised manually by one of our team.")}</p>
                         <div className="flex justify-center items-center">
-                        <button data-popup-dismiss="popup" className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold mt-16">
-                            close
-                        </button>
+                        <button data-popup-dismiss="popup" className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold mt-16">{t("close")}</button>
                         </div>
                     </div>
                 </Popup>

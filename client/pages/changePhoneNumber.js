@@ -8,11 +8,13 @@ import Icon from '../components/Icons';
 
 import { askChangePhone } from "../redux/action/apis/auth/changephone/askupdatePhone";
 import { UpdatePhone } from "../redux/action/apis/auth/changephone/updatePhone";
-import { errorConvertedMessage } from '../util/util';
+import { errorConvertedMessage, } from '../util/util';
+import { useTranslation } from 'react-i18next';
 import OTP from "../components/elements/otp";
 import { useRouter } from "next/router";
 
 function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, UpdatePhone, username }) {
+    const { t } = useTranslation();
     const [step, setStep] = useState(0);
     const [error, setError] = useState('');
     const pages = ['', 'OTP', 'EnterPhoneNumber', 'OTP', 'PhoneChanged'];
@@ -101,7 +103,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
     return (
         <form className="w-[521px]" method="post" onSubmit={handleSubmit}>
             <div className="heading_s1 mb-8">
-                <h1 className="auth-title capitalize">Change Phone Number</h1>
+                <h1 className="auth-title capitalize">{t("Change Phone Number")}</h1>
             </div>
             <div className={`mb-8 ${numberError.isError && 'error'}`}>
                 <input
@@ -114,9 +116,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
                 {numberError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(numberError.message) }} />}
             </div>
             <button className="w-full" type="submit" >
-                <Button name="login" shadow={true} className="w-full " >
-                    confirm
-                </Button>
+                <Button name="login" shadow={true} className="w-full " >{t("confirm")}</Button>
             </button>
         </form>
     )
@@ -131,14 +131,12 @@ function Message() {
                 <div className="flex w-full justify-center">
                     <Icon name={"done"} className="mb-9" />
                 </div>
-                <h1 className="auth-title mb-2">number changed</h1>
-                <p>Your phone number has been changed successfully</p>
+                <h1 className="auth-title mb-2">{t("number changed")}</h1>
+                <p>{t("Your phone number has been changed successfully")}</p>
             </div>
             <div className="mb-4 relative">
                 <Link href={"/login"}>
-                    <Button type="submit" name="login" shadow={true}>
-                        Done
-                    </Button>
+                    <Button type="submit" name="login" shadow={true}>{t("Done")}</Button>
                 </Link>
             </div>
         </div>

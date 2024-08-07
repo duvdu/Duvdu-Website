@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Popup from '../elements/popup';
 import AppButton from '../elements/button';
+import { useTranslation } from 'react-i18next';
 
 function createnewBoard({onSbmit}) {
+    const { t } = useTranslation();
     const [board, setBoardName] = useState('');
     const [boardError, setBoardError] = useState({ isError: false, message: '' });
     const handleSubmit = (e) => {
@@ -31,9 +33,7 @@ function createnewBoard({onSbmit}) {
                         />
                         {boardError.isError && <p className="error-msg">{boardError.message}</p>}
                     </div>
-                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>  
-                        Create
-                    </AppButton>
+                    <AppButton onClick={toggleDirectorConfirmed} className={'w-full'}>{t("Create")}</AppButton>
                     <div className='mb-4'/>
                 </div>
             </Popup>

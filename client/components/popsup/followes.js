@@ -3,6 +3,7 @@ import { getUserFollowers } from '../../redux/action/apis/auth/profile/getFollow
 import Popup from '../elements/popup';
 import React, { useEffect, useState } from "react";
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 function Followers({
     getUserFollowers_respond,
@@ -10,6 +11,7 @@ function Followers({
     ...rest
 }) {
     const [loading, setLoading] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (getUserFollowers_respond) {
@@ -34,7 +36,7 @@ function Followers({
                                 <Person key={index} data={item.follower} />
                             ))
                         ) : (
-                            <p>No followers found.</p>
+                            <p>{t("No followers found.")}</p>
                         )
                     )}
                 </div>

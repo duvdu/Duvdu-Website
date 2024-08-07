@@ -1,8 +1,10 @@
 
+
 import Icon from '../Icons';
 import Popup from '../elements/popup';
 import React, { useEffect, useState } from 'react';
 import QRCode from "react-qr-code";
+import { useTranslation } from 'react-i18next';
 
 
 const values = [
@@ -28,6 +30,7 @@ function Report_sent_successfully() {
     );
 }
 function Body() {
+    const { t } = useTranslation();
     const [counter, setcount] = useState(20);
     const [value, setvalue] = useState(0);
 
@@ -48,8 +51,8 @@ function Body() {
     return (
         <div className="flex flex-col justify-around w-full sm:w-[604px] h-[700px]">
             <div className="heading_s1 text-center">
-                <h1 className="auth-title">My QR Code</h1>
-                <p className='opacity-80'>Lorem ipsum dolor sit amet consecteur</p>
+                <h1 className="auth-title">{t("My QR Code")}</h1>
+                <p className='opacity-80'>{t("Lorem ipsum dolor sit amet consecteur")}</p>
             </div>
             <div className='w-full flex justify-center'>
                 <div className='relative p-9'>
@@ -67,13 +70,11 @@ function Body() {
             </div>
             <div className="">
                 <p className="resendMSG">
-                    <span className="opacity-70 font-semibold">This QR is available for : </span><span className="text-primary"> 00:{counter.toString().padStart(2, '0')}</span>
+                    <span className="opacity-70 font-semibold">{t("This QR is available for :")}</span><span className="text-primary"> 00:{counter.toString().padStart(2, '0')}</span>
                 </p>
             </div>
             <div className="flex justify-center items-center">
-                <button data-popup-dismiss="popup" className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">
-                    close
-                </button>
+                <button data-popup-dismiss="popup" className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">{t("close")}</button>
             </div>
         </div>)
 }

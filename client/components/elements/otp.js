@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
-import { convertDuration, errorConvertedMessage, OpenPopUp } from "../../util/util";
+import { convertDuration, errorConvertedMessage, OpenPopUp,  } from "../../util/util";
+import { useTranslation } from 'react-i18next';
+
 import { connect } from "react-redux";
 import { verify } from "../../redux/action/apis/auth/OTP/verify";
 import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
@@ -15,6 +17,7 @@ function OTP({
     verify_respond,
     initcount = 100
 }) {
+    const { t } = useTranslation();
 
     const [otp, setOtp] = useState('');
     const [counter, setcount] = useState(120);
@@ -76,8 +79,8 @@ function OTP({
                 <div className="max-w-96 flex flex-col items-center justify-center">
                     <div className="w-353">
                         <div className="heading_s1 mb-11 text-center">
-                            <h1 className="auth-title">Enter code</h1>
-                            <p className="otpnews" >Enter the verification code we just sent to your phone </p>
+                            <h1 className="auth-title">{t("Enter code")}</h1>
+                            <p className="otpnews" >{t("Enter the verification code we just sent to your phone")}</p>
                         </div>
                         <OtpInput
                             value={otp|| ""}
@@ -96,7 +99,7 @@ function OTP({
                             {
                                 counter > 0 ?
                                     <p className="resendMSG">
-                                        <span className="msg"> Send code again </span><span className="counter"> {convertDuration(counter * 1000)} </span>
+                                        <span className="msg">{t("Send code again")}</span><span className="counter"> {convertDuration(counter * 1000)} </span>
                                     </p> :
                                     <p className="resendMSG2 text-center cursor-pointer" onClick={() => { 
                                         setcount(120)

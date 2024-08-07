@@ -33,7 +33,7 @@ const TimeLeft = ({ data, msgstatus }) => {
     // if (calculatedTimeLeft < 0) {
     //     return (
     //         <span className='text-4xl'>
-    //             <span className='font-semibold capitalize mt-3'>Time Expired</span>
+    //             <span className='font-semibold capitalize mt-3'>{t("Time Expired")}</span>
     //             <span className='text-lg opacity-40 mx-2'>
     //                 for {msgstatus}
     //             </span>

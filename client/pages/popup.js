@@ -25,42 +25,44 @@ import Formsubmited from '../components/popsup/formsubmited';
 import Reportproject from '../components/popsup/report-project';
 import Verify_account_now from '../components/popsup/verify_account_now';
 import QRScanner from '../components/elements/QRScanner';
+import { useTranslation } from 'react-i18next';
 
 
 
 function Test() {
+    const { t } = useTranslation();
 
     return (
         <>
             <Layout>
                 <div className='container'>
                     <div className='flex flex-col max-w-[350px] w-full gap-1 mt-4'>
-                        <BTN target='registration-required'> Dashboard </BTN>
-                        <BTN target='delete-board'> DeleteBoard </BTN>
-                        <BTN target='edit-details'> EditProfile </BTN>
-                        <BTN target='create-new-board'> CreatenewBoard </BTN>
-                        <BTN target='form-submited'> Formsubmited </BTN>
-                        <BTN target='report-project2'> Reportproject </BTN>
-                        <BTN target='subscribe-notfree'> Subscribe </BTN>
-                        <BTN target='subscribe-free'> free Subscribe </BTN>
-                        <BTN target='alarm'> PostAlarm </BTN>
-                        <BTN target='verify'> Verify </BTN>
-                        <BTN target='add-to-team'> AddToTeam </BTN>
-                        <BTN target='report-project'> Report </BTN>
-                        <BTN target='report-project2'> Report 2 </BTN>
-                        <BTN target='thanks-meesage'> ThanksMSG </BTN>
-                        <BTN target='Report-sent-successfully'> Report sent successfully </BTN>
-                        <BTN target='clients'> clients </BTN>
-                        <BTN target='uploading_project_files'> Uploading Project Files </BTN>
-                        <BTN target='receive_project_files'> Receive Project Files </BTN>
-                        <BTN target='QR-code'> QR code </BTN>
-                        <BTN target='Rating'> Rating </BTN>
-                        <BTN target='Share'> Share </BTN>
-                        <BTN target='project-details'> Project Details </BTN>
-                        <BTN target='team_uploading_files'> upload files </BTN>
-                        <BTN target='work-hour'> hours work </BTN>
-                        <BTN target='project-post'> add post </BTN>
-                        <BTN target='verify-account-now'> verify now </BTN>
+                        <BTN target='registration-required'>{t("Dashboard")}</BTN>
+                        <BTN target='delete-board'>{t("DeleteBoard")}</BTN>
+                        <BTN target='edit-details'>{t("EditProfile")}</BTN>
+                        <BTN target='create-new-board'>{t("CreatenewBoard")}</BTN>
+                        <BTN target='form-submited'>{t("Formsubmited")}</BTN>
+                        <BTN target='report-project2'>{t("Reportproject")}</BTN>
+                        <BTN target='subscribe-notfree'>{t("Subscribe")}</BTN>
+                        <BTN target='subscribe-free'>{t("free Subscribe")}</BTN>
+                        <BTN target='alarm'>{t("PostAlarm")}</BTN>
+                        <BTN target='verify'>{t("Verify")}</BTN>
+                        <BTN target='add-to-team'>{t("AddToTeam")}</BTN>
+                        <BTN target='report-project'>{t("Report")}</BTN>
+                        <BTN target='report-project2'>{t("Report 2")}</BTN>
+                        <BTN target='thanks-meesage'>{t("ThanksMSG")}</BTN>
+                        <BTN target='Report-sent-successfully'>{t("Report sent successfully")}</BTN>
+                        <BTN target='clients'>{t("clients")}</BTN>
+                        <BTN target='uploading_project_files'>{t("Uploading Project Files")}</BTN>
+                        <BTN target='receive_project_files'>{t("Receive Project Files")}</BTN>
+                        <BTN target='QR-code'>{t("QR code")}</BTN>
+                        <BTN target='Rating'>{t("Rating")}</BTN>
+                        <BTN target='Share'>{t("Share")}</BTN>
+                        <BTN target='project-details'>{t("Project Details")}</BTN>
+                        <BTN target='team_uploading_files'>{t("upload files")}</BTN>
+                        <BTN target='work-hour'>{t("hours work")}</BTN>
+                        <BTN target='project-post'>{t("add post")}</BTN>
+                        <BTN target='verify-account-now'>{t("verify now")}</BTN>
                     </div>
 
 

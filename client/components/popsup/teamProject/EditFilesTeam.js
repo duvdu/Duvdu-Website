@@ -3,7 +3,9 @@ import Popup from '../../elements/popup';
 import Icon from '../../Icons';
 import React, { useEffect, useRef, useState } from "react";
 import ArrowBtn from '../../elements/arrowBtn';
-import { UpdateKeysAndValues, handleFileUpload } from '../../../util/util';
+import { UpdateKeysAndValues, handleFileUpload} from '../../../util/util';
+import { useTranslation } from 'react-i18next';
+
 import AddAttachment from '../../elements/attachment';
 import AddCoverPhoto from '../../elements/AddCoverPhoto';
 import { connect } from 'react-redux';
@@ -17,6 +19,7 @@ import { GetTeamProject } from '../../../redux/action/apis/teamproject/getone';
 import { GetTeamProjects } from '../../../redux/action/apis/teamproject/get';
 
 function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamProject, update_respond, get_respond, resetForm,GetTeamProjects }) {
+    const { t } = useTranslation();
     const formData = addprojectState.formData
     const [isPopupVisible, setIsPopupVisible] = useState(true);
     const [cover, setCover] = useState(null);
@@ -93,16 +96,16 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             <AddCoverPhoto UpdateFormData={UpdateFormData} formData={formData} initalValue={cover}/>
                         </section>
                         <section>
-                            <p className="capitalize opacity-60 mt-11">team name</p>
+                            <p className="capitalize opacity-60 mt-11">{t("team name")}</p>
                             <input onChange={handleInputChange} value={formData.title|| ""} name='title' placeholder="enter platform..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
                         </section>
                         <section>
-                            <p className="capitalize opacity-60 mt-11">project details</p>
+                            <p className="capitalize opacity-60 mt-11">{t("project details")}</p>
                             <textarea onChange={handleInputChange} value={formData.desc} name='desc' placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                         </section>
                         <div className="py-10">
                             <section>
-                                <span className="capitalize opacity-50">location</span>
+                                <span className="capitalize opacity-50">{t("location")}</span>
                                 <div className="capitalize mt-4">
                                     <section className="h-52 relative rounded-3xl overflow-hidden">
                                         <GoogleMap width={'100%'} value={{ 'lat': formData?.location?.lat, 'lng': formData?.location?.lng }} onChangeAddress={handleInputChange}/>
@@ -111,7 +114,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             </section>
                         </div>
                         <section>
-                            <p className="capitalize opacity-60 mt-11">shooting days</p>
+                            <p className="capitalize opacity-60 mt-11">{t("shooting days")}</p>
                             <div className='flex items-center justify-start gap-4'>
                                 <input type="number" min={0}
                                     value={formData.shootingDays|| ""}
@@ -119,7 +122,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             </div>
                         </section>
                         <section>
-                            <p className="capitalize opacity-60 mt-11">budget</p>
+                            <p className="capitalize opacity-60 mt-11">{t("budget")}</p>
                             <div className='flex items-center justify-start gap-4'>
                                 <input type="number" min={0} 
                                     value={formData.budget|| ""}
@@ -129,7 +132,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             </div>
                         </section>
                         <section className="my-11">
-                            <h3 className="capitalize opacity-60 mb-4">appointment Date</h3>
+                            <h3 className="capitalize opacity-60 mb-4">{t("appointment Date")}</h3>
                             <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                         </section>
 

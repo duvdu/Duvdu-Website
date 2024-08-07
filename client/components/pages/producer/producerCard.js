@@ -3,10 +3,12 @@ import React from 'react';
 import Icon from '../../Icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-scroll';
+import { useTranslation } from 'react-i18next';
 
 
 const ProducerCard = ({ cardData, className = "", onClick, user }) => {
-  return (
+    const { t } = useTranslation();
+    return (
     <>
     <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
 
@@ -27,7 +29,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
             <span className='Professional-text-decoration font-bold text-lg'>{cardData?.user?.rank?.title || "Unranked"}</span>
           </div>
           <span className='info-container flex gap-1'>
-            <span>{cardData?.user?.projectsView}</span> <span>projects</span>
+            <span>{cardData?.user?.projectsView}</span> <span>{t("projects")}</span>
           </span>
           <div className='info-container flex items-center gap-1'>
             <span>{cardData.user.rate.ratersCounter}</span>
@@ -38,12 +40,8 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
         </div>
         {
           user?.profile?.username != cardData?.user?.username ?
-          <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize cursor-pointer">
-            send pitching form
-          </button> :
-          <button style={{cursor:'not-allowed'}} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold mt-12 capitalize">
-            send pitching form
-          </button>
+          <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize cursor-pointer">{t("send pitching form")}</button> :
+          <button style={{cursor:'not-allowed'}} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold mt-12 capitalize">{t("send pitching form")}</button>
         }
       </div>
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const TimeLeft2 = ({ data, msgstatus }) => {
+    const { t } = useTranslation();
     const { status, deadline, actionAt, createdAt, stageExpiration } = data;
 
     const [timer, setTimer] = useState(0);
@@ -35,9 +37,7 @@ const TimeLeft2 = ({ data, msgstatus }) => {
             <div className='text-lg ml-auto mr-auto'>
                 
                     <>
-                        <span className='opacity-50 mx-1'>
-                            Time Expired
-                        </span>
+                        <span className='opacity-50 mx-1'>{t("Time Expired")}</span>
                         <span className='text-primary'>
                             for {msgstatus}
                         </span>
@@ -54,9 +54,7 @@ const TimeLeft2 = ({ data, msgstatus }) => {
     return (
         <div className='text-lg ml-auto mr-auto'>
 
-                    <span className='opacity-50 mx-1'>
-                        remain time
-                    </span>
+                    <span className='opacity-50 mx-1'>{t("remain time")}</span>
                     <span className='text-primary'>
                         {`${hours}h ${minutes}m ${seconds}s`}
                     </span>

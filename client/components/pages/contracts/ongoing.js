@@ -4,18 +4,14 @@ import Selector from "../../elements/CustomSelector";
 import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
 import dateFormat from "dateformat";
 import { formattedCreatedAt, formattedDeadline } from './../../../util/format-date';
+import { useTranslation } from 'react-i18next';
 
 const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
-    const statuses = [
-        { value: 'accept' },
-        { value: 'reject' },
-    ];
-
+   
     const Deadline = formattedDeadline(data?.contract?.deadline)
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
-    const handleDropdownSelect = (value) => {
-        // takeAction({id: , value : })
-    };
+    const { t } = useTranslation();
+  
     return (
         <div onClick={onClick} className='flex justify-between rounded-[50px] bg-primary p-6 relative w-full mx-auto cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>
@@ -38,23 +34,19 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
                 {/* deadline */}
                 <div className='flex flex-col xl:flex-row justify-between items-center w-full gap-3'>
                     <div className='flex gap-3'>
-                        <span className='text-[40px] flex items-center ml-3 gap-2'>  <span className='opacity-50 text-white'>$</span> <span className='text-white'>490</span> </span>
+                        <span className='text-[40px] flex items-center ml-3 gap-2'>  <span className='opacity-50 text-white'>$</span> <span className='text-white'>{t("490")}</span> </span>
                         <div className='h-auto w-[1px] bg-white opacity-15' />
                         <div>
-                            <span className='opacity-50 text-white'>deadline</span>
+                            <span className='opacity-50 text-white'>{t("deadline")}</span>
                             <br />
                             <span className='text-white'>{Deadline}</span>
                         </div>
                     </div>
                     {/* button */}
                     {(data.status === "submit-files" ?
-                        <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
-                            submit files
-                        </div>
+                        <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>{t("submit files")}</div>
                         :
-                        <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>
-                            scan QR
-                        </div>
+                        <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>{t("scan QR")}</div>
                     )}
 
                     {/*********/}
