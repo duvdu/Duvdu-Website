@@ -75,6 +75,8 @@ const TheTeam = ({
 
 
 const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) => {
+    const { t } = useTranslation();
+
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
     const [categoryId, setCategoryId] = useState();
     
@@ -116,7 +118,10 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
     );
 };
 
-const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => (
+const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => {
+    const { t } = useTranslation();
+
+    return (
     <>
         <div className="flex justify-between m-[10px]">
             <span className="opacity-60 capitalize font-medium">
@@ -137,9 +142,11 @@ const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => 
             {!isSolid && <AddCreative onClick={AddTeam} />}
         </div>
     </>
-);
+)};
 
 const Person = ({ person, onDelete, onUpdate }) => {
+    const { t } = useTranslation();
+
     const [hours, setHours] = useState();
     const [amount, setAmount] = useState();
 
@@ -197,7 +204,8 @@ const Person = ({ person, onDelete, onUpdate }) => {
 };
 
 const RightSide = ({ isSolid, data, onClick }) => {
-    console.log(data)
+    const { t } = useTranslation();
+
 
     return <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
         <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
@@ -273,16 +281,21 @@ const Cover = ({ respond }) => (
     </div>
 );
 
-const AddCreative = ({ onClick }) => (
+const AddCreative = ({ onClick }) => {
+    const { t } = useTranslation();
+
+    return (
     <div onClick={onClick} className="flex items-center rounded-full border border-primary p-1 w-min cursor-pointer">
         <div className="size-11 flex items-center justify-center border rounded-full border-primary">
             <Icon className="text-xl text-primary" name='plus' />
         </div>
         <div className="text-center text-primary font-semibold mx-4 capitalize whitespace-nowrap">{t("add creative")}</div>
     </div>
-);
+)};
 
-const Empty = () => (
+const Empty = () => {
+    const { t } = useTranslation();
+    return (
     <div className="h-body flex flex-col justify-center">
         <div className='container flex flex-col justify-center items-center text-center w-full'>
             <img src='/assets/imgs/theme/TeamProjects.svg' className='w-0 h-0 lg:w-[540px] lg:h-[450px]' alt="Team Projects" />
@@ -292,7 +305,7 @@ const Empty = () => (
             </h3>
         </div>
     </div>
-);
+)};
 
 
 const mapStateToProps = (state) => ({

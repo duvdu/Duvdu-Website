@@ -23,11 +23,13 @@ function Show({ count }) {
 
 // Define Button1 component
 function Button1({ increment }) {
+    const { t } = useTranslation();
     return <button onClick={increment}>{t("Increment")}</button>;
 }
 
 // Define Button2 component
 function Button2({ decrement }) {
+    const { t } = useTranslation();
     return <button onClick={decrement}>{t("Decrement")}</button>;
 }
 

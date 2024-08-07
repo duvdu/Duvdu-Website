@@ -28,8 +28,10 @@ const Saved = ({
     getFavList_respond
 
 }) => {
+    const { t } = useTranslation();
     const Boards = ({ data, isFav }) => {
         if (!data) return
+
 
         const { totalProjects, title, _id: id } = data;
         const img1 = data?.projects[0]?.project?.cover
@@ -91,6 +93,7 @@ const Saved = ({
             </>
         );
     };
+
     const [initFav, setInitFav] = useState({
         _id: 'favorites',
         title: "Favorites",
