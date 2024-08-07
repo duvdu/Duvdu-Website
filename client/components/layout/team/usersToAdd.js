@@ -149,15 +149,15 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
                 <div className='w-full lg:w-[600px] flex flex-col gap-9 h-full justify-center mt-24'>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
                         <span className="col-span-1 text-lg opacity-50">{t("Details")}</span>
-                        <input type="text" min={0} onChange={(e) => setDetails(e.target.value)} placeholder="Ex. Details" className="col-span-4 bg-[#9999991A] rounded-3xl border-black border-opacity-10 w-full h-16 p-4" />
+                        <input type="text" min={0} onChange={(e) => setDetails(e.target.value)} placeholder={t("Ex. Details")} className="col-span-4 bg-[#9999991A] rounded-3xl border-black border-opacity-10 w-full h-16 p-4" />
                     </div>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
                         <span className="col-span-1 text-lg opacity-50">{t("Hours")}</span>
-                        <input type="number" min={0} onChange={(e) => setHours(Math.abs(e.target.value))} placeholder="Ex. 5" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
+                        <input type="number" min={0} onChange={(e) => setHours(Math.abs(e.target.value))} placeholder={t("Ex. 5")} className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
                         <span className="col-span-1 text-lg opacity-50">{t("Amount")}</span>
-                        <input type="number" min={0} onChange={(e) => setPrice(Math.abs(e.target.value))} placeholder="Ex. 10$" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
+                        <input type="number" min={0} onChange={(e) => setPrice(Math.abs(e.target.value))} placeholder={t("Ex. 10$")} className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>  
                     <div className='grid grid-cols-5 items-center gap-9 full'>
                         <span className="col-span-1 text-lg opacity-50">{t("Start Date")}</span>
@@ -167,7 +167,7 @@ const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
                     </div>  
                     <div className='grid grid-cols-5 items-center gap-9 full'>
                         <span className="col-span-1 text-lg opacity-50">{t("Duration")}</span>
-                        <input type="number" min={0} onChange={(e) => setDurations(e.target.value)} placeholder="Ex. 5" className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
+                        <input type="number" min={0} onChange={(e) => setDurations(e.target.value)} placeholder={t("Ex. 5")} className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>
                     <div className='grid grid-cols-5 items-center gap-9 full'>
                         <span className="col-span-1 text-lg opacity-50">{t("Attachment")}</span>

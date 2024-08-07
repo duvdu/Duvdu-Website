@@ -116,11 +116,11 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     UpdateFormData('tags', value.tags)
                                 }} />
                         </div>
-                        <input placeholder='price' type="number" min={0} value={formData.price|| ""} onChange={handleInputChange} name="price" className={"inputStyle1"} />
+                        <input placeholder={t("price")} type="number" min={0} value={formData.price|| ""} onChange={handleInputChange} name="price" className={"inputStyle1"} />
 
-                        <input type="number" min={0} placeholder='duration Days' value={formData.duration|| ""} onChange={handleInputChange} name="duration" className={"inputStyle1"} />
+                        <input type="number" min={0} placeholder={t("duration Days")} value={formData.duration|| ""} onChange={handleInputChange} name="duration" className={"inputStyle1"} />
 
-                        <ListInput name={'searchKeyword'} placeholder='Search keywords' onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
+                        <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
                     </section>
                     <section className="h-96 relative overflow-hidden w-full">
                         <h3 className="capitalize opacity-60 mb-3">{t("Set location")}</h3>

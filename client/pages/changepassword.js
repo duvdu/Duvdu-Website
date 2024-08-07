@@ -102,7 +102,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                                     name="oldPassword"
                                     value={formData.oldPassword|| ""}
                                     onChange={handleChange}
-                                    placeholder="Old Password"
+                                    placeholder={t("Old Password")}
                                     className={formErrors.oldPassword.isError ? "app-field error" : "app-field"}
                                 />
                                 <div className="w-5 icon" onClick={() => toggleShowPassword('oldPassword')}>
@@ -118,7 +118,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                                     name="newPassword"
                                     value={formData.newPassword|| ""}
                                     onChange={handleChange}
-                                    placeholder="New Password"
+                                    placeholder={t("New Password")}
                                     className={formErrors.newPassword.isError ? "app-field error" : "app-field"}
                                 />
                                 <div className="w-5 icon" onClick={() => toggleShowPassword('newPassword')}>
@@ -134,7 +134,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                                     name="confirmPassword"
                                     value={formData.confirmPassword|| ""}
                                     onChange={handleChange}
-                                    placeholder="Confirm New Password"
+                                    placeholder={t("Confirm New Password")}
                                     className={formErrors.confirmPassword.isError ? "app-field error" : "app-field"}
                                 />
                                 <div className="w-5 icon" onClick={() => toggleShowPassword('confirmPassword')}>

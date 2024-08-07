@@ -97,11 +97,11 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                         </section>
                         <section>
                             <p className="capitalize opacity-60 mt-11">{t("team name")}</p>
-                            <input onChange={handleInputChange} value={formData.title|| ""} name='title' placeholder="enter platform..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
+                            <input onChange={handleInputChange} value={formData.title|| ""} name='title' placeholder={t("enter platform...")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
                         </section>
                         <section>
                             <p className="capitalize opacity-60 mt-11">{t("project details")}</p>
-                            <textarea onChange={handleInputChange} value={formData.desc} name='desc' placeholder="requirements, conditions" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                            <textarea onChange={handleInputChange} value={formData.desc} name='desc' placeholder={t("requirements, conditions")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                         </section>
                         <div className="py-10">
                             <section>
@@ -118,7 +118,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                             <div className='flex items-center justify-start gap-4'>
                                 <input type="number" min={0}
                                     value={formData.shootingDays|| ""}
-                                    onChange={handleInputChange} name='shootingDays' placeholder="Ex. 5 days" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                                    onChange={handleInputChange} name='shootingDays' placeholder={t("Ex. 5 days")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                             </div>
                         </section>
                         <section>
@@ -127,7 +127,7 @@ function EditTeam({ UpdateFormData, addprojectState, GetTeamProject, UpdateTeamP
                                 <input type="number" min={0} 
                                     value={formData.budget|| ""}
 
-                                onChange={handleInputChange} name='budget' placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                                onChange={handleInputChange} name='budget' placeholder={t("Ex. 10$")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
 
                             </div>
                         </section>

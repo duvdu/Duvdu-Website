@@ -32,7 +32,7 @@ function EditBoard({onSbmit ,id , defultValue}) {
                             type="text"
                             value={board|| ""}
                             onChange={(e) => setBoardName(e.target.value)}
-                            placeholder="New Board name"
+                            placeholder={t("New Board name")}
                             className={boardError.isError ? "app-field error" : "app-field"}
                         />
                         {boardError.isError && <p className="error-msg">{boardError.message}</p>}

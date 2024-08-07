@@ -295,7 +295,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
                                         name='content'
                                         onKeyDown={handleKeyPress}
                                         className='border-none bg-transparent w-full h-min'
-                                        placeholder="Write a message..."
+                                        placeholder={t("Write a message...")}
                                         type="text"
                                         accept="video/*,audio/*,image/*,.pdf" />
                                 }

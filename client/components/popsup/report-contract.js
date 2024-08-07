@@ -57,7 +57,7 @@ function ReportContract({ data, UpdateFormData, resetForm, formData, report_resp
                     <span className='font-semibold text-2xl capitalize'>{t("what happened ?")}</span>
                     <br />
                     <span className='font-medium text-lg'>{t("Why did you reject the final contract ?")}</span>
-                    <textarea name='desc' value={formData.desc || ""} onChange={handleInputChange} placeholder="Start typing..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5 h-20" />
+                    <textarea name='desc' value={formData.desc || ""} onChange={handleInputChange} placeholder={t("Start typing...")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5 h-20" />
                 </section>
                 <section className="w-full ">
                     <h3 className="capitalize opacity-60">{t("attachments")}</h3>

@@ -77,7 +77,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                 <div className={`mb-8 ${nameError.isError && 'error'}`}>
                     <input
                         type="text"
-                        placeholder="@username"
+                        placeholder={t("@username")}
                         className={nameError.isError ? "app-field error" : "app-field"}
                         value={userName|| ""}
                         onChange={(e) => handleChange(e.target.value)}
@@ -147,7 +147,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                             type={showPassword ? 'text' : 'password'}
                             value={password|| ""}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Password *"
+                            placeholder={t("Password *")}
                             autoComplete="on"
                             className={passwordError.isError ? "app-field error" : "app-field"}
                         />
@@ -163,7 +163,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                             type={showConfirmPassword ? 'text' : 'password'}
                             value={confirmPassword|| ""}
                             onChange={(e) => setConfirmPassword(e.target.value)}
-                            placeholder="Confirm Password *"
+                            placeholder={t("Confirm Password *")}
                             autoComplete="on"
                             className={confirmPasswordError.isError ? "app-field error" : "app-field"}
                         />

@@ -72,14 +72,14 @@ function EquipmentAvailable({ onSubmit }) {
                 <div className='flex flex-col justify-between gap-2 h-full'>
                     <div className='flex flex-col gap-2 h-full'>
                         <InputFeid
-                            placeholder="equipment name..."
+                            placeholder={t("equipment name...")}
                             name="equipmentName"
                             onChange={(value) => { handleInputChange('name', value) }}
                             errerMsg={error.name}
                             sendValue={formData.name}
                         />
                         <InputFeid
-                            placeholder="unitPrice"
+                            placeholder={t("unitPrice")}
                             name="unitPrice"
                             onChange={(value) => { handleInputChange('unitPrice', value) }}
                             errerMsg={error.unitPrice}

@@ -205,10 +205,10 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section >
-                                <input placeholder='equipment name' value={formData.studioName|| ""} onChange={handleInputChange} name="studioName" className={"inputStyle1"} />
-                                <input placeholder='phone number' type="tel" value={formData.studioNumber|| ""} onChange={handleInputChange} name="studioNumber" className={"inputStyle1"} />
-                                <input placeholder='description' value={formData.description|| ""} onChange={handleInputChange} name="description" className={"inputStyle1"} />
-                                <input placeholder='address' value={formData.address|| ""} onChange={handleInputChange} name="address" className={"inputStyle1"} />
+                                <input placeholder={t("equipment name")} value={formData.studioName|| ""} onChange={handleInputChange} name="studioName" className={"inputStyle1"} />
+                                <input placeholder={t("phone number")} type="tel" value={formData.studioNumber|| ""} onChange={handleInputChange} name="studioNumber" className={"inputStyle1"} />
+                                <input placeholder={t("description")} value={formData.description|| ""} onChange={handleInputChange} name="description" className={"inputStyle1"} />
+                                <input placeholder={t("address")} value={formData.address|| ""} onChange={handleInputChange} name="address" className={"inputStyle1"} />
                             </section>
                             <section className="h-96 relative overflow-hidden hidden">
                                 <span>{t("Set location")}</span>
@@ -219,9 +219,9 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                                 <p className='opacity-70'>{t("Client can choose different location")}</p>
                             </section>
                             <section >
-                                <ListInput name={'searchKeyword'} placeholder='Search keywords' onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input placeholder='price per hour' value={formData.pricePerHour|| ""} onChange={handleInputChange} name="pricePerHour" className={"inputStyle1"} />
-                                <input type="number" min={0} placeholder='insurance' value={formData.insurance|| ""} onChange={handleInputChange} name="insurance" className={"inputStyle1"} />
+                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <input placeholder={t("price per hour")} value={formData.pricePerHour|| ""} onChange={handleInputChange} name="pricePerHour" className={"inputStyle1"} />
+                                <input type="number" min={0} placeholder={t("insurance")} value={formData.insurance|| ""} onChange={handleInputChange} name="insurance" className={"inputStyle1"} />
                             </section>
                             <section className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />

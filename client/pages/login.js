@@ -105,7 +105,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             <h1 className="auth-title">{t("Welcome Back !!")}</h1>
           </div>
           <div className={`mb-4 ${userNameError.isError && 'error'}`}>
-            <input autoComplete="on" type="text" value={username|| ""} onChange={(e) => setUsername(e.target.value)} placeholder="@username" className={userNameError.isError ? "app-field error" : "app-field"} />
+            <input autoComplete="on" type="text" value={username|| ""} onChange={(e) => setUsername(e.target.value)} placeholder={t("@username")} className={userNameError.isError ? "app-field error" : "app-field"} />
             {userNameError.isError && <p className="error-msg">{userNameError.message}</p>}
           </div>
           <div className={`${passwordError.isError && 'error'}`}>
@@ -114,7 +114,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
                 type={showPassword ? 'text' : 'password'}
                 value={password|| ""}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                placeholder={t("Password")}
                 autoComplete="on"
                 className={passwordError.isError ? "app-field error" : "app-field"}
               />

@@ -197,21 +197,21 @@ const AddProducer = ({
                             <section className="w-full">
                                 <p className="capitalize opacity-60">{t("Min Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder="Ex. 5$" className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder={t("Ex. 5$")} className={"inputStyle1"} />
                                 </div>
                             </section>
 
                             <section className="w-full">
                                 <p className="capitalize opacity-60">{t("Max Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder="Ex. 10$" className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder={t("Ex. 10$")} className={"inputStyle1"} />
                                 </div>
                             </section>
                         </div>
                         <div>
                             <ListInput
                                 name={'searchKeywords'}
-                                placeholder='Search keywords'
+                                placeholder={t("Search keywords")}
                                 onChange={(keys) =>
                                     JSON.stringify(keys) !== JSON.stringify(producerData?.searchKeywords) && keys.length
                                         ? UpdateFormData('searchKeywords', keys)

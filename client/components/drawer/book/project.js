@@ -186,7 +186,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             }
                             <section className="mt-7">
                                 <h3 className="capitalize opacity-60">{t("job details")}</h3>
-                                <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder="requirements, conditions At least 6 char" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                                <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder={t("requirements, conditions At least 6 char")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                             </section>
                             <section className="my-11 gap-7 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">{t("location")}</h3>

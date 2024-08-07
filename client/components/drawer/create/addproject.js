@@ -204,17 +204,17 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section>
-                                <input placeholder='name' className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
+                                <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
                             </section>
                             <section>
-                                <input placeholder='description' className={"inputStyle1"} value={formData.description || ""} onChange={handleInputChange} name="description" />
+                                <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || ""} onChange={handleInputChange} name="description" />
                             </section>
                             <section>
-                                <input placeholder='duration' type="number" min={0} className={"inputStyle1"} value={formData.duration || ""} onChange={handleInputChange} name="duration" />
+                                <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || ""} onChange={handleInputChange} name="duration" />
                             </section>
                             <section>
                                 <ListInput
-                                    placeholder='tools used'
+                                    placeholder={t("tools used")}
                                     target="AddToolUsed"
                                     name={"tools"}
                                     listdiv={formData.tools && formData.tools.map((e, i) => (
@@ -230,7 +230,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                             <section>
                                 <ListInput
-                                    placeholder='Functions used'
+                                    placeholder={t("Functions used")}
                                     target="Addfunctions"
                                     name={"functions"}
                                     listdiv={formData.functions && formData.functions.map((e, i) =>
@@ -246,7 +246,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
                             <section>
                                 <ListInput
-                                    placeholder='tag creatives'
+                                    placeholder={t("tag creatives")}
                                     target="addOtherCreatives"
                                     name={"creatives"}
                                     listdiv={formData.creatives && formData.creatives.map((e, i) => (
@@ -263,7 +263,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </section>
 
                             <section>
-                                <ListInput name={'searchKeyword'} placeholder='Search keywords' onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span>{t("Set location")}</span>
@@ -312,7 +312,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder="current" className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={t("current")} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">

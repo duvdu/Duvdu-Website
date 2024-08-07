@@ -110,7 +110,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
                     type="text"
                     value={PhoneNumber|| ""}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="new number"
+                    placeholder={t("new number")}
                     className={numberError.isError ? "app-field error" : "app-field"}
                 />
                 {numberError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(numberError.message) }} />}

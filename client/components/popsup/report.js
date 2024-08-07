@@ -24,7 +24,7 @@ function Report() {
                     <span className='font-semibold text-2xl capitalize'>{t("what happened?")}</span>
                     <br />
                     <span className='font-medium text-lg'>{t("Tell us about the copyright violation happened")}</span>
-                    <textarea placeholder="Start typing..." className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5 h-20" />
+                    <textarea placeholder={t("Start typing...")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-5 h-20" />
                 </section>
                 <section className='mt-9'>
                     <span className='font-semibold text-2xl capitalize'>{t("send evidence")}</span>

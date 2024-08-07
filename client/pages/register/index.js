@@ -184,7 +184,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         name="name"
                         value={formData.name|| ""}
                         onChange={handleChange}
-                        placeholder="Name"
+                        placeholder={t("Name")}
                         className={formErrors.name.isError ? "app-field error" : "app-field"}
                     />
                     {formErrors.name.isError && <p className="error-msg">{formErrors.name.message}</p>}
@@ -195,7 +195,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         name="phone"
                         value={formData.phone|| ""}
                         onChange={handleChange}
-                        placeholder="Phone"
+                        placeholder={t("Phone")}
                         className={formErrors.phone.isError ? "app-field error" : "app-field"}
                     />
                     {formErrors.phone.isError && <p className="error-msg">{formErrors.phone.message}</p>}
@@ -207,7 +207,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                             name="username"
                             value={formData.username|| ""}
                             onChange={handleChange}
-                            placeholder="@username"
+                            placeholder={t("@username")}
                             className={formErrors.username.isError ? "app-field error" : "app-field"}
                         />
                         {formData.username.length > 5 &&
@@ -238,7 +238,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                             name="password"
                             value={formData.password|| ""}
                             onChange={handleChange}
-                            placeholder="Create Password"
+                            placeholder={t("Create Password")}
                             className={formErrors.password.isError ? "app-field error" : "app-field"}
                         />
                         <div className="w-5 icon" onClick={toggleShowPassword}>

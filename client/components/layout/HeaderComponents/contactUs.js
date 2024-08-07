@@ -42,7 +42,7 @@ const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
             </div>
             <div className="capitalize opacity-60 mt-8">{t('your message')}</div>
             <textarea
-                placeholder="start typing..."
+                placeholder={t("start typing...")}
                 className="bg-[#9999991A] rounded-3xl h-48 border-none mt-5"
                 onChange={(event) => {
                     setTextareavalue(event.target.value)

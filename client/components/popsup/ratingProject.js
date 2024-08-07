@@ -62,7 +62,7 @@ function RatingProject({ data = {} , rate_respond , RateContract}) {
                     <div>
                         <div className="capitalize opacity-60">{t("rating")}</div>
                         <textarea 
-                            placeholder="Rating will show on creative’s profile..." 
+                            placeholder={t("Rating will show on creative’s profile...")} 
                             className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none" 
                             value={desc} 
                             onChange={(e) => setDesc(e.target.value)} 

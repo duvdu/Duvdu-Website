@@ -103,7 +103,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                     <div className='flex flex-col gap-2'>
                         <div className='w-full'>
                             <InputFeid
-                                placeholder="username or phone number"
+                                placeholder={t("username or phone number")}
                                 name="name"
                                 onChange={(value) => { handleInputChange('name', value) }}
                                 errerMsg={error.name}

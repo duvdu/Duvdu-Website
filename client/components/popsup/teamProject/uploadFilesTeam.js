@@ -115,11 +115,11 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     </section> */}
                     <section>
                         <p className="capitalize opacity-60 mt-11">{t("team name")}</p>
-                        <input onChange={handleInputChange} name='title' placeholder="Team Name" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
+                        <input onChange={handleInputChange} name='title' placeholder={t("Team Name")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-full mt-4 p-4" />
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">{t("project details")}</p>
-                        <textarea onChange={handleInputChange} name='desc' placeholder="requirements, conditions at least 6 characters" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea onChange={handleInputChange} name='desc' placeholder={t("requirements, conditions at least 6 characters")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <div className="py-10">
                         <section>
@@ -134,13 +134,13 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     {/* <section>
                         <p className="capitalize opacity-60 mt-11">{t("shooting days")}</p>
                         <div className='flex items-center justify-start gap-4'>
-                            <input type="number" min={0} onChange={handleInputChange} name='shootingDays' placeholder="Ex. 5 days" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                            <input type="number" min={0} onChange={handleInputChange} name='shootingDays' placeholder={t("Ex. 5 days")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
                         </div>
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">{t("budget")}</p>
                         <div className='flex items-center justify-start gap-4'>
-                            <input type="number" min={0} onChange={handleInputChange} name='budget' placeholder="Ex. 10$" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
+                            <input type="number" min={0} onChange={handleInputChange} name='budget' placeholder={t("Ex. 10$")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 w-36 mt-4 p-4" />
 
                         </div>
                     </section>

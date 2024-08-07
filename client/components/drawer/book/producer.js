@@ -120,12 +120,12 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 
                     <section>
                         <h3 className="capitalize opacity-60 mt-10">{t("Platform")}</h3>
-                        <input type="text" placeholder='Enter Platform...' className={inputStyle} value={formData.platform || ""} onChange={handleInputChange} name="platform" />
+                        <input type="text" placeholder={t("Enter Platform...")} className={inputStyle} value={formData.platform || ""} onChange={handleInputChange} name="platform" />
                     </section>
 
                     <section>
                         <h3 className="capitalize opacity-60">{t("Project Details")}</h3>
-                        <textarea name="projectDetails" value={formData.projectDetails || ""} onChange={handleInputChange} placeholder="Main Idea" className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea name="projectDetails" value={formData.projectDetails || ""} onChange={handleInputChange} placeholder={t("Main Idea")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
 
                     <section className="h-96 relative overflow-hidden">
@@ -138,13 +138,13 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">{t("Episodes Number")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder="Ex. 5" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder={t("Ex. 5")} className={inputStyle} />
                             </div>
                         </section>
                         <section className="w-full">
                             <p className="capitalize opacity-60">{t("Episode Duration")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder="Ex. 15 minutes" className={inputStyle} />
+                                <input type="number" min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder={t("Ex. 15 minutes")} className={inputStyle} />
                             </div>
                         </section>
                     </div>
@@ -160,14 +160,14 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <section className="w-full">
                             <p className="capitalize opacity-60">{t("Expected Budget")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder={t("Ex. 10$")} className={inputStyle} />
                             </div>
                         </section>
 
                         <section className="w-full">
                             <p className="capitalize opacity-60">{t("Expected Profits")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder="Ex. 10$" className={inputStyle} />
+                                <input type="number" min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder={t("Ex. 10$")} className={inputStyle} />
                             </div>
                         </section>
                     </div>

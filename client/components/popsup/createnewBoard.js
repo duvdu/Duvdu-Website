@@ -28,7 +28,7 @@ function createnewBoard({onSbmit}) {
                             type="text"
                             value={board|| ""}
                             onChange={(e) => setBoardName(e.target.value)}
-                            placeholder="Board name"
+                            placeholder={t("Board name")}
                             className={boardError.isError ? "app-field error" : "app-field"}
                         />
                         {boardError.isError && <p className="error-msg">{boardError.message}</p>}

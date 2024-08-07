@@ -176,16 +176,16 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
                             </section>
                             <section className='gap-8'>
-                                <input placeholder='Name' name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                <input placeholder='Phone number' type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                <input placeholder='Email' type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                <input placeholder='Description' name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder={t("Phone number")} type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder={t("Email")} type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder={t("Description")} name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
                                 <section className="h-96 relative overflow-hidden mt-5">
                                     <h3>{t("location")}</h3>
                                     <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                                 </section>
-                                <ListInput name={'searchKeyword'} placeholder='Search keywords' value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input type="number" min={0} placeholder='insurance' name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
                             </section>
                             <section className="flex flex-col gap-8">
                                 <div className='flex items-center justify-between'>

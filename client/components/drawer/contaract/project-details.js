@@ -475,19 +475,19 @@ function ReceiveProjectFiles({
                                                     name="details"
                                                     value={formData.details || contract.details}
                                                     onChange={handleInputChange}
-                                                    placeholder="requirements, conditions At least 6 char"
+                                                    placeholder={t("requirements, conditions At least 6 char")}
                                                     className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
                                                 />
                                             </section>
                                             <section className="my-11 w-full">
                                                 <section className='mb-4 mt-14'>
                                                     <h3 className="capitalize opacity-60 mb-4">duration by {contract.duration.unit} </h3>
-                                                    <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration.value || ""} onChange={handleInputChange} name="duration" />
+                                                    <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration.value || ""} onChange={handleInputChange} name="duration" />
                                                 </section>
                                                 <div className='mb-4 w-full hidden'>
                                                     <h3 className="capitalize opacity-60 mb-4">{t("unit")}</h3>
                                                     <input
-                                                        placeholder='unit'
+                                                        placeholder={t("unit")}
                                                         type='text'
                                                         name='unit'
                                                         value={formData["unit"] || contract.duration.unit}
@@ -499,7 +499,7 @@ function ReceiveProjectFiles({
                                             <div className='mb-4 w-full'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("total price")}</h3>
                                                 <input
-                                                    placeholder='Total price'
+                                                    placeholder={t("Total price")}
                                                     type='number'
                                                     name='totalPrice'
                                                     value={formData.totalPrice || contract.totalPrice}
@@ -516,12 +516,12 @@ function ReceiveProjectFiles({
                                         <>
                                             <section className='mb-4 mt-14'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("duration")}</h3>
-                                                <input placeholder='duration' type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
+                                                <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
                                             </section>
                                             <div className='mb-4 w-full'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("unit Price")}</h3>
                                                 <input
-                                                    placeholder='unit price'
+                                                    placeholder={t("unit price")}
                                                     type='text'
                                                     name='unitPrice'
                                                     value={formData["unitPrice"] || contract.projectScale.unitPrice}
@@ -531,7 +531,7 @@ function ReceiveProjectFiles({
                                             </div>
                                             <section>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("number Of Units")}</h3>
-                                                <input placeholder='number Of Units' type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
+                                                <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
                                             </section>
                                             <div className='h-divider my-6' />
                                             <section>
@@ -549,7 +549,7 @@ function ReceiveProjectFiles({
                                                             className="edit app-field"
                                                             value={tool.unitPrice}
                                                             onChange={(e) => handleToolChange(e, i)}
-                                                            placeholder="Price"
+                                                            placeholder={t("Price")}
                                                             min={0}
                                                         />
                                                     </div>
@@ -571,7 +571,7 @@ function ReceiveProjectFiles({
                                                             className="edit app-field"
                                                             value={func.unitPrice}
                                                             onChange={(e) => handleFunctionChange(e, i)}
-                                                            placeholder="Price"
+                                                            placeholder={t("Price")}
                                                             min={0}
                                                         />
                                                     </div>
