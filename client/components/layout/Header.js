@@ -134,7 +134,7 @@ const Header = ({
                     <div className="py-3 hidden lg:block">
                         <div className="container">
                             <div className="header-wrap" >
-                                <div className="logo logo-width-1 mr-12 cursor-pointer">
+                                <div className="logo logo-width-1 ltr:mr-12 rtl:ml-12 cursor-pointer">
                                     <Link href="/">
                                         <img
                                             src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
