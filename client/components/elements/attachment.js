@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { handleMultipleFileUpload, handleRemoveEvent, parseFileSize,  } from '../../util/util';
+import { handleMultipleFileUpload, handleRemoveEvent, parseFileSize } from '../../util/util';
 import { useTranslation } from 'react-i18next';
-
 import Icon from '../Icons';
 
-function AddAttachment({ value, onChange, name, isValidCallback }) {
+function AddAttachment({ value, onChange, name, isValidCallback, media = "All" }) {
+    
     const { t } = useTranslation();
     const [uploadedFiles, setUploadedFiles] = useState(value || []);
     const maxFileSize = '3 MB';
@@ -41,6 +41,20 @@ function AddAttachment({ value, onChange, name, isValidCallback }) {
         validateFiles(filteredFiles);
     };
 
+    const getAcceptType = () => {
+        switch (media) {
+            case 'image':
+                return 'image/*';
+            case 'video':
+                return 'video/*';
+            case 'documents':
+                return 'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            case 'All':
+            default:
+                return 'image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        }
+    };
+
     return (
         <>
             <label htmlFor="attachment-upload" className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 p-2 mt-4 cursor-pointer">
@@ -50,7 +64,7 @@ function AddAttachment({ value, onChange, name, isValidCallback }) {
                 <span className="ltr:pl-5 rtl:pr-5 w-full text-blue-600">{t("Open gallery")}</span>
                 <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
             </label>
-            <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload"  accept="image/*"  type="file" multiple />
+            <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" accept={getAcceptType()} type="file" multiple />
             {
                 uploadedFiles.map((file, key) => (
                     parseFileSize(file.formattedFileSize) <= parseFileSize(maxFileSize) ?
