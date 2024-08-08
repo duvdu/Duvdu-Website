@@ -208,7 +208,7 @@ const RightSide = ({ isSolid, data, onClick }) => {
 
 
     return <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
-        <div className="flex flex-col justify-between gap-7 bg-DS_white w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
+        <div className="flex flex-col justify-between gap-7 bg-white dark:bg-[#1A2024] w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
             <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
                 <h2 className="opacity-80 text-2xl font-semibold capitalize">{t("Team Details")}</h2>
                 <div className="w-full flex flex-col gap-8 h-full mt-6">
@@ -230,7 +230,7 @@ const RightSide = ({ isSolid, data, onClick }) => {
                             {data.shootingDays} days
                         </span>
                     </section> */}
-                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                             <Icon className='text-primary' name={"calendar"} />
                         </div>
@@ -239,7 +239,7 @@ const RightSide = ({ isSolid, data, onClick }) => {
                             <span className="text-[#747688] text-xs">{dateFormat(data.startDate, 'dddd , h:mm TT')}</span>
                         </div>
                     </div>
-                    <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"location-dot"} />
                         </div>
@@ -248,7 +248,7 @@ const RightSide = ({ isSolid, data, onClick }) => {
                             {/* <span className="text-[#747688] text-xs">{t("36 Guild Street London, UK")}</span> */}
                         </div>
                     </div>
-                    {/* <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                    {/* <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"image"} />
                         </div>

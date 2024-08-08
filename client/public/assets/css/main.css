@@ -1145,11 +1145,11 @@ table p {
 }
 
 .home-list-gradaint {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--white) 100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--body-background) 100%);
 }
 
 .home-list-gradaint2 {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #F2F2F3 100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--home-list-gradaint2) 100%);
 }
 
 .hide-scrollable-container {
@@ -1280,7 +1280,7 @@ table p {
   gap: 15px;
   width: fit-content;
   top: 102%;
-  background-color: var(--white);
+  background-color: var(--body-background);
   padding: 40px 44px 40px 44px;
   opacity: 0;
   visibility: hidden;
@@ -2412,6 +2412,7 @@ audio::-webkit-media-controls-volume-slider-container {
   --gray-1: #C1CACF;
   --header-background: #fff;
   --body-background: #f8f4f4;
+  --home-list-gradaint2: #F2F2F3;
   --cart-dropdown-color: #1A2024;
   --auth-raduis: 5px;
   --invert: invert(0%);
@@ -2440,6 +2441,7 @@ audio::-webkit-media-controls-volume-slider-container {
   --header-background: #000;
   --cart-dropdown-color: #1A2024;
   --body-background: #171717;
+  --home-list-gradaint2: #1A1A1C;
   --invert: invert(100%);
   --border-color: #333;
   --white: #000;

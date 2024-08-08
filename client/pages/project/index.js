@@ -59,7 +59,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                     <div className="container mb-30">
                         {
                             searchTerm &&
-                            <div className="sticky top-0 bg-DS_white z-[5] py-6 ">
+                            <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] py-6 ">
                                 <Filter />
                             </div>
                         }

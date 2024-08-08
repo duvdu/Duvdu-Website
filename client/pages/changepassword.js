@@ -90,7 +90,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
     return (
         <Layout shortheader={true} showTabs={false}>
             <div className="container">
-                <div className="mx-auto flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-DS_white max-w-[749px]">
+                <div className="mx-auto flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-white dark:bg-[#1A2024] max-w-[749px]">
                     <form className='min-w-96' method="post" onSubmit={handleSubmit}>
                         <div className="heading_s1 mb-11">
                             <h1 className="auth-title">{t("Change Password")}</h1>
