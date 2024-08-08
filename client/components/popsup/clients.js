@@ -50,6 +50,7 @@ function Client() {
 
 }
 function Person({ data }) {
+    const { t } = useTranslation();
 
     return (
         <div className='flex gap-4 h-12 sm:min-w-[400px]'>
