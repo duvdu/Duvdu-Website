@@ -19,9 +19,11 @@ import CategorySelection from './assets/CategorySelection';
 import AppButton from '../../elements/button';
 import AddAttachment from '../../elements/attachment';
 import Share from '../../popsup/Share';
+import { useTranslation } from 'react-i18next';
 
 
 const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
+    const { t } = useTranslation();
 
     const router = useRouter();
     const formData = addprojectState.formData;

@@ -34,11 +34,11 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const categoryDetails = categories.find(i => i._id == formData.category)
 
     const listDropDown =
-        categoryDetails?.media === 'image'
+    categoryDetails ? (categoryDetails?.media === 'image'
             ? ['image']
             : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
                 ? ['minutes', 'hours']
-                : []);
+                : [])) : ['unit'];
 
     useEffect(() => {
         UpdateFormData("projectScale[unit]", listDropDown[0])
