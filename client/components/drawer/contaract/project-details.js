@@ -364,7 +364,7 @@ function ReceiveProjectFiles({
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize'>{t("alike media")}</h2>
                                         {contract.attachments.map((attachment, index) =>
-                                            <div key={index} className='flex gap-3 items-start p-4 bg-DS_white rounded-md border border-[#CACACA] mt-3'>
+                                            <div key={index} className='flex gap-3 items-start p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] mt-3'>
                                                 <Icon key={index} name={'file'} className='size-5' />
                                                 <div className='flex flex-col'>
                                                     <span className='text-[#353535] text-[14px] font-medium'> {attachment.split('/').pop()} </span>

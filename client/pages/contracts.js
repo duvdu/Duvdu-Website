@@ -18,7 +18,7 @@ function Contracts() {
                         <div className='w-full'>
                             <LeftSide RightSidehandleToggleClick={(value) => setIndexTab(value)} />
                         </div>
-                        <div className='w-[1px] hidden lg:block h-body bg-black opacity-20'></div>
+                        <div className='w-[1px] hidden lg:block h-body bg-black dark:bg-white opacity-20'></div>
                         <div className='w-full lg:w-auto'>
                             {true ?
                                 <RightSide tabindex={indexTab}/> :

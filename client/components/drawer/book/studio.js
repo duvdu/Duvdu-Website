@@ -123,7 +123,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                 </span>
                             </section>
                             <div className="mt-4">
-                                <div className="flex items-center rounded-2xl bg-DS_white h-16 sm:w-96 p-2 cursor-pointer">
+                                <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                                     <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                         <Icon className='text-primary' name={"calendar"} />
                                     </div>
@@ -134,7 +134,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                 </div>
                             </div>
                             <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                <div className="flex items-center rounded-2xl bg-DS_white">
+                                <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
                                     <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                         <Icon className='text-primary w-6' name={"location-dot"} />
                                     </div>

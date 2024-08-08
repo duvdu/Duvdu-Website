@@ -199,7 +199,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <section className="my-11 gap-7 hidden">
                                 <div className="w-full">
                                     <h3 className="capitalize opacity-60 mb-4">{t("location")}</h3>
-                                    <div onClick={() => setOpenMap(true)} className="flex items-center rounded-2xl border border-gray-300 bg-DS_white h-16 sm:w-96 p-2 mt-4 cursor-pointer">
+                                    <div onClick={() => setOpenMap(true)} className="flex items-center rounded-2xl border border-gray-300 bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 mt-4 cursor-pointer">
                                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary w-4' name={"location-dot"} />
                                         </div>
@@ -262,7 +262,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
                                     <h2 className='opacity-60 capitalize mb-3'>  </h2>
-                                    <div className="flex items-center rounded-2xl bg-DS_white">
+                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
                                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary' name={"calendar"} />
                                         </div>
@@ -274,7 +274,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <div className="flex items-center rounded-2xl bg-DS_white">
+                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
                                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary' name={"calendar"} />
                                         </div>
@@ -286,7 +286,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 </section>
 
                                 <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <div className="flex items-center rounded-2xl bg-DS_white">
+                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
                                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary w-6' name={"location-dot"} />
                                         </div>

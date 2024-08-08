@@ -15,7 +15,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="bg-DS_white border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
+        <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
             <div className="flex w-full overflow-hidden h-32">
                 <img className="w-full" src={info.coverImage} alt={`Profile Image`} />
             </div>

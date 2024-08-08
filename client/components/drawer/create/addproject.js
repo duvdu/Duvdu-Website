@@ -7,7 +7,7 @@ import Button from '../../elements/button';
 
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
-import { UpdateKeysAndValues, filterByCycle, gettFileUploaded, handleMultipleFileUpload, handleRemoveEvent, } from "../../../util/util";
+import { UpdateKeysAndValues, filterByCycle } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import SetCover from "./assets/addCover";
 import ListInput from "../../elements/listInput";
@@ -20,7 +20,7 @@ import AddAttachment from "../../elements/attachment";
 import GoogleMap from "../../elements/googleMap";
 
 
-const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, addprojectState, categories, resetForm }) => {
+const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState, categories, resetForm }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const formData = addprojectState.formData;
@@ -34,11 +34,11 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
     const categoryDetails = categories.find(i => i._id == formData.category)
 
     const listDropDown =
-        categoryDetails?.media === 'image'
+    categoryDetails ? (categoryDetails?.media === 'image'
             ? ['image']
             : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
                 ? ['minutes', 'hours']
-                : []);
+                : [])) : ['unit'];
 
     useEffect(() => {
         UpdateFormData("projectScale[unit]", listDropDown[0])
@@ -176,6 +176,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
             pathname: `/creative/${auth.username}`,
         })
     }
+    
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
@@ -201,7 +202,7 @@ const AddPost = ({ CreateProject, auth, respond, InsertToArray, UpdateFormData, 
                             </div>
                             <section>
                                 <h3 className="capitalize opacity-60">{t("attachments")}</h3>
-                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media}/>
                             </section>
                             <section>
                                 <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />

@@ -77,7 +77,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
             <div className="cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active">
                 <div className="dialog dialog-2 flex flex-col">
                     <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
-                        <div className="bg-DS_white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
+                        <div className="bg-white dark:bg-[#1A2024] dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
                             <div className="flex w-full overflow-hidden h-20">
                                 <img
                                     className="w-full h-full object-cover"
@@ -116,7 +116,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                         </div>
                         {
                             showMiddleCard &&
-                            <div className="p-6 bg-DS_white dark:bg-[#1A2024] rounded-[45px]">
+                            <div className="p-6 bg-white dark:bg-[#1A2024] dark:bg-[#1A2024] rounded-[45px]">
                                 <div className="flex gap-3">
                                     <div className="w-full">
 
@@ -175,7 +175,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                             </div>}
                         {/* end card  */}
                         <div>
-                            <div className="p-3 bg-DS_white dark:bg-[#1A2024] rounded-[45px] mb-2">
+                            <div className="p-3 bg-white dark:bg-[#1A2024] dark:bg-[#1A2024] rounded-[45px] mb-2">
                                 <h4 className="opacity-70 text-sm font-semibold m-2 flex justify-between">
                                     {t('saved projects')}
                                     <Link href="/saved" className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</Link>

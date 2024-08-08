@@ -130,7 +130,7 @@ const Header = ({
             left-0 right-0 fixed z-20`} />
             {
                 islogin != null &&
-                <header className={`bg-DS_white w-full z-20 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
+                <header className={`bg-white dark:bg-[#1A2024] w-full z-20 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
                     <div className="py-3 hidden lg:block">
                         <div className="container">
                             <div className="header-wrap" >

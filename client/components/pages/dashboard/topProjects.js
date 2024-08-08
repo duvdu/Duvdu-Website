@@ -3,7 +3,7 @@ import Link from "next/link";
 
 
 const TopProjects = ({ projects }) => (
-<div className='mt-6 card bg-DS_white w-full p-8 cardborder-3 bg-white dark:bg-[#1A2024]'>
+<div className='mt-6 card bg-white dark:bg-[#1A2024] w-full p-8 cardborder-3 bg-white dark:bg-[#1A2024]'>
     {projects?.map((e,index)=>(
         <Link href={e.projectDetails?.insurance?`/studio-booking/${e.projectDetails._id}`:`/project/${e.projectDetails._id}`} key={index} >
         <div className='spliter cursor-pointer'>

@@ -8,7 +8,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
   const { t } = useTranslation();
 
   return (
-    <div className={`border border-50 border-solid border-gray-300 p-10 h-min ${className}`}>
+    <div className={`border border-50 border-solid border-gray-300 dark:border-opacity-40 p-10 h-min ${className}`}>
       <Link href={`/creative/${cardData?.user?.username}`}>
         <div className='flex items-center justify-center text-center pb-5 cursor-pointer'>
 

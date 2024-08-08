@@ -53,7 +53,7 @@ function PostPopup({auth}) {
                     ]
                         .map((item, index) => (
                             <li
-                                className={`flex  items-center justify-center capitalize border border-[#00000040] rounded-3xl h-[90px] cursor-pointer ${selectedCycle === item.url ? 'border-primary hover:border-2' : 'hover:border-2 hover:border-primary'}`}
+                                className={`flex  items-center justify-center capitalize border border-[#00000040] dark:border-[#ffffff40] rounded-3xl h-[90px] cursor-pointer ${selectedCycle === item.url ? 'border-primary hover:border-2' : 'hover:border-2 hover:border-primary'}`}
                                 key={index}
                                 onClick={() => handleCycleSelect(item.url)}
                             >

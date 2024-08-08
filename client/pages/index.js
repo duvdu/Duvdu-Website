@@ -61,7 +61,7 @@ const Home = ({
                 <section className="w-full">
                     <div className="my-12 lg:my-24 mx-auto w-min">
                         <h1 className="text-center my-4">
-                            <span className="font-black text-[#263257] text-3xl lg:text-8xl capitalize whitespace-nowrap trap">{t("explore")} <span className="text-[#263257] pt-[25px] lg:pt-[80px] px-[10px] pb-0 trap" style={TheBeststyle}>
+                            <span className="font-black text-[#263257] dark:text-white text-3xl lg:text-8xl capitalize whitespace-nowrap trap">{t("explore")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[10px] pb-0 trap" style={TheBeststyle}>
                                 {t("the best")} </span> {t("of")}
                             </span>
                             <div className="relative h-[50px] lg:h-[120px]">
@@ -78,7 +78,7 @@ const Home = ({
                                 </div>
                             </div>
                         </h1>
-                        <p className="text-xs lg:text-xl font-bold text-[#263257] opacity-60 text-center lg:mx-20 trap capitalize">{t("consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.")}</p>
+                        <p className="text-xs lg:text-xl font-bold text-[#263257] dark:text-white opacity-60 text-center lg:mx-20 trap capitalize">{t("consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.")}</p>
                     </div>
                     <div className="mx-auto w-full py-12">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
@@ -154,8 +154,8 @@ const Home = ({
                                     ))}
                                     <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint right-6" dir="rtl">  </div>
                                     <div className="size-3"></div>
-
                                 </DraggableList>
+                                    <div className="size-3 bg-[#171717]"></div>
                             </div>
                         </div>
                     </div>

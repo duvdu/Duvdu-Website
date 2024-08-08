@@ -111,7 +111,7 @@ const LeftSide = () => {
     return (
         <>
             <div className='my-12 w-full h-full'>
-                <div className='rounded-2xl bg-DS_white dark:border-[#3D3D3D]'>
+                <div className='rounded-2xl bg-white dark:bg-[#1A2024] dark:border-[#3D3D3D]'>
                     <div className='flex rounded-xl gap-4 p-6'>
                         <Icon name={"card"} />
                         <p className='font-medium text-base'>{t("Registered cards")}</p>
@@ -157,7 +157,7 @@ const RightSide = () => {
                     <AppButton data-popup-dismiss="popup" className={"mb-40 mx-16 md:mx-32 w-52"} >{t("Try Again")}</AppButton>
                 </div>
             </Popup>
-            <div className='rounded-2xl bg-DS_white border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>
+            <div className='rounded-2xl bg-white dark:bg-[#1A2024] border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>
                 <section>
                     <h3 className="capitalize opacity-60 mb-4">{t("project type")}</h3>
                     <span className="rounded-full border border-black border-opacity-55 px-3 py-1">{t("videography")}</span>
