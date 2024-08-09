@@ -55,7 +55,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
     const getPaginatedProjects = projects?.data
 
-console.log(projects)
+
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>

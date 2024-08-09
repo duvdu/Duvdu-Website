@@ -15,7 +15,7 @@ const Reviews = ({ projectReview, projectReview_respond, data }) => {
         if (!projectReview_respond || !projectReview_respond.data) {
             return <div>{t("Loading...")}</div>;
         }
-
+console.log(projectReview_respond.data)
         return projectReview_respond.data.map((review) => ({
             id: review._id,
             userName: review.user.username,
@@ -23,6 +23,7 @@ const Reviews = ({ projectReview, projectReview_respond, data }) => {
             date: new Date(review.createdAt).toDateString(),
             avatar: review.user.profileImage,
             commentText: review.comment,
+            rate: review.rate,
         })).map((comment) => (
             <Comment key={comment.id} comment={comment} />
         ));

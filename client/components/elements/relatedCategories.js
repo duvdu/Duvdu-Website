@@ -25,8 +25,8 @@ const RelatedCategories = ({ className, NeedTranslate = true, categories }) => {
             <div className="mt-4 relative">
                 <DraggableList>
                     {allTags.map((item, index) =>
-                        <div className='mr-3 w-[250px]'>
-                            <Link key={item._id} href={`/${cycle}?tag=${item._id}`}>
+                        <div key={index} className='mr-3 w-[250px]'>
+                            <Link href={`/${cycle}?tag=${item._id}`}>
                                 <div className={`flex flex-col items-center justify-around border hover:border-2 border-[#1A73EBB2] rounded-3xl w-full py-2 cursor-pointer`}>
                                     <span className="text-primary text-lg font-semibold opacity-80 capitalize my-3">{item.title}</span>
                                     <span className="text-base font-medium opacity-50 capitalize hidden">{item.count} creative</span>
