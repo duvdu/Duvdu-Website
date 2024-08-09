@@ -41,7 +41,7 @@ const Home = ({
     const wordsRef = useRef(null);
     const list = homeTreny_respond?.data || [];
     const router = useRouter();
-    console.log(i18n.language)
+    
     var TheBeststyle = i18n.language == "Arabic" ?{}:{
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',
         backgroundSize: 'cover',

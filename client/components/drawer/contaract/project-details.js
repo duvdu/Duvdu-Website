@@ -345,7 +345,7 @@ function ReceiveProjectFiles({
                                     contractDetails.ref &&
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("service type")}</h2>
-                                        <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
+                                        <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] dark:text-[#ffffffD9] dark:border-[#ffffffD9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
                                             {getType()}
                                         </span>
                                     </section>
@@ -364,10 +364,10 @@ function ReceiveProjectFiles({
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize'>{t("alike media")}</h2>
                                         {contract.attachments.map((attachment, index) =>
-                                            <div key={index} className='flex gap-3 items-start p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] mt-3'>
+                                            <div key={index} className='flex gap-3 items-start p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
                                                 <Icon key={index} name={'file'} className='size-5' />
                                                 <div className='flex flex-col'>
-                                                    <span className='text-[#353535] text-[14px] font-medium'> {attachment.split('/').pop()} </span>
+                                                    <span className='text-[#353535] dark:text-white text-[14px] font-medium'> {attachment.split('/').pop()} </span>
                                                     <span className='text-[#989692] text-[12px]'> </span>
                                                     <a href={attachment} target="_blank" rel="noopener noreferrer" className='text-primary font-semibold text-[14px]'>{t("Click to view")}</a>
                                                 </div>
