@@ -254,7 +254,7 @@ const CheckVerify = ({ className, ...rest }) =>
 const BurgerMenu = ({ className, ...rest }) =>
   <div className={className}  {...rest}>
     <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.3997 15.4H1.19971M20.3997 8.2H1.19971M20.3997 1H1.19971" stroke="#323232" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M20.3997 15.4H1.19971M20.3997 8.2H1.19971M20.3997 1H1.19971" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
 
   </div>
@@ -269,7 +269,7 @@ const Xicon = ({ className, ...rest }) =>
 const SearchMenu = ({ className, ...rest }) =>
   <div className={className} {...rest}>
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M12.1057 12.2L15 15M14.0667 7.53333C14.0667 11.1416 11.1416 14.0667 7.53333 14.0667C3.92507 14.0667 1 11.1416 1 7.53333C1 3.92507 3.92507 1 7.53333 1C11.1416 1 14.0667 3.92507 14.0667 7.53333Z" stroke="#323232" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M12.1057 12.2L15 15M14.0667 7.53333C14.0667 11.1416 11.1416 14.0667 7.53333 14.0667C3.92507 14.0667 1 11.1416 1 7.53333C1 3.92507 3.92507 1 7.53333 1C11.1416 1 14.0667 3.92507 14.0667 7.53333Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   </div>
 
@@ -373,6 +373,8 @@ const PlayVieo = ({ className, ...rest }) =>
       <path d="M12.7419 8.42188C14.0687 9.16128 14.0735 10.0914 12.7419 10.9274L2.45234 17.8668C1.15948 18.5568 0.281404 18.1494 0.18923 16.6565L0.145569 2.13231C0.116461 0.757125 1.24923 0.368589 2.32864 1.02792L12.7419 8.42188Z" fill="white" />
     </svg>
   </div>
+
+
 
 const Temp = ({ className, ...rest }) =>
   <div className={className} {...rest}>

@@ -259,15 +259,15 @@ const Header = ({
                                 }
                                 <div className="flex lg:hidden items-center justify-center gap-2">
                                     {islogin &&
-                                        <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
+                                        <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
                                             <Icon className="items-center justify-center" name={'bell'} />
                                         </div>}
 
-                                    <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={() => toggleClick(3)}>
-                                        <Icon className="size-6 flex items-center justify-center" name={'search-menu'} />
+                                    <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer " onClick={() => toggleClick(3)}>
+                                        <Icon className="size-6 flex items-center justify-center dark:text-white" name={'search-menu'} />
                                     </div>
-                                    <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer " onClick={() => toggleClick(2)}>
-                                        <Icon className="size-6 flex items-center justify-center" name={'burger-menu'} />
+                                    <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer " onClick={() => toggleClick(2)}>
+                                        <Icon className="size-6 flex items-center justify-center dark:text-white" name={'burger-menu'} />
                                     </div>
                                 </div>
                             </div>
