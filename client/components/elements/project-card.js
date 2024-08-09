@@ -38,6 +38,7 @@ console.log(cardData?.isFavourite , cardData._id)
 
 
   const loveIconName = fav ? 'fas' : 'far'
+  enbablelove ? loveIconName = 'fas' : loveIconName
 
   useEffect(() => {
     if (videoRef.current) {
