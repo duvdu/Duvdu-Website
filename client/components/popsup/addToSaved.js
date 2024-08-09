@@ -28,8 +28,11 @@ function AddToSaved({
         AddProjectToBoard({ idboard: -1 })
     }, [AddProjectToBoard.message])
     useEffect(() => {
-        if (addProjectToBoard_respond)
+        if (addProjectToBoard_respond) {
+            close()
+
             OpenPopUp("addProjectToBoard-popup")
+        }
     }, [addProjectToBoard_respond])
 
     const handleNextStep = (id) => {
@@ -56,7 +59,7 @@ function AddToSaved({
 
     return (
         <>
-            <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To board" onCancel={close} />
+            <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To board" onCancel={()=> ClosePopUp('addProjectToBoard-popup') } />
             <Drawer className='z-30' toggleDrawer={toggleDrawerAddFav} name={'Add To Saved Projects'} isOpen={isOpen}>
                 <DuvduLoading loadingIn={"AddProjectToBoard"} />
                 <div className='flex flex-col w-full overflow-y-scroll'>
