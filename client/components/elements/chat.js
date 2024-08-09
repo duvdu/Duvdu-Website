@@ -180,7 +180,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
         <div className={`fixed bottom-0 z-20 ${messages.openchat ? '' : 'hidden'}`}>
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
-                <div className="chat w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl sm:left-8">
+                <div className="chat w-screen sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl sm:left-8">
                     <div className="flex p-2 h-16 border-b border-[#00000040] dark:border-[#FFFFFF40]">
                         <Link href={`/creative/${otherUser.username || ""}`} >
                             <div className="relative cursor-pointer">

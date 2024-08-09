@@ -13,22 +13,22 @@ import { useTranslation } from 'react-i18next';
 const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
     const { t } = useTranslation();
 
-    const [page, setpage] = useState(isToggled);
+    const [page, setPage] = useState(isToggled);
     const router = useRouter();
     useEffect(() => {
 
-        if (isToggled != page) setpage(isToggled)
+        if (isToggled != page) setPage(isToggled)
     }, [isToggled])
 
-    const togglePage = () => setpage(prev => prev == 2 ? 3 : 2)
+    const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)
 
-    const Header = ({ onClick, toggleOpenSearch, openSearch }) => {
+    const Header = ({ onClose, toggleOpenSearch, openSearch }) => {
         const [isDarkMode, setIsDarkMode] = useState(true);
         useEffect(() => {
             isDarkMode = localStorage.getItem('darkMode') === 'true';
             setIsDarkMode(isDarkMode)
         }, [])
-        
+
         return <div className="container">
             <div className="flex items-center py-2 border-b dark:border-b-[#FFFFFF33]">
                 <div className="flex justify-start w-full">
@@ -45,15 +45,15 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
 
                 <div className="flex items-center justify-center gap-2 ">
-                <Link href={"?action=notifications"}>
-                    <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" >
+
+                    <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
                         <Icon className="items-center justify-center" name={'bell'} />
                     </div>
-                    </Link>
+
                     <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={toggleOpenSearch}>
                         <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'} />
                     </div>
-                    <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={onClick}>
+                    <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={onClose}>
                         <Icon className="size-6 items-center justify-center" name={'x-icon'} />
                     </div>
                 </div>
@@ -68,7 +68,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
     </div>
 
     const Tabs2 = () => {
-        
+
         return (
             <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
                 {
@@ -79,17 +79,25 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                             name: 'profile',
                         },
                         {
+                            click: () => setPage(5),
                             icon: 'gear',
                             name: 'settings',
                         },
-                    ].map((item, index) =>
-                        <Link key={index} href={item.url ? item.url : ""}>
-                            <div className="flex gap-1 items-center cursor-pointer" onClick={item.url ? null : ()=>  setpage(5)  }>
-                                <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
-                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{item.name}</span>
+                    ].map(({ url, icon, name, click }, index) => (
+                        url ? (
+                            <Link key={`${name}-${index}`} href={url}>
+                                <div className="flex gap-1 items-center cursor-pointer">
+                                    <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={icon} />
+                                    <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{name}</span>
+                                </div>
+                            </Link>
+                        ) : (
+                            <div key={`${name}-${index}`} className="flex gap-1 items-center cursor-pointer" onClick={click}>
+                                <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={icon} />
+                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{name}</span>
                             </div>
-                        </Link>
-                    )
+                        )
+                    ))
                 }
             </div>
         )
@@ -100,21 +108,21 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
                 {
                     [
-                         {
-                             url: '/dashboard',
-                             icon: 'dashboard',
-                             name: 'dashboard',
-                         },
+                        {
+                            url: '/dashboard',
+                            icon: 'dashboard',
+                            name: 'dashboard',
+                        },
                         {
                             url: '/contracts',
                             icon: 'contracts',
                             name: 'contracts',
                         },
-                         {
-                             url: '/teams',
-                             icon: 'teams',
-                             name: 'team projects',
-                         },
+                        {
+                            url: '/teams',
+                            icon: 'teams',
+                            name: 'team projects',
+                        },
                     ].map((item, index) =>
                         <Link key={index} href={item.url}>
                             <div className="flex justify-center items-center cursor-pointer">
@@ -211,10 +219,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
     const DownLoadApp = () =>
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-black to-transparent border-50 p-6 mx-5">
             <div className="flex flex-col gap-3">
-            <h3 className="font-bold text-xl"> Get <span className="text-primary">{t("duvdu")}</span> on your mobile phone Now! </h3>
-            
-                <img src="/assets/imgs/theme/tab/android.png"/>
-                <img src="/assets/imgs/theme/tab/IOS.png"/>
+                <h3 className="font-bold text-xl"> Get <span className="text-primary">{t("duvdu")}</span> on your mobile phone Now! </h3>
+
+                <img src="/assets/imgs/theme/tab/android.png" />
+                <img src="/assets/imgs/theme/tab/IOS.png" />
             </div>
         </div>
     const SpeficIcon = ({ name }) => {
@@ -235,9 +243,9 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
         if (router.query) {
             const action = router.query.action
             if (action == "settings")
-                setpage(5)
+                setPage(5)
             else if (action == "notifications")
-                setpage(4)
+                setPage(4)
         }
     }, [router.query])
 
@@ -252,8 +260,8 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                 }
             >
                 <div className="h-full scroll-w-0 scroll-m-0 overflow-y-scroll">
-                
-                    <Header onClick={() => toggleClick(1)} toggleOpenSearch={togglePage} openSearch={page} />
+
+                    <Header onClose={() => toggleClick(1)} toggleOpenSearch={togglePage} openSearch={page} />
                     {page == 2 &&
                         <>
                             {
@@ -276,7 +284,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                     }
 
                     {page == 4 &&
-                        <MessageAndNotofication />
+                        <MessageAndNotofication onChoose={() => toggleClick(1)} />
                     }
 
                     {page == 5 &&
