@@ -28,8 +28,9 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
             isDarkMode = localStorage.getItem('darkMode') === 'true';
             setIsDarkMode(isDarkMode)
         }, [])
+        
         return <div className="container">
-            <div className="flex items-center py-2 border-b">
+            <div className="flex items-center py-2 border-b dark:border-b-[#FFFFFF33]">
                 <div className="flex justify-start w-full">
                     <Link href="/">
                         <a>
@@ -45,14 +46,14 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
                 <div className="flex items-center justify-center gap-2 ">
                 <Link href={"?action=notifications"}>
-                    <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] cursor-pointer flex items-center justify-center" >
+                    <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" >
                         <Icon className="items-center justify-center" name={'bell'} />
                     </div>
                     </Link>
-                    <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={toggleOpenSearch}>
+                    <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={toggleOpenSearch}>
                         <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'} />
                     </div>
-                    <div className="p-3 rounded-full border border-[#C6C8C9] cursor-pointer" onClick={onClick}>
+                    <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={onClick}>
                         <Icon className="size-6 items-center justify-center" name={'x-icon'} />
                     </div>
                 </div>
@@ -67,8 +68,9 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
     </div>
 
     const Tabs2 = () => {
+        
         return (
-            <div className="flex flex-col justify-center items-center gap-11 py-10 border-b">
+            <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
                 {
                     [
                         {
@@ -77,13 +79,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                             name: 'profile',
                         },
                         {
-                            url: '?action=settings',
                             icon: 'gear',
                             name: 'settings',
                         },
                     ].map((item, index) =>
-                        <Link key={index} href={item.url}>
-                            <div className="flex gap-1 items-center cursor-pointer">
+                        <Link key={index} href={item.url ? item.url : ""}>
+                            <div className="flex gap-1 items-center cursor-pointer" onClick={item.url ? null : ()=>  setpage(5)  }>
                                 <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
                                 <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{item.name}</span>
                             </div>
@@ -95,25 +96,25 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
     }
     const Tabs = () => {
         return (
-            <div className="flex flex-col justify-center items-center gap-11 py-10 border-b">
+            <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
 
                 {
                     [
-                        // {
-                        //     url: '/dashboard',
-                        //     icon: 'dashboard',
-                        //     name: 'dashboard',
-                        // },
+                         {
+                             url: '/dashboard',
+                             icon: 'dashboard',
+                             name: 'dashboard',
+                         },
                         {
                             url: '/contracts',
                             icon: 'contracts',
                             name: 'contracts',
                         },
-                        // {
-                        //     url: '/teams',
-                        //     icon: 'teams',
-                        //     name: 'team projects',
-                        // },
+                         {
+                             url: '/teams',
+                             icon: 'teams',
+                             name: 'team projects',
+                         },
                     ].map((item, index) =>
                         <Link key={index} href={item.url}>
                             <div className="flex justify-center items-center cursor-pointer">
@@ -153,7 +154,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                             <div className="flex w-full justify-between items-center p-5">
                                 <div className="w-3" />
                                 <Link href={`/${category.cycle}`}>
-                                    <span className="text-[#4F5E7B] font-semibold text-sm" >
+                                    <span className="text-[#4F5E7B] dark:text-[#B3B3B3] font-semibold text-sm" >
                                         {category.title}
                                     </span>
                                 </Link>
@@ -171,8 +172,8 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
                                     return (
                                         <li key={subcategory.title} className="cursor-pointer" onClick={(e) => { e.stopPropagation(); toggleSubcategory(subcategory) }}>
-                                            <div className="flex w-full bg-[#F7F9FB] justify-between items-center p-5">
-                                                <div className="text-[#4F5E7B] font-semibold text-sm">
+                                            <div className="flex w-full bg-[#F7F9FB] dark:bg-transparent justify-between items-center p-5">
+                                                <div className="text-[#4F5E7B] dark:text-[#B4BBC8] font-semibold text-sm">
                                                     {subcategory.title}
                                                 </div>
                                                 <Icon className={`text-[#B4BBC8] text-lg transform transition-all duration-300 ${isOurStation ? 'rotate-180' : ''}`} name={'angle-down-menu'} />
@@ -181,7 +182,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                                                 style={{ maxHeight: isOurStation ? subcategory.tags.length * 64 : 0 }}
                                             >
                                                 {subcategory.tags.map((item, itemIndex) => (
-                                                    <li key={itemIndex} className="p-5 bg-[#E6E9ED]">{item.title}</li>
+                                                    <li key={itemIndex} className="p-5 bg-[#E6E9ED] dark:bg-black">{item.title}</li>
                                                 ))}
                                             </ul>
                                         </li>
@@ -208,7 +209,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
         </div>
 
     const DownLoadApp = () =>
-        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-6 mx-5">
+        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-black to-transparent border-50 p-6 mx-5">
             <div className="flex flex-col gap-3">
             <h3 className="font-bold text-xl"> Get <span className="text-primary">{t("duvdu")}</span> on your mobile phone Now! </h3>
             
@@ -246,11 +247,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
             <div
                 className={
                     isToggled > 1
-                        ? "mobile-header-active mobile-header-wrapper-style sidebar-visible"
+                        ? "mobile-header-active mobile-header-wrapper-style sidebar-visible bg-[#1A2024]"
                         : "mobile-header-active mobile-header-wrapper-style"
                 }
             >
                 <div className="h-full scroll-w-0 scroll-m-0 overflow-y-scroll">
+                
                     <Header onClick={() => toggleClick(1)} toggleOpenSearch={togglePage} openSearch={page} />
                     {page == 2 &&
                         <>

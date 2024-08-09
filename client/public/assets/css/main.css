@@ -1138,7 +1138,6 @@ table p {
   /* transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1); */
   -webkit-transform: translate(-200px, 0);
   transform: translate(-200px, 0);
-  background-color: var(--white);
   -webkit-box-shadow: 0 0 15px 0 rgba(var(--black-rgb), 0.09);
   box-shadow: 0 0 15px 0 rgba(var(--black-rgb), 0.09);
   z-index: 99999;

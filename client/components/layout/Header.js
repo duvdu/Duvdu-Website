@@ -247,6 +247,7 @@ const Header = ({
                                         </div>
                                     </Link>
                                 </div>
+                                {/* 1A2024 */}
                                 {
                                     !fromlayout.shortheader &&
                                     <div className="header-nav w-full">

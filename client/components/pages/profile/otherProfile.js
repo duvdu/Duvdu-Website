@@ -14,6 +14,7 @@ import Followers from "../../popsup/followes";
 import { GetUserProject } from "../../../redux/action/apis/auth/profile/getUserProjects";
 import EmptyComponent from "../contracts/emptyComponent";
 import { swapFollow } from "../../../redux/action/apis/auth/profile/swapFollow";
+import { useTranslation } from 'react-i18next';
 
 const profile = {
     comments: [
@@ -56,6 +57,7 @@ function OtherProfile({
     const route = useRouter();
     const { profile: username } = route.query;
     const [isFollow, setIsFollow] = useState();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (swapFollowRespond && username) {
