@@ -57,6 +57,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
         setMessagesList(messages.list)
     }, [messages.list]);
 
+    const msglist = [...messagesList]
 
     useEffect(() => {
         // Scroll to the bottom of the chat when component updates
@@ -64,10 +65,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
         setOtherUser(getotherdata())
-
-    }, [messages?.list]);
+        
+    }, [JSON.stringify(msglist)]);
     
-    const msglist = [...messagesList]
+    
     msglist.reverse()
 
     useEffect(() => {
