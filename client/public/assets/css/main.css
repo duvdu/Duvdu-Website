@@ -1152,33 +1152,45 @@ table p {
 }
 
 .hide-scrollable-container {
-  overflow: hidden; /* Hide the scrollbar */
+  overflow: hidden;
+  /* Hide the scrollbar */
 }
 
 .hide-scrollable-container::-webkit-scrollbar {
-  display: none; /* Hide the scrollbar for Webkit browsers */
+  display: none;
+  /* Hide the scrollbar for Webkit browsers */
 }
 
 .hide-scrollable-container {
-  scrollbar-width: none; /* Hide the scrollbar */
-  -ms-overflow-style: none;  /* Hide the scrollbar for IE and Edge */
+  scrollbar-width: none;
+  /* Hide the scrollbar */
+  -ms-overflow-style: none;
+  /* Hide the scrollbar for IE and Edge */
 }
 
-.scrollableContainer {  
-  overflow: hidden; /* Hide the scrollbar */
-  cursor: grab; /* Change cursor to grab */
-  margin-bottom: 20px; /* Add some space between lists */
+.scrollableContainer {
+  overflow: hidden;
+  /* Hide the scrollbar */
+  cursor: grab;
+  /* Change cursor to grab */
+  margin-bottom: 20px;
+  /* Add some space between lists */
 }
 
 .scrollableContainer:active {
-  cursor: grabbing; /* Change cursor to grabbing when active */
+  cursor: grabbing;
+  /* Change cursor to grabbing when active */
 }
 
 .listScroll {
-  list-style: none; /* Remove list item bullets */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
-  display: flex; /* Display list items in a row */
+  list-style: none;
+  /* Remove list item bullets */
+  padding: 0;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margin */
+  display: flex;
+  /* Display list items in a row */
 }
 
 
@@ -1518,7 +1530,7 @@ table p {
   font-weight: 400;
   line-height: 18px;
   letter-spacing: 0em;
- 
+
 }
 
 .boronze-frame {
@@ -1757,6 +1769,11 @@ table p {
 
 }
 
+.app-btn.red {
+  filter:
+    drop-shadow(0px 5px 11px rgba(239, 50, 50, 0.18)) drop-shadow(0px 20px 20px rgba(239, 50, 50, 0.15)) drop-shadow(0px 45px 27px rgba(239, 50, 50, 0.09)) drop-shadow(0px 79px 32px rgba(239, 50, 50, 0.03)) drop-shadow(0px 124px 35px rgba(239, 50, 50, 0.00));
+}
+
 .app-btn {
   width: 100%;
   border-radius: 41.5px;
@@ -1768,7 +1785,8 @@ table p {
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
-  filter: drop-shadow(0px 5px 11px rgba(50, 107, 239, 0.18)) drop-shadow(0px 20px 20px rgba(50, 107, 239, 0.15)) drop-shadow(0px 45px 27px rgba(50, 107, 239, 0.09)) drop-shadow(0px 79px 32px rgba(50, 107, 239, 0.03)) drop-shadow(0px 124px 35px rgba(50, 107, 239, 0.00));
+  filter:
+    drop-shadow(0px 5px 11px rgba(50, 107, 239, 0.18)) drop-shadow(0px 20px 20px rgba(50, 107, 239, 0.15)) drop-shadow(0px 45px 27px rgba(50, 107, 239, 0.09)) drop-shadow(0px 79px 32px rgba(50, 107, 239, 0.03)) drop-shadow(0px 124px 35px rgba(50, 107, 239, 0.00));
 }
 
 .app-btn:hover {
@@ -1829,7 +1847,7 @@ table p {
   top: 50%;
   cursor: pointer;
   transform: translateY(-50%);
-  @apply ltr:right-[25px] rtl:left-[25px] 
+  @apply ltr:right-[25px] rtl:left-[25px]
 }
 
 .OTP:focus {
@@ -2212,6 +2230,7 @@ table p {
   background: linear-gradient(180deg, rgba(28, 28, 30, 0) 26.13%, rgba(28, 28, 30, 0.8) 93.22%);
 
 }
+
 .button-shadow-1 {
   -webkit-box-shadow: 0px 25px 80px 0px rgba(101, 88, 249, 0.5);
   -moz-box-shadow: 0px 25px 80px 0px rgba(101, 88, 249, 0.5);
@@ -2447,7 +2466,7 @@ audio::-webkit-media-controls-volume-slider-container {
   --white-rgb: 0, 0, 0;
   --black: #fff;
   --header-tab: #B3B3B3;
-  --black-rgb: 255, 255, 255;
+
   --indigo: var(--black);
   --Alabaster: #1A2024;
   --water: #001F4A;
