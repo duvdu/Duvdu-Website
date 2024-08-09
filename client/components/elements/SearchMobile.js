@@ -53,7 +53,7 @@ const Search = () => {
             <div className="flex gap-2 h-14">
 
                 <input
-                    className="searchInput border bg-[#EAEEF0] w-full text-lg placeholder:text-[#94A6C2]"
+                    className="searchInput border dark:border-gray-600 bg-[#EAEEF0] dark:bg-[#1A2024] w-full text-lg placeholder:text-[#94A6C2]"
                     value={searchTerm || ""}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onFocus={() => handleFocus(true)}

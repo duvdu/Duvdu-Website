@@ -61,7 +61,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
         </div>
     }
 
-    const SearchBody = () => <div className="h-body bg-[#F7F9FB]" >
+    const SearchBody = () => <div className="h-body bg-[#F7F9FB] dark:bg-[#1A2024]" >
         <div className="p-5">
             <Search />
         </div>
