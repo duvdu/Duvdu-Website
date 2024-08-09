@@ -1,4 +1,4 @@
-import { convertToK } from "../../../util/util";
+import { convertToK, getRankStyle } from "../../../util/util";
 import { useTranslation } from 'react-i18next';
 import Icon from "../../Icons";
 import React from 'react';
@@ -25,7 +25,7 @@ const About = ({ data }) => {
                     </div>
                 </div>
                 <div className='flex justify-center pt-25 items-center gap-1 sm:gap-3'>
-                    {data?.user?.rank?.title && <p className='rank'>{data?.user?.rank?.title}</p>}
+                    {data?.user?.rank?.title && <p className='rank' style={getRankStyle(data?.user?.rank?.color)}>{data?.user?.rank?.title}</p>}
                     {data?.category?.title && <p className="info-container whitespace-nowrap">{data?.category?.title}</p>}
                     <div className='info-container justify-center flex items-center gap-2 w-20'>
                         <p>{data?.user?.rate?.totalRates || 0}</p>

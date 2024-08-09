@@ -3,6 +3,7 @@ import Icon from '../../Icons';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { getRankStyle } from '../../../util/util';
 
 const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
   const { t } = useTranslation();
@@ -30,11 +31,11 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
         </div>
       </Link>
       <div className='flex justify-center pt-25 items-center gap-3'>
-        <div className='Professional-background-decoration px-3 py-1'>
-          <span className='Professional-text-decoration font-bold text-lg'>
+        
+          <div className='border rounded-full px-3 py-1 font-bold text-lg' style={getRankStyle(cardData?.user?.rank?.color)}>
             {cardData?.user?.rank?.title || "Unranked"}
-          </span>
-        </div>
+          </div>
+        
         <span className='info-container flex gap-1'>
           <span>{cardData?.user?.projectsView || 0}</span> <span>{t("projects")}</span>
         </span>

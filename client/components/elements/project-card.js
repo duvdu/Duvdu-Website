@@ -28,7 +28,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
       setFav(swapProjectToFav_respond.action === "add");
     }
   }, [cardData, swapProjectToFav_respond]);
-console.log(cardData?.isFavourite , cardData._id)
   useEffect(() => {
     if (enbablelove)
       setFav(true);
