@@ -133,7 +133,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data)
         }
-
+        
         return (
             !userInfo ? <></> :
                 <>
@@ -147,6 +147,8 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                     src={userInfo.profileImage}
                                     location={userInfo.address || 'NONE'}
                                     occupation={userInfo?.category?.title}
+                                    rank={userInfo?.rank?.title}
+                                    rankcolor={userInfo?.rank?.color}
                                     personalName={userInfo.name}
                                     popularity={{
                                         likes: userInfo.likes,

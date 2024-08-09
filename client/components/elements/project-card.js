@@ -28,7 +28,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
       setFav(swapProjectToFav_respond.action === "add");
     }
   }, [cardData, swapProjectToFav_respond]);
-
   useEffect(() => {
     if (enbablelove)
       setFav(true);
@@ -38,6 +37,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
 
 
   const loveIconName = fav ? 'fas' : 'far'
+  enbablelove ? loveIconName = 'fas' : loveIconName
 
   useEffect(() => {
     if (videoRef.current) {

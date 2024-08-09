@@ -224,12 +224,12 @@ export const errorConvertedMessage = (error) => {
 
         return `<div class="error-msg" >${errors[0].message}</div>`;
       }
-      
-      
+
+
       const hasFieldErrors = errors.some(error => error.field);
 
       if (hasFieldErrors) {
-        
+
         const formattedMessages = errors.map(error => `<li>${error.field}: ${error.message}</li>`).join('');
         return `<strong>{t("Error Fields:")}</strong><ul style="padding-left:20px;">${formattedMessages}</ul>`;
       } else {
@@ -240,7 +240,7 @@ export const errorConvertedMessage = (error) => {
     } catch (err) {
       const errorMessage = errorConverted.data.message;
       return `<div class="error-msg" >${errorMessage}</div>`;
-      
+
     }
   } catch (err) {
     return error.toString();
@@ -255,7 +255,7 @@ function validateErrorsAsList(data) {
 
   // Check if 'data' has a property 'errors'
   if (!data.hasOwnProperty('errors')) {
-     return false;
+    return false;
   }
 
   // Check if 'data.errors' is an array
@@ -265,7 +265,7 @@ function validateErrorsAsList(data) {
 
   // Optional: Check if 'data.errors' array has elements
   if (data.errors.length === 0) {
-     return false;  // Change to 'true' if empty array is acceptable
+    return false;  // Change to 'true' if empty array is acceptable
   }
 
   // Optional: Check each element in the array (if you expect each element to have certain properties)
@@ -402,6 +402,23 @@ export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = ''
 };
 
 
+export const getRankStyle = (rankcolor) => {
+  function hexToRgba(hex, opacity) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  }
+  const rankStyle = {
+    backgroundColor: hexToRgba(rankcolor, .2),
+    color: rankcolor,
+    borderColor: rankcolor,
+  };
+  return rankStyle
+};
+
 export const calculateRating = (rate) => {
   if (!rate) return 0
   if (rate.ratersCounter > 0) {
@@ -414,21 +431,21 @@ export const formatRemainingTime = (seconds) => {
   let remainingTime = seconds
   const days = Math.floor(remainingTime / (60 * 60 * 24));
   remainingTime %= (60 * 60 * 24);
-  const hours = Math.floor(remainingTime / ( 60 * 60));
+  const hours = Math.floor(remainingTime / (60 * 60));
   remainingTime %= (60 * 60);
   const minutes = Math.floor(remainingTime / (60));
-  
+
   const timeParts = [];
-  
+
   if (days > 0) {
-      timeParts.push(`${days} day${days > 1 ? 's' : ''}`);
+    timeParts.push(`${days} day${days > 1 ? 's' : ''}`);
   }
   if (hours > 0) {
-      timeParts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+    timeParts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
   }
   if (minutes > 0) {
-      timeParts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+    timeParts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
   }
-  
+
   return timeParts.join(' ');
 };

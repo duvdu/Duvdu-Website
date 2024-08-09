@@ -1,4 +1,4 @@
-import { convertToK } from "../../../util/util";
+import { convertToK, getRankStyle } from "../../../util/util";
 import { useTranslation } from 'react-i18next';
 import Icon from "../../Icons";
 import React from 'react';
@@ -14,7 +14,7 @@ const About = ({ data }) => {
                 <div className='flex items-center justify-center'>
                     <div className='w-32 h-32 relative'>
                         <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                        <img className='profile-picture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
+                        <img className='profileImgture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
                     </div>
                     <div className='flex-2 flex-col gap-1'>
                         <h3 className="capitalize font-semibold text-lg">{data?.user.name}</h3>
@@ -25,7 +25,7 @@ const About = ({ data }) => {
                     </div>
                 </div>
                 <div className='flex justify-center pt-25 items-center gap-1 sm:gap-3'>
-                    {data?.user?.rank?.title && <p className='rank'>{data?.user?.rank?.title}</p>}
+                    {data?.user?.rank?.title && <p className='rank' style={getRankStyle(data?.user?.rank?.color)}>{data?.user?.rank?.title}</p>}
                     {data?.category?.title && <p className="info-container whitespace-nowrap">{data?.category?.title}</p>}
                     <div className='info-container justify-center flex items-center gap-2 w-20'>
                         <p>{data?.user?.rate?.totalRates || 0}</p>

@@ -2,7 +2,7 @@ import { connect } from "react-redux"
 import dateFormat from "dateformat";
 import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
 
-function MessageTile({ GetAllMessageInChat, message, user }) {
+function MessageTile({ GetAllMessageInChat, message, user , onChoose }) {
     const lastMSG = message.newestMessage
     const unreadedcount = message.unreadMessageCount;
     // Start from the last element and move backwards
@@ -26,7 +26,7 @@ function MessageTile({ GetAllMessageInChat, message, user }) {
         if (!lastMSG.media || lastMSG.media.length === 0) {
             return lastMSG.content ;
         }
-
+        
         const media = lastMSG.media[0];
         if(!media) return ''
         if (media.type.startsWith('image/')) {
@@ -43,8 +43,12 @@ function MessageTile({ GetAllMessageInChat, message, user }) {
         }
         return '📁 File';
     };
+    const onselect = () => {
+        onChoose?.()
+        GetAllMessageInChat(message._id)
+    }
     return (
-        <div className="w-64 flex gap-4 cursor-pointer" onClick={() => GetAllMessageInChat(message._id)}>
+        <div className="w-64 flex gap-4 cursor-pointer" onClick={() => onselect()}>
             <div className="relative">
                 <div className="size-9 rounded-full bg-black overflow-hidden">
                     <img className="object-cover object-top" src={other.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" width="37" height="37" />

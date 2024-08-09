@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { OpenPopUp, convertToK } from "../../../util/util";
+import { OpenPopUp, convertToK, getRankStyle } from "../../../util/util";
 import Icon from "../../Icons";
 import { getUserFollowers } from "../../../redux/action/apis/auth/profile/getFollowerList";
 import PopUpImage from "../../elements/popUpImage";
@@ -9,6 +9,7 @@ function Info({
     personalName,
     location,
     rank,
+    rankcolor,
     occupation,
     rates,
     popularity,
@@ -18,10 +19,10 @@ function Info({
     const openFollowers = () => {
         OpenPopUp('show-followers')
     }
+   
     return <>
         <div className='flex items-end sm:items-center pb-5'>
             <div className={`w-28 h-28 bg-cover relative p-3 mr-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
-
                 <img className='w-full h-full rounded-full object-cover object-top' src={src} alt="profile picture" />
             </div>
             <div className='flex-1 flex-col gap-1'>
@@ -36,7 +37,7 @@ function Info({
         </div>
         <div className='flex justify-center pt-25 items-center gap-3'>
             {rank &&
-                <p className='rank'>{rank}</p>
+                <p className='rank' style={getRankStyle(rankcolor)}>{rank}</p>
             }
             {occupation &&
                 <div className="info-container flex items-center justify-center">

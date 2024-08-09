@@ -41,6 +41,7 @@ const Projects = ({
     }, [delete_respond, boardId, swap_respond]);
 
     const getPaginatedProjects = allprojects;
+    console.log(getPaginatedProjects)
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -48,7 +49,7 @@ const Projects = ({
                     <div className="container mb-30">
                         <div className='flex gap-3 pb-6'>
                             <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={Goback}>
-                                <Icon className='w-5 h-5 text-black' name={'angle-left'} />
+                                <Icon className='w-5 h-5 text-black dark:text-white' name={'angle-left'} />
                             </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>{t("favorites")}</span>
                         </div>

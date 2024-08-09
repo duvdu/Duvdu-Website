@@ -7,7 +7,7 @@ import { GetNotifications } from "../../../redux/action/apis/realTime/notificati
 
 
 
-function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond }) {
+function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond , onChoose }) {
 
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
@@ -30,27 +30,27 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
     }, [getheaderpopup == Types.SHOWNOTOFICATION])
 
     if (getheaderpopup != Types.SHOWNOTOFICATION && window.innerWidth > 1024) return
-    
+
 
     return (
-        <div className={isMob?"":"cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
-            <div className={isMob?"":"dialog dialog-1"}>
+        <div className={isMob ? "" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
+            <div className={isMob ? "" : "dialog dialog-1"}>
                 <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2">
                     {
-                        viewAllState == 0 &&!isMob&&
+                        viewAllState == 0 && !isMob &&
                         <>
                             <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
                             <ViewFew Type={'messages'} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
-                            
+
                         </>
                     }
                     {
-                        (viewAllState == 1 || isMob) && 
+                        (viewAllState == 1 || isMob) &&
                         <ViewAll Type={'notification'} list={GetNotifications_resond?.data || []} t={t} />
                     }
                     {
-                        viewAllState == 2 && 
-                        <ViewAll Type={'messages'} list={chats || []} t={t} />
+                        (viewAllState == 2 || isMob) &&
+                        <ViewAll Type={'messages'} list={chats || []} t={t} onChoose={onChoose}/>
                     }
                 </div>
             </div>
@@ -58,7 +58,7 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
     )
 }
 
-const ViewAll = ({ Type, list, t }) =>
+const ViewAll = ({ Type, list, t , onChoose }) =>
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] sm:dark:bg-[#1A2024] p-7">
         <div className="flex items-center justify-between">
             <h2 className="text-base font-bold capitalize">{t(Type)}</h2>
@@ -67,7 +67,7 @@ const ViewAll = ({ Type, list, t }) =>
         {list.length > 0 ?
             <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
                 {list.map((tile, index) => (
-                    Type == 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} />
+                    Type == 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
 
@@ -85,7 +85,7 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
         {list.length > 0 ?
             <div className="flex flex-col gap-4 mt-8 overflow-y-hidden">
                 {list.slice(0, 4).map((tile, index) => (
-                    Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} />
+                    Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Notification")}</span> </div>}
     </div>
