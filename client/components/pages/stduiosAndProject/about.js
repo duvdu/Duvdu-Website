@@ -14,7 +14,7 @@ const About = ({ data }) => {
                 <div className='flex items-center justify-center'>
                     <div className='w-32 h-32 relative'>
                         <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                        <img className='profile-picture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
+                        <img className='profileImgture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
                     </div>
                     <div className='flex-2 flex-col gap-1'>
                         <h3 className="capitalize font-semibold text-lg">{data?.user.name}</h3>
