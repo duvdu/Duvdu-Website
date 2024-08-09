@@ -403,6 +403,7 @@ export const UpdateKeysAndValues = (obj, onUpdate, avoidFields = [], prefix = ''
 
 
 export const getRankStyle = (rankcolor) => {
+ if(!rankcolor) return {}
   function hexToRgba(hex, opacity) {
     const bigint = parseInt(hex.slice(1), 16);
     const r = (bigint >> 16) & 255;
@@ -411,6 +412,7 @@ export const getRankStyle = (rankcolor) => {
 
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
   }
+  
   const rankStyle = {
     backgroundColor: hexToRgba(rankcolor, .2),
     color: rankcolor,

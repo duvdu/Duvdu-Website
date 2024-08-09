@@ -155,7 +155,6 @@ const Home = ({
                                     <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint right-6" dir="rtl">  </div>
                                     <div className="size-3"></div>
                                 </DraggableList>
-                                    <div className="size-3 bg-[#171717]"></div>
                             </div>
                         </div>
                     </div>
