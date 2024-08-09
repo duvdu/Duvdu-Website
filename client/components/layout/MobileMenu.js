@@ -255,7 +255,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
             <div
                 className={
                     isToggled > 1
-                        ? "mobile-header-active mobile-header-wrapper-style sidebar-visible bg-[#1A2024]"
+                        ? "mobile-header-active mobile-header-wrapper-style sidebar-visible bg-[#F7F9FB] dark:bg-[#1A2024]"
                         : "mobile-header-active mobile-header-wrapper-style"
                 }
             >
