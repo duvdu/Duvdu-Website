@@ -11,6 +11,7 @@ import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProject
 import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
 import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
 import DuvduLoading from "../../components/elements/duvduLoading";
+import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 
 const Projects = ({
@@ -107,7 +108,7 @@ const Projects = ({
                         </div>
                         <DuvduLoading loadingIn={"GetSavedBoard"}/>
                         {getPaginatedProjects?.length === 0 && (
-                            <EmptyComponent />
+                            <EmptyComponent message={"No Projects Yet!"} />
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
@@ -127,16 +128,6 @@ const Projects = ({
     );
 };
 
-const EmptyComponent = () => {
-    return (
-        <div className='container flex flex-col justify-center items-center text-center w-full h-NoProjectYet border-NoProjectYet p-10'>
-            <div className='bg-gray-600 mt-5' />
-            <img src='/assets/imgs/theme/Empty.svg' className='lg:w-[540px] lg:h-[450px]' />
-            <h3 className='text-2xl font-bold mt-8 mb-4'>{t("No Projects Yet!")}</h3>
-        </div>
-
-    );
-};
 
 const mapStateToProps = (state) => ({
     add_respond: state.api.AddProjectToBoard,
