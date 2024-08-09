@@ -65,7 +65,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
         }
         setOtherUser(getotherdata())
 
-    }, [messages]);
+    }, [messages?.list]);
     
     const msglist = [...messagesList]
     msglist.reverse()
@@ -166,9 +166,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
         }
     };
 
-
-
-
     const recording = (url, object) => {
         setaudioSrc(url)
         setRecordobject(object)
@@ -182,7 +179,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
         <div className={`fixed bottom-0 z-20 ${messages.openchat ? '' : 'hidden'}`}>
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
-                <div className="chat dark:bg-[#1A2024] w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl sm:left-8">
+                <div className="chat w-full sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl sm:left-8">
                     <div className="flex p-2 h-16 border-b border-[#00000040] dark:border-[#FFFFFF40]">
                         <Link href={`/creative/${otherUser.username || ""}`} >
                             <div className="relative cursor-pointer">
@@ -197,7 +194,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
                         </Link>
                         <div className="px-3">
                             <Link href={`/creative/${otherUser.username || ""}`} >
-                                <div className="capitalize font-bold text-black cursor-pointer">
+                                <div className="capitalize font-bold text-black dark:text-white cursor-pointer">
                                     {otherUser.name}
                                 </div>
                             </Link>
@@ -380,6 +377,7 @@ const Me = ({ message }) => {
 };
 
 const Other = ({ message }) => {
+    const { t } = useTranslation();
 
     return ((message?.media[0]?.type === "audio/wav") ?
         <div className="ml-20 mt-2">

@@ -45,9 +45,10 @@ const Header = ({ data, islogin,toggleDrawerAddFav }) => {
                         </div>
                     </div>
                 </Link>
+                <div className="flex gap-2">
                 <div className="block sm:hidden">
-                    <div onClick={toggleDrawerAddFav} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer">
-                        <Icon className="text-black " name="plus" />
+                    <div onClick={toggleDrawerAddFav} className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33]  flex justify-center items-center w-14 h-14 cursor-pointer">
+                        <Icon className="text-black dark:text-white" name="plus" />
                     </div>
                 </div>
                 <Selector
@@ -62,6 +63,7 @@ const Header = ({ data, islogin,toggleDrawerAddFav }) => {
                     onSelect={handleDropdownSelect}
                     className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-14 h-14 cursor-pointer"
                 />
+                </div>
             </div>
         </>
     );

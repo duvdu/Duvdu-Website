@@ -83,8 +83,8 @@ const SelectDate = ({ onChange, value }) => {
                     {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                 </span>
                 <div className="flex items-center font-medium text-[#8A96BC] cursor-pointer text-sm">
-                    <Icon className="mx-2 text-[#222E54] w-2" name="angle-left" onClick={() => handleScroll(-1)} />
-                    <Icon className="mx-2 text-[#222E54] w-2 -rotate-180" name="angle-left" onClick={() => handleScroll(1)} />
+                    <Icon className="mx-2 text-[#222E54] dark:text-white w-2" name="angle-left" onClick={() => handleScroll(-1)} />
+                    <Icon className="mx-2 text-[#222E54] dark:text-white w-2 -rotate-180" name="angle-left" onClick={() => handleScroll(1)} />
                 </div>
             </div>
             {isExpanded ? (
@@ -116,10 +116,10 @@ const SelectDate = ({ onChange, value }) => {
                         date ? (
                             <div
                                 key={index}
-                                className={`border-[1.5px] border-[#F7F8F8] rounded-xl px-3 flex flex-col justify-center items-center aspect-square w-12 h-12 cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
+                                className={`border-[1.5px] border-[#F7F8F8] dark:border-gray-600 rounded-xl px-3 flex flex-col justify-center items-center aspect-square w-12 h-12 cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
                                 onClick={() => handleDateClick(date)}
                             >
-                                <span className="font-semibold text-xs text-[#263257]">
+                                <span className="font-semibold text-xs text-[#263257] dark:text-white">
                                     {date.getDate()}
                                 </span>
                                 <span className="font-medium text-xs text-[#8A96BC]">

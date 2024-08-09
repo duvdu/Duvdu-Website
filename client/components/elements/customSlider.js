@@ -72,7 +72,7 @@ function CustomSlider({ initValue = 0, values, onValueChange }) {
 
     return (
         <>
-            <div className='border px-4 rounded-3xl'>
+            <div className='border dark:border-gray-600 px-4 rounded-3xl'>
                 <div className='mt-10' />
                 <div className="slider-container mb-4" ref={sliderContainerRef}>
                     <div className="slider-track">
