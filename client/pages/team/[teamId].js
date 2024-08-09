@@ -109,7 +109,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
             ) : (
                 <>
                     <div className='w-10 h-10 flex justify-center items-center rounded-full border px-4 cursor-pointer aspect-square' onClick={()=> setIsAddToTeamPage(!isAddToTeamPage)}>
-                        <Icon className='w-5 h-5 text-black' name={'angle-left'} />
+                        <Icon className='w-5 h-5 text-black dark:text-white' name={'angle-left'} />
                     </div>
                     <UsersToAdd goback={togglePage} />
                 </>
