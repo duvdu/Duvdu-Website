@@ -15,8 +15,7 @@ import { useTranslation } from 'react-i18next';
 function Login({ api, login_respond, login, resendCode, getMyprofile }) {
     const { t } = useTranslation();
     const { fcmToken,notificationPermissionStatus } = useFcmToken();
-  fcmToken && console.log('FCM token:', fcmToken);
-  notificationPermissionStatus && console.log('notificationPermissionStatus:', notificationPermissionStatus);
+  
 
   const [errorMSG, setErrorMSG] = useState(null);
   const router = useRouter();

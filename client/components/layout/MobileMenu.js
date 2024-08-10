@@ -30,7 +30,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
         }, [])
 
         return <div className="container">
-            <div className="flex items-center py-2 border-b dark:border-b-[#FFFFFF33]">
+            <div className="flex items-center py-2">
                 <div className="flex justify-start w-full">
                     <Link href="/">
                         <a>
@@ -44,7 +44,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                 </div>
 
 
-                <div className="flex items-center justify-center gap-2 ">
+                <div className="flex items-center justify-center gap-2">
 
                     <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
                         <Icon className="items-center justify-center" name={'bell'} />
@@ -61,14 +61,13 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
         </div>
     }
 
-    const SearchBody = () => <div className="h-body bg-[#F7F9FB] dark:bg-[#1A2024]" >
+    const SearchBody = () => <div className="h-body bg-[#F7F9FB] dark:bg-[#1A2024] " >
         <div className="p-5">
             <Search />
         </div>
     </div>
 
     const Tabs2 = () => {
-
         return (
             <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
                 {
@@ -104,7 +103,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
     }
     const Tabs = () => {
         return (
-            <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
+            <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33] border-t dark:border-t-[#FFFFFF33]">
 
                 {
                     [

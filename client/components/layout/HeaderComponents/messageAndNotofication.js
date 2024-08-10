@@ -33,11 +33,11 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
 
 
     return (
-        <div className={isMob ? "" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
+        <div className={isMob ? " bg-black h-screen" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
             <div className={isMob ? "" : "dialog dialog-1"}>
-                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2">
+                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2 px-1 py-4">
                     {
-                        viewAllState == 0 && !isMob &&
+                        viewAllState == 0 &&
                         <>
                             <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
                             <ViewFew Type={'messages'} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
@@ -45,11 +45,11 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
                         </>
                     }
                     {
-                        (viewAllState == 1 || isMob) &&
+                        (viewAllState == 1) &&
                         <ViewAll Type={'notification'} list={GetNotifications_resond?.data || []} t={t} />
                     }
                     {
-                        (viewAllState == 2 || isMob) &&
+                        (viewAllState == 2 ) &&
                         <ViewAll Type={'messages'} list={chats || []} t={t} onChoose={onChoose}/>
                     }
                 </div>
@@ -62,7 +62,6 @@ const ViewAll = ({ Type, list, t , onChoose }) =>
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] sm:dark:bg-[#1A2024] p-7">
         <div className="flex items-center justify-between">
             <h2 className="text-base font-bold capitalize">{t(Type)}</h2>
-
         </div>
         {list.length > 0 ?
             <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
@@ -70,7 +69,6 @@ const ViewAll = ({ Type, list, t , onChoose }) =>
                     Type == 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
-
     </div>
 
 const ViewFew = ({ Type, list, t, onViewAll }) => (
@@ -98,7 +96,7 @@ const NotificationTile = ({ tile }) =>
         <div className="flex flex-col justify-center">
             <span className="leading-[1px]">
                 <span className="rtl:hidden font-bold">{tile.sourceUser?.name || 'DUVDU'} </span>
-                <span className="text-xs opacity-60">{tile.title}</span>
+                <span className="text-xs opacity-60 mx-1">{tile.title}</span>
                 <span className="ltr:hidden font-bold">{tile.message} </span>
             </span>
         </div>
