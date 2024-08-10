@@ -325,6 +325,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
 };
 
 const Me = ({ message }) => {
+    const { t } = useTranslation();
+    
     return (
         (message?.media[0]?.type === "audio/wav") ?
             <div className="ml-20 mt-2">

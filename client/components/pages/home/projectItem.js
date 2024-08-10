@@ -98,6 +98,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
     // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
 
     const isVideoCover = isVideo(cardData?.cover)
+    
     return (
         <>
             <div className={`select-none project-card flex flex-col ${className}`} onClick={() => { }} >
