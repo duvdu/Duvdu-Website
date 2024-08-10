@@ -50,8 +50,6 @@ const Projects = ({ projects, GetProjects, api }) => {
     }, [page, pagganation?.totalPages]);
 
 
-
-
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>

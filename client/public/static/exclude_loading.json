@@ -15,5 +15,6 @@
     "projectReport",
     "SwapProjectToFav",
     "GetFavList",
+    "GetAllMessageInChat",
     "GetProjects"
 ]

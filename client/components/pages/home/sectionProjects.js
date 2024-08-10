@@ -62,6 +62,7 @@ function SectionProjects({ projects }) {
                     <ProjectItem key={i} cardData={item} className={isInSequence(i) ? 'col-span-2 row-span-2' : ''} />
                 ))}
             </div>
+         
         </div>
     );
 }

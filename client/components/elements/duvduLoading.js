@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 
 const DuvduLoading = ({ loadingIn, api, test = false }) => {
+    
     return (
         // <img className={ + "load  transition duration-500 ease-in-out"} src="/assets/imgs/loading.gif" alt="loading" />
         <>
