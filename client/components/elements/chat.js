@@ -3,15 +3,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { GetAllMessageInChat } from '../../redux/action/apis/realTime/messages/getAllMessageInChat';
 import { SendMessages } from '../../redux/action/apis/realTime/messages/sendmessage';
-import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent,  } from '../../util/util';
+import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent, } from '../../util/util';
 import { useTranslation } from 'react-i18next';
 
 import dateFormat from "dateformat";
-import ChatComponent from './recording';
 import AudioRecorder from './recording';
-import Waveform from './audioRecordWave';
 import Link from 'next/link';
 import PopUpImage from './popUpImage';
+import DuvduLoading from './duvduLoading';
 
 const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api }) => {
     const { t } = useTranslation();
@@ -40,7 +39,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
             ClearChatInput()
 
         if (respond?.data)
-            setMessagesList((prevMessages) => [respond?.data,...prevMessages]);
+            setMessagesList((prevMessages) => [respond?.data, ...prevMessages]);
 
     }, [respond])
 
@@ -53,8 +52,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
     }, [limit]);
 
     useEffect(() => {
-        if(messages.list)
-        setMessagesList(messages.list)
+        if (messages.list)
+            setMessagesList(messages.list)
     }, [messages.list]);
 
     const msglist = [...messagesList]
@@ -65,10 +64,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
         setOtherUser(getotherdata())
-        
+
     }, [JSON.stringify(msglist)]);
-    
-    
+
+
     msglist.reverse()
 
     useEffect(() => {
@@ -108,7 +107,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
         _setAttachments(event.target.files)
     };
     function checkIsMe(writer) {
-        return writer._id == user.profile._id
+        return writer._id == user?.profile?._id
     }
     function getotherdata() {
         for (let i = 0; i < msglist.length; i++) {
@@ -203,11 +202,13 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
                             <span className="capitalize">away . Avg. response time : <span className="font-bold">{t("1 Hour")}</span> </span>
                         </div>
                     </div>
+
+                    <DuvduLoading loadingIn={"GetAllMessageInChat"} />
+                    
                     <div onClick={onClose} className='absolute right-4 top-4 cursor-pointer'>
                         <Icon name={'xmark'} className='text-xl opacity-50 w-3' />
                     </div>
                     <div className="messages-chat h-full" id="chat" ref={chatRef}>
-
                         {msglist.map((message, index) => {
 
                             if (message.type === 'time') {
@@ -326,7 +327,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
 
 const Me = ({ message }) => {
     const { t } = useTranslation();
-    
+
     return (
         (message?.media[0]?.type === "audio/wav") ?
             <div className="ml-20 mt-2">
@@ -436,6 +437,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     GetAllMessageInChat,
     SendMessages,
-
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

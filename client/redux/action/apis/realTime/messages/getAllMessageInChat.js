@@ -2,10 +2,10 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const GetAllMessageInChat = (id,limit) => {
+export const GetAllMessageInChat = (id, limit) => {
     const req = "GetAllMessageInChat"
     return async dispatch => {
-        
+
         if (!id) {
             dispatch({ type: Types.RESET_CHAT });
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
@@ -13,6 +13,7 @@ export const GetAllMessageInChat = (id,limit) => {
         }
         dispatch({ type: Types.OPEN_CHAT, payload: id });
         dispatch({ type: Types.NONEPOPUP });
+        dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         try {
             const params = {};
             params.limit = limit || 100;
