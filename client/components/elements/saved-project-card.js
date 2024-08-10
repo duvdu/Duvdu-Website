@@ -176,7 +176,7 @@ const ProjectCard = ({
           </div>
           <div className='flex items-center gap-2'>
             <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
-            <Icon className='text-primary size-4' name={'rate-star'} />
+            <Icon className='text-primary size-4' name={'star'} />
           </div>
         </div>
         <p className='text-xl opacity-70 font-medium my-1'>{cardData.name || cardData.studioName}</p>

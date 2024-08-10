@@ -83,7 +83,8 @@
   max-width: 66%;
 }
 .chat .messages-chat .message.other {
-  border: 0.7px solid rgba(0, 0, 0, 0.20);
+  border: 0.7px solid rgba(var(--black-rgb), 0.20);
+
 }
 
 .margin-me {

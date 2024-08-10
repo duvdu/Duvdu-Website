@@ -37,6 +37,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
 
 
   const loveIconName = fav ? 'fas' : 'far'
+  
   enbablelove ? loveIconName = 'fas' : loveIconName
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
   }, [videoRef.current?.duration == NaN]);
 
   const loveToggleAction = () => {
-    SwapProjectToFav({ projectId: cardData?._id, action: fav ? "remove" : "add" })
+    SwapProjectToFav({ projectId: cardData?._id, action: (fav || enbablelove) ? "remove" : "add" })
   };
 
   const timeUpdate = () => {
@@ -79,13 +80,6 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
     }
 
   };
-
-
-  // useEffect(() => {
-  //   if (cardData?._id) {
-  //     setLove(isFav(cardData?._id, getBoards_respond))
-  //   }
-  // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
 
   const isVideoCover = isVideo(cardData?.cover)
   return (

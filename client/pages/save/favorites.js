@@ -13,6 +13,7 @@ import FavProjectCard from "../../components/elements/fav-project-card";
 import ProjectCard from "../../components/elements/project-card";
 import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 import { useTranslation } from 'react-i18next';
+import DuvduLoading from "../../components/elements/duvduLoading";
 
 const Projects = ({
     GetFavList,
@@ -41,6 +42,7 @@ const Projects = ({
     }, [delete_respond, boardId, swap_respond]);
 
     const getPaginatedProjects = allprojects;
+    
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -52,7 +54,9 @@ const Projects = ({
                             </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>{t("favorites")}</span>
                         </div>
-                        {!getPaginatedProjects?.length && (
+                        <DuvduLoading loadingIn={"GetFavList"} />
+
+                        {getPaginatedProjects && getPaginatedProjects.length == 0 && (
                             <EmptyComponent message={"No Projects Yet!"} />
                         )}
                         <div className="grid minmax-280 gap-5">
