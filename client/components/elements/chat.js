@@ -388,7 +388,7 @@ const Other = ({ message }) => {
             {
                 !message.content != "NULL" &&
                 <div>
-                    <span className="text-[#1B1A57]">
+                    <span className="text-[#1B1A57] dark:text-white">
                         {message.content}
                     </span>
                 </div>

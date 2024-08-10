@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
+import { connect } from "react-redux";
 
-const Search = () => {
+const Search = ({categories}) => {
     const { t } = useTranslation();
     const [searchTerm, setSearchTerm] = useState("");
     const [searchHistory, setSearchHistory] = useState([]);
@@ -11,6 +12,19 @@ const Search = () => {
     const router = useRouter();
     const searchquery = router.query.search;
 
+    const getSubCategories = () => {
+        return categories.flatMap(category =>
+            category.subCategories.map(subCategory => ({
+                ...subCategory,
+                cycle: category.cycle
+            }))
+        );
+    };
+    
+    const cycle = (value) => {
+      return value  
+    };
+    
     useEffect(() => {
         const storedHistory = localStorage.getItem("searchHistory");
         if (storedHistory) {
@@ -47,11 +61,10 @@ const Search = () => {
     const handleFocus = (visible) => {
         setSearchDropdownVisible(visible);
     };
-
+    const subCategories = getSubCategories().slice(0,10)
     return (
         <>
             <div className="flex gap-2 h-14">
-
                 <input
                     className="searchInput border dark:border-gray-600 bg-[#EAEEF0] dark:bg-[#1A2024] w-full text-lg placeholder:text-[#94A6C2]"
                     value={searchTerm || ""}
@@ -66,10 +79,10 @@ const Search = () => {
             <div >
                 <h4 className="text-lg font-medium opacity-80 mt-12 mb-5" href="#">{t("Search History")}</h4>
                 <ul className="flex flex-wrap gap-2">
-                    {searchDropdownVisible && searchHistory.map((item, index) => (
-                        <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full" key={index}>
-                            <Link href={item ? `/project?search=${item}` : '/project'}>
-                                <div className="cursor-pointer text-[#000000BF] capitalize">{item}</div>
+                    {subCategories.map((item, index) => (
+                        <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] dark:border-[#FFFFFF4D] rounded-full" key={index}>
+                            <Link href={item ? `/${cycle(item.cycle)}?subcategory=${item._id}` : '/project'}>
+                                <div className="cursor-pointer text-[#000000BF] dark:text-[#FFFFFFBF] capitalize">{item.title}</div>
                             </Link>
                         </li>
                     ))}
@@ -80,4 +93,12 @@ const Search = () => {
     );
 };
 
-export default Search;
+
+const mapStateToProps = (state) => ({
+    categories: state.categories
+});
+
+const mapDispatchToProps = {
+    
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

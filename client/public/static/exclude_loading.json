@@ -14,5 +14,6 @@
     "Rate",
     "projectReport",
     "SwapProjectToFav",
+    "GetFavList",
     "GetProjects"
 ]

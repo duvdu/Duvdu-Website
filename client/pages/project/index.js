@@ -58,13 +58,13 @@ const Projects = ({ projects, GetProjects, api }) => {
                 <section className="mb-12">
                     <div className="container mb-30">
                         {
-                            searchTerm &&
+                            searchTerm && false &&
                             <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] py-6 ">
                                 <Filter />
                             </div>
                         }
                         {
-                            !searchTerm &&
+                            !searchTerm || true &&
                             <div className="h-7" />
                         }
                          {projectsList?.length > 0 && (

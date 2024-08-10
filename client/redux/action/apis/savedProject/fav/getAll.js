@@ -5,6 +5,7 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetFavList = ({ page="", limit="",search="" }) => {
     const req = "GetFavList"
     return async dispatch => {
+        dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         try {
             const params = {};
             if (search?.length > 0) params.search = search;

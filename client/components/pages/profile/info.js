@@ -26,7 +26,7 @@ function Info({
                 <img className='w-full h-full rounded-full object-cover object-top' src={src} alt="profile picture" />
             </div>
             <div className='flex-1 flex-col gap-1'>
-                <span className='text-2xl xl:text-3xl font-bold capitalize line-clamp-1 lg:line-clamp-none'>{personalName}</span>
+                <span className='text-2xl xl:text-3xl font-bold capitalize line-clamp-1 lg:line-clamp-2'>{personalName}</span>
                 <span className='flex items-start'>
                     <div>
                         <Icon className='opacity-50 mr-2 size-4 mt-1' name='location-dot' />

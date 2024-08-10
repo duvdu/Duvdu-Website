@@ -2466,7 +2466,7 @@ audio::-webkit-media-controls-volume-slider-container {
   --white-rgb: 0, 0, 0;
   --black: #fff;
   --header-tab: #B3B3B3;
-
+  --black-rgb: 255, 255, 255;
   --indigo: var(--black);
   --Alabaster: #1A2024;
   --water: #001F4A;
