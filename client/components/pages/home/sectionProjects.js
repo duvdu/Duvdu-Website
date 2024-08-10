@@ -48,6 +48,7 @@ function SectionProjects({ projects }) {
     }
     // const repeatedProjects = Array(90).fill(projects).flat();
     const repeatedProjects = projects
+    console.log(repeatedProjects)
     return projects?.length > 0 && (
         <div>
             <div className="sm:hidden grid minmax-150 gap-3">
@@ -61,8 +62,22 @@ function SectionProjects({ projects }) {
                     item &&
                     <ProjectItem key={i} cardData={item} className={isInSequence(i) ? 'col-span-2 row-span-2' : ''} />
                 ))}
-            </div>
-         
+            </div> 
+            {/* <video controls width="500" height="500">
+                <source src="/assets/imgs/video/1.mp4" />
+            </video>
+            <video controls width="500" height="500">
+                <source src="/assets/imgs/video/2.MOV" />
+            </video>
+            <video controls width="500" height="500">
+                <source src="/assets/imgs/video/3.MOV" />
+            </video>
+            <video controls width="500" height="500">
+                <source src="/assets/imgs/video/4.MOV" />
+            </video>
+            <video controls width="500" height="500">
+                <source src="/assets/imgs/video/5.MOV" />
+            </video> */}
         </div>
     );
 }

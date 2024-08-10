@@ -11,7 +11,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
     const { t } = useTranslation();
     return (
     <>
-    <div className={`h-min border border-50 border-solid border-gray-300 p-10 ${className}`}>
+    <div className={`h-min border border-50 border-solid border-gray-300 dark:border-gray-500 p-10 ${className}`}>
 
         <a target='_blank' href={`/creative/${cardData?.user?.username}`}>
             <div className='flex flex-col items-center justify-center text-center pb-5'>
