@@ -21,7 +21,7 @@ const RelatedCategories = ({ className, NeedTranslate = true, categories }) => {
 
     return (
         <div className={className + (NeedTranslate ? " h-26 -translate-y-8" : "")}>
-            <h2 className="opacity-70 font-semibold text-lg lg:mt-6 capitalize">{t("related categories")}</h2>
+            <h2 className="opacity-70 font-semibold text-lg lg:mt-6 capitalize">{t("Related subCategories")}</h2>
             <div className="mt-4 relative">
                 <DraggableList>
                     {allTags.map((item, index) =>
