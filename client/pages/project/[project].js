@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import Report from '../../components/popsup/report';
@@ -17,7 +17,14 @@ import Reviews from "../../components/pages/stduiosAndProject/review";
 import Recommended from "../../components/pages/stduiosAndProject/recommend";
 import Share from "../../components/popsup/Share";
 import { OpenPopUp } from "../../util/util";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
+import 'swiper/swiper-bundle.css';
+import Icon from "../../components/Icons";
+import { useTranslation } from 'react-i18next';
 
+// Install Swiper modules
+SwiperCore.use([Autoplay, Navigation, EffectFade, Pagination]);
 
 const Projects = ({
     GetProjects,
@@ -28,10 +35,10 @@ const Projects = ({
     auth,
     user
 }) => {
-
-    const router = useRouter()
+    const { t } = useTranslation();
+    const router = useRouter();
     const { project: projectId } = router.query;
-    const projects = projects_respond?.data || []
+    const projects = projects_respond?.data || [];
     const [project, setProject] = useState(project_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
@@ -42,41 +49,82 @@ const Projects = ({
 
     useEffect(() => {
         if (projectId) {
-            setProject(null)
+            setProject(null);
             GetProject(projectId);
         }
     }, [projectId]);
+
     useEffect(() => {
         GetProjects({ limit: "4" });
     }, []);
 
     const toggleDrawer = () => {
-        if(auth.login)
-        setIsOpen(!isOpen);
-        else OpenPopUp("registration-required")
+        if (auth.login)
+            setIsOpen(!isOpen);
+        else OpenPopUp("registration-required");
     };
-    
+
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
+
     return (
         <>
-            <Layout >
-                {project &&
+            <Layout>
+                {project && (
                     <>
-                        <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav}/>
+                        <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav} />
                         <Report />
                         <ThanksMSG />
                         <Share url={window.location.href} title={'See that 👀'} />
                         <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
                             <div className="sm:container mt-6">
-                                <section className="mx-7 sm:mx-0" >
-                                    <Header data={project} toggleDrawerAddFav={toggleDrawerAddFav}/>
+                                <section className="mx-7 sm:mx-0">
+                                    <Header data={project} toggleDrawerAddFav={toggleDrawerAddFav} />
+                                    <h2 className='font-bold text-lg capitalize opacity-80 mb-4 mx-5 sm:mx-0'>{t('Project Attachments')}</h2>
                                 </section>
                                 <div className="lg:flex gap-6">
-                                    <section className="lg:w-2/3">
-                                        {/* <ProjectShow data={data} /> */}
-                                        <ProjectCover data={project} />
+                                <section className="lg:w-2/3">
+                                        {project?.attachments.length>1?
+                                        <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                            {/* Custom Arrows */}
+                                            {/* <div className="swiper-button-prev"> */}
+                                                <div className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                    <Icon className='!text-white !w-[10px] ' name={"chevron-left"} />
+                                                </div>
+                                            {/* </div> */}
+                                            <div className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                <Icon className='!text-white !w-[10px]' name={"chevron-right"} />
+                                            </div>
+                                            <Swiper
+                                                dir='ltr'
+                                                className='cardimg'
+                                                modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                                                spaceBetween={0}
+                                                slidesPerView={1}
+                                                loop={true}
+                                                pagination={{
+                                                    clickable: true,
+                                                    el: '.swiper-pagination',
+                                                }}
+                                                navigation={{
+                                                    prevEl: '.custom-swiper-prev',
+                                                    nextEl: '.custom-swiper-next',
+                                                }}
+                                            >
+                                                {project?.attachments.map((item, index) => {
+                                                    return <SwiperSlide key={index}>
+                                                        <ProjectCover data={item} cover={project?.cover} />
+                                                    </SwiperSlide>
+                                                })}
+                                            </Swiper>
+                                            {/* Pagination Bullets */}
+                                                <div className="swiper-pagination"></div>
+                                        </div>:
+                                        <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                            <ProjectCover data={project?.attachments[0]} cover={project?.cover} />
+                                        </div>
+                                        }
                                         <About data={project} />
                                     </section>
                                     <section className="lg:w-1/3 mt-10 lg:mt-0">
@@ -90,11 +138,11 @@ const Projects = ({
                             </div>
                         </div>
                         {!chat_respond &&
-                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={project.user.username != user?.username}/>
+                            <ProjectController initialData={project} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={project.user.username != user?.username} />
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>
-                }
+                )}
             </Layout>
         </>
     );
@@ -110,7 +158,6 @@ const mapStateToProps = (state) => ({
 const mapDidpatchToProps = {
     GetProjects,
     GetProject,
-    
 };
 
 export default connect(mapStateToProps, mapDidpatchToProps)(Projects);

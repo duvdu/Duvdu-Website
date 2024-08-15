@@ -1,34 +1,52 @@
 import { convertHoursTo__,  } from "../../../util/util";
 import { useTranslation } from 'react-i18next';
-
+import { useState, useRef } from 'react';
 import GoogleMap from "../../elements/googleMap";
 import dateFormat from "dateformat";
+import { isVideo  } from '../../../util/util';
+import Icon from '../../Icons';
 
 const Details = ({ data }) => {
     const { t } = useTranslation();
 
+  
+    console.log(data)
     return (
-        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-6 mx-5">
-            <div className="w-full flex justify-center my-10">
-                <span className="text-center capitalize opacity-50">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>
+        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-4 mx-5">
+            
+        <div className="w-full h-72 border-50 overflow-hidden">
+            {!isVideo(data?.cover) ? (
+          <img className='w-full h-full' src={data?.cover}/>
+        ) : (
+            <video
+              className='w-full h-full'
+              loop
+            >
+              <source src={data?.cover} type='video/mp4' />
+            </video>
+        )}
+                
+            </div>
+            <div className="w-full flex justify-center my-5">
+                <span className="text-center capitalize opacity-50 font-medium">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>
             </div>
 
             {(data?.tools || data?.equipments)?.length > 0 &&
                 <>
-                    <div className="mt-9 mb-3">
-                        <h3 className="capitalize opacity-50">{t("Tools Used")}</h3>
+                    <div className="mt-3 mb-3">
+                        {/* <h3 className="capitalize opacity-50 font-medium">{t("Tools Used")}</h3> */}
                     </div>
                     <div className="flex flex-col gap-2">
                         {(data?.tools || data?.equipments).map(tool => [
-                            { value: tool.name, isActive: false },
-                            { value: tool.unitPrice, isActive: false }
+                            { value: tool.name, isActive: false , isPrice:false},
+                            { value: tool.unitPrice, isActive: false, isPrice:true }
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
-                                    <div key={j} className={`text-white rounded-3xl py-2 px-4 ${tool.isActive ? 'bg-primary' : 'bg-[#00000040]'}`}>
-                                        {tool.value}
-                                    </div>
-                                ))}
+                                    <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080]`}>
+                                    {tool.value} {tool.isPrice?'$':''}
+                                </div>
+                            ))}
                             </div>
                         ))}
                     </div>
@@ -37,18 +55,18 @@ const Details = ({ data }) => {
 
             {data?.functions?.length > 0 &&
                 <>
-                    <div className="mt-4 mb-3">
-                        <h3 className="capitalize opacity-50">{t("function Used")}</h3>
+                    <div className="mt-2 mb-3">
+                        {/* <h3 className="capitalize opacity-50 font-medium">{t("function Used")}</h3> */}
                     </div>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 mb-4">
                         {(data?.functions).map(tool => [
-                            { value: tool.name, isActive: false },
-                            { value: tool.unitPrice, isActive: false }
+                            { value: tool.name, isActive: false , isPrice:false },
+                            { value: tool.unitPrice, isActive: false , isPrice:true}
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
-                                    <div key={j} className={`text-white rounded-3xl py-2 px-4 ${tool.isActive ? 'bg-primary' : 'bg-[#00000040]'}`}>
-                                        {tool.value}
+                                    <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080]`}>
+                                        {tool.value} {tool.isPrice?'$':''}
                                     </div>
                                 ))}
                             </div>
@@ -86,17 +104,34 @@ const Details = ({ data }) => {
                     </div>
                 </>
             }
-
-            <div className="mt-9">
-                <h3 className="capitalize opacity-50">{t("description")}</h3>
-            </div>
+            <h3 className="capitalize opacity-50 font-medium">{t("description")}</h3>
             <span className="capitalize font-semibold mt-4">{data?.desc || data?.description}</span>
-            <div className="mt-9">
+            <div className="mt-3">
             </div>
             {
-                data?.location &&
+                data.duration &&
                 <section>
-                    <span className="capitalize opacity-50">{t("location")}</span>
+                    <div className="mt-3">
+                        <span className="capitalize opacity-50 font-medium">{t("duration")}</span>
+                    </div>
+                    <div>
+                        <span className="capitalize font-semibold">{data.duration} Days</span>
+                    </div>
+                </section>}
+            {data.insurance &&
+                <section>
+                    <div className="mt-3">
+                        <span className="capitalize opacity-50 font-medium">{t("insurance")}</span>
+                    </div>
+                    <div>
+                        <span className="capitalize font-semibold">{data.insurance}</span>
+                    </div>
+                </section>
+            }
+            {
+                data?.location &&
+                <section className='mt-3'>
+                    <span className="capitalize opacity-50 font-medium">{t("location")}</span>
                     <div className="capitalize">
                         <section >
                             <GoogleMap
@@ -112,26 +147,6 @@ const Details = ({ data }) => {
                 </section>
             }
 
-            {
-                data.duration &&
-                <section>
-                    <div className="mt-9">
-                        <span className="capitalize opacity-50">{t("duration")}</span>
-                    </div>
-                    <div>
-                        <span className="capitalize font-semibold">{data.duration} Days</span>
-                    </div>
-                </section>}
-            {data.insurance &&
-                <section>
-                    <div className="mt-9">
-                        <span className="capitalize opacity-50">{t("insurance")}</span>
-                    </div>
-                    <div>
-                        <span className="capitalize font-semibold">{data.insurance}</span>
-                    </div>
-                </section>
-            }
         </div>
     )
 }

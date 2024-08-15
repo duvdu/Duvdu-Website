@@ -210,6 +210,12 @@ export const isVideo = (coverUrl) => {
   const urlExtension = coverUrl?.split('.').pop().toLowerCase();
   return videoExtensions.includes(`.${urlExtension}`);
 };
+export const isAudio = (coverUrl) => {
+  console.log(coverUrl)
+  const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.m4a'];
+  const urlExtension = coverUrl?.split('.').pop().toLowerCase();
+  return audioExtensions.includes(`.${urlExtension}`);
+};
 
 export const errorConvertedMessage = (error) => {
   if (!error) return null;

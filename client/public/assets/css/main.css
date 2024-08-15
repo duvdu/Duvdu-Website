@@ -2423,6 +2423,87 @@ audio::-webkit-media-controls-volume-slider-container {
   animation: slideIn 10s infinite;
 }
 
+.icon-pause{
+background: rgba(202, 222, 211, 0.2);
+border: 0.708819px solid rgba(255, 255, 255, 0.2);
+backdrop-filter: blur(7.08819px);
+/* Note: backdrop-filter has minimal browser support */
+
+}
+.custom-swiper-prev,
+.custom-swiper-next {
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+    display: hidden;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+/* Ensure pagination bullets are visible */
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  gap: 0px;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  opacity: 0.7;
+  border-radius: 50%;
+  bottom:0px;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background-color: #000;
+}
+
+.swiper-button-next {
+    right: 30px !important;
+}
+
+.swiper-button-prev{
+    left: 30px !important;
+}
+
+.swiper-pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 0px;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: #000;
+}
+
 
 /****************/
 
