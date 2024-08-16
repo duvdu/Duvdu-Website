@@ -33,13 +33,13 @@ const About = ({ data }) => {
                     </div>
                 </div>
                 <div className='flex justify-center pt-7 items-center'>
-                    <div className='flex justify-center items-center gap-10'>
+                    <div className='flex justify-center items-center gap-10' dir="ltr">
                         {[
                             { key: "likes", value: data.user?.likes },
                             { key: "followers", value: data.user?.followCount?.followers },
                             { key: "views", value: data.user.profileViews }
                         ].map(({ key, value }, index, array) => (
-                            <div className={`popularity pr-10`} key={key}>
+                            <div className={`popularity pr-10 last:pr-0`} key={key}>
                                 <p className='number'>{convertToK(value, 0)}</p>
                                 <p className='unit'>{key}</p>
                             </div>
