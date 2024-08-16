@@ -56,7 +56,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                             "followers": info.followCount?.followers || 0,
                             "views": info.projectsView || 0
                         },).map(([key, value]) => (
-                            <div className='popularity mr-9 pr-9 last:mr-0 last:pr-0' key={key}>
+                            <div className={`popularity me-9 pe-9 last:me-0 last:pe-0 ${localStorage.getItem('lang')==='Arabic'?'ar':'en'}`} key={key}>
                                 <p className='number'>{convertToK(value, 0)}</p>
                                 <p className='unit'>{key}</p>
                             </div>

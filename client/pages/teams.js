@@ -48,6 +48,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                             {creatives.length} creatives
                         </div>
                     </>
+                    {false &&
                     <div
                         className="absolute top-5 right-5"
                         onClick={handleSelectClick}
@@ -64,11 +65,11 @@ const Card = ({ data, DeleteTeamProjects }) => {
                             ]}
                         >
 
-                            {<Icon name="waiting" />}
+                            { <Icon name="waiting" />}
                             {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
                             {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
                         </Selector>
-                    </div>
+                    </div>}
                     <div>
                         <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px] gradient1" />
                         <div className="boards-info projects-name shadow2 flex">
@@ -125,8 +126,8 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
 
             <section className="mt-3 mb-12">
                 <div className="container mb-7">
-                    <div className="flex gap-6 alignCenter mb-7 items-center">
-                        <h1 className="text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">{t("Team Projects")}</h1>
+                    <div className="flex gap-3 md:gap-6 alignCenter mb-7 items-center">
+                        <h1 className="text-lg md:text-2xl opacity-80 font-semibold capitalize whitespace-nowrap">{t("Team Projects")}</h1>
                         <div
                             onClick={() => {
                                 route.push({
@@ -134,7 +135,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                                     query: { add: true },
                                 });
                             }}
-                            className="flex gap-5 items-center py-[21px] px-[35px] rounded-full bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
+                            className="flex gap-5 items-center py-[15px] md:py-[21px] px-[20px] md:px-[35px] rounded-full bg-primary text-white text-center text-lg font-semibold cursor-pointer capitalize whitespace-nowrap">
                             {t("New Project")}
                             <Icon className="w-4 text-white" name="plus" />
                         </div>

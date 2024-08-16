@@ -127,7 +127,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                     <Link href="/">
                                         <span className="as-Guest flex items-center cursor-pointer">
                                             {t("Continue as a Guest")}
-                                            <Icon name="arrow-right-long" className="ml-3 text-xl w-6 text-primary" />
+                                            <Icon name={localStorage.getItem('lang')==='Arabic'?"arrow-left-long":"arrow-right-long"} className="ms-3 text-xl w-6 text-primary" />
                                         </span>
                                     </Link>
                                     <div className="size-full max-w-[650px]">

@@ -156,11 +156,19 @@
 .popularity {
     display: flex;
     flex-direction: column;
+}
+.popularity.en{
     border-right: 1px solid #ccc;
 }
+.popularity.ar{
+    border-left: 1px solid #ccc;
+}
 
-.popularity:last-child {
+.popularity.en:last-child {
     border-right: none;
+}
+.popularity.ar:last-child {
+    border-left: none;
 }
 
 .popularity>.unit {

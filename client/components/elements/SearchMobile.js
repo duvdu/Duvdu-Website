@@ -46,7 +46,7 @@ const Search = ({categories , close}) => {
         }
 
         router.push({
-            pathname: "search",
+            pathname: "/search/",
             query: searchTerm ? { search: searchTerm } : {},
         });
     };

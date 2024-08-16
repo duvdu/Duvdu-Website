@@ -192,7 +192,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
                 <div className={`flex relative rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
                     <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>{t("message")}</span>
                     <div className='size-5'>
-                        <Icon name={'chat24'} />
+                        <Icon className='text-white bg-gray' name={'chat24'} />
                     </div>
                 </div> 
                 {person.status == 'pending' && <Selector options={options} onSelect={handleDropdownSelect}> <Icon name="waiting" className="size-12" /> </Selector>}
@@ -231,19 +231,19 @@ const RightSide = ({ isSolid, data, onClick }) => {
                         </span>
                     </section> */}
                     <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
-                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                            <Icon className='text-primary' name={"calendar"} />
+                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
+                            <Icon className='' name={"calendar"} />
                         </div>
-                        <div className="flex flex-col pl-5 w-full">
+                        <div className="flex flex-col ps-5 w-full">
                             <span className="font-normal text-base">{dateFormat(data.startDate, 'd mmmm , yyyy')}</span>
                             <span className="text-[#747688] text-xs">{dateFormat(data.startDate, 'dddd , h:mm TT')}</span>
                         </div>
                     </div>
                     <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
-                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"location-dot"} />
                         </div>
-                        <div className="flex flex-col pl-5 w-full">
+                        <div className="flex flex-col ps-5 w-full">
                             <span className="font-normal text-base">{data.address}</span>
                             {/* <span className="text-[#747688] text-xs">{t("36 Guild Street London, UK")}</span> */}
                         </div>
