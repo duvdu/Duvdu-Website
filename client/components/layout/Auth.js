@@ -21,6 +21,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     const [swiper, setSwiper] = useState(null);
     const [localerror, setLocalerror] = useState(true);
     const [location, setLocation] = useState(null);
+    const [lang, setLang] = useState(false);
 
     const imageSources = [
         {
@@ -41,8 +42,8 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     ];
 
     const router = useRouter();
+    
     useEffect(() => {
-
         const handleRouteChange = (url) => {
             swiper?.destroy();
         };
@@ -57,21 +58,24 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
     useEffect(() => {
         setLocalerror(true)
     }, [isloading]);
+
     useEffect(() => {
         if (auth.username && auth.login) {
             router.push(`/`);
-        }
-        else if (auth.username && auth.login && auth.user.isVerified === false && !verify_respond) {
+        } else if (auth.username && auth.login && auth.user.isVerified === false && !verify_respond) {
             // resendCode({ username: auth.username })
             // router.push(`/register/${auth.username}`);
         }
     }, [auth.username]);
 
     useEffect(() => {
-        setLocation(window.location.origin)
+        setLocation(window.location.origin);
+        if (typeof window !== 'undefined') {
+            const storedLang = localStorage.getItem('lang');
+            setLang(storedLang ? storedLang === 'Arabic' : false);
+        }
     }, []);
-    
-    
+
     return (
         <>
             <Layout isloading={isloading} shortheader={true} showTabs={false}>
@@ -115,7 +119,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                         <div className="footer">
                                             <div className="dots flex px-16">
                                                 {imageSources.map((source, index) => (
-                                                    <div key={index} className={index == active ? "dot-active" : "dot"}></div>
+                                                    <div key={index} className={index === active ? "dot-active" : "dot"}></div>
                                                 ))}
                                             </div>
                                         </div>
@@ -127,7 +131,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                     <Link href="/">
                                         <span className="as-Guest flex items-center cursor-pointer">
                                             {t("Continue as a Guest")}
-                                            <Icon name={localStorage.getItem('lang')==='Arabic'?"arrow-left-long":"arrow-right-long"} className="ms-3 text-xl w-6 text-primary" />
+                                            <Icon name={lang ? "arrow-left-long" : "arrow-right-long"} className="ms-3 text-xl w-6 text-primary" />
                                         </span>
                                     </Link>
                                     <div className="size-full max-w-[650px]">
@@ -154,7 +158,6 @@ const mapStateToProps = (state) => ({
     errors: state.errors,
     auth: state.auth,
     verify_respond: state.api.verify,
-
 });
 
 const mapDispatchToProps = {
