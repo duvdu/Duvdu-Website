@@ -154,7 +154,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                                 <MoreIcon />
                             </div>
                         </div>
-                        <Title title='history' />
+                        <Title title={t('history')} />
                         <div className="min-w-80">
                             {
                                 data?.map((value, i) => (
