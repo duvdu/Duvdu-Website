@@ -116,7 +116,7 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
                 </div>
                 {/*********/}
             </div>
-            <div className="bg-gray-100 text-gray-800 px-4 py-2 h-min rounded-3xl mr-3">
+            <div className="bg-gray-100 text-gray-800 px-4 py-2 h-min rounded-3xl me-3">
                 {getType()}
             </div>
             {(status == 'pending' || status?.includes("waiting-for-pay")) && <Icon name="waiting" />}

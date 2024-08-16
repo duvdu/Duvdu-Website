@@ -46,7 +46,7 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
                     {(data.status === "submit-files" ?
                         <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>{t("submit files")}</div>
                         :
-                        <div className={`bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>{t("scan QR")}</div>
+                        <div className={`hidden bg-white text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer`}>{t("scan QR")}</div>
                     )}
 
                     {/*********/}
