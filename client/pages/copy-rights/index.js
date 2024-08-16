@@ -22,7 +22,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
     const showLimit = 12;
     const page = 1;
     const searchTerm = Router.query.search;
-    const { subcategory, tag } = Router.query
+    const { subCategory, tag } = Router.query
 
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
@@ -31,10 +31,11 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
     const pagganation = respond?.pagination
 
+    console.log(subCategory)
     useEffect(() => {
         if (limit)
-            GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page, subcategory: subcategory, tag: tag })
-    }, [limit, subcategory, tag])
+            GetCopyrights({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page, subCategory: subCategory, tag: tag })
+    }, [limit, subCategory, tag])
 
     const targetRef = useRef(null);
 

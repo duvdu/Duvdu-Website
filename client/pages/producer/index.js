@@ -18,7 +18,7 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
     const { t } = useTranslation();
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { subcategory, tag } = Router.query
+    const { subCategory, tag } = Router.query
     const producers = respond?.data
     const pagganation = respond?.pagination
     const page = 1;
@@ -30,8 +30,8 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
 
     useEffect(() => {
         if (limit)
-            GetProducer({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page,subcategory:subcategory,tag:tag })
-    }, [limit,subcategory, tag])
+            GetProducer({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page,subCategory:subCategory,tag:tag })
+    }, [limit,subCategory, tag])
 
 
 

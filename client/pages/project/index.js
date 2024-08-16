@@ -16,7 +16,7 @@ const Projects = ({ projects, GetProjects, api }) => {
     const { t } = useTranslation();
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { subcategory, tag } = Router.query
+    const { subCategory, tag } = Router.query
     const projectsList = projects?.data
     const pagganation = projects?.pagination
     const page = 1;
@@ -27,8 +27,8 @@ const Projects = ({ projects, GetProjects, api }) => {
     
     useEffect(() => {
         if (limit)
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page,subcategory:subcategory,tag:tag })
-    }, [limit,searchTerm,subcategory, tag])
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page,subCategory:subCategory,tag:tag })
+    }, [limit,searchTerm,subCategory, tag])
 
 
     useEffect(() => {

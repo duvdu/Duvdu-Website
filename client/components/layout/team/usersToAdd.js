@@ -1,7 +1,7 @@
 import Icon from "../../../components/Icons";
 import React, { useEffect, useState, useRef } from 'react';
 import Filter from "../../../components/elements/filter";
-import { convertToK} from '../../../util/util';
+import { convertToK,getRankStyle} from '../../../util/util';
 import { connect } from "react-redux";
 import { FindUser } from "../../../redux/action/apis/auth/profile/FindUser";
 import Popup from "../../elements/popup";
@@ -25,7 +25,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                         <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={info.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                     </div>
                     <div className='flex-2 flex-col gap-1'>
-                        <span className='text-2xl font-bold capitalize'>{info.name}</span>
+                        <span className='text-2xl font-bold capitalize'>{info.name?.length > 14?`${info.name.slice(0,14)}...`:info.name}</span>
                         {info.location && (
                             <span className='flex items-center gap-2 opacity-40'>
                                 <div className='w-3'>
@@ -37,10 +37,8 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
                     </div>
                 </div>
                 <div className='flex justify-center pt-25 items-center gap-3'>
-                    <div className='Professional-background-decoration px-4 py-1'>
-                        <span className='Professional-text-decoration font-bold text-lg'>{info?.rank?.ratersCounter || "UNRANKED"}</span>
-                    </div>
-                    {info.category?.title &&
+                {info?.rank?.title && <p className='rank' style={getRankStyle(info?.rank?.color)}>{info?.rank?.title}</p>}
+                {info.category?.title &&
                     <span className='flex border rounded-full px-1 py-2 gap-1 text-sm'>
                         <span>{info.category?.title || "---"}</span>
                     </span>}
@@ -76,6 +74,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
 }
 
 const AddToTeamPage = ({ goback, FindUser, respond, api }) => {
+    const {t} = useTranslation()
     const [id, setId] = useState(null);
     const [hours, setHours] = useState(null);
     const [price, setPrice] = useState(null);

@@ -1002,8 +1002,20 @@ table p {
   visibility: visible;
   opacity: 1;
 }
+.search-style-2 .dialog-history-ar.active {
+  visibility: visible;
+  opacity: 1;
+}
 
 .dialog-history .menu-title {
+
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: 0em;
+  color: var(--black);
+  margin-bottom: 10px;
+}
+.dialog-history-ar .menu-title {
 
   font-size: 17px;
   line-height: 20px;
@@ -1014,6 +1026,11 @@ table p {
 
 
 .search-style-2 .dialog-history ul {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+.search-style-2 .dialog-history-ar ul {
   display: flex;
   flex-wrap: wrap;
 
@@ -1031,6 +1048,19 @@ table p {
   padding: 15px;
   z-index: 10;
 }
+.search-style-2 .dialog-history-ar {
+  position: absolute;
+  background: var(--Alabaster);
+  border-radius: 20px;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  padding: 15px;
+  z-index: 10;
+}
+
 
 .fake-height.active {
   display: block;
@@ -2502,6 +2532,42 @@ backdrop-filter: blur(7.08819px);
 .swiper-pagination-bullet-active {
     opacity: 1;
     background-color: #000;
+}
+
+
+.audio-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(108.36deg, rgba(22, 22, 22, 0.7) -35.33%, rgba(62, 62, 62, 0) 106.92%);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px;
+  width: 300px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.controls {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.progress-bars {
+  flex: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 0 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: white;
+  transition: width 0.1s linear;
 }
 
 

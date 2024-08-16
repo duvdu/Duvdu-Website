@@ -17,15 +17,15 @@ const Studio = ({ projects, GetStudios, api }) => {
     const { t } = useTranslation();
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { subcategory, tag } = Router.query
+    const { subCategory, tag } = Router.query
     const page = 1;
     const showLimit = 24;
     const pagganation = projects?.pagination
     const [limit, setLimit] = useState(showLimit);
 
     useEffect(() => {
-        GetStudios({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page, subcategory: subcategory, tag: tag })
-    }, [limit, searchTerm, subcategory, tag])
+        GetStudios({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page, subCategory: subCategory, tag: tag })
+    }, [limit, searchTerm, subCategory, tag])
 
     useEffect(() => {
         const handleScroll = () => {

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { isVideo , isAudio } from '../../../util/util';
 import Icon from '../../Icons';
+import AudioPlayer from './AudioPlayer';
 import { useEffect } from 'react';
 
 const ProjectCover = ({ data , cover }) => {
@@ -19,13 +20,20 @@ const ProjectCover = ({ data , cover }) => {
       videoRef.current.pause();
     }
   };
+  /* Rectangle 2 */
+
   return(
     isAudio(data)?(
-      <img
-      className="h-full w-full aspect-square object-cover"
-      src={data}
-      alt="Project Cover"
-    />
+      <div >
+        <div className='absolute bottom-2 left-1/2 -translate-x-1/2 p-5'>
+          <AudioPlayer src={data}/>
+        </div>
+        <img
+          className="h-full w-full aspect-square object-cover"
+          src={cover}
+          alt="Project Cover"
+        />
+      </div>
     ):(
         !isVideo(data) ? (
           <img

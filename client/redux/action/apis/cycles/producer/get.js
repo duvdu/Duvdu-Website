@@ -2,7 +2,7 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const GetProducer = ({ page = "1", limit = "", search = "" ,subcategory,tag}) => {
+export const GetProducer = ({ page = "1", limit = "", search = "" ,subCategory,tag}) => {
   const req = "GetProducer"
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
@@ -11,7 +11,7 @@ export const GetProducer = ({ page = "1", limit = "", search = "" ,subcategory,t
       if (search?.length > 0) params.search = search;
       if (page) params.page = page;
       if (limit) params.limit = limit;
-      if (subcategory) params.subcategory = subcategory;
+      if (subCategory) params.subCategory = subCategory;
       if (tag) params.tag = tag;
       const queryString = new URLSearchParams(params).toString();
 

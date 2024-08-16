@@ -43,7 +43,7 @@ const Details = ({ data }) => {
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
-                                    <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080]`}>
+                                    <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080] dark:border-[#d1d1d1] dark:text-white`}>
                                     {tool.value} {tool.isPrice?'$':''}
                                 </div>
                             ))}
@@ -65,7 +65,7 @@ const Details = ({ data }) => {
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
-                                    <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080]`}>
+                                    <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080] dark:border-[#d1d1d1] dark:text-white`}>
                                         {tool.value} {tool.isPrice?'$':''}
                                     </div>
                                 ))}

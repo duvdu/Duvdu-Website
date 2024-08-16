@@ -24,7 +24,7 @@ function PostPopup({ api, auth, isShow = "", categories }) {
         if (currentStep == 3 && selectedTags.length) {
             router.push({
                 pathname: `/creative/${auth.username}`,
-                query: { type: 'project-post', category: selectedCategory._id,subcategory:selectedSubCategory, tags: selectedTags }
+                query: { type: 'project-post', category: selectedCategory._id,subCategory:selectedSubCategory, tags: selectedTags }
             });
             return;
         }

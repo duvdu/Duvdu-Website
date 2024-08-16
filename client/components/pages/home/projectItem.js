@@ -177,14 +177,14 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                 <div className='mt-3 flex justify-between items-center'>
                     <div className='flex gap-2'>
                         <div className='flex items-center gap-3'>
-                            <Link href={`/creative/${cardData?.user.username}`} >
+                            <Link href={`/creative/${cardData?.user?.username}`} >
                                 <div className='cursor-pointer'>
-                                    <img src={cardData?.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
+                                    <img src={cardData?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
                                 </div>
                             </Link>
-                            <Link href={`/creative/${cardData?.user.username}`}>
+                            <Link href={`/creative/${cardData?.user?.username}`}>
                                 <div className='cursor-pointer' >
-                                    <span className='text-sm font-semibold'>{cardData?.user.name || 'NONE'}</span>
+                                    <span className='text-sm font-semibold'>{cardData?.user?.name || 'NONE'}</span>
                                 </div>
                             </Link>
                         </div>

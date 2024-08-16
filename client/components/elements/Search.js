@@ -2,14 +2,24 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
+import { connect } from "react-redux";
 
-const Search = () => {
+const Search = ({categories}) => {
     const { t } = useTranslation();
     const [searchTerm, setSearchTerm] = useState("");
     const [searchHistory, setSearchHistory] = useState([]);
     const [searchDropdownVisible, setSearchDropdownVisible] = useState(false);
     const router = useRouter();
     const searchquery = router.query.search;
+    const getSubCategories = () => {
+        return categories.flatMap(category =>
+            category.subCategories.map(subCategory => ({
+                ...subCategory,
+                cycle: category.cycle
+            }))
+        );
+    };
+    const subCategories = getSubCategories().slice(0,10)
 
     useEffect(() => {
         const storedHistory = localStorage.getItem("searchHistory");
@@ -30,7 +40,7 @@ const Search = () => {
         const query = searchTerm ? { search: searchTerm } : {};
 
         router.push({
-            pathname: "project/",
+            pathname: "search/",
             query: query,
         });
     };
@@ -41,10 +51,15 @@ const Search = () => {
             handleSearch();
         }
     };
+    const cycle = (value) => {
+        return value  
+      };
+  
 
     const handleFocus = (visible) => {
         setSearchDropdownVisible(visible);
     };
+    console.log(subCategories)
 
     return (
         <>
@@ -58,21 +73,26 @@ const Search = () => {
                 type="text"
                 placeholder={t("Search") + "..."}
             />
-            {searchDropdownVisible && searchHistory.length > 0 && (
-                <div className="dialog-history max-w-[300px] active">
-                    <ul className="gap-1">
-                        {searchHistory.map((item, index) => (
-                            <li className="py-1 px-2 border border-[#0000004D] dark:border-[#FFFFFF4D] rounded-full cursor-pointer" key={index}>
-                                <Link href={item ? `/project?search=${item}` : '/project'}>
-                                    <div className="text-[#3E3E3E] dark:text-[#FFFFFFBF]">{item}</div>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+                <div className={` max-w-[400px] active ${localStorage.getItem('lang') == 'Arabic' ?'dialog-history-ar':'dialog-history'}`}>
+                <h4 className="text-lg font-medium opacity-80 mt-12 mb-5" href="#">{t("Suggestions")}</h4>
+                <ul className="flex flex-wrap gap-2">
+                    {subCategories.map((item, index) => (
+                        <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] dark:border-[#FFFFFF4D] rounded-full" key={index} onClick={close}>
+                            <Link href={item ? `/${cycle(item.cycle)}?subCategory=${item._id}` : '/search'}>
+                                <div className="cursor-pointer text-[#000000BF] dark:text-[#FFFFFFBF] capitalize">{item.title}</div>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
     );
 };
+const mapStateToProps = (state) => ({
+    categories: state.categories
+});
+const mapDispatchToProps = {
+    
+};
 
-export default Search;
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
