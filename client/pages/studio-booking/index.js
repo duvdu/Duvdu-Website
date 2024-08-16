@@ -12,6 +12,7 @@ import { GetStudios } from "../../redux/action/apis/cycles/rental/get";
 
 import DuvduLoading from "../../components/elements/duvduLoading";
 import RelatedCategories from "../../components/elements/relatedCategories";
+import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Studio = ({ projects, GetStudios, api }) => {
     const { t } = useTranslation();
@@ -59,7 +60,7 @@ const Studio = ({ projects, GetStudios, api }) => {
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
-                <section className="mb-12">
+                <section className="my-12">
                     <div className="container mb-30">
                         {
                             searchTerm &&
@@ -76,7 +77,9 @@ const Studio = ({ projects, GetStudios, api }) => {
                         )}
 
                         {getPaginatedProjects?.length === 0 && (
-                            <h3>{t("No projects Found")}</h3>
+                            <div className="mt-10">
+                                <EmptyComponent message={t("No projects Found")} />
+                            </div>
                         )}
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (

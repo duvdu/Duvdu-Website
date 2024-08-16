@@ -54,7 +54,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
         setActiveIndex(index);
     };
     const Empty = () => <div className="mt-10 lg:mt-32">
-        <EmptyComponent message="No Contract Yet!" />
+        <EmptyComponent message={t("No Contract Yet!")} />
     </div>
     const pending = data?.filter(data => handleStatus(data.contract.status) == 0)
     const ongoing = data?.filter(data => handleStatus(data.contract.status) == 1)
@@ -118,13 +118,14 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
                         >
-                            my clients
+                            {t("my clients")}
                         </div>
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(1)}
                         >
-                            my creatives
+                        {t("my creatives")}
+                            
                         </div>
 
                     </section>
@@ -134,13 +135,15 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
                         >
-                            my clients
+                            {t("my clients")}
+                            
                         </div>
                         <div
                             className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(1)}
                         >
-                            my creatives
+                        {t("my creatives")}
+                            
                         </div>
                     </section>
                     {

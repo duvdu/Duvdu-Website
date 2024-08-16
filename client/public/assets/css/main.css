@@ -28,7 +28,9 @@ TABLE CONTENT
 ***/
 /*import vendors*/
 
-
+.test{
+  
+}
 @import url('./tailwinds.css');
 
 /*import plugins*/

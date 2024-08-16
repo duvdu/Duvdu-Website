@@ -125,7 +125,7 @@ const Home = ({
                                                 </div>
                                             </Link>
                                         ))}
-                                        <div className="hidden lg:block absolute z-10 h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 right-6" dir="rtl" />
+                                        <div className="hidden lg:block absolute z-10 h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 ltr:right-6 rtl:left-6 rtl:rotate-180" dir="rtl" />
                                         <div className="size-3"></div>
                                     </DraggableList>
                                 </div>
@@ -152,7 +152,7 @@ const Home = ({
                                             </div>
                                         </Link>
                                     ))}
-                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint right-6" dir="rtl">  </div>
+                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint ltr:right-6 rtl:left-6 rtl:rotate-180" dir="rtl">  </div>
                                     <div className="size-3"></div>
                                 </DraggableList>
                             </div>
@@ -197,7 +197,7 @@ const Home = ({
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint2 right-6" dir="rtl">  </div>
+                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint2 ltr:right-6 rtl:left-6 rtl:rotate-180" dir="rtl">  </div>
                                     <div className="size-3"></div>
 
                                 </DraggableList>
