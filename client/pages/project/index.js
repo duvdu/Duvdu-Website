@@ -11,6 +11,7 @@ import 'swiper/swiper-bundle.css';
 import { GetProjects } from "../../redux/action/apis/cycles/projects/get";
 import RelatedCategories from "../../components/elements/relatedCategories";
 import DuvduLoading from "../../components/elements/duvduLoading";
+import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Projects = ({ projects, GetProjects, api }) => {
     const { t } = useTranslation();
@@ -24,11 +25,11 @@ const Projects = ({ projects, GetProjects, api }) => {
     const [limit, setLimit] = useState(showLimit);
     const targetRef = useRef(null);
 
-    
+
     useEffect(() => {
         if (limit)
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null , page: page,subCategory:subCategory,tag:tag })
-    }, [limit,searchTerm,subCategory, tag])
+            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page, subCategory: subCategory, tag: tag })
+    }, [limit, searchTerm, subCategory, tag])
 
 
     useEffect(() => {
@@ -53,7 +54,7 @@ const Projects = ({ projects, GetProjects, api }) => {
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
-                <section className="mb-12">
+                <section className="my-12">
                     <div className="container mb-30">
                         {
                             searchTerm && false &&
@@ -65,12 +66,12 @@ const Projects = ({ projects, GetProjects, api }) => {
                             !searchTerm || true &&
                             <div className="h-7" />
                         }
-                         {projectsList?.length > 0 && (
+                        {projectsList?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}
-                        
+
                         {projectsList?.length === 0 && (
-                            <h3>{t("No projects Found")}</h3>
+                            <EmptyComponent message={t("No projects Found")} />                            
                         )}
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (
@@ -83,7 +84,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                             ))}
                         </div>
                         <div className="w-0 h-0" />
-                        <DuvduLoading loadingIn = {"GetProjects"} />
+                        <DuvduLoading loadingIn={"GetProjects"} />
                     </div>
                 </section>
             </Layout>
