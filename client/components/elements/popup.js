@@ -49,7 +49,7 @@ const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, ad
     }, []);
 
     return (
-        <div ref={popupRef} id={id} className={`popup z-30 ${className}`}>
+        <div ref={popupRef} id={id} className={`popup z-50 relative ${className}`}>
             <div onClick={onCancel} data-popup-dismiss="popup" className="flex overlay blur" />
             <div className='card content bg-[#F7F9FB] dark:bg-[#1A2024] sm:w-auto sm:mx-auto w-full mx-5' style={img ? { backgroundImage: `url(${img})` } : {}}>
                 <div className='p-5 pl-[31px]'>
