@@ -73,6 +73,7 @@ const Search = ({categories}) => {
                 type="text"
                 placeholder={t("Search") + "..."}
             />
+                {searchDropdownVisible && 
                 <div className={` max-w-[400px] active ${localStorage.getItem('lang') == 'Arabic' ?'dialog-history-ar':'dialog-history'}`}>
                 <h4 className="text-lg font-medium opacity-80 mt-12 mb-5" href="#">{t("Suggestions")}</h4>
                 <ul className="flex flex-wrap gap-2">
@@ -84,7 +85,7 @@ const Search = ({categories}) => {
                         </li>
                     ))}
                 </ul>
-            </div>
+            </div>}
         </>
     );
 };
