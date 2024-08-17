@@ -71,7 +71,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                         )}
 
                         {projectsList?.length === 0 && (
-                            <EmptyComponent message={t("No projects Found")} />                            
+                            <EmptyComponent message="No projects Found" />                            
                         )}
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (

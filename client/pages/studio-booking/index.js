@@ -78,7 +78,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
                         {getPaginatedProjects?.length === 0 && (
                             <div className="mt-10">
-                                <EmptyComponent message={t("No projects Found")} />
+                                <EmptyComponent message="No projects Found" />
                             </div>
                         )}
                         <div className="grid minmax-280 gap-5">

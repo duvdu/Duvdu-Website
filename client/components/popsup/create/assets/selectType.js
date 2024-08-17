@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { getCategory } from '../../../../redux/action/apis/category/getCategories';
 import { connect } from "react-redux";
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 
 function PostPopup({auth}) {
+    const { t } = useTranslation();
     const router = useRouter();
     const [selectedCycle, setSelectedCyvle] = useState(null);
 
@@ -58,7 +60,7 @@ function PostPopup({auth}) {
                                 onClick={() => handleCycleSelect(item.url)}
                             >
                                 <span className={`text-base font-semibold ${selectedCycle === index ? 'text-primary' : ''}`}>
-                                    {item.value}
+                                    {t(item.value)}
                                 </span>
                             </li>
                         ))}
