@@ -7,24 +7,26 @@ import { Rate } from '../../redux/action/apis/rate';
 import { ClosePopUp } from '../../util/util';
 import DuvduLoading from '../elements/duvduLoading';
 import DuvduError from '../elements/duvduError';
+import { useTranslation } from 'react-i18next';
 
-function ratingProject({ data = {} , rate_respond , Rate}) {
+function ratingProject({ data = {}, rate_respond, Rate }) {
+    const { t } = useTranslation();
     const [rate, setRate] = useState(0);
     const [desc, setDesc] = useState("");
 
     const handleSubmitRate = () => {
         Rate({
-            project: data._id || "", 
+            project: data._id || "",
             cycle: data.cycle || "studio-booking",
             rate,
-            comment:desc,
+            comment: desc,
         });
     };
-    useEffect(()=>{
-        if(rate_respond?.data?.createdAt) 
+    useEffect(() => {
+        if (rate_respond?.data?.createdAt)
             ClosePopUp("Rating-project")
-    },[rate_respond?.data?.createdAt])
-    
+    }, [rate_respond?.data?.createdAt])
+
 
     const handleStarClick = (rating) => {
         setRate(rating);
@@ -51,26 +53,25 @@ function ratingProject({ data = {} , rate_respond , Rate}) {
     const isEnabled = rate > 0 && desc.length > 5
     return (
         <>
-            <Popup id="Rating-project" header={`Rating ${data.name || ""}`} onCancel={handlereset}>
+            <Popup id="Rating-project" header={`Rating`} onCancel={handlereset}>
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
                     <div className='flex gap-5 my-5'>
                         {renderStars()}
                     </div>
                     <div>
-                        <div className="capitalize opacity-60">rating</div>
-                        <textarea 
-                            placeholder="Rating will show on creative’s profile..." 
-                            className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none" 
-                            value={desc} 
-                            onChange={(e) => setDesc(e.target.value)} 
+                        <div className="capitalize opacity-60">{t("rating")}</div>
+                        <textarea
+                            placeholder={t("Rating will show on creative’s profile...")}
+                            className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none"
+                            value={desc}
+                            onChange={(e) => setDesc(e.target.value)}
                         />
                     </div>
-                    <DuvduError req={"Rate"}/>
+                    <DuvduError req={"Rate"} />
                     <DuvduLoading loadingIn={"Rate"} />
                     <Button isEnabled={isEnabled} onClick={handleSubmitRate} className="mb-7 mx-4 font-bold text-lg w-full max-w-[345px] mt-20" shadow={true}>
-                        <span className='text-white font-bold capitalize text-lg'>
-                            Done
-                        </span>
+                        <span className='text-white font-bold capitalize text-lg'>{t("Done")}</span>
+
                     </Button>
                 </div>
             </Popup>

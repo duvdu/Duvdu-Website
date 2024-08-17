@@ -39,7 +39,7 @@ function Rating({ data = {} , rate_respond , Rate}) {
 
     return (
         <>
-            <Popup id="Rating" header={`Rating ${data.name || ""}`} >
+            <Popup id="Rating" header={`Rating`} >
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
                     <div className='w-20 h-20 rounded-full overflow-hidden'>
                         <img className='object-cover object-top' src={data.profileImage} alt="user" />

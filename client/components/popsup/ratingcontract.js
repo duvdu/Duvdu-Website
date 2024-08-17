@@ -54,7 +54,7 @@ function RatingContract({ data = {} , rate_respond , RateContract}) {
     const isEnabled = rate > 0 && desc.length > 5
     return (
         <>
-            <Popup id="Rating-contract" header={`Rating ${data.name || ""}`} onCancel={handlereset}>
+            <Popup id="Rating-contract" header={`Rating`} onCancel={handlereset}>
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
                     <div className='flex gap-5 my-5'>
                         {renderStars()}
