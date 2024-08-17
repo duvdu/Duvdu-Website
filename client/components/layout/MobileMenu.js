@@ -87,13 +87,13 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                             <Link key={`${name}-${index}`} href={url}>
                                 <div className="flex gap-1 items-center cursor-pointer">
                                     <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={icon} />
-                                    <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{name}</span>
+                                    <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{t(name)}</span>
                                 </div>
                             </Link>
                         ) : (
                             <div key={`${name}-${index}`} className="flex gap-1 items-center cursor-pointer" onClick={click}>
                                 <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={icon} />
-                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{name}</span>
+                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{t(name)}</span>
                             </div>
                         )
                     ))
@@ -126,7 +126,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
                         <Link key={index} href={item.url}>
                             <div className="flex justify-center items-center cursor-pointer">
                                 <Icon className="mx-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
-                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{item.name}</span>
+                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{t(item.name)}</span>
                             </div>
                         </Link>
                     )

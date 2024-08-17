@@ -30,7 +30,7 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "", pad
                 <div className={padding ? "p-8" : " h-full"}>
                     <div className={'flex gap-3' + (!padding ? "p-8 pb-0" : "")} >
                         <div className='flex justify-center items-center rounded-full border px-4 cursor-pointer aspect-square' onClick={toggleDrawer}>
-                            <Icon className='w-5 h-5 text-black dark:text-white' name={'angle-left'} />
+                            <Icon className='w-5 h-5 text-black dark:text-white rtl:rotate-180' name={'angle-left'} />
                         </div>
                             <div className='flex rounded-full border font-medium items-center'>
                             {img &&

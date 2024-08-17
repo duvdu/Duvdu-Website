@@ -57,8 +57,8 @@ const Projects = ({ projects, GetProjects, api }) => {
                 <section className="my-12">
                     <div className="container mb-30">
                         {
-                            searchTerm && false &&
-                            <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] py-6 ">
+                            // searchTerm &&
+                            <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] py-6 my-4">
                                 <Filter />
                             </div>
                         }
@@ -71,7 +71,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                         )}
 
                         {projectsList?.length === 0 && (
-                            <EmptyComponent message={t("No projects Found")} />                            
+                            <EmptyComponent message="No projects Found" />                            
                         )}
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (

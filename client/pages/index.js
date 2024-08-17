@@ -70,7 +70,7 @@ const Home = ({
                                         {
                                             words?.map((i) =>
                                                 <div className="h-[50px] lg:h-[120px] flex flex-col justify-center items-center my-2">
-                                                    <p className="text-[#1A73EB] font-black text-3xl lg:text-8xl h-full trap capitalize">{t(i)}</p>
+                                                    <p className="text-[#1A73EB] font-black text-3xl lg:text-8xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
                                                 </div>
                                             )
                                         }
