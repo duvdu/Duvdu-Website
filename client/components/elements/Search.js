@@ -59,7 +59,7 @@ const Search = ({categories}) => {
     const handleFocus = (visible) => {
         setSearchDropdownVisible(visible);
     };
-    console.log(subCategories)
+    
 
     return (
         <>

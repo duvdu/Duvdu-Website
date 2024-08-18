@@ -1,20 +1,11 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
-
-export const GetCopyrights = ({ page="1", limit="",search="",subCategory,tag }) => {
-  const req = "GetCopyrights"
+export const GetCopyrights = (queryString) => {
+  const req = "GetCopyrights";
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const params = {};
-      if (search?.length > 0) params.search = search;
-      if (page) params.page = page;
-      if (limit) params.limit = limit;
-      if (subCategory) params.subCategory = subCategory;
-      if (tag) params.tag = tag;
-      const queryString = new URLSearchParams(params).toString();
-
       const response = await mainApiInstance.get(`api/copyrights?${queryString}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {

@@ -1,10 +1,14 @@
 import Padge from './padge';
 
-const BoolOfPadges = ({ list = [], onSelect }) => (
-    <div className='flex flex-wrap gap-3'>
+const BoolOfPadges = ({ list = [], onSelect, isSelected }) => (
+    <div className='flex flex-wrap gap-1'>
         {list.map((item, index) => (
-            <Padge key={index} onClick={() => onSelect(item)}>
-                {item}
+            <Padge
+                key={index}
+                onClick={() => onSelect(item)}
+                isSelected={isSelected.includes(item._id)}
+            >
+                {item.title}
             </Padge>
         ))}
     </div>

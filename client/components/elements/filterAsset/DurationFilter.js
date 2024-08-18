@@ -4,7 +4,7 @@ import FilterContainer from './comman/FilterContainer';
 import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
 
-const DurationFilter = () => {
+const DurationFilter = ({ onDurationApply }) => {
     const [duration, setDuration] = useState('');
 
     const handleDurationChange = (e) => {
@@ -12,7 +12,9 @@ const DurationFilter = () => {
     };
 
     const handleDurationApply = () => {
-        console.log("Duration Applied:", duration);
+        if (onDurationApply) {
+            onDurationApply(duration);
+        }
     };
 
     return (
