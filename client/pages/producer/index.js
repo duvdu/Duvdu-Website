@@ -14,11 +14,8 @@ import EmptyComponent from '../../components/pages/contracts/emptyComponent';
 import Loading from '../../components/elements/duvduLoading';
 import DuvduLoading from '../../components/elements/duvduLoading';
 
-const Producers = ({ GetProducer, respond,api,islogin }) => {
+const Producers = ({ GetProducer, respond, api, islogin }) => {
     const { t } = useTranslation();
-    const Router = useRouter();
-    const searchTerm = Router.query.search;
-    const { subCategory, tag } = Router.query
     const producers = respond?.data
     const pagganation = respond?.pagination
     const page = 1;
@@ -27,12 +24,48 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
 
+    const Router = useRouter();
+    const searchTerm = Router.query.search;
+    const { category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive } = Router.query
+
+    const { asPath } = Router;
+
+    // Remove leading slash
+    const path = asPath.startsWith('/') ? asPath.substring(1) : asPath;
+
+    // Extract the path part of the URL
+    const cycle = path.split('?')[0];
+
 
     useEffect(() => {
-        if (limit)
-            GetProducer({ limit: limit, search: searchTerm?.length > 0 ? search : searchTerm, page: page,subCategory:subCategory,tag:tag })
-    }, [limit,subCategory, tag])
+        if (limit) {
+            const params = {
+                limit: limit,
+                page: page,
+            };
 
+            // Add search parameter if search term is defined and not empty
+            if (searchTerm?.length > 0) {
+                params.search = searchTerm;
+            }
+
+            // Include the query parameters from the URL if they exist
+            if (category) params.category = category;
+            if (subCategory) params.subCategory = subCategory;
+            if (tag) params.tag = tag;
+            if (minBudget) params.minBudget = minBudget;
+            if (maxBudget) params.maxBudget = maxBudget;
+            if (duration) params.duration = duration;
+            if (instant) params.instant = instant;
+            if (inclusive) params.inclusive = inclusive;
+
+            // Construct query string from params object
+            const queryString = new URLSearchParams(params).toString();
+
+            // Call GetCopyrights with the constructed query string
+            GetProducer(queryString);
+        }
+    }, [limit, searchTerm, page, category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive]);
 
 
     useEffect(() => {
@@ -65,6 +98,76 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
     };
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
+    };
+
+    const handleFilterChange = (selectedFilters) => {
+
+        // Initialize params object
+        const params = {};
+        
+        selectedFilters.forEach(filter => {
+            switch (filter.name) {
+                case "Category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.category = filter.data.join(',');
+                    }
+                    break;
+                case "Sub-category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.subCategory = filter.data.join(',');
+                    }
+                    break;
+                case "Tags":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.tag = filter.data.join(',');;
+                    }
+                    break;
+                case "Budget Range":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        // Extract numeric values from the budget range string
+                        const [minBudget, maxBudget] = filter.data.split(',')
+                            .map(price => price.trim().replace(/\D/g, ''));
+                        // Assign values to params
+                        if (minBudget) params.minBudget = minBudget;
+                        if (maxBudget) params.maxBudget = maxBudget;
+                    }
+                    break;
+                case "Duration":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        params.duration = filter.data; // Assuming data is like "Duration: 10 days"
+                    }
+                    break;
+                case "instantProject":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.instant = filter.data;
+                    }
+                    break;
+                case "priceInclusive":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.inclusive = filter.data;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // Update query parameters with selected filters
+        const queryString = new URLSearchParams({
+            ...params,
+            // limit: limit,
+            // page: page,
+        }).toString();
+
+        // Call GetCopyrights with updated query string
+        Router.push(`/${cycle}?${queryString}`);
 
     };
 
@@ -73,25 +176,27 @@ const Producers = ({ GetProducer, respond,api,islogin }) => {
             <Layout>
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
-                        <Filter />
+
+                        <Filter cycle={cycle} onFilterChange={handleFilterChange} />
+                        
                         {producers?.length > 0 &&
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }
 
                         {producers && producers.length === 0 &&
-                            <EmptyComponent message="No Producers Now"/>
+                            <EmptyComponent message="No Producers Now" />
                         }
                         <div className="grid minmax-360">
-                            {producers?.map((item, i) => 
+                            {producers?.map((item, i) =>
                                 <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />
                             )}
                         </div>
-                        <DuvduLoading loadingIn = {"GetProducer"} />
+                        <DuvduLoading loadingIn={"GetProducer"} />
                         <Formsubmited />
                     </div>
                 </section>
-                {islogin && 
-                <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />  }
+                {islogin &&
+                    <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />}
 
             </Layout>
         </>

@@ -15,21 +15,54 @@ import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Projects = ({ projects, GetProjects, api }) => {
     const { t } = useTranslation();
-    const Router = useRouter();
-    const searchTerm = Router.query.search;
-    const { subCategory, tag } = Router.query
     const projectsList = projects?.data
     const pagganation = projects?.pagination
     const page = 1;
     const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
-    const targetRef = useRef(null);
+
+    const Router = useRouter();
+    const searchTerm = Router.query.search;
+    const { category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive } = Router.query
+
+    const { asPath } = Router;
+
+    // Remove leading slash
+    const path = asPath.startsWith('/') ? asPath.substring(1) : asPath;
+
+    // Extract the path part of the URL
+    const cycle = path.split('?')[0];
 
 
     useEffect(() => {
-        if (limit)
-            GetProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page, subCategory: subCategory, tag: tag })
-    }, [limit, searchTerm, subCategory, tag])
+        if (limit) {
+            const params = {
+                limit: limit,
+                page: page,
+            };
+
+            // Add search parameter if search term is defined and not empty
+            if (searchTerm?.length > 0) {
+                params.search = searchTerm;
+            }
+
+            // Include the query parameters from the URL if they exist
+            if (category) params.category = category;
+            if (subCategory) params.subCategory = subCategory;
+            if (tag) params.tag = tag;
+            if (minBudget) params.minBudget = minBudget;
+            if (maxBudget) params.maxBudget = maxBudget;
+            if (duration) params.duration = duration;
+            if (instant) params.instant = instant;
+            if (inclusive) params.inclusive = inclusive;
+
+            // Construct query string from params object
+            const queryString = new URLSearchParams(params).toString();
+
+            // Call GetCopyrights with the constructed query string
+            GetProjects(queryString);
+        }
+    }, [limit, searchTerm, page, category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive]);
 
 
     useEffect(() => {
@@ -50,6 +83,76 @@ const Projects = ({ projects, GetProjects, api }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [page, pagganation?.totalPages]);
 
+    const handleFilterChange = (selectedFilters) => {
+
+        // Initialize params object
+        const params = {};
+
+        selectedFilters.forEach(filter => {
+            switch (filter.name) {
+                case "Category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.category = filter.data.join(',');
+                    }
+                    break;
+                case "Sub-category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.subCategory = filter.data.join(',');
+                    }
+                    break;
+                case "Tags":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.tag = filter.data.join(',');;
+                    }
+                    break;
+                case "Budget Range":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        // Extract numeric values from the budget range string
+                        const [minBudget, maxBudget] = filter.data.split(',')
+                            .map(price => price.trim().replace(/\D/g, ''));
+                        // Assign values to params
+                        if (minBudget) params.minBudget = minBudget;
+                        if (maxBudget) params.maxBudget = maxBudget;
+                    }
+                    break;
+                case "Duration":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        params.duration = filter.data; // Assuming data is like "Duration: 10 days"
+                    }
+                    break;
+                case "instantProject":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.instant = filter.data;
+                    }
+                    break;
+                case "priceInclusive":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.inclusive = filter.data;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // Update query parameters with selected filters
+        const queryString = new URLSearchParams({
+            ...params,
+            // limit: limit,
+            // page: page,
+        }).toString();
+
+        // Call GetCopyrights with updated query string
+        Router.push(`/${cycle}?${queryString}`);
+
+    };
 
     return (
         <>
@@ -58,20 +161,17 @@ const Projects = ({ projects, GetProjects, api }) => {
                     <div className="container mb-30">
                         {
                             // searchTerm &&
-                            <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] py-6 my-4">
-                                <Filter />
+                            <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] my-4">
+                                <Filter cycle={cycle} onFilterChange={handleFilterChange} />
+
                             </div>
                         }
-                        {
-                            !searchTerm || true &&
-                            <div className="h-7" />
-                        }
+                        <div className="h-7" />
                         {projectsList?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}
-
                         {projectsList?.length === 0 && (
-                            <EmptyComponent message="No projects Found" />                            
+                            <EmptyComponent message="No projects Found" />
                         )}
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (

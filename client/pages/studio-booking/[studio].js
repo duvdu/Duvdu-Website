@@ -22,6 +22,8 @@ import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper
 import 'swiper/swiper-bundle.css';
 import Icon from "../../components/Icons";
 import { useTranslation } from 'react-i18next';
+import DuvduLoading from "../../components/elements/duvduLoading";
+import Share from "../../components/popsup/Share";
 
 const Studio = ({
     GetStudios,
@@ -75,6 +77,7 @@ const Studio = ({
     return (
         <>
             <Layout >
+                <DuvduLoading loadingIn={"Getstudio"} />
                 {studio &&
                     (
                         <>
@@ -82,56 +85,57 @@ const Studio = ({
                             <AddToTeam />
                             <Report />
                             <ThanksMSG />
+                            <Share url={window.location.href} title={'See that 👀'} />
                             <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
                                 <div className="sm:container mt-6">
                                     <section className="mx-7 sm:mx-0" >
-                                        <Header data={studio} toggleDrawerAddFav={toggleDrawerAddFav}/>
+                                        <Header data={studio} toggleDrawerAddFav={toggleDrawerAddFav} />
                                         <h2 className='font-bold text-lg capitalize opacity-80 mb-4 mx-5 sm:mx-0'>{t('Project Attachments')}</h2>
                                     </section>
                                     <div className="lg:flex gap-6">
-                                    <section className="lg:w-2/3">
-                                        {studio?.attachments.length>1?
-                                        <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
-                                            {/* Custom Arrows */}
-                                            {/* <div className="swiper-button-prev"> */}
-                                                <div className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
-                                                    <Icon className='!text-white !w-[10px] ' name={"chevron-left"} />
+                                        <section className="lg:w-2/3">
+                                            {studio?.attachments.length > 1 ?
+                                                <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                                    {/* Custom Arrows */}
+                                                    {/* <div className="swiper-button-prev"> */}
+                                                    <div className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                        <Icon className='!text-white !w-[10px] ' name={"chevron-left"} />
+                                                    </div>
+                                                    {/* </div> */}
+                                                    <div className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                        <Icon className='!text-white !w-[10px]' name={"chevron-right"} />
+                                                    </div>
+                                                    <Swiper
+                                                        dir='ltr'
+                                                        className='cardimg'
+                                                        modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                                                        spaceBetween={0}
+                                                        slidesPerView={1}
+                                                        loop={true}
+                                                        pagination={{
+                                                            clickable: true,
+                                                            el: '.swiper-pagination',
+                                                        }}
+                                                        navigation={{
+                                                            prevEl: '.custom-swiper-prev',
+                                                            nextEl: '.custom-swiper-next',
+                                                        }}
+                                                    >
+                                                        {studio?.attachments.map((item, index) => {
+                                                            return <SwiperSlide key={index}>
+                                                                <ProjectCover data={item} cover={studio?.cover} />
+                                                            </SwiperSlide>
+                                                        })}
+                                                    </Swiper>
+                                                    {/* Pagination Bullets */}
+                                                    <div className="swiper-pagination"></div>
+                                                </div> :
+                                                <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                                    <ProjectCover data={studio?.attachments[0]} cover={studio?.cover} />
                                                 </div>
-                                            {/* </div> */}
-                                            <div className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
-                                                <Icon className='!text-white !w-[10px]' name={"chevron-right"} />
-                                            </div>
-                                            <Swiper
-                                                dir='ltr'
-                                                className='cardimg'
-                                                modules={[Autoplay, Navigation, EffectFade, Pagination]}
-                                                spaceBetween={0}
-                                                slidesPerView={1}
-                                                loop={true}
-                                                pagination={{
-                                                    clickable: true,
-                                                    el: '.swiper-pagination',
-                                                }}
-                                                navigation={{
-                                                    prevEl: '.custom-swiper-prev',
-                                                    nextEl: '.custom-swiper-next',
-                                                }}
-                                            >
-                                                {studio?.attachments.map((item, index) => {
-                                                    return <SwiperSlide key={index}>
-                                                        <ProjectCover data={item} cover={studio?.cover} />
-                                                    </SwiperSlide>
-                                                })}
-                                            </Swiper>
-                                            {/* Pagination Bullets */}
-                                                <div className="swiper-pagination"></div>
-                                        </div>:
-                                        <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
-                                            <ProjectCover data={studio?.attachments[0]} cover={studio?.cover} />
-                                        </div>
-                                        }
-                                        <About data={studio} />
-                                    </section>
+                                            }
+                                            <About data={studio} />
+                                        </section>
                                         <section className="lg:w-1/3 mt-10 lg:mt-0">
                                             <Details data={studio} />
                                             <Reviews data={studio} />

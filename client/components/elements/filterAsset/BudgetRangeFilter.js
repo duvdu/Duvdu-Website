@@ -4,7 +4,7 @@ import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
 import AppButton from '../button';
 
-const BudgetRangeFilter = () => {
+const BudgetRangeFilter = ({ onBudgetRangeApply }) => {
     const [budgetRange, setBudgetRange] = useState({ min: '', max: '' });
 
     const handleBudgetRangeChange = (e) => {
@@ -16,7 +16,9 @@ const BudgetRangeFilter = () => {
     };
 
     const handleBudgetRangeApply = () => {
-        console.log("Budget Range Applied:", budgetRange);
+        if (onBudgetRangeApply) {
+            onBudgetRangeApply(budgetRange);
+        }
     };
 
     return (
