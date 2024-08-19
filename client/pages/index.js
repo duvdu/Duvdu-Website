@@ -200,7 +200,7 @@ const Home = ({
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180">  </div>
+                                    <div className="hidden lg:block absolute z-10 h-[100.71px] lg:h-[200px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180">  </div>
                                     <div className="size-3"></div>
 
                                 </DraggableList>
