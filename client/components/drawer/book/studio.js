@@ -114,7 +114,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                         <div className="p-8">
                             <section className="w-full">
                                 <h2 className='opacity-60 capitalize mb-3'>{t("project type")}</h2>
-                                <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>{t("shooting permits")}</span>
+                                <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] dark:border-[#fff] dark:text-[#fff] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>{t("shooting permits")}</span>
                             </section>
                             <section className="w-full">
                                 <h2 className='opacity-60 capitalize mb-2'>{t("project details")}</h2>
@@ -124,26 +124,26 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                             </section>
                             <div className="mt-4">
                                 <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
-                                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 dark:border-black aspect-square">
+                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A73EB26] border-8 dark:border-black aspect-square">
                                         <Icon className='text-primary' name={"calendar"} />
                                     </div>
-                                    <div className="flex flex-col pl-5 w-full">
-                                        <span className="font-normal text-base capitalize">{t("Booking Date")}</span>
+                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                                    <span className="font-normal text-base capitalize">{t("Booking Date")}</span>
                                         <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
                                     </div>
                                 </div>
                             </div>
-                            <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 dark:border-black aspect-square">
-                                        <Icon className='text-primary w-6' name={"location-dot"} />
+                            <div className="mt-4">
+                                <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A73EB26] border-8 dark:border-black aspect-square">
+                                    <Icon className='text-primary w-6' name={"location-dot"} />
                                     </div>
-                                    <div className="flex flex-col pl-5 w-full">
+                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                                         <span className="font-normal text-base capitalize">{t("project location")}</span>
                                         <span className="font-normal text-base">{data.address}</span>
                                     </div>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </div>
 
