@@ -93,66 +93,117 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
     };
 
     // Filter component map
-    const renderFilterComponent = (value) => {
-        switch (value) {
-            case 1:
-                return <CategoryFilter categories={categories} cycle={cycle} onSelect={category => handleSelect(1, category)} />;
-            case 2:
-                return <SubCategoryFilter categories={categories} cycle={cycle} onSelect={subCategory => handleSelect(2, subCategory)} />;
-            case 3:
-                return <TagsFilter categories={categories} cycle={cycle} onSelect={tags => handleSelect(3, tags)} />;
-            case 4:
-                return <LocationFilter />;
-            case 5:
-                return <BudgetRangeFilter onBudgetRangeApply={budgetRange => handleSelect(5, `${budgetRange.min},${budgetRange.max}` )} />;
-            case 6:
-                return <DurationFilter onDurationApply={duration => handleSelect(6, duration )} />;
-            case 7:
-                return <InsuranceFilter onFiltersApply={filters => handleSelect(7,  filters.insurance )} />;
-            default:
-                return null;
-        }
-    };
+    const RenderFilterComponent = ({ value }) => {
+        return (
+            <>
+                <div className={value === 1 ? "" : "hidden"}>
+                    <CategoryFilter categories={categories} cycle={cycle} onSelect={category => handleSelect(1, category)} />
+                </div>
+                <div className={value === 2 ? "" : "hidden"}>
+                    <SubCategoryFilter categories={categories} cycle={cycle} onSelect={subCategory => handleSelect(2, subCategory)} />;
+                </div>
+                <div className={value === 3 ? "" : "hidden"}>
+                    <TagsFilter categories={categories} cycle={cycle} onSelect={tags => handleSelect(3, tags)} />;
+                </div>
+                <div className={value === 4 ? "" : "hidden"}>
+                    <LocationFilter />;
+                </div>
+                <div className={value === 5 ? "" : "hidden"}>
+                    <BudgetRangeFilter onBudgetRangeApply={budgetRange => handleSelect(5, `${budgetRange.min},${budgetRange.max}`)} />;
+                </div>
+                <div className={value === 6 ? "" : "hidden"}>
+                    <DurationFilter onDurationApply={duration => handleSelect(6, duration)} />;
+                </div>
+                <div className={value === 7 ? "" : "hidden"}>
+                    <InsuranceFilter onFiltersApply={filters => handleSelect(7, filters.insurance)} />;
+                </div>
+            </>
+        )
+    }
+
 
     return (
-        <div className="flex justify-between items-center">
-            <div className="flex gap-2 items-end">
-                {filterData.map(({ value, name }) => (
-                    <div key={value} className="relative">
-                        <div
-                            className="border border-[#E6E6E6] rounded-xl py-2 px-3 text-DS_black appearance-none w-min select-custom pr-8 cursor-pointer"
-                            onClick={() => toggleDropdown(value)}
-                        >
-                            <div className='whitespace-nowrap'>
-                                {selected[value]?.data || name}
+        <>
+            {/* desktop version */}
+            <div className="hidden md:flex justify-between items-center">
+                <div className="flex gap-2 items-end">
+                    {filterData.map(({ value, name }) => (
+                        <div key={value} className="relative">
+                            <div
+                                className="border border-[#E6E6E6] rounded-xl py-2 px-3 text-DS_black appearance-none w-min select-custom pr-8 cursor-pointer"
+                                onClick={() => toggleDropdown(value)}
+                            >
+                                <div className='whitespace-nowrap'>
+                                    {selected[value]?.data || name}
+                                </div>
                             </div>
-                        </div>
-                        {openIndex === value && renderFilterComponent(value)}
-                    </div>
-                ))}
-            </div>
-            {!hideSwitch && (
-                <div className="flex items-center justify-end gap-2">
-                    <Switch
-                        checked={switchState.instantProject}
-                        onSwitchChange={handleSwitchChange('instantProject')}
-                    />
-                    <span className="opacity-70">{t("instant project")}</span>
+                            <div className={openIndex === value ? " absolute" : "hidden"}>
+                                <RenderFilterComponent value={value} />
+                            </div>
 
-                    {cycle === "project" && (
-                        <>
-                            <Switch
-                                checked={switchState.priceInclusive}
-                                onSwitchChange={handleSwitchChange('priceInclusive')}
-                            />
-                            <span className="opacity-70">{t("price is inclusive")}</span>
-                        </>
-                    )}
+                        </div>
+                    ))}
                 </div>
-            )}
-        </div>
+                {!hideSwitch && (
+                    <div className="flex items-center justify-end gap-2">
+                        <Switch
+                            checked={switchState.instantProject}
+                            onSwitchChange={handleSwitchChange('instantProject')}
+                        />
+                        <span className="opacity-70">{t("instant project")}</span>
+
+                        {cycle === "project" && (
+                            <>
+                                <Switch
+                                    checked={switchState.priceInclusive}
+                                    onSwitchChange={handleSwitchChange('priceInclusive')}
+                                />
+                                <span className="opacity-70">{t("price is inclusive")}</span>
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
+            {/* mobile version */}
+            <div className="flex md:hidden justify-between items-center">
+                <div className="flex gap-2 items-end">
+                    {filterData.map(({ value, name }) => (
+                        <div key={value} className="relative">
+                            <div
+                                className="border border-[#E6E6E6] rounded-xl py-2 px-3 text-DS_black appearance-none w-min select-custom pr-8 cursor-pointer"
+                                onClick={() => toggleDropdown(value)}
+                            >
+                                <div className='whitespace-nowrap'>
+                                    {selected[value]?.data || name}
+                                </div>
+                            </div>
+                            {RenderFilterComponent(value)}
+                        </div>
+                    ))}
+                </div>
+                {!hideSwitch && (
+                    <div className="flex items-center justify-end gap-2">
+                        <Switch
+                            checked={switchState.instantProject}
+                            onSwitchChange={handleSwitchChange('instantProject')}
+                        />
+                        <span className="opacity-70">{t("instant project")}</span>
+
+                        {cycle === "project" && (
+                            <>
+                                <Switch
+                                    checked={switchState.priceInclusive}
+                                    onSwitchChange={handleSwitchChange('priceInclusive')}
+                                />
+                                <span className="opacity-70">{t("price is inclusive")}</span>
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
+        </>
     );
-};
+}
 
 const mapStateToProps = (state) => ({
     categories: state.categories,
