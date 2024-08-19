@@ -19,7 +19,7 @@ const Reviews = ({ projectReview, projectReview_respond, data }) => {
         return projectReview_respond.data.map((review) => ({
             id: review._id,
             userName: review.user.username,
-            name: review.user.name,
+            name: review.user.name?.split(' ')[0].length>6?review.user.name?.split(' ')[0].slice(0,6):review.user.name?.split(' ')[0],
             date: new Date(review.createdAt).toDateString(),
             avatar: review.user.profileImage,
             commentText: review.comment,

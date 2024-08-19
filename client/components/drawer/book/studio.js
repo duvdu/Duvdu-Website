@@ -70,14 +70,14 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
 
 
     if (!isOpen) {
-        return <Drawer name={data.user.name} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
+        return <Drawer name={data.user.name?.split(' ')[0].length>6?data.user.name?.split(' ')[0].slice(0,6):data.user.name?.split(' ')[0]} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
     }
 
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
-            <Drawer name={preview ? 'Review Booking' : data.user.name} img={data.user.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-y-scroll" padding={false}>
+            <Drawer name={preview ? 'Review Booking' : data.user.name?.split(' ')[0].length>6?data.user.name?.split(' ')[0].slice(0,6):data.user.name?.split(' ')[0]} img={data.user.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-y-scroll" padding={false}>
                 <div className={preview ? ' hidden p-8 pt-0' : 'p-8 pt-0'}>
                     <div className="mt-11" />
                     <section>

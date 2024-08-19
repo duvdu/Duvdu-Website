@@ -71,7 +71,7 @@ const ProjectController = ({ initialData,
                                 </div>
                                 <div className="px-3">
                                     <span className="capitalize font-bold">
-                                        {data?.user?.name || 'NONE'}
+                                        {data?.user?.name?.split(' ')[0].length>6?data?.user?.name?.split(' ')[0].slice(0,6):data?.user?.name?.split(' ')[0] || 'NONE'}
                                     </span>
                                     <div />
                                 </div>

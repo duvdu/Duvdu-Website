@@ -17,7 +17,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
             <div className='flex flex-col items-center justify-center text-center pb-5'>
               <img className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top' src={cardData?.user?.profileImage} alt="profile picture" />
               <div className='flex-2 flex-col items-center justify-center gap-1'>
-                <h3 className='opacity-80 text-lg font-bold'>{cardData?.user?.name}</h3>
+                <h3 className='opacity-80 text-lg font-bold'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0]}</h3>
                 <span className='flex items-center justify-center opacity-40 gap-1 w-full hidden'>
                   <Icon className='w-3' name='location-dot' />
                   <span className="location">{cardData?.user?.address || 'NONE'}</span>

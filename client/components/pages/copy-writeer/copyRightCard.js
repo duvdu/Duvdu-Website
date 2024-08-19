@@ -20,7 +20,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
           />
 
           <div className='flex-2 flex-col gap-1'>
-            <h3 className='opacity-80 text-lg font-bold text-start'>{cardData?.user?.name || "Unknown User"}</h3>
+            <h3 className='opacity-80 text-lg font-bold text-start'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0] || "Unknown User"}</h3>
             <span className='flex items-start justify-start opacity-40'>
               <div>
                 <Icon className='opacity-50 mr-1 mt-1 w-3' name='location-dot' />

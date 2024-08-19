@@ -17,7 +17,7 @@ const About = ({ data }) => {
                         <img className='profileImgture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
                     </div>
                     <div className='flex-2 flex-col gap-1'>
-                        <h3 className="capitalize font-semibold text-lg">{data?.user.name}</h3>
+                        <h3 className="capitalize font-semibold text-lg">{data?.user.name?.split(' ')[0].length>6?data?.user.name?.split(' ')[0].slice(0,6):data?.user.name?.split(' ')[0]}</h3>
                         <span className='flex items-center gap-2'>
                             <Icon className='opacity-50 w-3' name='location-dot' />
                             <span className="location">{data?.user.address || "UNKNOWN"}</span>

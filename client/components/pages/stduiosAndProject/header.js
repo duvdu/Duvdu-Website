@@ -36,7 +36,7 @@ const Header = ({ data, islogin,toggleDrawerAddFav }) => {
                         />
                         <div>
                             <span className="capitalize font-semibold text-lg">
-                                {data?.user?.name || 'NONE'}
+                                {data?.user?.name?.split(' ')[0].length>6?data?.user?.name?.split(' ')[0].slice(0,6):data?.user?.name?.split(' ')[0] || 'NONE'}
                             </span>
                             <div className="flex items-center gap-1 mt-1">
                                 <p>{data?.user?.totalRates || 0}</p>

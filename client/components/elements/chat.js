@@ -195,7 +195,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
                         <div className="px-3">
                             <Link href={`/creative/${otherUser.username || ""}`} >
                                 <div className="capitalize font-bold text-black dark:text-white cursor-pointer">
-                                    {otherUser.name}
+                                    {otherUser.name?.split(' ')[0].length>6?otherUser.name?.split(' ')[0].slice(0,6):otherUser.name?.split(' ')[0]}
                                 </div>
                             </Link>
                             <div />

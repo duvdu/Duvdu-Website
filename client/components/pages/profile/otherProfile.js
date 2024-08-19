@@ -103,7 +103,7 @@ function OtherProfile({
                             <Info
                                 src={user.profileImage || process.env.DEFULT_PROFILE_PATH}
                                 location={user.address || 'NONE'}
-                                personalName={user.name}
+                                personalName={user.name?.split(' ')[0].length>6?user.name?.split(' ')[0].slice(0,6):user.name?.split(' ')[0]}
                                 popularity={{
                                     likes: user.likes,
                                     followers: user.followCount.followers,

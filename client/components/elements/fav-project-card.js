@@ -166,7 +166,7 @@ const FavCard = ({
             </Link>
             <Link href={`/creative/${cardData?.user?.username}`}>
               <div className='cursor-pointer' >
-                <span className='text-sm font-semibold'>{cardData?.user?.name || ''}</span>
+                <span className='text-sm font-semibold'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0] || ''}</span>
               </div>
             </Link>
           </div>

@@ -93,7 +93,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                     </div>
                                     </div>
                                     <div className='flex-2 flex-col'>
-                                        <span className='text-base font-bold capitalize'>{user.name}</span>
+                                        <span className='text-base font-bold capitalize'>{user.name?.split(' ')[0].length>6?user.name?.split(' ')[0].slice(0,6):user.name?.split(' ')[0]}</span>
                                         <span className='flex items-start gap-1 opacity-40'>
                                             <div>
                                             <Icon className="w-3" name="location-dot" />

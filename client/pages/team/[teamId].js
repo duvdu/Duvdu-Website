@@ -186,7 +186,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
             <div className='flex gap-4 h-12 min-w-[300px]'>
                 <img className='rounded-full h-full aspect-square object-cover object-top' src={person.user.profileImage} alt='profile img' />
                 <div className='w-full flex flex-col justify-center'>
-                    <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name || person.user.username}</span>
+                    <span className='text-DS_black text-[15px] opacity-80 font-semibold'>{person.user.name?.split(' ')[0].length>6?person.user.name?.split(' ')[0].slice(0,6):person.user.name?.split(' ')[0] || person.user.username}</span>
                     <span className='text-DS_black text-[13px] font-bold opacity-50'>${person.totalAmount}</span>
                 </div>
                 <div className={`flex relative rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>

@@ -57,7 +57,7 @@ function MessageTile({ GetAllMessageInChat, message, user , onChoose }) {
             </div>
             <div className="flex flex-col w-full">
                 <div className="flex justify-between">
-                    <span className="font-semibold text-xs">{other.name} </span>
+                    <span className="font-semibold text-xs">{other.name?.split(' ')[0].length>6?other.name?.split(' ')[0].slice(0,6):other.name?.split(' ')[0]} </span>
                     <span className="text-[#333] text-[10px] opacity-60">{dateFormat(lastMSG.updatedAt, 'hh:mm')} </span>
                 </div>
                 <div className="flex justify-between">

@@ -95,9 +95,9 @@ const NotificationTile = ({ tile }) =>
         <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
         <div className="flex flex-col justify-center">
             <span className="line-clamp-2">
-                <span className="rtl:hidden font-bold">{tile.sourceUser?.name || 'DUVDU'} </span>
+                <span className="rtl:hidden font-bold">{tile.sourceUser?.name?.split(' ')[0].length>6?tile.sourceUser?.name?.split(' ')[0].slice(0,6):tile.sourceUser?.name?.split(' ')[0] || 'DUVDU'} </span>
                 <span className="text-xs opacity-60 mx-2">{tile.title}</span>
-                <span className="font-bold">{tile.message} </span>
+                <div className="font-bold">{tile.message} </div>
             </span>
         </div>
     </div>

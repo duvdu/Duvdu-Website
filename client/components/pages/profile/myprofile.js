@@ -149,7 +149,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                     occupation={userInfo?.category?.title}
                                     rank={userInfo?.rank?.title}
                                     rankcolor={userInfo?.rank?.color}
-                                    personalName={userInfo.name}
+                                    personalName={userInfo?.name?.split(' ')[0].length>6?userInfo?.name?.split(' ')[0].slice(0,6):userInfo?.name?.split(' ')[0]}
                                     popularity={{
                                         likes: userInfo.likes,
                                         followers: userInfo.followCount.followers,
