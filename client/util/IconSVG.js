@@ -29,6 +29,7 @@ const IsincludesSVG = [
   "dvudu-image",
   "pause-video",
   "play-video",
+  "filter",
   "file-error"
 ];
 
@@ -94,6 +95,8 @@ const GetIconSVG = ({ name, className, ...rest }) => {
       return <PauseVieo className={className} {...rest} />
     case "play-video":
       return <PlayVieo className={className} {...rest} />
+    case "filter":
+      return <Filter className={className} {...rest} />
     default:
       return <Temp />
   }
@@ -221,11 +224,11 @@ const Chat = ({ className, ...rest }) =>
       <path d="M35.9257 26.0612C35.528 26.0208 35.1229 26 34.7117 26C29.3481 26 25 29.5396 25 33.9059C25 38.2722 29.3481 41.8118 34.7117 41.8118C35.5501 41.8118 36.3637 41.7253 37.1397 41.5627L40.7816 45.2V40.1176C42.4165 39.0121 43.7304 37.3508 44.2 35.6M44.2 30.2C44.2 31.8569 42.8569 33.2 41.2 33.2C39.5431 33.2 38.2 31.8569 38.2 30.2C38.2 28.5431 39.5431 27.2 41.2 27.2C42.8569 27.2 44.2 28.5431 44.2 30.2Z" stroke="#1A73EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   </div>
-  
+
 const Chat24 = ({ className, ...rest }) => (
   <div className={className} {...rest}>
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M11.9257 1.06507C11.528 1.0247 11.1229 1.00391 10.7117 1.00391C5.3481 1.00391 1 4.54349 1 8.90979C1 13.2761 5.3481 16.8157 10.7117 16.8157C11.5501 16.8157 12.3637 16.7292 13.1397 16.5666L16.7816 20.2039V15.1215C18.4165 14.016 19.7304 12.3547 20.2 10.6039M20.2 5.20391C20.2 6.86076 18.8569 8.20391 17.2 8.20391C15.5431 8.20391 14.2 6.86076 14.2 5.20391C14.2 3.54705 15.5431 2.20391 17.2 2.20391C18.8569 2.20391 20.2 3.54705 20.2 5.20391Z" stroke="#95999C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11.9257 1.06507C11.528 1.0247 11.1229 1.00391 10.7117 1.00391C5.3481 1.00391 1 4.54349 1 8.90979C1 13.2761 5.3481 16.8157 10.7117 16.8157C11.5501 16.8157 12.3637 16.7292 13.1397 16.5666L16.7816 20.2039V15.1215C18.4165 14.016 19.7304 12.3547 20.2 10.6039M20.2 5.20391C20.2 6.86076 18.8569 8.20391 17.2 8.20391C15.5431 8.20391 14.2 6.86076 14.2 5.20391C14.2 3.54705 15.5431 2.20391 17.2 2.20391C18.8569 2.20391 20.2 3.54705 20.2 5.20391Z" stroke="#95999C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
   </div>
 );
@@ -376,6 +379,13 @@ const PlayVieo = ({ className, ...rest }) =>
   </div>
 
 
+
+const Filter = ({ className, ...rest }) =>
+  <div className={className} {...rest}>
+    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.09995 12H17.9M4.69995 7.19995H20.3M10.7 16.8H14.3" stroke="#1A73EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
 
 const Temp = ({ className, ...rest }) =>
   <div className={className} {...rest}>

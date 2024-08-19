@@ -97,7 +97,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
         // Initialize params object
         const params = {};
-        console.log(selectedFilters)
+        
         selectedFilters.forEach(filter => {
             switch (filter.name) {
                 case "Category":
@@ -122,8 +122,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                     // Check if filter.data and filter.data.data exist
                     if (filter.data && filter.data) {
                         // Extract numeric values from the budget range string
-                        const [projectScaleMin, projectScaleMax] = filter.data.split(',')
-                            .map(price => price.trim().replace(/\D/g, ''));
+                        const { min: priceFrom, max: priceTo } = filter.data;
                         // Assign values to params
                         if (projectScaleMin) params.projectScaleMin = projectScaleMin;
                         if (projectScaleMax) params.projectScaleMax = projectScaleMax;
@@ -175,10 +174,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                     <div className="container mb-30">
                         {
                             // searchTerm && 
-                            <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] my-4">
-                                <Filter cycle={cycle} onFilterChange={handleFilterChange} />
-
-                            </div>
+                            <Filter cycle={cycle} onFilterChange={handleFilterChange} />
                         }
                         {
                             !searchTerm &&

@@ -3,12 +3,20 @@ import AppButton from '../button';
 import FilterContainer from './comman/FilterContainer';
 import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
+import { useTranslation } from 'react-i18next';
 
-const DurationFilter = ({ onDurationApply }) => {
+const DurationFilter = ({ onDurationApply, onFilterChange,toggleDrawer }) => {
+    const { t } = useTranslation();
     const [duration, setDuration] = useState('');
 
     const handleDurationChange = (e) => {
-        setDuration(e.target.value);
+        const newDuration = e.target.value;
+        setDuration(newDuration);
+
+        // Call onFilterChange immediately when the duration changes
+        if (onFilterChange) {
+            onFilterChange(newDuration);
+        }
     };
 
     const handleDurationApply = () => {
@@ -18,18 +26,20 @@ const DurationFilter = ({ onDurationApply }) => {
     };
 
     return (
-        <FilterContainer>
-            <FilterHeader>Duration</FilterHeader>
+        <FilterContainer toggleDrawer={toggleDrawer}>
+            <FilterHeader>{t("Duration")}</FilterHeader>
             <div className='h-6'></div>
             <FilterInput
                 name="duration"
                 value={duration}
                 onChange={handleDurationChange}
-                placeholder="Number in days"
+                placeholder={t("Number in days")}
             />
             <div className='h-12'></div>
-            <AppButton onClick={handleDurationApply} className='h-[60px]' contentClassName='text-base'>
-                Apply
+
+            <AppButton onClick={handleDurationApply} className='hidden md:block h-[60px]' contentClassName='text-base'>
+            {t("Apply")}
+
             </AppButton>
         </FilterContainer>
     );

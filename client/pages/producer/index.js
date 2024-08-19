@@ -129,8 +129,7 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
                     // Check if filter.data and filter.data.data exist
                     if (filter.data && filter.data) {
                         // Extract numeric values from the budget range string
-                        const [minBudget, maxBudget] = filter.data.split(',')
-                            .map(price => price.trim().replace(/\D/g, ''));
+                        const { min: priceFrom, max: priceTo } = filter.data;
                         // Assign values to params
                         if (minBudget) params.minBudget = minBudget;
                         if (maxBudget) params.maxBudget = maxBudget;

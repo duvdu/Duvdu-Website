@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FilterContainer from './comman/FilterContainer';
 import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
 import AppButton from '../button';
+import { useTranslation } from 'react-i18next';
 
-const BudgetRangeFilter = ({ onBudgetRangeApply }) => {
+const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange,toggleDrawer }) => {
+    const { t } = useTranslation();
     const [budgetRange, setBudgetRange] = useState({ min: '', max: '' });
 
     const handleBudgetRangeChange = (e) => {
         const { name, value } = e.target;
-        setBudgetRange((prev) => ({
-            ...prev,
+        const updatedRange = {
+            ...budgetRange,
             [name]: value,
-        }));
+        };
+
+        setBudgetRange(updatedRange);
+
+        // Call onFilterChange immediately when the range changes
+        if (onFilterChange) {
+            onFilterChange(updatedRange);
+        }
     };
 
     const handleBudgetRangeApply = () => {
@@ -22,26 +31,27 @@ const BudgetRangeFilter = ({ onBudgetRangeApply }) => {
     };
 
     return (
-        <FilterContainer>
-            <FilterHeader>Budget Range</FilterHeader>
+        <FilterContainer toggleDrawer={toggleDrawer}>
+            <FilterHeader>{t("Budget Range")}</FilterHeader>
             <div className='h-6'></div>
             <div className="flex gap-2">
                 <FilterInput
                     name="min"
                     value={budgetRange.min}
                     onChange={handleBudgetRangeChange}
-                    placeholder="Min"
+                    placeholder={t("Min")}
                 />
                 <FilterInput
                     name="max"
                     value={budgetRange.max}
                     onChange={handleBudgetRangeChange}
-                    placeholder="Max"
+                    placeholder={t("Max")}
                 />
             </div>
             <div className='h-12'></div>
-            <AppButton onClick={handleBudgetRangeApply} className='h-[60px]' contentClassName='text-base'>
-                Apply
+            <AppButton onClick={handleBudgetRangeApply} className='hidden md:block h-[60px]' contentClassName='text-base'>
+            {t("Apply")}
+
             </AppButton>
         </FilterContainer>
     );
