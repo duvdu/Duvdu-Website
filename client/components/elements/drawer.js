@@ -28,7 +28,7 @@ const Drawer = ({ isOpen, toggleDrawer, img, name, children, className = "", pad
             {isOpen && <div onClick={toggleDrawer} className='z-10 fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />}
             <div className={`z-30 fixed top-0 right-0 h-full bg-white dark:bg-[#0D0D0D] shadow-lg transform transition-transform ease-in-out duration-300 overflow-y-scroll w-full md:w-2/3 lg:w-1/2 xl:w-1/3  ${isOpen ? 'translate-x-0' : 'translate-x-full'} ${className}`}>
                 <div className={padding ? "p-8" : " h-full"}>
-                    <div className={'flex gap-3' + (!padding ? "p-8 pb-0" : "")} >
+                    <div className={'flex gap-3 w-full p-8 h-full' + (!padding ? "p-8 pb-0" : "")} >
                         <div className='flex justify-center items-center rounded-full border px-4 cursor-pointer aspect-square' onClick={toggleDrawer}>
                             <Icon className='w-5 h-5 text-black dark:text-white rtl:rotate-180' name={'angle-left'} />
                         </div>

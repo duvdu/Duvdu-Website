@@ -134,7 +134,7 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                                     >
                                         <source src={cardData.cover} type='video/mp4' />
                                     </video>
-                                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                                    <div className="hidden md:block absolute start-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
                                         <span className="text-white">
                                             {convertDuration(Duration * 1000)}
                                         </span>
@@ -178,11 +178,13 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                         </Link>
                     </div>
                     <div className='absolute bottom-[15px] left-1/2 -translate-x-1/2 flex flex-col items-center w-full gap-3 z-[2]'>
-                        <div className='w-full flex gap-2   px-2'>
+                        {isVideoCover && 
+                        <div className='block md:hidden w-full flex gap-2   px-2'>
                             <span className='blur-container font-medium text-sm text-white px-3 py-2 whitespace-nowrap'>
-                                {cardData.projectScale.current} {cardData.projectScale.unit}
+                                {convertDuration(Duration * 1000)}
                             </span>
                         </div>
+                        }
                         <h2 className='font-medium text-xl text-white text-center'>
                             {cardData.name}
                         </h2>

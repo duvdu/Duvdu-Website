@@ -111,7 +111,7 @@ const SelectDate = ({ onChange, value }) => {
                     )}
                 </div>
             ) : (
-                <div className="flex justify-around gap-3 w-full">
+                <div className="flex justify-around gap-3 w-full overflow-auto">
                     {firstFiveNonNullDates.map((date, index) =>
                         date ? (
                             <div

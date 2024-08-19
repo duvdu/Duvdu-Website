@@ -104,7 +104,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                         <div className='flex flex-row gap-2'>
                             {data?.userCategoryRank && 
                             <div className='flex flex-col w-full gap-2'>
-                                <div className='card cardborder-3 bg-white dark:bg-[#1A2024] w-full h-full p-7 pt-16'>
+                                <div className='card cardborder-3 bg-white dark:bg-[#1A2024] w-full h-full p-7 md:pt-16'>
                                     <span className='text-lg font-semibold capitalize opacity-70'>{t("projects today")}</span>
                                     <br />
                                     <br />
@@ -116,7 +116,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='card border border-[#97C39E] dark:border-[#577E61] green-gradient w-full h-full p-7 pt-16'>
+                                <div className='card border border-[#97C39E] dark:border-[#577E61] green-gradient w-full h-full p-7 md:pt-16'>
                                     <div className='flex items-center'>
                                         <span className='text-lg font-semibold capitalize opacity-70'>{t("rank")}</span>
                                         <div className={`gap-1 rounded-full px-4 flex items-center ml-6 mr-2 dashboard_padge ${isUp ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}>
