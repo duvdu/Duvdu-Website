@@ -23,44 +23,31 @@ const TimeLeft2 = ({ data, msgstatus }) => {
     if (status !== 'ongoing') {
         const actionAtTime = new Date(actionOrCreateAt).getTime();
         const nowTime = new Date().getTime();
-        const stageExpirationHours = stageExpiration || 0;
-        const expirationTime = actionAtTime + stageExpirationHours * 3600000;
-        calculatedTimeLeft = Math.floor((expirationTime - nowTime) / 1000); // Convert to seconds
+        const expirationTime =(stageExpiration * 60 * 60 * 1000);
+        const futureTimestamp = actionAtTime + expirationTime
+        calculatedTimeLeft = futureTimestamp - nowTime;
     } else {
         const deadlineTime = (deadline ? new Date(deadline) : new Date()).getTime();
         const nowTime = new Date().getTime();
-        calculatedTimeLeft = Math.floor((deadlineTime - nowTime) / 1000); // Convert to seconds
+        calculatedTimeLeft =(deadlineTime - nowTime); // Convert to seconds
     }
 
-    if (calculatedTimeLeft < 0) {
-        return (
-            <div className='text-lg ml-auto mr-auto'>
-                
-                    <>
-                        <span className='opacity-50 mx-1'>{t("Time Expired")}</span>
-                        <span className='text-primary'>
-                            for {msgstatus}
-                        </span>
-                    </>
 
-            </div>
-        );
-    }
-
-    const seconds = calculatedTimeLeft % 60;
-    const minutes = Math.floor((calculatedTimeLeft % 3600) / 60);
-    const hours = Math.floor(calculatedTimeLeft / 3600);
-
+    const days = Math.floor(calculatedTimeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(calculatedTimeLeft / (1000 * 60 * 60));
+    const minutes = Math.floor((calculatedTimeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((calculatedTimeLeft % (1000 * 60)) / 1000);
     return (
         <div className='text-lg ml-auto mr-auto'>
 
-                    <span className='opacity-50 mx-1'>{t("remain time")}</span>
-                    <span className='text-primary'>
-                        {`${hours}h ${minutes}m ${seconds}s`}
-                    </span>
-                    <span className='opacity-50 mx-1'>
-                        for {msgstatus}
-                    </span>
+            <span className='opacity-50 mx-1'>{t("remain time")}</span>
+            <span className='text-primary'>
+            {calculatedTimeLeft && calculatedTimeLeft >0?
+            `${days}d ${hours}h ${minutes}m ${seconds}s`:'Expire Date'}
+            </span>
+            <span className='opacity-50 mx-1'>
+                for {msgstatus}
+            </span>
                
         </div>
     );

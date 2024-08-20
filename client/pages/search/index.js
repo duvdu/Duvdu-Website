@@ -37,11 +37,11 @@ const Search = ({
                         <UserSearch users={search?.data?.users}/>
                     </section>
                     }
-                    {search?.data?.projectCycles.length>0 && 
+                    {search?.data?.projects?.length>0 && 
                     <section>
                         <div className='container'>
                             <h2 className=" text-2xl font-semibold opacity-60 capitalize mb-8">{t("projects")}</h2>
-                            <ProjectSearch users={search?.data?.projectCycles}/>
+                            <ProjectSearch users={search?.data?.projects}/>
                         </div>
                     </section>
                     }
