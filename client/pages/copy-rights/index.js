@@ -105,7 +105,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
     };
     const handleFilterChange = (selectedFilters) => {
-
+        console.log(selectedFilters)
         // Initialize params object
         const params = {};
         
@@ -133,8 +133,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                     // Check if filter.data and filter.data.data exist
                     if (filter.data && filter.data) {
                         // Extract numeric values from the budget range string
-                        const [priceFrom, priceTo] = filter.data.split(',')
-                            .map(price => price.trim().replace(/\D/g, ''));
+                        const { min: priceFrom, max: priceTo } = filter.data;
                         // Assign values to params
                         if (priceFrom) params.priceFrom = priceFrom;
                         if (priceTo) params.priceTo = priceTo;
@@ -186,7 +185,9 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                         <Filter cycle={cycle} onFilterChange={handleFilterChange} />
 
                         {CopyRight?.length === 0 ?
-                            <EmptyComponent message="No CopyRight Now" /> :
+                        <div className='mt-4'>
+                            <EmptyComponent message="No CopyRight Now" />
+                        </div> :
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }
                         <div className="minmax-360">

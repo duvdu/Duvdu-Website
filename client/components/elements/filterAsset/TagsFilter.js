@@ -3,8 +3,10 @@ import FilterContainer from './comman/FilterContainer';
 import BoolOfPadges from './comman/BoolOfPadges';
 import AppButton from '../button';
 import FilterHeader from './comman/FilterHeader';
+import { useTranslation } from 'react-i18next';
 
-const Tags = ({ categories, cycle, onSelect }) => {
+const Tags = ({ categories, cycle, onSelect, onFilterChange,toggleDrawer }) => {
+    const { t } = useTranslation();
     const [selectedTags, setSelectedTags] = useState([]);
     const [filteredTags, setFilteredTags] = useState([]);
 
@@ -22,14 +24,20 @@ const Tags = ({ categories, cycle, onSelect }) => {
         }
     }, [cycle, categories]);
 
-    const tagTitles = filteredTags.map(tag => tag);
+    const tagTitles = filteredTags.map(tag => tag); // Assuming tag has a 'name' property
 
     const handleSelectTag = (selectedTag) => {
-        setSelectedTags(prev =>
-            prev.includes(selectedTag._id)
-                ? prev.filter(tag => tag !== selectedTag._id)
-                : [...prev, selectedTag._id]
-        );
+        const tagId = selectedTag._id;
+        const newSelectedTags = selectedTags.includes(tagId)
+            ? selectedTags.filter(tag => tag !== tagId)
+            : [...selectedTags, tagId];
+        
+        setSelectedTags(newSelectedTags);
+
+        // Notify parent component with real-time updates
+        if (onFilterChange) {
+            onFilterChange(newSelectedTags);
+        }
     };
 
     const handleApplyClick = () => {
@@ -37,8 +45,8 @@ const Tags = ({ categories, cycle, onSelect }) => {
     };
 
     return (
-        <FilterContainer>
-            <FilterHeader>Tags</FilterHeader>
+        <FilterContainer toggleDrawer={toggleDrawer}>
+            <FilterHeader>{t("Tags")}</FilterHeader>
             <div className='h-6'></div>
             <BoolOfPadges
                 list={tagTitles}
@@ -47,8 +55,8 @@ const Tags = ({ categories, cycle, onSelect }) => {
             />
             <div className='h-12' />
             {tagTitles.length > 0 && (
-                <AppButton onClick={handleApplyClick} className='h-[60px]' contentClassName='text-base'>
-                    Apply
+                <AppButton onClick={handleApplyClick} className='hidden md:block h-[60px]' contentClassName='text-base'>
+                    {t("Apply")}
                 </AppButton>
             )}
         </FilterContainer>

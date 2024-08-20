@@ -105,15 +105,14 @@ const Projects = ({ projects, GetProjects, api }) => {
                 case "Tags":
                     // Check if filter.data exists and is not empty
                     if (filter.data && filter.data.length > 0) {
-                        params.tag = filter.data.join(',');;
+                        params.tag = filter.data.join(',');
                     }
                     break;
                 case "Budget Range":
                     // Check if filter.data and filter.data.data exist
                     if (filter.data && filter.data) {
                         // Extract numeric values from the budget range string
-                        const [minBudget, maxBudget] = filter.data.split(',')
-                            .map(price => price.trim().replace(/\D/g, ''));
+                        const { min: priceFrom, max: priceTo } = filter.data;
                         // Assign values to params
                         if (minBudget) params.minBudget = minBudget;
                         if (maxBudget) params.maxBudget = maxBudget;
@@ -161,10 +160,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                     <div className="container mb-30">
                         {
                             // searchTerm &&
-                            <div className="sticky top-0 bg-white dark:bg-[#1A2024] z-[5] my-4">
-                                <Filter cycle={cycle} onFilterChange={handleFilterChange} />
-
-                            </div>
+                            <Filter cycle={cycle} onFilterChange={handleFilterChange} />
                         }
                         <div className="h-7" />
                         {projectsList?.length > 0 && (

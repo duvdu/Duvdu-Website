@@ -3,8 +3,10 @@ import FilterContainer from './comman/FilterContainer';
 import BoolOfPadges from './comman/BoolOfPadges';
 import AppButton from '../button';
 import FilterHeader from './comman/FilterHeader';
+import { useTranslation } from 'react-i18next';
 
-const CategoryFilter = ({ categories, cycle, onSelect }) => {
+const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDrawer }) => {
+    const { t } = useTranslation();
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [filteredCategories, setFilteredCategories] = useState([]);
 
@@ -21,21 +23,30 @@ const CategoryFilter = ({ categories, cycle, onSelect }) => {
     const categoryTitles = filteredCategories.map(category => category);
 
     const handleSelectCategory = (selectedCategory) => {
-        setSelectedCategories(prev =>
-            prev.includes(selectedCategory._id)
-                ? prev.filter(cat => cat !== selectedCategory._id)
-                : [...prev, selectedCategory._id]
-        );
+        const newSelectedCategories = selectedCategories.includes(selectedCategory._id)
+            ? selectedCategories.filter(cat => cat !== selectedCategory._id)
+            : [...selectedCategories, selectedCategory._id];
+
+        setSelectedCategories(newSelectedCategories);
+        // Optionally, you can trigger the filter change immediately when a category is selected
+        if (onFilterChange) {
+            onFilterChange(newSelectedCategories);
+        }
     };
 
     const handleApplyClick = () => {
         // Pass selected categories to the parent component
         onSelect(selectedCategories);
+        // Trigger the onFilterChange callback if needed
+        if (onFilterChange) {
+            onFilterChange(selectedCategories);
+        }
     };
 
+    
     return (
-        <FilterContainer>
-            <FilterHeader>Category</FilterHeader>
+        <FilterContainer toggleDrawer={toggleDrawer}>
+            <FilterHeader>{t("Category")}</FilterHeader>
             <div className='h-6'></div>
             <BoolOfPadges
                 list={categoryTitles}
@@ -44,8 +55,9 @@ const CategoryFilter = ({ categories, cycle, onSelect }) => {
             />
             <div className='h-12' />
             {categoryTitles.length > 0 && (
-                <AppButton onClick={handleApplyClick} className='h-[60px]' contentClassName='text-base'>
-                    Apply
+                <AppButton onClick={handleApplyClick} className='hidden md:block h-[60px]' contentClassName='text-base'>
+                {t("Apply")}
+
                 </AppButton>
             )}
         </FilterContainer>
