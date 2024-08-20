@@ -14,8 +14,6 @@ import EmptyComponent from './../../components/pages/contracts/emptyComponent';
 import DuvduLoading from '../../components/elements/duvduLoading';
 
 
-
-
 const Permit = ({ GetCopyrights, respond, api, islogin }) => {
     const { t } = useTranslation();
     const Router = useRouter();
@@ -105,7 +103,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
     };
     const handleFilterChange = (selectedFilters) => {
-        console.log(selectedFilters)
+        
         // Initialize params object
         const params = {};
         
