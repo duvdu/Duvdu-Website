@@ -12,6 +12,7 @@ import SectionProjects from "../components/pages/home/sectionProjects";
 import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 import DraggableList from "../components/pages/home/dragList";
 import { useTranslation } from 'react-i18next';
+import Filter from "../components/elements/filter";
 
 const Home = ({
     HomeTreny,
@@ -34,7 +35,6 @@ const Home = ({
         HomeTreny()
         HomeDiscover()
         popularSub()
-        GetProjects({ limit: 99 })
     }, [])
 
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
@@ -53,6 +53,121 @@ const Home = ({
     const handleNavigation = (path, query) => {
         const url = query ? `${path}?${query}` : path;
         router.push(url);
+    };
+
+    // filter 
+    const Router = useRouter();
+    const searchTerm = Router.query.search;
+    const showLimit = 999;
+    const page = 1;
+    const [limit, setLimit] = useState(showLimit);
+
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive } = Router.query
+    
+    // Extract the path part of the URL
+    const cycle ="project";
+
+
+    useEffect(() => {
+        if (limit) {
+            const params = {
+                limit: limit,
+                page: page,
+            };
+
+            // Add search parameter if search term is defined and not empty
+            if (searchTerm?.length > 0) {
+                params.search = searchTerm;
+            }
+
+            // Include the query parameters from the URL if they exist
+            if (category) params.category = category;
+            if (subCategory) params.subCategory = subCategory;
+            if (tag) params.tag = tag;
+            if (priceFrom) params.priceFrom = priceFrom;
+            if (priceTo) params.priceTo = priceTo;
+            if (duration) params.duration = duration;
+            if (instant !== undefined) params.instant = instant;
+            if (inclusive !== undefined) params.inclusive = inclusive;
+
+            // Construct query string from params object
+            const queryString = new URLSearchParams(params).toString();
+
+            // Call GetCopyrights with the constructed query string
+            GetProjects(queryString)
+           
+        }
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive]);
+    
+    const handleFilterChange = (selectedFilters) => {
+        
+        // Initialize params object
+        const params = {
+            limit: limit,
+            page: page,
+        };
+        
+        selectedFilters.forEach(filter => {
+            switch (filter.name) {
+                case "Category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.category = filter.data.join(',');
+                    }
+                    break;
+                case "Sub-category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.subCategory = filter.data.join(',');
+                    }
+                    break;
+                case "Tags":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.tag = filter.data.join(',');;
+                    }
+                    break;
+                case "Budget Range":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        // Extract numeric values from the budget range string
+                        const { min: priceFrom, max: priceTo } = filter.data;
+                        // Assign values to params
+                        if (priceFrom) params.priceFrom = priceFrom;
+                        if (priceTo) params.priceTo = priceTo;
+                    }
+                    break;
+                case "Duration":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        params.duration = filter.data; // Assuming data is like "Duration: 10 days"
+                    }
+                    break;
+                case "instantProject":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.instant = filter.data;
+                    }
+                    break;
+                case "priceInclusive":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.inclusive = filter.data;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // Update query parameters with selected filters
+        const queryString = new URLSearchParams({
+            ...params,
+        }).toString();
+
+        // Call GetCopyrights with updated query string
+        GetProjects(queryString)
+
     };
 
     return (
@@ -212,6 +327,8 @@ const Home = ({
                 <section className="py-12">
                     <div className='container'>
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("explore recommended projects")}</h2>
+                        <Filter cycle={cycle} onFilterChange={handleFilterChange} />
+                        <div className="h-5"/>
                         <SectionProjects projects={projects?.data} />
                     </div>
                 </section>

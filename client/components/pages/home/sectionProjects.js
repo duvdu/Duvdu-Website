@@ -48,7 +48,6 @@ function SectionProjects({ projects }) {
     }
     // const repeatedProjects = Array(90).fill(projects).flat();
     const repeatedProjects = projects
-    console.log(repeatedProjects)
     return projects?.length > 0 && (
         <div>
             <div className="sm:hidden grid minmax-150 gap-3">

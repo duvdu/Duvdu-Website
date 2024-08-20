@@ -192,7 +192,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
             <Drawer isOpen={mobileFiltersVisible} toggleDrawer={toggleMobileFilters} name={t("filter")} padding={false}>
                 <div className="flex flex-col gap-2 mt-2 bg-white dark:bg-black">
 
-                    <div className="flex items-center mx-4 gap-2">
+                    <div className="flex items-center m-4 gap-2">
                         {cycle === "project" && (
                             <>
                                 <Switch
