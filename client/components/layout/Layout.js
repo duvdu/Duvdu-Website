@@ -17,6 +17,8 @@ import Chat from "../elements/chat";
 import ErrorAndLoadingHandling from "./assets/errorAndLoadingHandling";
 import RegistrationRequired from "../popsup/booking/registrationRequired";
 import TestOTPCode from "../popsup/testOTPCode";
+import GoogleAnalytics from "../GoogleAnalytics";
+
 
 
 const Layout = ({
@@ -120,6 +122,8 @@ const Layout = ({
             <main className="main bg-body" >
                 {children}
             </main>
+            <GoogleAnalytics ga_id="G-L1SQRZGHZB" />
+            
             {/* <Footer /> */}
         </>
     );
