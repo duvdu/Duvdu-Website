@@ -19,15 +19,17 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             case 'pending':
                 return 0;
             case 'waiting-for-pay-10':
-                return 0;
+                return 2;
             case 'update-after-first-Payment':
-                return 0;
+                return 2;
             case 'waiting-for-total-payment':
-                return 0;
+                return 2;
+            case 'waiting-for-payment':
+                return 2;
             case 'ongoing':
                 return 1;
             case 'completed':
-                return -2;
+                return -1;
             case 'rejected':
                 return -1;
             default:
@@ -37,7 +39,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
 
     const data = getAllContracts_respond?.
         data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username))
-
+    
     // useEffect(() => {
     //     const _data = data.filter(value => tabindex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
     //     setData(_data)

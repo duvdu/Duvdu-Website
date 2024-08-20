@@ -293,8 +293,8 @@ const Home = ({
                                                             {category?.tags.map((item, index) => (
                                                                 <li className='py-1 px-2 border-[1.5px] border-[#00000033] hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
                                                                     <div className=' dark:text-[#FFFFFFBF] text-[#00000099] hover:text-[#3E3E3E] font-medium'
-                                                                        // onClick={() => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${item._id ? "tag=" + item._id : ''}`)}
-                                                                    >{item}</div>
+                                                                        onClick={() => handleNavigation(`/${category.cycle}`, `subcategory=${category._id}&${item._id ? "tag=" + item._id : ''}`)}
+                                                                    >{item.name}</div>
                                                                 </li>
                                                             ))}
                                                         </ul>

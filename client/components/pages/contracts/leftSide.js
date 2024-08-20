@@ -23,13 +23,13 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
             case 'pending':
                 return 0;
             case 'waiting-for-pay-10':
-                return 0;
+                return 2;
             case 'update-after-first-Payment':
-                return 0;
+                return 2;
             case 'waiting-for-total-payment':
-                return 0;
+                return 2;
             case 'waiting-for-payment':
-                return 0;
+                return 2;
             case 'ongoing':
                 return 1;
             case 'completed':
@@ -58,29 +58,79 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
     </div>
     const pending = data?.filter(data => handleStatus(data.contract.status) == 0)
     const ongoing = data?.filter(data => handleStatus(data.contract.status) == 1)
-
-
-
+    const checkout = data?.filter(data => handleStatus(data.contract.status) == 2)
+    console.log(data)
+    const groupedByCycle = pending?.reduce((acc, item) => {
+        const cycle = item.contract.status;
+        if (!acc[cycle]) {
+          acc[cycle] = [];
+        }
+        acc[cycle].push(item);
+        return acc;
+      }, {});
+    const groupedByCycle2 = ongoing?.reduce((acc, item) => {
+        const cycle = item.contract.status;
+        if (!acc[cycle]) {
+          acc[cycle] = [];
+        }
+        acc[cycle].push(item);
+        return acc;
+      }, {});
+    const groupedByCycle3 = checkout?.reduce((acc, item) => {
+        const cycle = item.contract.status;
+        if (!acc[cycle]) {
+          acc[cycle] = [];
+        }
+        acc[cycle].push(item);
+        return acc;
+      }, {});
+      
     const Clients = () =>
         (pending?.length || ongoing?.length) ?
             <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
-                    <section className='flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
-                        <h2 className="font-bold text-lg capitalize opacity-80">{t("pending")}</h2>
-                        {pending.map((data, index) => (
-                            <Pending key={index} data={data} onClick={() => toggleContractData(data)} />
-                        ))}
+                    <section className='flex flex-col gap-4 mx-auto sm:w-auto'>
+                        {Object.keys(groupedByCycle).map((cycle) => (
+                            <div key={cycle}>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <div className='flex flex-col gap-4'>
+                                    {groupedByCycle[cycle].map((item, index) => (
+                                    <Pending key={`pending-${item._id}`} data={item} onClick={() => toggleContractData(item)} />
+                                    ))}
+                                </div>
+                            </div>
+                            ))}
+                    </section>
+                }
+                {
+                    checkout.length > 0 &&
+                    <section className='flex flex-col gap-4 mx-auto sm:w-auto'>
+                        {Object.keys(groupedByCycle3).map((cycle) => (
+                            <div key={cycle}>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <div className='flex flex-col gap-4'>
+                                    {groupedByCycle3[cycle].map((item, index) => (
+                                    <Pending key={`pending-${item._id}`} data={item} onClick={() => toggleContractData(item)} />
+                                    ))}
+                                </div>
+                            </div>
+                            ))}
                     </section>
                 }
                 {
                     ongoing.length > 0 &&
-                    <section className='mt-11 flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
-                        <h2 className="font-bold text-lg capitalize opacity-80">{t("ongoing contracts")}</h2>
-                        {ongoing.map((data, index) => (
-                            <Ongoing key={index} data={data} onClick={() => toggleContractData(data)} />
+                    <section className='mt-11 flex flex-col gap-4 mx-auto sm:w-auto'>
+                        {Object.keys(groupedByCycle2).map((cycle) => (
+                        <div key={cycle}>
+                            <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                            <div className='flex flex-col gap-4'>
+                                {groupedByCycle2[cycle].map((item, index) => (
+                                <Ongoing key={`pending-${item._id}`} data={item} onClick={() => toggleContractData(item)} />
+                                ))}
+                            </div>
+                        </div>
                         ))}
-
                     </section>
                 }
             </section> : <Empty />
@@ -91,20 +141,49 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
             <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
-                    <section className=' flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
-                        <h2 className="font-bold text-lg capitalize opacity-80 ">{t("pending")}</h2>
-                        {pending.map((data, index) => (
-                            <Pending2 key={index} data={data} onClick={() => toggleContractData(data)} />
-                        ))}
+                    
+                    <section className=' flex flex-col gap-4 mx-auto sm:w-auto'>
+                       {Object.keys(groupedByCycle).map((cycle) => (
+                            <div key={cycle}>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <div className='flex flex-col gap-4'>
+                                    {groupedByCycle[cycle].map((item, index) => (
+                                    <Pending2 key={`pending-${item._id}`} data={item} onClick={() => toggleContractData(item)} />
+                                    ))}
+                                </div>
+                            </div>
+                            ))}
+                    </section>
+                }
+                {
+                    checkout.length > 0 &&
+                    
+                    <section className=' flex flex-col gap-4 mx-auto sm:w-auto'>
+                       {Object.keys(groupedByCycle3).map((cycle) => (
+                            <div key={cycle}>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <div className='flex flex-col gap-4'>
+                                    {groupedByCycle3[cycle].map((item, index) => (
+                                    <Pending2 key={`pending-${item._id}`} data={item} onClick={() => toggleContractData(item)} />
+                                    ))}
+                                </div>
+                            </div>
+                            ))}
                     </section>
                 }
                 {
                     ongoing.length > 0 &&
-                    <section className='mt-11 flex flex-col gap-4 mx-auto sm:w-auto mb-4'>
-                        <h2 className="font-bold text-lg capitalize opacity-80 ">{t("ongoing contracts")}</h2>
-                        {ongoing.map((data, index) => (
-                            <Ongoing2 key={index} data={data} onClick={() => toggleContractData(data)} />
-                        ))}
+                    <section className=' flex flex-col gap-4 mx-auto sm:w-auto'>
+                       {Object.keys(groupedByCycle2).map((cycle) => (
+                            <div key={cycle}>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <div className='flex flex-col gap-4'>
+                                    {groupedByCycle2[cycle].map((item, index) => (
+                                    <Ongoing2 key={`pending-${item._id}`} data={item} onClick={() => toggleContractData(item)} />
+                                    ))}
+                                </div>
+                            </div>
+                            ))}
                     </section>
                 }
             </section> : <Empty />

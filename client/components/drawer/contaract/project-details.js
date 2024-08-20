@@ -20,7 +20,10 @@ import { RateContract } from '../../../redux/action/apis/rateContract';
 import RatingProject from '../../popsup/ratingProject';
 import { OpenPopUp,  } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
-
+import ProjectView from './ProjectView'
+import RentalView from './RentalView'
+import ProducerView from './ProducerView'
+import CopywriterView from './CopywriterView'
 import ReportContract from '../../popsup/report-contract';
 
 
@@ -47,7 +50,7 @@ function ReceiveProjectFiles({
     const [timeLeft, setTimeLeft] = useState("");
     const [actionSuccess, setActionSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-
+    console.log({contract})
     const [appointmentDate, setdAppointmentDate] = useState(null);
 
 
@@ -323,7 +326,7 @@ function ReceiveProjectFiles({
                                 {
                                     (getType() == "project" || getType() == "rental") &&
                                     <section className='w-full flex-col'>
-                                        <h2 className='opacity-60 capitalize mb-3'>{t("original gig")}</h2>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("original project")}</h2>
                                         <div className='w-full'>
                                             <div className="h-20 w-full rounded-full relative overflow-hidden">
                                                 <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
@@ -335,34 +338,57 @@ function ReceiveProjectFiles({
                                             </div>
                                         </div>
                                     </section>}
-                                <section className='w-full hidden'>
-                                    <h2 className='opacity-60 capitalize mb-3'>{t("project type")}</h2>
-                                    <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
-                                        {contract.details}
+                                <section className='w-full'>
+                                    <h2 className='opacity-60 capitalize mb-3'>{t("status")}</h2>
+                                    <span className='font-semibold capitalize max-w-[543px]'>
+                                    {contract.status}
                                     </span>
                                 </section>
-                                {
-                                    contractDetails.ref &&
-                                    <section className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'>{t("service type")}</h2>
-                                        <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] dark:text-[#ffffffD9] dark:border-[#ffffffD9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>
-                                            {getType()}
+
+                                <section className='grid grid-cols-2 w-full'>
+                                {contractDetails.ref &&
+                                    <div>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("contract type")}</h2>
+                                        <span className='font-semibold capitalize max-w-[543px]'>
+                                        {getType()}
                                         </span>
-                                    </section>
+                                    </div>
+                        }
+                                {(getType() == "project" || getType() == "rental") &&
+                                    <div>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("Custom Requirements")}</h2>
+                                        <span className='font-semibold max-w-[543px]'>
+                                        {contract.projectScale.numberOfUnits} {contract.projectScale.unit}
+                                        </span>
+                                    </div>
                                 }
-                                {
-                                    contract.details &&
-                                    <section className='w-full'>
-                                        <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
-                                        <p className='font-semibold capitalize max-w-[543px]'>
-                                            {contract.details}
-                                        </p>
-                                    </section>
+                                </section>   
+                                 {/* Project  */}
+                                {(getType() == "project") && 
+                                <>
+                                <ProjectView contract={contract}/>
+                                </>
                                 }
+                                {(getType() == "rental") && 
+                                <>
+                                <RentalView contract={contract}/>
+                                </>
+                                }
+                                {(getType() == "producer") && 
+                                <>
+                                <ProducerView contract={contract}/>
+                                </>
+                                }
+                                {(getType() == "copyrights") && 
+                                <>
+                                <CopywriterView contract={contract}/>
+                                </>
+                                }
+                                
                                 {
                                     contract.attachments?.length > 0 &&
                                     <section className='w-full'>
-                                        <h2 className='opacity-60 capitalize'>{t("alike media")}</h2>
+                                        <h2 className='opacity-60 capitalize'>{t("Project Attachments")}</h2>
                                         {contract.attachments.map((attachment, index) =>
                                             <div key={index} className='flex gap-3 items-start p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
                                                 <Icon key={index} name={'file'} className='size-5' />
@@ -375,70 +401,6 @@ function ReceiveProjectFiles({
                                         )}
                                     </section>
                                 }
-
-                                <section className='w-full flex flex-col sm:flex-row justify-between items-start gap-10 sm:gap-3'>
-                                    <div className='w-full'>
-
-                                        <div className='w-full'>
-                                            <h2 className='opacity-60 capitalize mb-3'>{t("Stage Expiration")}</h2>
-                                            {contract?.actionAt ? <CountdownTimer time={contract?.actionAt} /> : "UNKOWN"}
-                                        </div>
-
-                                        <a
-                                            href={contract.address ? `https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}` : null}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className='opacity-85 text-base'
-                                        >
-                                            <div className='w-full mt-5'>
-                                                <h2 className='opacity-60 capitalize mb-3'>{t("Address")}</h2>
-                                                <div className='flex gap-4'>
-                                                    <div>
-                                                        <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
-                                                            <Icon className='text-primary text-2xl size-5' name={"location-dot"} />
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div>
-                                                            <span className='opacity-85 text-base line-clamp-2'>
-                                                                {contract.address ? contract.address : "No Address To show"}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div className='w-full'>
-                                        <div className='w-full'>
-                                            <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
-                                            <span className='font-semibold capitalize mt-3'> {contract.totalPrice} $ </span>
-                                        </div>
-                                        <div className='w-full mt-5'>
-                                            <h2 className='opacity-60 capitalize mb-3'>{t("start date")}</h2>
-                                            <div className='flex gap-4'>
-                                                <div>
-
-                                                    <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
-                                                        <Icon name={"bag"} />
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div>
-                                                        <span className='opacity-85 text-base'>
-                                                            {dateFormat(contract.appointmentDate, 'd mmmm , yyyy')}
-                                                        </span>
-                                                    </div>
-                                                    <div>
-                                                        <span className='text-xs text-[#747688]'>
-                                                            {dateFormat(contract.appointmentDate, 'dddd')}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
 
                             </div>
                             <div className={'flex mx-5 gap-7 mb-10 mt-16 justify-center' + (canEdit ? ' hidden' : '')}>
