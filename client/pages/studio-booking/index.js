@@ -24,7 +24,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, projectScaleMin, projectScaleMax, duration, instant, inclusive , keywords } = Router.query
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -51,8 +51,8 @@ const Studio = ({ projects, GetStudios, api }) => {
             if (category) params.category = category;
             if (subCategory) params.subCategory = subCategory;
             if (tag) params.tag = tag;
-            if (projectScaleMin) params.projectScaleMin = projectScaleMin;
-            if (projectScaleMax) params.projectScaleMax = projectScaleMax;
+            if (priceTo) params.projectScaleMin = priceTo;
+            if (priceFrom) params.projectScaleMax = priceFrom;
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
             if (inclusive) params.inclusive = inclusive;
@@ -64,7 +64,8 @@ const Studio = ({ projects, GetStudios, api }) => {
             // Call GetCopyrights with the constructed query string
             GetStudios(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, projectScaleMin, projectScaleMax, duration, instant, inclusive, keywords]);
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -94,85 +95,9 @@ const Studio = ({ projects, GetStudios, api }) => {
 
     const getPaginatedProjects = projects?.data
 
-    const handleFilterChange = (selectedFilters) => {
-
-        // Initialize params object
-        const params = {};
-
-        selectedFilters.forEach(filter => {
-            switch (filter.name) {
-                case "Category":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.category = filter.data.join(',');
-                    }
-                    break;
-                case "Sub-category":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.subCategory = filter.data.join(',');
-                    }
-                    break;
-                case "Tags":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.tag = filter.data.join(',');;
-                    }
-                    break;
-                case "Budget Range":
-                    // Check if filter.data and filter.data.data exist
-                    if (filter.data && filter.data) {
-                        // Extract numeric values from the budget range string
-                        const { min: priceFrom, max: priceTo } = filter.data;
-                        // Assign values to params
-                        if (projectScaleMin) params.projectScaleMin = projectScaleMin;
-                        if (projectScaleMax) params.projectScaleMax = projectScaleMax;
-                    }
-                    break;
-                case "Duration":
-                    // Check if filter.data and filter.data.data exist
-                    if (filter.data && filter.data) {
-                        params.duration = filter.data; // Assuming data is like "Duration: 10 days"
-                    }
-                    break;
-                case "instantProject":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.instant = filter.data;
-                    }
-                    break;
-                case "priceInclusive":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.inclusive = filter.data;
-                    }
-
-                case "Insurance":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data !== undefined) {
-                        params.insurance = filter.data;
-                    }
-                    break;
-                case "keywords":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.keywords = filter.data.join(',');
-                    }
-                default:
-                    break;
-            }
-        });
-
-        // Update query parameters with selected filters
-        const queryString = new URLSearchParams({
-            ...params,
-        }).toString();
-
-        // Call GetCopyrights with updated query string
+    const setParams = (queryString) => {
         Router.push(`/${cycle}?${queryString}`);
-
     };
-
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
@@ -180,7 +105,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                     <div className="container mb-30">
                         {
                             // searchTerm && 
-                            <Filter cycle={cycle} onFilterChange={handleFilterChange} />
+                            <Filter cycle={cycle} setParams={setParams} />
                         }
                         {
                             !searchTerm &&

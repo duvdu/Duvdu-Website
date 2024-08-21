@@ -5,7 +5,7 @@ import FilterInput from './comman/FilterInput';
 import AppButton from '../button';
 import { useTranslation } from 'react-i18next';
 
-const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange,toggleDrawer }) => {
+const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange, toggleDrawer }) => {
     const { t } = useTranslation();
     const [budgetRange, setBudgetRange] = useState({ min: '', max: '' });
 
@@ -36,12 +36,14 @@ const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange,toggleDrawer }) 
             <div className='h-6'></div>
             <div className="flex gap-2">
                 <FilterInput
+                    type="number"
                     name="min"
                     value={budgetRange.min}
                     onChange={handleBudgetRangeChange}
                     placeholder={t("Min")}
                 />
                 <FilterInput
+                    type="number"
                     name="max"
                     value={budgetRange.max}
                     onChange={handleBudgetRangeChange}
@@ -50,7 +52,7 @@ const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange,toggleDrawer }) 
             </div>
             <div className='h-12'></div>
             <AppButton onClick={handleBudgetRangeApply} className='hidden md:block h-[60px]' contentClassName='text-base'>
-            {t("Apply")}
+                {t("Apply")}
 
             </AppButton>
         </FilterContainer>

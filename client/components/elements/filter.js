@@ -42,7 +42,7 @@ const RenderFilterComponent = ({ value, categories, cycle, handleSelect, toggleD
     }
 }
 
-const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
+const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setParams }) => {
     const { t } = useTranslation();
     const [selectedFilters, setSelectedFilters] = useState({});
     const [openIndex, setOpenIndex] = useState(null);
@@ -65,7 +65,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
         filterData.push({ value: 5, name: "Budget Range" });
     }
 
-    if (cycle === "copy-rights" || cycle === "project" ) {
+    if (cycle === "copy-rights" || cycle === "project") {
         filterData.push({ value: 6, name: "Duration" });
     }
     filterData.push({ value: 8, name: "keywords" },);
@@ -114,6 +114,10 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
             }))
         ];
 
+        if (!onFilterChange) {
+            handleFilterChange(filterList)
+        }
+
         if (onFilterChange) {
             onFilterChange(filterList);
         }
@@ -122,6 +126,76 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
     // Toggle mobile filters visibility
     const toggleMobileFilters = () => {
         setMobileFiltersVisible(!mobileFiltersVisible);
+    };
+
+    const handleFilterChange = (selectedFilters) => {
+
+        // Initialize params object
+        const params = {};
+        console.log(selectedFilters)
+        selectedFilters.forEach(filter => {
+            switch (filter.name) {
+                case "Category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.category = filter.data.join(',');
+                    }
+                    break;
+                case "Sub-category":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.subCategory = filter.data.join(',');
+                    }
+                    break;
+                case "Tags":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        params.tag = filter.data.join(',');;
+                    }
+                    break;
+                case "Budget Range":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        // Extract numeric values from the budget range string
+                        const { min: priceFrom, max: priceTo } = filter.data;
+                        // Assign values to params
+                        if (priceFrom) params.priceFrom = priceFrom;
+                        if (priceTo) params.priceTo = priceTo;
+                    }
+                    break;
+                case "Duration":
+                    // Check if filter.data and filter.data.data exist
+                    if (filter.data && filter.data) {
+                        params.duration = filter.data; // Assuming data is like "Duration: 10 days"
+                    }
+                    break;
+                case "instantProject":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.instant = filter.data;
+                    }
+                    break;
+                case "priceInclusive":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.inclusive = filter.data;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // Update query parameters with selected filters
+        const queryString = new URLSearchParams({
+            ...params,
+        }).toString();
+
+        console.log(params)
+
+        if (setParams)
+            setParams(queryString)
+
     };
 
     return (

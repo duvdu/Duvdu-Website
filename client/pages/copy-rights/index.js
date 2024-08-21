@@ -102,79 +102,8 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
         setIsOpen(!isOpen);
 
     };
-    const handleFilterChange = (selectedFilters) => {
-
-        // Initialize params object
-        const params = {};
-
-        selectedFilters.forEach(filter => {
-            switch (filter.name) {
-                case "Category":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.category = filter.data.join(',');
-                    }
-                    break;
-                case "Sub-category":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.subCategory = filter.data.join(',');
-                    }
-                    break;
-                case "Tags":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.tag = filter.data.join(',');;
-                    }
-                    break;
-                case "Budget Range":
-                    // Check if filter.data and filter.data.data exist
-                    if (filter.data && filter.data) {
-                        // Extract numeric values from the budget range string
-                        const { min: priceFrom, max: priceTo } = filter.data;
-                        // Assign values to params
-                        if (priceFrom) params.priceFrom = priceFrom;
-                        if (priceTo) params.priceTo = priceTo;
-                    }
-                    break;
-                case "Duration":
-                    // Check if filter.data and filter.data.data exist
-                    if (filter.data && filter.data) {
-                        params.duration = filter.data; // Assuming data is like "Duration: 10 days"
-                    }
-                    break;
-                case "instantProject":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.instant = filter.data;
-                    }
-                    break;
-                case "priceInclusive":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.inclusive = filter.data;
-                    }
-                case "keywords":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.keywords = filter.data.join(',');
-                    }
-                    break;
-                default:
-                    break;
-            }
-        });
-
-        // Update query parameters with selected filters
-        const queryString = new URLSearchParams({
-            ...params,
-            // limit: limit,
-            // page: page,
-        }).toString();
-
-        // Call GetCopyrights with updated query string
+    const setParams = (queryString) => {
         Router.push(`/${cycle}?${queryString}`);
-
     };
 
 
@@ -185,7 +114,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
 
-                        <Filter cycle={cycle} onFilterChange={handleFilterChange} />
+                        <Filter cycle={cycle} setParams={setParams} />
 
                         {CopyRight?.length === 0 ?
                             <div className='mt-4'>

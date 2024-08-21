@@ -62,7 +62,7 @@ const Home = ({
     const page = 1;
     const [limit, setLimit] = useState(showLimit);
 
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive } = Router.query
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive ,keywords} = Router.query
     
     // Extract the path part of the URL
     const cycle ="project";
@@ -89,6 +89,7 @@ const Home = ({
             if (duration) params.duration = duration;
             if (instant !== undefined) params.instant = instant;
             if (inclusive !== undefined) params.inclusive = inclusive;
+            if (keywords) params.keywords = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
@@ -97,7 +98,8 @@ const Home = ({
             GetProjects(queryString)
            
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive]);
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+
     
     const handleFilterChange = (selectedFilters) => {
         

@@ -26,7 +26,7 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive, keywords } = Router.query
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -53,8 +53,8 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
             if (category) params.category = category;
             if (subCategory) params.subCategory = subCategory;
             if (tag) params.tag = tag;
-            if (minBudget) params.minBudget = minBudget;
-            if (maxBudget) params.maxBudget = maxBudget;
+            if (priceFrom) params.minBudget = priceFrom;
+            if (priceTo) params.maxBudget = priceTo;
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
             if (inclusive) params.inclusive = inclusive;
@@ -66,7 +66,7 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
             // Call GetCopyrights with the constructed query string
             GetProducer(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive, keywords]);
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
 
 
     useEffect(() => {
@@ -101,79 +101,8 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
         setIsOpen(!isOpen);
     };
 
-    const handleFilterChange = (selectedFilters) => {
-
-        // Initialize params object
-        const params = {};
-        
-        selectedFilters.forEach(filter => {
-            switch (filter.name) {
-                case "Category":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.category = filter.data.join(',');
-                    }
-                    break;
-                case "Sub-category":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.subCategory = filter.data.join(',');
-                    }
-                    break;
-                case "Tags":
-                    // Check if filter.data exists and is not empty
-                    if (filter.data && filter.data.length > 0) {
-                        params.tag = filter.data.join(',');;
-                    }
-                    break;
-                case "Budget Range":
-                    // Check if filter.data and filter.data.data exist
-                    if (filter.data && filter.data) {
-                        // Extract numeric values from the budget range string
-                        const { min: priceFrom, max: priceTo } = filter.data;
-                        // Assign values to params
-                        if (minBudget) params.minBudget = minBudget;
-                        if (maxBudget) params.maxBudget = maxBudget;
-                    }
-                    break;
-                case "Duration":
-                    // Check if filter.data and filter.data.data exist
-                    if (filter.data && filter.data) {
-                        params.duration = filter.data; // Assuming data is like "Duration: 10 days"
-                    }
-                    break;
-                case "instantProject":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.instant = filter.data;
-                    }
-                    break;
-                case "priceInclusive":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.inclusive = filter.data;
-                    }
-                    break;
-                case "keywords":
-                    // Handle the case where filter.data might be undefined
-                    if (filter.data) {
-                        params.keywords = filter.data.join(',');
-                    }
-                default:
-                    break;
-            }
-        });
-
-        // Update query parameters with selected filters
-        const queryString = new URLSearchParams({
-            ...params,
-            // limit: limit,
-            // page: page,
-        }).toString();
-
-        // Call GetCopyrights with updated query string
+    const setParams = (queryString) => {
         Router.push(`/${cycle}?${queryString}`);
-
     };
 
     return (
@@ -182,7 +111,8 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
 
-                        <Filter cycle={cycle} onFilterChange={handleFilterChange} />
+                        <Filter cycle={cycle} setParams={setParams} />
+                        <div className="h-7" />
                         
                         {producers?.length > 0 &&
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>

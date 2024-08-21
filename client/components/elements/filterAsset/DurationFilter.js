@@ -30,6 +30,7 @@ const DurationFilter = ({ onDurationApply, onFilterChange,toggleDrawer }) => {
             <FilterHeader>{t("Duration")}</FilterHeader>
             <div className='h-6'></div>
             <FilterInput
+                type="number"
                 name="duration"
                 value={duration}
                 onChange={handleDurationChange}

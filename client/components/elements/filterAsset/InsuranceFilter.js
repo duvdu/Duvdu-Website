@@ -36,6 +36,7 @@ const InsuranceFilter = ({ onFiltersApply, onFilterChange,toggleDrawer }) => {
             <FilterHeader>{t("Insurance")}</FilterHeader>
             <div className='h-6'></div>
             <FilterInput
+                type="number"
                 name="insurance"
                 value={filters.insurance}
                 onChange={handleFilterChange('insurance')}
