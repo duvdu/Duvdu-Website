@@ -12,6 +12,7 @@ import InsuranceFilter from './filterAsset/InsuranceFilter';
 import Icon from '../Icons';
 import Drawer from './drawer';
 import AppButton from './button';
+import KeyWords from './filterAsset/keywords';
 
 // Utility function to find filter name by value
 const getFilterNameByValue = (data, value) => {
@@ -34,6 +35,8 @@ const RenderFilterComponent = ({ value, categories, cycle, handleSelect, toggleD
             return <DurationFilter onDurationApply={duration => handleSelect(6, duration, true)} onFilterChange={duration => handleSelect(6, duration)} toggleDrawer={toggleDrawer} />;
         case 7:
             return <InsuranceFilter onFiltersApply={filters => handleSelect(7, filters.insurance, true)} onFilterChange={filters => handleSelect(7, filters.insurance)} toggleDrawer={toggleDrawer} />;
+        case 8:
+            return <KeyWords onFiltersApply={filters => handleSelect(8, filters.KeyWords, true)} onFilterChange={filters => handleSelect(8, filters.KeyWords)} toggleDrawer={toggleDrawer} />;
         default:
             return null;
     }
@@ -60,8 +63,12 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
     if (cycle === "studio-booking") filterData.push({ value: 7, name: "Insurance" });
     if (cycle === "copy-rights" || cycle === "producer") {
         filterData.push({ value: 5, name: "Budget Range" });
+    }
+
+    if (cycle === "copy-rights" || cycle === "project" ) {
         filterData.push({ value: 6, name: "Duration" });
     }
+    filterData.push({ value: 8, name: "keywords" },);
 
     // Toggle dropdown visibility
     const toggleDropdown = (value) => {
@@ -125,12 +132,14 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange }) => {
                     {filterData.map(({ value, name }) => (
                         <div key={value} className="relative">
                             <div
-                                className="border border-[#E6E6E6] dark:border-gray-700 rounded-xl py-2 px-3 text-DS_black dark:text-white appearance-none w-min select-custom pr-8 cursor-pointer bg-white dark:bg-gray-900"
+                                className="flex gap-2 items-center border border-[#E6E6E6] dark:border-gray-700 rounded-xl py-2 px-3 text-DS_black dark:text-white appearance-none w-min cursor-pointer bg-white dark:bg-gray-900"
                                 onClick={() => toggleDropdown(value)}
                             >
                                 <div className='whitespace-nowrap'>
                                     {t(selectedFilters[value]?.data || name)}
                                 </div>
+                                <Icon name={"drop-icon"} className='dark:text-white' />
+
                             </div>
 
                             <div className={openIndex === value ? "absolute" : "hidden"}>

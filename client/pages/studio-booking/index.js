@@ -24,7 +24,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, projectScaleMin, projectScaleMax, duration, instant, inclusive } = Router.query
+    const { category, subCategory, tag, projectScaleMin, projectScaleMax, duration, instant, inclusive , keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -56,6 +56,7 @@ const Studio = ({ projects, GetStudios, api }) => {
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
             if (inclusive) params.inclusive = inclusive;
+            if (keywords) params.keywords = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
@@ -63,7 +64,7 @@ const Studio = ({ projects, GetStudios, api }) => {
             // Call GetCopyrights with the constructed query string
             GetStudios(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, projectScaleMin, projectScaleMax, duration, instant, inclusive]);
+    }, [limit, searchTerm, page, category, subCategory, tag, projectScaleMin, projectScaleMax, duration, instant, inclusive, keywords]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -97,7 +98,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
         // Initialize params object
         const params = {};
-        
+
         selectedFilters.forEach(filter => {
             switch (filter.name) {
                 case "Category":
@@ -145,13 +146,18 @@ const Studio = ({ projects, GetStudios, api }) => {
                     if (filter.data) {
                         params.inclusive = filter.data;
                     }
-                    
+
                 case "Insurance":
                     // Handle the case where filter.data might be undefined
                     if (filter.data !== undefined) {
                         params.insurance = filter.data;
                     }
                     break;
+                case "keywords":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.keywords = filter.data.join(',');
+                    }
                 default:
                     break;
             }

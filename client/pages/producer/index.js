@@ -26,7 +26,7 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive } = Router.query
+    const { category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive, keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -58,6 +58,7 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
             if (inclusive) params.inclusive = inclusive;
+            if (keywords) params.keywords = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
@@ -65,7 +66,7 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
             // Call GetCopyrights with the constructed query string
             GetProducer(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive]);
+    }, [limit, searchTerm, page, category, subCategory, tag, minBudget, maxBudget, duration, instant, inclusive, keywords]);
 
 
     useEffect(() => {
@@ -153,6 +154,11 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
                         params.inclusive = filter.data;
                     }
                     break;
+                case "keywords":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.keywords = filter.data.join(',');
+                    }
                 default:
                     break;
             }

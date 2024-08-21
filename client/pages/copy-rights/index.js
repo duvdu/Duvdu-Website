@@ -28,7 +28,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
     const pagganation = respond?.pagination
 
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive } = Router.query
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
     const { asPath } = Router;
 
     // Remove leading slash
@@ -66,7 +66,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
             // Call GetCopyrights with the constructed query string
             GetCopyrights(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive]);
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
 
 
 
@@ -103,10 +103,10 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
     };
     const handleFilterChange = (selectedFilters) => {
-        
+
         // Initialize params object
         const params = {};
-        
+
         selectedFilters.forEach(filter => {
             switch (filter.name) {
                 case "Category":
@@ -154,6 +154,11 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                     if (filter.data) {
                         params.inclusive = filter.data;
                     }
+                case "keywords":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.keywords = filter.data.join(',');
+                    }
                     break;
                 default:
                     break;
@@ -183,9 +188,9 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                         <Filter cycle={cycle} onFilterChange={handleFilterChange} />
 
                         {CopyRight?.length === 0 ?
-                        <div className='mt-4'>
-                            <EmptyComponent message="No CopyRight Now" />
-                        </div> :
+                            <div className='mt-4'>
+                                <EmptyComponent message="No CopyRight Now" />
+                            </div> :
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }
                         <div className="minmax-360">
