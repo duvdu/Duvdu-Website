@@ -10,6 +10,7 @@ import Icon from "../../components/Icons";
 import Drawer from '../elements/drawer';
 import DuvduLoading from '../elements/duvduLoading';
 import EmptyComponent from '../pages/contracts/emptyComponent';
+import { useTranslation } from 'react-i18next';
 
 
 function AddToSaved({
@@ -23,6 +24,7 @@ function AddToSaved({
     const router = useRouter();
     const { project: projectId } = router.query;
     const boards = getBoards_respond?.data || []
+    const { t } = useTranslation();
 
     useEffect(() => {
         AddProjectToBoard({ idboard: -1 })
@@ -60,7 +62,7 @@ function AddToSaved({
     return (
         <>
             <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To board" onCancel={()=> ClosePopUp('addProjectToBoard-popup') } />
-            <Drawer className='z-30' toggleDrawer={toggleDrawerAddFav} name={'Add To Saved Projects'} isOpen={isOpen}>
+            <Drawer className='z-30' toggleDrawer={toggleDrawerAddFav} name={t('Add To Saved Projects')} isOpen={isOpen}>
                 <DuvduLoading loadingIn={"AddProjectToBoard"} />
                 <div className='flex flex-col w-full overflow-y-scroll'>
                     {boards?.filter(board => !isProjectInBoard(board, projectId)).map((board, index) => (
