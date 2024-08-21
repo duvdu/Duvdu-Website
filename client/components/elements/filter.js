@@ -132,7 +132,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
 
         // Initialize params object
         const params = {};
-        console.log(selectedFilters)
+        
         selectedFilters.forEach(filter => {
             switch (filter.name) {
                 case "Category":
