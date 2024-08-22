@@ -262,6 +262,7 @@
     "36 Guild Street London, UK": "36 شارع جيلد، لندن، المملكة المتحدة",
     "add creative": "إضافة مبدع",
     "Change password": "تغيير كلمة المرور",
+    "Change Password": "تغيير كلمة المرور",
     "Change Phone Number": "تغيير رقم الهاتف",
     "confirm": "تأكيد",
     "number changed": "تم تغيير الرقم",
@@ -413,6 +414,7 @@
     "Function name...": "اسم الوظيفة...",
     "duration Days": "مدة الأيام",
     "Confirm Password *": "تأكيد كلمة المرور *",
+    "new board": "لوحة الجديدة",
     "New Board name": "اسم اللوحة الجديدة",
     "Enter Platform...": "أدخل المنصة...",
     "current": "الحالي",
@@ -472,5 +474,6 @@
     "filter": "تحديد",
     "KeyWords": "الكلمات المفتاحية",
     "Enter a keyword": "أدخل كلمة مفتاحية",
+    "Invalid Code": "ترميز خاطئ",
     "": ""
 }

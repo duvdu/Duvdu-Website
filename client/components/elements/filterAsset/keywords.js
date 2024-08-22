@@ -50,16 +50,17 @@ const KeyWords = ({ onFiltersApply, onFilterChange, toggleDrawer }) => {
         <FilterContainer toggleDrawer={toggleDrawer}>
             <FilterHeader>{t("KeyWords")}</FilterHeader>
             <div className='h-6'></div>
-            <div className='flex space-x-2 items-center'>
+            <div className='flex items-center gap-2'>
                 <FilterInput
                     name="KeyWordsInput"
                     value={currentKeyword}
                     onChange={handleInputChange}
                     placeholder={t("Enter a keyword")}
                 />
-                <AppButton onClick={handleAddKeyword} className='h-[40px] aspect-square'>
+                <AppButton onClick={handleAddKeyword} height='h-[40px]' className='aspect-square'>
                     <Icon name={'plus'} className='text-white w-4 h-4'/>
                 </AppButton>
+                
             </div>
             <div className='h-6'></div>
             <div className='flex flex-wrap gap-2'>

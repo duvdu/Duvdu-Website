@@ -50,7 +50,7 @@ function OTP({
             const errorMessage = errorConvertedMessage(api.error);
             if(api.req == "resendCode" ) setcount(errorMessage)
             if(api.req == "verify"){
-                setlocal_error('Invalid Code')
+                setlocal_error(t('Invalid Code'))
             }
         }
         else {
@@ -75,7 +75,7 @@ function OTP({
 
     return (
         <>
-            <form className="flex flex-col items-center">
+            <form className="flex flex-col items-center" dir='ltr'>
                 <div className="max-w-96 flex flex-col items-center justify-center">
                     <div className="w-353">
                         <div className="heading_s1 mb-11 text-center">
@@ -105,7 +105,7 @@ function OTP({
                                         setcount(120)
                                         resendCode({ username });
                                         }}>
-                                        Send code again
+                                        {t("Send code again")}
                                     </p>
                             }
                         </div>

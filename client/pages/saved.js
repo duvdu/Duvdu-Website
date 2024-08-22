@@ -132,7 +132,7 @@ const Saved = ({
                             <h1 className="text-2xl opacity-80 font-semibold capitalize">{t("mood boards")}</h1>
                             <div className="mr-6"></div>
                             <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board ">
-                                new board
+                                {t("new board")}
                                 <Icon className="text-white" name={"plus"} />
                             </div>
                         </div>
