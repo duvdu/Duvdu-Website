@@ -132,7 +132,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
 
         // Initialize params object
         const params = {};
-        
+
         selectedFilters.forEach(filter => {
             switch (filter.name) {
                 case "Category":
@@ -174,6 +174,11 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                     if (filter.data) {
                         params.instant = filter.data;
                     }
+                case "Insurance":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.Insurance = filter.data;
+                    }
                     break;
                 case "priceInclusive":
                     // Handle the case where filter.data might be undefined
@@ -190,8 +195,6 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
         const queryString = new URLSearchParams({
             ...params,
         }).toString();
-
-        console.log(params)
 
         if (setParams)
             setParams(queryString)
