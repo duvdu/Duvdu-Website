@@ -34,6 +34,8 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                 return 1;
             case 'completed':
                 return -1;
+            case 'accepted':
+                return -1;
             case 'rejected':
                 return -1;
             default:

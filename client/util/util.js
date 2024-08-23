@@ -212,9 +212,11 @@ export const isVideo = (coverUrl) => {
 };
 export const isAudio = (coverUrl) => {
   console.log(coverUrl)
-  const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.m4a'];
-  const urlExtension = coverUrl?.split('.').pop().toLowerCase();
-  return audioExtensions.includes(`.${urlExtension}`);
+  if(coverUrl){
+    const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.m4a'];
+    const urlExtension = coverUrl?.split('.').pop().toLowerCase();
+    return audioExtensions.includes(`.${urlExtension}`);
+  }
 };
 
 export const errorConvertedMessage = (error) => {

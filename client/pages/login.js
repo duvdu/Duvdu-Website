@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import Button from '../components/elements/button';
+import GoogleLogin from '../components/pages/login/GoogleLogin';
 import { useState, useEffect } from 'react';
 import Icon from '../components/Icons';
 import { connect } from "react-redux";
@@ -11,6 +12,7 @@ import { resendCode } from "../redux/action/apis/auth/OTP/resend";
 import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
 import useFcmToken from "../util/hooks/useFcmToken";
 import { useTranslation } from 'react-i18next';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function Login({ api, login_respond, login, resendCode, getMyprofile }) {
     const { t } = useTranslation();
@@ -95,6 +97,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
     resendCode({ username: username })
   };
 
+  const clientId = "475213071438-mn7lcjd3sdq0ltsv92n04pr97ipdhe9g.apps.googleusercontent.com";
 
   return (
     <>
@@ -160,16 +163,9 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             <p className="px-4 font-bold my-10 ">{t("OR")}</p>
             <div className="border-t border-black opacity-20 w-full my-4"></div>
           </div>
-          <div className="flex flex-col sm:flex-row justify-center gap-8 ">
-            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer">
-              <img src="/assets/imgs/theme/google-icon.svg" />
-              <p className="text-lg font-bold">{t("Google")}</p>
-            </div>
-            <div className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer">
-              <img src="/assets/imgs/theme/apple-logo.png" className="w-9 dark:invert" />
-              <p className="text-lg font-bold">{t("Apple")}</p>
-            </div>
-          </div>
+          <GoogleOAuthProvider clientId={clientId}>
+            <GoogleLogin/>
+          </GoogleOAuthProvider>
         </form>
       </Auth>
     </>
