@@ -79,7 +79,8 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
 
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
     const [categoryId, setCategoryId] = useState();
-    
+    const [lang, setLang] = useState(false);
+
     const togglePage = (value) => {
 
         if (typeof (value) == 'string')
@@ -92,7 +93,12 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
     };
 
     const data = respond?.data?.creatives || [];
-    console.log(data)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const storedLang = localStorage.getItem('lang');
+            setLang(storedLang ? storedLang === 'Arabic' : false);
+        }
+    }, []);
     return (
         <div className="md:h-body w-full overflow-y-scroll pt-14 addUserScroll">
             {!isAddToTeamPage ? (
@@ -109,9 +115,10 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
             ) : (
                 <>
                     <div className='w-10 h-10 flex justify-center items-center rounded-full border px-4 cursor-pointer aspect-square' onClick={()=> setIsAddToTeamPage(!isAddToTeamPage)}>
-                        <Icon className='w-5 h-5 text-black dark:text-white' name={'angle-left'} />
+                        {lang?<Icon className='w-5 text-black dark:text-white' name={'angle-right'} />:
+                        <Icon className='w-5 h-5 text-black dark:text-white' name={'angle-left'} />}
                     </div>
-                    <UsersToAdd goback={togglePage} />
+                    <UsersToAdd goback={togglePage} categoryId={categoryId} />
                 </>
             )}
         </div>
@@ -166,6 +173,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
     const handleDropdownSelect = (v) => {
         v == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)
     };
+    console.log(person)
     return (
         <>
             <Popup id={"Edit-creative-" + person._id} header={'Work Details'} onCancel={onCancel}>
@@ -195,9 +203,9 @@ const Person = ({ person, onDelete, onUpdate }) => {
                         <Icon className='text-white bg-gray' name={'chat24'} />
                     </div>
                 </div> 
-                {person.status == 'pending' && <Selector options={options} onSelect={handleDropdownSelect}> <Icon name="waiting" className="size-12" /> </Selector>}
+                {/* {person.status == 'pending' && <Selector options={options} onSelect={handleDropdownSelect}> <Icon name="waiting" className="size-12" /> </Selector>}
                 {person.status == 'refuse' && <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div>}
-                {person.status == 'available' && <div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div>}
+                {person.status == 'available' && <div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div>} */}
             </div>
         </>
     )
@@ -206,7 +214,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
 const RightSide = ({ isSolid, data, onClick }) => {
     const { t } = useTranslation();
 
-
+    
     return <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
         <div className="flex flex-col justify-between gap-7 bg-white dark:bg-[#1A2024] w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
             <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
@@ -230,7 +238,9 @@ const RightSide = ({ isSolid, data, onClick }) => {
                             {data.shootingDays} days
                         </span>
                     </section> */}
-                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                    <section>
+                    <h3 className="opacity-60 capitalize text-base mb-2">{t("Team Create At")}</h3>
+                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                             <Icon className='' name={"calendar"} />
                         </div>
@@ -239,7 +249,10 @@ const RightSide = ({ isSolid, data, onClick }) => {
                             <span className="text-[#747688] text-xs">{dateFormat(data.startDate, 'dddd , h:mm TT')}</span>
                         </div>
                     </div>
-                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                    </section>
+                    <section>
+                    <h3 className="opacity-60 capitalize text-base mb-2">{t("Project Location")}</h3>
+                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"location-dot"} />
                         </div>
@@ -248,6 +261,7 @@ const RightSide = ({ isSolid, data, onClick }) => {
                             {/* <span className="text-[#747688] text-xs">{t("36 Guild Street London, UK")}</span> */}
                         </div>
                     </div>
+                    </section>
                     {/* <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"image"} />

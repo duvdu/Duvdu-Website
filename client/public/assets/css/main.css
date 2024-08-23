@@ -498,8 +498,8 @@ textarea {
 }
 
 textarea:focus {
-  background: transparent;
-  border: 1px solid #BCE3C9;
+  /* background: transparent; */
+  /* border: 1px solid #BCE3C9; */
 }
 
 
