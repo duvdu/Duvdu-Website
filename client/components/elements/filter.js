@@ -68,7 +68,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
     if (cycle === "copy-rights" || cycle === "project") {
         filterData.push({ value: 6, name: "Duration" });
     }
-    filterData.push({ value: 8, name: "keywords" },);
+    filterData.push({ value: 8, name: "KeyWords" },);
 
     // Toggle dropdown visibility
     const toggleDropdown = (value) => {

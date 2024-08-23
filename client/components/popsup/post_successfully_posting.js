@@ -27,7 +27,7 @@ function SuccessfullyPosting({ id = "Report-sent-successfully",isShow, onCancel 
                         <div className="flex w-full justify-center">
                             <Icon name={"done"} className="mb-9" />
                         </div>
-                        <h1 className="text-3xl font-semibold my-5">Successfully {message}</h1>
+                        <h1 className="text-3xl font-semibold my-5">{t(`Successfully ${message}`)}</h1>
                     </div>
                     <div className="flex justify-center items-center">
                         <button onClick={Cancel} className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">{t("Close")}</button>
