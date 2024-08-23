@@ -185,8 +185,8 @@ const Home = ({
                                 <div className="absolute h-full w-full overflow-hidden">
                                     <div ref={wordsRef} className="slide-in">
                                         {
-                                            words?.map((i) =>
-                                                <div className="h-[50px] lg:h-[120px] flex flex-col justify-center items-center my-2">
+                                            words?.map((i, index) =>
+                                                <div className="h-[50px] lg:h-[120px] flex flex-col justify-center items-center my-2" key={index}>
                                                     <p className="text-[#1A73EB] font-black text-3xl lg:text-8xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
                                                 </div>
                                             )
@@ -201,11 +201,10 @@ const Home = ({
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
                         <div className="flex md:grid md:grid-cols-3 gap-3 px-3 overflow-auto lg:container">
                             {list?.slice(0,3)?.map((data, index) => (
-                                <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                <Link href={data.cycle ? `/${data.cycle}` : ''} key={index}>
                                 <div
                                     className="cursor-pointer bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
                                     style={{ backgroundImage: `url(${data.image})` }}
-                                    key={index}
                                 >
                                     <span className="text-white text-xl lg:text-3xl font-semibold capitalize">
                                         {data.title || 'Empty Title'}

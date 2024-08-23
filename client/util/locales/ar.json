@@ -464,7 +464,7 @@
     "No Producers Now": "لا يوجد منتجون حاليًا",
     "Add To Saved Projects": "أضف إلى المشاريع المحفوظة",
     "Category": "الفئة",
-    "Sub-category": "الفئة الفرعية",
+    "Sub-category": "الفئة الفرعية",    
     "Budget Range": "نطاق الميزانية",
     "Apply": "تطبيق",
     "Number in days": "عدد الأيام",
@@ -475,5 +475,12 @@
     "KeyWords": "الكلمات المفتاحية",
     "Enter a keyword": "أدخل كلمة مفتاحية",
     "Invalid Code": "ترميز خاطئ",
+    "Successfully Booking": "تم الحجز بنجاح",
+    "Successfully Payment": "تم الدفع بنجاح",
+    "Successfully Creating": "تم الإنشاء بنجاح",
+    "Successfully Update": "تم التحديث بنجاح",
+    "Successfully Delete": "تم الحذف بنجاح",
+    "Successfully Add To board": "تمت الإضافة إلى اللوحة بنجاح",
+    "Successfully Create Team": "تم إنشاء الفريق بنجاح",
     "": ""
 }
