@@ -47,7 +47,7 @@ const Category = ({ category, language }) => {
     <li className='header-category'>
       <div
         className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'
-        onClick={() => handleNavigation(`/${category.cycle}`)}
+        onClick={() => handleNavigation(`/${category.cycle}?category=${category._id}`)}
       >
         {category.title}
       </div>
@@ -59,7 +59,7 @@ const Category = ({ category, language }) => {
               key={subIndex}
               title={subcategory.title}
               items={subcategory.tags}
-              onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${ tagId ? "tag=" + tagId : ''}`)}
+              onClick={(tagId) => handleNavigation(`/${category.cycle}`, `category=${category._id}&subcategory=${subcategory._id}&${ tagId ? "tag=" + tagId : ''}`)}
               cycle={category.cycle}
             />
           ))}
