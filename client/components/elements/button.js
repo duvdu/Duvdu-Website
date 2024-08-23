@@ -1,4 +1,4 @@
-function AppButton({ children, color, contentClassName = "", className = "", shadow = false, shadowHeight, isEnabled = true, onClick, ...rest }) {
+function AppButton({ children, color, contentClassName = "", className = "", shadow = false, shadowHeight, isEnabled = true, height = "h-[75px]" ,  onClick, ...rest }) {
   let buttonClass;
   let isbuttonred = color == "#D30000";
   switch (color) {
@@ -24,10 +24,11 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
     }
   };
 
+  
   return (
     <div
       onClick={handleClick}
-      className={`relative h-[75px] flex rounded-full p-1 ${className}`}
+      className={`relative flex rounded-full p-1 ${height} ${className}`}
       {...rest}
     >
       <div className={`${buttonClass} absolute left-0 app-btn h-full btn leading-10 z-10 min-w-min ${isbuttonred ? 'red' : 'blue'} ${disabledClass}`}>
@@ -35,7 +36,6 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
           {children}
         </div>
       </div>
-
     </div>
   );
 }
