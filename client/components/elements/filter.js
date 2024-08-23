@@ -186,6 +186,12 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                         params.inclusive = filter.data;
                     }
                     break;
+                case "KeyWords":
+                    // Handle the case where filter.data might be undefined
+                    if (filter.data) {
+                        params.keywords = filter.data;
+                    }
+                    break;
                 default:
                     break;
             }
