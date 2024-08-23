@@ -5,6 +5,7 @@ import GoogleMap from "../../elements/googleMap";
 import dateFormat from "dateformat";
 import { isVideo  } from '../../../util/util';
 import Icon from '../../Icons';
+import ProjectCover from './projectShow';
 
 const Details = ({ data }) => {
     const { t } = useTranslation();
@@ -13,10 +14,10 @@ const Details = ({ data }) => {
     console.log(data)
     return (
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-4 mx-5">
-            
-        <div className="w-full h-72 border-50 overflow-hidden">
+        <ProjectCover data={data?.attachments[0]} cover={data?.cover}/>
+            {/* <div className="w-full h-72 border-50 overflow-hidden">
             {!isVideo(data?.cover) ? (
-          <img className='w-full h-full' src={data?.cover}/>
+          <img className='w-full h-full object-cover' src={data?.cover}/>
         ) : (
             <video
               className='w-full h-full'
@@ -26,7 +27,7 @@ const Details = ({ data }) => {
             </video>
         )}
                 
-            </div>
+            </div> */}
             <div className="w-full flex justify-center my-5">
                 <span className="text-center capitalize opacity-50 font-medium">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>
             </div>
