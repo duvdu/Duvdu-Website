@@ -46,9 +46,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
                 <div className="flex items-center justify-center gap-2">
 
-                    <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
-                        <Icon className="items-center justify-center" name={'bell'} />
-                    </div>
+                    {islogin &&
+                        <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
+                            <Icon className="items-center justify-center" name={'bell'} />
+                        </div>}
 
                     <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={toggleOpenSearch}>
                         <Icon className="size-6 flex items-center justify-center" name={openSearch == 2 ? 'search-menu' : 'burger-menu'} />
@@ -63,7 +64,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
 
     const SearchBody = () => <div className="h-body bg-[#F7F9FB] dark:bg-[#1A2024] " >
         <div className="p-5">
-            <Search close={()=> toggleClick()}/>
+            <Search close={() => toggleClick()} />
         </div>
     </div>
 
