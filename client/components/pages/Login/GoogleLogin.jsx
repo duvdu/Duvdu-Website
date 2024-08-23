@@ -21,12 +21,11 @@ function GoogleLogin({ api, login_respond, googleLogin, getMyprofile }) {
         
     const login = useGoogleLogin({
         onSuccess: async(response) => {
-            console.log('Login Success:', response);
             const res = await axios
             .get('https://www.googleapis.com/oauth2/v3/userinfo', {
               headers: { Authorization: `Bearer ${response.access_token}` },
             })
-            googleLogin({ username:'mos3addev', id:res.data.sub , notificationToken:fcmToken ?? null })
+            googleLogin({ username:'mos3addev', id:res?.data?.sub , notificationToken:fcmToken ?? null })
             },
         onError: (error) => {
             console.error('Login Failed:', error);
