@@ -171,7 +171,7 @@ const Home = ({
         GetProjects(queryString)
 
     };
-
+// console.log(list)
     return (
         <>
             <Layout isbodyWhite={true}>
