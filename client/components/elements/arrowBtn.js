@@ -23,7 +23,7 @@ const ArrowBtn = ({ className, children, text, Click, isEnable = true, IconName 
                 <span className="capitalize flex mx-2 lg:mx-5 items-center text-base sm:text-lg font-bold text-DS_white text-center text-white whitespace-nowrap">{t(text)}</span>
             </div>
             <div className={`flex aspect-square items-center justify-center rounded-full bg-white bg-opacity-25 h-16 sm:h-20 ${isEnable ? 'opacity-100' : 'opacity-50'}`}>
-                <Icon className="text-white text-3xl w-3" name={IconName} />
+                <Icon className="rtl:rotate-180 text-white text-3xl w-3 " name={IconName} />
             </div>
         </div>
     );

@@ -77,7 +77,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
             <div className="cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active">
                 <div className="dialog dialog-2 flex flex-col">
                     <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
-                        <div className="bg-white dark:bg-[#1A2024] dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
+                        <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
                             <div className="flex w-full overflow-hidden h-20">
                                 <img
                                     className="w-full h-full object-cover"
@@ -89,7 +89,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                 <div className='flex items-start gap-4 -translate-y-4 h-12'>
                                     <div>
                                     <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                                        <img className='w-full h-full rounded-full border-2 dark:border-[#1A2024] shadow -translate-y-8 object-cover object-top' src={user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                                     </div>
                                     </div>
                                     <div className='flex-2 flex-col'>
@@ -116,7 +116,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                         </div>
                         {
                             showMiddleCard &&
-                            <div className="p-6 bg-white dark:bg-[#1A2024] dark:bg-[#1A2024] rounded-[45px]">
+                            <div className="p-6 bg-white dark:bg-[#1A2024] rounded-[45px]">
                                 <div className="flex gap-3">
                                     <div className="w-full">
 

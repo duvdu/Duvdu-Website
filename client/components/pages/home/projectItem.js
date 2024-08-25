@@ -12,8 +12,10 @@ import { DeleteProjectFromBoard } from '../../../redux/action/apis/savedProject/
 import Link from 'next/link';
 import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
 import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
+import { useTranslation } from 'react-i18next';
 
 const ProjectItem = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+    const { t, i18n } = useTranslation();
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
     const [Duration, setDuration] = useState(0);
@@ -79,7 +81,6 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
 
     };
     const handleTouchStart = () => {
-        console.log("???")
         const timeout = setTimeout(() => {
             handleHover(); // Trigger hover behavior on long press
         }, 500); // Adjust duration for long press
@@ -98,7 +99,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
     // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
 
     const isVideoCover = isVideo(cardData?.cover)
-    
+
     return (
         <>
             <div className={`select-none project-card flex flex-col ${className}`} onClick={() => { }} >
@@ -184,7 +185,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                             </Link>
                             <Link href={`/creative/${cardData?.user?.username}`}>
                                 <div className='cursor-pointer' >
-                                    <span className='text-sm font-semibold'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0] || 'NONE'}</span>
+                                    <span className='text-sm font-semibold'>{cardData?.user?.name?.split(' ')[0].length > 6 ? cardData?.user?.name?.split(' ')[0].slice(0, 6) : cardData?.user?.name?.split(' ')[0] || 'NONE'}</span>
                                 </div>
                             </Link>
                         </div>
@@ -194,15 +195,33 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                         </div>
                     </div>
                     <div>
-                        {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
+                        {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) && (
                             <>
-                                <span className='text-xs opacity-60 '>from {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} L.E</span>
-                                {(cardData?.projectScale?.unit) &&
-                                    <span className='text-xs ml-1 opacity-60'>
-                                        per {cardData?.projectScale?.unit}
-                                    </span>}
+                                {i18n.language !== "Arabic" ? (
+                                    <>
+                                        <span className="text-xs opacity-60 font-semibold">
+                                            from {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} L.E
+                                        </span>
+                                        {cardData?.projectScale?.unit && (
+                                            <span className="text-xs ml-1 opacity-60 font-semibold">
+                                                per {cardData?.projectScale?.unit}
+                                            </span>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="text-xs opacity-60 font-semibold">
+                                         {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} ج.م </span>
+                                        {cardData?.projectScale?.unit && (
+                                            <span className="text-xs ml-1 opacity-60 font-semibold">
+                                                لكل {t(cardData?.projectScale?.unit)}
+                                            </span>
+                                        )}
+                                    </>
+                                )}
                             </>
-                        }
+                        )}
+
                     </div>
                 </div>
             </div>

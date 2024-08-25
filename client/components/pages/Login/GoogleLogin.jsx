@@ -34,7 +34,7 @@ function GoogleLogin({ api, login_respond, googleLogin, getMyprofile }) {
 
     return (
         <GoogleOAuthProvider clientId={clientId}>
-            <div className="flex flex-col sm:flex-row justify-center gap-8">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <div 
                     onClick={() => login()} 
                     className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer"

@@ -6,7 +6,7 @@ import SelectDate from "../../elements/selectDate";
 import { connect } from "react-redux";
 import { UpdateFormData, resetForm } from "../../../redux/action/logic/forms/Addproject";
 import GoogleMap from "../../elements/googleMap";
-import { UpdateKeysAndValues, handleMultipleFileUpload, handleRemoveEvent} from "../../../util/util";
+import { UpdateKeysAndValues, handleMultipleFileUpload, handleRemoveEvent } from "../../../util/util";
 import { BookProject } from "../../../redux/action/apis/cycles/projects/book";
 import dateFormat from "dateformat";
 import { useTranslation } from 'react-i18next';
@@ -138,7 +138,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
         if (formData.functions)
             for (var i = 0; i < formData.functions.length; i++) {
-        
+
                 form.append(`equipment[functions][${i}][id]`, formData.functions[i]._id);
             }
 
@@ -157,8 +157,9 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         UpdateFormData('location[lat]', location.lat)
         UpdateFormData('location[lng]', location.lng)
     };
-    
-    
+
+    const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
+
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
@@ -190,11 +191,14 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className="my-11 gap-7 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">{t("location")}</h3>
-                                <GoogleMap 
-                                width={'100%'} 
-                                value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }} 
-                                onChangeAddress={handleInputChange} 
-                                onsetLocation={handlelocationChange} />
+                                <GoogleMap
+                                    width={'100%'}
+                                    isreadOnly={true}
+                                    value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
+                                    inputclass={inputStyle}
+                                    className={"relative rounded-md overflow-hidden h-[250px] border-2 border-[#E5E5E5]"}
+                                    onChangeAddress={handleInputChange}
+                                    onsetLocation={handlelocationChange} />
                             </section>
                             <section className="my-11 gap-7 hidden">
                                 <div className="w-full">
@@ -235,79 +239,79 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                         </div>
 
                         {preview &&
-                        <div className='flex flex-col gap-9 h-full'>
-                            <div className="flex flex-col gap-9 overflow-y-scroll overflow-x-hidden p-8 h-full">
-                                <section>
-                                    <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} mainremovable={false} />
-                                    <BookTeam team={(formData?.tools || formData?.equipments || [])} mainremovable={false} />
-                                    <BookTeam team={(formData?.functions || [])} mainremovable={false} />
-                                </section>
-                                <section className="w-full hidden">
-                                    <h2 className='opacity-60 mb-3'>{t("project type")}</h2>
-                                    <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>{t("shooting permits")}</span>
-                                </section>
-                                <section className="w-full">
-                                    <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
-                                    <span className='capitalize mb-8 opacity-80 w-min font-bold'>
-                                        {formData.details}
-                                    </span>
-                                </section>
+                            <div className='flex flex-col gap-9 h-full'>
+                                <div className="flex flex-col gap-9 overflow-y-scroll overflow-x-hidden p-8 h-full">
+                                    <section>
+                                        <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} mainremovable={false} />
+                                        <BookTeam team={(formData?.tools || formData?.equipments || [])} mainremovable={false} />
+                                        <BookTeam team={(formData?.functions || [])} mainremovable={false} />
+                                    </section>
+                                    <section className="w-full hidden">
+                                        <h2 className='opacity-60 mb-3'>{t("project type")}</h2>
+                                        <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>{t("shooting permits")}</span>
+                                    </section>
+                                    <section className="w-full">
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
+                                        <span className='capitalize mb-8 opacity-80 w-min font-bold'>
+                                            {formData.details}
+                                        </span>
+                                    </section>
 
-                                <section className="w-full">
-                                    <h2 className='opacity-60 capitalize mb-3'>{t("Custom Requirements")}</h2>
-                                    <span className='capitalize mb-8 opacity-80 w-min whitespace-nowrap font-bold'>
-                                        {formData['projectScale[numberOfUnits]']} {data.projectScale.unit}
-                                    </span>
-                                </section>
+                                    <section className="w-full">
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("Custom Requirements")}</h2>
+                                        <span className='capitalize mb-8 opacity-80 w-min whitespace-nowrap font-bold'>
+                                            {formData['projectScale[numberOfUnits]']} {data.projectScale.unit}
+                                        </span>
+                                    </section>
 
-                                <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <h2 className='opacity-60 capitalize mb-3'>  </h2>
-                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                                            <Icon className='text-primary' name={"calendar"} />
+                                    <section className="w-full h-16 sm:w-96 p-2 mt-4">
+                                        <h2 className='opacity-60 capitalize mb-3'>  </h2>
+                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
+                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                                <Icon className='text-primary' name={"calendar"} />
+                                            </div>
+                                            <div className="flex flex-col pl-5 w-full">
+                                                <span className="font-normal text-base capitalize">{t("Appointment Date")}</span>
+                                                <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col pl-5 w-full">
-                                            <span className="font-normal text-base capitalize">{t("Appointment Date")}</span>
-                                            <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
-                                        </div>
-                                    </div>
-                                </section>
+                                    </section>
 
-                                <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                                            <Icon className='text-primary' name={"calendar"} />
+                                    <section className="w-full h-16 sm:w-96 p-2 mt-4">
+                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
+                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                                <Icon className='text-primary' name={"calendar"} />
+                                            </div>
+                                            <div className="flex flex-col pl-5 w-full">
+                                                <span className="font-normal text-base capitalize">{t("Start Date")}</span>
+                                                <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col pl-5 w-full">
-                                            <span className="font-normal text-base capitalize">{t("Start Date")}</span>
-                                            <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
-                                        </div>
-                                    </div>
-                                </section>
+                                    </section>
 
-                                <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
-                                            <Icon className='text-primary w-6' name={"location-dot"} />
+                                    <section className="w-full h-16 sm:w-96 p-2 mt-4">
+                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
+                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                                <Icon className='text-primary w-6' name={"location-dot"} />
+                                            </div>
+                                            <div className="flex flex-col pl-5 w-full">
+                                                <span className="font-normal text-base capitalize">{t("address")}</span>
+                                                <span className="font-normal text-base">{formData.address}</span>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col pl-5 w-full">
-                                            <span className="font-normal text-base capitalize">{t("address")}</span>
-                                            <span className="font-normal text-base">{formData.address}</span>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-
-                            <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
-                                <div className="w-full flex px-8 justify-between">
-                                    <span className="text-2xl opacity-50 font-semibold">{t("Total Amount")}</span>
-                                    <span className="text-2xl font-bold">${calculateTotalPrice()}</span>
+                                    </section>
                                 </div>
-                                <div className="flex justify-center">
-                                    <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
-                                </div>
-                            </section>
-                        </div>}
+
+                                <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
+                                    <div className="w-full flex px-8 justify-between">
+                                        <span className="text-2xl opacity-50 font-semibold">{t("Total Amount")}</span>
+                                        <span className="text-2xl font-bold">${calculateTotalPrice()}</span>
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
+                                    </div>
+                                </section>
+                            </div>}
                     </>
 
                 }
