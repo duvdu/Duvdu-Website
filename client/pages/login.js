@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Auth from '../components/layout/Auth';
 import Button from '../components/elements/button';
-import GoogleLogin from '../components/pages/login/GoogleLogin';
 import { useState, useEffect } from 'react';
 import Icon from '../components/Icons';
 import { connect } from "react-redux";
@@ -13,6 +12,7 @@ import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
 import useFcmToken from "../util/hooks/useFcmToken";
 import { useTranslation } from 'react-i18next';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import GoogleLogin from "../components/pages/Login/GoogleLogin";
 
 function Login({ api, login_respond, login, resendCode, getMyprofile }) {
     const { t } = useTranslation();

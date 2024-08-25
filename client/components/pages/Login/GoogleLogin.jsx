@@ -3,7 +3,6 @@ import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import useFcmToken from "../../../util/hooks/useFcmToken";
 import { getMyprofile } from "../../../redux/action/apis/auth/profile/getProfile";
-import { login } from "../../../redux/action/apis/auth/signin/signin";
 import { googleLogin } from '../../../redux/action/apis/auth/signin/googleLogin';
 import { connect } from "react-redux";
 import React from 'react' 
@@ -12,7 +11,6 @@ function GoogleLogin({ api, login_respond, googleLogin, getMyprofile }) {
     const { t } = useTranslation();
     const clientId = "475213071438-mn7lcjd3sdq0ltsv92n04pr97ipdhe9g.apps.googleusercontent.com";
     const { fcmToken,notificationPermissionStatus } = useFcmToken();
-    console.log(login_respond)
     React.useEffect(() => {
         if (login_respond?.message) {
           getMyprofile()
@@ -21,12 +19,13 @@ function GoogleLogin({ api, login_respond, googleLogin, getMyprofile }) {
         
     const login = useGoogleLogin({
         onSuccess: async(response) => {
-            console.log('Login Success:', response);
             const res = await axios
             .get('https://www.googleapis.com/oauth2/v3/userinfo', {
-              headers: { Authorization: `Bearer ${response.access_token}` },
+              headers: { Authorization: `Bearer ${response?.access_token}` },
             })
-            googleLogin({ username:'mos3addev', id:res.data.sub , notificationToken:fcmToken ?? null })
+            if(res.data){
+                googleLogin({ username:'mos3addev', id:res?.data?.sub , notificationToken:fcmToken ?? null })
+            }
             },
         onError: (error) => {
             console.error('Login Failed:', error);

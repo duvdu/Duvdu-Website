@@ -24,6 +24,7 @@ import ProjectView from './ProjectView'
 import RentalView from './RentalView'
 import ProducerView from './ProducerView'
 import CopywriterView from './CopywriterView'
+import TeamView from './TeamView'
 import ReportContract from '../../popsup/report-contract';
 
 
@@ -384,7 +385,12 @@ function ReceiveProjectFiles({
                                 <CopywriterView contract={contract}/>
                                 </>
                                 }
-                                
+                                {(getType() == "team") && 
+                                <>
+                                <TeamView contract={contract}/>
+                                </>
+                                }
+
                                 {
                                     contract.attachments?.length > 0 &&
                                     <section className='w-full'>
