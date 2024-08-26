@@ -87,7 +87,7 @@ function OTP({
                             onChange={(value) => setOtp(value)}
                             numInputs={6}
                             renderSeparator={<span style={{ width: "100%" }} > </span>}
-                            renderInput={(props) => <input {...props} className={`${local_error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center`} style={{ width: "53px", height: "62px" }} />}
+                            renderInput={(props) => <input {...props} className={`${local_error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center mx-1`} style={{ width: "53px", height: "62px" }} />}
                         />
 
                         {

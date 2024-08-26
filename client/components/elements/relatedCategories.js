@@ -1,10 +1,10 @@
 
 import { useRouter } from 'next/router';
 import { connect } from 'react-redux';
-import { Link } from 'react-scroll';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import DraggableList from '../pages/home/dragList';
 import { useTranslation } from 'react-i18next';
+import Link from 'next/link';
 
 const RelatedCategories = ({ className, NeedTranslate = true, categories }) => {
     const { t } = useTranslation();
