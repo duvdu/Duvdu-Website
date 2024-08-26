@@ -13,6 +13,7 @@ import { GetProjects } from "../redux/action/apis/cycles/projects/get";
 import DraggableList from "../components/pages/home/dragList";
 import { useTranslation } from 'react-i18next';
 import Filter from "../components/elements/filter";
+import DuvduLoading from "../components/elements/duvduLoading";
 
 const Home = ({
     HomeTreny,
@@ -41,8 +42,8 @@ const Home = ({
     const wordsRef = useRef(null);
     const list = homeTreny_respond?.data || [];
     const router = useRouter();
-    
-    var TheBeststyle = i18n.language == "Arabic" ?{}:{
+
+    var TheBeststyle = i18n.language == "Arabic" ? {} : {
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'bottom',
@@ -62,10 +63,10 @@ const Home = ({
     const page = 1;
     const [limit, setLimit] = useState(showLimit);
 
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive ,keywords} = Router.query
-    
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
+
     // Extract the path part of the URL
-    const cycle ="project";
+    const cycle = "project";
 
 
     useEffect(() => {
@@ -96,19 +97,19 @@ const Home = ({
 
             // Call GetCopyrights with the constructed query string
             GetProjects(queryString)
-           
+
         }
     }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
 
-    
+
     const handleFilterChange = (selectedFilters) => {
-        
+
         // Initialize params object
         const params = {
             limit: limit,
             page: page,
         };
-        
+
         selectedFilters.forEach(filter => {
             switch (filter.name) {
                 case "Category":
@@ -171,7 +172,7 @@ const Home = ({
         GetProjects(queryString)
 
     };
-// console.log(list)
+    console.log(popularSub_respond)
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -200,22 +201,22 @@ const Home = ({
                     <div className="mx-auto w-full py-12">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
                         <div className="flex md:grid md:grid-cols-3 gap-3 px-3 overflow-auto lg:container">
-                            {list?.slice(0,3)?.map((data, index) => (
-                                <Link href={data.cycle ? `/${data.cycle}` : ''} key={index}>
-                                <div
-                                    className="cursor-pointer bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
-                                    style={{ backgroundImage: `url(${data.image})` }}
-                                >
-                                    <span className="text-white text-xl lg:text-3xl font-semibold capitalize">
-                                        {data.title || 'Empty Title'}
-                                    </span>
-                                    <span className="text-white opacity-50 font-semibold text-xs lg:text-lg text-center">
-                                        {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
-                                    </span>
-                                    <Link href={data.cycle ? `/${data.cycle}` : ''} >
-                                        <a className="text-xs font-semibold text-primary bg-white px-5 lg:px-7 py-2 lg:py-3 rounded-full">{t("View More")}</a>
-                                    </Link>
-                                </div>
+                            {list?.slice(0, 3)?.map((data, index) => (
+                                <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} key={index}>
+                                    <div
+                                        className="cursor-pointer bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
+                                        style={{ backgroundImage: `url(${data.image})` }}
+                                    >
+                                        <span className="text-white text-xl lg:text-3xl font-semibold capitalize">
+                                            {data.title || 'Empty Title'}
+                                        </span>
+                                        <span className="text-white opacity-50 font-semibold text-xs lg:text-lg text-center">
+                                            {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
+                                        </span>
+                                        <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
+                                            <a className="text-xs font-semibold text-primary bg-white px-5 lg:px-7 py-2 lg:py-3 rounded-full">{t("View More")}</a>
+                                        </Link>
+                                    </div>
                                 </Link>
                             ))}
 
@@ -232,7 +233,7 @@ const Home = ({
                                 <div className="flex">
                                     <DraggableList>
                                         {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
-                                            <Link key={index} href={data.cycle ? `/${data.cycle}` : ''}  >
+                                            <Link key={index} href={data.cycle ? `/${data.cycle}?category=${data.categoryId}&subCategory=${data._id}` : ''}  >
                                                 <div
                                                     className="cursor-pointer bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] lg:w-[314px] ml-3"
                                                     style={{ backgroundImage: `url(${data.image})` }}
@@ -258,7 +259,7 @@ const Home = ({
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("top categories")}</h2>
                                 <DraggableList>
                                     {categories?.map((data, index) => (
-                                        <Link href={data.cycle ? `/${data.cycle}` : ''} >
+                                        <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
                                             <div
                                                 className={`cursor-pointer bg-black ml-3 h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
                                                 style={{ backgroundImage: `url(${data.image})` }}
@@ -284,35 +285,25 @@ const Home = ({
                             <div className="overflow-auto hide-scrollable-container">
                                 <DraggableList>
                                     {popularSub_respond?.data[0]?.subCategories?.map((category, index) => (
-                                        <div onClick={() => handleNavigation(`/${category.cycle}`)} className='cursor-pointer' key={index}>
+                                        <div onClick={() => handleNavigation(`/${category.cycle}`, new URLSearchParams({
+                                            category: category.categoryId,
+                                            subcategory: category._id,
+                                            tags: category.tags.map(tag => tag._id).join(',')
+                                        }).toString()
+                                        )}
+                                            className='cursor-pointer' key={index}>
                                             <div className="ml-3">
                                                 <img className="h-24 object-cover min-w-[300px] lg:w-full rounded-3xl" src={category.image} />
-                                                <h2 className="text-2xl opacity-60 font-semibold mt-6"
-                                                    
-                                                >{category.title}</h2>
-                                                        <ul className={"flex flex-wrap gap-2 py-2"}>
-                                                            {category?.tags.map((item, index) => (
-                                                                <li className='py-1 px-2 border-[1.5px] border-[#00000033] hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
-                                                                    <div className=' dark:text-[#FFFFFFBF] text-[#00000099] hover:text-[#3E3E3E] font-medium'
-                                                                        onClick={() => handleNavigation(`/${category.cycle}`, `subcategory=${category._id}&${item._id ? "tag=" + item._id : ''}`)}
-                                                                    >{item.name}</div>
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-
-                                                {/* <ul>
-                                                     {category?.subCategories.length > 1 && (
-                                                        <div>
-                                                            {category.subCategories.map((subcategory, subIndex) => (
-                                                                subIndex / category.subCategories.length >= 0.5 && (
-                                                                    <MenuItem key={subIndex} title={subcategory.title} items={subcategory.tags}
-                                                                        onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
-                                                                    />
-                                                                )
-                                                            ))}
-                                                        </div>
-                                                    )} 
-                                                </ul> */}
+                                                <h2 className="text-2xl opacity-60 font-semibold mt-6">{category.title}</h2>
+                                                <ul className={"flex flex-wrap gap-2 py-2"}>
+                                                    {category?.tags.map((item, index) => (
+                                                        <li className='py-1 px-2 border-[1.5px] border-[#00000033] dark:border-[#FFFFFF4D] rounded-full' key={index}>
+                                                            <div className=' dark:text-[#FFFFFFBF] text-[#00000099] font-medium'
+                                                            // onClick={() => handleNavigation(`/${category.cycle}`, `subcategory=${category._id}&${item._id ? "tag=" + item._id : ''}`)}
+                                                            >{item.name}</div>
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
                                         </div>
                                     ))}
@@ -329,7 +320,8 @@ const Home = ({
                     <div className='container'>
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("explore recommended projects")}</h2>
                         <Filter cycle={cycle} onFilterChange={handleFilterChange} />
-                        <div className="h-5"/>
+                        <div className="h-5" />
+                        <DuvduLoading loadingIn={"GetProjects"} />
                         <SectionProjects projects={projects?.data} />
                     </div>
                 </section>
