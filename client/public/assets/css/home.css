@@ -1,5 +1,4 @@
 .minmax-280 {
-  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(293px, 1fr));
 }
 
