@@ -2,45 +2,38 @@ import Auth from '../components/layout/Auth';
 import React, { useEffect, useState } from 'react';
 import Button from '../components/elements/button';
 import Icon from '../components/Icons';
-import { connect } from "react-redux";
 import OTP from '../components/elements/otp';
-import { ASKforgetpassword } from "../redux/action/apis/auth/forgetPassword/askForgetPassword";
-import { errorConvertedMessage} from '../util/util';
+import { errorConvertedMessage } from '../util/util';
 import { useTranslation } from 'react-i18next';
-import { resetpassword } from '../redux/action/apis/auth/forgetPassword/resetPassword';
+import { useRouter } from 'next/router';
+import { connect } from 'react-redux';
 
-function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpassword }) {
+function Page() {
     const { t } = useTranslation();
-    const [step, setStep] = useState(1);
     const [username, setUsername] = useState(null);
-    const pages = ['', 'OTP', 'ResetPassword', 'PasswordChanged'];
+    const router = useRouter();
+    const { query } = router;
 
-    useEffect(() => {
-        const handlePopstate = () => {
-            const queryParams = new URLSearchParams(window.location.search);
-            const page = queryParams.get('page');
-            const newStep = pages.indexOf(page);
-            setStep(newStep !== -1 ? newStep : 1);
-        };
-
-        window.addEventListener('popstate', handlePopstate);
-        return () => window.removeEventListener('popstate', handlePopstate);
-    }, []);
-
-    useEffect(() => {
-        if (ask_respond) handleNextStep(2);
-    }, [ask_respond?.message]);
-
-    useEffect(() => {
-        if (Change_respond) handleNextStep(4);
-    }, [Change_respond?.message]);
-
-    const handleNextStep = (value) => {
-        if (value <= pages.length) {
-            setStep(value);
-            const newURL = `${window.location.pathname}?page=${pages[step]}`;
-            window.history.pushState({ path: newURL }, '', newURL);
+    // Determine which component to render based on the "page" query parameter
+    const getPageComponent = () => {
+        switch (query.page) {
+            case 'OTP':
+                return <OTP onSuccess={() => handleNextStep('ResetPassword')} username={username} />;
+            case 'ResetPassword':
+                return <ResetPassword />;
+            case 'PasswordChanged':
+                return <PasswordChanged />;
+            default:
+                return <EnterYourUserName />;
         }
+    };
+
+    // Handle next step navigation
+    const handleNextStep = (nextPage) => {
+        router.replace({
+            pathname: router.pathname,
+            query: { page: nextPage },
+        });
     };
 
     const EnterYourUserName = () => {
@@ -53,21 +46,15 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                 setNameError({ isError: true, message: 'Enter your username' });
             } else {
                 setNameError({ isError: false, message: '' });
-                ASKforgetpassword({ username: userName });
+                // You can add your own logic here to handle the username submission
                 setUsername(userName);
+                handleNextStep('OTP');
             }
         };
 
         const handleChange = (value) => {
             setUserName(value);
         };
-
-        useEffect(() => {
-            if (api.req === "ASKforgetpassword" && api.error) {
-                const errorMessage = errorConvertedMessage(api.error);
-                setNameError({ isError: true, message: errorMessage });
-            }
-        }, [api.error]);
 
         return (
             <form method="post" onSubmit={handleSubmit}>
@@ -79,10 +66,10 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                         type="text"
                         placeholder={t("@username")}
                         className={nameError.isError ? "app-field error" : "app-field"}
-                        value={userName|| ""}
+                        value={userName || ""}
                         onChange={(e) => handleChange(e.target.value)}
                     />
-                    {nameError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(nameError.message) }} />}
+                    {nameError.isError && <span className="error-msg">{nameError.message}</span>}
                 </div>
                 <div className="h-10" />
                 <button className="w-full" type="submit">
@@ -102,35 +89,18 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
 
         const handleSubmit = (e) => {
             e.preventDefault();
-            let pError = password.length < 8;
-            let pcError = password !== confirmPassword;
-            const uppercaseRegex = /[A-Z]/;
-            const lowercaseRegex = /[a-z]/;
-            const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;        
-              if (password.length < 8) {
+
+            if (password.length < 8) {
                 setPasswordError({ isError: true, message: 'Password must be at least 8 characters long.' });
-              } else if (!uppercaseRegex.test(password)) {
-                  setPasswordError({ isError: true, message: 'Password must contain at least one uppercase letter.' });
-              } else if (!lowercaseRegex.test(password)) {
-                  setPasswordError({ isError: true, message: 'Password must contain at least one lowercase letter.' });
-              } else if (!specialCharRegex.test(password)) {
-                  setPasswordError({ isError: true, message: 'Password must contain at least one special character.' });
-              } else if(password !== confirmPassword) {
+            } else if (password !== confirmPassword) {
+                setConfirmPasswordError({ isError: true, message: 'Passwords do not match' });
+            } else {
                 setPasswordError({ isError: false, message: '' });
-                 setConfirmPasswordError({ isError: pcError, message: pcError ? 'Passwords do not match' : '' });
-              }else {
-                resetpassword({ newPassword: password, username: username });
-                    setConfirmPasswordError({ isError: false, message: '' });
-              }
-
-        };
-
-        useEffect(() => {
-            if (api.req === "ChangePassword" && api.error) {
-                const errorMessage = errorConvertedMessage(api.error);
-                setPasswordError({ isError: true, message: errorMessage });
+                setConfirmPasswordError({ isError: false, message: '' });
+                // Add logic to handle password reset here
+                handleNextStep('PasswordChanged');
             }
-        }, [api.req, api.error]);
+        };
 
         const toggleShowPassword = () => setShowPassword(!showPassword);
         const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
@@ -145,7 +115,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                     <div className="relative password-container">
                         <input
                             type={showPassword ? 'text' : 'password'}
-                            value={password|| ""}
+                            value={password || ""}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder={t("Password *")}
                             autoComplete="on"
@@ -155,13 +125,13 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                             <Icon className="opacity-40" name={showPassword ? "eye-slash" : "eye"} />
                         </div>
                     </div>
-                    {passwordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(passwordError.message) }} />}
+                    {passwordError.isError && <span className="error-msg">{passwordError.message}</span>}
                 </div>
                 <div className={`mb-20 ${confirmPasswordError.isError && 'error'}`}>
                     <div className="relative password-container">
                         <input
                             type={showConfirmPassword ? 'text' : 'password'}
-                            value={confirmPassword|| ""}
+                            value={confirmPassword || ""}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder={t("Confirm Password *")}
                             autoComplete="on"
@@ -171,7 +141,7 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
                             <Icon className="opacity-40" name={showConfirmPassword ? "eye-slash" : "eye"} />
                         </div>
                     </div>
-                    {confirmPasswordError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(confirmPasswordError.message) }} />}
+                    {confirmPasswordError.isError && <span className="error-msg">{confirmPasswordError.message}</span>}
                 </div>
                 <button className="w-full" type="submit">
                     <Button name="reset-password" shadow={true}>{t("Next")}</Button>
@@ -192,25 +162,9 @@ function Page({ api, ASKforgetpassword, ask_respond, Change_respond, resetpasswo
         </div>
     );
 
-    return (
-        <Auth>
-            {step === 1 && <EnterYourUserName />}
-            {step === 2 && <OTP onSuccess={() => handleNextStep(3)} username={username} />}
-            {step === 3 && <ResetPassword />}
-            {step === 4 && <PasswordChanged />}
-        </Auth>
-    );
+    return <Auth>{getPageComponent()}</Auth>;
 }
 
-const mapStateToProps = (state) => ({
-    api: state.api,
-    ask_respond: state.api.ASKforgetpassword,
-    Change_respond: state.api.resetpassword
-});
 
-const mapDispatchToProps = {
-    ASKforgetpassword,
-    resetpassword
-};
+export default Page;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
