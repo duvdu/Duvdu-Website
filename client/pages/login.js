@@ -12,7 +12,7 @@ import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
 import useFcmToken from "../util/hooks/useFcmToken";
 import { useTranslation } from 'react-i18next';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import GoogleLogin from "../components/pages/Login/GoogleLogin";
+import SocialLogin from "../components/pages/Login/SocialLogin";
 
 function Login({ api, login_respond, login, resendCode, getMyprofile }) {
     const { t } = useTranslation();
@@ -163,9 +163,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             <p className="px-4 font-bold my-10 ">{t("OR")}</p>
             <div className="border-t border-black opacity-20 w-full my-4"></div>
           </div>
-          <GoogleOAuthProvider clientId={clientId}>
-            <GoogleLogin/>
-          </GoogleOAuthProvider>
+          <SocialLogin/>
         </form>
       </Auth>
     </>

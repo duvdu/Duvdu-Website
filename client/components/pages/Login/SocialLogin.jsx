@@ -1,0 +1,88 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { connect } from "react-redux";
+import firebaseApp from '../../../util/firebase';
+import { getAuth, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
+import useFcmToken from "../../../util/hooks/useFcmToken";
+import { getMyprofile } from "../../../redux/action/apis/auth/profile/getProfile";
+import { googleLogin } from '../../../redux/action/apis/auth/signin/googleLogin';
+
+function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
+    const auth = getAuth(firebaseApp);
+    const googleProvider = new GoogleAuthProvider();
+    const appleProvider = new OAuthProvider('apple.com');
+    const { t } = useTranslation();
+    const clientId = "475213071438-mn7lcjd3sdq0ltsv92n04pr97ipdhe9g.apps.googleusercontent.com";
+    const { fcmToken, notificationPermissionStatus } = useFcmToken();
+
+    React.useEffect(() => {
+        if (login_respond?.message) {
+            getMyprofile();
+        }
+    }, [login_respond?.message]);
+
+    const loginWithGoogle = () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                const user = result.user;
+                console.log({ user, token, credential });
+                googleLogin({ username: user?.email.split('@')[0], id: user?.uid, notificationToken: fcmToken ?? null });
+            })
+            .catch((error) => {
+                console.log({ error });
+                const credential = GoogleAuthProvider.credentialFromError(error);
+            });
+    };
+
+    const loginWithApple = () => {
+        signInWithPopup(auth, appleProvider)
+            .then((result) => {
+                const credential = OAuthProvider.credentialFromResult(result);
+                const user = result.user;
+                console.log({ user, credential });
+                googleLogin({ username: user?.email.split('@')[0], id: user?.uid, notificationToken: fcmToken ?? null });
+            })
+            .catch((error) => {
+                console.log({ error });
+                const credential = OAuthProvider.credentialFromError(error);
+            });
+    };
+
+    return (
+        <GoogleOAuthProvider clientId={clientId}>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <div
+                    onClick={() => loginWithGoogle()}
+                    className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer"
+                >
+                    <img src="/assets/imgs/theme/google-icon.svg" alt="Google Icon" />
+                    <p className="text-lg font-bold">{t("Google")}</p>
+                </div>
+                <div
+                    onClick={() => loginWithApple()}
+                    className="rounded-full border border-solid border-DS_gray_1 hover:border-primary py-4 w-full flex justify-center gap-4 items-center cursor-pointer"
+                >
+                    <img src="/assets/imgs/theme/apple-logo.png" className="w-9 dark:invert" alt="Apple Logo" />
+                    <p className="text-lg font-bold">{t("Apple")}</p>
+                </div>
+            </div>
+        </GoogleOAuthProvider>
+    );
+};
+
+const mapStateToProps = (state) => ({
+    api: state.api,
+    login_respond: state.api.login,
+    resendCode_respond: state.api.resendCode,
+    user: state.auth
+});
+
+const mapDispatchToProps = {
+    googleLogin,
+    getMyprofile
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SocialLogin);
