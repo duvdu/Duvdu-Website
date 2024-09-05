@@ -7,7 +7,7 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" }
     
     const { t } = useTranslation();
     const [uploadedFiles, setUploadedFiles] = useState(value || []);
-    const maxFileSize = '3 MB';
+    const maxFileSize = '99 TB';
 
     useEffect(() => {
         setUploadedFiles(value || []);
