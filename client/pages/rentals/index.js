@@ -126,7 +126,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                                     {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
-                                    <ProjectCard cardData={item} type="studio-booking" />
+                                    <ProjectCard cardData={item} type="rentals" />
                                 </React.Fragment>
                             ))}
                         </div>

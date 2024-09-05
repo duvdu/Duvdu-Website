@@ -65,9 +65,9 @@ const Projects = ({
                             {getPaginatedProjects?.map((item, i) => (
                                 item?.project && (
                                     (item?.cycle == "studio-booking" || item?.cycle == "rentals") ? (
-                                        <ProjectCard key={`studio-${i}`} cardData={item.project} type="studio-booking" enbablelove={true}/>
+                                        <ProjectCard key={`studio-${i}`} cardData={item.project} type="rentals" enbablelove={true}/>
                                     ) : (
-                                        <ProjectCard key={`project-${i}`} cardData={item.project}  enbablelove={true}/>
+                                        <ProjectCard key={`project-${i}`} cardData={item.project} enbablelove={true}/>
                                     )
                                 )
                             ))}
