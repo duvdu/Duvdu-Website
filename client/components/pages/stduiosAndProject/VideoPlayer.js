@@ -13,7 +13,7 @@ const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setI
     setIsAnimating(!isPlaying)
   };
   return (
-    <div className='w-full h-full md:px-5 md:px-0 relative'>
+    <div className='w-full h-full relative'>
     <video
       ref={audioRef}
       controls
