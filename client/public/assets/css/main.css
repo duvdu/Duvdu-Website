@@ -2098,6 +2098,10 @@ table p {
   margin-top: var(--header-height);
   margin-bottom: 2.25rem;
 }
+::-webkit-scrollbar-thumb:horizontal{
+  background: transparent !important;
+  opacity: 0;
+}
 
 .popup .content::-webkit-scrollbar-track {
   margin-top: 2.25rem;
