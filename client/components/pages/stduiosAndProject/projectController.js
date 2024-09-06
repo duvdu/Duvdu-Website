@@ -69,7 +69,7 @@ const ProjectController = ({ initialData,
                                     />
                                     <div className={`absolute w-4 h-4 border-2 border-white rounded-full right-0 -translate-y-3 ${online ? 'bg-green-500' : 'bg-gray-500'}`} />
                                 </div>
-                                <div className="px-3">
+                                <div className="px-3 flex items-center">
                                     <span className="capitalize font-bold">
                                         {data?.user?.name?.split(' ')[0].length>6?data?.user?.name?.split(' ')[0].slice(0,6):data?.user?.name?.split(' ')[0] || 'NONE'}
                                     </span>

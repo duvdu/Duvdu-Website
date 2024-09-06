@@ -7,14 +7,14 @@ import { isVideo  } from '../../../util/util';
 import Icon from '../../Icons';
 import ProjectCover from './projectShow';
 
-const Details = ({ data }) => {
+const Details = ({ data , onAudioPlay }) => {
     const { t } = useTranslation();
 
-  
-    console.log(data)
     return (
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-4 mx-5">
-        <ProjectCover data={data?.attachments[0]} cover={data?.cover}/>
+            <div className='rounded-[50px] overflow-hidden'>
+                <ProjectCover onAudioPlay={onAudioPlay} hidden={true} data={data?.attachments[0]} cover={data?.cover}/>
+            </div>
             {/* <div className="w-full h-72 border-50 overflow-hidden">
             {!isVideo(data?.cover) ? (
           <img className='w-full h-full object-cover' src={data?.cover}/>

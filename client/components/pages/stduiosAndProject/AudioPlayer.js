@@ -1,8 +1,6 @@
 import React, { useRef, useState } from "react";
 
-const AudioPlayer = ({src}) => {
-  const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+const AudioPlayer = ({ src, audioRef, isPlaying, setIsPlaying }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -43,20 +41,20 @@ const AudioPlayer = ({src}) => {
         <div className="progress-bars">
           <div
             className="progress"
-            style={{ width: `${(currentTime / duration) * 100}%` , background:'white' }}
+            style={{ width: `${(currentTime / duration) * 100}%`, background: "white" }}
           ></div>
         </div>
       </div>
-      <div className='flex items-center justify-between w-full px-3'>
-        <span className='text-white'>{formatTime(currentTime)}</span>
-        <span className='text-white'>-{formatTime(duration - currentTime)}</span>
+      <div className="flex items-center justify-between w-full px-3">
+        <span className="text-white">{formatTime(currentTime)}</span>
+        <span className="text-white">-{formatTime(duration - currentTime)}</span>
       </div>
       <div className="buttons">
-        <button  onClick={togglePlayPause}>
+        <button onClick={togglePlayPause}>
           {isPlaying ? (
-            <span className='text-white'>&#10074;&#10074;</span>
+            <span className="text-white">&#10074;&#10074;</span>
           ) : (
-            <span className='text-white'>&#9654;</span>
+            <span className="text-white">&#9654;</span>
           )}
         </button>
       </div>

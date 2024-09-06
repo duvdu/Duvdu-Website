@@ -2550,6 +2550,8 @@ backdrop-filter: blur(7.08819px);
   width: 300px;
   color: white;
   font-family: Arial, sans-serif;
+  z-index:100;
+  position:relative;
 }
 
 .controls {

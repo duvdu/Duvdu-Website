@@ -43,6 +43,7 @@ const Projects = ({
     const [project, setProject] = useState(project_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
+    const [playingAudioRef, setPlayingAudioRef] = useState(null);
 
     useEffect(() => {
         setProject(project_respond?.data);
@@ -68,7 +69,13 @@ const Projects = ({
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
-
+    const handleAudioPlay = (newAudioRef) => {
+        if (playingAudioRef && playingAudioRef !== newAudioRef) {
+          playingAudioRef.pause();
+        }
+        setPlayingAudioRef(newAudioRef);
+      };
+    
     return (
         <>
             <Layout>
@@ -109,6 +116,11 @@ const Projects = ({
                                                         clickable: true,
                                                         el: '.swiper-pagination',
                                                     }}
+                                                    onSlideChange={() => {
+                                                        if (playingAudioRef) {
+                                                          playingAudioRef.pause();  // Pause the currently playing audio when the slide changes
+                                                        }
+                                                      }}
                                                     navigation={{
                                                         prevEl: '.custom-swiper-prev',
                                                         nextEl: '.custom-swiper-next',
@@ -116,7 +128,7 @@ const Projects = ({
                                                 >
                                                     {project?.attachments.map((item, index) => {
                                                         return <SwiperSlide key={index}>
-                                                            <ProjectCover data={item} cover={project?.cover} />
+                                                            <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={project?.cover} />
                                                         </SwiperSlide>
                                                     })}
                                                 </Swiper>
@@ -130,7 +142,7 @@ const Projects = ({
                                         <About data={project} />
                                     </section>
                                     <section className="lg:w-1/3 mt-10 lg:mt-0">
-                                        <Details data={project} />
+                                        <Details onAudioPlay={handleAudioPlay} data={project} />
                                         <Reviews data={project} />
                                     </section>
                                 </div>
