@@ -41,6 +41,7 @@ const Studio = ({
     const [studio, setStudio] = useState(studio_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
+    const [playingAudioRef, setPlayingAudioRef] = useState(null);
 
     useEffect(() => {
         setStudio(studio_respond?.data);
@@ -73,7 +74,13 @@ const Studio = ({
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
-    console.log(studio?.attachments.length)
+    const handleAudioPlay = (newAudioRef) => {
+        if (playingAudioRef && playingAudioRef !== newAudioRef) {
+          playingAudioRef.pause();
+        }
+        setPlayingAudioRef(newAudioRef);
+      };
+
     return (
         <>
             <Layout >
@@ -116,6 +123,11 @@ const Studio = ({
                                                             clickable: true,
                                                             el: '.swiper-pagination',
                                                         }}
+                                                        onSlideChange={() => {
+                                                            if (playingAudioRef) {
+                                                              playingAudioRef.pause();  // Pause the currently playing audio when the slide changes
+                                                            }
+                                                          }}    
                                                         navigation={{
                                                             prevEl: '.custom-swiper-prev',
                                                             nextEl: '.custom-swiper-next',
@@ -125,19 +137,22 @@ const Studio = ({
                                                             return <SwiperSlide key={index}>
                                                                 <ProjectCover data={item} cover={studio?.cover} />
                                                             </SwiperSlide>
+                                                            return <SwiperSlide key={index}>
+                                                                <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={studio?.cover} />
+                                                            </SwiperSlide>                                                        
                                                         })}
                                                     </Swiper>
                                                     {/* Pagination Bullets */}
                                                     <div className="swiper-pagination"></div>
                                                 </div> :
                                                 <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
-                                                    <ProjectCover data={studio?.attachments[0]} cover={studio?.cover} />
+=                                                    <ProjectCover data={studio?.attachments[0]} cover={studio?.cover} />
                                                 </div>
                                             }
                                             <About data={studio} />
                                         </section>
                                         <section className="lg:w-1/3 mt-10 lg:mt-0">
-                                            <Details data={studio} />
+                                        <Details onAudioPlay={handleAudioPlay} data={studio} />
                                             <Reviews data={studio} />
                                         </section>
                                     </div>
