@@ -172,7 +172,7 @@ const Home = ({
         GetProjects(queryString)
 
     };
-    console.log(popularSub_respond)
+    console.log(list)
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -211,7 +211,7 @@ const Home = ({
                                             {data.title || 'Empty Title'}
                                         </span>
                                         <span className="text-white opacity-50 font-semibold text-xs lg:text-lg text-center">
-                                            {data.title ? 'Lectus ut aenean nisi consequat sit nisl pulvinar vulputate. ridiculus facilisis.' : 'This is an empty item.'}
+                                            {data.title ? t('category_description') : 'This is an empty item.'}
                                         </span>
                                         <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
                                             <a className="text-xs font-semibold text-primary bg-white px-5 lg:px-7 py-2 lg:py-3 rounded-full">{t("View More")}</a>
