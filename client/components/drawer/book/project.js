@@ -193,7 +193,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <h3 className="capitalize opacity-60 mb-4">{t("location")}</h3>
                                 <GoogleMap
                                     width={'100%'}
-                                    isreadOnly={true}
+                                    isreadOnly={false}
                                     value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
                                     inputclass={inputStyle}
                                     className={"relative rounded-md overflow-hidden h-[250px] border-2 border-[#E5E5E5]"}
