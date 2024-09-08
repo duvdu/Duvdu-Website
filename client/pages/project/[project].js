@@ -136,7 +136,7 @@ const Projects = ({
                                                 <div className="swiper-pagination"></div>
                                             </div> :
                                             <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
-                                                <ProjectCover data={project?.attachments[0]} cover={project?.cover} />
+                                                <ProjectCover onAudioPlay={handleAudioPlay}  data={project?.attachments[0]} cover={project?.cover} />
                                             </div>
                                         }
                                         <About data={project} />
