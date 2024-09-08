@@ -23,18 +23,18 @@ const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setI
       <source src={src} type='video/mp4' />
     </video>
     <div
-      className={`absolute inset-0 flex flex-row items-center justify-center ${isAnimating ? 'animate-ping' : ''}`}
+      className={`absolute inset-x-0 top-0 bottom-20 flex flex-row items-center justify-center ${isAnimating ? 'animate-ping' : ''}`}
       onClick={togglePlayPause}
     >
       {(isAnimating && isPlaying) &&
-        <div  className='top-1/2 left-1/2 icon-pause rounded-full ps-10 p-7 size-16 flex flex-row items-center justify-center'>
+        <div  className='top-1/2 left-1/2 translate-y-1/2 icon-pause rounded-full ps-10 p-7 size-16 flex flex-row items-center justify-center'>
           <Icon className='text-white my-auto text-center'  name={"pause-video"} />
         </div>
       }
    
 
       {(!isPlaying) &&
-        <div className='top-1/2 left-1/2 icon-pause rounded-full p-7 size-16 flex flex-row items-center justify-center'>
+        <div className='top-1/2 left-1/2 translate-y-1/2 icon-pause rounded-full p-7 size-16 flex flex-row items-center justify-center'>
           <Icon className='text-white ' name={"play-video"} />
           </div>
       }

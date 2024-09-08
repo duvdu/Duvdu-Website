@@ -56,6 +56,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     useEffect(() => {
         if (user?.username)
             userReview({ username: user.username })
+            GetUserProject({ username: user?.username });
     }, [user?.username])
 
     function removeQueryParameter() {

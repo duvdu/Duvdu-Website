@@ -1,0 +1,260 @@
+import React from 'react';
+import Icon from '../../Icons';
+import { useState, useRef, useEffect } from 'react';
+import { convertDuration, isVideo } from '../../../util/util';
+import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { connect } from "react-redux";
+
+import 'swiper/swiper-bundle.css';
+import { AddProjectToBoard } from '../../../redux/action/apis/savedProject/boardProjects/add';
+import { DeleteProjectFromBoard } from '../../../redux/action/apis/savedProject/boardProjects/remove';
+import Link from 'next/link';
+import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
+import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
+import { useTranslation } from 'react-i18next';
+
+const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+    const { t, i18n } = useTranslation();
+    const [soundIconName, setSoundIconName] = useState('volume-xmark');
+    const [isMuted, setIsMuted] = useState(false);
+    const [Duration, setDuration] = useState(0);
+    const videoRef = useRef(null);
+    const cardData = initialCardData?.project;
+    console.log({cardData , initialCardData})
+    const [fav, setFav] = useState(false);
+
+    useEffect(() => {
+        if (cardData?._id === (swapProjectToFav_respond?.projectId || -1)) {
+            setFav(swapProjectToFav_respond.action === "add");
+        }
+    }, [cardData, swapProjectToFav_respond]);
+
+    useEffect(() => {
+        if (enbablelove)
+            setFav(true);
+        if (cardData?.isFavourite)
+            setFav(cardData?.isFavourite);
+    }, [cardData?.isFavourite, enbablelove]);
+
+
+    const loveIconName = fav ? 'fas' : 'far'
+
+    useEffect(() => {
+        if (videoRef.current) {
+            const timerId = setInterval(() => {
+                if (videoRef.current?.duration) {
+                    setDuration(videoRef.current.duration);
+                    clearInterval(timerId);
+                }
+            }, 10)
+        }
+    }, [videoRef.current?.duration == NaN]);
+
+    const loveToggleAction = () => {
+        SwapProjectToFav({ projectId: cardData?._id, action: fav ? "remove" : "add" })
+    };
+
+    const timeUpdate = () => {
+        setDuration(videoRef.current.duration - videoRef.current.currentTime);
+    }
+    const handleSoundIconClick = () => {
+        setIsMuted(soundIconName === 'volume-xmark' ? true : false)
+        setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark')
+        if (videoRef.current)
+            videoRef.current.muted = soundIconName === 'volume-high';
+    };
+
+    const handleHover = () => {
+        if (videoRef.current) {
+            videoRef.current.play();
+            videoRef.current.muted = !isMuted;
+        }
+    };
+
+    const handleLeave = () => {
+        if (videoRef.current) {
+            videoRef.current.pause();
+            videoRef.current.currentTime = 0;
+            setDuration(videoRef.current.duration);
+        }
+
+    };
+    const handleTouchStart = () => {
+        const timeout = setTimeout(() => {
+            handleHover(); // Trigger hover behavior on long press
+        }, 500); // Adjust duration for long press
+        setLongPressTimeout(timeout);
+    };
+
+    const handleTouchEnd = () => {
+        clearTimeout(longPressTimeout);
+        handleLeave(); // Trigger leave behavior when touch ends
+    };
+
+    // useEffect(() => {
+    //   if (cardData?._id) {
+    //     setLove(isFav(cardData?._id, getBoards_respond))
+    //   }
+    // }, [cardData?._id, getBoards_respond,addProjectToBoard_respond]);
+
+    const isVideoCover = isVideo(cardData?.cover)
+    const handleVideoLoad = () => {
+        if (videoRef.current) {
+            setDuration(videoRef.current.duration);
+        }
+    };    
+    return (
+        <>
+            <div className={isbig ? 'profile-project big w-full xl:w-68% cursor-pointer relative' : 'profile-project small w-48% xl:w-28% cursor-pointer relative'} onClick={() => { }} >
+                {cardData.projectBudget && 
+                <div className='creatives'>
+                    {cardData.projectBudget} $
+                </div>
+                }
+                <div className={`title ${isbig ? 'size-big' : 'size-small'}`}>
+                    {cardData?.name || cardData?.title}
+                </div>
+
+                <div
+                    onMouseEnter={handleHover}
+                    onMouseLeave={handleLeave}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    className='project home_project'>
+                    <>
+                        {
+                            // cardData?.cover.length == 1 &&
+                            isVideoCover ? ( // Check if source is a video
+                                <Link href={`/${type}/${cardData?._id}`}>
+                                    <a>
+                                        <video
+                                            id={cardData?._id}
+                                            className='cardvideo h-full'
+                                            ref={videoRef}
+                                            onTimeUpdate={timeUpdate}
+                                            onLoadedData={handleVideoLoad} // Ensure video is loaded before interaction
+                                            preload="auto"
+                                            loop
+                                        >
+                                            <source src={cardData?.cover} type='video/mp4' />
+                                        </video>
+                                        <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                                            <span className="text-white">
+                                                {convertDuration(Duration * 1000)}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </Link>
+                            ) : (
+                                <Link href={`/${type}/${cardData?._id}`}>
+                                    <a>
+                                        <img className='cardimg cursor-pointer' src={cardData?.cover} alt="project" />
+                                    </a>
+                                </Link>
+                            )
+                        }
+                        {
+                            false &&
+                            cardData?.backgroundImages.length > 1 &&
+                            <Link href={`/${type}/${cardData?._id}`}>
+                                <Swiper
+                                    dir='ltr'
+                                    className='cardimg'
+                                    modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                                    spaceBetween={0}
+                                    slidesPerView={1}
+                                    scrollbar={{ draggable: true }}
+                                    loop={true}
+                                    pagination={{
+                                        clickable: true,
+                                    }}
+                                >
+                                    {cardData?.backgroundImages.map((source, index) => (
+                                        <SwiperSlide key={index}>
+                                            <img key={index} src={source} className='cardimg' alt="project" />
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            </Link>
+                        }
+                    </>
+                    {
+                        isVideoCover &&
+                        <div onClick={handleSoundIconClick} className="blur-container absolute w-11 h-11 top-[15px] left-[15px] z-[1]">
+                            <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
+                        </div>
+                    }
+                </div>
+                <div className='mt-3 flex justify-between items-center'>
+                    <div className='flex gap-2'>
+                        <div className='flex items-center gap-3'>
+                            <Link href={`/creative/${cardData?.user?.username}`} >
+                                <div className='cursor-pointer'>
+                                    <img src={cardData?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
+                                </div>
+                            </Link>
+                            <Link href={`/creative/${cardData?.user?.username}`}>
+                                <div className='cursor-pointer' >
+                                    <span className='text-sm font-semibold'>{cardData?.user?.name?.split(' ')[0].length > 6 ? cardData?.user?.name?.split(' ')[0].slice(0, 6) : cardData?.user?.name?.split(' ')[0] || 'NONE'}</span>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className='flex items-center gap-1'>
+                            <Icon className='text-primary size-4' name={'star'} />
+                            <span className='text-xs text-primary font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
+                        </div>
+                    </div>
+                    <div>
+                        {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) && (
+                            <>
+                                {i18n.language !== "Arabic" ? (
+                                    <>
+                                        <span className="text-xs opacity-60 font-semibold">
+                                            from {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} L.E
+                                        </span>
+                                        {cardData?.projectScale?.unit && (
+                                            <span className="text-xs ml-1 opacity-60 font-semibold">
+                                                per {cardData?.projectScale?.unit}
+                                            </span>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="text-xs opacity-60 font-semibold">
+                                         {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} ج.م </span>
+                                        {cardData?.projectScale?.unit && (
+                                            <span className="text-xs ml-1 opacity-60 font-semibold">
+                                                لكل {t(cardData?.projectScale?.unit)}
+                                            </span>
+                                        )}
+                                    </>
+                                )}
+                            </>
+                        )}
+
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+const mapStateToProps = (state) => ({
+    api: state.api,
+    islogin: state.auth.login,
+    getBoards_respond: state.api.GetBoards,
+    addProjectToBoard_respond: state.api.AddProjectToBoard,
+    swapProjectToFav_respond: state.api.SwapProjectToFav,
+    GetProject_respond: state.api.GetProject,
+
+});
+
+const mapDispatchToProps = {
+    AddProjectToBoard,
+    DeleteProjectFromBoard,
+    SwapProjectToFav,
+    GetProject
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectItemHome);

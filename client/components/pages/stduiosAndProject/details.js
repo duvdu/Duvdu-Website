@@ -105,8 +105,10 @@ const Details = ({ data , onAudioPlay }) => {
                     </div>
                 </>
             }
-            <h3 className="capitalize opacity-50 font-medium mt-3">{t("description")}</h3>
-            <span className="capitalize font-semibold mt-4">{data?.desc || data?.description}</span>
+            <h3 className="capitalize opacity-50 font-medium mt-5">{t("description")}</h3>
+            <div>
+                <span className="capitalize font-semibold mt-4">{data?.desc || data?.description}</span>
+            </div>
             {
                 data.duration &&
                 <section>
