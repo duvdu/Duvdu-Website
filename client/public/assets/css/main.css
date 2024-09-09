@@ -31,21 +31,14 @@ TABLE CONTENT
 .test{
   
 }
+@import url('font.css');
+
 @import url('./tailwinds.css');
 
 /*import plugins*/
 /*RESET*/
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
-
-@font-face {
-  font-family: 'Urbanist';
-  src: url('../fonts/Urbanist/Urbanist.woff') format('woff');
-  /* src: url('../fonts/Urbanist/Urbanist.ttf') format('truetype'); */
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 @font-face {
   font-family: 'Cairo';
