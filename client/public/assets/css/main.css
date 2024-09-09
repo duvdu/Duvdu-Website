@@ -40,8 +40,11 @@ TABLE CONTENT
 
 @font-face {
   font-family: 'Urbanist';
-  src: url('../fonts/Urbanist/Urbanist.ttf') format('truetype');
-  src: url('../fonts/Urbanist/Urbanist.woff') format('woff'),;
+  src: url('../fonts/Urbanist/Urbanist.woff') format('woff');
+  /* src: url('../fonts/Urbanist/Urbanist.ttf') format('truetype'); */
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
