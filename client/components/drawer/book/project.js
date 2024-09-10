@@ -74,12 +74,14 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData['location[lat]'] || !formData['location[lng]']) errors.location = 'Location is required';
-        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
+        // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
 
         return errors;
     };
 
     const enableBtn = Object.keys(validateRequiredFields()).length == 0
+    let ErrorMsg = ""
+    if(!enableBtn) ErrorMsg = Object.values(validateRequiredFields())[0]
 
     function ontoggleDrawer(all) {
         if (preview)
@@ -169,14 +171,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                     <></> :
                     <>
                         <div className={preview ? ' hidden' : 'p-8 pt-0'}>
-                            {/* {
-                                false &&
-                                creatives.length > 0 &&
-                                <section className="my-11">
-                                    <h3 className="capitalize opacity-60 mb-4">{t("team")}</h3>
-                                    <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} onChange={(value) => UpdateFormData('creative', value)} />
-                                </section>
-                            } */}
                             {
                                 (data?.tools || data?.equipments)?.length > 0 &&
                                 <section className="my-11">
@@ -232,6 +226,9 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                             </section>
                             <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
+                            <span className="text-rose-700 text-base text-center">
+                                    {ErrorMsg}
+                            </span>
                                 <div className="flex justify-center">
                                     <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
                                 </div>
