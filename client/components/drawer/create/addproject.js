@@ -34,7 +34,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const categoryDetails = categories.find(i => i._id == formData.category)
 
     const listDropDown =
-    categoryDetails ? (categoryDetails?.media === 'image'
+        categoryDetails ? (categoryDetails?.media === 'image'
             ? ['image']
             : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
                 ? ['minutes', 'hours']
@@ -120,7 +120,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
     let ErrorMsg = ""
-    if(!isEnable) ErrorMsg = Object.values(validateRequiredFields())[0]
+    if (!isEnable) ErrorMsg = Object.values(validateRequiredFields())[0]
 
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
@@ -178,7 +178,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             pathname: `/creative/${auth.username}`,
         })
     }
-    
+
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
@@ -204,7 +204,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                             </div>
                             <section>
                                 <h3 className="capitalize opacity-60">{t("attachments")}</h3>
-                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media}/>
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
                             </section>
                             <section>
                                 <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
@@ -331,7 +331,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
                             <span className="text-rose-700 text-base text-center mt-4">
-                                    {ErrorMsg}
+                                {ErrorMsg}
                             </span>
                             <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
