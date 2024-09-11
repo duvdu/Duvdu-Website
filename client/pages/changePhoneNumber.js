@@ -77,7 +77,7 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
         const [numberError, setNumberError] = useState({ isError: false, message: '' });
 
         if (api.req == "UpdatePhone" && api.error && !numberError.isError) {
-            const errorMessage = errorConvertedMessage(api.error)
+            const errorMessage = errorConvertedMessage(api.error).replace("phoneNumber.number is already exists","phone number is already exists")
             setNumberError({ isError: true, message: errorMessage });
         }
 
@@ -91,7 +91,6 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
             }
             else if (!egyptianPhoneRegex.test(PhoneNumber)) {
                 setNumberError( { isError: true, message: 'Invalid Egyptian phone number.' });
-
             }
             else {
                 setNumberError({ isError: false, message: '' });

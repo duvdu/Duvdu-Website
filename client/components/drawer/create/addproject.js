@@ -34,7 +34,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const categoryDetails = categories.find(i => i._id == formData.category)
 
     const listDropDown =
-    categoryDetails ? (categoryDetails?.media === 'image'
+        categoryDetails ? (categoryDetails?.media === 'image'
             ? ['image']
             : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
                 ? ['minutes', 'hours']
@@ -107,7 +107,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         // if (!formData.tools || !formData.tools.length) errors.title = 'tools is required';
         // if (!formData.functions || !formData.functions.length) errors.title = 'functions is required';
         // if (!formData.creatives || !formData.creatives.length) errors.title = 'creatives is required';
-        if ((formData.description?.length || 0) < 6) errors.desc = 'Description is required';
+        if ((formData.description?.length || 0) < 6) errors.desc = 'Description must be at least 6 characters long';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'duration is required';
         // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
@@ -119,7 +119,9 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-    
+    let ErrorMsg = ""
+    if (!isEnable) ErrorMsg = Object.values(validateRequiredFields())[0]
+
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -176,7 +178,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             pathname: `/creative/${auth.username}`,
         })
     }
-    
+
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
@@ -202,7 +204,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                             </div>
                             <section>
                                 <h3 className="capitalize opacity-60">{t("attachments")}</h3>
-                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media}/>
+                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
                             </section>
                             <section>
                                 <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
@@ -328,7 +330,10 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
-                            <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mt-4 mx-20" shadow={true} shadowHeight={"14"}>
+                            <span className="text-rose-700 text-base text-center mt-4">
+                                {ErrorMsg}
+                            </span>
+                            <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                             </Button>
 
