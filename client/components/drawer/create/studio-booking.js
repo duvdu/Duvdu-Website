@@ -31,7 +31,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
-    categories = filterByCycleCategory(categories, 'studio-booking')
+    categories = filterByCycleCategory(categories, 'rentals')
 
     const converting = () => {
         const data = convertToFormData(formData, ['location', 'tags', 'attachments', 'searchKeywords'])
@@ -161,7 +161,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
-                                    filterIn={"studio-booking"}
+                                    filterIn={"rentals"}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,

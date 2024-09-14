@@ -17,7 +17,7 @@ function ratingProject({ data = {}, rate_respond, Rate }) {
     const handleSubmitRate = () => {
         Rate({
             project: data._id || "",
-            cycle: data.cycle || "studio-booking",
+            cycle: data.cycle || "rentals",
             rate,
             comment: desc,
         });

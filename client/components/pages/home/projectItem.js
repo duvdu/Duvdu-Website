@@ -118,6 +118,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                                         <video
                                             className='cardvideo h-full'
                                             ref={videoRef}
+                                            id={cardData?._id}
                                             onTimeUpdate={timeUpdate}
                                             loop
                                         >

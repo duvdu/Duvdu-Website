@@ -18,7 +18,7 @@ function RatingContract({ data = {} , rate_respond , RateContract}) {
     const handleSubmitRate = () => {
         RateContract({
             contract: data._id || "", 
-            cycle: data.cycle || "studio-booking",
+            cycle: data.cycle || "rentals",
             rate,
             comment:desc,
         });

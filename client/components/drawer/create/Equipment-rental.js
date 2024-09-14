@@ -188,7 +188,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
-                                filterIn={'studio-booking'}
+                                filterIn={'rentals'}
                                     value={{
                                         'category': formData.category,
                                         'subCategory': formData.subCategory,

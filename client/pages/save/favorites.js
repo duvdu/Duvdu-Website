@@ -64,7 +64,7 @@ const Projects = ({
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
                                 item?.project && (
-                                    (item?.cycle == "studio-booking" || item?.cycle == "rentals") ? (
+                                    (item?.cycle == "rentals" || item?.cycle == "studio-booking") ? (
                                         <ProjectCard key={`studio-${i}`} cardData={item.project} type="rentals" enbablelove={true}/>
                                     ) : (
                                         <ProjectCard key={`project-${i}`} cardData={item.project} enbablelove={true}/>

@@ -60,7 +60,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
     ];
     // { value: 4, name: "Location" },
 
-    if (cycle === "studio-booking") filterData.push({ value: 7, name: "Insurance" });
+    if (cycle === "rentals") filterData.push({ value: 7, name: "Insurance" });
     if (cycle === "copy-rights" || cycle === "producer") {
         filterData.push({ value: 5, name: "Budget Range" });
     }
