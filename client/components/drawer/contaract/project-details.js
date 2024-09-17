@@ -106,8 +106,10 @@ function ReceiveProjectFiles({
                 return <NormalState value={"Rejected"} />;
             case 'canceled':
                 return <NormalState value={"Canceled"} />;
+            case 'accepted':
+                return <NormalState value={"Accepted"} />;
             default:
-                return "Unknown"; // Handle unknown cases as needed
+                return "";
         }
     };
 
@@ -239,7 +241,7 @@ function ReceiveProjectFiles({
     };
 
     const openReview = () => {
-        OpenPopUp('Rating-contract')
+        OpenPopUp('Rating-project')
     };
     const openComplain = () => {
         OpenPopUp('report-contract')
@@ -312,7 +314,7 @@ function ReceiveProjectFiles({
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
-            <RatingProject />
+            <RatingProject data={contract}/>
             <ReportContract data={contract} />
             
             <Drawer isOpen={!!contractDetails} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
@@ -409,16 +411,16 @@ function ReceiveProjectFiles({
                                 }
 
                             </div>
-                            <div className={'flex mx-5 gap-7 mb-10 mt-16 justify-center' + (canEdit ? ' hidden' : '')}>
+                            <div className={'flex mx-5 gap-7 mt-16 justify-center' + (canEdit ? ' hidden' : '')}>
                                 {
                                     (
                                         (status == "pending" && getType() == "producer" && IsImSp()) ||
                                         (status == "update-after-first-Payment" && getType() == "copyrights" && IsImSp()) ||
                                         (status == "update-after-first-Payment" && getType() === "project" && IsImSp())
                                     ) &&
-                                    < Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={() => setCanEdit(true)}>
-                                        <span className='text-white font-bold capitalize text-lg'>{t("Edit some Details")}</span>
-                                    </Button>
+                                    < button className="rounded-full border-2 border-solid border-primary w-full h-[66px] text-primary text-lg font-bold mt-2" shadow={true} shadowHeight={"14"} onClick={() => setCanEdit(true)}>
+                                        {t("Edit some Details")}
+                                    </button>
                                 }
                             </div>
                             {canEdit &&
@@ -555,13 +557,6 @@ function ReceiveProjectFiles({
                                     </Button>
                                 </section>
                             }
-                            {
-                                <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} color={"#D30000"}  onClick={openComplain}>
-                                        <span className='text-white font-bold capitalize text-lg'>{t("Report")}</span>
-                                    </Button>
-                                </section>
-                            }
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
@@ -572,7 +567,7 @@ function ReceiveProjectFiles({
 
                             {!canEdit &&
                                 <section className="w-full">
-                                    <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                    <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                         {
                                             acceptBtn &&
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
@@ -587,7 +582,7 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() &&
                                         status == "waiting-for-pay-10" &&
-                                        <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                        <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now 10%")}</span>
                                             </Button>
@@ -596,7 +591,7 @@ function ReceiveProjectFiles({
                                     }
                                     {
                                         !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
-                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
                                             <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 90 % )")}</span>
                                             </Button>
@@ -604,7 +599,7 @@ function ReceiveProjectFiles({
                                     }
                                     {
                                         !IsImSp() && getType() === 'team' && status == "waiting-for-total-payment" &&
-                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-16'>
+                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
                                             <Button isEnabled={new Date(appointmentDate).getDate() === new Date().getDate()} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 100 % )")}</span>
                                             </Button>
@@ -612,7 +607,7 @@ function ReceiveProjectFiles({
                                     }
                                     {
                                         !IsImSp() && status == "waiting-for-payment" &&
-                                        <div className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
+                                        <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now")}</span>
                                             </Button>
@@ -623,6 +618,13 @@ function ReceiveProjectFiles({
                                     {
                                         !status?.includes("waiting-for-pay") && false &&
                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">{t("Cancel")}</button>
+                                    }
+                                    {
+                                    <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                        <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#D30000"}  onClick={openComplain}>
+                                            <span className='text-white font-bold capitalize text-lg'>{t("Report")}</span>
+                                        </Button>
+                                    </section>
                                     }
                                 </section>
                             }

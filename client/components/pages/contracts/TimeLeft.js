@@ -40,9 +40,9 @@ const TimeLeft = ({ data, msgstatus }) => {
     //     );
     // }
     const days = Math.floor(calculatedTimeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(calculatedTimeLeft / (1000 * 60 * 60));
-    const minutes = Math.floor((calculatedTimeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((calculatedTimeLeft % (1000 * 60)) / 1000);
+    const hours = Math.floor((calculatedTimeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Hours after days
+    const minutes = Math.floor((calculatedTimeLeft % (1000 * 60 * 60)) / (1000 * 60)); // Minutes after hours
+    const seconds = Math.floor((calculatedTimeLeft % (1000 * 60)) / 1000); // Seconds after minutes
 
     return (
         <span className='text-4xl'>

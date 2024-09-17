@@ -67,7 +67,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         const Deadline = formattedDeadline(data?.contract?.deadline)
         return <>
             {/* max-w-[370px] ahmed */}
-            <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4'
+            <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4 cursor-pointer'
                 onClick={() => toggleContractData(data)}
             >
                 {/* dropdown */}

@@ -1,4 +1,8 @@
 {
 "dashboard":"dashboard",
-"category_description":"Explore new photography projects & discover talented creatives"
+"category_description":"Explore new photography projects & discover talented creatives",
+"waiting-for-pay-10":"Waiting for pay 10",
+"waiting-for-payment":"waiting for payment",
+"update-after-first-Payment":"update after first Payment",
+"waiting-for-total-payment":"waiting for total payment"
 }

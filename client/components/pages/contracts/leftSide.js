@@ -61,7 +61,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
     const pending = data?.filter(data => handleStatus(data.contract.status) == 0)
     const ongoing = data?.filter(data => handleStatus(data.contract.status) == 1)
     const checkout = data?.filter(data => handleStatus(data.contract.status) == 2)
-    console.log(data)
+    console.log({pending ,ongoing  , checkout })
     const groupedByCycle = pending?.reduce((acc, item) => {
         const cycle = item.contract.status;
         if (!acc[cycle]) {
@@ -86,9 +86,8 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
         acc[cycle].push(item);
         return acc;
       }, {});
-      
     const Clients = () =>
-        (pending?.length || ongoing?.length) ?
+        (pending?.length || ongoing?.length || checkout?.length) ?
             <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
@@ -139,7 +138,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
 
 
     const Creatives = () =>
-        (pending?.length || ongoing?.length) ?
+        (pending?.length || ongoing?.length || checkout?.length) ?
             <section className="mt-11 lg:mt-36">
                 {
                     pending.length > 0 &&
