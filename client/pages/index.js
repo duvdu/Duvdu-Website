@@ -259,7 +259,7 @@ const Home = ({
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("top categories")}</h2>
                                 <DraggableList>
                                     {categories?.map((data, index) => (
-                                        <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
+                                        <Link key={data._id} href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
                                             <div
                                                 className={`cursor-pointer bg-black ml-3 h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
                                                 style={{ backgroundImage: `url(${data.image})` }}
@@ -297,7 +297,7 @@ const Home = ({
                                                 <h2 className="text-2xl opacity-60 font-semibold mt-6">{category.title}</h2>
                                                 <ul className={"flex flex-wrap gap-2 py-2"}>
                                                     {category?.tags.map((item, index) => (
-                                                        <li className='py-1 px-2 border-[1.5px] border-[#00000033] dark:border-[#FFFFFF4D] rounded-full' key={index}>
+                                                        <li key={item._id} className='py-1 px-2 border-[1.5px] border-[#00000033] dark:border-[#FFFFFF4D] rounded-full'>
                                                             <div className=' dark:text-[#FFFFFFBF] text-[#00000099] font-medium'
                                                             // onClick={() => handleNavigation(`/${category.cycle}`, `subcategory=${category._id}&${item._id ? "tag=" + item._id : ''}`)}
                                                             >{item.name}</div>
