@@ -95,12 +95,12 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 {/*********/}
                 
                 {/* profile */}
-                <Link href={`/creative/${tabindex == 0 ? data.customer.username : data.sp.username}`}>
+                <Link href={`/creative/${tabindex == 0 ? (data?.customer?.username?.split(' ')[0].length>6?data?.customer?.username?.split(' ')[0].slice(0,6):data?.customer?.username?.split(' ')[0]) : (data?.sp?.username?.split(' ')[0].length>6?data?.sp?.username?.split(' ')[0].slice(0,6):data?.sp?.username?.split(' ')[0])}`}>
                     <div className="cursor-pointer">
                         <div className='flex gap-3 items-center'>
                             <img className='size-14 rounded-full object-cover object-top' src={tabindex == 0 ? data.customer.profileImage : data.sp.profileImage} alt="profile picture" />
                             <div className='flex flex-col items-start justify-start'>
-                                <h3 className='opacity-80 text-lg font-bold capitalize'>{tabindex == 0 ? data.customer.name : data.sp.name}</h3>
+                                <h3 className='opacity-80 text-lg font-bold capitalize'>{tabindex == 0 ? (data?.customer?.name?.split(' ')[0].length>6?data?.customer?.name?.split(' ')[0].slice(0,6):data?.customer?.name?.split(' ')[0]) : (data?.sp?.name?.split(' ')[0].length>6?data?.sp?.name?.split(' ')[0].slice(0,6):data?.sp?.name?.split(' ')[0]) }</h3>
                                 <span className='opacity-50'>{dateFormat(data.contract.appointmentDate, 'd mmmm , yyyy')}</span>
                             </div>
                         </div>
@@ -122,8 +122,8 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
 
                 {/* deadline */}
                 <div className='flex gap-3 mt-9'>
-                    <span className='text-[40px] flex items-center ml-3 gap-2'>
-                        <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}>
+                    <span className='text-[24px] md:text-[40px] flex items-center ml-3 gap-2'>
+                        <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} flex gap-2`}>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>$</span>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.expectedProfits}</span>
                         </span>
@@ -146,7 +146,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             {/* <Clients /> */}
             {/* ahmed */}
             {(!data?.length == 0 || !getAllContracts_respond?.loading)?
-                <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
+                <div className='h-auto lg:h-body overflow-y-scroll mx-auto md:min-w-max'>
                     <div className='flex flex-col gap-[15px] mx-0 w-auto text-center mt-9'>
                         {/* <Title title="recent clients" /> */}
                         <div className='flex sm:flex-row gap-2 hidden'>
@@ -160,7 +160,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                             </div>
                         </div>
                             <Title title={t('history')} />
-                            <div className="min-w-80">
+                            <div className="w-full md:min-w-80">
                                 {
                                     data?.map((value, i) => (
                                         <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
@@ -168,7 +168,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                                 }
                             </div>
                     </div>
-                </div> : <div className="w-96" >
+                </div> : <div className="w-full md:w-96" >
                     <DuvduLoading loadingIn={""} type='contract' />:
                 </div>
             }

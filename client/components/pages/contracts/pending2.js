@@ -82,7 +82,7 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
                     <img className='w-14 h-14 rounded-full object-cover object-top' src={data.sp.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold capitalize'>
-                            {data.sp.name || 'Unknown User'}
+                            {data?.sp?.name?.split(' ')[0].length>6?data?.sp?.name?.split(' ')[0].slice(0,6):data?.sp?.name?.split(' ')[0] || 'Unknown User'}
                         </h3>
                         <span className='opacity-50'>
                             {CreatedAt}

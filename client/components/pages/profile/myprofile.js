@@ -136,7 +136,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                 <>
                     <Followers id={"show-followers"} />
                     {updateProfile_respond?.loading || myProfile_respond?.loading? 
-                          <div className="bg-gray-200 dark:bg-[#1f1f1f] h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
+                          <div className="bg-gray-200 dark:bg-[#1f1f1f] h-36 md:h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
                           <Conver converPic={userInfo?.coverImage} />
                     }
                     

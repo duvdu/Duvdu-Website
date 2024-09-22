@@ -45,7 +45,7 @@ const TimeLeft = ({ data, msgstatus }) => {
     const seconds = Math.floor((calculatedTimeLeft % (1000 * 60)) / 1000); // Seconds after minutes
 
     return (
-        <span className='text-4xl'>
+        <span className='text-xl md:text-4xl'>
             <span className='font-semibold capitalize mt-3'>
                 {calculatedTimeLeft && calculatedTimeLeft >0?
                 `${days}d ${hours}h ${minutes}m ${seconds}s`:'Expire Date'}

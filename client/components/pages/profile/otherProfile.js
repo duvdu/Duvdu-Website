@@ -98,7 +98,7 @@ function OtherProfile({
             <div className='sm:container'>
                 <Followers id={"show-followers"} />
                 {user?.loading? 
-                    <div className="bg-gray-200 dark:bg-[#1f1f1f] h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
+                    <div className="bg-gray-200 dark:bg-[#1f1f1f] h-36 md:h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
                     <Conver converPic={userInfo?.coverImage} />
                 }
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row mb-5'>
