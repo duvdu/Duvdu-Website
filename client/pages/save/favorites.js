@@ -56,11 +56,13 @@ const Projects = ({
                             </div>
                             <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>{t("favorites")}</span>
                         </div>
-                        <DuvduLoading loadingIn={"GetFavList"} />
+                        
 
                         {getPaginatedProjects && getPaginatedProjects.length == 0 && (
                             <EmptyComponent message={"No Projects Yet!"} />
                         )}
+                        {get_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='projects'/>:
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
                                 item?.project && (
@@ -72,6 +74,7 @@ const Projects = ({
                                 )
                             ))}
                         </div>
+                        }
                         {
                             getPaginatedProjects?.length === limit &&
                             <div className="load-parent">

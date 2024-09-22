@@ -33,14 +33,12 @@ const Home = ({
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
-        HomeTreny()
-        HomeDiscover()
-        popularSub()
-    }, [])
-
+        Promise.all([HomeTreny(), HomeDiscover(), popularSub()]);
+    }, []);
+    console.log({popularSub_respond ,homeDiscover_respond , homeTreny_respond  })
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
-    const list = homeTreny_respond?.data || [];
+    const list =  homeTreny_respond?.data || [];
     const router = useRouter();
 
     var TheBeststyle = i18n.language == "Arabic" ? {} : {
@@ -49,7 +47,7 @@ const Home = ({
         backgroundPosition: 'bottom',
         display: 'inline-block',
     };
-    const homeTrenyList = [...list, ...Array(4 - list.length).fill({ title: '', image: '' })].slice(0, 4);
+    // const homeTrenyList = [...list, ...Array(4 - list.length).fill({ title: '', image: '' })].slice(0, 4);
 
     const handleNavigation = (path, query) => {
         const url = query ? `${path}?${query}` : path;
@@ -172,7 +170,7 @@ const Home = ({
         GetProjects(queryString)
 
     };
-    console.log(list)
+    console.log({categories})
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -200,8 +198,10 @@ const Home = ({
                     </div>
                     <div className="mx-auto w-full py-12">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
+                    {homeTreny_respond?.loading ? 
+                    <DuvduLoading loadingIn={""} type={'category'} />:
                         <div className="flex md:grid md:grid-cols-3 gap-3 px-3 overflow-auto lg:container">
-                            {list?.slice(0, 3)?.map((data, index) => (
+                            {list &&list?.slice(0, 3)?.map((data, index) => (
                                 <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} key={index}>
                                     <div
                                         className="cursor-pointer bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
@@ -219,8 +219,8 @@ const Home = ({
                                     </div>
                                 </Link>
                             ))}
-
                         </div>
+                        }
                     </div>
                 </section>
                 <section className="bg-[#F2F2F3] dark:bg-[#1A1A1C] py-12">
@@ -229,6 +229,8 @@ const Home = ({
                             <div className="sm:container">
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("discover tags")}</h2>
                             </div>
+                            {homeDiscover_respond?.loading ? 
+                           <DuvduLoading loadingIn={""} type={'tag'}/>:
                             <div className="overflow-auto hide-scrollable-container">
                                 <div className="flex">
                                     <DraggableList>
@@ -248,7 +250,7 @@ const Home = ({
                                         <div className="size-3"></div>
                                     </DraggableList>
                                 </div>
-                            </div>
+                            </div>}
                         </section>
                     </div>
                 </section>
@@ -257,6 +259,8 @@ const Home = ({
                         <div className="mx-auto lg:container relative  ps-3">
                             <div className=" ">
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("top categories")}</h2>
+                                {homeDiscover_respond?.loading ? 
+                            <DuvduLoading loadingIn={""} type={'category'}/>:
                                 <DraggableList>
                                     {categories?.map((data, index) => (
                                         <Link key={data._id} href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
@@ -274,6 +278,7 @@ const Home = ({
                                     <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint end-6 rtl:rotate-180">  </div>
                                     <div className="size-3"></div>
                                 </DraggableList>
+                                }
                             </div>
                         </div>
                     </div>
@@ -281,10 +286,12 @@ const Home = ({
                 <section className="py-12 bg-[#F2F2F3] dark:bg-[#1A1A1C]">
                     <div className="mx-auto">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("popular sub-sub categories")}</h2>
+                        {popularSub_respond?.loading?
+                        <DuvduLoading loadingIn={""} type={'tag'} />:
                         <div className="flex gap-8 w-full lg:container relative  ps-3">
                             <div className="overflow-auto hide-scrollable-container">
-                                <DraggableList>
-                                    {popularSub_respond?.data[0]?.subCategories?.map((category, index) => (
+                            <DraggableList>
+                                    {popularSub_respond?.data && popularSub_respond?.data[0]?.subCategories?.map((category, index) => (
                                         <div onClick={() => handleNavigation(`/${category.cycle}`, new URLSearchParams({
                                             category: category.categoryId,
                                             subcategory: category._id,
@@ -314,6 +321,7 @@ const Home = ({
                             </div>
 
                         </div>
+                        }
                     </div>
                 </section>
                 <section className="py-12">
@@ -321,8 +329,13 @@ const Home = ({
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("explore recommended projects")}</h2>
                         <Filter cycle={cycle} onFilterChange={handleFilterChange} />
                         <div className="h-5" />
-                        <DuvduLoading loadingIn={"GetProjects"} />
+                        {projects?.loading ?
+                        <>
+                        <DuvduLoading loadingIn={""} type='projects' />
+                        <DuvduLoading loadingIn={""} type='projects' />
+                        </>:
                         <SectionProjects projects={projects?.data} />
+                        }
                     </div>
                 </section>
             </Layout>

@@ -29,13 +29,14 @@ function AddToSaved({
     useEffect(() => {
         AddProjectToBoard({ idboard: -1 })
     }, [AddProjectToBoard.message])
+    console.log(addProjectToBoard_respond)
     useEffect(() => {
-        if (addProjectToBoard_respond) {
+        if (addProjectToBoard_respond?.data) {
             close()
 
             OpenPopUp("addProjectToBoard-popup")
         }
-    }, [addProjectToBoard_respond])
+    }, [addProjectToBoard_respond?.data])
 
     const handleNextStep = (id) => {
         AddProjectToBoard({ idboard: id, idproject: projectId })

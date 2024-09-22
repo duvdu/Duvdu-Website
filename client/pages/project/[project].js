@@ -75,12 +75,20 @@ const Projects = ({
         }
         setPlayingAudioRef(newAudioRef);
       };
-    
+    console.log({project})
     return (
         <>
             <Layout>
-                <DuvduLoading loadingIn={"GetProjects"} />
-                {project && (
+                
+                {project_respond?.loading?
+                <>
+                <DuvduLoading loadingIn={""} type='project'/>
+                <div className='container'>
+                    <DuvduLoading loadingIn={""} type='projects'/>
+                </div>
+                </>:
+            project && (
+                    
                     <>
                         <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav} />
                         <Report />
@@ -135,7 +143,7 @@ const Projects = ({
                                                 {/* Pagination Bullets */}
                                                 <div className="swiper-pagination"></div>
                                             </div> :
-                                            <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                                <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
                                                 <ProjectCover onAudioPlay={handleAudioPlay}  data={project?.attachments[0]} cover={project?.cover} />
                                             </div>
                                         }
@@ -156,6 +164,7 @@ const Projects = ({
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                     </>
+                
                 )}
             </Layout>
         </>

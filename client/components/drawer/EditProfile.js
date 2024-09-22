@@ -31,15 +31,15 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
 
     useEffect(() => {
         if (isOpen) {
-            UpdateFormData("profileImage", userInfo.profileImage);
-            UpdateFormData("coverImage", userInfo.coverImage);
-            UpdateFormData("name", userInfo.name);
-            UpdateFormData('category', userInfo.category)
-            UpdateFormData("address", userInfo.address);
-            UpdateFormData("pricePerHour", userInfo.pricePerHour);
-            UpdateFormData("about", userInfo.about);
-            UpdateFormData("location[lat]", userInfo.location?.lat);
-            UpdateFormData("location[lng]", userInfo.location?.lng);
+            UpdateFormData("profileImage", userInfo?.profileImage);
+            UpdateFormData("coverImage", userInfo?.coverImage);
+            UpdateFormData("name", userInfo?.name);
+            UpdateFormData('category', userInfo?.category)
+            UpdateFormData("address", userInfo?.address);
+            UpdateFormData("pricePerHour", userInfo?.pricePerHour);
+            UpdateFormData("about", userInfo?.about);
+            UpdateFormData("location[lat]", userInfo?.location?.lat);
+            UpdateFormData("location[lng]", userInfo?.location?.lng);
         }
         else {
             resetForm()

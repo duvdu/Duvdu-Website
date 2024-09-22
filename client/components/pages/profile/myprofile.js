@@ -35,28 +35,26 @@ import { userReview } from '../../../redux/action/apis/reviews/users';
 import { useTranslation } from 'react-i18next';
 
 
-function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond,myProfile_respond, user, updateProfile_respond }) {
     const { t } = useTranslation();
-
     const route = useRouter()
 
     const { type, category, subcategory, tags, edit: goEdit } = route.query
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
     const [userInfo, setUserInfo] = useState(user);
-    projects = projects?.data?.projects || []
+    const projectData = projects?.data?.projects || []
 
     useEffect(() => {
         setUserInfo(user)
     }, [user])
 
     useEffect(() => {
-        // GetUserProject({})
+        GetUserProject({})
     }, [])
     useEffect(() => {
         if (user?.username)
             userReview({ username: user.username })
-            GetUserProject({ username: user?.username });
     }, [user?.username])
 
     function removeQueryParameter() {
@@ -119,7 +117,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             pathname: url.pathname,
         });
     };
-
+    console.log({projects})
     function Allpage() {
         useEffect(() => {
             if (updateProfile_respond) {
@@ -134,45 +132,49 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             data.append('isAvaliableToInstantProjects', checked)
             updateProfile(data)
         }
-        
         return (
-            !userInfo ? <></> :
                 <>
                     <Followers id={"show-followers"} />
-                    <Conver converPic={userInfo.coverImage} />
+                    {updateProfile_respond?.loading || myProfile_respond?.loading? 
+                          <div className="bg-gray-200 dark:bg-[#1f1f1f] h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
+                          <Conver converPic={userInfo?.coverImage} />
+                    }
+                    
                     <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
+                        {updateProfile_respond?.loading || myProfile_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='profileCard'/>
+                        :
                         <div className='sm:bg-white sm:dark:bg-[#1A2024] sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
-                            <DuvduLoading loadingIn={"updateProfile"} />
                             <div className='relative px-6 sm:px-10'>
                                 <Info
-                                    src={userInfo.profileImage}
-                                    location={userInfo.address || 'NONE'}
+                                    src={userInfo?.profileImage}
+                                    location={userInfo?.address || 'NONE'}
                                     occupation={userInfo?.category?.title}
                                     rank={userInfo?.rank?.title}
                                     rankcolor={userInfo?.rank?.color}
                                     personalName={userInfo?.name?.split(' ')[0].length>6?userInfo?.name?.split(' ')[0].slice(0,6):userInfo?.name?.split(' ')[0]}
                                     popularity={{
-                                        likes: userInfo.likes,
-                                        followers: userInfo.followCount.followers,
-                                        views: userInfo.profileViews,
+                                        likes: userInfo?.likes,
+                                        followers: userInfo?.followCount.followers,
+                                        views: userInfo?.profileViews,
                                     }}
-                                    rates={userInfo.rate.totalRates.toFixed(1)}
+                                    rates={userInfo?.rate.totalRates.toFixed(1)}
                                     isMe={true}
                                 />
                             </div>
 
                             <div className='flex items-center justify-center my-7 gap-2'>
-                                <Switch onSwitchChange={updateInstantState} value={userInfo.isAvaliableToInstantProjects} id='profile-instant' />
-                                <span className={userInfo.isAvaliableToInstantProjects ? "" : "opacity-70"}>
-                                    Instant Projects is {userInfo.isAvaliableToInstantProjects ? "open" : "disabled"}
+                                <Switch onSwitchChange={updateInstantState} value={userInfo?.isAvaliableToInstantProjects} id='profile-instant' />
+                                <span className={userInfo?.isAvaliableToInstantProjects ? "" : "opacity-70"}>
+                                    Instant Projects is {userInfo?.isAvaliableToInstantProjects ? "open" : "disabled"}
                                 </span>
                             </div>
 
                             <div className='h-divider'></div>
-                            {userInfo.about &&
+                            {userInfo?.about &&
                                 <div className='px-10'>
                                     <h3 className='pt-6' id='about-header'>{t("about")}</h3>
-                                    <p className='pt-6' id='about-paragraph'>{userInfo.about || '---'}</p>
+                                    <p className='pt-6' id='about-paragraph'>{userInfo?.about || '---'}</p>
                                 </div>}
                             <div className='h-divider my-7'></div>
                             <div className='px-10'>
@@ -197,6 +199,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                             }
 
                         </div>
+                        }
                         {
                             !showAddPanal &&
 
@@ -213,14 +216,13 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
 
                         }
                         <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
-                            {
-                                projects.length == 0 &&
-                                <EmptyComponent message="No Projects Yet!" />
-
+                            {projects?.loading?
+                            <DuvduLoading loadingIn={""} type='profileProjects'/>
+                            :projectData?.length == 0 ?
+                                <EmptyComponent message="No Projects Yet!" />:
+                                <Projects projects={projectData} />
                             }
-
-                            <Projects projects={projects} />
-
+                            
                         </div>
                     </div>
                 </>
@@ -246,7 +248,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             <div className='sm:container'>
                 {
                     showAddPanal &&
-                    <PostSheet setShowAddPanal={setShowAddPanal} username={userInfo.username} />
+                    <PostSheet setShowAddPanal={setShowAddPanal} username={userInfo?.username} />
                 }
                 {
                     showAddPost &&
@@ -267,7 +269,7 @@ const mapStateToProps = (state) => ({
     updateProfile_respond: state.api.updateProfile,
     projects: state.api.GetUserProject,
     userReview_respond: state.api.userReview,
-    // api: state.api,
+    myProfile_respond: state.api.getMyprofile,
 
 });
 

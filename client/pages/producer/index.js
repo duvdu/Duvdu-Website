@@ -121,12 +121,13 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
                         {producers && producers.length === 0 &&
                             <EmptyComponent message="No Producers Now" />
                         }
+                        {respond?.loading?
+                       <DuvduLoading loadingIn={""} type='category'/>:    
                         <div className="grid minmax-360">
                             {producers?.map((item, i) =>
                                 <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />
                             )}
-                        </div>
-                        <DuvduLoading loadingIn={"GetProducer"} />
+                        </div>}
                         <Formsubmited />
                     </div>
                 </section>

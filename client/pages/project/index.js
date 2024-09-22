@@ -104,6 +104,8 @@ const Projects = ({ projects, GetProjects, api }) => {
                         {projectsList?.length === 0 && (
                             <EmptyComponent message="No projects Found" />
                         )}
+                        {(projects?.loading)?
+                       <DuvduLoading loadingIn={""} type='projects'/>:    
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (
                                 <React.Fragment key={item._id}>
@@ -114,8 +116,9 @@ const Projects = ({ projects, GetProjects, api }) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        <div className="w-0 h-0" />
-                        <DuvduLoading loadingIn={"GetProjects"} />
+                        }
+                        {/* <div className="w-0 h-0" />
+                        <DuvduLoading loadingIn={"GetProjects"} /> */}
                     </div>
                 </section>
             </Layout>

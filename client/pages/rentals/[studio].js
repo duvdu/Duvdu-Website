@@ -84,8 +84,14 @@ const Studio = ({
     return (
         <>
             <Layout >
-                <DuvduLoading loadingIn={"Getstudio"} />
-                {studio &&
+            {studio_respond?.loading?
+            <>
+                <DuvduLoading loadingIn={""} type='project'/>
+                <div className='container'>
+                    <DuvduLoading loadingIn={""} type='projects'/>
+                </div>
+            </>:
+                studio &&
                     (
                         <>
                             <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav} />
@@ -145,9 +151,9 @@ const Studio = ({
                                                     {/* Pagination Bullets */}
                                                     <div className="swiper-pagination"></div>
                                                 </div> :
-                                                <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
-=                                                    <ProjectCover data={studio?.attachments[0]} cover={studio?.cover} />
-                                                </div>
+                                                    <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                                        <ProjectCover onAudioPlay={handleAudioPlay}  data={studio?.attachments[0]} cover={studio?.cover} />
+                                                    </div>
                                             }
                                             <About data={studio} />
                                         </section>

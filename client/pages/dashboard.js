@@ -1,5 +1,6 @@
 import Layout from '../components/layout/Layout';
 import DashboardPopup from '../components/popsup/dashboard';
+import DuvduLoading from "../components/elements/duvduLoading.js";
 import NextBadgeCard from '../components/pages/dashboard/NextBadgeCard';
 import ProjectViewsCard from '../components/pages/dashboard/ProjectViewsCard';
 import TopProjects from '../components/pages/dashboard/topProjects';
@@ -94,6 +95,9 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
         <>
             <Layout shortheader={true}>
                 <DashboardPopup GoBackOnCancel={true} />
+                {user_analysis && (user_analysis?.loading?
+                <DuvduLoading loadingIn={""} type='dashboard' />
+                :
                 <div className='container flex gap-6 flex-col lg:flex-row py-6 px-3'>
                     <div className='w-full flex flex-col gap-3 sm:gap-6'>
                         <NextBadgeCard next={data?.userData[0]?.rank?.nextRankTitle} title={data?.userData[0]?.rank?.title} badge={data?.userData[0]?.rank?.nextRankPercentage} />
@@ -155,6 +159,7 @@ const Dashboard = ({user_analysis ,api, getUserAnalysis}) => {
                         <TopProjects projects={data?.topProjectViews} />
                     </div>
                 </div>
+                )}
             </Layout>
         </>
     );

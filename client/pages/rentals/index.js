@@ -94,7 +94,7 @@ const Studio = ({ projects, GetStudios, api }) => {
     };
 
     const getPaginatedProjects = projects?.data
-
+    console.log({projects})
     const setParams = (queryString) => {
         Router.push(`/${cycle}?${queryString}`);
     };
@@ -120,7 +120,9 @@ const Studio = ({ projects, GetStudios, api }) => {
                                 <EmptyComponent message="No projects Found" />
                             </div>
                         )}
-                        <div className="grid minmax-280 gap-5">
+                        {projects?.loading?
+                       <DuvduLoading loadingIn={""} type='projects'/>:    
+                       <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
@@ -130,7 +132,8 @@ const Studio = ({ projects, GetStudios, api }) => {
                                 </React.Fragment>
                             ))}
                         </div>
-                        <DuvduLoading loadingIn={"GetStudios"} />
+                    }
+                        {/* <DuvduLoading loadingIn={"GetStudios"} /> */}
                     </div>
                 </section>
             </Layout>

@@ -122,12 +122,15 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                             </div> :
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }
-                        <div className="minmax-360">
+                        {respond?.loading?
+                       <DuvduLoading loadingIn={""} type='category'/>:    
+                       <div className="minmax-360">
                             {CopyRight?.map((item, i) =>
                                 <CopyRightCard key={i} onClick={() => handlesetdata(item)} cardData={item} />
                             )}
                         </div>
-                        <DuvduLoading loadingIn={"GetCopyrights"} />
+                        }
+                        {/* <DuvduLoading loadingIn={"GetCopyrights"} /> */}
                         <Formsubmited />
                     </div>
                 </section>
