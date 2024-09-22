@@ -7,6 +7,7 @@ import dateFormat from "dateformat";
 import { formattedDeadline } from "../../../util/format-date";
 import { toggleContractData } from "../../../redux/action/contractDetails";
 import { useTranslation } from 'react-i18next';
+import DuvduLoading from "../../elements/duvduLoading.js";
 
 const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex }) => {
     const { t } = useTranslation();
@@ -38,7 +39,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 return "Unknown";
         }
     }
-
+    console.log({getAllContracts_respond})
     const data = getAllContracts_respond?.
         data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username))
     
@@ -144,7 +145,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         <>
             {/* <Clients /> */}
             {/* ahmed */}
-            {!data?.length == 0 ?
+            {(!data?.length == 0 || !getAllContracts_respond?.loading)?
                 <div className='h-auto lg:h-body overflow-y-scroll mx-auto min-w-max'>
                     <div className='flex flex-col gap-[15px] mx-0 w-auto text-center mt-9'>
                         {/* <Title title="recent clients" /> */}
@@ -158,16 +159,18 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                                 <MoreIcon />
                             </div>
                         </div>
-                        <Title title={t('history')} />
-                        <div className="min-w-80">
-                            {
-                                data?.map((value, i) => (
-                                    <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
-                                ))
-                            }
-                        </div>
+                            <Title title={t('history')} />
+                            <div className="min-w-80">
+                                {
+                                    data?.map((value, i) => (
+                                        <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
+                                    ))
+                                }
+                            </div>
                     </div>
-                </div> : <div className="w-80" />
+                </div> : <div className="w-96" >
+                    <DuvduLoading loadingIn={""} type='contract' />:
+                </div>
             }
         </>
     );

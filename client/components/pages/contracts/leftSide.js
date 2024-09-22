@@ -47,7 +47,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
     }, [])
 
     useEffect(() => {
-        const _data = respond?.data.filter(value => activeIndex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
+        const _data = respond?.data?.filter(value => activeIndex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
         setData(_data)
     }, [activeIndex, respond?.data])
 
@@ -86,7 +86,10 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
         acc[cycle].push(item);
         return acc;
       }, {});
+      console.log({respond})
     const Clients = () =>
+        respond?.loading?
+    <DuvduLoading loadingIn={""} type='contract' />:
         (pending?.length || ongoing?.length || checkout?.length) ?
             <section className="mt-11 lg:mt-36">
                 {
@@ -134,10 +137,12 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                         ))}
                     </section>
                 }
-            </section> : <Empty />
+            </section> : (respond?.data?.length===0 && <Empty />)
 
 
     const Creatives = () =>
+        respond?.loading?
+        <DuvduLoading loadingIn={""} type='contract' />:
         (pending?.length || ongoing?.length || checkout?.length) ?
             <section className="mt-11 lg:mt-36">
                 {
@@ -187,7 +192,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                             ))}
                     </section>
                 }
-            </section> : <Empty />
+            </section> : (respond?.data?.length===0 && <Empty />)
     return (
         <>
 

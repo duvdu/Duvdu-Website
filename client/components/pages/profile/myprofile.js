@@ -218,9 +218,13 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                         <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
                             {projects?.loading?
                             <DuvduLoading loadingIn={""} type='profileProjects'/>
-                            :projectData?.length == 0 ?
-                                <EmptyComponent message="No Projects Yet!" />:
-                                <Projects projects={projectData} />
+                            :
+                            (projects?.data?.projects?.length > 0 ?
+                                <Projects projects={projectData} />:
+
+                                projects?.data?.projects && 
+                                    <EmptyComponent message="No Projects Yet!" />
+                            )
                             }
                             
                         </div>

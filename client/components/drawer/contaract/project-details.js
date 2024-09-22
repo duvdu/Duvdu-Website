@@ -143,7 +143,7 @@ function ReceiveProjectFiles({
 
 
     useEffect(() => {
-        if (takeAction_respond) {
+        if (takeAction_respond?.data) {
             getAllContracts()
             setActionSuccess(true)
         }
@@ -155,7 +155,7 @@ function ReceiveProjectFiles({
     }, [contract?.tools, contract?.functions]);
 
     useEffect(() => {
-        if (payment_respond) {
+        if (payment_respond?.data) {
             getAllContracts()
             setPaymentSuccess(true)
         }
@@ -163,7 +163,7 @@ function ReceiveProjectFiles({
 
     useEffect(() => {
         if (getType() == "producer") {
-            setdAppointmentDate(contract.appointmentDate)
+            setdAppointmentDate(contract?.appointmentDate)
         }
         else {
             setdAppointmentDate(null)
@@ -176,7 +176,7 @@ function ReceiveProjectFiles({
         if (!contract?.deadline) return
         const interval = setInterval(() => {
             const now = new Date();
-            const deadline = new Date(contract.deadline);
+            const deadline = new Date(contract?.deadline);
             const timeRemaining = deadline - now;
 
             if (timeRemaining <= 0) {
@@ -197,7 +197,7 @@ function ReceiveProjectFiles({
     const handleAccept = () => {
         if (!contractDetails?.ref) return
         const type = getType()
-        takeAction({ id: contract._id, data: true, type: type })
+        takeAction({ id: contract?._id, data: true, type: type })
     };
 
     const handleUpdate = () => {
@@ -210,7 +210,7 @@ function ReceiveProjectFiles({
             data['totalPrice'] = formData['totalPrice']
             data['duration'] = {
                 value: formData['duration'],
-                unit: contract.duration.unit
+                unit: contract?.duration.unit
             }
         }
         else {
@@ -232,12 +232,12 @@ function ReceiveProjectFiles({
             if (formData['unitPrice']) data.unitPrice = formData['unitPrice'];
         }
 
-        takeAction({ id: contract._id, data: data, type: type, isUpdate: true })
+        takeAction({ id: contract?._id, data: data, type: type, isUpdate: true })
     };
 
     const handlePayment = () => {
         const type = getType()
-        payment({ id: contract.paymentLink, type: type })
+        payment({ id: contract?.paymentLink, type: type })
     };
 
     const openReview = () => {
@@ -250,7 +250,7 @@ function ReceiveProjectFiles({
     const handleRefuse = () => {
         if (!contractDetails?.ref) return
         const type = getType()
-        takeAction({ id: contract._id, data: false, type: type })
+        takeAction({ id: contract?._id, data: false, type: type })
     };
     const toggleDrawer = () => {
         if (canEdit) {
@@ -293,9 +293,9 @@ function ReceiveProjectFiles({
             IsImSp() &&
             status === "update-after-first-Payment" &&
             (
-                formData['totalPrice'] && formData['totalPrice'] != contract.totalPrice ||
-                formData['details'] && formData['details'] != contract.details ||
-                formData['duration'] && formData['duration'] != contract.duration.value
+                formData['totalPrice'] && formData['totalPrice'] != contract?.totalPrice ||
+                formData['details'] && formData['details'] != contract?.details ||
+                formData['duration'] && formData['duration'] != contract?.duration.value
             )) ||
         (getType() === "project" &&
             IsImSp() &&
@@ -335,7 +335,7 @@ function ReceiveProjectFiles({
                                                 <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
                                                 <div className="absolute z-20 flex items-center w-full h-full p-7">
                                                     <div className="w-full text-center p-20">
-                                                        <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{contract.project}</span>
+                                                        <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{contract?.project}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -344,7 +344,7 @@ function ReceiveProjectFiles({
                                 <section className='w-full'>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("status")}</h2>
                                     <span className='font-semibold capitalize max-w-[543px]'>
-                                    {contract.status}
+                                    {contract?.status}
                                     </span>
                                 </section>
 
@@ -361,7 +361,7 @@ function ReceiveProjectFiles({
                                     <div>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("Custom Requirements")}</h2>
                                         <span className='font-semibold max-w-[543px]'>
-                                        {contract.projectScale.numberOfUnits} {contract.projectScale.unit}
+                                        {contract?.projectScale.numberOfUnits} {contract?.projectScale.unit}
                                         </span>
                                     </div>
                                 }
@@ -394,10 +394,10 @@ function ReceiveProjectFiles({
                                 }
 
                                 {
-                                    contract.attachments?.length > 0 &&
+                                    contract?.attachments?.length > 0 &&
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize'>{t("Project Attachments")}</h2>
-                                        {contract.attachments.map((attachment, index) =>
+                                        {contract?.attachments.map((attachment, index) =>
                                             <div key={index} className='flex gap-3 items-start p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
                                                 <Icon key={index} name={'file'} className='size-5' />
                                                 <div className='flex flex-col'>
@@ -443,7 +443,7 @@ function ReceiveProjectFiles({
                                                 <h3 className="capitalize opacity-60">{t("job details")}</h3>
                                                 <textarea
                                                     name="details"
-                                                    value={formData.details || contract.details}
+                                                    value={formData.details || contract?.details}
                                                     onChange={handleInputChange}
                                                     placeholder={t("requirements, conditions At least 6 char")}
                                                     className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
@@ -451,8 +451,8 @@ function ReceiveProjectFiles({
                                             </section>
                                             <section className="my-11 w-full">
                                                 <section className='mb-4 mt-14'>
-                                                    <h3 className="capitalize opacity-60 mb-4">duration by {contract.duration.unit} </h3>
-                                                    <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration.value || ""} onChange={handleInputChange} name="duration" />
+                                                    <h3 className="capitalize opacity-60 mb-4">duration by {contract?.duration.unit} </h3>
+                                                    <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract?.duration.value || ""} onChange={handleInputChange} name="duration" />
                                                 </section>
                                                 <div className='mb-4 w-full hidden'>
                                                     <h3 className="capitalize opacity-60 mb-4">{t("unit")}</h3>
@@ -460,7 +460,7 @@ function ReceiveProjectFiles({
                                                         placeholder={t("unit")}
                                                         type='text'
                                                         name='unit'
-                                                        value={formData["unit"] || contract.duration.unit}
+                                                        value={formData["unit"] || contract?.duration.unit}
                                                         onChange={handleInputChange}
                                                         className="edit app-field"
                                                     />
@@ -472,7 +472,7 @@ function ReceiveProjectFiles({
                                                     placeholder={t("Total price")}
                                                     type='number'
                                                     name='totalPrice'
-                                                    value={formData.totalPrice || contract.totalPrice}
+                                                    value={formData.totalPrice || contract?.totalPrice}
                                                     onChange={handleInputChange}
                                                     className="edit app-field"
                                                 />
@@ -486,7 +486,7 @@ function ReceiveProjectFiles({
                                         <>
                                             <section className='mb-4 mt-14'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("duration")}</h3>
-                                                <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract.duration || ""} onChange={handleInputChange} name="duration" />
+                                                <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract?.duration || ""} onChange={handleInputChange} name="duration" />
                                             </section>
                                             <div className='mb-4 w-full'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("unit Price")}</h3>
@@ -494,14 +494,14 @@ function ReceiveProjectFiles({
                                                     placeholder={t("unit price")}
                                                     type='text'
                                                     name='unitPrice'
-                                                    value={formData["unitPrice"] || contract.projectScale.unitPrice}
+                                                    value={formData["unitPrice"] || contract?.projectScale.unitPrice}
                                                     onChange={handleInputChange}
                                                     className="edit app-field"
                                                 />
                                             </div>
                                             <section>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("number Of Units")}</h3>
-                                                <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
+                                                <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract?.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
                                             </section>
                                             <div className='h-divider my-6' />
                                             <section>

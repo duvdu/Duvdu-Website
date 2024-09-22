@@ -53,7 +53,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     }, [user])
 
     useEffect(() => {
-        if (updateProfile_respond) {
+        if (updateProfile_respond?.data) {
             setUserInfo(updateProfile_respond.data)
         }
     }, [updateProfile_respond])

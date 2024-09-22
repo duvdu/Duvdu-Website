@@ -29,7 +29,6 @@ function AddToSaved({
     useEffect(() => {
         AddProjectToBoard({ idboard: -1 })
     }, [AddProjectToBoard.message])
-    console.log(addProjectToBoard_respond)
     useEffect(() => {
         if (addProjectToBoard_respond?.data) {
             close()

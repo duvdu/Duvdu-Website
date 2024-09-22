@@ -8,8 +8,6 @@ const Recommended = ({ projects, type }) => {
 
     return (
         <>
-            <DuvduLoading loadingIn={"Getstudios"} />
-            <DuvduLoading loadingIn={"GetProjects"} />
             <h2 className="font-bold text-lg capitalize opacity-80 mt-16 mb-4">{t("recommended for you")}</h2>
 
             <div className="grid minmax-280 gap-5">

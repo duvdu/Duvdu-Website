@@ -12,7 +12,7 @@ import Link from 'next/link';
 import PopUpImage from './popUpImage';
 import DuvduLoading from './duvduLoading';
 
-const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api }) => {
+const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_respond, api }) => {
     const { t } = useTranslation();
     const chatRef = useRef(null);
     const [messagesList, setMessagesList] = useState([])
@@ -174,7 +174,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
     const swapRecording = () => {
         setIsRecord(!isRecording)
     };
-
+    console.log({chat_respond})
     return (
         <div className={`fixed bottom-0 z-20 px-8 ${messages.openchat ? '' : 'hidden'}`} >
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
@@ -203,13 +203,14 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages, api 
                         </div>
                     </div>
 
-                    <DuvduLoading loadingIn={"GetAllMessageInChat"} />
                     
                     <div onClick={onClose} className='absolute right-4 top-4 cursor-pointer'>
                         <Icon name={'xmark'} className='text-xl opacity-50 w-3' />
                     </div>
                     <div className="messages-chat h-full" id="chat" ref={chatRef}>
-                        {msglist.map((message, index) => {
+                        {chat_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='chat' />:
+                        msglist.map((message, index) => {
 
                             if (message.type === 'time') {
                                 return (

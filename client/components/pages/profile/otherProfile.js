@@ -99,7 +99,7 @@ function OtherProfile({
                 <Followers id={"show-followers"} />
                 {user?.loading? 
                     <div className="bg-gray-200 dark:bg-[#1f1f1f] h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
-                    <Conver converPic={userInfo?.coverImage || process.env.DEFULT_COVER_PATH} />
+                    <Conver converPic={userInfo?.coverImage} />
                 }
                 <div className='flex gap-3 pt-7 flex-col lg:flex-row mb-5'>
                 {user?.loading?
@@ -172,13 +172,16 @@ function OtherProfile({
 
                     </div>}
                     <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
-                            {projects?.loading?
+                        {projects?.loading?
                             <DuvduLoading loadingIn={""} type='profileProjects'/>
-                            :projectData?.length == 0 ?
-                                <EmptyComponent message="No Projects Yet!" />:
-                                <Projects projects={projectData} />
-                            }
-                            
+                            :
+                            (projects?.data?.projects?.length > 0 ?
+                                <Projects projects={projectData} />:
+
+                                projects?.data?.projects && 
+                                    <EmptyComponent message="No Projects Yet!" />
+                            )
+                            }                            
                         </div>
                 </div>
             </div>

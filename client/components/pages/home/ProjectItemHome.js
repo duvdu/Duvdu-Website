@@ -21,7 +21,6 @@ const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', i
     const [Duration, setDuration] = useState(0);
     const videoRef = useRef(null);
     const cardData = initialCardData?.project;
-    console.log({cardData , initialCardData})
     const [fav, setFav] = useState(false);
 
     useEffect(() => {

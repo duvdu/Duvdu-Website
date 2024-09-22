@@ -91,7 +91,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
     const page = 1;
     const showLimit = 6;
     const [limit, setLimit] = useState(showLimit);
-
+    console.log({get_respond})
 
     useEffect(() => {
         GetTeamProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page })
@@ -140,7 +140,8 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                             <Icon className="w-4 text-white" name="plus" />
                         </div>
                     </div>
-                    {
+                    {get_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='category' />:
                         get_respond?.data?.length > 0 ? (
                             <div className="boards-grid">
                                 {get_respond.data.map((feature, index) => (
@@ -152,7 +153,6 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
                             <Empty />
                         )}
                 </div>
-                <DuvduLoading loadingIn={"GetTeamProjects"} />
             </section>
         </Layout>
     );
