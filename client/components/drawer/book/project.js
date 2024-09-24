@@ -118,7 +118,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
 

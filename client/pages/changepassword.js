@@ -29,7 +29,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
     const router = useRouter();
 
     useEffect(() => {
-        if (respond) {
+        if (respond?.data) {
             router.push(`/`);
         }
     }, [respond]);

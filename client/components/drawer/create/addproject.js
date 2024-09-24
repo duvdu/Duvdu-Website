@@ -107,7 +107,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         // if (!formData.tools || !formData.tools.length) errors.title = 'tools is required';
         // if (!formData.functions || !formData.functions.length) errors.title = 'functions is required';
         // if (!formData.creatives || !formData.creatives.length) errors.title = 'creatives is required';
-        if ((formData.description?.length || 0) < 6) errors.desc = 'Description must be at least 6 characters long';
+        if ((formData.description?.length || 0) < 6) errors.description = 'Description must be at least 6 characters long';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'duration is required';
         // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
@@ -118,9 +118,10 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.location = 'maximum should be greater than current';
         return errors;
     };
+    console.log(validateRequiredFields())
     const isEnable = Object.keys(validateRequiredFields()).length == 0
     let ErrorMsg = ""
-    if (!isEnable) ErrorMsg = Object.values(validateRequiredFields())[0]
+    if (!isEnable) ErrorMsg = validateRequiredFields()
 
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
@@ -151,7 +152,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     };
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
 
@@ -208,12 +209,15 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                             </section>
                             <section>
                                 <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
+                                <div className="text-rose-700 text-base mt-4">{ErrorMsg.title}</div>
                             </section>
                             <section>
                                 <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || ""} onChange={handleInputChange} name="description" />
+                                <div className="text-rose-700 text-base mt-4">{ErrorMsg.description}</div>
                             </section>
                             <section>
                                 <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || ""} onChange={handleInputChange} name="duration" />
+                                <div className="text-rose-700 text-base mt-4">{ErrorMsg.duration}</div>
                             </section>
                             <section>
                                 <ListInput
@@ -330,9 +334,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
-                            <span className="text-rose-700 text-base text-center mt-4">
-                                {ErrorMsg}
-                            </span>
+                            
                             <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                             </Button>

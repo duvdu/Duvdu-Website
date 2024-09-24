@@ -196,10 +196,12 @@ const Home = ({
                         </h1>
                         <p className="text-xs lg:text-xl font-bold text-[#263257] dark:text-white opacity-60 text-center lg:mx-20 trap capitalize">{t("consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.")}</p>
                     </div>
+                    {homeTreny_respond &&
+                    
                     <div className="mx-auto w-full py-12">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
-                    {homeTreny_respond?.loading ? 
-                    <DuvduLoading loadingIn={""} type={'category'} />:
+                        {homeTreny_respond?.loading ? 
+                        <DuvduLoading loadingIn={""} type={'category'} />:
                         <div className="flex md:grid md:grid-cols-3 gap-3 px-3 overflow-auto lg:container">
                             {list &&list?.slice(0, 3)?.map((data, index) => (
                                 <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} key={index}>
@@ -222,7 +224,9 @@ const Home = ({
                         </div>
                         }
                     </div>
+                    }
                 </section>
+                {homeDiscover_respond && 
                 <section className="bg-[#F2F2F3] dark:bg-[#1A1A1C] py-12">
                     <div className="w-full ">
                         <section className="mx-auto lg:container relative ps-3">
@@ -253,7 +257,8 @@ const Home = ({
                             </div>}
                         </section>
                     </div>
-                </section>
+                </section>}
+                {homeDiscover_respond && 
                 <section className="py-12">
                     <div className="w-full pr-0">
                         <div className="mx-auto lg:container relative  ps-3">
@@ -283,6 +288,9 @@ const Home = ({
                         </div>
                     </div>
                 </section>
+                }
+                {popularSub_respond && 
+                
                 <section className="py-12 bg-[#F2F2F3] dark:bg-[#1A1A1C]">
                     <div className="mx-auto">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("popular sub-sub categories")}</h2>
@@ -324,6 +332,8 @@ const Home = ({
                         }
                     </div>
                 </section>
+                }
+                {projects && 
                 <section className="py-12">
                     <div className='container'>
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("explore recommended projects")}</h2>
@@ -338,6 +348,7 @@ const Home = ({
                         }
                     </div>
                 </section>
+                }
             </Layout>
 
         </>

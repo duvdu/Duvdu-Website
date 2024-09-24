@@ -94,7 +94,8 @@ function OtherProfile({
     const projectData = projects?.data?.projects || [];
     console.log({user, projectData})
     return (
-        
+        user &&
+    
             <div className='sm:container'>
                 <Followers id={"show-followers"} />
                 {user?.loading? 

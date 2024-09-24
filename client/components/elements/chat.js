@@ -35,7 +35,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     ///////////////////////////
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             ClearChatInput()
 
         if (respond?.data)

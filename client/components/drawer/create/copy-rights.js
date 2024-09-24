@@ -73,7 +73,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
 
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
 

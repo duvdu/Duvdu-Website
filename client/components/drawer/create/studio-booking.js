@@ -118,7 +118,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     };
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
 

@@ -54,7 +54,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
 
 
     useEffect(() => {
-        if (respond) {
+        if (respond?.data) {
             router.push(`/register/${formData.username}`);
         }
     }, [respond]);
