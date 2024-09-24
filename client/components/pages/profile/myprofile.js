@@ -35,10 +35,10 @@ import { userReview } from '../../../redux/action/apis/reviews/users';
 import { useTranslation } from 'react-i18next';
 
 
-function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond,myProfile_respond, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
     const { t } = useTranslation();
     const route = useRouter()
-
+    
     const { type, category, subcategory, tags, edit: goEdit } = route.query
     const [showAddPost, setshowAddPost] = useState(false);
     const [showAddPanal, setShowAddPanal] = useState(false);
@@ -49,12 +49,13 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
         setUserInfo(user)
     }, [user])
 
-    useEffect(() => {
-        GetUserProject({})
-    }, [])
+    // useEffect(() => {
+    //     GetUserProject({})
+    // }, [])
     useEffect(() => {
         if (user?.username)
             userReview({ username: user.username })
+            GetUserProject({ username: user?.username });
     }, [user?.username])
 
     function removeQueryParameter() {
@@ -117,15 +118,15 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             pathname: url.pathname,
         });
     };
-    console.log({projects})
     function Allpage() {
+        console.log({updateProfile_respond})
         useEffect(() => {
             if (updateProfile_respond?.data) {
                 // updateProfile_respond.data.coverImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.coverImage
                 // updateProfile_respond.data.profileImage = "https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + updateProfile_respond.data.profileImage
-                setUserInfo(updateProfile_respond.data)
+                setUserInfo(updateProfile_respond?.data)
             }
-        }, [updateProfile_respond])
+        }, [updateProfile_respond?.data])
 
         function updateInstantState(checked) {
             const data = new FormData();
@@ -133,17 +134,17 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             updateProfile(data)
         }
         return (
-            updateProfile_respond || myProfile_respond &&
+            user &&
                 <>
                     <Followers id={"show-followers"} />
                     
-                    {updateProfile_respond?.loading || myProfile_respond?.loading? 
+                    {user?.loading? 
                           <div className="bg-gray-200 dark:bg-[#1f1f1f] h-36 md:h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
                           <Conver converPic={userInfo?.coverImage} />
                     }
                     
                     <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
-                        {updateProfile_respond?.loading || myProfile_respond?.loading?
+                        {user?.loading?
                         <DuvduLoading loadingIn={""} type='profileCard'/>
                         :
                         <div className='sm:bg-white sm:dark:bg-[#1A2024] sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
@@ -182,7 +183,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                             <div className='px-10'>
                                 <div className='flex flex-col gap-4'>
                                     {userReview_respond?.data?.map((comment) => (
-                                        <Comment key={comment.id} comment={comment} />
+                                        <Comment key={comment._id} comment={comment} />
                                     ))}
                                 </div>
                             </div>
@@ -275,8 +276,6 @@ const mapStateToProps = (state) => ({
     updateProfile_respond: state.api.updateProfile,
     projects: state.api.GetUserProject,
     userReview_respond: state.api.userReview,
-    myProfile_respond: state.api.getMyprofile,
-
 });
 
 const mapDispatchToProps = {
