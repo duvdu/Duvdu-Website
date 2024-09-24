@@ -33,12 +33,12 @@ const Projects = ({
     const targetRef = useRef(null);
 
     useEffect(() => {
-        if (get_respond)
+        if (get_respond?.data)
             setallProjects(get_respond?.data?.projects)
     }, [get_respond]);
 
     useEffect(() => {
-        if (delete_respond)
+        if (delete_respond?.data)
             GetSavedBoard({ id: boardId })
     }, [delete_respond]);
 

@@ -270,7 +270,7 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
         router.push({ pathname: "/team/" + create_respond.data._id });
     }
     useEffect(() => {
-        if (create_respond) {
+        if (create_respond?.data) {
             OpenPopUp("successfully-create-team")
         }
     }, [create_respond])

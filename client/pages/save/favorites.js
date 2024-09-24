@@ -31,12 +31,12 @@ const Projects = ({
     const targetRef = useRef(null);
 
     useEffect(() => {
-        if (get_respond)
+        if (get_respond?.data)
             setallProjects(get_respond?.data)
     }, [get_respond]);
 
     useEffect(() => {
-        if (delete_respond || boardId || swap_respond) {
+        if (delete_respond?.data || boardId || swap_respond?.data) {
             GetFavList({});
         }
     }, [delete_respond, boardId, swap_respond]);

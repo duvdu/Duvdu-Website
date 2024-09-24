@@ -65,7 +65,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
 
 
     useEffect(() => {
-        if (bookCopyrights_respond)
+        if (bookCopyrights_respond?.data)
             setPost_success(true)
     }, [bookCopyrights_respond?.message])
 

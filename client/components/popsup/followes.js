@@ -14,7 +14,7 @@ function Followers({
     const { t } = useTranslation();
 
     useEffect(() => {
-        if (getUserFollowers_respond) {
+        if (getUserFollowers_respond?.data) {
             setLoading(false);
             }
     }, [getUserFollowers_respond]);

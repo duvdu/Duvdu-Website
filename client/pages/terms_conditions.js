@@ -30,7 +30,7 @@ const Page = ({ api, GetTerms , respond }) => {
         GetTerms()
     }, [])
     useEffect(() => {
-        if(respond)
+        if(respond?.data)
             setTerms(respond.data.desc)
     }, [respond?.message])
     

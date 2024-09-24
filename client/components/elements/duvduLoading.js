@@ -228,7 +228,7 @@ const SkeletonProject = () => {
       <div className="h-4 bg-gray-200 dark:bg-[#444] rounded w-36 animate-pulse"></div>
 
       {/* Large Image Skeleton */}
-      <div className='grid md:grid-cols-4 space-y-6 gap-5 w-full'>
+      <div className='grid md:grid-cols-4 gap-5 w-full'>
         <div className="h-[600px] md:h-auto col-span-2 md:col-span-3 grid md:grid-rows-3 gap-5">
           <div className="md:row-span-2 bg-gray-200 dark:bg-[#444] rounded-[30px] animate-pulse" />
           <div className="bg-gray-200 dark:bg-[#444] rounded-[30px] animate-pulse" />

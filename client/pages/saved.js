@@ -113,7 +113,7 @@ const Saved = ({
    
     useEffect(() => {
         
-        if (createBoard_respond || updateBoard_respond || deleteSavedBoard_respond) {
+        if (createBoard_respond?.data || updateBoard_respond?.data || deleteSavedBoard_respond?.data) {
             GetBoards()
             GetFavList({})
         }

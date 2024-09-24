@@ -40,7 +40,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
     useEffect(() => {
-        if (create_respond) {
+        if (create_respond?.data) {
             OpenPopUp("successfully-create-team")
         }
     }, [create_respond])

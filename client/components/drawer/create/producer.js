@@ -105,15 +105,15 @@ const AddProducer = ({
     }, [producerData, UpdateFormData]);
 
     useEffect(() => {
-        if (createProducer_respond) OpenPopUp(SuccessfullyCreatePopupId);
+        if (createProducer_respond?.data) OpenPopUp(SuccessfullyCreatePopupId);
     }, [createProducer_respond]);
 
     useEffect(() => {
-        if (deleteProducer_respond) OpenPopUp(SuccessfullyDeletePopupId);
+        if (deleteProducer_respond?.data) OpenPopUp(SuccessfullyDeletePopupId);
     }, [deleteProducer_respond]);
 
     useEffect(() => {
-        if (updateProducer_respond) OpenPopUp(SuccessfullyUpdatePopupId);
+        if (updateProducer_respond?.data) OpenPopUp(SuccessfullyUpdatePopupId);
     }, [updateProducer_respond]);
 
     useEffect(() => {

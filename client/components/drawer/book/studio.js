@@ -49,7 +49,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
 
 
     useEffect(() => {
-        if (StudopBooking_respond)
+        if (StudopBooking_respond?.data)
             setPost_success(true)
     }, [StudopBooking_respond?.message])
 
