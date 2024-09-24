@@ -35,7 +35,6 @@ const Home = ({
     useEffect(() => {
         Promise.all([HomeTreny(), HomeDiscover(), popularSub()]);
     }, []);
-    console.log({popularSub_respond ,homeDiscover_respond , homeTreny_respond  })
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
     const list =  homeTreny_respond?.data || [];
@@ -170,7 +169,6 @@ const Home = ({
         GetProjects(queryString)
 
     };
-    console.log({categories})
     return (
         <>
             <Layout isbodyWhite={true}>

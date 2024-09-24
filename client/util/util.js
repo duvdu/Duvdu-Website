@@ -211,7 +211,6 @@ export const isVideo = (coverUrl) => {
   return videoExtensions.includes(`.${urlExtension}`);
 };
 export const isAudio = (coverUrl) => {
-  console.log(coverUrl)
   if(coverUrl){
     const audioExtensions = ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.m4a'];
     const urlExtension = coverUrl?.split('.').pop().toLowerCase();

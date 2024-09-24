@@ -51,7 +51,6 @@ function ReceiveProjectFiles({
     const [timeLeft, setTimeLeft] = useState("");
     const [actionSuccess, setActionSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-    console.log({contract})
     const [appointmentDate, setdAppointmentDate] = useState(null);
 
 

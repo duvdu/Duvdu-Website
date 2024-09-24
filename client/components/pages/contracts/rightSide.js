@@ -39,7 +39,6 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 return "Unknown";
         }
     }
-    console.log({getAllContracts_respond})
     const data = getAllContracts_respond?.
         data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username))
     

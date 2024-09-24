@@ -39,7 +39,6 @@ const TheTeam = ({
     }, [teamId, add_creative, delete_respond, update_respond]);
 
     const updateTeamProject = (data) => {
-        console.log(data)
         AddTeamProject(data, teamId);
     }
     const handleDelete = (id) => {
@@ -173,7 +172,6 @@ const Person = ({ person, onDelete, onUpdate }) => {
     const handleDropdownSelect = (v) => {
         v == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)
     };
-    console.log(person)
     return (
         <>
             <Popup id={"Edit-creative-" + person._id} header={'Work Details'} onCancel={onCancel}>

@@ -63,7 +63,6 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
 
         return covers;
     };
-    console.log(fav_respond)
     const saved = getProjectCovers(getBoards_respond?.data || [])
     const favCover = fav_respond?.data?.length>0 ? fav_respond.data[0].project?.cover : null
 

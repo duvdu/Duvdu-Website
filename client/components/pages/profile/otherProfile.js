@@ -82,7 +82,6 @@ function OtherProfile({
 
     const handleSwapFollow = () => {
         if (api.loading && api.req === "swapFollow") return;
-        console.log(user)
         swapFollow(userInfo?._id, isFollow != null ? isFollow : userInfo?.isFollow);
     };
 
@@ -90,9 +89,7 @@ function OtherProfile({
         if(userInfo?.canChat)
             GetAllMessageInChat(userInfo?._id)
     };
-    console.log({projects})
     const projectData = projects?.data?.projects || [];
-    console.log({user, projectData})
     return (
         user &&
     

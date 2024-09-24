@@ -31,7 +31,6 @@ function MyApp({ Component, pageProps }) {
     const [payload, setPayload] = useState(null);
 
     const { fcmToken, notificationPermissionStatus } = useFcmToken();
-    fcmToken && console.log('FCM token:', fcmToken);
 
     useEffect(() => {
         const messaging = getMessaging(firebaseApp);

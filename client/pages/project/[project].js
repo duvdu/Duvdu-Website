@@ -75,7 +75,6 @@ const Projects = ({
         }
         setPlayingAudioRef(newAudioRef);
       };
-    console.log({project})
     return (
         <>
             <Layout>

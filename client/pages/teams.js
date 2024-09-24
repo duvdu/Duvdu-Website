@@ -17,7 +17,6 @@ const Card = ({ data, DeleteTeamProjects }) => {
     const { t } = useTranslation();
     const { cover, creatives, title, _id, status } = data;
     const route = useRouter()
-    console.log(creatives)
     const onDelete = () => {
         DeleteTeamProjects(_id)
     }
@@ -91,7 +90,6 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
     const page = 1;
     const showLimit = 6;
     const [limit, setLimit] = useState(showLimit);
-    console.log({get_respond})
 
     useEffect(() => {
         GetTeamProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page })

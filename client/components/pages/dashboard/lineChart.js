@@ -157,7 +157,6 @@ const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
 
     }, [Months, initialDatapoints]);
     const isDown = initialDatapoints?.slice(-2)[0]>initialDatapoints?.slice(-2)[1]
-    console.log(isDown)
     return (
         <div className='relative h-full '>
             <div className='absolute h-24 w-full flex items-center px-10 gap-5'>

@@ -94,7 +94,6 @@ const Studio = ({ projects, GetStudios, api }) => {
     };
 
     const getPaginatedProjects = projects?.data
-    console.log({projects})
     const setParams = (queryString) => {
         Router.push(`/${cycle}?${queryString}`);
     };

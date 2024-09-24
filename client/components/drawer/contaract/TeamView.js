@@ -5,7 +5,6 @@ import Icon from '../../Icons';
 
 export default function TeamView({contract}){
     const { t } = useTranslation();
-    console.log(contract)
     return <>
     <section className='grid grid-cols-3 w-full'>
         <div>

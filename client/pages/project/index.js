@@ -86,7 +86,6 @@ const Projects = ({ projects, GetProjects, api }) => {
     }, [page, pagganation?.totalPages]);
 
     const setParams = (queryString) => {
-        console.log(queryString)
         Router.push(`/${cycle}?${queryString}`);
     };
 

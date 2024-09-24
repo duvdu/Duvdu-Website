@@ -19,7 +19,6 @@ const Search = ({
     search, GetAllSearch
 }) => {
     const { t, i18n } = useTranslation();
-    console.log(search)
     const Router = useRouter();
     const searchTerm = Router.query.search;
 
