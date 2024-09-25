@@ -15,9 +15,9 @@ function RegistrationRequired() {
                     <span className='mb-12 text-center text-xl font-semibold'>
                         {t('Register or Sign-in')}
                         <br />{t("to access this feature")}</span>
-                    <Link href="/register">
+                    <Link href="/login">
                         <div className="max-w-96 w-full cursor-pointer">
-                            <AppButton>{t("register")}</AppButton>
+                            <AppButton>{t("login")}</AppButton>
                         </div>
                     </Link>
                 </div>

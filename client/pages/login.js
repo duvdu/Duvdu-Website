@@ -33,8 +33,11 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
   var convertError = JSON.parse(api.error ?? null)
 
   useEffect(() => {
-    if (login_respond?.message) {
-      getMyprofile()
+    console.log(login_respond)
+    if (login_respond?.message === 'success') {
+      getMyprofile().then(()=>{
+        router.back()
+      })
     }
   }, [login_respond?.message])
 

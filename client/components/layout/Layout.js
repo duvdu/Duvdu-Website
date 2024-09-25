@@ -93,7 +93,7 @@ const Layout = ({
     }, [user?.username])
 
     useEffect(() => {
-        if(logout_respond) {
+        if(logout_respond?.data) {
             router.push({
             pathname: "/login",
         });
