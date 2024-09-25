@@ -230,7 +230,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     {ErrorMsg}
                             </span>
                                 <div className="flex justify-center">
-                                    <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
+                                    <ArrowBtn isEnable={enableBtn} onClick={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
                                 </div>
                             </section>
                         </div>
@@ -305,7 +305,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                         <span className="text-2xl font-bold">${calculateTotalPrice()}</span>
                                     </div>
                                     <div className="flex justify-center">
-                                        <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
+                                        <ArrowBtn isEnable={enableBtn} onClick={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
                                     </div>
                                 </section>
                             </div>}

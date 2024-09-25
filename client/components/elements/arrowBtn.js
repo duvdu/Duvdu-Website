@@ -2,12 +2,12 @@ import React from "react";
 import Icon from '../Icons';
 import { useTranslation } from 'react-i18next';
 
-const ArrowBtn = ({ className, children, text, Click, isEnable = true, IconName = "angle-right", ...rest }) => {
+const ArrowBtn = ({ className , loading, children, text, onClick, isEnable = true, IconName = "angle-right", ...rest }) => {
     const { t } = useTranslation();
 
     const handleClick = () => {
-        if (isEnable && Click) {
-            Click();
+        if (isEnable && onClick) {
+            onClick();
         }
     };
 
@@ -23,7 +23,10 @@ const ArrowBtn = ({ className, children, text, Click, isEnable = true, IconName 
                 <span className="capitalize flex mx-2 lg:mx-5 items-center text-base sm:text-lg font-bold text-DS_white text-center text-white whitespace-nowrap">{t(text)}</span>
             </div>
             <div className={`flex aspect-square items-center justify-center rounded-full bg-white bg-opacity-25 h-16 sm:h-20 ${isEnable ? 'opacity-100' : 'opacity-50'}`}>
+                {loading ? 
+                <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:
                 <Icon className="rtl:rotate-180 text-white text-3xl w-3 " name={IconName} />
+                }
             </div>
         </div>
     );

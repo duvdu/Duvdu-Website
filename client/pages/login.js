@@ -30,7 +30,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  var convertError = JSON.parse(api.error ?? null)
+  var convertError = JSON.parse(login_respond?.error ?? null)
 
   useEffect(() => {
     console.log(login_respond)
@@ -43,7 +43,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
 
 
   useEffect(() => {
-    if (convertError && api.req == "login") {
+    if (convertError && login_respond?.req == "login") {
       if (convertError.status == 422) {
         convertError.data.errors.forEach(({ field, message }) => {
           switch (field) {
@@ -59,13 +59,13 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
         });
       }
       else {
-        setErrorMSG(errorConvertedMessage(api.error))
+        setErrorMSG(errorConvertedMessage(login_respond?.error))
       }
 
     }
     else
       setErrorMSG(null)
-  }, [api.error])
+  }, [login_respond.error])
 
 
 

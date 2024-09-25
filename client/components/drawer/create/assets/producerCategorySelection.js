@@ -7,20 +7,19 @@ import { useTranslation } from 'react-i18next';
 
 function ProducerCategorySelection({ categories, onChange, value, filterIn, onValidateChange }) {
     const { t } = useTranslation();
-    categories = filterByCycleCategory(categories, filterIn);
-    if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
 
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
     const [validationError, setValidationError] = useState('');
+    categories = filterByCycleCategory(categories, filterIn);
 
     useEffect(() => {
         onValidateChange(validationError)
     },[validationError])
 
     useEffect(() => {
-        const selectedCategory = categories.find(category => category._id === value?.category);
+        const selectedCategory = categories?.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
 
         if (selectedCategory) {
@@ -98,6 +97,7 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
         return '';
     };
 
+    if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
 
     return (
         <>

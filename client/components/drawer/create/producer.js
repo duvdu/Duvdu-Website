@@ -7,7 +7,9 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import Drawer from "../../elements/drawer";
 import ArrowBtn from "../../elements/arrowBtn";
 import { useTranslation } from 'react-i18next';
-
+import ErrorPopUp from '../../popsup/errorPopUp';
+import ErrorMessage from '../../elements/ErrorMessage';
+import DuvduLoading from '../../elements/duvduLoading';
 import ListInput from "../../elements/listInput";
 import ProducerCategorySelection from "./assets/producerCategorySelection";
 import { GetIsLoggedProducer } from '../../../redux/action/apis/cycles/producer/islogged';
@@ -78,7 +80,6 @@ const AddProducer = ({
     const [isProducer, setIsProducer] = useState(false);
     const [validateTags, setValidateTags] = useState(false);
     const producerData = getIsLoggedProducer_respond?.data;
-
     if (producerData && Array.isArray(producerData.subCategories)) {
         producerData.subCategories = convertSubCategoryData(producerData.subCategories);
     }
@@ -94,9 +95,7 @@ const AddProducer = ({
         [UpdateFormData]
     );
 
-    useEffect(() => {
-        GetIsLoggedProducer()
-    }, [GetIsLoggedProducer])
+
 
     useEffect(() => {
         if (producerData) {
@@ -125,7 +124,9 @@ const AddProducer = ({
         if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
         CreateProducer(formData);
     };
-
+    useEffect(() => {
+        GetIsLoggedProducer()
+    }, [])
     const handleUpdate = () => {
         if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
         if (formData.minBudget || formData.maxBudget) {
@@ -167,14 +168,19 @@ const AddProducer = ({
 
 
     const canDelete = true;
-
+    var convertError = JSON.parse(deleteProducer_respond?.error ?? null)
 
     return (
         <>
+            <ErrorPopUp id="image_size_error" errorMsg={deleteProducer_respond?.error} />
             <SuccessfullyPosting id={SuccessfullyUpdatePopupId} onCancel={toggleDrawer} message="Update" />
             <SuccessfullyPosting id={SuccessfullyDeletePopupId} onCancel={toggleDrawer} message="Delete" />
             <SuccessfullyPosting id={SuccessfullyCreatePopupId} onCancel={toggleDrawer} message="Create" />
             <Drawer isOpen={true} name={'add producer'} toggleDrawer={toggleDrawer} padding={false}>
+                {getIsLoggedProducer_respond &&
+                (getIsLoggedProducer_respond?.loading?
+                <DuvduLoading loadingIn={''} type='contract'/>
+                :
                 <div className='flex flex-col justify-between h-full container mx-auto'>
                     <div className='flex flex-col h-full gap-14 container mx-auto mt-8'>
                         <div>
@@ -223,19 +229,21 @@ const AddProducer = ({
                                         : producerData?.searchKeywords
                                 }
                             />
+                            <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
                         </div>
                     </div>
 
                     {
                         !isProducer ?
                             <ArrowBtn isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
-                            <div className='flex flex-col left-0 bottom-10 sticky w-auto mx-14 gap-3'>
-                                <ArrowBtn isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text="delete" shadow={true} shadowHeight={"14"} />
-                                <ArrowBtn isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text="update" shadow={true} shadowHeight={"14"} />
+                            <div className='flex flex-col left-0 bottom-10 sticky mt-14 w-auto mx-14 gap-3'>
+                                <ArrowBtn loading={deleteProducer_respond?.loading} isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text="delete" shadow={true} shadowHeight={"14"} />
+                                <ArrowBtn loading={updateProducer_respond?.loading} isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text="update" shadow={true} shadowHeight={"14"} />
                             </div>
                     }
 
                 </div>
+                )}
             </Drawer>
         </>
     );

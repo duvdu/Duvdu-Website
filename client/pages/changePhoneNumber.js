@@ -59,9 +59,9 @@ function ChangePhoneNumber({ api, respond_Ask, respond_Update, askChangePhone, U
     };
 
     useEffect(() => {
-        if (respond_Update?.data)
+        if (respond_Update)
             handleNextStep(3);
-        else if (respond_Ask?.data)
+        else if (respond_Ask)
             handleNextStep(1);
     }, [respond_Update, respond_Ask])
 

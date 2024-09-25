@@ -1,6 +1,7 @@
 
 import Comment from '../../../components/elements/comment';
 import Controller from '../../../components/elements/controllers';
+import GoogleMap from '../../../components/elements/googleMap';
 import Icon from '../../../components/Icons';
 import EditDrawer from '../../../components/drawer/EditProfile';
 import React, { useEffect, useState } from 'react';
@@ -179,16 +180,31 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                     <p className='pt-6' id='about-paragraph'>{userInfo?.about || '---'}</p>
                                 </div>}
                             <div className='h-divider my-7'></div>
-                            <div className='px-10'>
-                                <div className='flex flex-col gap-4'>
-                                    {userReview_respond?.data?.map((comment) => (
-                                        <Comment key={comment._id} comment={comment} />
-                                    ))}
+                            {userReview_respond?.data.length>0 && 
+                             <>
+                                <div className='h-divider my-7'></div>
+                                <div className='px-10'>
+                                    <div className='flex flex-col gap-4'>
+                                        {userReview_respond?.data?.map((comment) => (
+                                            <Comment key={comment._id} comment={comment} />
+                                        ))}
+                                    </div>
                                 </div>
+                            </>
+                            }   
+                            <div className='px-10'>
+                            <GoogleMap
+                                width={'100%'} value={{ 'lat': userInfo?.location?.lat, 'lng': userInfo?.location?.lng }}
+                                isreadOnly={true}
+                                className={"relative rounded-3xl overflow-hidden h-[200px] border-2 z-10 border-primary"}
+                                height={200}
+                                inputclass={"my-0 bg-transparent font-bold"}
+                                fullscreenControl={false}
+                            />
                             </div>
                             {
                                 !showAddPanal &&
-                                <div className='hidden sticky bottom-0 h-32 lg:flex justify-center items-center mx-auto'>
+                                <div className='hidden sticky bottom-0 h-32 lg:flex justify-center items-center mx-auto z-20'>
                                     <Controller>
                                         <div data-popup-toggle="popup" data-popup-target="select-type" className="dark:bg-[#FFFFFF1A] border border-transparent dark:border-[#FFFFFF4D] w-20 h-20 rounded-full cursor-pointer flex justify-center items-center bg-primary" >
                                             <Icon className='text-white text-2xl' name={'plus'} />

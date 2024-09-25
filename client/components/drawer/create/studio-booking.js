@@ -6,7 +6,7 @@ import Switch from '../../elements/switcher'
 import { connect } from "react-redux";
 import { CreateStudio } from '../../../redux/action/apis/cycles/rental/create';
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
-
+import ErrorMessage from '../../elements/ErrorMessage';
 import { useRouter } from "next/router";
 import { convertToFormData, filterByCycle as filterByCycleCategory, printFormData} from "../../../util/util";
 import ListInput from "../../elements/listInput";
@@ -28,6 +28,8 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const router = useRouter();
     const formData = addprojectState.formData;
     const [errors, setErrors] = useState({});
+    const [validFormCheck, setValidFormCheck] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
@@ -74,12 +76,11 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData.email) errors.email = 'Studio email is required';
         if (!formData.description || formData.description.length < 6) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
-        // if (!formData.address) errors.address = 'Insurance is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         if (!formData.insurance) errors.insurance = 'Insurance is required';
         // showOnHome
-        if (!formData['projectScale.unit']) errors.projectScaleunit = 'Price per hour is required';
-        if (!formData['projectScale.pricerPerUnit']) errors.pricerPerUnit = 'Maximum value is required';
+        if (!formData['projectScale.unit']) errors.projectScaleunit = 'Project Scale Unit is required';
+        if (!formData['projectScale.pricerPerUnit']) errors.pricerPerUnit = 'Price Per Unite is required';
         if (!formData['projectScale.minimum']) errors.minimum = 'Minimum value is required';
         if (!formData['projectScale.maximum']) errors.maximum = 'Maximum value is required';
         if (parseInt(formData['projectScale.minimum']) > parseInt(formData['projectScale.maximum'])) errors.minimum = 'Minimum value should not be greater than maximum value';
@@ -87,7 +88,17 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         // cover
         return errors;
     };
-
+    const CheckNext=()=>{
+        setValidFormCheck(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) setErrorMsg(validateRequiredFields())
+        else return setCover()
+    }
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+    },[formData])
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -95,7 +106,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             return;
         }
         setErrors({});
-        setNextstep(2)
+        // setNextstep(2)
     }
 
     const Publish = () => {
@@ -131,7 +142,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     }, [auth.login])
 
     useEffect(() => {
-        UpdateFormData("projectScale.unit", "minute")
+        UpdateFormData("projectScale.unit", "minutes")
     }, [])
 
 
@@ -172,22 +183,46 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         UpdateFormData('subCategory', value.subCategory)
                                         UpdateFormData('tags', value.tags)
                                     }} />
+                                    {ErrorMsg.category ?
+                                    <ErrorMessage ErrorMsg={ErrorMsg.category}/>:(
+                                        ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
+                                        <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
+                                    )}
                             </div>
                             <section className="w-full ">
                                 <h3 className="capitalize opacity-60">{t("attachments")}</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                             </section>
                             <section className='gap-8'>
-                                <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                <input placeholder={t("Phone number")} type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                <input placeholder={t("Email")} type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                <input placeholder={t("Description")} name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <section>
+                                    <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.title}/>
+                                </section>
+                                <section>
+                                    <input placeholder={t("Phone number")} type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.phoneNumber}/>
+                                </section>
+                                <section>
+                                    <input placeholder={t("Email")} type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.email}/>
+                                </section>
+                                <section>
+                                    <input placeholder={t("Description")} name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.description}/>
+                                </section>
                                 <section className="h-96 relative overflow-hidden mt-5">
                                     <h3>{t("location")}</h3>
                                     <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                                 </section>
-                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <section>
+                                    <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
+                                </section>
+                                <section>
+                                    <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.insurance}/>
+                                </section>
                             </section>
                             <section className="flex flex-col gap-8">
                                 <div className='flex items-center justify-between'>
@@ -205,7 +240,10 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         ))}
                                     </select>
                                 </div>
-                                <input placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <section>
+                                    <input placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} type='number' className={"inputStyle1"} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.pricerPerUnit}/>
+                                </section>
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
@@ -219,13 +257,17 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
+                                    <ErrorMessage ErrorMsg={ErrorMsg.minimum}/>
+                                </div >
                             </section>
                             <section className='flex justify-center gap-3 mt-10'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </section>
 
-                            <AppButton isEnabled={!hasErrors} onClick={setCover} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                            <AppButton onClick={CheckNext} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                             </AppButton>
 

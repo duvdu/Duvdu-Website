@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AppButton from "../../elements/button";
 import Comment from "../../elements/comment";
+import GoogleMap from '../../../components/elements/googleMap';
 import Conver from "./conver";
 import Info from "./info";
 import Projects from "./projects";
@@ -60,7 +61,7 @@ function OtherProfile({
     const [isFollow, setIsFollow] = useState();
     const { t } = useTranslation();
     const userInfo = user?.data;
-
+    console.log(userInfo)
     useEffect(() => {
         if (swapFollowRespond && username) {
             setIsFollow(swapFollowRespond.isFollow);
@@ -167,6 +168,17 @@ function OtherProfile({
                                 </div>
                             </>
                         }
+                            <div className='h-divider my-7'></div>
+                            <div className='px-10'>
+                            <GoogleMap
+                                width={'100%'} value={{ 'lat': userInfo?.location?.lat, 'lng': userInfo?.location?.lng }}
+                                isreadOnly={true}
+                                className={"relative rounded-3xl overflow-hidden h-[200px] border-2 z-10 border-primary"}
+                                height={200}
+                                inputclass={"my-0 bg-transparent font-bold"}
+                                fullscreenControl={false}
+                            />
+                            </div>
 
                     </div>}
                     <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
