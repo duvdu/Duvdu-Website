@@ -65,7 +65,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
     }
     else
       setErrorMSG(null)
-  }, [login_respond.error])
+  }, [login_respond?.error])
 
 
 
