@@ -7,7 +7,7 @@ export const resendCode = ({ username }) => {
       dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'resendCode' });
       try {
         const response = await mainApiInstance.post('api/users/auth/resend-code', {
-          username: username,
+          login: username,
         });
         dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data , req: 'resendCode'});
       } catch (error) {

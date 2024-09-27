@@ -17,12 +17,14 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const [errorMSG, setErrorMSG] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
+        email:'',
         phone: '',
         username: '',
         password: '',
     });
     const [formErrors, setFormErrors] = useState({
         name: { isError: false, message: '' },
+        email: { isError: false, message: '' },
         phone: { isError: false, message: '' },
         username: { isError: false, message: '' },
         password: { isError: false, message: '' },
@@ -54,19 +56,19 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
 
 
     useEffect(() => {
-        if (respond?.data) {
+        if (respond?.message === 'success') {
             router.push(`/register/${formData.username}`);
         }
-    }, [respond]);
+    }, [respond?.message]);
 
     useEffect(() => {
-        if (api.error) {
-            const convertError = JSON.parse(api.error);
+        if (respond?.error) {
+            const convertError = JSON.parse(respond?.error);
             handleApiErrors(convertError);
         } else {
             setErrorMSG(null);
         }
-    }, [api.error]);
+    }, [respond?.error]);
 
     const handleApiErrors = (convertError) => {
         
@@ -100,11 +102,21 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
         if (Object.values(validationErrors).some(error => error.isError)) {
             setFormErrors(validationErrors);
             return;
+        }else{
+            setFormErrors({
+                name: { isError: false, message: '' },
+                email: { isError: false, message: '' },
+                phone: { isError: false, message: '' },
+                username: { isError: false, message: '' },
+                password: { isError: false, message: '' },
+                termsAgreed: { isError: false, message: '' },
+            })
         }
 
         signup({
             name: formData.name,
             username: formData.username,
+            email: formData.email,
             password: formData.password,
             phoneNumber: formData.phone,
         });
@@ -133,6 +145,16 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
             errors.phone = { isError: true, message: 'Invalid Egyptian phone number.' };
         } else {
             errors.phone = { isError: false, message: '' };
+
+        }
+        const EmailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+        if (formData.email.trim() === '') {
+            errors.email = { isError: true, message: 'Email is required.' };
+        } else if (!EmailRegex.test(formData.email)) {
+            errors.email = { isError: true, message: 'Invalid Email.' };
+        } else {
+            errors.email = { isError: false, message: '' };
         }
 
 
@@ -171,7 +193,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
+    
     return (
         <Auth>
             <form method="post" onSubmit={handleSubmit}>
@@ -188,6 +210,17 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         className={formErrors.name.isError ? "app-field error" : "app-field"}
                     />
                     {formErrors.name.isError && <p className="error-msg">{formErrors.name.message}</p>}
+                </div>
+                <div className={`mb-4 ${formErrors.email.isError ? 'error' : ''}`}>
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email|| ""}
+                        onChange={handleChange}
+                        placeholder={t("email")}
+                        className={formErrors.email.isError ? "app-field error" : "app-field"}
+                    />
+                    {formErrors.email.isError && <p className="error-msg">{formErrors.email.message}</p>}
                 </div>
                 <div className={`mb-4 ${formErrors.phone.isError ? 'error' : ''}`}>
                     <input
@@ -271,10 +304,11 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         </div>
                     </div>
                     {formErrors.termsAgreed.isError && <p className="error-msg">{formErrors.termsAgreed.message}</p>}
-                    {errorMSG && <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
                 </div>
+                {errorMSG && <div className="error-msg" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
                 <button type="submit" className="mb-4 relative mb-30 w-full">
-                    <Button name="login" shadow>{t("Create Account")}</Button>
+                    <Button name="login" shadow>{respond?.loading ?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Create Account")}</Button>
+                
                     <div className="submit-btn"></div>
                 </button>
                 <div className="have-account">

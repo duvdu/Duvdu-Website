@@ -194,17 +194,21 @@ const Home = ({
                         </h1>
                         <p className="text-xs lg:text-xl font-bold text-[#263257] dark:text-white opacity-60 text-center lg:mx-20 trap capitalize">{t("consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.")}</p>
                     </div>
-                    {homeTreny_respond &&
-                    
-                    <div className="mx-auto w-full py-12">
-                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
-                        {homeTreny_respond?.loading ? 
-                        <DuvduLoading loadingIn={""} type={'category'} />:
-                        <div className="flex md:grid md:grid-cols-3 gap-3 px-3 overflow-auto lg:container">
-                            {list &&list?.slice(0, 3)?.map((data, index) => (
+                </section>
+                {homeTreny_respond && 
+                <section className="py-12">
+                    <div className="w-full pr-0">
+                        <div className="mx-auto lg:container relative">
+                            <div className="sm:container">
+                                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
+                            </div>
+                                {homeTreny_respond?.loading ? 
+                            <DuvduLoading loadingIn={""} type={'category'}/>:
+                                <DraggableList>
+                            {list &&list?.map((data, index) => (
                                 <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} key={index}>
                                     <div
-                                        className="cursor-pointer bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 min-w-[300px] lg:w-full lg:p-11 overflow-hidden"
+                                        className="cursor-pointer bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 h-[250px] lg:h-[450px] min-w-[250px] lg:min-w-[450px] lg:p-11 ms-3 overflow-hidden"
                                         style={{ backgroundImage: `url(${data.image})` }}
                                     >
                                         <span className="text-white text-xl lg:text-3xl font-semibold capitalize">
@@ -219,11 +223,15 @@ const Home = ({
                                     </div>
                                 </Link>
                             ))}
+                                    <div className="hidden lg:block absolute h-[151.71px] lg:h-[450px] w-[300px] home-list-gradaint end-6 rtl:rotate-180">  </div>
+                                    <div className="size-3"></div>
+                                </DraggableList>
+                                }
+                            </div>
                         </div>
-                        }
-                    </div>
-                    }
                 </section>
+                }
+
                 {homeDiscover_respond && 
                 <section className="bg-[#F2F2F3] dark:bg-[#1A1A1C] py-12">
                     <div className="w-full ">
@@ -248,7 +256,7 @@ const Home = ({
                                                 </div>
                                             </Link>
                                         ))}
-                                        <div className="hidden lg:block absolute z-10 h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180" />
+                                        <div className="hidden lg:block absolute h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180" />
                                         <div className="size-3"></div>
                                     </DraggableList>
                                 </div>
@@ -278,7 +286,7 @@ const Home = ({
                                             </div>
                                         </Link>
                                     ))}
-                                    <div className="hidden lg:block absolute z-10 h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint end-6 rtl:rotate-180">  </div>
+                                    <div className="hidden lg:block absolute h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint end-6 rtl:rotate-180">  </div>
                                     <div className="size-3"></div>
                                 </DraggableList>
                                 }
@@ -320,7 +328,7 @@ const Home = ({
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="hidden lg:block absolute z-10 h-[100.71px] lg:h-[200px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180">  </div>
+                                    {/* <div className="hidden lg:block absolute z-10 h-[100.71px] lg:h-[200px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180">  </div> */}
                                     <div className="size-3"></div>
 
                                 </DraggableList>

@@ -11,6 +11,7 @@ import dateFormat from "dateformat";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import AddAttachment from "../../elements/attachment";
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '../../elements/ErrorMessage';
 
 const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const { t } = useTranslation();
@@ -19,6 +20,8 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
+    const [validFormCheck, setValidFormCheck] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
     let durationInDays = 0
     if (formData.appointmentDate && formData.startDate) {
         const startDate = new Date(formData.startDate);
@@ -28,22 +31,30 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
         
         durationInDays = durationInMilliseconds / (1000 * 60 * 60 * 24);
     }
+    console.log({ErrorMsg})
+    const validateRequiredFields = () => {
+        const errors = {};
+        if (!formData.startDate) errors.startDate = 'StartDate is required';
+        if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
+        if (!formData.details) errors.details = 'Details is required';
+        if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
+        if (!formData.address) errors.address = 'Address is required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        return errors;
+    };
+    const CheckNext=()=>{
+        setValidFormCheck(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) setErrorMsg(validateRequiredFields())
+        else return onsubmit()
+    }
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+    },[formData])
 
-    if (
-        formData.details?.length > 5 &&
-        formData.startDate &&
-        formData.appointmentDate &&
-        formData['location.lat'] &&
-        formData['location.lng'] &&
-        durationInDays > 0
-    ) {
-        if (!enableBtn)
-            setEnableBtn(true)
-    }
-    else {
-        if (enableBtn)
-            setEnableBtn(false)
-    }
+
 
     function ontoggleDrawer() {
         if (preview)
@@ -62,7 +73,8 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
         toggleDrawer()
         ontoggleDrawer()
     }
-
+    
+    var convertError = JSON.parse(bookCopyrights_respond?.error ?? null)
 
     useEffect(() => {
         if (bookCopyrights_respond?.data)
@@ -119,26 +131,31 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                     <section>
                         <h3 className="capitalize opacity-60">{t("job details")}</h3>
                         <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder={t("requirements, conditions At least 6 char")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <ErrorMessage ErrorMsg={ErrorMsg.details}/>
                     </section>
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">{t("select appointmentDate  date")}</h3>
                         <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.appointmentDate}/>
                     </section>
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">{t("select start date")}</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
                     </section>
                     <section className="h-96 relative overflow-hidden w-full mt-5">
                         <h3 className="capitalize opacity-60  mb-3">{t("location")}</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.location}/>
                     </section>
                     <section className="w-full">
                         <h3 className="capitalize opacity-60 mt-11">{t("upload alike project")}</h3>
                         <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} onClick={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
+                            <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
                         </div>
                     </section>
                 </div>
@@ -188,12 +205,15 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                     </div>
 
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
+                        <div className='text-center'>
+                            <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                        </div>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">{t("Total Amount")}</span>
                             <span className="text-2xl font-bold">${data.price}</span>
                         </div>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} onClick={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
+                            <ArrowBtn loading={bookCopyrights_respond?.loading} onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
                         </div>
                     </section>
                 </div>
