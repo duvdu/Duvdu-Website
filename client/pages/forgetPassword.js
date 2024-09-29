@@ -7,7 +7,7 @@ import { errorConvertedMessage } from '../util/util';
 import { useTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { useRouter } from 'next/router';
-import { forgetpassword } from "../redux/action/apis/auth/forgetpassword/forgetpassword";
+import { forgetpassword } from './../redux/action/apis/auth/forgetPassword/forgetPassword';
 
 function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
     const { t } = useTranslation();
