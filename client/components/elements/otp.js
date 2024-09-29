@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { verify } from "../../redux/action/apis/auth/OTP/verify";
 import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
+import DuvduLoading from './duvduLoading';
 
 function OTP({
     api,
@@ -82,13 +83,15 @@ function OTP({
                             <h1 className="auth-title">{t("Enter code")}</h1>
                             <p className="otpnews" >{t("Enter the verification code we just sent to your phone")}</p>
                         </div>
-                        <OtpInput
+                        {verify_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='otp' />:<OtpInput
                             value={otp|| ""}
                             onChange={(value) => setOtp(value)}
                             numInputs={6}
                             renderSeparator={<span style={{ width: "100%" }} > </span>}
                             renderInput={(props) => <input {...props} className={`${local_error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center mx-1`} style={{ width: "53px", height: "62px" }} />}
                         />
+                        }
 
                         {
                             local_error &&
