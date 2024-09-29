@@ -5,10 +5,11 @@ import Icon from '../components/Icons';
 import OTP from '../components/elements/otp';
 import { errorConvertedMessage } from '../util/util';
 import { useTranslation } from 'react-i18next';
+import { connect } from "react-redux";
 import { useRouter } from 'next/router';
-import { connect } from 'react-redux';
+import { forgetpassword } from "../redux/action/apis/auth/forgetpassword/forgetpassword";
 
-function Page() {
+function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
     const { t } = useTranslation();
     const [username, setUsername] = useState(null);
     const router = useRouter();
@@ -35,10 +36,19 @@ function Page() {
             query: { page: nextPage },
         });
     };
+    useEffect(() => {
+        if (respond_forgetpassword?.message==='success')
+            handleNextStep('OTP');
+    }, [respond_forgetpassword?.message])
 
     const EnterYourUserName = () => {
         const [userName, setUserName] = useState('');
         const [nameError, setNameError] = useState({ isError: false, message: '' });
+
+        if (respond_forgetpassword?.error && !nameError.isError) {
+            const errorMessage = errorConvertedMessage(respond_forgetpassword?.error)
+            setNameError({ isError: true, message: errorMessage });
+        }
 
         const handleSubmit = (e) => {
             e.preventDefault();
@@ -47,8 +57,8 @@ function Page() {
             } else {
                 setNameError({ isError: false, message: '' });
                 // You can add your own logic here to handle the username submission
+                forgetpassword({login:userName})
                 setUsername(userName);
-                handleNextStep('OTP');
             }
         };
 
@@ -61,7 +71,7 @@ function Page() {
                 <div className="heading_s1 mb-8">
                     <h1 className="auth-title text-center">{t("Enter your username")}</h1>
                 </div>
-                <div className={`mb-8 ${nameError.isError && 'error'}`}>
+                <div className={` ${nameError.isError || respond_forgetpassword?.error ? 'error':'mb-8'}`}>
                     <input
                         type="text"
                         placeholder={t("@username")}
@@ -69,11 +79,12 @@ function Page() {
                         value={userName || ""}
                         onChange={(e) => handleChange(e.target.value)}
                     />
-                    {nameError.isError && <span className="error-msg">{nameError.message}</span>}
+                {nameError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(nameError.message) }} />}
                 </div>
                 <div className="h-10" />
                 <button className="w-full" type="submit">
-                    <Button name="reset-password" shadow={true}>{t("Next")}</Button>
+                  <Button name="reset-password" shadow={true} className="w-full ">{respond_forgetpassword?.loading ?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Next")}</Button>
+
                 </button>
             </form>
         );
@@ -165,6 +176,15 @@ function Page() {
     return <Auth>{getPageComponent()}</Auth>;
 }
 
+const mapStateToProps = (state) => ({
+    api: state.api,
+    respond_forgetpassword: state.api.forgetpassword,
+    
+});
 
-export default Page;
+const mapDispatchToProps = {
+    forgetpassword,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForgetPassword);
 

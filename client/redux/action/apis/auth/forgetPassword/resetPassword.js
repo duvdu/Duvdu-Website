@@ -6,9 +6,10 @@ export const resetpassword = ({ username, newPassword }) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'resetpassword' });
     try {
       const data = {
+        login:username,
         newPassword: newPassword
       }
-      const response = await mainApiInstance.post(`api/users/auth/reset-password/${username}`, data);
+      const response = await mainApiInstance.post(`api/users/auth/reset-password`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: 'resetpassword' });
     } catch (error) {
       dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response?.data || error.message), req: 'resetpassword' });

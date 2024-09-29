@@ -28,7 +28,7 @@ function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 const user = result.user;
-                googleLogin({ username: user?.email.split('@')[0], id: user?.uid, notificationToken: fcmToken ?? null });
+                googleLogin({ username: user?.email.split('@')[0],email:user?.email, name:user?.displayName, id: user?.uid, notificationToken: fcmToken ?? null });
             })
             .catch((error) => {
                 const credential = GoogleAuthProvider.credentialFromError(error);
@@ -40,7 +40,7 @@ function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
             .then((result) => {
                 const credential = OAuthProvider.credentialFromResult(result);
                 const user = result.user;
-                googleLogin({ username: user?.email.split('@')[0], id: user?.uid, notificationToken: fcmToken ?? null });
+                googleLogin({ username: user?.email.split('@')[0],email:user?.email, name:user?.displayName, id: user?.uid, notificationToken: fcmToken ?? null });
             })
             .catch((error) => {
                 const credential = OAuthProvider.credentialFromError(error);

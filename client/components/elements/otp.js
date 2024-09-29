@@ -46,10 +46,10 @@ function OTP({
 
 
     useEffect(() => {
-        if (api.error && (api.req == "resendCode" || api.req == "verify")) {
-            const errorMessage = errorConvertedMessage(api.error);
-            if(api.req == "resendCode" ) setcount(errorMessage)
-            if(api.req == "verify"){
+        if (resendCode_respond?.error) {
+            const errorMessage = errorConvertedMessage(resendCode_respond?.error);
+            if(resendCode_respond?.data) setcount(errorMessage)
+            if(verify_respond?.data){
                 setlocal_error(t('Invalid Code'))
             }
         }
@@ -57,7 +57,7 @@ function OTP({
             setlocal_error(null)
             setOtp('')
         }
-    }, [api.error])
+    }, [resendCode_respond?.error])
 
     useEffect(() => {
         if (counter > 0) {

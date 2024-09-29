@@ -35,6 +35,7 @@ const Layout = ({
     GetBoards,
     GetFavList,
     getCategory,
+    getMyprofile_respond,
     GetBoards_respond,
     GetAllChats_respond,
     GetNotifications_respond,
@@ -49,7 +50,6 @@ const Layout = ({
     const [isToggled, setToggled] = useState(1);
     const router = useRouter();
     
-
     const toggleClick = (type) => {
         setToggled(type);
         isToggled > 1
@@ -74,7 +74,12 @@ const Layout = ({
     useEffect(() => {
         init()
     }, [])
-
+    
+    useEffect(() => {
+        if(getMyprofile_respond?.message === 'success' && !getMyprofile_respond?.data?.phoneNumber?.number)
+            router.push(`/addPhoneNumber?${getMyprofile_respond?.data?.username}`);
+    }, [getMyprofile_respond?.message])
+    
     useEffect(() => {
         if (user?.username) {
             if (!GetBoards_respond)

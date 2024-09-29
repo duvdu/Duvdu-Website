@@ -61,7 +61,6 @@ function OtherProfile({
     const [isFollow, setIsFollow] = useState();
     const { t } = useTranslation();
     const userInfo = user?.data;
-    console.log(userInfo)
     useEffect(() => {
         if (swapFollowRespond && username) {
             setIsFollow(swapFollowRespond.isFollow);

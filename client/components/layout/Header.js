@@ -129,7 +129,6 @@ const Header = ({
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-20`} />
             {
-                islogin != null &&
                 <header className={`bg-white dark:bg-[#1A2024] w-full z-20 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
                     <div className="py-3 hidden lg:block">
                         <div className="container">

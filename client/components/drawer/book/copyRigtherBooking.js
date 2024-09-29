@@ -31,7 +31,6 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
         
         durationInDays = durationInMilliseconds / (1000 * 60 * 60 * 24);
     }
-    console.log({ErrorMsg})
     const validateRequiredFields = () => {
         const errors = {};
         if (!formData.startDate) errors.startDate = 'StartDate is required';

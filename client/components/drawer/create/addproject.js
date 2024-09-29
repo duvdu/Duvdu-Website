@@ -25,7 +25,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const { t } = useTranslation();
     const router = useRouter();
     const formData = addprojectState.formData;
-    console.log(formData)
     const [errors, setErrors] = useState({});
     const [validFormCheck, setValidFormCheck] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
@@ -128,7 +127,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         setValidFormCheck(true)
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        console.log(isEnable)
         if (!isEnable) setErrorMsg(validateRequiredFields())
         else return setCover()
     }

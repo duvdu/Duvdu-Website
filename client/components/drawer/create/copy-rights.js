@@ -24,7 +24,6 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     const [validFormCheck, setValidFormCheck] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
-    console.log({ErrorMsg})
     useEffect(() => {
         if (categories.length)
             UpdateFormData('category', categories[0]._id)
