@@ -1,12 +1,12 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances';
 
-export const resetpassword = ({ username, newPassword }) => {
+export const resetpassword = ({login, newPassword }) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'resetpassword' });
     try {
       const data = {
-        login:username,
+        login,
         newPassword: newPassword
       }
       const response = await mainApiInstance.post(`api/users/auth/reset-password`, data);

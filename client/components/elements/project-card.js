@@ -8,9 +8,9 @@ import { connect } from "react-redux";
 import Link from 'next/link';
 
 import 'swiper/swiper-bundle.css';
-import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
-import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
-import { SwapProjectToFav } from '../../redux/action/apis/savedProject/fav/favAction';
+import { AddProjectToBoard } from '../../redux/action/apis/bookmarks/bookmarkItem/add';
+import { DeleteProjectFromBoard } from '../../redux/action/apis/bookmarks/bookmarkItem/remove';
+import { SwapProjectToFav } from '../../redux/action/apis/bookmarks/fav/favAction';
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 import DuvduLoading from './duvduLoading';
 

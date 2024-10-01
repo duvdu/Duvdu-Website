@@ -3,17 +3,18 @@ import Layout from "../components/layout/Layout";
 import CreateBoardPopup from "../components/popsup/createnewBoard";
 import Selector from "../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
-import { GetBoards } from "../redux/action/apis/savedProject/board/get";
-import { UpdateBoard } from "../redux/action/apis/savedProject/board/update";
-import { CreateSavedBoard } from "../redux/action/apis/savedProject/board/create";
+import { GetBoards } from "../redux/action/apis/bookmarks/bookmark/get";
+import { UpdateBoard } from "../redux/action/apis/bookmarks/bookmark/update";
+import { CreateSavedBoard } from "../redux/action/apis/bookmarks/bookmark/create";
 import { connect } from "react-redux";
-import { DeleteSavedBoard } from "../redux/action/apis/savedProject/board/deleteboard";
+import { DeleteSavedBoard } from "../redux/action/apis/bookmarks/bookmark/deleteboard";
 import { ClosePopUp, OpenPopUp, } from "../util/util";
 import { useTranslation } from 'react-i18next';
 import EditBoard from "../components/popsup/editBoard";
 import Link from 'next/link'
-import { GetFavList } from "../redux/action/apis/savedProject/fav/getAll";
+import { GetFavList } from "../redux/action/apis/bookmarks/fav/getAll";
 import DeleteBoard from "../components/popsup/DeleteBoard";
+import DuvduLoading from "../components/elements/duvduLoading";
 
 const Saved = ({
     GetBoards,
@@ -33,9 +34,9 @@ const Saved = ({
         if (!data) return
 
 
-        const { totalProjects, title, _id: id } = data;
-        const img1 = data?.projects[0]?.project?.cover
-
+        const { title, _id: id } = data;
+        const img1 = data?.image
+        const color = data?.color
 
         const dropdown = [
             {
@@ -73,13 +74,13 @@ const Saved = ({
                         <div className="projects cursor-pointer">
                             {img1 ?
                                 <div className="w-full rounded-[50px] img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div> :
-                                <div className="w-full rounded-[50px] img-cart-style flex justify-center items-center" >
-                                    <Icon className="w-44" name={'dvudu-image'} />
+                                <div className="w-full rounded-[50px] img-cart-style" style={{backgroundColor:color}} >
+                                    {/* <Icon className="w-44" name={'dvudu-image'} /> */}
                                 </div>
                             }
                         </div>
                     </Link>
-                    <div className="boards-info projects-num">{totalProjects} projects</div>
+                    <div className="boards-info projects-num">{data?.bookmarkProjectCount} projects</div>
                     <Link href={`/save/${id}`} >
                         <div className="cursor-pointer">
                             <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
@@ -139,14 +140,16 @@ const Saved = ({
                         {false && (
                             <h3>{t("No saved Found")}</h3>
                         )}
+                        {getBoards_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='category'/>:
                         <div className="boards-grid">
-                            <Boards isFav={true} data={initFav} />
-                            {
-                                getBoards_respond?.data?.map((feature, index) => (
+                            {/* <Boards isFav={true} data={initFav} /> */}
+                            
+                            {    getBoards_respond?.data?.map((feature, index) => (
                                     <Boards key={index} isFav={false} data={feature} />
                                 ))
                             }
-                        </div>
+                        </div>}
                     </div>
                 </section>
             </Layout>

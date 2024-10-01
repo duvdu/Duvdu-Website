@@ -2567,11 +2567,19 @@ backdrop-filter: blur(7.08819px);
   margin: 0 10px;
   border-radius: 5px;
   overflow: hidden;
+  position: relative; /* Required for positioning the hover effect */
+  cursor: pointer;
 }
 
 .progress {
   height: 100%;
   background: white;
+  transition: width 0.1s linear;
+}
+
+.hover-progress {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
   transition: width 0.1s linear;
 }
 

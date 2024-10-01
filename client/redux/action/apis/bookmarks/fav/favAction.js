@@ -12,7 +12,12 @@ export const SwapProjectToFav = ({ projectId, action }) => {
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         
         try {
-            const response = await mainApiInstance.patch(`api/users/auth/profile/favourites/${projectId}?action=${action}`);
+            let response = null
+            if(action==='add'){
+                response = await mainApiInstance.post(`api/users/favourites/${projectId}`);
+            }else{
+                response = await mainApiInstance.delete(`api/users/favourites/${projectId}`);
+            }
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: { ...response.data, projectId , action }, req: req });
         } catch (error) {
             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });

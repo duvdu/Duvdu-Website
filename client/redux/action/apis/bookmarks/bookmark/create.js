@@ -13,7 +13,7 @@ export const CreateSavedBoard = (data) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
   
-      const response = await mainApiInstance.post(`api/users/saved-projects`, data);
+      const response = await mainApiInstance.post(`api/users/bookmarks`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: new Date().toISOString(), req: req });
     } catch (error) {
        dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });

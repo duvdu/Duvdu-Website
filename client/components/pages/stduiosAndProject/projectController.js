@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Controller from '../../elements/controllers';
 import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/messages/getAllMessageInChat';
-import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
+import { SwapProjectToFav } from '../../../redux/action/apis/bookmarks/fav/favAction';
 import { OpenPopUp } from '../../../util/util';
 import Icon from '../../Icons';
 import ArrowBtn from '../../elements/arrowBtn';

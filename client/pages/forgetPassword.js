@@ -4,12 +4,14 @@ import Button from '../components/elements/button';
 import Icon from '../components/Icons';
 import OTP from '../components/elements/otp';
 import { errorConvertedMessage } from '../util/util';
+import { validatePassword } from "../util/util";
 import { useTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { useRouter } from 'next/router';
 import { forgetpassword } from './../redux/action/apis/auth/forgetPassword/forgetPassword';
+import { resetpassword } from './../redux/action/apis/auth/forgetPassword/resetPassword';
 
-function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
+function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpassword , respond_resetpassword }) {
     const { t } = useTranslation();
     const [username, setUsername] = useState(null);
     const router = useRouter();
@@ -40,7 +42,6 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
         if (respond_forgetpassword?.message==='success')
             handleNextStep('OTP');
     }, [respond_forgetpassword?.message])
-
     const EnterYourUserName = () => {
         const [userName, setUserName] = useState('');
         const [nameError, setNameError] = useState({ isError: false, message: '' });
@@ -76,7 +77,7 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
                         type="text"
                         placeholder={t("@username")}
                         className={nameError.isError ? "app-field error" : "app-field"}
-                        value={userName || ""}
+                        // value={userName || ""}
                         onChange={(e) => handleChange(e.target.value)}
                     />
                 {nameError.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(nameError.message) }} />}
@@ -97,22 +98,33 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
         const [confirmPasswordError, setConfirmPasswordError] = useState({ isError: false, message: '' });
         const [showPassword, setShowPassword] = useState(false);
         const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+        const [error, setError] = useState({ isError: false, message: '' });
+        useEffect(()=>{
+            if(respond_resetpassword?.error){
+                const errorMessage = JSON.parse(respond_resetpassword?.error)
+                setError({ isError: true, message: errorMessage.errors[0].message });        
+            }
+        },[respond_resetpassword?.error])
         const handleSubmit = (e) => {
             e.preventDefault();
-
-            if (password.length < 8) {
-                setPasswordError({ isError: true, message: 'Password must be at least 8 characters long.' });
-            } else if (password !== confirmPassword) {
-                setConfirmPasswordError({ isError: true, message: 'Passwords do not match' });
+            const error = validatePassword(password);
+            if (error) {
+                setPasswordError({ isError: true, message: error });
             } else {
                 setPasswordError({ isError: false, message: '' });
+            }
+            if (password !== confirmPassword) {
+                setConfirmPasswordError({ isError: true, message: 'Passwords do not match.' });
+            } else {
                 setConfirmPasswordError({ isError: false, message: '' });
-                // Add logic to handle password reset here
+            }
+            if(!passwordError.isError && !confirmPasswordError.isError && password  && confirmPassword)
+                resetpassword({login:username , newPassword : password})
+            else return
+            if(respond_resetpassword?.message){
                 handleNextStep('PasswordChanged');
             }
         };
-
         const toggleShowPassword = () => setShowPassword(!showPassword);
         const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
@@ -155,7 +167,9 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
                     {confirmPasswordError.isError && <span className="error-msg">{confirmPasswordError.message}</span>}
                 </div>
                 <button className="w-full" type="submit">
-                    <Button name="reset-password" shadow={true}>{t("Next")}</Button>
+                {error?.isError && <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error?.message) }} />}
+                    <Button name="reset-password" shadow={true} className="w-full ">{respond_resetpassword?.loading ?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Next")}</Button>
+
                 </button>
             </form>
         );
@@ -179,11 +193,13 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword }) {
 const mapStateToProps = (state) => ({
     api: state.api,
     respond_forgetpassword: state.api.forgetpassword,
+    respond_resetpassword: state.api.resetpassword,
     
 });
 
 const mapDispatchToProps = {
     forgetpassword,
+    resetpassword,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgetPassword);

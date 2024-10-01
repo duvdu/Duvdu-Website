@@ -7,7 +7,7 @@ export const DeleteProjectFromBoard = (idBoard , idProject) => {
     return async dispatch => {
         
         try {
-            const response = await mainApiInstance.delete(`/api/users/saved-projects/${idBoard}/project/${idProject}`);
+            const response = await mainApiInstance.delete(`/api/users/bookmarks/${idBoard}/${idProject}`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
         } catch (error) {
              dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });

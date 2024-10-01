@@ -40,6 +40,21 @@ function OTP({
             verify({ username: username, code: -1 })
         }
     }, [verify_respond?.message])
+    useEffect(() => {
+        if(verify_respond?.error){
+            const errorMessage = errorConvertedMessage(verify_respond?.error);
+            if(errorMessage.includes('token')){
+                setlocal_error(t('Please Resend Code Again'))
+                setcount(null)
+            }else{
+                setlocal_error(t('Invalid Code'))
+            }
+        }
+        // if (verify_respond?.message) {
+        //     onSuccess()
+        //     verify({ username: username, code: -1 })
+        // }
+    }, [verify_respond?.error])
 
     useEffect(() => {
         OpenPopUp('OTP-tester')
@@ -49,17 +64,14 @@ function OTP({
     useEffect(() => {
         if (resendCode_respond?.error) {
             const errorMessage = errorConvertedMessage(resendCode_respond?.error);
-            if(resendCode_respond?.data) setcount(errorMessage)
-            if(verify_respond?.data){
-                setlocal_error(t('Invalid Code'))
+            if(resendCode_respond?.data) setcount(errorMessage)   
+            else {
+                setlocal_error(null)
+                setOtp('')
             }
         }
-        else {
-            setlocal_error(null)
-            setOtp('')
-        }
     }, [resendCode_respond?.error])
-
+    console.log(verify_respond)
     useEffect(() => {
         if (counter > 0) {
             const intervalId = setInterval(() => {

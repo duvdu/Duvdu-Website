@@ -305,7 +305,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     </div>
                     {formErrors.termsAgreed.isError && <p className="error-msg">{formErrors.termsAgreed.message}</p>}
                 </div>
-                {errorMSG && <div className="error-msg" dangerouslySetInnerHTML={{ __html: errorMSG }}></div>}
+                {errorMSG && <div className="error-msg" dangerouslySetInnerHTML={{ __html: t(errorMSG) }}></div>}
                 <button type="submit" className="mb-4 relative mb-30 w-full">
                     <Button name="login" shadow>{respond?.loading ?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Create Account")}</Button>
                 

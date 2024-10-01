@@ -5,10 +5,10 @@ import Layout from "../../components/layout/Layout";
 import Card from "../../components/elements/saved-project-card";
 import Icon from '../../components/Icons';
 import { Goback } from '../../util/util';
-import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
-import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
-import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
-import { SwapProjectToFav } from "../../redux/action/apis/savedProject/fav/favAction";
+import { DeleteProjectFromBoard } from "../../redux/action/apis/bookmarks/bookmarkItem/remove";
+import { AddProjectToBoard } from "../../redux/action/apis/bookmarks/bookmarkItem/add";
+import { GetFavList } from "../../redux/action/apis/bookmarks/fav/getAll";
+import { SwapProjectToFav } from "../../redux/action/apis/bookmarks/fav/favAction";
 import FavProjectCard from "../../components/elements/fav-project-card";
 import ProjectCard from "../../components/elements/project-card";
 import EmptyComponent from "../../components/pages/contracts/emptyComponent";
@@ -42,7 +42,7 @@ const Projects = ({
     }, [delete_respond, boardId, swap_respond]);
 
     const getPaginatedProjects = allprojects;
-    
+    console.log({getPaginatedProjects})
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -64,14 +64,8 @@ const Projects = ({
                         {get_respond?.loading?
                         <DuvduLoading loadingIn={""} type='projects'/>:
                         <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects?.map((item, i) => (
-                                item?.project && (
-                                    (item?.cycle == "rentals" || item?.cycle == "studio-booking") ? (
-                                        <ProjectCard key={`studio-${i}`} cardData={item.project} type="rentals" enbablelove={true}/>
-                                    ) : (
-                                        <ProjectCard key={`project-${i}`} cardData={item.project} enbablelove={true}/>
-                                    )
-                                )
+                            {getPaginatedProjects?.length>0 && getPaginatedProjects?.map((item, i) => (
+                                <Card key={i} favorite={true} cardData={item}/>
                             ))}
                         </div>
                         }

@@ -7,7 +7,7 @@ export const DeleteSavedBoard = (id) => {
     return async dispatch => {
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         try {
-            const response = await mainApiInstance.delete(`api/users/saved-projects/${id}`);
+            const response = await mainApiInstance.delete(`api/users/bookmarks/${id}`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: id, req: req });
         } catch (error) {
               dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });

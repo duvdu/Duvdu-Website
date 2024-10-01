@@ -9,7 +9,7 @@ export const UpdateBoard = (data, id) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
 
-      const response = await mainApiInstance.put(`api/users/saved-projects/${id}`, data);
+      const response = await mainApiInstance.put(`api/users/bookmarks/${id}`, data);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: new Date().toISOString(), req: req });
     } catch (error) {
       try {

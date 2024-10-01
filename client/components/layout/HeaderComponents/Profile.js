@@ -56,13 +56,14 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
     const getProjectCovers = (data) => {
         const covers = [];
         data.forEach((item) => {
-            item.projects.slice(0, 1).forEach((project) => {
-                covers.push(project.project.cover);
-            });
+            // item.projects.slice(0, 1).forEach((project) => {
+                covers.push(item.image);
+            // });
         });
 
         return covers;
     };
+    console.log({getBoards_respond})
     const saved = getProjectCovers(getBoards_respond?.data || [])
     const favCover = fav_respond?.data?.length>0 ? fav_respond.data[0].project?.cover : null
 
