@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { useRouter } from 'next/router';
 import { forgetpassword } from './../redux/action/apis/auth/forgetPassword/forgetPassword';
 import { resetpassword } from './../redux/action/apis/auth/forgetPassword/resetPassword';
+import Link from "next/link";
 
 function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpassword , respond_resetpassword }) {
     const { t } = useTranslation();
@@ -183,6 +184,11 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpa
                 </div>
                 <h1 className="auth-title mb-2">{t("Password changed")}</h1>
                 <p>{t("Your password has been changed successfully")}</p>
+                <div className="mb-4 relative">
+                    <Link href={"/login"}>
+                        <Button type="submit" name="login" shadow={true}>{t("Done")}</Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );

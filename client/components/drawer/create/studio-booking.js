@@ -106,7 +106,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             return;
         }
         setErrors({});
-        // setNextstep(2)
+        setNextstep(2)
     }
 
     const Publish = () => {

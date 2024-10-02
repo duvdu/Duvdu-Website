@@ -46,7 +46,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
     useEffect(()=>{
-        if(formData.category == undefined)
+        // if(formData.category == undefined)
             UpdateFormData('attachments' , null)
     },[formData.category])
     const convertToFormData = () => {
@@ -121,12 +121,14 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
         if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.current = 'current should be greater than minimum';
         if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
+        console.log(errors)
         return errors;
     };
     const CheckNext=()=>{
         setValidFormCheck(true)
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
+        console.log(validateRequiredFields())
         if (!isEnable) setErrorMsg(validateRequiredFields())
         else return setCover()
     }
@@ -141,7 +143,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             return;
         }
         setErrors({});
-        // setNextstep(2)
+        setNextstep(2)
     }
 
     const handleInputChange = (e) => {

@@ -32,8 +32,6 @@ const Saved = ({
     const { t } = useTranslation();
     const Boards = ({ data, isFav }) => {
         if (!data) return
-
-
         const { title, _id: id } = data;
         const img1 = data?.image
         const color = data?.color
@@ -59,7 +57,7 @@ const Saved = ({
         return (
             <>
                 <DeleteBoard onClick={deleteSavedBoard} id={id} />
-                <EditBoard id={id} onSbmit={(v) => UpdateBoard({ title: v }, id)} defultValue={title} />
+                <EditBoard id={id} onSbmit={(v) => UpdateBoard(v, id)} defultValue={{title , image:img1}} />
                 <div className="boards-card">
                     <div className="absolute top-7 right-7" onClick={handleSelectClick}>
                         {!isFav &&
@@ -80,7 +78,7 @@ const Saved = ({
                             }
                         </div>
                     </Link>
-                    <div className="boards-info projects-num">{data?.bookmarkProjectCount} projects</div>
+                    <div className="boards-info projects-num">{data?.bookmarkProjectCount} {t(data?.bookmarkProjectCount===1?'project':'projects')}</div>
                     <Link href={`/save/${id}`} >
                         <div className="cursor-pointer">
                             <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
@@ -99,7 +97,7 @@ const Saved = ({
         _id: 'favorites',
         title: "Favorites",
         projects: [],
-        totalProjects: 0
+        totalProjects: 10
     });
     useEffect(() => {
         if (getFavList_respond?.data) {
@@ -107,14 +105,14 @@ const Saved = ({
                 _id: 'favorites',
                 title: "Favorites",
                 projects: getFavList_respond.data,
-                totalProjects: getFavList_respond.data.length
+                bookmarkProjectCount: getFavList_respond.data.length
             });
         }
-    }, [getFavList_respond]);
-   
+    }, [getFavList_respond?.data]);
+   console.log({createBoard_respond ,updateBoard_respond ,deleteSavedBoard_respond})
     useEffect(() => {
         
-        if (createBoard_respond?.data || updateBoard_respond?.data || deleteSavedBoard_respond?.data) {
+        if (createBoard_respond?.message || updateBoard_respond?.message || deleteSavedBoard_respond?.message) {
             GetBoards()
             GetFavList({})
         }
@@ -124,32 +122,33 @@ const Saved = ({
 
     return (
         <>
-            <CreateBoardPopup onSbmit={(v) => CreateSavedBoard({ title: v, projects: [] })} />
+            <CreateBoardPopup loading={createBoard_respond?.loading} onSbmit={(v) => CreateSavedBoard(v)} />
             <Layout shortheader={true} isbodyWhite={true}>
 
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
-                            <h1 className="text-2xl opacity-80 font-semibold capitalize">{t("mood boards")}</h1>
+                            <h1 className="text-2xl opacity-80 font-semibold capitalize">{t("saved projects")}</h1>
                             <div className="mr-6"></div>
                             <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board ">
-                                {t("new board")}
+                                {t("new bookmark")}
                                 <Icon className="text-white" name={"plus"} />
                             </div>
                         </div>
                         {false && (
                             <h3>{t("No saved Found")}</h3>
                         )}
-                        {getBoards_respond?.loading?
-                        <DuvduLoading loadingIn={""} type='category'/>:
                         <div className="boards-grid">
-                            {/* <Boards isFav={true} data={initFav} /> */}
+                            <Boards isFav={true} data={initFav} />
+                        {getBoards_respond?.loading?
+                        <DuvduLoading loadingIn={""} type=''/>:
                             
-                            {    getBoards_respond?.data?.map((feature, index) => (
+                                getBoards_respond?.data?.map((feature, index) => (
                                     <Boards key={index} isFav={false} data={feature} />
                                 ))
-                            }
-                        </div>}
+                            
+                        }
+                        </div>
                     </div>
                 </section>
             </Layout>

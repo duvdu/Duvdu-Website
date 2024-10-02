@@ -22,23 +22,25 @@ function AddToSaved({
     isOpen,
 }) {
     const router = useRouter();
-    const { project: projectId } = router.query;
+    const { project: projectId , studio:rentalId } = router.query;
+    console.log(projectId , rentalId)
     const boards = getBoards_respond?.data || []
     const { t } = useTranslation();
-
+    useEffect(()=>{
+        if(addProjectToBoard_respond?.message==='success')
+        init()
+    },[addProjectToBoard_respond?.data])
     useEffect(() => {
-        AddProjectToBoard({ idboard: -1 })
-    }, [AddProjectToBoard.message])
-    useEffect(() => {
-        if (addProjectToBoard_respond?.data) {
+        if (addProjectToBoard_respond?.message) {
             close()
 
             OpenPopUp("addProjectToBoard-popup")
+            AddProjectToBoard({ idboard: -1 })
         }
-    }, [addProjectToBoard_respond?.data])
+    }, [addProjectToBoard_respond?.message])
 
     const handleNextStep = (id) => {
-        AddProjectToBoard({ idboard: id, idproject: projectId })
+        AddProjectToBoard({ idboard: id, idproject: projectId ?? rentalId })
     };
 
     const init = () => {
