@@ -30,17 +30,23 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  var convertError = JSON.parse(api.error ?? null)
-
+  var convertError = JSON.parse(login_respond?.error ?? null)
   useEffect(() => {
-    if (login_respond?.message) {
-      getMyprofile()
+    if (login_respond?.message === 'success') {
+      getMyprofile().then(()=>{
+        if (document.reffer === '/register') {
+          // Navigate to the home page
+          router.push('/');
+        } else {
+          router.back();
+        }
+      })
     }
   }, [login_respond?.message])
 
 
   useEffect(() => {
-    if (convertError && api.req == "login") {
+    if (convertError && login_respond?.req == "login") {
       if (convertError.status == 422) {
         convertError.data.errors.forEach(({ field, message }) => {
           switch (field) {
@@ -56,13 +62,13 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
         });
       }
       else {
-        setErrorMSG(errorConvertedMessage(api.error))
+        setErrorMSG(errorConvertedMessage(login_respond?.error))
       }
 
     }
     else
       setErrorMSG(null)
-  }, [api.error])
+  }, [login_respond?.error])
 
 
 
@@ -83,6 +89,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
       setPasswordError({ isError: true, message: error });
     } else {
       setPasswordError({ isError: false, message: '' });
+      setErrorMSG(null)
       login({ username, password , notificationToken:fcmToken ?? null })
     }
 
@@ -95,6 +102,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
   const verifyAccount = () => {
     router.push(`/register/${username}`);
     resendCode({ username: username })
+    setErrorMSG(null)
   };
 
   const clientId = "475213071438-mn7lcjd3sdq0ltsv92n04pr97ipdhe9g.apps.googleusercontent.com";
@@ -107,7 +115,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             <h1 className="auth-title">{t("Welcome Back !!")}</h1>
           </div>
           <div className={`mb-4 ${userNameError.isError && 'error'}`}>
-            <input autoComplete="on" type="text" value={username|| ""} onChange={(e) => setUsername(e.target.value)} placeholder={t("@username")} className={userNameError.isError ? "app-field error" : "app-field"} />
+            <input autoComplete="on" type="text" value={username|| ""} onChange={(e) => setUsername(e.target.value)} placeholder={t("phone or email or username")} className={userNameError.isError ? "app-field error" : "app-field"} />
             {userNameError.isError && <p className="error-msg">{userNameError.message}</p>}
           </div>
           <div className={`${passwordError.isError && 'error'}`}>
@@ -151,7 +159,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
           <div className="login_footer mb-4"></div>
 
           <button type="submit" className="mb-4 relative mb-30 w-full">
-            <Button name="login" shadow={true}>{t("Login")}</Button>
+            <Button name="login" shadow={true}>{login_respond?.loading ?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Login")}</Button>
             <div className="submit-btn"></div>
           </button>
           <div className="have-account">

@@ -35,7 +35,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     ///////////////////////////
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             ClearChatInput()
 
         if (respond?.data)
@@ -174,7 +174,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const swapRecording = () => {
         setIsRecord(!isRecording)
     };
-    console.log({chat_respond})
     return (
         <div className={`fixed bottom-0 z-20 px-8 ${messages.openchat ? '' : 'hidden'}`} >
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />

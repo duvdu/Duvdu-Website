@@ -8,7 +8,7 @@ const dataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 [action.req]: {
-                    ...state[action.req],
+                    // ...state[action.req],
                     loading: true,
                     error: null,
                     ...action.payload,
@@ -20,7 +20,7 @@ const dataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 [action.req]: {
-                    ...state[action.req],
+                    // ...state[action.req],
                     loading: false,
                     error: null,
                     ...action.payload,
@@ -32,7 +32,7 @@ const dataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 [action.req]: {
-                    ...state[action.req],
+                    // ...state[action.req],
                     loading: false,
                     error: action.payload,
                     req: action.req

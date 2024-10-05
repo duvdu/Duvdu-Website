@@ -12,7 +12,7 @@ const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
     const [errorMessage, setErrorMessage] = useState("");
     
     useEffect(() => {
-        if(respond)
+        if(respond?.data)
             setOpened(0)
     }, [respond?.message])
     

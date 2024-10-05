@@ -7,12 +7,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
 
 import 'swiper/swiper-bundle.css';
-import { AddProjectToBoard } from '../../../redux/action/apis/savedProject/boardProjects/add';
-import { DeleteProjectFromBoard } from '../../../redux/action/apis/savedProject/boardProjects/remove';
+import { AddProjectToBoard } from '../../../redux/action/apis/bookmarks/bookmarkItem/add';
+import { DeleteProjectFromBoard } from '../../../redux/action/apis/bookmarks/bookmarkItem/remove';
 import Link from 'next/link';
-import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
+import { SwapProjectToFav } from '../../../redux/action/apis/bookmarks/fav/favAction';
 import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 import { useTranslation } from 'react-i18next';
+
 
 const ProjectItem = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
     const { t, i18n } = useTranslation();
@@ -29,7 +30,6 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
             setFav(swapProjectToFav_respond.action === "add");
         }
     }, [cardData, swapProjectToFav_respond]);
-
     useEffect(() => {
         if (enbablelove)
             setFav(true);

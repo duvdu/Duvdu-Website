@@ -140,7 +140,7 @@ const EquipmentRental = ({ CreateStudio, user, auth, api, categories, addproject
 
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
     // useEffect(() => {

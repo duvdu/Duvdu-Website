@@ -10,14 +10,34 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import { StudopBooking } from "../../../redux/action/apis/cycles/rental/book";
 import { useTranslation } from 'react-i18next';
 import CustomSlider from "../../elements/customSlider";
+import ErrorMessage from '../../elements/ErrorMessage';
 
 const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData, StudopBooking, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const { t } = useTranslation();
-
+    const [validFormCheck, setValidFormCheck] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
     const formData = addprojectState.formData
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
+    const validateRequiredFields = () => {
+        const errors = {};
+        if (!formData.startDate) errors.startDate = 'StartDate is required';
+        if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
+        if (!formData.details) errors.details = 'Details is required';
+        return errors;
+    };
+    const CheckNext=()=>{
+        setValidFormCheck(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) setErrorMsg(validateRequiredFields())
+        else return onsubmit()
+    }
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+    },[formData])
 
     useEffect(() => {
         if (
@@ -46,10 +66,10 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         toggleDrawer()
         ontoggleDrawer()
     }
-
+    var convertError = JSON.parse(StudopBooking_respond?.error ?? null)
 
     useEffect(() => {
-        if (StudopBooking_respond)
+        if (StudopBooking_respond?.message === "success")
             setPost_success(true)
     }, [StudopBooking_respond?.message])
 
@@ -83,6 +103,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                     <section>
                         <h3 className="capitalize opacity-60">{t("job details")}</h3>
                         <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder={t("requirements, conditions At least 6 char")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <ErrorMessage ErrorMsg={ErrorMsg.details}/>
                     </section>
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">{t("extra payments")}</h3>
@@ -101,10 +122,11 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">{t("select Booking date")}</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
+                            <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
                         </div>
                     </section>
                 </div>
@@ -148,12 +170,15 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                     </div>
 
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] dark:bg-[#080604] border-t border-[#00000033]`}>
+                        <div className='text-center'>
+                            <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                        </div>
                         <div className="w-full flex px-8 justify-between">
                             <span className="text-2xl opacity-50 font-semibold">{t("Total Amount")}</span>
                             <span className="text-2xl font-bold">${data.projectScale.pricerPerUnit * formData['projectScale.numberOfUnits']}</span>
                         </div>
                         <div className="flex justify-center">
-                            <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
+                            <ArrowBtn loading={StudopBooking_respond?.loading} onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
                         </div>
                     </section>
                 </div>

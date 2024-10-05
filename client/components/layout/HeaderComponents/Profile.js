@@ -56,17 +56,16 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
     const getProjectCovers = (data) => {
         const covers = [];
         data.forEach((item) => {
-            item.projects.slice(0, 1).forEach((project) => {
-                covers.push(project.project.cover);
-            });
+            // item.projects.slice(0, 1).forEach((project) => {
+                covers.push(item.details.cover);
+            // });
         });
 
         return covers;
     };
-    console.log(fav_respond)
-    const saved = getProjectCovers(getBoards_respond?.data || [])
-    const favCover = fav_respond?.data?.length>0 ? fav_respond.data[0].project?.cover : null
-
+    const saved = getProjectCovers(fav_respond?.data || [])
+    const favCover = getBoards_respond?.data?.length>0 ? (getBoards_respond?.data[1].image?getBoards_respond?.data[1].image:'color') : null
+    const color = getBoards_respond?.data?.length && getBoards_respond?.data[1]?.color
     useEffect(()=>{
         setShowMiddleCard(false)
     },[hasVerificationBadge])
@@ -176,7 +175,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                             </div>}
                         {/* end card  */}
                         <div>
-                            <div className="p-3 bg-white dark:bg-[#1A2024] dark:bg-[#1A2024] rounded-[45px] mb-2">
+                            <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[45px] mb-2">
                                 <h4 className="opacity-70 text-sm font-semibold m-2 flex justify-between">
                                     {t('saved projects')}
                                     <Link href="/saved" className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</Link>
@@ -185,7 +184,11 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                     <Link href={`/save/favorites`} >
                                         <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
-                                                favCover ? <img className='rounded-[30px] h-full object-cover' src={favCover} /> :
+                                                favCover ? (favCover!=='color'?<img className='rounded-[30px] h-full w-full object-cover' src={favCover} /> :
+                                                    <div style={{backgroundColor:color}} className={`aspect-square rounded-[30px] w-full flex justify-center items-center cursor-pointer]`}>
+                                                        <Icon className='w-10' name={"dvudu-image"} />
+                                                    </div>
+                                                ):
                                                     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
                                                         <Icon className='w-10' name={"dvudu-image"} />
                                                     </div>
@@ -195,7 +198,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                     <Link href="/saved" >
                                         <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
-                                                saved[0] ? <img className='rounded-[30px] h-full object-cover' src={saved[0]} /> :
+                                                saved[0] && false ? <img className='rounded-[30px] h-full object-cover' src={saved[0]} /> :
                                                     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
                                                         <Icon className='w-10' name={"dvudu-image"} />
                                                     </div>

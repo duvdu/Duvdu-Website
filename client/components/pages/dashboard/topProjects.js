@@ -2,7 +2,7 @@ import React from 'react';
 import Link from "next/link";
 
 
-const TopProjects = ({ projects }) => (
+const TopProjects = ({ projects }) => (projects.length>0 &&
 <div className='mt-6 card bg-white dark:bg-[#1A2024] w-full p-8 cardborder-3 bg-white dark:bg-[#1A2024]'>
     {projects?.map((e,index)=>(
         <Link href={e.projectDetails?.insurance?`/rentals/${e.projectDetails._id}`:`/project/${e.projectDetails._id}`} key={index} >

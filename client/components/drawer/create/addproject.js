@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Switch from '../../elements/switcher'
 import { connect } from "react-redux";
 import Button from '../../elements/button';
+import ErrorMessage from '../../elements/ErrorMessage';
 
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import { useRouter } from "next/router";
@@ -24,8 +25,9 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const { t } = useTranslation();
     const router = useRouter();
     const formData = addprojectState.formData;
-
     const [errors, setErrors] = useState({});
+    const [validFormCheck, setValidFormCheck] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
@@ -43,7 +45,10 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     useEffect(() => {
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
-
+    useEffect(()=>{
+        // if(formData.category == undefined)
+            UpdateFormData('attachments' , null)
+    },[formData.category])
     const convertToFormData = () => {
         const data = new FormData();
 
@@ -104,24 +109,33 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
         if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
         if (!formData.name) errors.title = 'Title is required';
-        // if (!formData.tools || !formData.tools.length) errors.title = 'tools is required';
-        // if (!formData.functions || !formData.functions.length) errors.title = 'functions is required';
-        // if (!formData.creatives || !formData.creatives.length) errors.title = 'creatives is required';
-        if ((formData.description?.length || 0) < 6) errors.desc = 'Description must be at least 6 characters long';
+        if (!formData.tools || !formData.tools.length) errors.tools = 'Tools is required';
+        if (!formData.functions || !formData.functions.length) errors.functions = 'Functions is required';
+        if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives is required';
+        if ((formData.description?.length || 0) < 6) errors.description = 'Description must be at least 6 characters long';
         if (!formData.address) errors.address = 'Address is required';
-        if (!formData.duration) errors.duration = 'duration is required';
-        // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
-        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
+        if (!formData.duration) errors.duration = 'Duration is required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
-        if (!formData['projectScale[unit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.location = 'projectScale is required';
-        if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.location = 'current should be greater than minimum';
-        if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.location = 'maximum should be greater than current';
+        if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
+        if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.current = 'current should be greater than minimum';
+        if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
+        console.log(errors)
         return errors;
     };
-    const isEnable = Object.keys(validateRequiredFields()).length == 0
-    let ErrorMsg = ""
-    if (!isEnable) ErrorMsg = Object.values(validateRequiredFields())[0]
-
+    const CheckNext=()=>{
+        setValidFormCheck(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        console.log(validateRequiredFields())
+        if (!isEnable) setErrorMsg(validateRequiredFields())
+        else return setCover()
+    }
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+    },[formData])
     const setCover = (e) => {
         const validationErrors = validateRequiredFields();
         if (Object.keys(validationErrors).length > 0) {
@@ -151,7 +165,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     };
 
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
 
@@ -201,19 +215,28 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                         UpdateFormData('subCategoryId', value.subCategory)
                                         UpdateFormData('tagsId', value.tags)
                                     }} />
+                                    {ErrorMsg.category ?
+                                    <ErrorMessage ErrorMsg={ErrorMsg.category}/>:(
+                                        ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
+                                        <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
+                                    )}
                             </div>
                             <section>
                                 <h3 className="capitalize opacity-60">{t("attachments")}</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                             </section>
                             <section>
                                 <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
+                                <ErrorMessage ErrorMsg={ErrorMsg.title}/>
                             </section>
                             <section>
                                 <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || ""} onChange={handleInputChange} name="description" />
+                                <ErrorMessage ErrorMsg={ErrorMsg.description}/>
                             </section>
                             <section>
                                 <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || ""} onChange={handleInputChange} name="duration" />
+                                <ErrorMessage ErrorMsg={ErrorMsg.duration}/>
                             </section>
                             <section>
                                 <ListInput
@@ -230,6 +253,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                     remove={(value) => removeFromArray('tools', value)}
                                     enable={false}
                                 />
+                                <ErrorMessage ErrorMsg={ErrorMsg.tools}/>
                             </section>
                             <section>
                                 <ListInput
@@ -246,6 +270,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                     remove={(value) => removeFromArray('functions', value)}
                                     enable={false}
                                 />
+                                <ErrorMessage ErrorMsg={ErrorMsg.functions}/>
                             </section>
                             <section>
                                 <ListInput
@@ -263,10 +288,12 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                     remove={(value) => removeFromArray('creatives', value)}
                                     enable={false}
                                 />
+                                <ErrorMessage ErrorMsg={ErrorMsg.creatives}/>
                             </section>
 
                             <section>
                                 <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span>{t("Set location")}</span>
@@ -324,16 +351,19 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                <ErrorMessage ErrorMsg={ErrorMsg.projectScale}/>
+                                <ErrorMessage ErrorMsg={ErrorMsg.current}/>
+                                <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
+                                </div>
                             </section>
 
                             <div className='flex justify-center gap-3 mt-1'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
-                            <span className="text-rose-700 text-base text-center mt-4">
-                                {ErrorMsg}
-                            </span>
-                            <Button isEnabled={isEnable} onClick={setCover} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
+                            
+                            <Button onClick={CheckNext} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
                                 <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                             </Button>
 

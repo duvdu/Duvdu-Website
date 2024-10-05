@@ -1,7 +1,7 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
-export const signup = ({ name, username, password, phoneNumber }) => {
+export const signup = ({ name, username, password, phoneNumber ,email }) => {
     return async dispatch => {
       dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'signup' });
       try {
@@ -9,6 +9,7 @@ export const signup = ({ name, username, password, phoneNumber }) => {
           name: name,
           username: username,
           password: password,
+          email:email,
           phoneNumber: {
             number: phoneNumber
           }

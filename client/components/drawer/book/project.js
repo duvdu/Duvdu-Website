@@ -14,6 +14,7 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import BookTeam from "../../elements/teams";
 import AddAttachment from "../../elements/attachment";
 import CustomSlider from "../../elements/customSlider";
+import ErrorMessage from '../../elements/ErrorMessage';
 
 const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject, resetForm, data = {}, isOpen, toggleDrawer, submit, user }) => {
     const { t } = useTranslation();
@@ -21,6 +22,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const formData = addprojectState.formData
     const [openMap, setOpenMap] = useState(false);
     const [preview, setPreview] = useState(false);
+    const [validFormCheck, setValidFormCheck] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
 
     const [post_success, setPost_success] = useState(false);
     const [creatives, setCreatives] = useState([]);
@@ -69,19 +72,30 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const validateRequiredFields = () => {
         const errors = {};
 
-        if (!formData.startDate) errors.startDate = 'startDate is required';
-        if ((formData.details?.length || 0) < 5) errors.details = 'details is required';
+        if (!formData.startDate) errors.startDate = 'StartDate is required';
+        if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
+        if (!formData.details) errors.details = 'Details is required';
         if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData['location[lat]'] || !formData['location[lng]']) errors.location = 'Location is required';
-        // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
-
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         return errors;
     };
+    const CheckNext=()=>{
+        setValidFormCheck(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) setErrorMsg(validateRequiredFields())
+        else return onsubmit()
+    }
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+    },[formData])
 
-    const enableBtn = Object.keys(validateRequiredFields()).length == 0
-    let ErrorMsg = ""
-    if(!enableBtn) ErrorMsg = Object.values(validateRequiredFields())[0]
+    // const enableBtn = Object.keys(validateRequiredFields()).length == 0
+    // let ErrorMsg = ""
+    // if(!enableBtn) ErrorMsg = Object.values(validateRequiredFields())[0]
 
     function ontoggleDrawer(all) {
         if (preview)
@@ -100,7 +114,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         setPost_success(false)
         resetForm()
         // toggleDrawer()
-        ontoggleDrawer()
+        // ontoggleDrawer()
     }
 
     useEffect(() => {
@@ -116,10 +130,12 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         UpdateFormData('functions', data?.functions || [])
     }, [isOpen])
 
-
+    var convertError = JSON.parse(respond?.error ?? null)
     useEffect(() => {
-        if (respond)
+        if (respond?.data){
             setPost_success(true)
+            toggleDrawer()
+        }
     }, [respond?.message])
 
 
@@ -182,6 +198,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <section className="mt-7">
                                 <h3 className="capitalize opacity-60">{t("job details")}</h3>
                                 <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder={t("requirements, conditions At least 6 char")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                                <ErrorMessage ErrorMsg={ErrorMsg.details}/>
                             </section>
                             <section className="my-11 gap-7 h-96 relative overflow-hidden">
                                 <h3 className="capitalize opacity-60 mb-4">{t("location")}</h3>
@@ -209,6 +226,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <section className="w-full">
                                 <h3 className="capitalize opacity-60 mt-11">{t("upload alike project")}</h3>
                                 <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                             </section>
                             <section className="my-11">
                                 <div className="flex justify-between">
@@ -220,17 +238,16 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("appointment Date")}</h3>
                                 <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.appointmentDate}/>
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("Start Date")}</h3>
                                 <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
                             </section>
                             <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
-                            <span className="text-rose-700 text-base text-center">
-                                    {ErrorMsg}
-                            </span>
                                 <div className="flex justify-center">
-                                    <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='continue' />
+                                    <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
                                 </div>
                             </section>
                         </div>
@@ -299,13 +316,16 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     </section>
                                 </div>
 
-                                <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
+                                <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-white dark:bg-[#1A2024] border-t border-[#00000033]`}>
+                                    <div className='text-center'>
+                                        <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                                    </div>
                                     <div className="w-full flex px-8 justify-between">
                                         <span className="text-2xl opacity-50 font-semibold">{t("Total Amount")}</span>
                                         <span className="text-2xl font-bold">${calculateTotalPrice()}</span>
                                     </div>
                                     <div className="flex justify-center">
-                                        <ArrowBtn isEnable={enableBtn} Click={onsubmit} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
+                                        <ArrowBtn loading={respond?.loading} onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
                                     </div>
                                 </section>
                             </div>}

@@ -35,7 +35,7 @@ const ErrorAndLoadingHandling = ({
     }, [errorMsg, errorReq]);
 
     useEffect(() => {
-        if (logout_respond) {
+        if (logout_respond?.data) {
             router.push("/login");
             LogOut(-1);
         }

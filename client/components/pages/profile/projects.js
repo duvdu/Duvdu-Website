@@ -19,7 +19,7 @@ function Projects({ projects }) {
         <div className='container sm:p-0 project-grid gap-[10px]'>
             {projects.map((data, index) => (
                 // <Project key={index} data={data} isbig={(index + 1) % 4 < 2} />
-                <ProjectItemHome type={getCycle(data?.ref)} cardData={data} isbig={(index + 1) % 4 < 2}/>
+                <ProjectItemHome key={data._id} type={getCycle(data?.ref)} cardData={data} isbig={(index + 1) % 4 < 2}/>
             ))}
         </div>
     )

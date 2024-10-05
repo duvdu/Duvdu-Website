@@ -12,7 +12,7 @@ export const verify = ({ username, code }) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'verify' });
       try {
         const response = await mainApiInstance.post('api/users/auth/verify', {
-          username: username,
+          login: username,
           code: code
         });
         dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data , req: 'verify'});

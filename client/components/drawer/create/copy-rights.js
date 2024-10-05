@@ -12,6 +12,7 @@ import { filterByCycle } from "../../../util/util";
 import { CreateCopyrights } from '../../../redux/action/apis/cycles/copywriter/create';
 import GoogleMap from '../../elements/googleMap';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '../../elements/ErrorMessage';
 
 
 
@@ -20,9 +21,9 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
 
     const formData = addprojectState.formData;
     const router = useRouter();
-    const [errors, setErrors] = useState({});
+    const [validFormCheck, setValidFormCheck] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
-    
     useEffect(() => {
         if (categories.length)
             UpdateFormData('category', categories[0]._id)
@@ -37,7 +38,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
         const errors = {};
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.subCategory) errors.subCategory = 'subCategory is required';
-        if (!formData.tags?.length) errors.subCategory = 'tags is required';
+        if (!formData.tags?.length) errors.tags = 'tags is required';
         if (!formData.price) errors.price = 'Price is required';
         if (!formData.duration) errors.duration = 'Duration is required';
         if (!formData.address) errors.address = 'Address is required';
@@ -46,22 +47,22 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
         return errors;
     };
 
-    const isEnable = Object.keys(validateRequiredFields()).length == 0
-
     const handleSubmit = (e) => {
         e.preventDefault();
+        setValidFormCheck(true)
         const validationErrors = validateRequiredFields();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-        setErrors({});
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) return setErrorMsg(validateRequiredFields())
         formData.duration = {
             value : formData.duration,
             unit: "days"
         }
         CreateCopyrights(formData);
     };
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+    },[formData])
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
@@ -70,10 +71,8 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
         }
         UpdateFormData(name, value);
     };
-
-
     useEffect(() => {
-        if (respond)
+        if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
 
@@ -115,12 +114,21 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     UpdateFormData('subCategory', value.subCategory)
                                     UpdateFormData('tags', value.tags)
                                 }} />
+                                {ErrorMsg.category?
+                                <ErrorMessage ErrorMsg={ErrorMsg.category}/>:(
+                                    ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
+                                    <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
+                                )}
+
                         </div>
-                        <input placeholder={t("price")} type="number" min={0} value={formData.price|| ""} onChange={handleInputChange} name="price" className={"inputStyle1"} />
-
+                        <div>
+                            <input placeholder={t("price")} type="number" min={0} value={formData.price|| ""} onChange={handleInputChange} name="price" className={"inputStyle1"} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.price}/>
+                        </div>
                         <input type="number" min={0} placeholder={t("duration Days")} value={formData.duration|| ""} onChange={handleInputChange} name="duration" className={"inputStyle1"} />
-
+                        <ErrorMessage ErrorMsg={ErrorMsg.duration}/>
                         <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} onChange={(keys) => UpdateFormData('searchKeywords', keys)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                     </section>
                     <section className="h-96 relative overflow-hidden w-full">
                         <h3 className="capitalize opacity-60 mb-3">{t("Set location")}</h3>
@@ -130,8 +138,12 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                         <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} id='showOnHome' />
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </section>
-                    <Button isEnabled={isEnable} onClick={handleSubmit} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                    <Button onClick={handleSubmit} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                        {respond?.loading ? 
+                         <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />
+                        :
                         <span className='text-white font-bold capitalize text-lg'>{t("Publish")}</span>
+                        }
                     </Button>
                 </form>
             </Drawer>

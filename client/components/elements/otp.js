@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { verify } from "../../redux/action/apis/auth/OTP/verify";
 import { resendCode } from "../../redux/action/apis/auth/OTP/resend";
+import DuvduLoading from './duvduLoading';
 
 function OTP({
     api,
@@ -34,11 +35,26 @@ function OTP({
     // }, [resendCode_respond?.message])
 
     useEffect(() => {
-        if (verify_respond) {
+        if (verify_respond?.message) {
             onSuccess()
             verify({ username: username, code: -1 })
         }
     }, [verify_respond?.message])
+    useEffect(() => {
+        if(verify_respond?.error){
+            const errorMessage = errorConvertedMessage(verify_respond?.error);
+            if(errorMessage.includes('token')){
+                setlocal_error(t('Please Resend Code Again'))
+                setcount(null)
+            }else{
+                setlocal_error(t('Invalid Code'))
+            }
+        }
+        // if (verify_respond?.message) {
+        //     onSuccess()
+        //     verify({ username: username, code: -1 })
+        // }
+    }, [verify_respond?.error])
 
     useEffect(() => {
         OpenPopUp('OTP-tester')
@@ -46,19 +62,16 @@ function OTP({
 
 
     useEffect(() => {
-        if (api.error && (api.req == "resendCode" || api.req == "verify")) {
-            const errorMessage = errorConvertedMessage(api.error);
-            if(api.req == "resendCode" ) setcount(errorMessage)
-            if(api.req == "verify"){
-                setlocal_error(t('Invalid Code'))
+        if (resendCode_respond?.error) {
+            const errorMessage = errorConvertedMessage(resendCode_respond?.error);
+            if(resendCode_respond?.data) setcount(errorMessage)   
+            else {
+                setlocal_error(null)
+                setOtp('')
             }
         }
-        else {
-            setlocal_error(null)
-            setOtp('')
-        }
-    }, [api.error])
-
+    }, [resendCode_respond?.error])
+    console.log(verify_respond)
     useEffect(() => {
         if (counter > 0) {
             const intervalId = setInterval(() => {
@@ -82,13 +95,15 @@ function OTP({
                             <h1 className="auth-title">{t("Enter code")}</h1>
                             <p className="otpnews" >{t("Enter the verification code we just sent to your phone")}</p>
                         </div>
-                        <OtpInput
+                        {verify_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='otp' />:<OtpInput
                             value={otp|| ""}
                             onChange={(value) => setOtp(value)}
                             numInputs={6}
                             renderSeparator={<span style={{ width: "100%" }} > </span>}
                             renderInput={(props) => <input {...props} className={`${local_error ? "OTP error" : "OTP"} bg-transparent border dark:border-[#2F3234] text-3xl text-center mx-1`} style={{ width: "53px", height: "62px" }} />}
                         />
+                        }
 
                         {
                             local_error &&

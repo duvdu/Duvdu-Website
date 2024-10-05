@@ -11,6 +11,7 @@ import { ChangePassword } from '../redux/action/apis/auth/changePassword/changeP
 
 const ChangePasswordPage = ({ ChangePassword, respond }) => {
     const { t } = useTranslation();
+    const [errorMSG, setErrorMSG] = useState(null);
     const [formData, setFormData] = useState({
         oldPassword: '',
         newPassword: '',
@@ -29,7 +30,7 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
     const router = useRouter();
 
     useEffect(() => {
-        if (respond) {
+        if (respond?.data) {
             router.push(`/`);
         }
     }, [respond]);
@@ -47,13 +48,21 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
             setFormErrors(validationErrors);
             return;
         }
-
+        setFormErrors({
+            oldPassword: { isError: false, message: '' },
+            newPassword: { isError: false, message: '' },
+            confirmPassword: { isError: false, message: '' },
+        })
         ChangePassword({
             oldPassword: formData.oldPassword,
             newPassword: formData.newPassword,
         });
     };
+    useEffect(()=>{
+        if(respond?.error)
+            setErrorMSG(errorConvertedMessage(respond?.error))
 
+    },[respond?.error])
     const validateForm = () => {
         const errors = { ...formErrors };
 
@@ -143,8 +152,9 @@ const ChangePasswordPage = ({ ChangePassword, respond }) => {
                             </div>
                             {formErrors.confirmPassword.isError && <p className="error-msg">{formErrors.confirmPassword.message}</p>}
                         </div>
+                        <div className="text-red-600 text-center" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(errorMSG) }} />
                         <button type="submit" className="mb-4 relative mb-30 w-full">
-                            <AppButton className='z-0' >{t("Change Password")}</AppButton>
+                            <AppButton className='z-0' >{respond?.loading ?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Change Password")}</AppButton>
                             <div className="submit-btn"></div>
                         </button>
                         

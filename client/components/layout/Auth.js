@@ -83,8 +83,8 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                     <div className="container">
                         <div className="flex flex-col lg:flex-row gap-6 h-body py-9">
                             <div className="lg:w-5/12 xl:w-5/12 ">
-                                <div className="left-side-auth lg:mt-0 h-full">
-                                    <div className="flex h-full">
+                                <div className="left-side-auth lg:mt-0 h-full w-full">
+                                    <div className="flex h-full w-full">
                                         <Swiper
                                             modules={[Autoplay, Navigation, EffectFade]}
                                             spaceBetween={0}
@@ -98,7 +98,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                         >
                                             {imageSources.map((source, index) => (
                                                 <SwiperSlide key={index}>
-                                                    <div className="relative min-h-[790px] lg:min-h-0 min-w-10 size-full">
+                                                    <div className="relative min-h-[790px] lg:min-h-0 min-w-96 size-full">
                                                         <div className="absolute inset-0 flex flex-col auth-gradient px-[7px] sm:px-4 lg:px-16">
                                                             <div className="absolute bottom-20 ">
                                                                 <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">{source.h1}</h1>

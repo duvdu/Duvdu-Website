@@ -1,12 +1,14 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
-export const googleLogin = ({ username, id  ,notificationToken}) => {
+export const googleLogin = ({ username, id, name , email ,notificationToken}) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'login' });
     try {
       const response = await mainApiInstance.post('api/users/auth/provider', {
-        username: username,
+        username,
+        name,
+        email,
         googleId: id,
         notificationToken:notificationToken??null
       });

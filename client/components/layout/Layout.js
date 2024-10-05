@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { GetNotifications, cleanupSocket } from "../../redux/action/apis/realTime/notification/getAllNotification";
-import { GetBoards } from "../../redux/action/apis/savedProject/board/get";
-import { GetFavList } from "../../redux/action/apis/savedProject/fav/getAll";
+import { GetBoards } from "../../redux/action/apis/bookmarks/bookmark/get";
+import { GetFavList } from "../../redux/action/apis/bookmarks/fav/getAll";
 import { getCategory } from "../../redux/action/apis/category/getCategories";
 import { init } from "../../redux/action/apis/init/getdata";
 import { useRouter } from "next/router";
@@ -35,6 +35,7 @@ const Layout = ({
     GetBoards,
     GetFavList,
     getCategory,
+    getMyprofile_respond,
     GetBoards_respond,
     GetAllChats_respond,
     GetNotifications_respond,
@@ -49,7 +50,6 @@ const Layout = ({
     const [isToggled, setToggled] = useState(1);
     const router = useRouter();
     
-
     const toggleClick = (type) => {
         setToggled(type);
         isToggled > 1
@@ -74,7 +74,12 @@ const Layout = ({
     useEffect(() => {
         init()
     }, [])
-
+    
+    useEffect(() => {
+        if(getMyprofile_respond?.message === 'success' && !getMyprofile_respond?.data?.phoneNumber?.number)
+            router.push(`/addPhoneNumber?${getMyprofile_respond?.data?.username}`);
+    }, [getMyprofile_respond?.message])
+    
     useEffect(() => {
         if (user?.username) {
             if (!GetBoards_respond)
@@ -93,7 +98,7 @@ const Layout = ({
     }, [user?.username])
 
     useEffect(() => {
-        if(logout_respond) {
+        if(logout_respond?.data) {
             router.push({
             pathname: "/login",
         });

@@ -51,7 +51,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
     return (
         <>
             <section className='mt-10'>
-                <h3 className='opacity-60 my-2 text-lg font-bold'>{t("media Type")}</h3>
+                <h3 className='opacity-60 my-2 text-lg font-bold capitalize'>{t("media Type")}</h3>
                 <div className='flex'>
                     <span className='flex flex-col h-full border-[1.5px] border-[#000000D9] dark:border-[#FFFFFFD9] rounded-full px-3 py-[6px] text-[#000000D9] dark:text-[#FFFFFFD9] capitalize'>
                         {coverType}

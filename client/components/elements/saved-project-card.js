@@ -8,11 +8,12 @@ import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
-import Selector from "./CustomSelector";
-
 import 'swiper/swiper-bundle.css';
-import { AddProjectToBoard } from '../../redux/action/apis/savedProject/boardProjects/add';
-import { DeleteProjectFromBoard } from '../../redux/action/apis/savedProject/boardProjects/remove';
+import { AddProjectToBoard } from '../../redux/action/apis/bookmarks/bookmarkItem/add';
+import { DeleteProjectFromBoard } from '../../redux/action/apis/bookmarks/bookmarkItem/remove';
+import { SwapProjectToFav } from '../../redux/action/apis/bookmarks/fav/favAction';
+import DuvduLoading from './duvduLoading';
+
 import Link from 'next/link';
 import DeleteBoard from '../popsup/DeleteBoard';
 
@@ -20,6 +21,9 @@ const ProjectCard = ({
   cardData,
   className = "",
   DeleteProjectFromBoard,
+  favorite,
+  SwapProjectToFav,
+  swapProjectToFav_respond,
 }) => {
   const Router = useRouter();
   const boardId = Router.query.boardId;
@@ -33,6 +37,7 @@ const ProjectCard = ({
       value: "Delete",
     },
   ]
+  console.log({cardData})
   useEffect(() => {
     if (videoRef.current) {
       const timerId = setInterval(() => {
@@ -76,14 +81,14 @@ const ProjectCard = ({
     }
 
   };
-  const ProjectId = cardData._id
-  cardData = cardData?.project
+  const ProjectId = cardData.details._id
+  // cardData = cardData.project
   const handleSelectClick = (event) => {
     event.stopPropagation();
   };
   
-  const isVideoCover = isVideo(cardData.cover)
-  const type = cardData.category?.cycle
+  const isVideoCover = isVideo(cardData.details.cover)
+  const type = cardData.cycle
 
   return (
     <>
@@ -97,7 +102,7 @@ const ProjectCard = ({
             {
               // cardData.cover.length == 1 &&
               isVideoCover ? ( // Check if source is a video
-                <Link href={`/${type}/${cardData._id}`}>
+                <Link href={`/${type}/${cardData.details._id}`}>
                   <a>
                     <video
                       className='cardvideo'
@@ -105,7 +110,7 @@ const ProjectCard = ({
                       onTimeUpdate={timeUpdate}
                       loop
                     >
-                      <source src={cardData.cover} type='video/mp4' />
+                      <source src={cardData.details.cover} type='video/mp4' />
                     </video>
                     <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
                       <span className="text-white">
@@ -115,9 +120,9 @@ const ProjectCard = ({
                   </a>
                 </Link>
               ) : (
-                <Link href={`/${type}/${cardData._id}`}>
+                <Link href={`/${type}/${cardData.details?._id}`}>
                   <a>
-                    <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
+                    <img className='cardimg cursor-pointer' src={cardData.details?.cover} alt="project" />
                   </a>
                 </Link>
               )
@@ -125,7 +130,7 @@ const ProjectCard = ({
             {
               false &&
               cardData.backgroundImages.length > 1 &&
-              <Link href={`/${type}/${cardData._id}`}>
+              <Link href={`/${type}/${cardData.details?._id}`}>
                 <Swiper
                   dir='ltr'
                   className='cardimg'
@@ -147,13 +152,23 @@ const ProjectCard = ({
               </Link>
             }
           </>
-          <div className="absolute top-2 right-2" onClick={handleSelectClick}>
-            <Selector options={dropdown} onSelect={(v) => OpenPopUp('delete-board-' + boardId)}>
-              <div className="border rounded-full size-9 flex justify-center items-center">
-                <Icon className="size-6 text-white" name="ellipsis-vertical" />
+            {/* <Selector options={dropdown} > */}
+            {favorite ?
+              <div className="blur-container love z-[1] cursor-pointer" onClick={(v) => {
+                handleSelectClick(v)
+                SwapProjectToFav({projectId: cardData.details?._id, action:"remove" })
+                }}>
+                  {swapProjectToFav_respond?.loading&&<DuvduLoading loadingIn={"SwapProjectToFav"} />}
+                  <Icon className=" h-4 text-primary" name="heart" />
               </div>
-            </Selector>
-          </div>
+            :
+              <div className="blur-container love z-[1] cursor-pointer" onClick={(v) => {
+                handleSelectClick(v)
+                OpenPopUp('delete-board-' + boardId)}}>
+                <Icon className=" size-5 text-red" name="delete" />
+              </div>
+            }
+            {/* </Selector> */}
           {
             isVideoCover &&
             <div onClick={handleSoundIconClick} className="blur-container sound left-[15px] z-[1]">
@@ -163,27 +178,27 @@ const ProjectCard = ({
         </div>
         <div className='mt-3 flex justify-between items-center'>
           <div className='flex items-center gap-3'>
-            <Link href={`/creative/${cardData.user.username}`} >
+            <Link href={`/creative/${cardData.details.user.username}`} >
               <div className='cursor-pointer'>
-                <img src={cardData.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
+                <img src={cardData.details.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
               </div>
             </Link>
-            <Link href={`/creative/${cardData.user.username}`}>
+            <Link href={`/creative/${cardData.details.user.username}`}>
               <div className='cursor-pointer' >
-                <span className='text-sm font-semibold'>{cardData.user.name?.split(' ')[0].length>6?cardData.user.name?.split(' ')[0].slice(0,6):cardData.user.name?.split(' ')[0] || 'NONE'}</span>
+                <span className='text-sm font-semibold'>{cardData.details.user.name?.split(' ')[0].length>6?cardData.details.user.name?.split(' ')[0].slice(0,6):cardData.details.user.name?.split(' ')[0] || 'NONE'}</span>
               </div>
             </Link>
           </div>
           <div className='flex items-center gap-2'>
-            <span className='text-base opacity-80 font-medium'>{(cardData?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
+            <span className='text-base opacity-80 font-medium'>{(cardData.details.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
             <Icon className='text-primary size-4' name={'star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData.name || cardData.studioName}</p>
-        {(cardData.projectBudget || cardData.projectScale?.pricerPerUnit) &&
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.details.name || cardData.details.studioName}</p>
+        {(cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit) &&
           <>
-            <span className='text-xl font-bold'>{cardData.projectBudget || cardData.projectScale?.pricerPerUnit}$</span>
-            {(cardData.projectScale?.unit) &&
+            <span className='text-xl font-bold'>{cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit}$</span>
+            {(cardData.details.projectScale?.unit) &&
               <span className='text-xl ml-2 opacity-60'>
                 per {cardData.projectScale?.unit}
               </span>}
@@ -197,12 +212,14 @@ const ProjectCard = ({
 
 const mapStateToProps = (state) => ({
   add_respond: state.api.AddProjectToBoard,
-
+  swapProjectToFav_respond: state.api.SwapProjectToFav
 });
 
 const mapDispatchToProps = {
   AddProjectToBoard,
   DeleteProjectFromBoard,
+  SwapProjectToFav,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);

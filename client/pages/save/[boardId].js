@@ -7,9 +7,9 @@ import Icon from '../../components/Icons';
 import { Goback} from '../../util/util';
 import { useTranslation } from 'react-i18next';
 
-import { GetSavedBoard } from "../../redux/action/apis/savedProject/boardProjects/getone";
-import { DeleteProjectFromBoard } from "../../redux/action/apis/savedProject/boardProjects/remove";
-import { AddProjectToBoard } from "../../redux/action/apis/savedProject/boardProjects/add";
+import { GetSavedBoard } from "../../redux/action/apis/bookmarks/bookmarkItem/getone";
+import { DeleteProjectFromBoard } from "../../redux/action/apis/bookmarks/bookmarkItem/remove";
+import { AddProjectToBoard } from "../../redux/action/apis/bookmarks/bookmarkItem/add";
 import DuvduLoading from "../../components/elements/duvduLoading";
 import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
@@ -33,12 +33,12 @@ const Projects = ({
     const targetRef = useRef(null);
 
     useEffect(() => {
-        if (get_respond)
-            setallProjects(get_respond?.data?.projects)
+        if (get_respond?.data)
+            setallProjects(get_respond?.data)
     }, [get_respond]);
 
     useEffect(() => {
-        if (delete_respond)
+        if (delete_respond?.data)
             GetSavedBoard({ id: boardId })
     }, [delete_respond]);
 
@@ -102,16 +102,17 @@ const Projects = ({
                             <div className='flex justify-center items-center rounded-full border px-5 cursor-pointer aspect-square' onClick={Goback}>
                                 <Icon className='w-5 h-5 text-black dark:text-white' name={'angle-left'} />
                             </div>
-                            <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
+                            {/* <span className='flex items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
                                 {get_respond?.data?.title}
-                            </span>
+                            </span> */}
                         </div>
-                        <DuvduLoading loadingIn={"GetSavedBoard"}/>
+                        {get_respond?.loading?
+                        <DuvduLoading loadingIn={""} type='projects'/>:<>
                         {getPaginatedProjects?.length === 0 && (
                             <EmptyComponent message={"No Projects Yet!"} />
                         )}
                         <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects?.map((item, i) => (
+                            {getPaginatedProjects?.length>0 && getPaginatedProjects?.map((item, i) => (
                                 <Card key={i} cardData={item}/>
                             ))}
                         </div>
@@ -120,6 +121,7 @@ const Projects = ({
                             <div className="load-parent">
                                 <img className="load" ref={targetRef} src="/assets/imgs/loading.gif" alt="loading" />
                             </div>
+                        }</>
                         }
                     </div>
                 </section>

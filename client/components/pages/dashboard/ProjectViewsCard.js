@@ -22,7 +22,7 @@ const ProjectViewsCard = ({ recieved, userData }) => {
                             <Icon className='text-[#289C34] dark:text-[#2DB03A]' name={'arrow-up-long'} />
                         } */}
                     </span>
-                    <span className={`${recieved ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}>{recieved}%</span>
+                    {/* <span className={`${recieved ? 'text-[#289C34] dark:text-[#2DB03A]' : 'text-[#B41D38]'}`}>{recieved}%</span> */}
                 </div>
             </div>
             <div className='flex flex-row justify-between items-center pt-5'>

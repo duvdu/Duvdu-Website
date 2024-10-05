@@ -2567,11 +2567,19 @@ backdrop-filter: blur(7.08819px);
   margin: 0 10px;
   border-radius: 5px;
   overflow: hidden;
+  position: relative; /* Required for positioning the hover effect */
+  cursor: pointer;
 }
 
 .progress {
   height: 100%;
   background: white;
+  transition: width 0.1s linear;
+}
+
+.hover-progress {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
   transition: width 0.1s linear;
 }
 
@@ -2620,7 +2628,7 @@ backdrop-filter: blur(7.08819px);
   --header-tab: #B3B3B3;
   --black-rgb: 255, 255, 255;
   --indigo: var(--black);
-  --Alabaster: #1A2024;
+  --Alabaster: #21282e;
   --water: #001F4A;
   --linear-popup: linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 91.04%);
   --drop-white-arrow: url('../imgs/theme/icons/drop-white-arrow.svg') --padge: #FFFFFFBF;

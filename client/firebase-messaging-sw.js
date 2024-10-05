@@ -34,7 +34,6 @@ try {
 }
 
 // To dispaly background notifications
-console.log(messaging)
 
 if (messaging) {
   try {

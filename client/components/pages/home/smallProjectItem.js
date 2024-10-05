@@ -7,10 +7,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
 
 import 'swiper/swiper-bundle.css';
-import { AddProjectToBoard } from '../../../redux/action/apis/savedProject/boardProjects/add';
-import { DeleteProjectFromBoard } from '../../../redux/action/apis/savedProject/boardProjects/remove';
+import { AddProjectToBoard } from '../../../redux/action/apis/bookmarks/bookmarkItem/add';
+import { DeleteProjectFromBoard } from '../../../redux/action/apis/bookmarks/bookmarkItem/remove';
 import Link from 'next/link';
-import { SwapProjectToFav } from '../../../redux/action/apis/savedProject/fav/favAction';
+import { SwapProjectToFav } from '../../../redux/action/apis/bookmarks/fav/favAction';
 import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 
 const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false, isbig }) => {

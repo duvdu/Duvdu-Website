@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 function CategorySelection({ categories, onChange, value, filterIn }) {
     const { t } = useTranslation();
     categories = filterByCycleCategory(categories, filterIn)
-    if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
 
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState({});
@@ -62,6 +61,7 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
         }
 
     };
+    if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
 
     return (
         <>
