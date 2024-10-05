@@ -69,12 +69,12 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     }, [api.error]);
 
     const handleApiErrors = (convertError) => {
-        
+
         if (convertError.status === 422) {
             const updatedErrors = { ...formErrors };
             convertError.data.errors.forEach(({ field, message }) => {
                 if (updatedErrors[field]) {
-                    
+
                     updatedErrors[field] = { isError: true, message };
                 }
             });
@@ -149,7 +149,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
         } else {
             errors.username = { isError: false, message: '' };
         }
-        
+
 
         const error = validatePassword(formData.password);
 
@@ -182,7 +182,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     <input
                         type="text"
                         name="name"
-                        value={formData.name|| ""}
+                        value={formData.name || ""}
                         onChange={handleChange}
                         placeholder={t("Name")}
                         className={formErrors.name.isError ? "app-field error" : "app-field"}
@@ -193,7 +193,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     <input
                         type="phone"
                         name="phone"
-                        value={formData.phone|| ""}
+                        value={formData.phone || ""}
                         onChange={handleChange}
                         placeholder={t("Phone")}
                         className={formErrors.phone.isError ? "app-field error" : "app-field"}
@@ -205,7 +205,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         <input
                             type="text"
                             name="username"
-                            value={formData.username|| ""}
+                            value={formData.username || ""}
                             onChange={handleChange}
                             placeholder={t("@username")}
                             className={formErrors.username.isError ? "app-field error" : "app-field"}
@@ -236,7 +236,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                         <input
                             type={showPassword ? 'text' : 'password'}
                             name="password"
-                            value={formData.password|| ""}
+                            value={formData.password || ""}
                             onChange={handleChange}
                             placeholder={t("Create Password")}
                             className={formErrors.password.isError ? "app-field error" : "app-field"}
@@ -261,7 +261,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                                 />
                                 <label className="form-check-label terms-submit flex gap-1 items-center" htmlFor="termsAgreed">
                                     <span className="capitalize text-xs">
-                                        <span>{t("I agree to")}</span>
+                                        <span>{t("I agree to") + " "}</span>
                                         <Link href="/terms_conditions">
                                             <span className="font-bold text-primary cursor-pointer">{t("terms and conditions")}</span>
                                         </Link>
@@ -278,7 +278,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     <div className="submit-btn"></div>
                 </button>
                 <div className="have-account">
-                    <span>{t("Already have an account?")}</span>
+                    <span>{t("Already have an account?") + " "}</span>
                     <Link href="/login">{t("Log in")}</Link>
                 </div>
             </form>

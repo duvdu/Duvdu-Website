@@ -155,7 +155,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             <div className="submit-btn"></div>
           </button>
           <div className="have-account">
-            <span>{t("Don't have an account ?")}</span>
+            <span>{t("Don't have an account ?") + " "}</span>
             <Link href="/register">{t("Register now")}</Link>
           </div>
           <div className="flex items-center">
