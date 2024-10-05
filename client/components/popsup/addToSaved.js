@@ -79,7 +79,7 @@ function AddToSaved({
                             </div>
                             {!board.image?
                                 <div className="flex justify-center items-center w-full h-full" style={{backgroundColor:board.color}} >
-                                </div> : <img className="absolute -translate-y-1/2 blur-sm" src={board.image} />}
+                                </div> : <img className="absolute -translate-y-1/2 blur-sm w-full" src={board.image} />}
                         </div>
                     ))}
                     {boards?.filter(board => !isProjectInBoard(board, projectId))?.length === 0 && (
