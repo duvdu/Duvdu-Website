@@ -17,7 +17,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border-radius: 25px;
+    border-radius: 40px;
     overflow: hidden;
   }
 
@@ -26,7 +26,7 @@
   }
 
   .home_project_big{
-    aspect-ratio: calc(313/225);
+    aspect-ratio: calc(313/200);
   }
 
   .project-card>.project {

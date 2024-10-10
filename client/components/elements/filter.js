@@ -237,7 +237,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                             checked={switchState.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
                         />
-                        <span className="opacity-70">{t("instant project")}</span>
+                        <span className="opacity-70 font-semibold">{t("instant project")}</span>
 
                         {cycle === "project" && (
                             <>
@@ -245,7 +245,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                                     checked={switchState.priceInclusive}
                                     onSwitchChange={handleSwitchChange('priceInclusive')}
                                 />
-                                <span className="opacity-70">{t("price is inclusive")}</span>
+                                <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
                             </>
                         )}
                     </div>
@@ -260,7 +260,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                             checked={switchState.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
                         />
-                        <span className="opacity-70">{t("instant project")}</span>
+                        <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
                         {cycle === "project" && (
                             <>
                                 <div className='hidden md:block'>
@@ -269,7 +269,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                                         onSwitchChange={handleSwitchChange('priceInclusive')}
                                     />
                                 </div>
-                                <span className="opacity-70 hidden md:block">{t("price is inclusive")}</span>
+                                <span className="opacity-70 font-semibold hidden md:block">{t("price is inclusive")}</span>
                             </>
                         )}
                     </div>
@@ -291,7 +291,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                                     checked={switchState.priceInclusive}
                                     onSwitchChange={handleSwitchChange('priceInclusive')}
                                 />
-                                <span className="opacity-70">{t("price is inclusive")}</span>
+                                <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
                             </>
                         )}
                     </div>

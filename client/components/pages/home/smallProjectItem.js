@@ -185,7 +185,7 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                             </span>
                         </div>
                         }
-                        <h2 className='font-medium text-xl text-white text-center'>
+                        <h2 className='font-medium text-xl text-white text-center px-1'>
                             {cardData.name}
                         </h2>
                     </div>
