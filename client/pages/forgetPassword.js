@@ -15,12 +15,16 @@ import Link from "next/link";
 function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpassword , respond_resetpassword }) {
     const { t } = useTranslation();
     const [username, setUsername] = useState(null);
+    const [step, setStep] = useState(null);
     const router = useRouter();
     const { query } = router;
-
-    // Determine which component to render based on the "page" query parameter
+    useEffect(()=>{
+        if(username==null)
+        setStep(null)
+    },[username==null])
+    console.log(username)
     const getPageComponent = () => {
-        switch (query.page) {
+        switch (step) {
             case 'OTP':
                 return <OTP onSuccess={() => handleNextStep('ResetPassword')} username={username} />;
             case 'ResetPassword':
@@ -31,16 +35,13 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpa
                 return <EnterYourUserName />;
         }
     };
-
+    
     // Handle next step navigation
     const handleNextStep = (nextPage) => {
-        router.replace({
-            pathname: router.pathname,
-            query: { page: nextPage },
-        });
+        setStep(nextPage)
     };
     useEffect(() => {
-        if (respond_forgetpassword?.message==='success')
+        if (respond_forgetpassword?.message==='success' && step==null)
             handleNextStep('OTP');
     }, [respond_forgetpassword?.message])
     const EnterYourUserName = () => {
@@ -55,7 +56,7 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpa
         const handleSubmit = (e) => {
             e.preventDefault();
             if (userName.length < 1) {
-                setNameError({ isError: true, message: 'Enter your username' });
+                return setNameError({ isError: true, message: 'Enter your username' });
             } else {
                 setNameError({ isError: false, message: '' });
                 // You can add your own logic here to handle the username submission
@@ -71,12 +72,12 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpa
         return (
             <form method="post" onSubmit={handleSubmit}>
                 <div className="heading_s1 mb-8">
-                    <h1 className="auth-title text-center">{t("Enter your username")}</h1>
+                    <h1 className="auth-title text-center">{t("Forgot Password")}</h1>
                 </div>
                 <div className={` ${nameError.isError || respond_forgetpassword?.error ? 'error':'mb-8'}`}>
                     <input
                         type="text"
-                        placeholder={t("@username")}
+                        placeholder={t("phone or email or username")}
                         className={nameError.isError ? "app-field error" : "app-field"}
                         // value={userName || ""}
                         onChange={(e) => handleChange(e.target.value)}
@@ -110,22 +111,25 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpa
             e.preventDefault();
             const error = validatePassword(password);
             if (error) {
-                setPasswordError({ isError: true, message: error });
+                return setPasswordError({ isError: true, message: error });
             } else {
                 setPasswordError({ isError: false, message: '' });
             }
-            if (password !== confirmPassword) {
-                setConfirmPasswordError({ isError: true, message: 'Passwords do not match.' });
+            if (password &&  confirmPassword && password !== confirmPassword) {
+                return setConfirmPasswordError({ isError: true, message: 'Passwords do not match.' });
+                
             } else {
                 setConfirmPasswordError({ isError: false, message: '' });
             }
             if(!passwordError.isError && !confirmPasswordError.isError && password  && confirmPassword)
                 resetpassword({login:username , newPassword : password})
             else return
-            if(respond_resetpassword?.message){
+        };
+        useEffect(()=>{
+            if(respond_resetpassword?.message === 'success'){
                 handleNextStep('PasswordChanged');
             }
-        };
+        },[respond_resetpassword?.message])
         const toggleShowPassword = () => setShowPassword(!showPassword);
         const toggleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 

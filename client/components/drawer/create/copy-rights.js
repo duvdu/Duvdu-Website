@@ -37,8 +37,8 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     const validateRequiredFields = () => {
         const errors = {};
         if (!formData.category) errors.category = 'Category is required';
-        if (!formData.subCategory) errors.subCategory = 'subCategory is required';
-        if (!formData.tags?.length) errors.tags = 'tags is required';
+        // if (!formData.subCategory) errors.subCategory = 'subCategory is required';
+        // if (!formData.tags?.length) errors.tags = 'tags is required';
         if (!formData.price) errors.price = 'Price is required';
         if (!formData.duration) errors.duration = 'Duration is required';
         if (!formData.address) errors.address = 'Address is required';
@@ -114,11 +114,12 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                                     UpdateFormData('subCategory', value.subCategory)
                                     UpdateFormData('tags', value.tags)
                                 }} />
-                                {ErrorMsg.category?
-                                <ErrorMessage ErrorMsg={ErrorMsg.category}/>:(
+                                {/* {ErrorMsg.category? */}
+                                <ErrorMessage ErrorMsg={ErrorMsg.category}/>
+                                {/* :(
                                     ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
                                     <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
-                                )}
+                                )} */}
 
                         </div>
                         <div>

@@ -82,9 +82,13 @@ const SelectDate = ({ onChange, value }) => {
                 <span className="opacity-60 font-medium">
                     {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                 </span>
-                <div className="flex items-center font-medium text-[#8A96BC] cursor-pointer text-sm">
-                    <Icon className="mx-2 text-[#222E54] dark:text-white w-2" name="angle-left" onClick={() => handleScroll(-1)} />
-                    <Icon className="mx-2 text-[#222E54] dark:text-white w-2 -rotate-180" name="angle-left" onClick={() => handleScroll(1)} />
+                <div className="flex gap-3 items-center font-medium text-[#8A96BC] cursor-pointer text-sm">
+                    <button onClick={() => handleScroll(-1)}>
+                    <Icon className="text-[#222E54] dark:text-white w-3" name="angle-left"  />
+                    </button>
+                    <button onClick={() => handleScroll(1)}>
+                    <Icon className="text-[#222E54] dark:text-white w-3 -rotate-180" name="angle-left" />
+                    </button>
                 </div>
             </div>
             {isExpanded ? (
@@ -120,20 +124,20 @@ const SelectDate = ({ onChange, value }) => {
                                 onClick={() => handleDateClick(date)}
                             >
                                 <span className="font-semibold text-xs text-[#263257] dark:text-white">
-                                    {date.getDate()}
+                                    {date.getDate()} 
                                 </span>
                                 <span className="font-medium text-xs text-[#8A96BC]">
                                     {date.toLocaleDateString('en-US', { weekday: 'short' })}
                                 </span>
                             </div>
                         ) : (
-                            <div key={index} className='size-4 bg-white' ></div>
+                            <div key={index} className='size-4 bg-white dark:bg-black' ></div>
                         )
                     )}
                 </div>
             )}
             <div className="flex justify-center rounded-full p-1 shadow arrow-icon cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
-                <Icon className="w-3 text-black opacity-50" name={isExpanded ? "arrow-up" : "arrow-down"} />
+                <Icon className="w-3 text-black dark:text-white opacity-50" name={isExpanded ? "arrow-up" : "arrow-down"} />
             </div>
         </div>
     );

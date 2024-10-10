@@ -64,7 +64,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
         return covers;
     };
     const saved = getProjectCovers(fav_respond?.data || [])
-    const favCover = getBoards_respond?.data?.length>0 ? (getBoards_respond?.data[1].image?getBoards_respond?.data[1].image:'color') : null
+    const favCover = getBoards_respond?.data?.length>0 ? (getBoards_respond?.data[1]?.image?getBoards_respond?.data[1].image:'color') : null
     const color = getBoards_respond?.data?.length && getBoards_respond?.data[1]?.color
     useEffect(()=>{
         setShowMiddleCard(false)

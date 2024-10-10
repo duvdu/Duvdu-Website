@@ -11,6 +11,8 @@ import { StudopBooking } from "../../../redux/action/apis/cycles/rental/book";
 import { useTranslation } from 'react-i18next';
 import CustomSlider from "../../elements/customSlider";
 import ErrorMessage from '../../elements/ErrorMessage';
+import AddAttachment from "../../elements/attachment";
+import { UpdateKeysAndValues } from "../../../util/util";
 
 const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData, StudopBooking, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const { t } = useTranslation();
@@ -20,11 +22,16 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
+    const [attachmentValidation, setAttachmentValidation] = useState(false);
+    let dates = formData?.timeDate?.split(':');
+    let date = new Date(formData.startDate);
     const validateRequiredFields = () => {
         const errors = {};
         if (!formData.startDate) errors.startDate = 'StartDate is required';
-        if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
-        if (!formData.details) errors.details = 'Details is required';
+        if (!formData.timeDate) errors.timeDate = 'imeDate is required';
+        // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
+        // if (!formData.details) errors.details = 'Details is required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         return errors;
     };
     const CheckNext=()=>{
@@ -80,7 +87,22 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         }
         if (submit)
             submit()
-        StudopBooking(data._id, formData)
+        const form = new FormData()
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments' , 'timeDate' ,'startDate'])
+        if (formData.attachments)
+            for (let i = 0; i < formData.attachments.length; i++) {
+                const file = formData.attachments[i];
+                form.append(`attachments`, file.file);
+            }
+            if(formData.startDate && formData.timeDate){
+                // date.setUTCHours(dates?.hours);
+                // date.setUTCMinutes(dates?.minutes);
+                let [datePart, _] = formData.startDate.split('T');
+
+                let newDate = `${datePart}T${formData.timeDate}:00.000Z`;
+                form.append(`startDate`, newDate);
+            }
+        StudopBooking(data._id, form)
     }
 
     const handleInputChange = (event) => {
@@ -102,15 +124,22 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                     <div className="mt-11" />
                     <section>
                         <h3 className="capitalize opacity-60">{t("job details")}</h3>
-                        <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder={t("requirements, conditions At least 6 char")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
-                        <ErrorMessage ErrorMsg={ErrorMsg.details}/>
+                        <textarea name="details" value={formData.details || ""} onChange={handleInputChange} placeholder={t("requirements, conditions")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        {/* <ErrorMessage ErrorMsg={ErrorMsg.details}/> */}
                     </section>
+                    {data.insurance && 
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">{t("extra payments")}</h3>
                         <div className="flex gap-2">
                             <div className="border border-[#00000040] dark:border-[#ffffff40] px-3 py-1 rounded-full">{t("insurance")}</div>
                             <div className="border border-[#00000040] dark:border-[#ffffff40] px-3 py-1 rounded-full">$ {data.insurance}</div>
                         </div>
+                    </section>
+                    }
+                    <section className="my-11">
+                        <h3 className="capitalize opacity-60 mt-11">{t("upload alike project")}</h3>
+                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                     </section>
                     <section className="my-11">
                         <div className="flex justify-between">
@@ -123,6 +152,8 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                         <h3 className="capitalize opacity-60 mb-4">{t("select Booking date")}</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                         <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
+                        <input type='time' name="timeDate" value={formData.timeDate || ""} onChange={handleInputChange} className="bg-[#9999991A] rounded-xl border-black border-opacity-10 p-2"/>
+                        <ErrorMessage ErrorMsg={ErrorMsg.timeDate}/>
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
@@ -149,9 +180,9 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                     <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A73EB26] border-8 dark:border-black aspect-square">
                                         <Icon className='text-primary' name={"calendar"} />
                                     </div>
-                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                                    <div className="flex gap-2 items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                                     <span className="font-normal text-base capitalize">{t("Booking Date")}</span>
-                                        <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
+                                    <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +191,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                     <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A73EB26] border-8 dark:border-black aspect-square">
                                     <Icon className='text-primary w-6' name={"location-dot"} />
                                     </div>
-                                    <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                                    <div className="flex gap-2 items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                                         <span className="font-normal text-base capitalize">{t("project location")}</span>
                                         <span className="font-normal text-base">{data.address}</span>
                                     </div>

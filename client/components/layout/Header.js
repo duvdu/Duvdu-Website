@@ -143,7 +143,7 @@ const Header = ({
                                     </Link>
                                 </div>
                                 <div className="header-right">
-                                    {fromlayout.showTabs && islogin &&
+                                    {fromlayout.showTabs && islogin === true &&
                                         <div className="header-tabs">
                                             <div className="">
                                                 <Link href="/dashboard">
@@ -184,7 +184,7 @@ const Header = ({
                                     <div className="hidden lg:flex min-w-max">
 
                                         {
-                                            islogin &&
+                                            islogin === true&&
                                             <div className="header-action-2 flex items-center ">
                                                 <div className="header-action-icon-2 z-10" >
                                                     <div className="icon-holder cursor-pointer" onClick={() =>
@@ -217,7 +217,7 @@ const Header = ({
                                             </div>
                                         }
                                         {
-                                            !islogin &&
+                                            islogin === false &&
                                             <div className="header-action-2 flex gap-6 items-center">
                                                 <Link href="/login">
                                                     <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</div>

@@ -64,8 +64,8 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
 
         if (!formData.category) errors.category = 'Category is required';
-        if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
-        if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
+        // if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
+        // if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
         if (!formData.title) errors.title = 'Studio name is required';
         if (!formData.phoneNumber) {
@@ -77,7 +77,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData.description || formData.description.length < 6) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
-        if (!formData.insurance) errors.insurance = 'Insurance is required';
+        // if (!formData.insurance) errors.insurance = 'Insurance is required';
         // showOnHome
         if (!formData['projectScale.unit']) errors.projectScaleunit = 'Project Scale Unit is required';
         if (!formData['projectScale.pricerPerUnit']) errors.pricerPerUnit = 'Price Per Unite is required';
@@ -183,11 +183,12 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                         UpdateFormData('subCategory', value.subCategory)
                                         UpdateFormData('tags', value.tags)
                                     }} />
-                                    {ErrorMsg.category ?
-                                    <ErrorMessage ErrorMsg={ErrorMsg.category}/>:(
+                                    {/* {ErrorMsg.category ? */}
+                                    <ErrorMessage ErrorMsg={ErrorMsg.category}/>
+                                    {/* :(
                                         ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
                                         <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
-                                    )}
+                                    )} */}
                             </div>
                             <section className="w-full ">
                                 <h3 className="capitalize opacity-60">{t("attachments")}</h3>
@@ -221,7 +222,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 </section>
                                 <section>
                                     <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                    <ErrorMessage ErrorMsg={ErrorMsg.insurance}/>
+                                    {/* <ErrorMessage ErrorMsg={ErrorMsg.insurance}/> */}
                                 </section>
                             </section>
                             <section className="flex flex-col gap-8">

@@ -119,7 +119,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
                     </section>
                     <section>
                         <p className="capitalize opacity-60 mt-11">{t("project details")}</p>
-                        <textarea onChange={handleInputChange} name='desc' placeholder={t("requirements, conditions at least 6 characters")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <textarea onChange={handleInputChange} name='desc' placeholder={t("requirements, conditions")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
                     </section>
                     <div className="py-10">
                         <section>

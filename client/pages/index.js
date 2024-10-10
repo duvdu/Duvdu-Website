@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Layout from "../components/layout/Layout";
 import { HomeDiscover, HomeTreny, popularSub } from "../redux/action/apis/home/home";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
+import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination ,FreeMode} from 'swiper';
 import CustomSwiper from "../components/elements/customSwiper";
 import Link from "next/link";
 import { gsap } from 'gsap';
@@ -14,6 +14,11 @@ import DraggableList from "../components/pages/home/dragList";
 import { useTranslation } from 'react-i18next';
 import Filter from "../components/elements/filter";
 import DuvduLoading from "../components/elements/duvduLoading";
+import Icon from "../components/Icons";
+import 'swiper/css/free-mode';
+
+// Install modules
+SwiperCore.use([FreeMode]);
 
 const Home = ({
     HomeTreny,
@@ -27,7 +32,7 @@ const Home = ({
 
     GetProjects,
     projects,
-
+    islogin,
     categories
 }) => {
     const { t, i18n } = useTranslation();
@@ -169,11 +174,24 @@ const Home = ({
         GetProjects(queryString)
 
     };
+    function chunkArray(array, size) {
+        const result = [];
+        for (let i = 0; i < array.length; i += size) {
+            result.push(array.slice(i, i + size));
+        }
+        return result;
+    }
+    
+    // Chunk the array into groups of 4
+    const chunkedCategories = chunkArray(categories,4);
+    
     return (
         <>
             <Layout isbodyWhite={true}>
+            {islogin===false && 
+            <>
                 <section className="w-full">
-                    <div className="my-12 lg:my-24 mx-auto w-min">
+                    <div className="my-12 lg:my-20 mx-auto w-min">
                         <h1 className="text-center my-4">
                             <span className="font-black text-[#263257] dark:text-white text-3xl lg:text-8xl capitalize whitespace-nowrap trap">{t("explore")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[10px] pb-0 trap" style={TheBeststyle}>
                                 {t("the best")} </span> {t("of")}
@@ -195,39 +213,77 @@ const Home = ({
                         <p className="text-xs lg:text-xl font-bold text-[#263257] dark:text-white opacity-60 text-center lg:mx-20 trap capitalize">{t("consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.")}</p>
                     </div>
                 </section>
+                
                 {homeTreny_respond && 
                 <section className="py-12">
                     <div className="w-full pr-0">
-                        <div className="mx-auto lg:container relative">
+                        <div className="mx-auto container relative">
                             <div className="sm:container">
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("trendy categories")}</h2>
                             </div>
                                 {homeTreny_respond?.loading ? 
-                            <DuvduLoading loadingIn={""} type={'category'}/>:
-                                <DraggableList>
-                            {list &&list?.map((data, index) => (
-                                <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} key={index}>
-                                    <div
-                                        className="cursor-pointer bg-black aspect-square rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 h-[250px] lg:h-[450px] min-w-[250px] lg:min-w-[450px] lg:p-11 ms-3 overflow-hidden"
-                                        style={{ backgroundImage: `url(${data.image})` }}
-                                    >
-                                        <span className="text-white text-xl lg:text-3xl font-semibold capitalize">
-                                            {data.title || 'Empty Title'}
-                                        </span>
-                                        <span className="text-white opacity-50 font-semibold text-xs lg:text-lg text-center">
-                                            {data.title ? t('category_description') : 'This is an empty item.'}
-                                        </span>
-                                        <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
-                                            <a className="text-xs font-semibold text-primary bg-white px-5 lg:px-7 py-2 lg:py-3 rounded-full">{t("View More")}</a>
-                                        </Link>
-                                    </div>
-                                </Link>
-                            ))}
-                                    <div className="hidden lg:block absolute h-[151.71px] lg:h-[450px] w-[300px] home-list-gradaint end-6 rtl:rotate-180">  </div>
-                                    <div className="size-3"></div>
-                                </DraggableList>
+                            <DuvduLoading loadingIn={""} type={'category'}/>:                                
+                                <>
+                                <Swiper
+                                    dir='ltr'
+                                    className=''
+                                    modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                                    spaceBetween={20}
+                                    slidesPerView={1}
+                                    loop={true}
+                                    pagination={{
+                                        clickable: true,
+                                        el: '.swiper-pagination',
+                                    }}
+                                    navigation={{
+                                        prevEl: '.custom-swiper-prev2.prev1',
+                                        nextEl: '.custom-swiper-next2.next1',
+                                    }}
+                                    breakpoints={{
+                                        640: {
+                                          slidesPerView: 1, // For mobile screens
+                                        },
+                                        768: {
+                                          slidesPerView: 2, // For tablets
+                                        },
+                                        1024: {
+                                          slidesPerView: 3, // For desktop
+                                        },
+                                      }}                                    
+                                >
+                                    {list &&list?.map((data, index) => {
+                                        return <SwiperSlide key={index}>                                                            
+                                            <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
+                                                <div
+                                                    className="cursor-pointer bg-black relative rounded-3xl trendy-section flex flex-col gap-5 items-center justify-end p-8 h-[250px] lg:h-[450px] overflow-hidden"
+                                                    style={{ backgroundImage: `url(${data.image})` }}
+                                                >
+                                                    <span className="text-white text-xl lg:text-3xl font-semibold capitalize">
+                                                        {data.title || 'Empty Title'}
+                                                    </span>
+                                                    <span className="text-white opacity-50 font-semibold text-xs lg:text-lg text-center">
+                                                        {data.title ? t('category_description') : 'This is an empty item.'}
+                                                    </span>
+                                                    <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
+                                                        <a className="text-xs font-semibold text-primary bg-white px-5 lg:px-7 py-2 lg:py-3 rounded-full">{t("View More")}</a>
+                                                    </Link>
+                                                </div>
+                                            </Link>
+                                        </SwiperSlide>
+                                    })}
+                                </Swiper>
+                                <div className='flex items-center justify-center gap-5 mt-5'>
+                                <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                               </button>
+                               {/* </div> */}
+                               <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                               </button>
+                                </div>
+                                </>
                                 }
-                            </div>
+                        </div>
                         </div>
                 </section>
                 }
@@ -235,19 +291,45 @@ const Home = ({
                 {homeDiscover_respond && 
                 <section className="bg-[#F2F2F3] dark:bg-[#1A1A1C] py-12">
                     <div className="w-full ">
-                        <section className="mx-auto lg:container relative ps-3">
+                        <section className="mx-auto container relative">
                             <div className="sm:container">
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("discover tags")}</h2>
                             </div>
                             {homeDiscover_respond?.loading ? 
                            <DuvduLoading loadingIn={""} type={'tag'}/>:
-                            <div className="overflow-auto hide-scrollable-container">
-                                <div className="flex">
-                                    <DraggableList>
-                                        {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => (
-                                            <Link key={index} href={data.cycle ? `/${data.cycle}?category=${data.categoryId}&subCategory=${data._id}` : ''}  >
+
+                           <>
+                           <Swiper
+                               dir='ltr'
+                               className=''
+                               modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                               spaceBetween={5}
+                               slidesPerView={2}
+                               loop={true}
+                               pagination={{
+                                   clickable: true,
+                                   el: '.swiper-pagination',
+                               }}
+                               navigation={{
+                                   prevEl: '.custom-swiper-prev2.prev2',
+                                   nextEl: '.custom-swiper-next2.next2',
+                               }}
+                               breakpoints={{
+                                   640: {
+                                     slidesPerView: 3,
+                                     spaceBetween:5,
+                                   },
+                                   1024: {
+                                     slidesPerView: 4, // For desktop
+                                     spaceBetween:5,
+                                   },
+                                 }}                                    
+                           >
+                               {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => {
+                                   return <SwiperSlide key={index}>                                                            
+                                       <Link key={index} href={data.cycle ? `/${data.cycle}?category=${data.categoryId}&subCategory=${data._id}` : ''}  >
                                                 <div
-                                                    className="cursor-pointer bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] lg:w-[314px] ml-3"
+                                                    className="cursor-pointer bg-black aspect-[3] rounded-2xl lg:rounded-3xl trendy-section flex flex-col items-center justify-center overflow-hidden w-[189px] lg:w-[314px]"
                                                     style={{ backgroundImage: `url(${data.image})` }}
                                                 >
                                                     <span className="text-white text-xs lg:text-xl font-semibold capitalize">
@@ -255,40 +337,94 @@ const Home = ({
                                                     </span>
                                                 </div>
                                             </Link>
-                                        ))}
-                                        <div className="hidden lg:block absolute h-[65px] lg:h-[108px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180" />
-                                        <div className="size-3"></div>
-                                    </DraggableList>
-                                </div>
-                            </div>}
+                                   </SwiperSlide>
+                               })}
+                           </Swiper>
+                           <div className='flex items-center justify-center gap-5 mt-5'>
+                               <button className='left-[45%] custom-swiper-prev2 prev2 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                               </button>
+                               {/* </div> */}
+                               <button className='right-[45%] custom-swiper-next2 next2 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                               </button>
+                           </div>
+                           </>
+                            }
                         </section>
                     </div>
                 </section>}
                 {homeDiscover_respond && 
                 <section className="py-12">
                     <div className="w-full pr-0">
-                        <div className="mx-auto lg:container relative  ps-3">
+                        <div className="mx-auto container relative">
                             <div className=" ">
                                 <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("top categories")}</h2>
                                 {homeDiscover_respond?.loading ? 
+                                
                             <DuvduLoading loadingIn={""} type={'category'}/>:
-                                <DraggableList>
-                                    {categories?.map((data, index) => (
-                                        <Link key={data._id} href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
-                                            <div
-                                                className={`cursor-pointer bg-black ml-3 h-[151.71px] lg:h-[347px] ${(index + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[548.99px]' : 'min-w-[106.53px] lg:min-w-[230px]'} rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
-                                                style={{ backgroundImage: `url(${data.image})` }}
+                            <>
+                           <Swiper
+                                dir='ltr'
+                                className=''
+                                modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                                spaceBetween={5}
+                                slidesPerView={1}
+                                loop={true}
+                                pagination={{
+                                    clickable: true,
+                                    el: '.swiper-pagination',
+                                }}
+                                navigation={{
+                                    prevEl: '.custom-swiper-prev2.prev3',
+                                    nextEl: '.custom-swiper-next2.next3',
+                                }}
+                                breakpoints={{
+                                    640: {
+                                    slidesPerView: 2,
+                                    spaceBetween:5,
+                                    },
+                                    768: {
+                                    slidesPerView: 3,
+                                    spaceBetween:10,
+                                    },
+                                    1024: {
+                                    slidesPerView:6, 
+                                    spaceBetween:15,
+                                    },
+                                }}                                                                   
+                           >
+                            {categories.map((data, i) => (
+                                <SwiperSlide key={i}
+                                className={(i + 1) % 3 === 0 ? 'min-w-[252.39px] lg:min-w-[530.99px]' : 'min-w-[106.53px] lg:min-w-[220px]'} // Apply specific class for slide 3
+                                >
+                                            <Link key={data._id} href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''}
                                             >
-                                                <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">{t("150 creatives")}</div>
-                                                <span className="text-white text-[14px] lg:text-3xl font-semibold capitalize text-center w-full">
-                                                    {data.title}
-                                                </span>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                    <div className="hidden lg:block absolute h-[151.71px] lg:h-[347px] w-[341px] home-list-gradaint end-6 rtl:rotate-180">  </div>
-                                    <div className="size-3"></div>
-                                </DraggableList>
+                                                <div
+                                                className={`cursor-pointer bg-black h-[151.71px] lg:h-[400px] rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-3 py-3 lg:px-7 lg:py-10`}
+                                                style={{ backgroundImage: `url(${data.image})` }}
+                                                >
+                                                    <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
+                                                        {t("150 creatives")}
+                                                    </div>
+                                                    <span className="text-white text-[14px] lg:text-3xl font-semibold capitalize text-center w-full">
+                                                        {data.title}
+                                                    </span>
+                                                </div>
+                                            </Link>
+                                </SwiperSlide>
+                                ))}
+                            </Swiper>
+                           <div className='flex items-center justify-center gap-5 mt-5'>
+                               <button className='left-[45%] custom-swiper-prev2 prev3 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                               </button>
+                               {/* </div> */}
+                               <button className='right-[45%] custom-swiper-next2 next3 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                               </button>
+                           </div>
+                                </>
                                 }
                             </div>
                         </div>
@@ -298,22 +434,48 @@ const Home = ({
                 {popularSub_respond && 
                 
                 <section className="py-12 bg-[#F2F2F3] dark:bg-[#1A1A1C]">
-                    <div className="mx-auto">
+                        <div className="mx-auto container relative">
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-8">{t("popular sub-sub categories")}</h2>
                         {popularSub_respond?.loading?
                         <DuvduLoading loadingIn={""} type={'tag'} />:
-                        <div className="flex gap-8 w-full lg:container relative  ps-3">
-                            <div className="overflow-auto hide-scrollable-container">
-                            <DraggableList>
-                                    {popularSub_respond?.data && popularSub_respond?.data[0]?.subCategories?.map((category, index) => (
-                                        <div onClick={() => handleNavigation(`/${category.cycle}`, new URLSearchParams({
+                        <>
+                           <Swiper
+                               dir='ltr'
+                               className=''
+                               modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                               spaceBetween={10}
+                               slidesPerView={1}
+                               loop={true}
+                               pagination={{
+                                   clickable: true,
+                                   el: '.swiper-pagination',
+                               }}
+                               navigation={{
+                                   prevEl: '.custom-swiper-prev2.prev4',
+                                   nextEl: '.custom-swiper-next2.next4',
+                               }}
+                               breakpoints={{
+                                   640: {
+                                     slidesPerView: 2, // For mobile screens
+                                   },
+                                   768: {
+                                     slidesPerView: 3, // For tablets
+                                   },
+                                   1024: {
+                                     slidesPerView: 4, // For desktop
+                                   },
+                                 }}                                    
+                           >
+                               {popularSub_respond?.data && popularSub_respond?.data[0]?.subCategories?.map((category, index) => {
+                                   return <SwiperSlide key={index}>                                                            
+                                       <div onClick={() => handleNavigation(`/${category.cycle}`, new URLSearchParams({
                                             category: category.categoryId,
                                             subcategory: category._id,
                                             tags: category.tags.map(tag => tag._id).join(',')
                                         }).toString()
                                         )}
                                             className='cursor-pointer' key={index}>
-                                            <div className="ml-3">
+                                            <div className="">
                                                 <img className="h-24 object-cover min-w-[300px] lg:w-full rounded-3xl" src={category.image} />
                                                 <h2 className="text-2xl opacity-60 font-semibold mt-6">{category.title}</h2>
                                                 <ul className={"flex flex-wrap gap-2 py-2"}>
@@ -327,18 +489,23 @@ const Home = ({
                                                 </ul>
                                             </div>
                                         </div>
-                                    ))}
-                                    {/* <div className="hidden lg:block absolute z-10 h-[100.71px] lg:h-[200px] w-[341px] home-list-gradaint2 end-6 rtl:rotate-180">  </div> */}
-                                    <div className="size-3"></div>
-
-                                </DraggableList>
-                            </div>
-
-                        </div>
+                                   </SwiperSlide>
+                               })}
+                           </Swiper>
+                           <div className='flex items-center justify-center gap-5 mt-5'>
+                           <button className='left-[45%] custom-swiper-prev2 prev4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                               </button>
+                               {/* </div> */}
+                               <button className='right-[45%] custom-swiper-next2 next4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
+                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                               </button>
+                           </div>
+                           </>
                         }
                     </div>
                 </section>
-                }
+                }</>}
                 {projects && 
                 <section className="py-12">
                     <div className='container'>
@@ -393,6 +560,7 @@ const mapStateToProps = (state) => ({
     homeDiscover_respond: state.api.HomeDiscover,
     popularSub_respond: state.api.popularSub,
     projects: state.api.GetProjects,
+    islogin: state.auth.login,
 
 });
 

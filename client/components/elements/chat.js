@@ -11,6 +11,7 @@ import AudioRecorder from './recording';
 import Link from 'next/link';
 import PopUpImage from './popUpImage';
 import DuvduLoading from './duvduLoading';
+import AudioPlayer from './../pages/stduiosAndProject/AudioPlayer';
 
 const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_respond, api }) => {
     const { t } = useTranslation();
@@ -36,10 +37,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
     useEffect(() => {
         if (respond?.data)
-            ClearChatInput()
 
-        if (respond?.data)
-            setMessagesList((prevMessages) => [respond?.data, ...prevMessages]);
+            setMessagesList((prevMessages) => [...prevMessages,respond?.data]);
 
     }, [respond])
 
@@ -68,7 +67,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     }, [JSON.stringify(msglist)]);
 
 
-    msglist.reverse()
+    // msglist.reverse()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -124,6 +123,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
 
     const loadMore = () => {
+        if(chat_respond?.pagination?.currentPage < chat_respond?.pagination?.totalPages)
         setLimit(prev => prev + 50)
         // Your custom logic to load more messages
     };
@@ -155,13 +155,14 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
         //////// SENDING MESSAGE ///////////////
         SendMessages(data)
+        ClearChatInput()
     }
     const onChange = (event) => {
         setContent(event.target.value);
     }
 
     const handleKeyPress = (event) => {
-        if (event.key === 'Enter' && content.length > 0) {
+        if (event.key === 'Enter' && content?.length > 0) {
             onSend()
         }
     };
@@ -175,10 +176,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         setIsRecord(!isRecording)
     };
     return (
-        <div className={`fixed bottom-0 z-20 px-8 ${messages.openchat ? '' : 'hidden'}`} >
+        <div className={`fixed bottom-0 z-20 md:px-8 ${messages.openchat ? '' : 'hidden'}`} >
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
-                <div className="chat w-screen sm:w-[422px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl">
+                <div className="chat w-screen sm:w-[400px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl">
                     <div className="flex p-2 h-16 border-b border-[#00000040] dark:border-[#FFFFFF40]">
                         <Link href={`/creative/${otherUser.username || ""}`} >
                             <div className="relative cursor-pointer">
@@ -198,7 +199,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                                 </div>
                             </Link>
                             <div />
-                            <span className="capitalize">away . Avg. response time : <span className="font-bold">{t("1 Hour")}</span> </span>
+                            {/* <span className="capitalize">away . Avg. response time : <span className="font-bold">{t("1 Hour")}</span> </span> */}
                         </div>
                     </div>
 
@@ -207,6 +208,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                         <Icon name={'xmark'} className='text-xl opacity-50 w-3' />
                     </div>
                     <div className="messages-chat h-full" id="chat" ref={chatRef}>
+                    <div className='mb-14'>
                         {chat_respond?.loading?
                         <DuvduLoading loadingIn={""} type='chat' />:
                         msglist.map((message, index) => {
@@ -241,21 +243,22 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                             }
                         })}
                     </div>
+                    </div>
                     {
                         attachments &&
-                        <div className='flex flex-wrap gap-1 p-2 relative max-h-56 overflow-y-scroll'>
+                        <div className='flex flex-wrap gap-1 p-2 relative max-h- mb-20 overflow-y-scroll'>
                             {attachments?.map((file, index) => {
                                 switch (true) {
                                     case file.fileType.includes('image'):
                                         return (
                                             <PopUpImage key={index}>
-                                                <img src={URL.createObjectURL(file.file)} className="size-48 text-gray-400" />
+                                                <img src={URL.createObjectURL(file.file)} className="size-72 text-gray-400" />
                                             </PopUpImage>
                                         );
 
                                     case file.fileType.includes('video'):
                                         return (
-                                            <div key={index} className="size-48 text-gray-400">
+                                            <div key={index} className="size-72 text-gray-400">
                                                 <video controls>
                                                     <source src={URL.createObjectURL(file.file)} type={file.fileType} />{t("Your browser does not support the video tag.")}</video>
                                             </div>
@@ -274,47 +277,55 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                         </div>
                     }
 
-                    <div className="flex justify-end items-center dark:bg-[#4d4c4c] p-3 ">
+                    <div className="flex justify-end items-center w-full gap-2 p-3 absolute bottom-0 backdrop-blur-md">
                         <AudioRecorder
                             isstartRecording={isRecording}
                             recordingoutput={recording}
                         />
                         {audioSrc ? (
-                            <div className="w-full max-w-md flex items-center">
-                                <audio controls controlsList="nodownload" src={audioSrc} className="w-full outline-none"></audio>
-                                <div className='cursor-pointer bg-red rounded-full p-3 h-min ml-3' onClick={() => setaudioSrc(null)}>
-                                    <Icon className='size-4 text-white' name={'xmark'} />
-                                </div>
-                            </div>) :
                             <>
-                                {!isRecording &&
+                            <div className="w-full flex items-center">
+                                <audio controls controlsList="nodownload" src={audioSrc} className="w-full outline-none"></audio>
+                            </div>
+                            <div className='cursor-pointer bg-red rounded-full h-12 !w-16 ms-3 flex items-center justify-center' onClick={() => setaudioSrc(null)}>
+                                <Icon className='size-5 text-white' name={'trash'} />
+                            </div>
+                            </>
+                            ) :
+                            <>
+                                {!isRecording && !attachments  &&
                                     <input
                                         value={content || ""}
                                         onChange={onChange}
                                         name='content'
                                         onKeyDown={handleKeyPress}
-                                        className='border-none bg-transparent w-full h-min'
+                                        className='border-none w-full h-min rounded-full dark:bg-[#4d4c4c] bg-[#f1f1f1] p-3'
                                         placeholder={t("Write a message...")}
                                         type="text"
                                         accept="video/*,audio/*,image/*,.pdf" />
                                 }
-                                <label htmlFor="attachment-upload" >
+                                {!content?.length>0 &&  !isRecording &&
+                                <>
+                                <label htmlFor="attachment-upload" className='rounded-full dark:bg-[#4d4c4c] bg-[#f1f1f1] h-12 !w-14 flex items-center justify-center m-0 p-0' >
                                     <Icon className="cursor-pointer" name={'attachment'} />
                                 </label>
                                 <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
-                                <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' onClick={swapRecording}>
+                                </>}
+                                {!content?.length > 0  && !attachments && 
+                                <div className='cursor-pointer bg-primary rounded-full h-12 !w-14 flex items-center justify-center' onClick={swapRecording}>
                                     {!isRecording ?
-                                        <Icon name={'microphone'} /> :
+                                        <Icon className='size-5 text-white' name={'microphone'} /> :
                                         <Icon className='size-5 text-white' name={'stop'} />
                                     }
                                 </div>
+                                }
                             </>
                         }
 
                         {
-                            !isRecording && (content?.length > 0 || audioSrc) &&
-                            <div className='cursor-pointer bg-primary rounded-full p-3 h-min ml-3' onClick={onSend}>
-                                <Icon className='size-4 text-white' name={'paper-plane'} />
+                            !isRecording && (content?.length > 0 || audioSrc || attachments) &&
+                            <div className='cursor-pointer bg-primary rounded-full h-12 !w-14 flex items-center justify-center' onClick={onSend}>
+                                <Icon className='size-5 text-white' name={'paper-plane'} />
                             </div>
                         }
 
@@ -327,13 +338,35 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
 const Me = ({ message }) => {
     const { t } = useTranslation();
+    const audioRef = useRef(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [playingAudioRef, setPlayingAudioRef] = useState(null);
+    const handleAudioPlay = (newAudioRef) => {
+        if (playingAudioRef && playingAudioRef !== newAudioRef) {
+          playingAudioRef.pause();
+        }
+        setPlayingAudioRef(newAudioRef);
+      };
 
+    useEffect(() => {
+      if (isPlaying) {
+        setIsPlaying(true)
+        handleAudioPlay(audioRef.current);
+    }
+    }, [isPlaying]);  
     return (
-        (message?.media[0]?.type === "audio/wav") ?
+        (message?.media[0]?.type.includes("audio")) ?
             <div className="ml-20 mt-2">
-                <audio controls controlsList="nodownload">
-                    <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
+            <AudioPlayer
+              src={message?.media[0]?.url}
+              audioRef={audioRef}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+            />      
+                {/* <audio controls controlsList="nodownload">
+                    <source src={message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio> */}
             </div> :
+            <>
             <div className="message me">
                 <div className="flex-col">
                     <div>
@@ -341,53 +374,89 @@ const Me = ({ message }) => {
                             {message.content}
                         </span>
                     </div>
+                </div>
+                                    <div className="w-full text-end">
+                        <span className="text-white text-xs">
+                            {dateFormat(message.updatedAt, 'hh:mm')}
+                        </span>
+                    </div>
+                    </div>
 
-                    <div className="flex flex-wrap gap-2">
+
+                    <div className="flex flex-wrap">
                         {
                             message.media?.length > 0 &&
                             message.media?.map((media, index) => {
+                                if(media.type.includes("audio")){
+                                    return (<div className="ml-20 mt-2">
+                                        <AudioPlayer
+                                            src={message?.url}
+                                            audioRef={audioRef}
+                                            isPlaying={isPlaying}
+                                            setIsPlaying={setIsPlaying}
+                                            /> 
+                                    </div>)
+                                    }
                                 if (media.type.includes("image")) {
                                     return (
+                                    <div className='message me'>
                                         <PopUpImage key={`image-${index}`}>
-                                            <img src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} alt="media" className='cursor-pointer' />
+                                            <img src={media.url} alt="media" className='cursor-pointer' />
                                         </PopUpImage>
+                                        <div className="w-full text-end">
+                                            <span className="text-white text-xs">
+                                                {dateFormat(message.updatedAt, 'hh:mm')}
+                                            </span>
+                                        </div>
+                                    </div>
                                     );
                                 } else if (media.type.includes("video")) {
                                     return (
+                                        <div className='message me'>
                                         <video key={`video-${index}`} controls className='size-48'>
-                                            <source src={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
+                                            <source src={media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
+                                                    <div className="w-full text-end">
+                                                    <span className="text-white text-xs">
+                                                        {dateFormat(message.updatedAt, 'hh:mm')}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        
                                     );
                                 } else {
                                     return (
-                                        <a href={"https://duvdu-s3.s3.eu-central-1.amazonaws.com/" + media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
+                                        <div className='message me'>
+                                        <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
                                             <div className='relative size-14 flex justify-center items-center cursor-pointer'>
                                                 <Icon name="file" className="absolute size-full opacity-50" />
                                                 <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
                                             </div>
                                         </a>
+                                        <div className="w-full text-end">
+                                            <span className="text-white text-xs">
+                                                {dateFormat(message.updatedAt, 'hh:mm')}
+                                            </span>
+                                        </div>
+                                    </div>
+
                                     );
                                 }
                             })
                         }
+                        
                     </div>
-                    <div className="w-full text-end">
-                        <span className="text-white text-xs">
-                            {dateFormat(message.updatedAt, 'hh:mm')}
-                        </span>
-                    </div>
-                </div>
-            </div>
+                    </>
     );
 };
 
 const Other = ({ message }) => {
     const { t } = useTranslation();
-
+    console.log({message})
     return ((message?.media[0]?.type === "audio/wav") ?
         <div className="ml-20 mt-2">
             <audio controls controlsList="nodownload">
-                <source src={process.env.ASSETS_URL + message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
-        </div> : <div className="message other bg-white dark:bg-[#1A2024]">
+                <source src={message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
+        </div> : <div className="message other dark:bg-[#4d4c4c] bg-[#f1f1f1]">
             {
                 !message.content != "NULL" &&
                 <div>
@@ -397,28 +466,43 @@ const Other = ({ message }) => {
                 </div>
             }
             <div className="flex flex-wrap gap-2">
-                {
-                    message.media?.length > 0 &&
-                    message.media?.map((media, index) => {
-                        if (media.type === "audio/wav") {
-                            return (
-                                <audio key={`audio-${index}`} controls controlsList="nodownload">
-                                    <source src={process.env.ASSETS_URL + media.url} controlsList="nodownload" type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
-                            );
-                        } else if (media.type === "image/png") {
-                            return (
-                                <img key={`image-${index}`} src={process.env.ASSETS_URL + media.url} className="h-28" alt="media" />
-                            );
-                        } else {
-                            return (
-                                <Icon key={`file-${index}`} name="file" className="size-10" />
-                            );
+            {
+                            message.media?.length > 0 &&
+                            message.media?.map((media, index) => {
+                                if(media.type.includes("audio")){
+
+                                return (<div className="ml-20 mt-2">
+                                    <audio controls controlsList="nodownload">
+                                        <source src={message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
+                                </div>)
+                                }
+                                else if (media.type.includes("image")) {
+                                    return (
+                                        <PopUpImage key={`image-${index}`}>
+                                            <img src={media.url} alt="media" className='cursor-pointer' />
+                                        </PopUpImage>
+                                    );
+                                } else if (media.type.includes("video")) {
+                                    return (
+                                        <video key={`video-${index}`} controls className='size-48'>
+                                            <source src={ media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
+                                    );
+                                } else {
+                                    return (
+                                        <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
+                                            <div className='relative size-14 flex justify-center items-center cursor-pointer'>
+                                                <Icon name="file" className="absolute size-full opacity-50" />
+                                                <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
+                                            </div>
+                                        </a>
+                                    );
+                                }
+                            })
                         }
-                    })}
-            </div>
+                                    </div>
             <div className="w-full text-start">
-                <span className="text-[#A1A1BC] text-xs">
-                    {dateFormat(message.updatedAt, 'hh:mm')}
+                <span className=" text-xs">
+                {dateFormat(message.updatedAt, 'hh:mm')}
                 </span>
             </div>
         </div>

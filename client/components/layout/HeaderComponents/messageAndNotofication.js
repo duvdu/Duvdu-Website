@@ -40,7 +40,7 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
                         viewAllState == 0 &&
                         <>
                             <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
-                            <ViewFew Type={'messages'} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
+                            <ViewFew Type={'messages'} onChoose={onChoose} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
 
                         </>
                     }
@@ -71,7 +71,7 @@ const ViewAll = ({ Type, list, t , onChoose }) =>
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
     </div>
 
-const ViewFew = ({ Type, list, t, onViewAll }) => (
+const ViewFew = ({ Type, list, t, onViewAll , onChoose}) => (
 
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] p-7">
         <div className="flex items-center justify-between">
@@ -83,7 +83,7 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
         {list.length > 0 ?
             <div className="flex flex-col gap-4 mt-8 overflow-y-hidden">
                 {list.slice(0, 4).map((tile, index) => (
-                    Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile}/>
+                    Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Notification")}</span> </div>}
     </div>

@@ -444,7 +444,7 @@ function ReceiveProjectFiles({
                                                     name="details"
                                                     value={formData.details || contract?.details}
                                                     onChange={handleInputChange}
-                                                    placeholder={t("requirements, conditions At least 6 char")}
+                                                    placeholder={t("requirements, conditions")}
                                                     className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
                                                 />
                                             </section>
