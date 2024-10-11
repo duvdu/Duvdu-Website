@@ -27,8 +27,8 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
     let date = new Date(formData.startDate);
     const validateRequiredFields = () => {
         const errors = {};
-        if (!formData.startDate) errors.startDate = 'StartDate is required';
-        if (!formData.timeDate) errors.timeDate = 'imeDate is required';
+        if (!formData.startDate) errors.startDate = 'Start date is required';
+        if (!formData.timeDate) errors.timeDate = 'Time date is required';
         // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
         // if (!formData.details) errors.details = 'Details is required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
@@ -152,7 +152,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                         <h3 className="capitalize opacity-60 mb-4">{t("select Booking date")}</h3>
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                         <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
-                        <input type='time' name="timeDate" value={formData.timeDate || ""} onChange={handleInputChange} className="bg-[#9999991A] rounded-xl border-black border-opacity-10 p-2"/>
+                        <input type='time' name="timeDate" value={formData.timeDate || ""} onChange={handleInputChange} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 px-2 py-5 w-full"/>
                         <ErrorMessage ErrorMsg={ErrorMsg.timeDate}/>
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>

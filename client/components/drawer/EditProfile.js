@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 import GoogleMap from '../elements/googleMap';
 import CategorySelectOne from '../elements/CategorySelectOne';
+import CategoryMultiSelection from '../elements/CategoryMultiSelection';
 import { useRouter } from 'next/router';
 
 
@@ -28,13 +29,13 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const [cover, setCover] = useState(null);
     const router = useRouter();
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
-
+    console.log({formData , userInfo})
     useEffect(() => {
         if (isOpen) {
             UpdateFormData("profileImage", userInfo?.profileImage);
             UpdateFormData("coverImage", userInfo?.coverImage);
             UpdateFormData("name", userInfo?.name);
-            UpdateFormData('category', userInfo?.category)
+            UpdateFormData('categories', userInfo?.categories?.map(item=> item._id))
             UpdateFormData("address", userInfo?.address);
             UpdateFormData("pricePerHour", userInfo?.pricePerHour);
             UpdateFormData("about", userInfo?.about);
@@ -70,7 +71,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             'acceptedProjectsCounter',
             'profileViews',
             'isOnline',
-            'category',
+            'categories',
             'avaliableContracts'
         ]
         Object.keys(formData).forEach(key => {
@@ -86,7 +87,11 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
         if (profileImage)
             data.append('profileImage', profileImage)
         
-            data.append('category', formData?.category?._id || formData?.category)
+        formData?.categories?.forEach((category, index) => {
+            const categoryKey = `[categories][${index}]`;
+            data.append(categoryKey, category?._id || category);
+        });
+            // data.append('category', formData?.category?._id || formData?.category)
         return data;
     }
 
@@ -161,8 +166,8 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                 </div>
                 <form className='pb-0 flex flex-col items-center py-20' onSubmit={handleSubmit}>
                     <div className='mb-4 w-full'>
-                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("services")}</span>
-                        <CategorySelectOne value={formData.category} onChange={(v) => { UpdateFormData('category', v) }} />
+                    <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("services")}</span>
+                    <CategoryMultiSelection value={formData?.categories?.length>0?[...formData?.categories]:[]} onChange={(v) => { UpdateFormData('categories', v) }} />
                     </div>
                     <div className='mb-4 w-full'>
                         <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("name")}</span>

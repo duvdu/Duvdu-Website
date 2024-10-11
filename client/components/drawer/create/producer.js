@@ -11,6 +11,7 @@ import ErrorPopUp from '../../popsup/errorPopUp';
 import ErrorMessage from '../../elements/ErrorMessage';
 import DuvduLoading from '../../elements/duvduLoading';
 import ListInput from "../../elements/listInput";
+import ListInputSearchAPI from "../../elements/listInputSearchAPI";
 import ProducerCategorySelection from "./assets/producerCategorySelection";
 import { GetIsLoggedProducer } from '../../../redux/action/apis/cycles/producer/islogged';
 import { CreateProducer } from "../../../redux/action/apis/cycles/producer/create";
@@ -122,6 +123,7 @@ const AddProducer = ({
 
     const handleSubmit = () => {
         if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
+        if (formData.platforms?.length>0) formData.platforms = (formData.platforms.map(item=> item._id));
         CreateProducer(formData);
     };
     useEffect(() => {
@@ -129,6 +131,7 @@ const AddProducer = ({
     }, [])
     const handleUpdate = () => {
         if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
+        if (formData.platforms?.length>0) formData.platforms = (formData.platforms.map(item=> item._id));
         if (formData.minBudget || formData.maxBudget) {
             formData.maxBudget = formData.maxBudget || producerData?.maxBudget
             formData.minBudget = formData.minBudget || producerData?.minBudget
@@ -152,24 +155,26 @@ const AddProducer = ({
         return (formData.category || false) &&
             (formData.minBudget || false) &&
             (formData.maxBudget || false) &&
-            validateTags &&
-            formData.searchKeywords?.length > 0 &&
-            formData.subcategory?.length > 0;
+            // validateTags &&
+            formData.platforms?.length > 0&&
+            formData.searchKeywords?.length > 0
+            // formData.subcategory?.length > 0;
     };
 
     const isFormValidForUpdate = () => {
         return formData.category ||
             formData.minBudget ||
             formData.maxBudget ||
-            formData.searchKeywords?.length > 0 ||
-            (formData.subcategory?.length > 0 && validateTags);
+            formData.platforms?.length>0 ||
+            formData.searchKeywords?.length > 0
+            // (formData.subcategory?.length > 0 && validateTags);
 
     };
 
 
     const canDelete = true;
     var convertError = JSON.parse(deleteProducer_respond?.error ?? null)
-
+    console.log(formData?.platforms)
     return (
         <>
             <ErrorPopUp id="image_size_error" errorMsg={deleteProducer_respond?.error} />
@@ -179,7 +184,7 @@ const AddProducer = ({
             <Drawer isOpen={true} name={'add producer'} toggleDrawer={toggleDrawer} padding={false}>
                 {getIsLoggedProducer_respond &&
                 (getIsLoggedProducer_respond?.loading?
-                <DuvduLoading loadingIn={''} type='contract'/>
+                <DuvduLoading loadingIn={''} type=''/>
                 :
                 <div className='flex flex-col justify-between h-full container mx-auto'>
                     <div className='flex flex-col h-full gap-14 container mx-auto mt-8'>
@@ -227,6 +232,21 @@ const AddProducer = ({
                                     formData?.searchKeywords?.length
                                         ? formData.searchKeywords
                                         : producerData?.searchKeywords
+                                }
+                            />
+                            <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                            <ListInputSearchAPI
+                                name={'platforms'}
+                                placeholder={t("platforms")}
+                                onChange={(keys) =>
+                                    JSON.stringify(keys) !== JSON.stringify(producerData?.platforms) && keys.length
+                                        ? UpdateFormData('platforms', keys)
+                                        : null
+                                }
+                                value={
+                                    formData?.platforms?.length
+                                        ? formData.platforms
+                                        : producerData?.platforms
                                 }
                             />
                             <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>

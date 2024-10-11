@@ -113,6 +113,7 @@ function OtherProfile({
                                     followers: userInfo?.followCount.followers,
                                     views: userInfo?.profileViews,
                                 }}
+                                categories={userInfo?.categories}
                                 rank={userInfo?.rank?.title}
                                 rankcolor={userInfo?.rank?.color}
                                 isMe={false}

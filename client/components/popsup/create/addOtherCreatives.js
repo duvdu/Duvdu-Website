@@ -31,7 +31,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
     }, [FindUser_respond])
 
     useEffect(() => {
-        if (api.req === "FindUser" && api.loading) {
+        if (FindUser_respond?.loading) {
             setIsLoading(true);
             setCreatives([])
         } else if (_searchTo != searchTo) {
@@ -39,7 +39,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
             _setSearchTo(searchTo);
             FindUser({search:searchTo});
         }
-    }, [searchTo, api.req === "FindUser" && api.loading]);
+    }, [searchTo, FindUser_respond?.loading]);
 
     // Handler to manage input changes for any field
     const handleInputChange = (name, value) => {

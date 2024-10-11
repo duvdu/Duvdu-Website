@@ -9,6 +9,7 @@ function Info({
     personalName,
     location,
     rank,
+    categories,
     rankcolor,
     occupation,
     rates,
@@ -49,6 +50,15 @@ function Info({
                 <Icon className='text-primary w-4' name={'star'} />
             </div>
         </div>
+        {categories && categories.length>0 &&
+        <div className='flex flex-wrap pt-5 items-center gap-3'>
+            {categories.map(item=>
+            <div key={item._id} className="info-container flex items-center justify-center">
+                <p className="whitespace-nowrap" >{item.title?.en ?? item.title}</p>
+            </div>
+            )}
+        </div>
+            }
         <div className='flex justify-center pt-7 items-center'>
             <div className='flex justify-center' dir="ltr">
                 {Object.entries(popularity).map(([key, value]) => (
