@@ -19,9 +19,9 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpa
     const router = useRouter();
     const { query } = router;
     useEffect(()=>{
-        if(username==null)
-        setStep(null)
-    },[username==null])
+        if(step==='OTP' && !username)
+            setStep(null)
+    },[step , username])
     console.log(username)
     const getPageComponent = () => {
         switch (step) {

@@ -57,6 +57,7 @@ function OTP({
     }, [verify_respond?.error])
 
     useEffect(() => {
+        if(username)
         OpenPopUp('OTP-tester')
     }, [])
 
