@@ -74,6 +74,7 @@ const Header = ({
                 var header = document.getElementsByTagName('header')[0];
                 var headerHeight = header.offsetHeight;
                 root.style.setProperty('--header-height', headerHeight + 'px');
+                root.style.setProperty('--header-height2', headerHeight+ 20 + 'px');
                 root.style.setProperty('--body-height', (window.innerHeight - headerHeight) + 'px');
                 root.style.setProperty('--drawer-height', (window.innerHeight - 160) + 'px');
             }

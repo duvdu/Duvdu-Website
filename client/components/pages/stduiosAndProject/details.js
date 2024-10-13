@@ -11,7 +11,7 @@ const Details = ({ data , onAudioPlay }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-4 mx-5">
+        <div className="!sticky top-header grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-[#1A2024] to-transparent border-50 p-4 mx-5">
             <div className='rounded-[50px] overflow-hidden'>
                 <ProjectCover onAudioPlay={onAudioPlay} hidden={true} data={data?.attachments[0]} cover={data?.cover}/>
             </div>

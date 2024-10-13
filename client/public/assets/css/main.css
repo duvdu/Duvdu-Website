@@ -1497,7 +1497,7 @@ table p {
 
 
 .top-header {
-  top: var(--header-height);
+  top: var(--header-height2);
 }
 
 .padge:hover {

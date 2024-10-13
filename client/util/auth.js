@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-const AUTH_TOKEN_KEY = 'eslam';
+const AUTH_TOKEN_KEY = 'connect.sid';
 
 export const setAuthToken = (token) => {
   Cookies.set(AUTH_TOKEN_KEY, token);

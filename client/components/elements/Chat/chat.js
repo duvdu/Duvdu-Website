@@ -1,18 +1,33 @@
-import Icon from '../Icons';
+import Icon from '../../Icons';
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { GetAllMessageInChat } from '../../redux/action/apis/realTime/messages/getAllMessageInChat';
-import { SendMessages } from '../../redux/action/apis/realTime/messages/sendmessage';
-import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent, } from '../../util/util';
+import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/messages/getAllMessageInChat';
+import { SendMessages } from '../../../redux/action/apis/realTime/messages/sendmessage';
+import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent, } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
+import { io } from "socket.io-client";
 
 import dateFormat from "dateformat";
-import AudioRecorder from './recording';
+import AudioRecorder from '../recording';
 import Link from 'next/link';
-import PopUpImage from './popUpImage';
-import DuvduLoading from './duvduLoading';
-import AudioPlayer from './../pages/stduiosAndProject/AudioPlayer';
+import PopUpImage from '../popUpImage';
+import DuvduLoading from '../duvduLoading';
+import AudioPlayer from './AudioPlayer';
 
+import Me from './Me';
+import Other from './Other';
+const CacheHelper = {
+    get: function (name) {
+      if (typeof document !== 'undefined') { // Ensure we are on the client-side
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      return null;
+    }
+  };
+  
+  
 const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_respond, api }) => {
     const { t } = useTranslation();
     const chatRef = useRef(null);
@@ -120,9 +135,46 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         }
         return { _id: messages._id }
     }
-
-
-    const loadMore = () => {
+    useEffect(() => {
+        async function setupSocket() {
+          try {
+            // Fetch the 'connect.sid' cookie only on the client-side
+            const sid = CacheHelper.get('connect.sid'); 
+    
+            if (!sid) {
+              console.error('No connect.sid cookie found!');
+              return;
+            }
+    
+            const socket = io('https://api.duvdu.com/', {
+              transports: ['websocket'],
+              extraHeaders: {
+                'cookie': `connect.sid=${sid}` // Attach 'connect.sid' cookie to headers
+              }
+            });
+    
+            socket.on('connect', () => {
+              console.log('----------CONNECTED-----------');
+            });
+    
+            socket.on('new_message', (data) => {
+              if (data.message != null) {
+                console.log('Message received:', data.message);
+                // Handle message and scroll logic here
+              }
+            });
+    
+            socket.on('error', (err) => {
+              console.error('Socket error:', err);
+            });
+          } catch (error) {
+            console.error('Socket connection failed:', error);
+          }
+        }
+    
+        // Call the function only when the component mounts
+        setupSocket();
+      }, []);    const loadMore = () => {
         if(chat_respond?.pagination?.currentPage < chat_respond?.pagination?.totalPages)
         setLimit(prev => prev + 50)
         // Your custom logic to load more messages
@@ -175,6 +227,26 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const swapRecording = () => {
         setIsRecord(!isRecording)
     };
+    const [currentAudio, setCurrentAudio] = useState(null); // The currently playing audio element
+
+    const playAudio = (audioElement, setIsPlaying) => {
+      if (currentAudio && currentAudio.audio !== audioElement) {
+        currentAudio.audio.pause();
+        currentAudio.setIsPlaying(false); // Pause the previous audio and update state
+      }
+  
+      setCurrentAudio({ audio: audioElement, setIsPlaying });
+    };
+    // const playAudio = (audioToPlay, setIsPlaying) => {
+    //     // Find all audio elements or audio references in the context (e.g., an array of all audioRefs)
+    //     audioRefs.forEach((audioRef) => {
+    //       if (audioRef !== audioToPlay) {
+    //         audioRef.pause(); // Pause other audios
+    //         setIsPlaying(false); // Set their state to paused
+    //       }
+    //     });
+    //   };
+      
     return (
         <div className={`fixed bottom-0 z-20 md:px-8 ${messages.openchat ? '' : 'hidden'}`} >
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
@@ -192,7 +264,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                                 )}
                             </div>
                         </Link>
-                        <div className="px-3">
+                        <div className="px-3 place-self-center">
                             <Link href={`/creative/${otherUser.username || ""}`} >
                                 <div className="capitalize font-bold text-black dark:text-white cursor-pointer">
                                     {otherUser.name?.split(' ')[0].length>6?otherUser.name?.split(' ')[0].slice(0,6):otherUser.name?.split(' ')[0]}
@@ -208,39 +280,40 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                         <Icon name={'xmark'} className='text-xl opacity-50 w-3' />
                     </div>
                     <div className="messages-chat h-full" id="chat" ref={chatRef}>
-                    <div className='mb-14'>
+                    <div className='pb-20'>
                         {chat_respond?.loading?
                         <DuvduLoading loadingIn={""} type='chat' />:
                         msglist.map((message, index) => {
-
-                            if (message.type === 'time') {
-                                return (
-                                    <div key={index} className="time">
-                                        {message.data}
-                                    </div>
-                                );
-                            } else if (checkIsMe(message.sender)) {
-                                return <Me key={index} message={message} />
+                            // if (message.type === 'time') {
+                            //     return (
+                            //         <div key={message._id} className="time">
+                            //             {message.data}
+                            //         </div>
+                            //     );
+                            // } else
+                             if (checkIsMe(message.sender)) {
+                                return <Me playAudio={playAudio} key={message._id} message={message} />
                             } else if (!checkIsMe(message.sender)) {
-                                return <Other key={index} message={message} />
-                            } else if (message.type === 'typing other') {
-                                return (
-                                    <div key={index} className="message other">
-                                        <div className="typing typing-1"></div>
-                                        <div className="typing typing-2"></div>
-                                        <div className="typing typing-3"></div>
-                                    </div>
-                                );
-                            }
-                            else if (message.type === 'typing me') {
-                                return (
-                                    <div key={index} className="message me">
-                                        <div className="typing typing-1"></div>
-                                        <div className="typing typing-2"></div>
-                                        <div className="typing typing-3"></div>
-                                    </div>
-                                );
-                            }
+                                return <Other playAudio={playAudio} key={message._id} message={message} />
+                            } 
+                            // else if (message.type === 'typing other') {
+                            //     return (
+                            //         <div key={message._id} className="message other">
+                            //             <div className="typing typing-1"></div>
+                            //             <div className="typing typing-2"></div>
+                            //             <div className="typing typing-3"></div>
+                            //         </div>
+                            //     );
+                            // }
+                            // else if (message.type === 'typing me') {
+                            //     return (
+                            //         <div key={message._id} className="message me">
+                            //             <div className="typing typing-1"></div>
+                            //             <div className="typing typing-2"></div>
+                            //             <div className="typing typing-3"></div>
+                            //         </div>
+                            //     );
+                            // }
                         })}
                     </div>
                     </div>
@@ -336,178 +409,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     );
 };
 
-const Me = ({ message }) => {
-    const { t } = useTranslation();
-    const audioRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [playingAudioRef, setPlayingAudioRef] = useState(null);
-    const handleAudioPlay = (newAudioRef) => {
-        if (playingAudioRef && playingAudioRef !== newAudioRef) {
-          playingAudioRef.pause();
-        }
-        setPlayingAudioRef(newAudioRef);
-      };
-
-    useEffect(() => {
-      if (isPlaying) {
-        setIsPlaying(true)
-        handleAudioPlay(audioRef.current);
-    }
-    }, [isPlaying]);  
-    return (
-        (message?.media[0]?.type.includes("audio")) ?
-            <div className="ml-20 mt-2">
-            <AudioPlayer
-              src={message?.media[0]?.url}
-              audioRef={audioRef}
-              isPlaying={isPlaying}
-              setIsPlaying={setIsPlaying}
-            />      
-                {/* <audio controls controlsList="nodownload">
-                    <source src={message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio> */}
-            </div> :
-            <>
-            <div className="message me">
-                <div className="flex-col">
-                    <div>
-                        <span className="text-white">
-                            {message.content}
-                        </span>
-                    </div>
-                </div>
-                                    <div className="w-full text-end">
-                        <span className="text-white text-xs">
-                            {dateFormat(message.updatedAt, 'hh:mm')}
-                        </span>
-                    </div>
-                    </div>
-
-
-                    <div className="flex flex-wrap">
-                        {
-                            message.media?.length > 0 &&
-                            message.media?.map((media, index) => {
-                                if(media.type.includes("audio")){
-                                    return (<div className="ml-20 mt-2">
-                                        <AudioPlayer
-                                            src={message?.url}
-                                            audioRef={audioRef}
-                                            isPlaying={isPlaying}
-                                            setIsPlaying={setIsPlaying}
-                                            /> 
-                                    </div>)
-                                    }
-                                if (media.type.includes("image")) {
-                                    return (
-                                    <div className='message me'>
-                                        <PopUpImage key={`image-${index}`}>
-                                            <img src={media.url} alt="media" className='cursor-pointer' />
-                                        </PopUpImage>
-                                        <div className="w-full text-end">
-                                            <span className="text-white text-xs">
-                                                {dateFormat(message.updatedAt, 'hh:mm')}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    );
-                                } else if (media.type.includes("video")) {
-                                    return (
-                                        <div className='message me'>
-                                        <video key={`video-${index}`} controls className='size-48'>
-                                            <source src={media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
-                                                    <div className="w-full text-end">
-                                                    <span className="text-white text-xs">
-                                                        {dateFormat(message.updatedAt, 'hh:mm')}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        
-                                    );
-                                } else {
-                                    return (
-                                        <div className='message me'>
-                                        <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
-                                            <div className='relative size-14 flex justify-center items-center cursor-pointer'>
-                                                <Icon name="file" className="absolute size-full opacity-50" />
-                                                <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
-                                            </div>
-                                        </a>
-                                        <div className="w-full text-end">
-                                            <span className="text-white text-xs">
-                                                {dateFormat(message.updatedAt, 'hh:mm')}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    );
-                                }
-                            })
-                        }
-                        
-                    </div>
-                    </>
-    );
-};
-
-const Other = ({ message }) => {
-    const { t } = useTranslation();
-    console.log({message})
-    return ((message?.media[0]?.type === "audio/wav") ?
-        <div className="ml-20 mt-2">
-            <audio controls controlsList="nodownload">
-                <source src={message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
-        </div> : <div className="message other dark:bg-[#4d4c4c] bg-[#f1f1f1]">
-            {
-                !message.content != "NULL" &&
-                <div>
-                    <span className="text-[#1B1A57] dark:text-white">
-                        {message.content}
-                    </span>
-                </div>
-            }
-            <div className="flex flex-wrap gap-2">
-            {
-                            message.media?.length > 0 &&
-                            message.media?.map((media, index) => {
-                                if(media.type.includes("audio")){
-
-                                return (<div className="ml-20 mt-2">
-                                    <audio controls controlsList="nodownload">
-                                        <source src={message?.media[0]?.url} type="audio/wav" />{t("Your browser does not support the audio element.")}</audio>
-                                </div>)
-                                }
-                                else if (media.type.includes("image")) {
-                                    return (
-                                        <PopUpImage key={`image-${index}`}>
-                                            <img src={media.url} alt="media" className='cursor-pointer' />
-                                        </PopUpImage>
-                                    );
-                                } else if (media.type.includes("video")) {
-                                    return (
-                                        <video key={`video-${index}`} controls className='size-48'>
-                                            <source src={ media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
-                                    );
-                                } else {
-                                    return (
-                                        <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
-                                            <div className='relative size-14 flex justify-center items-center cursor-pointer'>
-                                                <Icon name="file" className="absolute size-full opacity-50" />
-                                                <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
-                                            </div>
-                                        </a>
-                                    );
-                                }
-                            })
-                        }
-                                    </div>
-            <div className="w-full text-start">
-                <span className=" text-xs">
-                {dateFormat(message.updatedAt, 'hh:mm')}
-                </span>
-            </div>
-        </div>
-    );
-};
 
 const mapStateToProps = (state) => ({
     api: state.api,

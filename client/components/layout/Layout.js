@@ -13,7 +13,7 @@ import { getCategory } from "../../redux/action/apis/category/getCategories";
 import { init } from "../../redux/action/apis/init/getdata";
 import { useRouter } from "next/router";
 import { LogOut } from "../../redux/action/apis/auth/logout";
-import Chat from "../elements/chat";
+import Chat from "../elements/Chat/chat";
 import ErrorAndLoadingHandling from "./assets/errorAndLoadingHandling";
 import RegistrationRequired from "../popsup/booking/registrationRequired";
 import TestOTPCode from "../popsup/testOTPCode";

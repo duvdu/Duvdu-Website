@@ -7,7 +7,7 @@ const About = ({ data }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="sticky top-header">
+        <div className="">
             <div className="h-16" />
             <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mx-5 sm:mx-0">{t("about the creative")}</h2>
             <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] p-10 mx-5 md:mx-0">
