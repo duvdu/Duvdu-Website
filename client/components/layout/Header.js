@@ -120,7 +120,8 @@ const Header = ({
 
 
     const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
-    const totalUnwatchedNotification = api?.GetNotifications?.data?.filter(message => !message.watched).length;
+    const totalUnwatchedNotification = api?.GetNotifications?.unWatchiedCount
+    // .data?.filter(message => !message.watched).length;
     const totalNews = totalUnreadMessages + totalUnwatchedNotification
 
 

@@ -88,7 +88,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             data.append('profileImage', profileImage)
         
         formData?.categories?.forEach((category, index) => {
-            const categoryKey = `[categories][${index}]`;
+            const categoryKey = `categories[${index}]`;
             data.append(categoryKey, category?._id || category);
         });
             // data.append('category', formData?.category?._id || formData?.category)

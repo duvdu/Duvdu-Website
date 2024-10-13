@@ -122,15 +122,16 @@ const AddProducer = ({
 
 
     const handleSubmit = () => {
-        if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
+        if (formData.subcategory?.length>0) formData.subcategory = transformKeys(formData.subcategory);
         if (formData.platforms?.length>0) formData.platforms = (formData.platforms.map(item=> item._id));
         CreateProducer(formData);
     };
     useEffect(() => {
         GetIsLoggedProducer()
     }, [])
+    console.log(transformKeys(formData.subcategory))
     const handleUpdate = () => {
-        if (formData.subcategory) formData.subcategory = transformKeys(formData.subcategory);
+        if (formData.subcategory?.length>0) formData.subcategory = transformKeys(formData.subcategory);
         if (formData.platforms?.length>0) formData.platforms = (formData.platforms.map(item=> item._id));
         if (formData.minBudget || formData.maxBudget) {
             formData.maxBudget = formData.maxBudget || producerData?.maxBudget

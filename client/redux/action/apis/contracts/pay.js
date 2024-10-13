@@ -22,7 +22,7 @@ export const payment = ({ id, type }) => {
                     response = await mainApiInstance.get(`/api/copyrights/contract/pay/${id}`);
                     break;
                 case "project":
-                    response = await mainApiInstance.get(`/api/projects/contract/pay/${id}`);
+                    response = await mainApiInstance.post(`/api/projects/contract/pay/${id}`);
                     break;
                 case "team":
                     response = await mainApiInstance.post(`/api/team/contract/pay/${id}`);

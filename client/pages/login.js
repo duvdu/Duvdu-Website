@@ -29,21 +29,22 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
   const [passwordError, setPasswordError] = useState({ isError: false, message: '' });
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const NotBackPages = ['/register' , '/forgetPassword'] 
   var convertError = JSON.parse(login_respond?.error ?? null)
   useEffect(() => {
     if (login_respond?.message === 'success') {
-      getMyprofile().then(()=>{
-        if (document.reffer === '/register') {
-          // Navigate to the home page
+      getMyprofile().then(() => {
+        if (NotBackPages.includs(document.referrer)) {
           router.push('/');
         } else {
           router.back();
         }
-      })
+      }).catch((error) => {
+        console.error("Failed to fetch profile:", error);
+      });
     }
-  }, [login_respond?.message])
-
+  }, [login_respond?.message]);
+  
 
   useEffect(() => {
     if (convertError && login_respond?.req == "login") {
