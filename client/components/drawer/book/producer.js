@@ -10,8 +10,9 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import { BookProducer } from "../../../redux/action/apis/cycles/producer/book";
 import { useTranslation } from 'react-i18next';
 import AddAttachment from "../../elements/attachment";
+import { GetPlatforms } from '../../../redux/action/apis/cycles/producer/platform';
 
-const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProducer, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
+const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, UpdateFormData, BookProducer, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const { t } = useTranslation();
 
     const formData = addprojectState.formData
@@ -107,6 +108,9 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
         UpdateFormData(name, value)
     };
     
+    useEffect(()=>{
+        GetPlatforms({search:[]})
+    },[])
 
 
     // const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
@@ -122,7 +126,35 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                         <h3 className="capitalize opacity-60 mt-10">{t("Platform")}</h3>
                         <input type="text" placeholder={t("Enter Platform...")} className={inputStyle} value={formData.platform || ""} onChange={handleInputChange} name="platform" />
                     </section>
-
+                    {formData.platform && platforms?.data?.filter(platform => platform.name.toLowerCase().includes(formData.platform.toLowerCase()))  &&
+                    <div className="flex gap-3 flex-wrap">
+                        {(platforms?.data?.filter(item=> item.name !== formData.platform))?.map((platform) => (
+                            <div key={platform._id}
+                                className={`py-1 px-2 border border-[#0000004c] dark:border-[#FFFFFF4D] rounded-full cursor-pointer`}
+                                onClick={() => UpdateFormData('platform', platform.name)}>
+                                <div className={`whitespace-nowrap font-mediumdark:text-[#FFFFFFBF] text-[#3E3E3E] opacity-80`}>
+                                    {platform.name}
+                                </div>
+                            </div>
+                        ))}
+                    </div>}
+                {/* <section>
+                    <ListInputSearchAPI
+                        name={'platforms'}
+                        placeholder={t("platforms")}
+                        onChange={(keys) =>
+                            JSON.stringify(keys) !== JSON.stringify(producerData?.platforms) && keys.length
+                                ? UpdateFormData('platforms', keys)
+                                : null
+                        }
+                        value={
+                            formData?.platforms?.length
+                                ? formData.platforms
+                                : producerData?.platforms
+                        }
+                    />
+                    <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                    </section> */}
                     <section>
                         <h3 className="capitalize opacity-60">{t("Project Details")}</h3>
                         <textarea name="projectDetails" value={formData.projectDetails || ""} onChange={handleInputChange} placeholder={t("Main Idea")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
@@ -148,7 +180,7 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
                             </div>
                         </section>
                     </div>
-
+                    
                     <section>
                         <h3 className="capitalize opacity-60 mb-4">{t("budget range")}</h3>
                         <div className="flex gap-2">
@@ -195,11 +227,13 @@ const ProducerBooking = ({ respond, addprojectState, UpdateFormData, BookProduce
 const mapStateToProps = (state) => ({
     respond: state.api.BookProducer,
     addprojectState: state.addproject,
+    platforms: state.api.GetPlatforms,
 });
 
 const mapDispatchToProps = {
     UpdateFormData,
     resetForm,
+    GetPlatforms,
     BookProducer
 };
 

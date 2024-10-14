@@ -104,8 +104,10 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     // Handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
-        updateProfile(converting())
-        router.push({ pathname: "/creative/" + user.username });
+        updateProfile(converting()).then(()=>{
+            router.push({ pathname: "/creative/" + user.username });
+        })
+        
     };
 
 
@@ -223,7 +225,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                         </section>
                     </div>
                     <button className='w-full flex justify-center mt-12 max-w-96' type="submit">
-                        <AppButton className='sticky bottom-10 w-full z-10' shadow={true}>{t("Done")}</AppButton>
+                        <AppButton className='sticky bottom-10 w-full z-10' shadow={true}>{updateProfile_respond?.loading?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Done")}</AppButton>
                     </button>
 
                 </form>

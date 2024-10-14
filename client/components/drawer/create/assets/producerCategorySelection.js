@@ -24,16 +24,16 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
 
         if (selectedCategory) {
             const selectedSubCategories = value?.subCategories?.map(subCatObj =>
-                selectedCategory.subCategories.find(subCategory => subCategory._id === subCatObj.subCategory)
+                selectedCategory.subCategories.find(subcategory => subcategory._id === subCatObj.subcategory)
             ).filter(Boolean);
             setSelectedSubCategories(selectedSubCategories || []);
 
             const selectedTags = value?.subCategories?.reduce((acc, subCatObj) => {
-                const tags = subCatObj.tags.map(tagId => {
-                    const subCategory = selectedCategory.subCategories.find(sub => sub._id === subCatObj.subCategory);
-                    return subCategory?.tags.find(tag => tag._id === tagId);
+                const tags = subCatObj.tags?.map(tagId => {
+                    const subcategory = selectedCategory.subCategories.find(sub => sub._id === subCatObj.subcategory);
+                    return subcategory?.tags.find(tag => tag._id === tagId);
                 }).filter(Boolean);
-                return [...acc, ...tags];
+                return tags ? [...acc, ...tags]:[...acc];
             }, []);
 
             setSelectedTags(selectedTags || []);
@@ -46,7 +46,7 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
     useEffect(() => {
         if (onChange) {
             const formattedSubCategories = selectedSubCategories.map(sub => ({
-                subCategory: sub._id,
+                subcategory: sub._id,
                 tags: selectedTags.filter(tag => sub.tags.some(t => t._id === tag._id)).map(tag => tag._id)
             }));
             onChange({
@@ -68,11 +68,11 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
         setValidationError('');
     };
 
-    const toggleSubCategory = (subCategory) => {
-        if (selectedSubCategories.some(sub => sub._id === subCategory._id)) {
-            setSelectedSubCategories(selectedSubCategories.filter(sub => sub._id !== subCategory._id));
+    const togglesubcategory = (subcategory) => {
+        if (selectedSubCategories.some(sub => sub._id === subcategory._id)) {
+            setSelectedSubCategories(selectedSubCategories.filter(sub => sub._id !== subcategory._id));
         } else {
-            setSelectedSubCategories([...selectedSubCategories, subCategory]);
+            setSelectedSubCategories([...selectedSubCategories, subcategory]);
         }
         setValidationError('');
     };
@@ -87,11 +87,11 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
     };
 
     const validateTags = () => {
-        for (const subCategory of selectedSubCategories) {
-            const subCategoryTags = selectedTags.filter(tag => subCategory.tags.some(t => t._id === tag._id));
+        for (const subcategory of selectedSubCategories) {
+            const subcategoryTags = selectedTags.filter(tag => subcategory.tags.some(t => t._id === tag._id));
 
-            if (subCategoryTags.length === 0) {
-                return `Please select at least one tag for the subcategory "${subCategory.title}".`;
+            if (subcategoryTags.length === 0) {
+                return `Please select at least one tag for the subcategory "${subcategory.title}".`;
             }
         }
         return '';
@@ -131,12 +131,12 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
                 <section>
                     <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Subcategories")}</h3>
                     <div className="flex gap-3 flex-wrap">
-                        {selectedCategory.subCategories.map((subCategory) => (
-                            <div key={subCategory._id}
-                                className={`py-1 px-2 border ${selectedSubCategories.some(sub => sub._id === subCategory._id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
-                                onClick={() => toggleSubCategory(subCategory)}>
-                                <div className={`whitespace-nowrap font-medium ${selectedSubCategories.some(sub => sub._id === subCategory._id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
-                                    {subCategory.title}
+                        {selectedCategory.subCategories.map((subcategory) => (
+                            <div key={subcategory._id}
+                                className={`py-1 px-2 border ${selectedSubCategories.some(sub => sub._id === subcategory._id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                                onClick={() => togglesubcategory(subcategory)}>
+                                <div className={`whitespace-nowrap font-medium ${selectedSubCategories.some(sub => sub._id === subcategory._id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                    {subcategory.title}
                                 </div>
                             </div>
                         ))}
@@ -144,11 +144,11 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
                 </section>
             )}
 
-            {selectedSubCategories.map((subCategory) => (
-                <section key={subCategory._id}>
-                    <h3 className='opacity-60 my-2 text-lg font-bold'>{subCategory.title} Tags</h3>
+            {selectedSubCategories.map((subcategory) => (
+                <section key={subcategory._id}>
+                    <h3 className='opacity-60 my-2 text-lg font-bold'>{subcategory.title} Tags</h3>
                     <div className="flex gap-3 flex-wrap">
-                        {subCategory.tags.map((tag) => (
+                        {subcategory.tags.map((tag) => (
                             <div key={tag._id}
                                 className={`py-1 px-2 border ${selectedTags.some(t => t._id === tag._id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
                                 onClick={() => toggleTag(tag)}>

@@ -29,7 +29,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
         if (!formData.category?.length) errors.category = 'category is required';
         // if (!formData.attachments?.length) errors.attachments = 'attachment is required';
         if (!formData.title) errors.title = 'title is required';
-        if ((formData.desc?.length||0) < 6) errors.desc = 'description is required';
+        if (!formData.desc) errors.desc = 'description is required';
         if (!formData.address) errors.address = 'address is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         // if (!formData.shootingDays) errors.shootingDays = 'shootingDays is required';

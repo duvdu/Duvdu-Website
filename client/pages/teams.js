@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 const Card = ({ data, DeleteTeamProjects }) => {
     const { t } = useTranslation();
     const { cover, creatives, title, _id, status } = data;
+    console.log({data})
     const route = useRouter()
     const onDelete = () => {
         DeleteTeamProjects(_id)
@@ -33,7 +34,8 @@ const Card = ({ data, DeleteTeamProjects }) => {
     const handleDropdownSelect = (v) => {
         v === 'Delete' ? onDelete() : onEdit(_id)
     };
-
+    const length = creatives?.map(item=> item.users.length)
+    const sum = length?.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     return (
         <>
             <Link href={`/team/${_id}`}>
@@ -44,7 +46,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                             style={{ backgroundImage: `url(${cover})` }}
                         />
                         <div className="boards-info projects-num capitalize">
-                            {creatives.length} creatives
+                            {sum} {t('creatives')}
                         </div>
                     </>
                     {false &&

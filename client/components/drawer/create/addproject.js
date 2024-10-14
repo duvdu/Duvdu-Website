@@ -121,7 +121,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
         if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.current = 'current should be greater than minimum';
         if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
-        console.log(errors)
         return errors;
     };
     const CheckNext=()=>{

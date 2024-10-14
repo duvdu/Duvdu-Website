@@ -17,6 +17,7 @@ import { GetIsLoggedProducer } from '../../../redux/action/apis/cycles/producer/
 import { CreateProducer } from "../../../redux/action/apis/cycles/producer/create";
 import { DeleteProducer } from '../../../redux/action/apis/cycles/producer/delete';
 import { UpdateProducer } from '../../../redux/action/apis/cycles/producer/update';
+import PlatformMultiSelection from '../../elements/platformMultiSelection';
 
 const transformKeys = (obj) => {
     if (Array.isArray(obj)) {
@@ -80,6 +81,8 @@ const AddProducer = ({
     const SuccessfullyUpdatePopupId = "Producer-update"
     const [isProducer, setIsProducer] = useState(false);
     const [validateTags, setValidateTags] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
+    const [validFormCheck, setValidFormCheck] = useState(false);
     const producerData = getIsLoggedProducer_respond?.data;
     if (producerData && Array.isArray(producerData.subCategories)) {
         producerData.subCategories = convertSubCategoryData(producerData.subCategories);
@@ -97,12 +100,13 @@ const AddProducer = ({
     );
 
 
-
     useEffect(() => {
-        if (producerData) {
+        if (getIsLoggedProducer_respond?.data) {
             setIsProducer(true);
+        }else{
+            setIsProducer(false);
         }
-    }, [producerData, UpdateFormData]);
+    }, [getIsLoggedProducer_respond, UpdateFormData]);
 
     useEffect(() => {
         if (createProducer_respond?.data) OpenPopUp(SuccessfullyCreatePopupId);
@@ -122,21 +126,27 @@ const AddProducer = ({
 
 
     const handleSubmit = () => {
-        if (formData.subcategory?.length>0) formData.subcategory = transformKeys(formData.subcategory);
-        if (formData.platforms?.length>0) formData.platforms = (formData.platforms.map(item=> item._id));
-        CreateProducer(formData);
+            CheckNext()
     };
     useEffect(() => {
         GetIsLoggedProducer()
-    }, [])
-    console.log(transformKeys(formData.subcategory))
+    }, [updateProducer_respond?.data , deleteProducer_respond?.data])
+    console.log()
     const handleUpdate = () => {
         if (formData.subcategory?.length>0) formData.subcategory = transformKeys(formData.subcategory);
-        if (formData.platforms?.length>0) formData.platforms = (formData.platforms.map(item=> item._id));
+        if(formData.subcategory?.length === 0) formData.subcategory = null;
+        if (formData.platforms?.length>0){
+            formData.platforms != producerData?.platforms?.map(item=>item._id)
+        }
+
         if (formData.minBudget || formData.maxBudget) {
             formData.maxBudget = formData.maxBudget || producerData?.maxBudget
             formData.minBudget = formData.minBudget || producerData?.minBudget
         }
+        if(formData.subcategory?.length===0) delete formData.subcategory;
+        formData?.subcategory?.map(item=>
+            (item.tags?.length===0)? delete item.tags: item.tags
+        )
         UpdateProducer(formData);
     };
 
@@ -153,15 +163,14 @@ const AddProducer = ({
 
 
     const isFormValidForSubmit = () => {
-        return (formData.category || false) &&
-            (formData.minBudget || false) &&
-            (formData.maxBudget || false) &&
+        return (formData.category) &&
+            (formData.minBudget) &&
+            (formData.maxBudget) &&
             // validateTags &&
             formData.platforms?.length > 0&&
             formData.searchKeywords?.length > 0
             // formData.subcategory?.length > 0;
     };
-
     const isFormValidForUpdate = () => {
         return formData.category ||
             formData.minBudget ||
@@ -172,10 +181,36 @@ const AddProducer = ({
 
     };
 
-
+    const validateRequiredFields = () => {
+        const errors = {};
+        if (!formData.category) errors.category = 'Category is required';
+        if (!formData.minBudget || !formData.minBudget) errors.minBudget = 'MinBudget are required';
+        if (!formData.maxBudget) errors.maxBudget = 'MaxBudget is required';
+        if (parseInt(formData.minBudget) > parseInt(formData.maxBudget)) errors.minBudget = 'Minimum value should not be greater than maximum value';
+        if (!formData.platforms || !formData.platforms.length) errors.platforms = 'platforms is required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        return errors;
+    };
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+    },[formData])
+    const CheckNext=()=>{
+        setValidFormCheck(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) setErrorMsg(validateRequiredFields())
+            else {
+                if(formData.subcategory?.length===0) delete formData.subcategory;
+                formData?.subcategory?.map(item=>
+                    (item.tags?.length===0)? delete item.tags: item.tags
+                )
+                CreateProducer(formData);
+        
+            }
+    }
     const canDelete = true;
     var convertError = JSON.parse(deleteProducer_respond?.error ?? null)
-    console.log(formData?.platforms)
     return (
         <>
             <ErrorPopUp id="image_size_error" errorMsg={deleteProducer_respond?.error} />
@@ -183,7 +218,7 @@ const AddProducer = ({
             <SuccessfullyPosting id={SuccessfullyDeletePopupId} onCancel={toggleDrawer} message="Delete" />
             <SuccessfullyPosting id={SuccessfullyCreatePopupId} onCancel={toggleDrawer} message="Create" />
             <Drawer isOpen={true} name={'add producer'} toggleDrawer={toggleDrawer} padding={false}>
-                {getIsLoggedProducer_respond &&
+                {
                 (getIsLoggedProducer_respond?.loading?
                 <DuvduLoading loadingIn={''} type=''/>
                 :
@@ -203,8 +238,14 @@ const AddProducer = ({
                                         UpdateFormData('subcategory', value.subCategories)
                                     }
                                 }} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.category}/>
                         </div>
 
+                        <section className="w-full flex flex-col gap-3">
+                            <p className="capitalize opacity-60">{t("platforms")}</p>
+                            <PlatformMultiSelection value={formData?.platforms?.length>0?[...formData?.platforms]:producerData?.platforms?.map(item=>item._id)} onChange={(v) => { UpdateFormData('platforms', v) }} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.platforms}/>
+                        </section>
                         <div className="flex w-full justify-between gap-3">
                             <section className="w-full">
                                 <p className="capitalize opacity-60">{t("Min Budget")}</p>
@@ -219,7 +260,10 @@ const AddProducer = ({
                                     <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder={t("Ex. 10$")} className={"inputStyle1"} />
                                 </div>
                             </section>
+
                         </div>
+                        <ErrorMessage ErrorMsg={ErrorMsg.maxBudget}/>
+                        <ErrorMessage ErrorMsg={ErrorMsg.minBudget}/>
                         <div>
                             <ListInput
                                 name={'searchKeywords'}
@@ -235,28 +279,13 @@ const AddProducer = ({
                                         : producerData?.searchKeywords
                                 }
                             />
-                            <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
-                            <ListInputSearchAPI
-                                name={'platforms'}
-                                placeholder={t("platforms")}
-                                onChange={(keys) =>
-                                    JSON.stringify(keys) !== JSON.stringify(producerData?.platforms) && keys.length
-                                        ? UpdateFormData('platforms', keys)
-                                        : null
-                                }
-                                value={
-                                    formData?.platforms?.length
-                                        ? formData.platforms
-                                        : producerData?.platforms
-                                }
-                            />
-                            <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                            <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                         </div>
                     </div>
 
                     {
                         !isProducer ?
-                            <ArrowBtn isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
+                            <ArrowBtn loading={createProducer_respond?.loading} isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
                             <div className='flex flex-col left-0 bottom-10 sticky mt-14 w-auto mx-14 gap-3'>
                                 <ArrowBtn loading={deleteProducer_respond?.loading} isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text="delete" shadow={true} shadowHeight={"14"} />
                                 <ArrowBtn loading={updateProducer_respond?.loading} isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text="update" shadow={true} shadowHeight={"14"} />

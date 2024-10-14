@@ -51,10 +51,10 @@ function Info({
             </div>
         </div>
         {categories && categories.length>0 &&
-        <div className='flex flex-wrap pt-5 items-center gap-3'>
+        <div className='flex flex-wrap pt-5 items-center justify-center gap-3'>
             {categories.map(item=>
             <div key={item._id} className="info-container flex items-center justify-center">
-                <p className="whitespace-nowrap" >{item.title?.en ?? item.title}</p>
+                <p className="whitespace-nowrap" >{(localStorage.getItem('lang')==='Arabic'? item.title?.ar:item.title?.en)?? item.title}</p>
             </div>
             )}
         </div>
