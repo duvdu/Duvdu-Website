@@ -18,7 +18,7 @@ const Details = ({ data , onAudioPlay }) => {
       };
 
     return (
-        <div className="!sticky top-header grad-card  bg-white rounded-[30px] p-4 pt-6 mx-5 md:mx-0">
+        <div className="!sticky top-header grad-card bg-white dark:bg-[#1A2024] rounded-[30px] p-4 pt-6 mx-5 md:mx-0">
             {/* <div className='rounded-[50px] overflow-hidden block lg:hidden'>
                 <ProjectCover onAudioPlay={onAudioPlay} hidden={true} data={data?.attachments[0]} cover={data?.cover}/>
             </div> */}

@@ -46,7 +46,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
             </div>
           </div>
         </div>
-        <div className='h-[1px] bg-black opacity-15' />
+        <div className='h-[1px] bg-black dark:bg-gray-400 opacity-15' />
         {cardData?.platforms?.length > 0 && 
           <div className='flex justify-center pt-25 items-center gap-3'>
               {cardData?.platforms.map(platform=>
