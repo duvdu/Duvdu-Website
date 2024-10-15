@@ -72,7 +72,6 @@ function OTP({
             }
         }
     }, [resendCode_respond?.error])
-    console.log(verify_respond)
     useEffect(() => {
         if (counter > 0) {
             const intervalId = setInterval(() => {

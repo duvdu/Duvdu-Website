@@ -127,7 +127,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         setValidFormCheck(true)
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        console.log(validateRequiredFields())
         if (!isEnable) setErrorMsg(validateRequiredFields())
         else return setCover()
     }

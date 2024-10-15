@@ -7,11 +7,11 @@ import { getRankStyle } from '../../../util/util';
 
 const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
   const { t } = useTranslation();
-
+ const price = cardData?.price?.toString()
   return (
-    <div className={`border border-50 border-solid border-gray-300 dark:border-opacity-40 p-10 h-min ${className}`}>
+    <div className={`border border-50 border-solid border-gray-300 dark:border-opacity-40 p-10 h-full flex flex-col gap-5 justify-between ${className}`}>
       <Link href={`/creative/${cardData?.user?.username}`}>
-        <div className='flex items-center justify-center text-center pb-5 cursor-pointer'>
+        <div className='flex items-center justify-center text-center cursor-pointer'>
 
           <img
             className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top'
@@ -30,14 +30,14 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
           </div>
         </div>
       </Link>
-      <div className='flex justify-center pt-25 items-center gap-3'>
+      <div className='flex justify-center items-center gap-3'>
         
           <div className='border rounded-full px-3 py-1 font-bold text-lg' style={getRankStyle(cardData?.user?.rank?.color)}>
             {cardData?.user?.rank?.title || "Unranked"}
           </div>
         
         <span className='info-container flex gap-1'>
-          <span>{cardData?.user?.projectsView || 0}</span> <span>{t("projects")}</span>
+          <span>{cardData?.user?.acceptedProjectsCounter || 0}</span> <span>{t("projects")}</span>
         </span>
         <div className='info-container flex justify-between items-center gap-2'>
           <span>{cardData?.user?.rate?.ratersCounter || 0}</span>
@@ -46,10 +46,15 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
           </div>
         </div>
       </div>
-      <div className='flex justify-between mt-7'>
+      <div className='flex justify-between'>
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>{t("pricing")}</p>
-          <span className='text-4xl lg:text-5xl font-medium'>{cardData?.price || 0} $</span>
+          <span className='text-4xl lg:text-5xl font-medium'>{(price?.length>5 ? price.slice(0,5): price)|| 0} {price?.length>5?'':'$'}</span>
+          {price?.length>5 && 
+          <>
+          <br/>
+          <span className='text-4xl lg:text-5xl font-medium'>{price.slice(5,-1)} $</span>
+          </>}
         </div>
         <div className='w-[1px] bg-black opacity-15' />
         <div>
@@ -57,11 +62,12 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
           <span className='text-4xl lg:text-5xl font-medium'>{cardData?.duration?.value || 0} Days</span>
         </div>
       </div>
-
+      <div className='pt-5'>
       {user?.profile?.username !== cardData?.user?.username ?
-        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold mt-12 capitalize">{t("book")}</button> :
-        <button style={{ cursor: 'not-allowed' }} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold mt-12 capitalize">{t("Book")}</button>
+        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold  capitalize">{t("book")}</button> :
+        <button style={{ cursor: 'not-allowed' }} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold capitalize">{t("Book")}</button>
       }
+      </div>
     </div>
   );
 };

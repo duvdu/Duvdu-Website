@@ -281,7 +281,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <section className="w-full h-16 sm:w-96 p-2 mt-4">
                                         <h2 className='opacity-60 capitalize mb-3'>  </h2>
                                         <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary' name={"calendar"} />
                                             </div>
                                             <div className="flex flex-col pl-5 w-full">
@@ -293,7 +293,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
                                     <section className="w-full h-16 sm:w-96 p-2 mt-4">
                                         <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary' name={"calendar"} />
                                             </div>
                                             <div className="flex flex-col pl-5 w-full">
@@ -305,7 +305,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
                                     <section className="w-full h-16 sm:w-96 p-2 mt-4">
                                         <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
+                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary w-6' name={"location-dot"} />
                                             </div>
                                             <div className="flex flex-col pl-5 w-full">

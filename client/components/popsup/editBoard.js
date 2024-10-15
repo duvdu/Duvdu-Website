@@ -16,7 +16,6 @@ function EditBoard({onSbmit ,id , defultValue}) {
         setBoardName(defultValue.title)
         setPrev(defultValue.image)
     },[defultValue])
-    console.log(prev)
     const handleSubmit = (e) => {
         if (board.length < 8) {
             setBoardError({ isError: true, message: 'some error' });
@@ -39,7 +38,6 @@ function EditBoard({onSbmit ,id , defultValue}) {
         setFile(file);
         setPrev(fileUrl);
     };
-    console.log(prev)
 
     const renderMediaPreview = () => {
         if (!prev) return null;

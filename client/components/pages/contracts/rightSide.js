@@ -68,7 +68,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         return <>
             {/* max-w-[370px] ahmed */}
             <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4 cursor-pointer'
-                onClick={() => toggleContractData(data)}
+                onClick={() => router.push(`/contracts?contract=${data._id}`)}
             >
                 {/* dropdown */}
                 <div className="absolute right-6 hidden">

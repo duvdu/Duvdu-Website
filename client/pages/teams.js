@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 const Card = ({ data, DeleteTeamProjects }) => {
     const { t } = useTranslation();
     const { cover, creatives, title, _id, status } = data;
-    console.log({data})
     const route = useRouter()
     const onDelete = () => {
         DeleteTeamProjects(_id)
@@ -83,7 +82,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
     );
 };
 
-const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond, update_respond, api }) => {
+const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_respond, create_respond, update_respond, api  , isLogin}) => {
     const { t } = useTranslation();
 
     const route = useRouter()
@@ -116,14 +115,16 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
     }, [page, pagganation?.totalPages]);
 
 
-
+    useEffect(()=>{
+        if(!isLogin)
+            route.push('/')
+    },[isLogin])
     return (
         <Layout shortheader={true} isbodyWhite={true}>
 
             <UploadFilesTeam />
 
             <EditFilesTeam />
-
             <section className="mt-3 mb-12">
                 <div className="container mb-7">
                     <div className="flex gap-3 md:gap-6 alignCenter mb-7 items-center">
@@ -182,6 +183,7 @@ const mapStateToProps = (state) => ({
     delete_respond: state.api.DeleteTeamProjects,
     update_respond: state.api.UpdateTeamProject,
     api: state.api,
+    isLogin: state.auth.login,
 
 });
 

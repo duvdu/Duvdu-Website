@@ -124,7 +124,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                         }
                         {respond?.loading?
                        <DuvduLoading loadingIn={""} type='category'/>:    
-                       <div className="minmax-360">
+                       <div className="grid grid-cols-3 gap-5">
                             {CopyRight?.map((item, i) =>
                                 <CopyRightCard key={i} onClick={() => handlesetdata(item)} cardData={item} />
                             )}

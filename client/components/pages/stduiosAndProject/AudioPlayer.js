@@ -18,7 +18,6 @@ const AudioPlayer = ({ src, audioRef, isPlaying, setIsPlaying }) => {
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
   };
-  console.log(audioRef)
   const handleLoadedMetadata = () => {
     setDuration(audioRef.current.duration);
   };

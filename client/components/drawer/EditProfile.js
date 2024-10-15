@@ -29,7 +29,6 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
     const [cover, setCover] = useState(null);
     const router = useRouter();
     // "isAvaliableToInstantProjects": user.isAvaliableToInstantProjects || false,
-    console.log({formData , userInfo})
     useEffect(() => {
         if (isOpen) {
             UpdateFormData("profileImage", userInfo?.profileImage);

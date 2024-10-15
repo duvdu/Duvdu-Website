@@ -22,7 +22,6 @@ function ForgetPassword({ api, forgetpassword , respond_forgetpassword , resetpa
         if(step==='OTP' && !username)
             setStep(null)
     },[step , username])
-    console.log(username)
     const getPageComponent = () => {
         switch (step) {
             case 'OTP':

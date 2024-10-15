@@ -109,7 +109,6 @@ const Saved = ({
             });
         }
     }, [getFavList_respond?.data]);
-   console.log({createBoard_respond ,updateBoard_respond ,deleteSavedBoard_respond})
     useEffect(() => {
         
         if (createBoard_respond?.message || updateBoard_respond?.message || deleteSavedBoard_respond?.message) {

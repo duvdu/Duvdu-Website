@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Icon from '../Icons';
 const Comment = ({ comment }) => {
-
+    
     const renderStars = () => {
         const className = "text-primary scale-50 size-6"
         const stars = [];
@@ -14,24 +14,28 @@ const Comment = ({ comment }) => {
         }
         return stars;
     };
+    const options = { weekday: 'short', month: 'short', day: 'numeric' };
+    const formattedDate = comment.date.toLocaleDateString('en-US', options);
 
     return (
         <>
-            <div className="rounded-3xl border border-solid border-[#00000040] dark:border-[#FFFFFF40] p-5 mx-5 ">
-                <Link href={`/creative/${comment.userName}`}>
+            <div className="rounded-3xl border border-solid border-[#00000040] w-[400px] h-full dark:border-[#FFFFFF40] p-5 mx-2 ">
+                <>
                     <div className="flex justify-between">
-                        <div className="flex profile gap-3">
-                            <img src={comment.avatar} alt={comment.userName} width="45" height="45" />
-                            <div className='flex-column ' >
-                                <p className="name">{comment.name}</p>
-                                <p className="date">{comment.date}</p>
+                        <Link href={`/creative/${comment.userName}`}>
+                            <div className="flex profile cursor-pointer gap-3">
+                                <img src={comment.avatar} alt={comment.userName} width="45" height="45" />
+                                <div className='flex-column ' >
+                                    <p className="name">{comment.name}</p>
+                                    <p className="date">{formattedDate}</p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                         <div className='flex'>
                         {renderStars()}
                         </div>
                     </div>
-                </Link>
+                </>
                 <p className="pt-4">{comment.commentText}</p>
             </div>
         </>

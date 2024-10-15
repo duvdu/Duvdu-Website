@@ -131,7 +131,6 @@ const AddProducer = ({
     useEffect(() => {
         GetIsLoggedProducer()
     }, [updateProducer_respond?.data , deleteProducer_respond?.data])
-    console.log()
     const handleUpdate = () => {
         if (formData.subcategory?.length>0) formData.subcategory = transformKeys(formData.subcategory);
         if(formData.subcategory?.length === 0) formData.subcategory = null;

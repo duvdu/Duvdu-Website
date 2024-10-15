@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Popup from '../../elements/popup';
-import Button from '../../elements/button';
-import Icon from '../../Icons';
-import Drawer from '../../elements/drawer';
+import Popup from '../../components/elements/popup';
+import Button from '../../components/elements/button';
+import Icon from '../../components/Icons';
+import Drawer from '../../components/elements/drawer';
 import { connect } from 'react-redux';
-import { toggleContractData } from '../../../redux/action/contractDetails';
+import { toggleContractData } from '../../redux/action/contractDetails';
 import dateFormat from "dateformat";
-import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
-import SuccessfullyPosting from '../../popsup/post_successfully_posting';
-import { payment } from '../../../redux/action/apis/contracts/pay';
-import SelectDate from '../../elements/selectDate';
-import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
-import CountdownTimer from '../../elements/CounterDownTimer';
-import FunctionUsed from '../../popsup/create/FunctionsUsed';
-import AddToolUsed from '../../popsup/create/addToolUsed';
-import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
-import TimeLeft from '../../pages/contracts/TimeLeft';
-import { RateContract } from '../../../redux/action/apis/rateContract';
-import { GetContract } from '../../../redux/action/apis/contracts/getOne';
-import RatingProject from '../../popsup/ratingProject';
-import { OpenPopUp,  } from '../../../util/util';
+import { takeAction } from '../../redux/action/apis/contracts/takeaction';
+import SuccessfullyPosting from '../../components/popsup/post_successfully_posting';
+import { payment } from '../../redux/action/apis/contracts/pay';
+import SelectDate from '../../components/elements/selectDate';
+import { getAllContracts } from '../../redux/action/apis/contracts/getall';
+import CountdownTimer from '../../components/elements/CounterDownTimer';
+import FunctionUsed from '../../components/popsup/create/FunctionsUsed';
+import AddToolUsed from '../../components/popsup/create/addToolUsed';
+import { InsertToArray, UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
+import TimeLeft from '../../components/pages/contracts/TimeLeft';
+import { RateContract } from '../../redux/action/apis/rateContract';
+import RatingProject from '../../components/popsup/ratingProject';
+import { OpenPopUp,  } from '../../util/util';
 import { useTranslation } from 'react-i18next';
-import ProjectView from './ProjectView'
-import RentalView from './RentalView'
-import ProducerView from './ProducerView'
-import CopywriterView from './CopywriterView'
-import TeamView from './TeamView'
-import ReportContract from '../../popsup/report-contract';
-import Loading from '../../elements/loading';
-import DuvduLoading from '../../elements/duvduLoading';
+import ProjectView from '../../components/drawer/contaract/ProjectView'
+import RentalView from '../../components/drawer/contaract/RentalView'
+import ProducerView from '../../components/drawer/contaract/ProducerView'
+import CopywriterView from '../../components/drawer/contaract/CopywriterView'
+import TeamView from '../../components/drawer/contaract/TeamView'
+import ReportContract from '../../components/popsup/report-contract';
+import Loading from '../../components/elements/loading';
 
 
 function ReceiveProjectFiles({
@@ -38,8 +35,6 @@ function ReceiveProjectFiles({
     toggleContractData,
     takeAction,
     takeAction_respond,
-    GetContract,
-    contract_respond,
     payment,
     payment_respond,
     addprojectState,
@@ -47,19 +42,11 @@ function ReceiveProjectFiles({
     InsertToArray,
     resetForm,
     user }) {
-    const router = useRouter();
-    const contractId  = router.query
-    useEffect(() => {
-        if (contractId.contract) {
-            GetContract(contractId.contract);
-        }
-    }, [contractId.contract]);
-
     const { t } = useTranslation();
     const formData = addprojectState?.formData
-    const contract = contract_respond?.data?.contract;
-    const customer = contract_respond?.data?.customer;
-    const sp = contract_respond?.data?.sp;
+    const contract = contractDetails?.contract;
+    const customer = contractDetails?.customer;
+    const sp = contractDetails?.sp;
     const status = contract?.status
     const [timeLeft, setTimeLeft] = useState("");
     const [actionSuccess, setActionSuccess] = useState(false);
@@ -78,15 +65,15 @@ function ReceiveProjectFiles({
         return sp?.username == user?.username
     }
     const getType = () => {
-        if (contract_respond?.data?.ref.includes("copyright"))
+        if (contractDetails?.ref.includes("copyright"))
             return "copyrights"
-        else if (contract_respond?.data?.ref.includes("rental"))
+        else if (contractDetails?.ref.includes("rental"))
             return "rental"
-        else if (contract_respond?.data?.ref.includes("producer"))
+        else if (contractDetails?.ref.includes("producer"))
             return "producer"
-        else if (contract_respond?.data?.ref.includes("project"))
+        else if (contractDetails?.ref.includes("project"))
             return "project"
-        else if (contract_respond?.data?.ref.includes("team"))
+        else if (contractDetails?.ref.includes("team"))
             return "team"
     }
 
@@ -183,7 +170,7 @@ function ReceiveProjectFiles({
             setdAppointmentDate(null)
         }
 
-    }, [contract_respond?.data?._id]);
+    }, [contractDetails?._id]);
 
 
     useEffect(() => {
@@ -210,20 +197,14 @@ function ReceiveProjectFiles({
 
     const handleAccept = () => {
         setActionAccept(true)
-        if (!contract_respond?.data?.ref) return
+        if (!contractDetails?.ref) return
         const type = getType()
         takeAction({ id: contract?._id, data: true, type: type })
-    };
-    const handleCancle = () => {
-        setActionAccept(true)
-        if (!contract_respond?.data?.ref) return
-        const type = getType()
-        takeAction({ id: contract?._id, data: 'cancel', type: type })
     };
 
     const handleUpdate = () => {
         setActionAccept(false)
-        if (!contract_respond?.data?.ref) return
+        if (!contractDetails?.ref) return
         const type = getType()
 
         const data = {}
@@ -270,7 +251,7 @@ function ReceiveProjectFiles({
     };
 
     const handleRefuse = () => {
-        if (!contract_respond?.data?.ref) return
+        if (!contractDetails?.ref) return
         const type = getType()
         takeAction({ id: contract?._id, data: false, type: type })
     };
@@ -279,7 +260,7 @@ function ReceiveProjectFiles({
             setCanEdit(false)
             return
         }
-        router.push('/contracts')
+
         toggleContractData(null)
         setActionSuccess(false)
         setPaymentSuccess(false)
@@ -298,7 +279,6 @@ function ReceiveProjectFiles({
 
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
-    const cancle = (!IsImSp() && status === "pending")
     const canReview = (IsImSp() && status === "ongoing")
     const UpdateBtn =
         (getType() === "producer" &&
@@ -334,13 +314,12 @@ function ReceiveProjectFiles({
             <RatingProject data={contract}/>
             <ReportContract data={contract} />
             
-            <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
+            <Drawer isOpen={true} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
                 {
-                    contract_respond?.loading?
-                    <DuvduLoading loadingIn={""} type={'contractDetails'}/>:
+                    contract &&
                     <>
                         <div className='flex flex-col justify-between h-drawer'>
-                            <div className={`flex flex-col justify-start items-center px-0 gap-6 ${canEdit ? 'hidden' : ''}`}>
+                            <div className={`flex flex-col justify-start items-center px-0 gap-6 mt-10 ${canEdit ? 'hidden' : ''}`}>
                                 <section>
                                     {uiStatus()}
                                 </section>
@@ -367,7 +346,7 @@ function ReceiveProjectFiles({
                                 </section>
 
                                 <section className='grid grid-cols-2 w-full'>
-                                {contract_respond?.data?.ref &&
+                                {contractDetails.ref &&
                                     <div>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("contract type")}</h2>
                                         <span className='font-semibold capitalize max-w-[543px]'>
@@ -605,14 +584,6 @@ function ReceiveProjectFiles({
                                                 t("Refuse")}
                                                 </button>
                                         }
-                                        {cancle && 
-                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                         {takeAction_respond?.loading  ? 
-                                            <Loading/>
-                                            :
-                                            t("Cancel")}
-                                            </button>
-                                            }
                                     </div>
                                     {
                                         !IsImSp() &&
@@ -650,11 +621,7 @@ function ReceiveProjectFiles({
                                         !IsImSp() && getType() === 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
                                             <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())||true} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                {payment_respond?.loading && actionAccept ? 
-                                                    <Loading/>
-                                                    :
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 100 % )")}</span>
-                                                }
                                             </Button>
                                         </div>
                                     }
@@ -662,19 +629,9 @@ function ReceiveProjectFiles({
                                         !IsImSp() && status == "waiting-for-payment" &&
                                         <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                            {payment_respond?.loading && actionAccept ? 
-                                                <Loading/>
-                                                :
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now")}</span>
-                                            }
                                             </Button>
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                            {takeAction_respond?.loading && !actionAccept ? 
-                                                <Loading/>
-                                                :
-                                                t("Refuse")
-                                            }
-                                            </button>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>{t("Refuse")}</button>
                                         </div>
 
                                     }
@@ -702,8 +659,7 @@ function ReceiveProjectFiles({
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    contract_respond: state.api.GetContract,
-    contractDetails: state.contractDetails,
+    contractDetails: state.ContractDetails,
     takeAction_respond: state.api.takeAction,
     payment_respond: state.api.payment,
     addprojectState: state.addproject,
@@ -719,8 +675,7 @@ const mapDispatchToProps = {
     UpdateFormData,
     InsertToArray,
     RateContract,
-    resetForm,
-    GetContract
+    resetForm
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReceiveProjectFiles);

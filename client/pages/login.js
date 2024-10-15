@@ -13,6 +13,7 @@ import useFcmToken from "../util/hooks/useFcmToken";
 import { useTranslation } from 'react-i18next';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import SocialLogin from "../components/pages/Login/SocialLogin";
+import Loading from '../components/elements/loading';
 
 function Login({ api, login_respond, login, resendCode, getMyprofile }) {
     const { t } = useTranslation();
@@ -160,7 +161,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
           <div className="login_footer mb-4"></div>
 
           <button type="submit" className="mb-4 relative mb-30 w-full">
-            <Button name="login" shadow={true}>{login_respond?.loading ?<div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />:t("Login")}</Button>
+            <Button name="login" shadow={true}>{login_respond?.loading ?<Loading/>:t("Login")}</Button>
             <div className="submit-btn"></div>
           </button>
           <div className="have-account">

@@ -7,6 +7,7 @@ let socket;
 export const GetNotifications = () => {
     const req = "GetNotifications";
     return async dispatch => {
+        dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         try {
             const response = await mainApiInstance.get(`api/notification`);
             

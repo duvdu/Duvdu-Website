@@ -11,6 +11,7 @@ import Setting from "./HeaderComponents/setting";
 import * as Types from "../../redux/constants/actionTypes";
 import { OpenPopUp, errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
+import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import Link from "next/link";
 import ErrorPopUp from "../popsup/errorPopUp";
 import { LogOut } from "../../redux/action/apis/auth/logout";
@@ -30,6 +31,7 @@ const Header = ({
     getheaderpopup,
     toggleDarkMode,
     MarkNotificationsAsRead,
+    GetNotifications,
     LogOut,
     user,
 }) => {
@@ -50,7 +52,6 @@ const Header = ({
     catch (error) {
 
     }
-
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
@@ -58,6 +59,7 @@ const Header = ({
     useEffect(() => {
         if (getheaderpopup == Types.SHOWNOTOFICATION) {
             MarkNotificationsAsRead()
+            GetNotifications()
         }
     }, [getheaderpopup]);
 
@@ -296,6 +298,7 @@ const mapDispatchToProps = {
     toggleDarkMode,
     SetheaderPopUp,
     MarkNotificationsAsRead,
+    GetNotifications,
     LogOut,
 };
 

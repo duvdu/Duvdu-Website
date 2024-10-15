@@ -37,7 +37,6 @@ const ProjectCard = ({
       value: "Delete",
     },
   ]
-  console.log({cardData})
   useEffect(() => {
     if (videoRef.current) {
       const timerId = setInterval(() => {

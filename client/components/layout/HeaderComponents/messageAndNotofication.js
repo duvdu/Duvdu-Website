@@ -4,11 +4,11 @@ import * as Types from '../../../redux/constants/actionTypes';
 import { useEffect, useState } from "react";
 import MessageTile from "../../elements/MessageTile";
 import { GetNotifications } from "../../../redux/action/apis/realTime/notification/getAllNotification";
+import DuvduLoading from "../../elements/duvduLoading.js";
+import Link from 'next/link';
 
 
-
-function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond , onChoose }) {
-
+function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond , onChoose  }) {
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
@@ -39,9 +39,12 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
                     {
                         viewAllState == 0 &&
                         <>
+                            {GetNotifications_resond?.loading?
+                            <DuvduLoading loadingIn={""} type='notification' />
+                            :
                             <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
+                        }
                             <ViewFew Type={'messages'} onChoose={onChoose} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
-
                         </>
                     }
                     {
@@ -71,7 +74,7 @@ const ViewAll = ({ Type, list, t , onChoose }) =>
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
     </div>
 
-const ViewFew = ({ Type, list, t, onViewAll , onChoose}) => (
+const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
 
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] p-7">
         <div className="flex items-center justify-between">
@@ -85,22 +88,24 @@ const ViewFew = ({ Type, list, t, onViewAll , onChoose}) => (
                 {list.slice(0, 4).map((tile, index) => (
                     Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
-            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Notification")}</span> </div>}
+            </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t(`There's No ${Type}`)}</span> </div>}
     </div>
 );
 
 
 const NotificationTile = ({ tile }) =>
-    <div className="w-64 flex gap-4">
-        <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
-        <div className="flex flex-col justify-center">
-            <span className="line-clamp-2">
-                <span className="rtl:hidden font-bold">{tile.sourceUser?.name?.split(' ')[0].length>6?tile.sourceUser?.name?.split(' ')[0].slice(0,6):tile.sourceUser?.name?.split(' ')[0] || 'DUVDU'} </span>
-                <span className="text-xs opacity-60 mx-2">{tile.title}</span>
-                <div className="font-bold">{tile.message} </div>
-            </span>
+    <Link href={`/contracts?contract=${tile.arget}`}>
+        <div className="w-64 flex gap-4">
+            <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
+            <div className="flex flex-col justify-center">
+                <span className="line-clamp-2">
+                    <span className="rtl:hidden font-bold">{tile.sourceUser?.name?.split(' ')[0].length>6?tile.sourceUser?.name?.split(' ')[0].slice(0,6):tile.sourceUser?.name?.split(' ')[0] || 'DUVDU'} </span>
+                    <span className="text-xs opacity-60 mx-2">{tile.title}</span>
+                    <div className="font-bold">{tile.message} </div>
+                </span>
+            </div>
         </div>
-    </div>
+    </Link>
 
 
 

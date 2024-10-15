@@ -57,7 +57,7 @@ const ProjectController = ({ initialData,
         messages.openchat ?
             <></> :
             <>
-                <div className='sticky h-32 bottom-0 z-20 max-w-full'>
+                <div className='sticky hidden h-32 bottom-0 z-20 max-w-full'>
                     <div className="sm:container flex justify-between items-end">
                         {auth.login ? (
                             <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer">
@@ -96,7 +96,7 @@ const ProjectController = ({ initialData,
                             )}
                             {
                                 canBook &&
-                                <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-full sm:w-96 max-w-[211px]" text="book now" />
+                                <ArrowBtn onClick={toggleDrawer} className="cursor-pointer w-full sm:w-96  max-w-[211px]" text="book now" />
                             }
                         </Controller>
                     </div>

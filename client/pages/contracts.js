@@ -4,15 +4,22 @@ import LeftSide from '../components/pages/contracts/leftSide';
 import RightSide from '../components/pages/contracts/rightSide';
 import Loadingcomponent from '../components/pages/contracts/loadingcomponent';
 import ReceiveProjectFiles from '../components/drawer/contaract/project-details';
-import { useState } from 'react';
+import React from 'react';
+import { connect } from "react-redux";
+import { useRouter } from "next/router";
 
-function Contracts() {
-    const [indexTab, setIndexTab] = useState(0);
+function Contracts({isLogin}) {
+    const [indexTab, setIndexTab] = React.useState(0);
+    const route = useRouter()
+    React.useEffect(()=>{
+        if(!isLogin)
+            route.push('/')
+    },[isLogin])
 
     return (
         <>
             <ReceiveProjectFiles />
-            <Layout shortheader={true} isbodyWhite={true}>
+            <Layout shortheader={true}>
                 <div className='container'>
                     <div className='flex flex-col lg:flex-row gap-9'>
                         <div className='w-full'>
@@ -33,6 +40,10 @@ function Contracts() {
 }
 
 
+const mapStateToProps = (state) => ({
+    isLogin: state.auth.login,
+
+});
 
 // *****************
-export default Contracts;
+export default connect(mapStateToProps)(Contracts);

@@ -24,7 +24,7 @@ const Header = ({ data, islogin,toggleDrawerAddFav }) => {
                 <ReportProject data={data} />
             }
             <h1 className="text-xl capitalize opacity-80 font-bold">
-                {data?.name || data?.studioName}
+                {data?.name || data?.title}
             </h1>
             <div className="creator-info flex mt-6 mb-6 justify-between">
                 <Link href={`/creative/${data?.user?.username || ''}`}>

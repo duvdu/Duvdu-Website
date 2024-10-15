@@ -28,7 +28,6 @@ const TimeLeft = ({ data, msgstatus }) => {
         const nowTime = new Date().getTime();
         calculatedTimeLeft =(deadlineTime - nowTime); // Convert to seconds
     }
-    // console.log(calculatedTimeLeft) 
     // if (calculatedTimeLeft < 0) {
     //     return (
     //         <span className='text-4xl'>

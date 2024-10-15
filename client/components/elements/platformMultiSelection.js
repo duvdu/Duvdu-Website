@@ -4,7 +4,6 @@ import { GetPlatforms } from '../../redux/action/apis/cycles/producer/platform';
 
 function PlatformMultiSelection({ platforms , GetPlatforms, onChange, value }) {
     const [selectedCategories, setSelectedCategories] = useState([]);
-    console.log(platforms)
     useEffect(()=>{
         GetPlatforms({search:[]})
     },[])

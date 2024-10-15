@@ -89,7 +89,7 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
         if (!durations) errors.durations = 'price is required';
         if (!attachments?.length) errors.attachments = 'attachment is required';
         if (!startDate) errors.startDate = 'start date is required';
-        if ((details?.length||0) < 6) errors.details = 'description is required';        
+        if (!details) errors.details = 'description is required';        
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0

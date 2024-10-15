@@ -18,7 +18,7 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
             switch (type) {
                 case "rental":
                     response = await mainApiInstance.post(`/api/rentals/rental/contract/${id}/action`, {
-                        action: data ? "accept" : "reject"
+                        action: data==='cancel' ?"cancel" : (data===true ?  "accept" : "reject" )
                     });
                     break;
 
@@ -27,7 +27,7 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
                         response = await mainApiInstance.patch(`/api/producers/contract/${id}`, data);
                     } else {
                         response = await mainApiInstance.patch(`/api/producers/contract/${id}`, {
-                            status: data ? "accepted" : "rejected"
+                            status: data==='cancel' ?"cancel" : (data===true ?   "accepted" : "rejected")
                         });
                     }
                     break;
@@ -37,7 +37,7 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
                         response = await mainApiInstance.patch(`/api/copyrights/contract/${id}`, data);
                     } else {
                         response = await mainApiInstance.post(`/api/copyrights/contract/${id}/action`, {
-                            action: data ? "accept" : "reject"
+                            action: data==='cancel'?"cancel" : (data===true ?   "accept" : "reject")
                         });
                     }
                     break;
@@ -47,14 +47,14 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
                         response = await mainApiInstance.patch(`/api/projects/contract/${id}/contract`, data);
                     } else {
                         response = await mainApiInstance.post(`/api/projects/contract/${id}/action`, {
-                            action: data ? "accept" : "reject"
+                            action: data==='cancel' ?"cancel" : (data===true ?   "accept" : "reject")
                         });
                     }
                     break;
 
                 case "team":
                     response = await mainApiInstance.post(`/api/team/contract/${id}`, {
-                        action: data ? "accept" : "reject"
+                        action: data==='cancel' ?"cancel" : (data===true ?   "accept" : "reject")
                     });
                     break;
 

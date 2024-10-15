@@ -23,7 +23,6 @@ function AddToSaved({
 }) {
     const router = useRouter();
     const { project: projectId , studio:rentalId } = router.query;
-    console.log(projectId , rentalId)
     const boards = getBoards_respond?.data || []
     const { t } = useTranslation();
     useEffect(()=>{

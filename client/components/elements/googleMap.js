@@ -165,7 +165,7 @@ const GoogleMap = ({ width, height, google, onsetLocation, onChangeAddress, valu
             />
             <div className='h-2' />
             <div className={`${className}`}>
-                {isreadOnly && <a target='_blank' href={`https://www.google.com/maps?q=${markerPosition?.lat},${markerPosition?.lng}`} className={`absolute w-[500px] h-[1000px] z-10 cursor-pointer`} />}
+                {isreadOnly && <a target='_blank' href={`https://www.google.com/maps?q=${markerPosition?.lat},${markerPosition?.lng}`} className={`absolute  z-10 cursor-pointer`} />}
                 <Map
                     google={google}
                     zoom={17}

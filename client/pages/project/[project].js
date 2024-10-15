@@ -94,15 +94,15 @@ const Projects = ({
                         <ThanksMSG />
                         <Share url={window.location.href} title={'See that 👀'} />
                         <div className={isOpen ? "h-0 sm:h-auto overflow-hidden" : ""}>
-                            <div className="sm:container mt-6">
-                                <section className="mx-7 sm:mx-0">
+                            <div className="sm:container lg:mt-6">
+                                {/* <section className="mx-7 sm:mx-0">
                                     <Header data={project} toggleDrawerAddFav={toggleDrawerAddFav} />
                                     <h2 className='font-bold text-lg capitalize opacity-80 mb-4 mx-5 sm:mx-0'>{t('Project Attachments')}</h2>
-                                </section>
-                                <div className="lg:flex gap-6">
+                                </section> */}
+                                    <div className="flex lg:flex-row flex-col-reverse gap-3">
                                     <section className="lg:w-2/3">
                                         {project?.attachments.length > 1 ?
-                                            <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                            <div className='mx-5 md:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>
                                                 {/* Custom Arrows */}
                                                 {/* <div className="swiper-button-prev"> */}
                                                 <div className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
@@ -142,15 +142,15 @@ const Projects = ({
                                                 {/* Pagination Bullets */}
                                                 <div className="swiper-pagination"></div>
                                             </div> :
-                                                <div className='mx-5 md:mx-0 rounded-[50px] overflow-hidden h-[600px] relative'>
+                                                <div className='mx-5 md:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>
                                                 <ProjectCover onAudioPlay={handleAudioPlay}  data={project?.attachments[0]} cover={project?.cover} />
                                             </div>
                                         }
                                         <About data={project} />
+                                        <Reviews data={project} />
                                     </section>
                                     <section className="lg:w-1/3 mt-10 lg:mt-0">
                                         <Details onAudioPlay={handleAudioPlay} data={project} />
-                                        <Reviews data={project} />
                                     </section>
                                 </div>
                                 <section className="mx-7 sm:mx-0">

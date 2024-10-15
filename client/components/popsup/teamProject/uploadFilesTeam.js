@@ -22,7 +22,6 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
     const [isPopupVisible, setIsPopupVisible] = useState(true);
     const router = useRouter();
     const elementRef = useRef(null);
-    console.log(formData)
     const validateRequiredFields = () => {
         const errors = {};
         if (!formData.cover) errors.cover = 'cover is required';

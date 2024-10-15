@@ -8,10 +8,10 @@ const About = ({ data }) => {
 
     return (
         <div className="">
-            <div className="h-16" />
-            <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mx-5 sm:mx-0">{t("about the creative")}</h2>
-            <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] p-10 mx-5 md:mx-0">
-                <div className='flex items-center justify-center'>
+            {/* <div className="h-16" /> */}
+            <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mt-10 mx-5 sm:mx-0">{t("about the creative")}</h2>
+            <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] mx-5 pb-10 md:mx-0">
+                <div className='flex items-center justify-center px-10 pt-10'>
                     <div className='w-32 h-32 relative'>
                         <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
                         <img className='profileImgture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
@@ -47,7 +47,7 @@ const About = ({ data }) => {
                     </div>
                 </div>
                 {data?.user.about && (
-                    <div className='sm:px-10 border-[#00000040] dark:border-[#FFFFFF40] border-t mt-6 pt-6'>
+                    <div className='px-10 border-[#00000040] dark:border-[#FFFFFF40] border-t mt-6 pt-6'>
                         <p id='about-header'>{t("about")}</p>
                         <p className='pt-2' id='about-paragraph'>{data?.user.about}</p>
                     </div>

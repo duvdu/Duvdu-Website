@@ -124,7 +124,6 @@
     line-height: normal;
     text-transform: capitalize;
     opacity: 0.8;
-    @apply border-black dark:border-white 
 }
 
 #rating {

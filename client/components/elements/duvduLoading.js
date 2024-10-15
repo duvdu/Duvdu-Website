@@ -10,6 +10,8 @@ import ProfileProjectsSkeleton from "../skeletons/ProfileProjectsSkeleton";
 import ProfileCardSkeleton from "../skeletons/ProfileCardSkeleton";
 import ContractSkeleton from "../skeletons/ContractSkeleton";
 import OTPSkeleton from "../skeletons/OTPSkeleton";
+import ContractDetailsSkeleton from "../skeletons/ContractDetailsSkeleton";
+import NotificationSkeleton from "../skeletons/NotificationSkeleton";
 
 
 const DuvduLoading = ({ loadingIn, api, test = false, type }) => {
@@ -38,6 +40,10 @@ const DuvduLoading = ({ loadingIn, api, test = false, type }) => {
                 return <ContractSkeleton />;
               case "otp":
                 return <OTPSkeleton />;
+              case "contractDetails":
+                return <ContractDetailsSkeleton />;
+              case "notification":
+                return <NotificationSkeleton />;
               default:
                 return <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-primary rounded-full m-2 mx-auto" />
             }
