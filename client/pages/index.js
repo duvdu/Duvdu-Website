@@ -38,8 +38,9 @@ const Home = ({
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
+        if(islogin===false)
         Promise.all([HomeTreny(), HomeDiscover(), popularSub()]);
-    }, []);
+    }, [islogin]);
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
     const list =  homeTreny_respond?.data || [];
@@ -184,7 +185,31 @@ const Home = ({
     
     // Chunk the array into groups of 4
     const chunkedCategories = chunkArray(categories,4);
-
+    const [scrollInterval, setScrollInterval] = useState(null);
+    const CategoryRef = useRef(null);
+    const TagRef = useRef(null);
+    const TopCategoryRef = useRef(null);
+    const SubCategoryRef = useRef(null);
+  
+    const startScroll = (direction , ref) => {
+      const scroll = () => {
+        if (direction === 'next') {
+          ref?.current?.swiper?.slideNext();
+        } else {
+          ref.current.swiper.slidePrev();
+        }
+      };
+  
+      // Start scrolling at regular intervals
+      setScrollInterval(setInterval(scroll, 200));
+    };
+  
+    const stopScroll = () => {
+      // Stop the interval when mouse is released or leaves the button
+      clearInterval(scrollInterval);
+      setScrollInterval(null);
+    };
+  
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -227,6 +252,7 @@ const Home = ({
                                 <Swiper
                                     dir='ltr'
                                     className=''
+                                    ref={CategoryRef}
                                     modules={[Autoplay, Navigation, EffectFade, Pagination]}
                                     spaceBetween={10}
                                     slidesPerView={1.2}
@@ -276,13 +302,21 @@ const Home = ({
                                     })}
                                 </Swiper>
                                 <div className='flex items-center justify-center gap-5 mt-5'>
-                                <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
-                               </button>
-                               {/* </div> */}
-                               <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
-                               </button>
+                                    <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                        onMouseDown={() => startScroll('prev' , CategoryRef)} // Start scrolling when mouse is down
+                                        onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                        onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                                
+                                        >
+                                        <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                                    </button>
+                                    {/* </div> */}
+                                    <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                        onMouseDown={() => startScroll('next' , CategoryRef)} // Start scrolling when mouse is down
+                                        onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                        onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                               
+                                        >
+                                        <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                                    </button>
                                 </div>
                                 </>
                                 }
@@ -305,6 +339,7 @@ const Home = ({
                            <Swiper
                                dir='ltr'
                                className=''
+                               ref={TagRef}
                                modules={[Autoplay, Navigation, EffectFade, Pagination]}
                                spaceBetween={10}
                                slidesPerView={2.1}
@@ -342,14 +377,22 @@ const Home = ({
                                })}
                            </Swiper>
                            <div className='flex items-center justify-center gap-5 mt-5'>
-                               <button className='left-[45%] custom-swiper-prev2 prev2 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
-                               </button>
-                               {/* </div> */}
-                               <button className='right-[45%] custom-swiper-next2 next2 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
-                               </button>
-                           </div>
+                                <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                    onMouseDown={() => startScroll('prev' , TagRef)} // Start scrolling when mouse is down
+                                    onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                    onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                                
+                                    >
+                                    <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                                </button>
+                                {/* </div> */}
+                                <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                    onMouseDown={() => startScroll('next' , TagRef)} // Start scrolling when mouse is down
+                                    onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                    onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                               
+                                    >
+                                    <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                                </button>
+                            </div>
                            </>
                             }
                         </section>
@@ -368,6 +411,7 @@ const Home = ({
                            <Swiper
                                 dir='ltr'
                                 className=''
+                                ref={TopCategoryRef}
                                 modules={[Autoplay, Navigation, EffectFade, Pagination]}
                                 spaceBetween={0}
                                 slidesPerView={4}
@@ -407,15 +451,23 @@ const Home = ({
                                 </SwiperSlide>
                                 ))}
                             </Swiper>
-                           <div className='flex items-center justify-center gap-5 mt-5'>
-                               <button className='left-[45%] custom-swiper-prev2 prev3 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
-                               </button>
-                               {/* </div> */}
-                               <button className='right-[45%] custom-swiper-next2 next3 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
-                               </button>
-                           </div>
+                            <div className='flex items-center justify-center gap-5 mt-5'>
+                                <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                    onMouseDown={() => startScroll('prev',TopCategoryRef)} // Start scrolling when mouse is down
+                                    onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                    onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                                
+                                    >
+                                    <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                                </button>
+                                {/* </div> */}
+                                <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                    onMouseDown={() => startScroll('next',TopCategoryRef)} // Start scrolling when mouse is down
+                                    onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                    onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                               
+                                    >
+                                    <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                                </button>
+                            </div>
                                 </>
                                 }
                             </div>
@@ -434,6 +486,7 @@ const Home = ({
                            <Swiper
                                dir='ltr'
                                className=''
+                               ref={SubCategoryRef}
                                modules={[Autoplay, Navigation, EffectFade, Pagination]}
                                spaceBetween={10}
                                slidesPerView={1.2}
@@ -488,14 +541,22 @@ const Home = ({
                                })}
                            </Swiper>
                            <div className='flex items-center justify-center gap-5 mt-5'>
-                           <button className='left-[45%] custom-swiper-prev2 prev4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
-                               </button>
-                               {/* </div> */}
-                               <button className='right-[45%] custom-swiper-next2 next4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'>
-                                   <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
-                               </button>
-                           </div>
+                                    <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                        onMouseDown={() => startScroll('prev' , SubCategoryRef)} // Start scrolling when mouse is down
+                                        onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                        onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                                
+                                        >
+                                        <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+                                    </button>
+                                    {/* </div> */}
+                                    <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                        onMouseDown={() => startScroll('next' , SubCategoryRef)} // Start scrolling when mouse is down
+                                        onMouseUp={stopScroll} // Stop scrolling when mouse is released
+                                        onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                               
+                                        >
+                                        <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+                                    </button>
+                                </div>
                            </>
                         }
                     </div>

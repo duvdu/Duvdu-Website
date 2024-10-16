@@ -147,7 +147,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                         {user?.loading?
                         <DuvduLoading loadingIn={""} type='profileCard'/>
                         :
-                        <div className='sm:bg-white sm:dark:bg-[#1A2024] sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
+                        <div className='sm:bg-white sm:dark:bg-[#1A2024] sm:py-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
                             <div className='relative px-6 sm:px-10'>
                                 <Info
                                     src={userInfo?.profileImage}
@@ -258,7 +258,8 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             <EditDrawer isOpen={goEdit} onClose={() => onCloseEdit()} />
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
-            <AddOtherCreatives onSubmit={(value) => InsertToArray('creatives', value)} />
+            <AddOtherCreatives onSubmit={(value) =>{
+             value.invitedCreatives?InsertToArray('invitedCreatives', value) :InsertToArray('creatives', value)}} />
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <InputDrawer />
             {

@@ -18,27 +18,23 @@ const Comment = ({ comment }) => {
     const formattedDate = comment.date.toLocaleDateString('en-US', options);
 
     return (
-        <>
-            <div className="rounded-3xl border border-solid border-[#00000040] w-[400px] h-full dark:border-[#FFFFFF40] p-5 mx-2 ">
-                <>
-                    <div className="flex justify-between">
-                        <Link href={`/creative/${comment.userName}`}>
-                            <div className="flex profile cursor-pointer gap-3">
-                                <img src={comment.avatar} alt={comment.userName} width="45" height="45" />
-                                <div className='flex-column ' >
-                                    <p className="name">{comment.name}</p>
-                                    <p className="date">{formattedDate}</p>
-                                </div>
-                            </div>
-                        </Link>
-                        <div className='flex'>
-                        {renderStars()}
+        <div className="rounded-3xl border border-solid border-[#00000040] w-full h-[150px] dark:border-[#FFFFFF40] p-5 ">
+            <div className="flex justify-between ">
+                <Link href={`/creative/${comment.userName}`}>
+                    <div className="flex profile cursor-pointer gap-3">
+                        <img src={comment.avatar} alt={comment.userName} width="45" height="45" />
+                        <div className='flex-column ' >
+                            <p className="name">{comment.name}</p>
+                            <p className="date">{formattedDate}</p>
                         </div>
                     </div>
-                </>
-                <p className="pt-4">{comment.commentText}</p>
+                </Link>
+                <div className='flex'>
+                {renderStars()}
+                </div>
             </div>
-        </>
+            <p className="pt-4 line-clamp-2">{comment.commentText}</p>
+        </div>
     );
 };
 export default Comment;

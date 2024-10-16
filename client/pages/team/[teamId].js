@@ -1,11 +1,15 @@
 import Icon from "../../components/Icons";
 import Layout from "../../components/layout/Layout";
+import DuvduLoading from '../../components/elements/duvduLoading';
+
 import Selector from "../../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { GetTeamProject } from "../../redux/action/apis/teamproject/getone";
 import UsersToAdd from "../../components/layout/team/usersToAdd";
+import CategorySelectOne from '../../components/elements/CategorySelectOne';
+import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
 import { DeleteTeamProjects } from "../../redux/action/apis/teamproject/deleteProject";
 import { AddTeamProject } from "../../redux/action/apis/teamproject/addCreative";
 import { UpdateTeamUser } from "../../redux/action/apis/teamproject/updatecreative";
@@ -26,6 +30,7 @@ const TheTeam = ({
     delete_respond,
     UpdateTeamUser,
     update_respond,
+    GetAllMessageInChat,
 
 }) => {
     const { t } = useTranslation();
@@ -49,6 +54,9 @@ const TheTeam = ({
         
         UpdateTeamUser(alldata, teamId)
     }
+    const handleOpenChat = (PersonId) => {
+        GetAllMessageInChat(PersonId);
+    };
 
     return (
         <Layout shortheader={true}>
@@ -56,15 +64,15 @@ const TheTeam = ({
                 {state === 0 && <Empty />}
                 {state === 1 && (
                     <div className="flex flex-col lg:flex-row gap-7 items-center">
-                        <LeftSide respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                        <RightSide data={get_respond?.data || {}} onClick={() => setState(1)} />
+                        <LeftSide handleOpenChat={handleOpenChat} respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleDelete={handleDelete} handleUpdate={handleUpdate} />
+                        <RightSide data={get_respond?.data || {}} respond={get_respond} onClick={() => setState(1)} />
                     </div>
                 )}
                 {state === 2 && (
                     <div className="flex flex-col lg:flex-row gap-7">
                         <Cover />
-                        <LeftSide isSolid={true} respond={get_respond} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                        <RightSide data={get_respond?.data || {}} isSolid={true} />
+                        <LeftSide handleOpenChat={handleOpenChat} isSolid={true} respond={get_respond} handleDelete={handleDelete} handleUpdate={handleUpdate} />
+                        <RightSide data={get_respond?.data || {}} respond={get_respond} isSolid={true} />
                     </div>
                 )}
             </section>
@@ -74,7 +82,7 @@ const TheTeam = ({
 
 
 
-const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) => {
+const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate  , handleOpenChat}) => {
     const { t } = useTranslation();
 
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
@@ -99,18 +107,37 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
             setLang(storedLang ? storedLang === 'Arabic' : false);
         }
     }, []);
-    return (
+    const [hours, setHours] = useState();
+    const [amount, setAmount] = useState();
+
+    const onCancel = () => {
+        setHours("")
+        setHours("")
+    }
+
+    return (respond &&
         <div className="md:h-body w-full overflow-y-scroll pt-14 addUserScroll">
-            {!isAddToTeamPage ? (
+            {respond?.loading?<DuvduLoading loadingIn={""} type={'teamProject'}/>:(
+            !isAddToTeamPage ? (
                 <>
                     <h1 className="page-header mb-8">{t("Team Project")}</h1>
                     <Cover respond={respond} />
                     {data.map((section, index) => (
                         <div key={index}>
-                            <Sections isSolid={isSolid} AddTeam={()=> togglePage(section.category._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} />
-                            {index !== data.length - 1 && <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>}
+                            <Sections isSolid={isSolid} AddTeam={()=> togglePage(section.category._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} handleOpenChat={handleOpenChat} />
+                            <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>
                         </div>
                     ))}
+                     <AddCategory onClick={()=> OpenPopUp(`AddCategoryToTeam`)} />
+                     <Popup id={"AddCategoryToTeam"} header={'Add New Category'} onCancel={onCancel}>
+                            <div className='flex gap-9 max-w-72 h-full justify-center items-center flex-col mt-10'>                            
+                                <CategorySelectOne value={data.map(item=> item.category._id)} onChange={(v) => { console.log(v) }} />
+                                <AppButton  onClick={(e) => console.log()} className={" mt-10 mx-16 px-20 sm:px-40"} >
+                                    Confirm
+                                </AppButton>
+                            </div>
+                        </Popup>
+
                 </>
             ) : (
                 <>
@@ -120,38 +147,38 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate }) =>
                     </div>
                     <UsersToAdd goback={togglePage} categoryId={categoryId} />
                 </>
-            )}
+            ))}
         </div>
     );
 };
 
-const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate }) => {
+const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate ,handleOpenChat}) => {
     const { t } = useTranslation();
 
     return (
     <>
-        <div className="flex justify-between m-[10px]">
+        <div className="flex justify-between items-center m-[10px]">
             <span className="opacity-60 capitalize font-medium">
                 {section?.category?.title}
             </span>
-            {!isSolid && (
+            {section?.users.length ===0 && (
                 <div className="flex gap-2 cursor-pointer items-center">
-                    <Icon className="text-[#FF4646]" name="xmark" />
-                    <span className="text-[#FF4646] hidden">{t("Remove")}</span>
+                    <Icon className="text-[#FF4646] w-4 h-4" name="xmark" />
+                    <span className="text-[#FF4646] font-medium">{t("Remove")}</span>
                 </div>
             )}
         </div>
         <div className="w-full h-[1px] bg-black opacity-15" />
         <div className='flex flex-col gap-5 my-5 max-h-[600px] overflow-y-scroll'>
             {section?.users?.map((person, index) => (
-                <Person key={index} person={person} onDelete={handleDelete} onUpdate={handleUpdate} />
+                <Person key={index} person={person} onDelete={handleDelete} onUpdate={handleUpdate} handleOpenChat={handleOpenChat}  />
             ))}
             {!isSolid && <AddCreative onClick={AddTeam} />}
         </div>
     </>
 )};
 
-const Person = ({ person, onDelete, onUpdate }) => {
+const Person = ({ person, onDelete, onUpdate,handleOpenChat }) => {
     const { t } = useTranslation();
 
     const [hours, setHours] = useState();
@@ -173,7 +200,7 @@ const Person = ({ person, onDelete, onUpdate }) => {
     const handleDropdownSelect = (v) => {
         v == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)
     };
-    console.log({person})
+
     return (
         <>
             <Popup id={"Edit-creative-" + person._id} header={'Work Details'} onCancel={onCancel}>
@@ -202,12 +229,12 @@ const Person = ({ person, onDelete, onUpdate }) => {
                     </div>
                 </Link>
                     
-                <div className={`flex relative rounded-full justify-center items-center gap-2 border border-primary p-4 ${person.enableMessage ? 'cursor-pointer' : 'grayscale opacity-20'}`}>
+                <button onClick={()=>handleOpenChat(person.user._id)} className={`flex relative rounded-full justify-center items-center gap-2 border border-primary p-4`}>
                     <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>{t("message")}</span>
                     <div className='size-5'>
-                        <Icon className='text-white bg-gray' name={'chat24'} />
+                        <Icon className='text-primary' color="#1A73EB" name={'chat24'} />
                     </div>
-                </div> 
+                </button> 
                 {/* {person.status == 'pending' && <Selector options={options} onSelect={handleDropdownSelect}> <Icon name="waiting" className="size-12" /> </Selector>}
                 {person.status == 'refuse' && <div className="w-14">  <Icon name="circle-exclamation" className="rounded-full border border-[#D72828] text-[#D72828] p-3 h-full" /> </div>}
                 {person.status == 'available' && <div className="w-14"> <Icon className="text-[#50C878] rounded-full border border-[#50C878] p-3 h-full" name="circle-check" /> </div>} */}
@@ -216,13 +243,15 @@ const Person = ({ person, onDelete, onUpdate }) => {
     )
 };
 
-const RightSide = ({ isSolid, data, onClick }) => {
+const RightSide = ({ isSolid, data, onClick , respond }) => {
     const { t } = useTranslation();
 
     
-    return <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
+    return respond && <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
         <div className="flex flex-col justify-between gap-7 bg-white dark:bg-[#1A2024] w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
             <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
+            {respond?.loading?<DuvduLoading loadingIn={""} type={'contractDetails'}/>:
+            <>
                 <h2 className="opacity-80 text-2xl font-semibold capitalize">{t("Team Details")}</h2>
                 <div className="w-full flex flex-col gap-8 h-full mt-6">
                     <section>
@@ -277,6 +306,8 @@ const RightSide = ({ isSolid, data, onClick }) => {
                         </div>
                     </div> */}
                 </div>
+                </>
+                }
             </div>
             {!isSolid && false && (
                 <div className="border-t flex flex-col gap-4 bottom-0 w-full h-20 p-6 items-center">
@@ -312,6 +343,18 @@ const AddCreative = ({ onClick }) => {
     </div>
 )};
 
+const AddCategory = ({ onClick }) => {
+    const { t } = useTranslation();
+
+    return (
+    <div onClick={onClick} className="flex items-center rounded-full border border-primary p-1 mt-6 w-min cursor-pointer">
+        <div className="size-11 flex items-center justify-center border rounded-full border-primary">
+            <Icon className="text-xl text-primary" name='plus' />
+        </div>
+        <div className="text-center text-primary font-semibold mx-4 capitalize whitespace-nowrap">{t("add new category")}</div>
+    </div>
+)};
+
 const Empty = () => {
     const { t } = useTranslation();
     return (
@@ -340,6 +383,7 @@ const mapDispatchToProps = {
     AddTeamProject,
     DeleteTeamProjects,
     UpdateTeamUser,
+    GetAllMessageInChat,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TheTeam);
 

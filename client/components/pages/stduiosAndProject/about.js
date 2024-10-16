@@ -9,7 +9,7 @@ const About = ({ data }) => {
     return (
         <div className="">
             {/* <div className="h-16" /> */}
-            <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mt-10 mx-5 sm:mx-0">{t("about the creative")}</h2>
+            <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mt-6 md:mt-10 mx-5 sm:mx-0">{t("about the creative")}</h2>
             <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] mx-5 pb-10 md:mx-0">
                 <div className='flex items-center justify-center px-10 pt-10'>
                     <div className='w-32 h-32 relative'>

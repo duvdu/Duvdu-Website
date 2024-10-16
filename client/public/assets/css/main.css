@@ -1744,6 +1744,10 @@ table p {
 .gradient1 {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 130.01%);
 }
+.gradient2 {
+  background: linear-gradient(180deg, rgba(72, 143, 239, 0) 1.7%, #488FEF 130.01%);
+}
+/* Rectangle 561 */
 
 .front-part {
   z-index: 2;

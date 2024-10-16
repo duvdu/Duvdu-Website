@@ -18,12 +18,12 @@ const Details = ({ data , onAudioPlay }) => {
       };
 
     return (
-        <div className="!sticky top-header grad-card bg-white dark:bg-[#1A2024] rounded-[30px] p-4 pt-6 mx-5 md:mx-0">
+        <div className="!sticky top-header rounded-[30px] mx-5 md:mx-0">
             {/* <div className='rounded-[50px] overflow-hidden block lg:hidden'>
                 <ProjectCover onAudioPlay={onAudioPlay} hidden={true} data={data?.attachments[0]} cover={data?.cover}/>
             </div> */}
             {data?.attachments.length > 1 ?
-                                                <div className=' rounded-[30px] mb-10 overflow-hidden h-[300px] relative  block lg:hidden'>
+                <div className=' rounded-[30px] mb-10 overflow-hidden h-[400px] relative block lg:hidden'>
                                                     {/* Custom Arrows */}
                                                     {/* <div className="swiper-button-prev"> */}
                                                     <div className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
@@ -65,11 +65,11 @@ const Details = ({ data , onAudioPlay }) => {
                                                     </Swiper>
                                                     {/* Pagination Bullets */}
                                                     <div className="swiper-pagination"></div>
-                                                </div> :
-                                                    <div className='rounded-[30px] mb-10 overflow-hidden h-[300px] relative lg:hidden block'>
-                                                        <ProjectCover onAudioPlay={handleAudioPlay}  data={data?.attachments[0]} cover={data?.cover} />
-                                                    </div>
-                                            }
+                </div> :
+                    <div className='rounded-[30px] mb-10 overflow-hidden h-[400px] relative lg:hidden block'>
+                        <ProjectCover onAudioPlay={handleAudioPlay}  data={data?.attachments[0]} cover={data?.cover} />
+                    </div>
+            }
             {/* <div className="w-full h-72 border-50 overflow-hidden">
             {!isVideo(data?.cover) ? (
           <img className='w-full h-full object-cover' src={data?.cover}/>
@@ -81,9 +81,10 @@ const Details = ({ data , onAudioPlay }) => {
               <source src={data?.cover} type='video/mp4' />
             </video>
         )}
-                
-            </div> */}
-             <h1 className="text-xl capitalize opacity-80 font-bold">
+        
+        </div> */}
+        <div className="bg-white dark:bg-[#1A2024] p-4 rounded-[30px] pt-6">
+            <h1 className="text-xl capitalize opacity-80 font-bold">
                 {data?.name || data?.title}
             </h1>
 
@@ -207,6 +208,7 @@ const Details = ({ data , onAudioPlay }) => {
                 </section>
             }
 
+        </div>
         </div>
     )
 }

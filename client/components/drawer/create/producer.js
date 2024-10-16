@@ -202,7 +202,7 @@ const AddProducer = ({
             else {
                 if(formData.subcategory?.length===0) delete formData.subcategory;
                 formData?.subcategory?.map(item=>
-                    (item.tags?.length===0)? delete item.tags: item.tags
+                    (item.tagsId?.length===0)? delete item.tagsId: item.tagsId
                 )
                 CreateProducer(formData);
         

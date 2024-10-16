@@ -214,7 +214,7 @@ function ReceiveProjectFiles({
         const type = getType()
         takeAction({ id: contract?._id, data: true, type: type })
     };
-    const handleCancle = () => {
+    const handleCancel = () => {
         setActionAccept(true)
         if (!contract_respond?.data?.ref) return
         const type = getType()
@@ -606,7 +606,7 @@ function ReceiveProjectFiles({
                                                 </button>
                                         }
                                         {cancle && 
-                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleCancel}>
                                          {takeAction_respond?.loading  ? 
                                             <Loading/>
                                             :

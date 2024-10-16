@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import { convertToFormData, filterByCycle as filterByCycleCategory, printFormData} from "../../../util/util";
 import ListInput from "../../elements/listInput";
 import EquipmentAvailable from "../../popsup/create/equipmentAvailable";
-import AddOtherCreatives from "../../popsup/create/addOtherCreatives";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from "./assets/addCover";

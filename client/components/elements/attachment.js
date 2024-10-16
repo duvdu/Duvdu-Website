@@ -47,11 +47,13 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" }
                 return 'image/*';
             case 'video':
                 return 'video/*';
-            case 'documents':
+            case 'audio':
+                return 'audio/mpeg, audio/ogg, audio/mp4, audio/aac, audio/flac, audio/x-ms-wma';  // Explicitly list audio types
+                case 'documents':
                 return 'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             case 'All':
             default:
-                return 'image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                return 'image/*, video/*,application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
         }
     };
 

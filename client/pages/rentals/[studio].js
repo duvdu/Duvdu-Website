@@ -105,7 +105,10 @@ const Studio = ({
                                         <Header data={studio} toggleDrawerAddFav={toggleDrawerAddFav} />
                                         <h2 className='font-bold text-lg capitalize opacity-80 mb-4 mx-5 sm:mx-0'>{t('Project Attachments')}</h2>
                                     </section> */}
-                                    <div className="flex lg:flex-row flex-col-reverse gap-3">
+                                    <div className="flex lg:flex-row flex-col gap-3">
+                                        <section className="lg:w-1/3 mt-6 lg:mt-0">
+                                            <Details onAudioPlay={handleAudioPlay} data={studio} />
+                                        </section>
                                         <section className="lg:w-2/3">
                                             {studio?.attachments.length > 1 ?
                                                 <div className='mx-5 lg:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>
@@ -157,9 +160,6 @@ const Studio = ({
                                             }
                                             <About data={studio} />
                                             <Reviews data={studio} />
-                                        </section>
-                                        <section className="lg:w-1/3 mt-10 lg:mt-0">
-                                            <Details onAudioPlay={handleAudioPlay} data={studio} />
                                         </section>
                                     </div>
                                     <section className="mx-7 sm:mx-0">

@@ -5,9 +5,12 @@ import { gettFileUploaded, handleFileUpload, handleRemoveEvent } from '../../../
 import { connect } from "react-redux";
 import { UpdateFormData } from '../../../../redux/action/logic/forms/Addproject';
 import { useTranslation } from 'react-i18next';
+import AddAttachment from "../../../elements/attachment";
+import ErrorMessage from '../../../elements/ErrorMessage';
+import Loading from '../../../elements/loading';
 
 
-function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverType = "image" }) {
+function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,coverType = "image" }) {
     const { t } = useTranslation();
     const formData = addprojectState.formData;
     const media = formData.coverShow;
@@ -18,6 +21,15 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
 
         UpdateFormData('cover', file);
         UpdateFormData('coverShow', fileUrl);
+    };
+    const [attachmentValidation, setAttachmentValidation] = useState(false);
+
+    const handleInputChange = (e) => {
+        let { name, value } = e.target;
+        if (!isNaN(value) && parseInt(value) < 0) {
+            value = Math.abs(Number(value));
+        }
+        UpdateFormData(name, value);
     };
 
     const handleSubmit = (e) => {
@@ -42,11 +54,18 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
             case 'video':
                 return <video controls className='w-full h-52 mt-5' src={media} />;
             case 'audio':
-                return <audio controls className='w-full mt-5' src={media} />;
+                return <><div className='card w-full h-52 mt-5 object-cover bg-bottom' style={{
+                    backgroundImage: `url(${media})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat'
+                }} /><audio controls className='w-full mt-5' src={media} />
+                </>;
             default:
                 return null;
         }
     };
+    var convertError = JSON.parse(respond?.error ?? null)
 
     return (
         <>
@@ -58,9 +77,11 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
                     </span>
                 </div>
             </section>
-
+            {coverType==='audio' && 
+                <AddAttachment name={'audioCover'} value={formData.audioCover} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={coverType} />
+            }
             <div className='flex flex-col gap-5 mx-5 max-w-96 sm:mx-auto' >
-                <div className='p-5 pl-[31px] w-[430px] '>
+                <div className='w-full '>
                     <div className='flex flex-col justify-between h-full'>
                         <section>
                             <label htmlFor="file-upload" >
@@ -72,20 +93,21 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, coverTyp
                                 </div>
                                 {renderMediaPreview()}
                             </label>
-                            <input onClick={handleRemoveEvent} id="file-upload" type="file" className="hidden" onChange={profileUpload} accept={coverType === 'image' ? 'image/*' : coverType === 'video' ? 'video/*' : 'audio/*'} />
+                            <input onClick={handleRemoveEvent} id="file-upload" type="file" className="hidden" onChange={profileUpload} accept={coverType === 'image' ? 'image/*' : coverType === 'video' ? 'video/*' : 'image/*'} />
                         </section>
                         <section className='mt-5'>
                             <span className='opacity-40 text-base capitalize'>{t("preview")}</span>
                             <div className='flex gap-3 mb-14'>
                                 <div className='w-1/3'>
-                                    <Preview title={"test title"} price={"500"} media={media} coverType={coverType} />
+                                    <Preview title={"test title"} price={"500"} media={coverType==='audio'?formData.audioCover:media} coverType={coverType} />
                                 </div>
                                 <div className='w-2/3'>
-                                    <Preview title={"test title"} price={"500"} media={media} coverType={coverType} />
+                                    <Preview title={"test title"} price={"500"} media={coverType==='audio'?formData.audioCover:media} coverType={coverType} />
                                 </div>
                             </div>
                         </section>
-                        <AppButton isEnabled={isEnable} onClick={handleSubmit} className={'w-full'}>{t("Publish")}</AppButton>
+                        <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                        <AppButton isEnabled={isEnable || respond?.loading} onClick={handleSubmit} className={'w-full'}>{respond?.loading?<Loading/>:t("Publish")}</AppButton>
                     </div>
                 </div>
             </div>

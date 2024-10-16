@@ -5,20 +5,6 @@ import Icon from '../Icons'; // Ensure the Icon component is correctly imported
 
 function CategorySelectOne({ categories, onChange, value }) {
     const [selectedCategory, setSelectedCategory] = useState({});
-    value= value?._id
-    useEffect(() => {
-        
-        if (value && categories?.data) {
-            const category = categories.data.find(cat => cat._id === value);
-            if (category) {
-                setSelectedCategory(category);
-            } else {
-                setSelectedCategory({});
-            }
-        } else {
-            setSelectedCategory({});
-        }
-    }, [value, categories]);
 
     const handleCategorySelect = (category) => {
         const updatedCategory = category._id ? category : {};
@@ -30,7 +16,7 @@ function CategorySelectOne({ categories, onChange, value }) {
         <section>
             {!selectedCategory._id ? (
                 <div className="flex gap-3 flex-wrap">
-                    {categories?.data?.map((item) => (
+                    {categories?.data?.filter(item=>!value?.includes(item._id))?.map((item) => (
                         <div key={item._id}
                             className={`py-1 px-2 border ${selectedCategory._id === item._id ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
                             onClick={() => handleCategorySelect(item)}>

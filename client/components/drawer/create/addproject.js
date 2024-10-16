@@ -39,7 +39,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         categoryDetails ? (categoryDetails?.media === 'image'
             ? ['image']
             : (categoryDetails?.media === 'video' || categoryDetails?.media === 'audio'
-                ? ['minutes', 'hours']
+                ? ['seconds','minutes', 'hours','episodes']
                 : [])) : ['unit'];
 
     useEffect(() => {
@@ -53,10 +53,15 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         const data = new FormData();
 
         // Append simple string and number values directly from the state
-        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments', 'location', 'tools', 'creatives', 'functions'])
+        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments','subCategoryId', 'location', 'tools', 'creatives','invitedCreatives','audioCover', 'functions'])
         // data.append('projectBudget', formData.projectBudget);
         // data.append('projectScale[scale]', formData.duration);
-
+        // if(formData.subCategoryId?.length===0) delete formData.subCategoryId;
+        // formData?.subcategory?.map(item=>
+        //     (item.tags?.length===0)? delete item.tags: item.tags
+        // )
+        if(formData.subCategoryId)
+            data.append('subCategoryId',formData.subCategoryId)
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
                 data.append(`tags[${index}]`, tag);
@@ -72,6 +77,12 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             for (let i = 0; i < formData.attachments.length; i++) {
                 const file = formData.attachments[i];
                 data.append(`attachments`, file.file);
+        }
+
+        if (formData.audioCover)
+            for (let i = 0; i < formData.audioCover.length; i++) {
+                const file = formData.audioCover[i];
+                data.append(`audioCover`, file.file);
             }
 
         if (formData.location) {
@@ -83,7 +94,13 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (formData.creatives) {
             formData.creatives.forEach((item, index) => {
                 // data.append(`creatives[${index}]`, item.name);
-                data.append(`creatives[${index}]`, item._id);
+                data.append(`creatives[${index}][creative]`, item._id);
+            });
+        }
+
+        if (formData.invitedCreatives) {
+            formData.invitedCreatives.forEach((item, index) => {
+                data.append(`number[${index}]`, item._id);
             });
         }
 
@@ -106,12 +123,12 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         const errors = {};
 
         if (!formData.category) errors.category = 'Category is required';
-        if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
-        if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
+        // if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
+        // if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
         if (!formData.name) errors.title = 'Title is required';
         if (!formData.tools || !formData.tools.length) errors.tools = 'Tools is required';
         if (!formData.functions || !formData.functions.length) errors.functions = 'Functions is required';
-        if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives is required';
+        // if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives is required';
         if ((formData.description?.length || 0) < 6) errors.description = 'Description must be at least 6 characters long';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'Duration is required';
@@ -155,10 +172,10 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const removeFromArray = (arrayName, index) => {
         const newArray = [...formData[arrayName]]; // Create a new array to avoid mutating the original state
         newArray.splice(index, 1); // Remove the item at the specified index
-        UpdateFormData(arrayName, index);
+        UpdateFormData(arrayName, newArray);
     };
     const Publish = (e) => {
-        setNextstep(1)
+        // setNextstep(1)
         CreateProject(convertToFormData())
     };
 
@@ -190,13 +207,16 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             pathname: `/creative/${auth.username}`,
         })
     }
+    const AudioIndex = categories.indexOf(categories.map(item=> item.title).includes('Audio'))
+    const AudioId =  (AudioIndex===-1 ? categories[categories.length -1] : categories[AudioIndex])?._id
+    console.log({formData})
 
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Drawer isOpen={true} name={'add project'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
-                    <SetCover coverType={categoryDetails?.media} Publish={Publish} oncancel={() => setNextstep(1)} />
+                    <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
                 ) :
                     (
                         <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
@@ -212,12 +232,9 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategoryId', value.subCategory)
                                         UpdateFormData('tagsId', value.tags)
-                                    }} />
-                                    {ErrorMsg.category ?
-                                    <ErrorMessage ErrorMsg={ErrorMsg.category}/>:(
-                                        ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
-                                        <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
-                                    )}
+                                    }}
+                                />
+                                <ErrorMessage ErrorMsg={ErrorMsg.category}/>
                             </div>
                             <section>
                                 <h3 className="capitalize opacity-60">{t("attachments")}</h3>
@@ -274,18 +291,34 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <ListInput
                                     placeholder={t("tag creatives")}
                                     target="addOtherCreatives"
-                                    name={"creatives"}
-                                    listdiv={formData.creatives && formData.creatives.map((e, i) => (
-                                        <a href={`/creative/${e.username}`} target="_blank" rel="noopener noreferrer">
+                                    enable={false}
+                                >
+                                    <div className="flex flex-wrap gap-3">
+                                     {formData?.invitedCreatives?.length>0 && formData?.invitedCreatives?.map((e, i) => (
+                                         <div key={i} className="border border-primary rounded-2xl px-1 mt-2 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
                                             <div className="flex gap-2 items-center">
-                                                <img className="size-6 rounded-full" src={e.profileImage} alt={`${e.name}'s profile image`} />
                                                 {e.name}
                                             </div>
-                                        </a>
+                                            <div onClick={() => removeFromArray('invitedCreatives',i)} className='cursor-pointer'>
+                                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
+                                            </div>
+                                        </div>
                                     ))}
-                                    remove={(value) => removeFromArray('creatives', value)}
-                                    enable={false}
-                                />
+                                     {formData?.creatives && formData.creatives?.map((e, i) => (
+                                         <div key={i} className="border border-primary rounded-2xl px-1 mt-2 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
+                                                <a href={`/creative/${e.username}`} target="_blank" rel="noopener noreferrer">
+                                                    <div className="flex gap-2 items-center">
+                                                        <img className="size-6 rounded-full" src={e.profileImage} alt={`${e.name}'s profile image`} />
+                                                        {e.name}
+                                                    </div>
+                                                </a>
+                                            <div onClick={() => removeFromArray('creatives',i)} className='cursor-pointer'>
+                                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
+                                            </div>
+                                        </div>
+                                    ))}
+                                    </div>
+                                </ListInput>
                                 <ErrorMessage ErrorMsg={ErrorMsg.creatives}/>
                             </section>
 

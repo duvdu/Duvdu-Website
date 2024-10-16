@@ -2,9 +2,9 @@ import React from 'react'
 
 export default function CardsSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid animate-pulse grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {[...Array(4)].map((_, index) => (
-        <div key={index} className="w-full animate-pulse">
+        <div key={index} className="w-full ">
             {/* Image Section */}
             <div className="relative rounded-3xl bg-gray-300 dark:bg-[#333] w-full h-64 mb-4">
             </div>

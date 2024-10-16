@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { GetFavList } from "../redux/action/apis/bookmarks/fav/getAll";
 import DeleteBoard from "../components/popsup/DeleteBoard";
 import DuvduLoading from "../components/elements/duvduLoading";
+import { useRouter } from "next/router";
 
 const Saved = ({
     GetBoards,
@@ -26,10 +27,16 @@ const Saved = ({
     updateBoard_respond,
     deleteSavedBoard_respond,
     GetFavList,
+    isLogin,
     getFavList_respond
 
 }) => {
     const { t } = useTranslation();
+    const route = useRouter()
+    useEffect(()=>{
+        if(!isLogin)
+            route.push('/')
+    },[isLogin])
     const Boards = ({ data, isFav }) => {
         if (!data) return
         const { title, _id: id } = data;
@@ -58,7 +65,7 @@ const Saved = ({
             <>
                 <DeleteBoard onClick={deleteSavedBoard} id={id} />
                 <EditBoard id={id} onSbmit={(v) => UpdateBoard(v, id)} defultValue={{title , image:img1}} />
-                <div className="boards-card">
+                <div className="boards-card h-[400px]">
                     <div className="absolute top-7 right-7" onClick={handleSelectClick}>
                         {!isFav &&
                             <Selector options={dropdown} onSelect={handleDropdownSelect}>
@@ -71,19 +78,20 @@ const Saved = ({
                     <Link href={`/save/${id}`}>
                         <div className="projects cursor-pointer">
                             {img1 ?
-                                <div className="w-full rounded-[50px] img-cart-style" style={{ backgroundImage: `url(${img1})` }}></div> :
+                                <div className={`w-full rounded-[50px]  ${isFav ? 'bg-[#E8F1FD] dark:bg-[#1A2024] bg-center bg-no-repeat border-[2px] !border-[#B0C9EB] dark:!border-[#B0C9EB40]':'img-cart-style'} `} style={{ backgroundImage: `url(${img1})`}}></div> :
                                 <div className="w-full rounded-[50px] img-cart-style" style={{backgroundColor:color}} >
                                     {/* <Icon className="w-44" name={'dvudu-image'} /> */}
                                 </div>
                             }
                         </div>
                     </Link>
-                    <div className="boards-info projects-num">{data?.bookmarkProjectCount} {t(data?.bookmarkProjectCount===1?'project':'projects')}</div>
+                    <div className={`boards-info projects-num ${isFav && '!text-[#263257] dark:!text-[white] !bg-transparent rounded-full !border-gray-400'}`}>{data?.bookmarkProjectCount} {t(data?.bookmarkProjectCount===1?'project':'projects')}</div>
                     <Link href={`/save/${id}`} >
                         <div className="cursor-pointer">
-                            <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px]  gradient1" />
-                            <div className="boards-info projects-name flex">
-                                {isFav && <Icon name={"favorites"} />}
+                            <div className={`absolute bottom-0 w-full h-1/3 rounded-b-[50px]  ${isFav?'gradient2':'gradient1`'}`} />
+                            <div className={`boards-info projects-name flex items-center gap-2 ${isFav && '!text-[#263257] dark:!text-white'}`}>
+                                {isFav && <Icon className='hidden dark:block' name={"favorites"} />}
+                                {isFav && <Icon className='block dark:hidden w-full' name={"favorite"} />}
                                 {title}
                             </div>
                         </div>
@@ -96,6 +104,7 @@ const Saved = ({
     const [initFav, setInitFav] = useState({
         _id: 'favorites',
         title: "Favorites",
+        image:'/assets/imgs/Favorite.svg',
         projects: [],
         totalProjects: 10
     });
@@ -104,6 +113,7 @@ const Saved = ({
             setInitFav({
                 _id: 'favorites',
                 title: "Favorites",
+                image:'/assets/imgs/Favorite.svg',
                 projects: getFavList_respond.data,
                 bookmarkProjectCount: getFavList_respond.data.length
             });
@@ -127,7 +137,7 @@ const Saved = ({
                 <section className="mt-3 mb-12">
                     <div className="container mb-7">
                         <div className="flex alignCenter mb-7 items-center">
-                            <h1 className="text-2xl opacity-80 font-semibold capitalize">{t("saved projects")}</h1>
+                            <h1 className="text-2xl opacity-80 font-semibold capitalize">{t("mood boards")}</h1>
                             <div className="mr-6"></div>
                             <div data-popup-toggle="popup" data-popup-target='create-new-board' className="new_board ">
                                 {t("new bookmark")}
@@ -161,6 +171,7 @@ const mapStateToProps = (state) => ({
     deleteBoard_respond: state.api.DeleteBoard,
     deleteSavedBoard_respond: state.api.DeleteSavedBoard,
     getFavList_respond: state.api.GetFavList,
+    isLogin: state.auth.login,  
 });
 
 const mapDispatchToProps = {

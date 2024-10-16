@@ -1,10 +1,9 @@
 import React, { useRef, useState } from "react";
 
-const AudioPlayer = ({ src, audioRef, isPlaying, setIsPlaying }) => {
+const AudioPlayer = ({ src , audioRef, isPlaying, setIsPlaying }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [hoverProgress, setHoverProgress] = useState(null); // To store the hover position
-
   const togglePlayPause = () => {
     const audio = audioRef.current;
     if (isPlaying) {
@@ -59,7 +58,7 @@ const AudioPlayer = ({ src, audioRef, isPlaying, setIsPlaying }) => {
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
       >
-        <source src={src} type="audio/mpeg" />
+        <source src={src} type="audio/wav" />
       </audio>
       <div
         className="controls"
@@ -96,7 +95,7 @@ const AudioPlayer = ({ src, audioRef, isPlaying, setIsPlaying }) => {
         <span className="text-white">{formatTime(currentTime)}</span>
         <span className="text-white">-{formatTime(duration - currentTime)}</span>
       </div>
-      <div className="buttons">
+      <div className="buttons1">
         <button onClick={togglePlayPause}>
           {isPlaying ? (
             <span className="text-white">&#10074;&#10074;</span>

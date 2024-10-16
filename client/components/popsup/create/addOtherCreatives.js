@@ -85,17 +85,17 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
     };
 
     const handleCreativeSelect = (selectedCreative) => {
-        
-        setFormData(prev => ({
+        setFormData(prev=>({
             ...prev,
             name: selectedCreative.name,
             profileImage: selectedCreative.profileImage,
             username: selectedCreative.username,
-            _id:selectedCreative._id
+            _id:selectedCreative._id,
+            invitedCreatives:selectedCreative.invitedCreatives,
         }));
         setCreatives([])
     };
-
+    console.log({formData , searchTo })
     return (
         <>
             <Comman id={"addOtherCreatives"} header={"Add Other Creatives"} onCancel={onCancel}>
@@ -110,22 +110,37 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                                 sendValue={formData.name}
                             />
                         </div>
-                        {
+                        {formData.name&& 
                             isLoading &&
                             <div className="load-parent">
                                 <img className="h-full" src="/assets/imgs/loading.gif" alt="loading" />
                             </div>
                         }
                         <ul className="flex flex-wrap gap-2">
+                            {searchTo && searchTo !==formData.name  && 
+                                <li
+                                    className="flex items-center text-base opacity-80 font-medium border-[1.5px] border-[#0000004d] dark:border-[#ffffff4d] rounded-full cursor-pointer"
+                                    onClick={() => handleCreativeSelect({
+                                        name:searchTo,
+                                        _id:searchTo,
+                                        invitedCreatives:true
+                                    })} // Handle click event
+                                >
+                                    <div className=" capitalize mx-2 ">{searchTo}</div>
+                                </li>
+                            }
                             {creatives?.map((item, index) => (
                                 <li
-                                    className="flex items-center text-base opacity-80 font-medium border-[1.5px] border-[#0000004d] rounded-full cursor-pointer"
+                                    className="flex items-center text-base opacity-80 font-medium border-[1.5px] border-[#0000004d] dark:border-[#ffffff4d] rounded-full cursor-pointer"
                                     key={index}
-                                    onClick={() => handleCreativeSelect(item)} // Handle click event
+                                    onClick={() => handleCreativeSelect({
+                                        ...item , 
+                                        invitedCreatives:false
+                                    })} // Handle click event
                                 >
                                     {item.profileImage &&
                                         <img className='aspect-square rounded-full size-6 border' src={item.profileImage} alt='user img' />}
-                                    <div className="text-[#000000BF] capitalize mx-2 ">{item.name}</div>
+                                    <div className=" capitalize mx-2 ">{item.name}</div>
                                 </li>
                             ))}
                         </ul>

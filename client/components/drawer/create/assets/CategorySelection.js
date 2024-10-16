@@ -62,7 +62,6 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
 
     };
     if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
-
     return (
         <>
             <section>

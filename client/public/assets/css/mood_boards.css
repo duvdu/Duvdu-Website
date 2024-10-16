@@ -23,11 +23,11 @@
 
 .boards-card .boards-info.projects-num {
     top: 30px;
-    left: 30px;
+    inset-inline-start: 30px;
     border-radius: 30.555px;
     border: 0.764px solid rgba(var(--white-rgb), 0.20);
-    background: rgba(var(--black-rgb),.25);
-    backdrop-filter: blur(7.638689994812012px);
+    background: rgba(var(--black-rgb),0);
+    backdrop-filter: blur(14.638689994812012px);
     padding: 15px 21.388px;
     color: #FFF;
     font-size: 21.388px;
@@ -35,8 +35,8 @@
 }
 
 .boards-card .boards-info.projects-name {
-    bottom: 30px;
-    left: 30px;
+    bottom: 40px;
+    inset-inline-start: 30px;
     color: #FFF;
     text-shadow: 0px 3.483px 10.45px rgba(black,.50);
     font-size: 34px;
