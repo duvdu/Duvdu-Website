@@ -107,11 +107,11 @@ const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
 
 
 const NotificationTile = ({ tile }) =>
-    <Link href={`/contracts?contract=${tile.target}`}>
+    <Link href={tile.type==='new tag'?`/project/projectInvitations`:`/contracts?contract=${tile.target}`}>
         <div className="w-64 flex gap-4">
             <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
             <div className="flex flex-col justify-center">
-                <span className="line-clamp-2">
+                <span className="line-clamp-2 cursor-pointer">
                     <span className="rtl:hidden font-bold">{tile.sourceUser?.name?.split(' ')[0].length>6?tile.sourceUser?.name?.split(' ')[0].slice(0,6):tile.sourceUser?.name?.split(' ')[0] || 'DUVDU'} </span>
                     <span className="text-xs opacity-60 mx-2">{tile.title}</span>
                     <div className="font-bold">{tile.message} </div>
