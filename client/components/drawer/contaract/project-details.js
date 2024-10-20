@@ -299,7 +299,7 @@ function ReceiveProjectFiles({
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
-    const canReview = (IsImSp() && status === "ongoing")
+    const canReview = (IsImSp() && status === "completed")
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&

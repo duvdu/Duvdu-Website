@@ -1,6 +1,7 @@
 import Icon from "../../components/Icons";
 import Layout from "../../components/layout/Layout";
 import DuvduLoading from '../../components/elements/duvduLoading';
+import Loading from '../../components/elements/loading';
 
 import Selector from "../../components/elements/CustomSelector";
 import React, { useEffect, useState } from 'react';
@@ -8,11 +9,16 @@ import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { GetTeamProject } from "../../redux/action/apis/teamproject/getone";
 import UsersToAdd from "../../components/layout/team/usersToAdd";
+import DeleteCategory from "../../components/popsup/deleteCategory";
 import CategorySelectOne from '../../components/elements/CategorySelectOne';
 import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
 import { DeleteTeamProjects } from "../../redux/action/apis/teamproject/deleteProject";
 import { AddTeamProject } from "../../redux/action/apis/teamproject/addCreative";
+import { AddNewCategoryTeam } from "../../redux/action/apis/teamproject/addNewCategory";
+import { DeleteCategoryTeam } from "../../redux/action/apis/teamproject/deleteCategory";
 import { UpdateTeamUser } from "../../redux/action/apis/teamproject/updatecreative";
+import DeleteTeam from "../../components/popsup/deleteTeam";
+
 import { ClosePopUp, OpenPopUp } from "../../util/util";
 import { useTranslation } from 'react-i18next';
 import Link from "next/link";
@@ -31,24 +37,24 @@ const TheTeam = ({
     UpdateTeamUser,
     update_respond,
     GetAllMessageInChat,
+    AddNewCategoryTeam,
+    add_category_respond,
+    DeleteCategoryTeam,
+    delete_category_respond,
+    isLogin
 
 }) => {
     const { t } = useTranslation();
     const [state, setState] = useState(1);
     const router = useRouter();
     const { teamId } = router.query;
-
     useEffect(() => {
         if (teamId) {
             GetTeamProject({ id: teamId });
         }
-    }, [teamId, add_creative, delete_respond, update_respond]);
-
+    }, [teamId, add_creative, delete_respond, update_respond , add_category_respond , delete_category_respond]);
     const updateTeamProject = (data) => {
         AddTeamProject(data, teamId);
-    }
-    const handleDelete = (id) => {
-        DeleteTeamProjects(id)
     }
     const handleUpdate = (alldata) => {
         
@@ -57,6 +63,22 @@ const TheTeam = ({
     const handleOpenChat = (PersonId) => {
         GetAllMessageInChat(PersonId);
     };
+    const onDeleteTeam = () => {
+        DeleteTeamProjects(teamId)
+    }
+
+    const addNewCategory = (categoryId)=>{
+        AddNewCategoryTeam({teamId , categoryId})
+        if(add_category_respond?.data)
+            ClosePopUp('AddCategoryToTeam')
+    }
+    const deleteCategory = (categoryId)=>{
+        DeleteCategoryTeam({teamId , categoryId})
+    }
+    useEffect(()=>{
+        if(isLogin ===false)
+            router.push('/')
+    },[isLogin])
 
     return (
         <Layout shortheader={true}>
@@ -64,15 +86,15 @@ const TheTeam = ({
                 {state === 0 && <Empty />}
                 {state === 1 && (
                     <div className="flex flex-col lg:flex-row gap-7 items-center">
-                        <LeftSide handleOpenChat={handleOpenChat} respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                        <RightSide data={get_respond?.data || {}} respond={get_respond} onClick={() => setState(1)} />
+                        <LeftSide add_category_respond={add_category_respond} deleteCategory={deleteCategory} addNewCategory={addNewCategory} handleOpenChat={handleOpenChat} respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleUpdate={handleUpdate} />
+                        <RightSide onDeleteTeam={onDeleteTeam} data={get_respond?.data || {}} respond={get_respond} onClick={() => setState(1)} teamId={teamId} />
                     </div>
                 )}
                 {state === 2 && (
                     <div className="flex flex-col lg:flex-row gap-7">
                         <Cover />
-                        <LeftSide handleOpenChat={handleOpenChat} isSolid={true} respond={get_respond} handleDelete={handleDelete} handleUpdate={handleUpdate} />
-                        <RightSide data={get_respond?.data || {}} respond={get_respond} isSolid={true} />
+                        <LeftSide add_category_respond={add_category_respond} deleteCategory={deleteCategory} addNewCategory={addNewCategory} handleOpenChat={handleOpenChat} isSolid={true} respond={get_respond} handleUpdate={handleUpdate} />
+                        <RightSide onDeleteTeam={onDeleteTeam} data={get_respond?.data || {}} respond={get_respond} isSolid={true} teamId={teamId}/>
                     </div>
                 )}
             </section>
@@ -82,7 +104,7 @@ const TheTeam = ({
 
 
 
-const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate  , handleOpenChat}) => {
+const LeftSide = ({isSolid, respond, onAddOne, handleDelete, handleUpdate  , handleOpenChat , addNewCategory , add_category_respond , deleteCategory}) => {
     const { t } = useTranslation();
 
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
@@ -108,7 +130,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate  , ha
         }
     }, []);
     const [hours, setHours] = useState();
-    const [amount, setAmount] = useState();
+    const [newCategoryId, setNewCategoryId] = useState();
 
     const onCancel = () => {
         setHours("")
@@ -116,7 +138,7 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate  , ha
     }
 
     return (respond &&
-        <div className="md:h-body w-full overflow-y-scroll pt-14 addUserScroll">
+        <div className="md:h-body w-full overflow-y-scroll py-14 addUserScroll">
             {respond?.loading?<DuvduLoading loadingIn={""} type={'teamProject'}/>:(
             !isAddToTeamPage ? (
                 <>
@@ -124,16 +146,17 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate  , ha
                     <Cover respond={respond} />
                     {data.map((section, index) => (
                         <div key={index}>
-                            <Sections isSolid={isSolid} AddTeam={()=> togglePage(section.category._id)} section={section} handleDelete={handleDelete} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} handleOpenChat={handleOpenChat} />
+                            <Sections deleteCategory={deleteCategory} isSolid={isSolid} AddTeam={()=> togglePage(section.category._id)} section={section} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} handleOpenChat={handleOpenChat} />
                             <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>
                         </div>
                     ))}
-                     <AddCategory onClick={()=> OpenPopUp(`AddCategoryToTeam`)} />
+                    
+                    <AddCategory onClick={()=> OpenPopUp(`AddCategoryToTeam`)} />
                      <Popup id={"AddCategoryToTeam"} header={'Add New Category'} onCancel={onCancel}>
                             <div className='flex gap-9 max-w-72 h-full justify-center items-center flex-col mt-10'>                            
-                                <CategorySelectOne value={data.map(item=> item.category._id)} onChange={(v) => { console.log(v) }} />
-                                <AppButton  onClick={(e) => console.log()} className={" mt-10 mx-16 px-20 sm:px-40"} >
-                                    Confirm
+                                <CategorySelectOne value={data.map(item=> item.category._id)} onChange={(v) => { setNewCategoryId(v) }} />
+                                <AppButton  onClick={() => addNewCategory(newCategoryId )} className={" mt-10 mx-16 px-20 sm:px-40"} >
+                                    {add_category_respond?.loading ? <Loading/>:'Confirm'}
                                 </AppButton>
                             </div>
                         </Popup>
@@ -152,11 +175,11 @@ const LeftSide = ({ isSolid, respond, onAddOne, handleDelete, handleUpdate  , ha
     );
 };
 
-const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate ,handleOpenChat}) => {
+const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate ,handleOpenChat , deleteCategory}) => {
     const { t } = useTranslation();
-
     return (
     <>
+        <DeleteCategory onClick={()=> deleteCategory(section?.category?._id)} id={section?.category?._id} />
         <div className="flex justify-between items-center m-[10px]">
             <span className="opacity-60 capitalize font-medium">
                 {section?.category?.title}
@@ -164,21 +187,21 @@ const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate ,handl
             {section?.users.length ===0 && (
                 <div className="flex gap-2 cursor-pointer items-center">
                     <Icon className="text-[#FF4646] w-4 h-4" name="xmark" />
-                    <span className="text-[#FF4646] font-medium">{t("Remove")}</span>
+                    <span className="text-[#FF4646] font-medium" onClick={()=> OpenPopUp('delete-category-team-' + section?.category?._id)}>{t("Remove")}</span>
                 </div>
             )}
         </div>
         <div className="w-full h-[1px] bg-black opacity-15" />
         <div className='flex flex-col gap-5 my-5 max-h-[600px] overflow-y-scroll'>
             {section?.users?.map((person, index) => (
-                <Person key={index} person={person} onDelete={handleDelete} onUpdate={handleUpdate} handleOpenChat={handleOpenChat}  />
+                <Person key={index} person={person} onUpdate={handleUpdate} handleOpenChat={handleOpenChat}  />
             ))}
             {!isSolid && <AddCreative onClick={AddTeam} />}
         </div>
     </>
 )};
 
-const Person = ({ person, onDelete, onUpdate,handleOpenChat }) => {
+const Person = ({ person, onUpdate,handleOpenChat }) => {
     const { t } = useTranslation();
 
     const [hours, setHours] = useState();
@@ -197,9 +220,9 @@ const Person = ({ person, onDelete, onUpdate,handleOpenChat }) => {
         { value: 'Edit' },
     ];
 
-    const handleDropdownSelect = (v) => {
-        v == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)
-    };
+    // const handleDropdownSelect = (v) => {
+    //     v == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)
+    // };
 
     return (
         <>
@@ -243,25 +266,28 @@ const Person = ({ person, onDelete, onUpdate,handleOpenChat }) => {
     )
 };
 
-const RightSide = ({ isSolid, data, onClick , respond }) => {
+const RightSide = ({ isSolid, data, onClick , respond  ,onDeleteTeam , teamId }) => {
     const { t } = useTranslation();
+    const length = data?.creatives?.map(item=> item.users.length)
+    const sum = length?.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-    
-    return respond && <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
+    return respond &&<>
+    <DeleteTeam onClick={()=> onDeleteTeam()} id={teamId} />
+     <div className="w-full max-w-[483px] md:h-body md:py-10 mb-4 md:mb-0">
         <div className="flex flex-col justify-between gap-7 bg-white dark:bg-[#1A2024] w-full h-full border rounded-2xl border-[#CFCFCF] dark:border-[#3D3D3D] relative">
             <div className="p-12 w-full flex flex-col h-full overflow-y-scroll">
             {respond?.loading?<DuvduLoading loadingIn={""} type={'contractDetails'}/>:
             <>
                 <h2 className="opacity-80 text-2xl font-semibold capitalize">{t("Team Details")}</h2>
-                <div className="w-full flex flex-col gap-8 h-full mt-6">
+                <div className="w-full flex flex-col gap-5 h-full mt-6">
                     <section>
-                        <h3 className="opacity-60 capitalize text-base mb-2">{t("Team Name")}</h3>
+                        <h3 className="opacity-60 capitalize text-base">{t("Team Name")}</h3>
                         <span className="font-bold capitalize">
                             {data.title}
                         </span>
                     </section>
                     <section>
-                        <h3 className="opacity-60 capitalize text-base mb-2">{t("Team details")}</h3>
+                        <h3 className="opacity-60 capitalize text-base">{t("Team details")}</h3>
                         <span className="font-bold">
                             {data.desc}
                         </span>
@@ -273,19 +299,19 @@ const RightSide = ({ isSolid, data, onClick , respond }) => {
                         </span>
                     </section> */}
                     <section>
-                    <h3 className="opacity-60 capitalize text-base mb-2">{t("Team Create At")}</h3>
+                    <h3 className="opacity-60 capitalize text-base">{t("Team Create At")}</h3>
                     <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                             <Icon className='' name={"calendar"} />
                         </div>
                         <div className="flex flex-col ps-5 w-full">
-                            <span className="font-normal text-base">{dateFormat(data.startDate, 'd mmmm , yyyy')}</span>
-                            <span className="text-[#747688] text-xs">{dateFormat(data.startDate, 'dddd , h:mm TT')}</span>
+                            <span className="font-normal text-base">{dateFormat(data.createdAt, 'd mmmm , yyyy')}</span>
+                            <span className="text-[#747688] text-xs">{dateFormat(data.createdAt, 'dddd , h:mm TT')}</span>
                         </div>
                     </div>
                     </section>
                     <section>
-                    <h3 className="opacity-60 capitalize text-base mb-2">{t("Project Location")}</h3>
+                    <h3 className="opacity-60 capitalize text-base">{t("Project Location")}</h3>
                     <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"location-dot"} />
@@ -296,6 +322,12 @@ const RightSide = ({ isSolid, data, onClick , respond }) => {
                         </div>
                     </div>
                     </section>
+                    {sum===0 &&<section>
+                        <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={()=>OpenPopUp('delete-team-' + teamId)}>
+                            {t("Delete")}
+                        </button>
+
+                    </section>}
                     {/* <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                         <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">
                             <Icon className='text-primary w-4' name={"image"} />
@@ -320,6 +352,7 @@ const RightSide = ({ isSolid, data, onClick , respond }) => {
             )}
         </div>
     </div>
+    </>
 };
 
 const Cover = ({ respond }) => (
@@ -375,7 +408,9 @@ const mapStateToProps = (state) => ({
     add_creative: state.api.AddTeamProject,
     delete_respond: state.api.DeleteTeamProjects,
     update_respond: state.api.UpdateTeamUser,
-
+    add_category_respond:state.api.AddNewCategoryTeam,
+    delete_category_respond:state.api.DeleteCategoryTeam,
+    isLogin: state.auth.login,  
 });
 
 const mapDispatchToProps = {
@@ -384,6 +419,8 @@ const mapDispatchToProps = {
     DeleteTeamProjects,
     UpdateTeamUser,
     GetAllMessageInChat,
+    AddNewCategoryTeam,
+    DeleteCategoryTeam
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TheTeam);
 

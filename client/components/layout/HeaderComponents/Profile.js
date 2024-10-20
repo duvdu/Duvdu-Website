@@ -64,8 +64,9 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
         return covers;
     };
     const saved = getProjectCovers(fav_respond?.data || [])
-    const favCover = getBoards_respond?.data?.length>0 ? (getBoards_respond?.data[1]?.image?getBoards_respond?.data[1].image:'color') : null
-    const color = getBoards_respond?.data?.length && getBoards_respond?.data[1]?.color
+    const favCover = getBoards_respond?.data?.length>0 ? (getBoards_respond?.data[0]?.image?getBoards_respond?.data[0].image:'color') : null
+    const color = getBoards_respond?.data?.length && getBoards_respond?.data[0]?.color
+    console.log({favCover,color , getBoards_respond})
     useEffect(()=>{
         setShowMiddleCard(false)
     },[hasVerificationBadge])
@@ -184,6 +185,27 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                     <Link href={`/save/favorites`} >
                                         <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
+                                                // favCover ? (favCover!=='color'?<img className='rounded-[30px] h-full w-full object-cover' src={favCover} /> :
+                                                //     <div style={{backgroundColor:color}} className={`aspect-square rounded-[30px] w-full flex justify-center items-center cursor-pointer]`}>
+                                                //         <Icon className='w-10' name={"dvudu-image"} />
+                                                //     </div>
+                                                // ):
+                                                    // <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
+                                                    //     <Icon className='w-10' name={"dvudu-image"} />
+                                                    // </div>
+                                                    <img className='rounded-[30px] h-full w-full object-cover bg-[#E8F1FD] dark:bg-[#1A2024] bg-center bg-no-repeat border-[1px] !border-[#B0C9EB] dark:!border-[#B0C9EB40]' src={'/assets/imgs/Favorite.svg'} />
+                                                    // <div className={`w-full rounded-[50px] h-full bg-[#E8F1FD] dark:bg-[#1A2024] bg-center bg-no-repeat border-[2px] !border-[#B0C9EB] dark:!border-[#B0C9EB40]`} style={{ backgroundImage: `url('/assets/imgs/Favorite.svg')`}}></div>
+                                                                        
+                                            }
+                                        </div>
+                                    </Link>
+                                    <Link href="/saved" >
+                                        <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
+                                            {
+                                                // saved[0] && false ? <img className='rounded-[30px] h-full object-cover' src={saved[0]} /> :
+                                                //     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
+                                                //         <Icon className='w-10' name={"dvudu-image"} />
+                                                //     </div>
                                                 favCover ? (favCover!=='color'?<img className='rounded-[30px] h-full w-full object-cover' src={favCover} /> :
                                                     <div style={{backgroundColor:color}} className={`aspect-square rounded-[30px] w-full flex justify-center items-center cursor-pointer]`}>
                                                         <Icon className='w-10' name={"dvudu-image"} />
@@ -192,16 +214,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                                     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
                                                         <Icon className='w-10' name={"dvudu-image"} />
                                                     </div>
-                                            }
-                                        </div>
-                                    </Link>
-                                    <Link href="/saved" >
-                                        <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
-                                            {
-                                                saved[0] && false ? <img className='rounded-[30px] h-full object-cover' src={saved[0]} /> :
-                                                    <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
-                                                        <Icon className='w-10' name={"dvudu-image"} />
-                                                    </div>
+
                                             }
                                         </div>
                                     </Link>

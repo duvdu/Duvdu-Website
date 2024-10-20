@@ -16,19 +16,21 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
         <div className='flex items-center justify-center text-center cursor-pointer'>
 
           <img
-            className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top'
+            className='profileImgture-2 bg-gray-300 dark:bg-[#ffffff20] m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top'
             src={cardData?.user?.profileImage || '/default-profile.png'} // Providing a default image
-            alt="profile picture"
+            alt=""
           />
 
           <div className='flex-2 flex-col gap-1'>
             <h3 className='opacity-80 text-lg font-bold text-start'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0] || "Unknown User"}</h3>
+            {cardData?.address && 
             <span className='flex items-start justify-start opacity-40'>
               <div>
                 <Icon className='opacity-50 mr-1 mt-1 w-3' name='location-dot' />
               </div>
-              <span className="text-start line-clamp-2">{cardData?.address || "UNKNOWN"}</span>
+                <span className="text-start line-clamp-2">{cardData?.address || "UNKNOWN"}</span>
             </span>
+            }
           </div>
         </div>
       </Link>
@@ -50,7 +52,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
         {cardData?.platforms?.length > 0 && 
           <div className='flex justify-center pt-25 items-center gap-3'>
               {cardData?.platforms.map(platform=>
-              <div className='info-container'>
+              <div className='info-container !normal-case'>
                 <span>{platform.name}</span>
               </div>
               )}

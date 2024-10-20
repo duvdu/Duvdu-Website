@@ -7,8 +7,6 @@ import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { GetNotifications, cleanupSocket } from "../../redux/action/apis/realTime/notification/getAllNotification";
-import { GetBoards } from "../../redux/action/apis/bookmarks/bookmark/get";
-import { GetFavList } from "../../redux/action/apis/bookmarks/fav/getAll";
 import { getCategory } from "../../redux/action/apis/category/getCategories";
 import { init } from "../../redux/action/apis/init/getdata";
 import { useRouter } from "next/router";
@@ -32,14 +30,10 @@ const Layout = ({
     getMyprofile,
     GetAllChats,
     GetNotifications,
-    GetBoards,
-    GetFavList,
     getCategory,
     getMyprofile_respond,
-    GetBoards_respond,
     GetAllChats_respond,
     GetNotifications_respond,
-    GetFavList_respond,
     getCategory_respond,
     logout_respond,
     LogOut,
@@ -81,23 +75,6 @@ const Layout = ({
     }, [getMyprofile_respond?.message])
     
     useEffect(() => {
-        if (user?.username) {
-            if (!GetBoards_respond)
-                GetBoards({})
-            if (!GetFavList_respond)
-                GetFavList({})
-            if (!GetAllChats_respond)
-                GetAllChats()
-            if (!GetNotifications_respond) {
-                GetNotifications()
-            }
-        }
-        return () => {
-            // cleanupSocket();
-        };
-    }, [user?.username])
-
-    useEffect(() => {
         if(logout_respond?.data) {
             router.push({
             pathname: "/login",
@@ -138,11 +115,8 @@ const mapStateToProps = (state) => ({
     login_respond: state.api.login,
     getMyprofile_respond: state.api.getMyprofile,
     categories: state.categories,
-
     GetAllChats_respond: state.api.GetAllChats,
     GetNotifications_respond: state.api.GetNotifications,
-    GetBoards_respond: state.api.GetBoards,
-    GetFavList_respond: state.api.GetFavList,
     logout_respond: state.api.LogOut,
     getCategory_respond: state.api.getCategory,
 });
@@ -152,8 +126,6 @@ const mapDispatchToProps = {
     GetAllChats,
     GetNotifications,
     cleanupSocket,
-    GetBoards,
-    GetFavList,
     LogOut,
     init,
     getCategory

@@ -77,7 +77,7 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
       audio.removeEventListener("ended", handleAudioEnd);
     };
   }, [audioRef]);
-
+  console.log({duration})
   return (
     <>
       <div className="audio-player-chat">
@@ -108,7 +108,7 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
             <div
               className="progress-chat"
               style={{
-                width: `${(currentTime / duration) * 100}%`,
+                width: `${(currentTime / (duration =='Infinity'?2 : duration)) * 100}%`,
               }}
             ></div>
             {hoverProgress !== null && (
@@ -131,7 +131,7 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
         <div className="time-display">
           <span>{formatTime(currentTime)}</span>
           <span>/</span>
-          <span>{formatTime(duration)}</span>
+          <span>{formatTime(duration =='Infinity'?2 : duration)}</span>
         </div>
         <span>{time}</span>
       </div>

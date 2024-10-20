@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import * as Types from '../../../redux/constants/actionTypes';
 import { useEffect, useState } from "react";
 import MessageTile from "../../elements/MessageTile";
-import { GetNotifications } from "../../../redux/action/apis/realTime/notification/getAllNotification";
 import DuvduLoading from "../../elements/duvduLoading.js";
+import DraggableList from "../../../components/pages/home/dragList";
+
 import Link from 'next/link';
 
 
-function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond , onChoose  }) {
+function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond  , AvailableUserChat_resond , AvailableUserChat, onChoose  }) {
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
@@ -44,7 +45,11 @@ function MessageAndNotofication({ getheaderpopup, chats, GetNotifications_resond
                             :
                             <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
                         }
-                            <ViewFew Type={'messages'} onChoose={onChoose} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
+                        {chats?.length==0 ?
+                            <DuvduLoading loadingIn={""} type='notification' />
+                        :
+                        <ViewFew Type={'messages'} onChoose={onChoose} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
+                                                }
                         </>
                     }
                     {
@@ -83,6 +88,14 @@ const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
                 <div onClick={onViewAll} className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</div>
             }
         </div>
+        {Type === "messages" &&
+        <div className="flex items-center mt-5">
+            <DraggableList>
+
+                <img className="size-9 rounded-full object-cover object-top" src={''} alt="user" width="45" height="45" />
+            </DraggableList>
+        </div>
+        }
         {list.length > 0 ?
             <div className="flex flex-col gap-4 mt-8 overflow-y-hidden">
                 {list.slice(0, 4).map((tile, index) => (
@@ -94,7 +107,7 @@ const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
 
 
 const NotificationTile = ({ tile }) =>
-    <Link href={`/contracts?contract=${tile.arget}`}>
+    <Link href={`/contracts?contract=${tile.target}`}>
         <div className="w-64 flex gap-4">
             <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
             <div className="flex flex-col justify-center">
@@ -112,9 +125,10 @@ const NotificationTile = ({ tile }) =>
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
     chats: state.chats.list,
-    GetNotifications_resond: state.api.GetNotifications,
+    GetNotifications_resond: state.api.GetNotifications,    
+    AvailableUserChat_resond: state.api.AvailableUserChat,    
 });
 const mapDispatchToProps = {
-    GetNotifications,
+    // AvailableUserChat
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MessageAndNotofication);

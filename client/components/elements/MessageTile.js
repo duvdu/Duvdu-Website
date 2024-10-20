@@ -7,27 +7,27 @@ function MessageTile({ GetAllMessageInChat, message, user , onChoose }) {
     const unreadedcount = message.unreadMessageCount;
     // Start from the last element and move backwards
     function checkIsMe(writer) {
-        return writer.username == user.username
+        return writer?.username == user?.username
     }
 
     function getotherdata() {
 
         const element = lastMSG;
-        if (!checkIsMe(element.sender)) {
-            return element.sender
+        if (!checkIsMe(element?.sender)) {
+            return element?.sender
         }
-        if (!checkIsMe(element.receiver)) {
-            return element.receiver
+        if (!checkIsMe(element?.receiver)) {
+            return element?.receiver
         }
 
     }
     const other = getotherdata() ?? {}
     const renderMessageContent = () => {
-        if (!lastMSG.media || lastMSG.media.length === 0) {
-            return lastMSG.content ;
+        if (!lastMSG?.media || lastMSG?.media.length === 0) {
+            return lastMSG?.content ;
         }
         
-        const media = lastMSG.media[0];
+        const media = lastMSG?.media[0];
         if(!media) return ''
         if (media.type.startsWith('image/')) {
             return '📷 Image';
@@ -53,12 +53,12 @@ function MessageTile({ GetAllMessageInChat, message, user , onChoose }) {
                 <div className="size-9 rounded-full bg-black overflow-hidden">
                     <img className="object-cover object-top" src={other.profileImage || process.env.DEFULT_PROFILE_PATH} alt="user" width="37" height="37" />
                 </div>
-                <div className={`absolute bottom-1 right-[2px] rounded-full size-[10px] border-[1.68px] border-white ${lastMSG.sender.isOnline ? 'bg-[#4CE417]' : 'bg-[#BDBDBD]'}`} />
+                <div className={`absolute bottom-1 right-[2px] rounded-full size-[10px] border-[1.68px] border-white ${lastMSG?.sender?.isOnline ? 'bg-[#4CE417]' : 'bg-[#BDBDBD]'}`} />
             </div>
             <div className="flex flex-col w-full">
                 <div className="flex justify-between">
                     <span className="font-semibold text-xs">{other.name?.split(' ')[0].length>6?other.name?.split(' ')[0].slice(0,6):other.name?.split(' ')[0]} </span>
-                    <span className="text-[#333] text-[10px] opacity-60">{dateFormat(lastMSG.updatedAt, 'hh:mm')} </span>
+                    <span className="text-[#444] text-[10px] opacity-60">{dateFormat(lastMSG?.updatedAt, 'hh:mm')} </span>
                 </div>
                 <div className="flex justify-between">
                     <span className="text-xs opacity-60">{renderMessageContent()}</span>

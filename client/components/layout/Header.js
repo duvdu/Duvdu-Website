@@ -12,6 +12,10 @@ import * as Types from "../../redux/constants/actionTypes";
 import { OpenPopUp, errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
+import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
+import { AvailableUserChat } from "../../redux/action/apis/realTime/messages/availableUserChat";
+import { GetBoards } from "../../redux/action/apis/bookmarks/bookmark/get";
+import { GetFavList } from "../../redux/action/apis/bookmarks/fav/getAll";
 import Link from "next/link";
 import ErrorPopUp from "../popsup/errorPopUp";
 import { LogOut } from "../../redux/action/apis/auth/logout";
@@ -32,7 +36,14 @@ const Header = ({
     toggleDarkMode,
     MarkNotificationsAsRead,
     GetNotifications,
+    GetAllChats_respond,
+    GetAllChats,
+    AvailableUserChat,
     LogOut,
+    GetBoards,
+    GetFavList,
+    GetFavList_respond,
+    GetBoards_respond,
     user,
 }) => {
 
@@ -60,6 +71,14 @@ const Header = ({
         if (getheaderpopup == Types.SHOWNOTOFICATION) {
             MarkNotificationsAsRead()
             GetNotifications()
+            if(!GetAllChats_respond?.data){
+                AvailableUserChat()
+                GetAllChats()
+            }
+        }
+        if(getheaderpopup===Types.SHOWPROFILE){
+            if (!GetBoards_respond)
+                GetBoards({})
         }
     }, [getheaderpopup]);
 
@@ -133,7 +152,7 @@ const Header = ({
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-20`} />
             {
-                <header className={`bg-white dark:bg-[#1A2024] w-full z-20 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
+                <header className={`bg-white dark:bg-[#1A2024] w-full !z-20 ${fromlayout.iSsticky ? "sticky top-0" : ""}`}>
                     <div className="py-3 hidden lg:block">
                         <div className="container">
                             <div className="header-wrap" >
@@ -289,9 +308,13 @@ const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
     getheaderpopup: state.setting.headerpopup,
     islogin: state.auth.login,
+    GetAllChats_respond: state.api.GetAllChats,
     api: state.api,
     error: state.errors,
     user: state.auth.user,
+    GetBoards_respond: state.api.GetBoards,
+    GetFavList_respond: state.api.GetFavList,
+
 });
 
 const mapDispatchToProps = {
@@ -299,7 +322,11 @@ const mapDispatchToProps = {
     SetheaderPopUp,
     MarkNotificationsAsRead,
     GetNotifications,
+    GetAllChats,
+    AvailableUserChat,
     LogOut,
+    GetBoards,
+    GetFavList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

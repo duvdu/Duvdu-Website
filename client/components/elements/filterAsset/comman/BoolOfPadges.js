@@ -9,7 +9,7 @@ const BoolOfPadges = ({ list = [], onSelect, isSelected }) => (
                 onClick={() => onSelect(item)}
                 isSelected={isSelected.includes(item._id)}
             >
-                {item.title}
+                {item.title??item.name}
             </Padge>
         ))}
     </div>

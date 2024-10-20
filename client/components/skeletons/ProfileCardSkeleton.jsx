@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ProfileCardSkeleton() {
   return (
-    <div className="w-full lg:max-w-sm p-6 bg-gray-200 dark:bg-[#444] rounded-[40px] animate-pulse space-y-4">
+    <div className="w-full col-span-2 lg:max-w-sm p-6 bg-gray-200 dark:bg-[#444] rounded-[40px] animate-pulse space-y-4">
       {/* Profile Image */}
       <div className="flex items-center space-x-2">
         <div className="bg-gray-300 dark:bg-[#333] rounded-full h-20 w-20"></div>

@@ -21,7 +21,7 @@ const ProjectCover = ({ data , cover  , hidden , onAudioPlay}) => {
     isAudio(data)?(
       <div className='w-full h-full'>
         {!hidden && 
-        <div className='absolute bottom-2 left-1/2 z-30 -translate-x-1/2 p-5'>
+        <div className='absolute bottom-2 left-1/2 z-10 -translate-x-1/2 p-5'>
             <AudioPlayer
               src={data}
               audioRef={audioRef}

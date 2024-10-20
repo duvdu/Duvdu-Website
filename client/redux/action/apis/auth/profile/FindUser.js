@@ -11,7 +11,7 @@ export const FindUser = ({search = "", page = 1, limit = 10 , category}) => {
             if (search?.length > 0) params.search = search;
             if (page) params.page = page;
             if (limit) params.limit = limit;
-            if (category) params.categories = category;
+            if (category) params.category = category;
             const queryString = new URLSearchParams(params).toString();
             const response = await mainApiInstance.get(`/api/users/auth/find?${queryString}`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });

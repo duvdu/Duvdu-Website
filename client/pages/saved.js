@@ -34,7 +34,7 @@ const Saved = ({
     const { t } = useTranslation();
     const route = useRouter()
     useEffect(()=>{
-        if(!isLogin)
+        if(isLogin===false)
             route.push('/')
     },[isLogin])
     const Boards = ({ data, isFav }) => {
@@ -123,7 +123,12 @@ const Saved = ({
         
         if (createBoard_respond?.message || updateBoard_respond?.message || deleteSavedBoard_respond?.message) {
             GetBoards()
-            GetFavList({})
+        }
+        if(!getBoards_respond){
+            GetBoards()
+        }
+        if(!getFavList_respond){
+            GetFavList({search:''})
         }
         ClosePopUp("create-new-board")
     }, [createBoard_respond, updateBoard_respond, deleteSavedBoard_respond])

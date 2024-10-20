@@ -51,8 +51,8 @@ const Studio = ({ projects, GetStudios, api }) => {
             if (category) params.category = category;
             if (subCategory) params.subCategory = subCategory;
             if (tag) params.tag = tag;
-            if (priceTo) params.projectScaleMin = priceTo;
-            if (priceFrom) params.projectScaleMax = priceFrom;
+            if (priceTo) params.maxBudget = priceTo;
+            if (priceFrom) params.minBudget = priceFrom;
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
             if (inclusive) params.inclusive = inclusive;

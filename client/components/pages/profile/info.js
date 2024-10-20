@@ -24,7 +24,7 @@ function Info({
     return <>
         <div className='flex items-end sm:items-center pb-5'>
             <div className={`w-28 h-28 bg-cover relative p-3 ltr:mr-3 rtl:ml-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
-                <img className='w-full h-full rounded-full object-cover object-top' src={src} alt="profile picture" />
+                <img className='w-full h-full rounded-full object-cover object-top' src={src} alt="" />
             </div>
             <div className='flex-1 flex-col gap-1'>
                 <span className='text-2xl xl:text-3xl font-bold capitalize line-clamp-1 lg:line-clamp-2'>{personalName}</span>

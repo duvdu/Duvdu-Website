@@ -6,6 +6,9 @@ import dateFormat from "dateformat";
 import { isVideo  } from '../../../util/util';
 import Icon from '../../Icons';
 import ProjectCover from './projectShow';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
+import 'swiper/swiper-bundle.css';
 
 const Details = ({ data , onAudioPlay }) => {
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
@@ -95,7 +98,7 @@ const Details = ({ data , onAudioPlay }) => {
             {(data?.tools || data?.equipments)?.length > 0 &&
                 <>
                     <div className="mt-3 mb-3">
-                        {/* <h3 className="capitalize opacity-50 font-medium">{t("Tools Used")}</h3> */}
+                        <h3 className="capitalize opacity-50 font-medium">{t("Tools Used")}</h3>
                     </div>
                     <div className="flex flex-col gap-2">
                         {(data?.tools || data?.equipments).map(tool => [
@@ -117,7 +120,7 @@ const Details = ({ data , onAudioPlay }) => {
             {data?.functions?.length > 0 &&
                 <>
                     <div className="mt-2 mb-3">
-                        {/* <h3 className="capitalize opacity-50 font-medium">{t("function Used")}</h3> */}
+                        <h3 className="capitalize opacity-50 font-medium">{t("function Used")}</h3>
                     </div>
                     <div className="flex flex-col gap-2 mb-4">
                         {(data?.functions).map(tool => [

@@ -23,6 +23,7 @@ import 'swiper/swiper-bundle.css';
 import Icon from "../../components/Icons";
 import { useTranslation } from 'react-i18next';
 import DuvduLoading from "../../components/elements/duvduLoading";
+import { userReview } from '../../redux/action/apis/reviews/users';
 
 // Install Swiper modules
 SwiperCore.use([Autoplay, Navigation, EffectFade, Pagination]);
@@ -34,16 +35,22 @@ const Projects = ({
     project_respond,
     chat_respond,
     auth,
-    user
+    user,
+    userReview, 
+    userReview_respond
 }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const { project: projectId } = router.query;
-    const projects = projects_respond?.data || [];
+    const projects = projects_respond?.data?.filter(item=> item._id !==projectId) || [];
     const [project, setProject] = useState(project_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
+    useEffect(() => {
+        if (project_respond?.data?.user?.username)
+            userReview({ username: project_respond?.data?.user?.username })
+    }, [project_respond?.data?.user?.username  ])
 
     useEffect(() => {
         setProject(project_respond?.data);
@@ -55,10 +62,17 @@ const Projects = ({
             GetProject(projectId);
         }
     }, [projectId]);
-
     useEffect(() => {
-        GetProjects({ limit: "4" });
-    }, []);
+        const params = {
+            limit: "5",
+        };
+        const categoryId = project_respond?.data?.category?._id
+        if (categoryId) {
+            params.category = categoryId;
+            const queryString = new URLSearchParams(params).toString();
+            GetProjects(queryString);
+        }
+    }, [project_respond?.data?.category?._id]);
 
     const toggleDrawer = () => {
         if (auth.login)
@@ -82,9 +96,6 @@ const Projects = ({
                 {project_respond?.loading?
                 <>
                 <DuvduLoading loadingIn={""} type='project'/>
-                <div className='container'>
-                    <DuvduLoading loadingIn={""} type='projects'/>
-                </div>
                 </>:
             project && (
                     
@@ -108,13 +119,13 @@ const Projects = ({
                                             <div className='mx-5 md:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>
                                                 {/* Custom Arrows */}
                                                 {/* <div className="swiper-button-prev"> */}
-                                                <div className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                <button className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
                                                     <Icon className='!text-white !w-[10px] ' name={"chevron-left"} />
-                                                </div>
-                                                {/* </div> */}
-                                                <div className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                </button>
+                                                {/* </button> */}
+                                                <button className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
                                                     <Icon className='!text-white !w-[10px]' name={"chevron-right"} />
-                                                </div>
+                                                </button>
                                                 <Swiper
                                                     dir='ltr'
                                                     className='cardimg'
@@ -150,11 +161,22 @@ const Projects = ({
                                             </div>
                                         }
                                         <About data={project} />
-                                        <Reviews data={project} />
+                                        {userReview_respond?.data && 
+                                        <div className='pt-5'> 
+                                            <Reviews project={true} userName={project?.user?.username} data={userReview_respond?.data} />
+                                        </div> 
+                                        }
                                     </section>
                                 </div>
+
                                 <section className="mx-7 sm:mx-0">
+                                {projects_respond?.loading?
+                                <div className='py-10'>
+                                    <DuvduLoading loadingIn={""} type='projects'/>
+                                </div>
+                                :
                                     <Recommended projects={projects} />
+                                }
                                 </section>
                             </div>
                         </div>
@@ -162,9 +184,9 @@ const Projects = ({
                             <ProjectController initialData={project} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={project.user.username != user?.username} />
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />
-                    </>
+                        </>
+                        )}
                 
-                )}
             </Layout>
         </>
     );
@@ -175,11 +197,13 @@ const mapStateToProps = (state) => ({
     project_respond: state.api.GetProject,
     user: state.user.profile,
     auth: state.auth,
+    userReview_respond: state.api.userReview,
 });
 
 const mapDidpatchToProps = {
     GetProjects,
     GetProject,
+    userReview
 };
 
 export default connect(mapStateToProps, mapDidpatchToProps)(Projects);

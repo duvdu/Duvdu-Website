@@ -196,7 +196,7 @@ const Home = ({
         if (direction === 'next') {
           ref?.current?.swiper?.slideNext();
         } else {
-          ref.current.swiper.slidePrev();
+          ref?.current?.swiper?.slidePrev();
         }
       };
   

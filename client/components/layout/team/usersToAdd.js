@@ -16,13 +16,13 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
 
     return (
         <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
-            <div className="flex w-full overflow-hidden h-32">
-                <img className="w-full" src={info.coverImage} alt={`Profile Image`} />
+            <div className="flex w-full bg-gray-300 overflow-hidden h-32">
+                <img className="w-full" src={info.coverImage} alt={``} />
             </div>
             <div className='p-5'>
                 <div className='flex items-start gap-4 -translate-y-4 h-11'>
                     <div className='w-[85px] h-[85px] bg-cover relative bg-no-repeat'>
-                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={info.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                        <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={info.profileImage || process.env.DEFULT_PROFILE_PATH} alt="" />
                     </div>
                     <div className='flex-2 flex-col gap-1'>
                         <span className='text-2xl font-bold capitalize'>{info.name?.length > 14?`${info.name.slice(0,14)}...`:info.name}</span>
@@ -82,6 +82,7 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
     const [details, setDetails] = useState(null);
     const [durations, setDurations] = useState(null);
     const [attachments, setAttachments] = useState(null);
+    const [data, setData] = useState(respond?.data);
     const validateRequiredFields = () => {
         const errors = {};
         if (!hours) errors.hours = 'hours is required';
@@ -99,10 +100,13 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
     const [limit, setLimit] = useState(showLimit);
     const pagganation = respond?.pagination;
     const observerRef = useRef();
-
+    useEffect(()=>{
+        setData(respond?.data)
+    },[respond?.data])
     useEffect(() => {
+        if(respond?.pagination?.totalPages!==1 || respond?.pagination?.totalPages!==0)
         FindUser({ limit: limit, page: page , category:categoryId });
-    }, [limit]);
+    }, [limit , categoryId]);
 
     useEffect(() => {
         if (!observerRef.current) return;
@@ -182,12 +186,14 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
                 </div>
             </Popup>
             <div className="grid minmax-360 gap-5 my-6 addUserScroll">
-                {respond?.data?.map((value, index) => (
+                {data?.map((value, index) => (
                     <AddToTeamCard goback={goback} info={value} key={index} onChoose={() => openpopUp(value)} />
                 ))}
             </div>
             <div ref={observerRef}></div>
-            <DuvduLoading loadingIn={"FindUser"} />
+            {respond?.loading && 
+            <DuvduLoading loadingIn={""} />
+            }
         </>
     )
 };

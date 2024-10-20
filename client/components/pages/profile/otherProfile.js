@@ -16,7 +16,9 @@ import { GetUserProject } from "../../../redux/action/apis/auth/profile/getUserP
 import EmptyComponent from "../contracts/emptyComponent";
 import { swapFollow } from "../../../redux/action/apis/auth/profile/swapFollow";
 import { useTranslation } from 'react-i18next';
+import { userReview } from '../../../redux/action/apis/reviews/users';
 import DuvduLoading from '../../elements/duvduLoading';
+import Reviews from "../../../components/pages/stduiosAndProject/review";
 
 const profile = {
     comments: [
@@ -53,7 +55,9 @@ function OtherProfile({
     swapFollow,
     swapFollowRespond,
     api,
-    islogin
+    islogin,
+    userReview, 
+    userReview_respond
 }) {
 
     const route = useRouter();
@@ -71,6 +75,7 @@ function OtherProfile({
 
     useEffect(() => {
         if (username) {
+            userReview({ username: username })
             getOtherprofile(username);
             GetUserProject({ username });
         }
@@ -99,10 +104,10 @@ function OtherProfile({
                     <div className="bg-gray-200 dark:bg-[#1f1f1f] h-36 md:h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
                     <Conver converPic={userInfo?.coverImage} />
                 }
-                <div className='flex gap-3 pt-7 flex-col lg:flex-row mb-5'>
-                {user?.loading?
+                    <div className='flex lg:grid lg:grid-cols-6 gap-3 pt-7 flex-col lg:flex-row'>
+                    {user?.loading ?
                     <DuvduLoading loadingIn={""} type='profileCard'/>:
-                    <div className='sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
+                    <div className='col-span-2 sm:bg-white sm:dark:bg-black sm:pt-10 sm:pb-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
                         <div className='px-6 sm:px-10'>
                             <Info
                                 src={userInfo?.profileImage || process.env.DEFULT_PROFILE_PATH}
@@ -169,7 +174,10 @@ function OtherProfile({
                             </>
                         }
                             <div className='h-divider my-7'></div>
-                            <div className='px-10'>
+                            <div className='ps-5 md:ps-10 '>
+                                <Reviews userName={user?.username} data={userReview_respond?.data} />
+                            </div>
+                            <div className='px-5 md:px-10 '>
                             <GoogleMap
                                 width={'100%'} value={{ 'lat': userInfo?.location?.lat, 'lng': userInfo?.location?.lng }}
                                 isreadOnly={true}
@@ -177,11 +185,10 @@ function OtherProfile({
                                 height={200}
                                 inputclass={"my-0 bg-transparent font-bold"}
                                 fullscreenControl={false}
-                            />
+                                />
                             </div>
-
                     </div>}
-                    <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
+                    <div className='col-span-4 w-full mb-10 -translate-y-[80px] sm:-translate-y-0'>
                         {projects?.loading?
                             <DuvduLoading loadingIn={""} type='profileProjects'/>
                             :
@@ -205,7 +212,8 @@ const mapStateToProps = (state) => ({
     user: state.api.getOtherprofile,
     projects: state.api.GetUserProject,
     swapFollowRespond: state.api.swapFollow,
-    
+    userReview_respond: state.api.userReview,
+
 });
 
 const mapDispatchToProps = {
@@ -213,7 +221,8 @@ const mapDispatchToProps = {
     getOtherprofile,
     GetUserProject,
     setFollow,
-    swapFollow
+    swapFollow,
+    userReview
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OtherProfile);

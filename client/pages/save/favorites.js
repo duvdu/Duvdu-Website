@@ -57,16 +57,17 @@ const Projects = ({
                         </div>
                         
 
-                        {getPaginatedProjects && getPaginatedProjects.length == 0 && (
-                            <EmptyComponent message={"No Projects Yet!"} />
-                        )}
+                        {/* {getPaginatedProjects && getPaginatedProjects.length == 0 && (
+                           
+                        )} */}
                         {get_respond?.loading?
                         <DuvduLoading loadingIn={""} type='projects'/>:
+                        get_respond &&(getPaginatedProjects?.length>0 ?
                         <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.length>0 && getPaginatedProjects?.map((item, i) => (
                                 <Card key={i} favorite={true} cardData={item}/>
                             ))}
-                        </div>
+                        </div>: <EmptyComponent message={"No Projects Yet!"} />)
                         }
                         {
                             getPaginatedProjects?.length === limit &&

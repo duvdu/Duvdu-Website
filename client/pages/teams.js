@@ -12,6 +12,9 @@ import EditFilesTeam from "../components/popsup/teamProject/EditFilesTeam";
 import { useRouter } from "next/router";
 import DuvduLoading from "../components/elements/duvduLoading";
 import { useTranslation } from 'react-i18next';
+import DeleteTeam from "../components/popsup/deleteTeam";
+import { OpenPopUp } from "../util/util";
+
 
 const Card = ({ data, DeleteTeamProjects }) => {
     const { t } = useTranslation();
@@ -29,12 +32,9 @@ const Card = ({ data, DeleteTeamProjects }) => {
     const handleSelectClick = (event) => {
         event.stopPropagation();
     };
-
-    const handleDropdownSelect = (v) => {
-        v === 'Delete' ? onDelete() : onEdit(_id)
-    };
     const length = creatives?.map(item=> item.users.length)
     const sum = length?.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
     return (
         <>
             <Link href={`/team/${_id}`}>
@@ -48,7 +48,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                             {sum} {t('creatives')}
                         </div>
                     </>
-                    {false &&
+                    {/* {sum==0 &&
                     <div
                         className="absolute top-5 right-5"
                         onClick={handleSelectClick}
@@ -69,7 +69,7 @@ const Card = ({ data, DeleteTeamProjects }) => {
                             {status == 'refuse' && <Icon name="circle-exclamation" className={"border border-[#D72828] text-[#D72828] rounded-full p-2 size-11"} />}
                             {status == 'available' && <Icon className={"border text-[#50C878] border-[#50C878] rounded-full p-2 size-11"} name="circle-check" />}
                         </Selector>
-                    </div>}
+                    </div>} */}
                     <div>
                         <div className="absolute bottom-0 w-full h-1/2 rounded-b-[50px] gradient1" />
                         <div className="boards-info projects-name shadow2 flex">
@@ -114,9 +114,9 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
         return () => window.removeEventListener('scroll', handleScroll);
     }, [page, pagganation?.totalPages]);
 
-
+    console.log({get_respond})
     useEffect(()=>{
-        if(!isLogin)
+        if(isLogin === false)
             route.push('/')
     },[isLogin])
     return (

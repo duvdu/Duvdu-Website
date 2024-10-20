@@ -13,13 +13,14 @@ import Icon from '../Icons';
 import Drawer from './drawer';
 import AppButton from './button';
 import KeyWords from './filterAsset/keywords';
+import PlatformFilter from './filterAsset/Platforms';
 
 // Utility function to find filter name by value
 const getFilterNameByValue = (data, value) => {
     return data.find(item => item.value === value)?.name || '';
 };
 
-const RenderFilterComponent = ({ value, categories, cycle, handleSelect, toggleDrawer }) => {
+const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelect, toggleDrawer }) => {
     switch (value) {
         case 1:
             return <CategoryFilter categories={categories} cycle={cycle} onSelect={category => handleSelect(1, category, true)} onFilterChange={category => handleSelect(1, category)} toggleDrawer={toggleDrawer} />;
@@ -37,12 +38,14 @@ const RenderFilterComponent = ({ value, categories, cycle, handleSelect, toggleD
             return <InsuranceFilter onFiltersApply={filters => handleSelect(7, filters.insurance, true)} onFilterChange={filters => handleSelect(7, filters.insurance)} toggleDrawer={toggleDrawer} />;
         case 8:
             return <KeyWords onFiltersApply={filters => handleSelect(8, filters.KeyWords, true)} onFilterChange={filters => handleSelect(8, filters.KeyWords)} toggleDrawer={toggleDrawer} />;
+        case 9:
+            return <PlatformFilter platforms={platforms?.data} cycle={cycle} onSelect={platform => handleSelect(9, platform, true)} onFilterChange={platform => handleSelect(9, platform)} toggleDrawer={toggleDrawer} />;
         default:
             return null;
     }
 }
 
-const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setParams }) => {
+const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChange, setParams }) => {
     const { t } = useTranslation();
     const [selectedFilters, setSelectedFilters] = useState({});
     const [openIndex, setOpenIndex] = useState(null);
@@ -61,7 +64,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
     // { value: 4, name: "Location" },
 
     if (cycle === "rentals") filterData.push({ value: 7, name: "Insurance" });
-    if (cycle === "copy-rights" || cycle === "producer") {
+    if (cycle === "copy-rights" || cycle === "producer" || cycle === "rentals") {
         filterData.push({ value: 5, name: "Budget Range" });
     }
 
@@ -69,6 +72,9 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
         filterData.push({ value: 6, name: "Duration" });
     }
     filterData.push({ value: 8, name: "KeyWords" },);
+    if (cycle === "producer") {
+        filterData.push({ value: 9, name: "Platforms" });
+    }
 
     // Toggle dropdown visibility
     const toggleDropdown = (value) => {
@@ -147,6 +153,13 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                         params.subCategory = filter.data.join(',');
                     }
                     break;
+                case "Platforms":
+                    // Check if filter.data exists and is not empty
+                    if (filter.data && filter.data.length > 0) {
+                        console.log({platforms:filter.data})
+                        params.Platforms = filter.data;
+                    }
+                    break;
                 case "Tags":
                     // Check if filter.data exists and is not empty
                     if (filter.data && filter.data.length > 0) {
@@ -214,7 +227,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                 <div className="flex gap-2 items-end">
                     {filterData.map(({ value, name }) => (
                         <div key={value} className="relative">
-                            <div
+                            <button
                                 className="flex gap-2 items-center border border-[#E6E6E6] dark:border-gray-700 rounded-xl py-2 px-3 text-DS_black dark:text-white appearance-none w-min cursor-pointer bg-white dark:bg-gray-900"
                                 onClick={() => toggleDropdown(value)}
                             >
@@ -223,10 +236,10 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
                                 </div>
                                 <Icon name={"drop-icon"} className='dark:text-white' />
 
-                            </div>
+                            </button>
 
                             <div className={openIndex === value ? "absolute" : "hidden"}>
-                                <RenderFilterComponent value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} handleFilterChange={onFilterChange} toggleDrawer={closeDropDown} />
+                                <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} handleFilterChange={onFilterChange} toggleDrawer={closeDropDown} />
                             </div>
                         </div>
                     ))}
@@ -298,7 +311,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
 
                     {filterData.map(({ value, name }) => (
                         <div key={value} className="relative" >
-                            <RenderFilterComponent value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} />
+                            <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} />
                         </div>
                     ))}
                     <AppButton onClick={takeAction} className='block md:hidden h-[60px] m-5' contentClassName='text-base'>
@@ -312,6 +325,7 @@ const Filter = ({ hideSwitch = false, categories, cycle, onFilterChange, setPara
 
 const mapStateToProps = (state) => ({
     categories: state.categories,
+    platforms: state.api.GetPlatforms,
 });
 
 export default connect(mapStateToProps)(Filter);

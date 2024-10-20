@@ -24,6 +24,7 @@ import Icon from "../../components/Icons";
 import { useTranslation } from 'react-i18next';
 import DuvduLoading from "../../components/elements/duvduLoading";
 import Share from "../../components/popsup/Share";
+import { userReview } from '../../redux/action/apis/reviews/users';
 
 const Studio = ({
     GetStudios,
@@ -32,16 +33,23 @@ const Studio = ({
     studio_respond,
     chat_respond,
     user,
-    auth
+    auth,
+    userReview, 
+    userReview_respond
 }) => {
     const { t } = useTranslation();
     const router = useRouter()
     const { studio: studioId } = router.query;
-    const projects = studios_respond?.data || []
+    const projects = studios_respond?.data?.filter(item=> item._id !==studioId) || []
+    console.log({projects:studios_respond})
     const [studio, setStudio] = useState(studio_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
+    useEffect(() => {
+        if (studio_respond?.data?.user?.username)
+            userReview({ username: studio_respond?.data?.user?.username })
+    }, [studio_respond?.data?.user?.username  ])
 
     useEffect(() => {
         setStudio(studio_respond?.data);
@@ -60,9 +68,21 @@ const Studio = ({
     };
 
 
+    // useEffect(() => {
+    //     GetStudios({ limit: 4 });
+    // }, []);
     useEffect(() => {
-        GetStudios({ limit: 4 });
-    }, []);
+        const params = {
+            limit: "5",
+        };
+        const categoryId = studio_respond?.data?.category?._id
+        if (categoryId) {
+            params.category = categoryId;
+            const queryString = new URLSearchParams(params).toString();
+            GetStudios(queryString);
+        }
+    }, [studio_respond?.data?.category?._id]);
+
 
 
     const toggleDrawer = () => {
@@ -87,9 +107,6 @@ const Studio = ({
             {studio_respond?.loading?
             <>
                 <DuvduLoading loadingIn={""} type='project'/>
-                <div className='container'>
-                    <DuvduLoading loadingIn={""} type='projects'/>
-                </div>
             </>:
                 studio &&
                     (
@@ -114,13 +131,13 @@ const Studio = ({
                                                 <div className='mx-5 lg:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>
                                                     {/* Custom Arrows */}
                                                     {/* <div className="swiper-button-prev"> */}
-                                                    <div className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                    <button className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
                                                         <Icon className='!text-white !w-[10px] ' name={"chevron-left"} />
-                                                    </div>
-                                                    {/* </div> */}
-                                                    <div className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                                    </button>
+                                                    {/* </button> */}
+                                                    <button className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
                                                         <Icon className='!text-white !w-[10px]' name={"chevron-right"} />
-                                                    </div>
+                                                    </button>
                                                     <Swiper
                                                         dir='ltr'
                                                         className='cardimg'
@@ -159,11 +176,21 @@ const Studio = ({
                                                     </div>
                                             }
                                             <About data={studio} />
-                                            <Reviews data={studio} />
-                                        </section>
+                                            {userReview_respond?.data && 
+                                            <div className='pt-5'> 
+                                                <Reviews project={true} userName={studio?.user?.username} data={userReview_respond?.data} />
+                                            </div> 
+                                            }
+                                            </section>
                                     </div>
                                     <section className="mx-7 sm:mx-0">
-                                        <Recommended projects={projects} type={"rentals"} />
+                                    {studios_respond?.loading?
+                                        <div className='py-10'>
+                                        <DuvduLoading loadingIn={""} type='projects'/>
+                                    </div>
+                                    :
+                                    <Recommended projects={projects} type={"rentals"} />
+                                }
                                     </section>
                                 </div>
                             </div>
@@ -187,11 +214,13 @@ const mapStateToProps = (state) => ({
     projectReview_respond: state.api.projectReview,
     user: state.user.profile,
     auth: state.auth,
+    userReview_respond: state.api.userReview,
 });
 
 const mapDidpatchToProps = {
     GetStudios,
     Getstudio,
+    userReview
 };
 
 export default connect(mapStateToProps, mapDidpatchToProps)(Studio);

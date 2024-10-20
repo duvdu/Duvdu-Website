@@ -137,7 +137,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                         ))}
                     </section>
                 }
-            </section> : (respond?.data?.length===0 && <Empty />)
+            </section> : (pending?.length==0 && ongoing?.length==0 && checkout?.length==0 && <Empty />)
 
 
     const Creatives = () =>
@@ -192,8 +192,8 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                             ))}
                     </section>
                 }
-            </section> : (respond?.data?.length===0 && <Empty />)
-    return (
+            </section> : (pending?.length==0 && ongoing?.length==0 && checkout?.length==0 && <Empty />)
+        return (
         <>
 
             <div className='h-auto lg:h-body overflow-y-scroll'>

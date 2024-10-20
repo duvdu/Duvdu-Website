@@ -13,8 +13,9 @@ import ProducerCard from '../../components/pages/producer/producerCard';
 import EmptyComponent from '../../components/pages/contracts/emptyComponent';
 import Loading from '../../components/elements/duvduLoading';
 import DuvduLoading from '../../components/elements/duvduLoading';
+import { GetPlatforms } from '../../redux/action/apis/cycles/producer/platform';
 
-const Producers = ({ GetProducer, respond, api, islogin }) => {
+const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin }) => {
     const { t } = useTranslation();
     const producers = respond?.data
     const pagganation = respond?.pagination
@@ -26,17 +27,19 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords , Platforms } = Router.query
 
     const { asPath } = Router;
-
+    console.log({Platforms})
     // Remove leading slash
     const path = asPath.startsWith('/') ? asPath.substring(1) : asPath;
 
     // Extract the path part of the URL
     const cycle = path.split('?')[0];
 
-
+    useEffect(()=>{
+        GetPlatforms({search:[]})
+    },[])
     useEffect(() => {
         if (limit) {
             const params = {
@@ -52,6 +55,12 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
             // Include the query parameters from the URL if they exist
             if (category) params.category = category;
             if (subCategory) params.subCategory = subCategory;
+            if (Platforms){
+                const arr =  Platforms.split(',')
+                arr.forEach((platform, index) => {
+                    params[`platforms[${index}]`] = platform;
+                }); 
+            } 
             if (tag) params.tag = tag;
             if (priceFrom) params.minBudget = priceFrom;
             if (priceTo) params.maxBudget = priceTo;
@@ -66,7 +75,7 @@ const Producers = ({ GetProducer, respond, api, islogin }) => {
             // Call GetCopyrights with the constructed query string
             GetProducer(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }, [limit, searchTerm, page, category, Platforms, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
 
 
     useEffect(() => {
@@ -143,9 +152,11 @@ const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.GetProducer,
     islogin: state.auth.login,
+    platform: state.api.GetPlatforms,
 });
 
 const mapDispatchToProps = {
-    GetProducer
+    GetProducer,
+    GetPlatforms
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Producers);

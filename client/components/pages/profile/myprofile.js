@@ -18,6 +18,7 @@ import AddPost from '../../../components/drawer/create/addproject'
 import AddProducer from '../../../components/drawer/create/producer'
 import PostPopup from '../../../components/popsup/create/assets/chooseCategory';
 import SelectType from '../../../components/popsup/create/assets/selectType';
+import DraggableList from "../../../components/pages/home/dragList";
 
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
 import AddToolUsed from '../../popsup/create/addToolUsed';
@@ -34,7 +35,7 @@ import Loading from '../../elements/duvduLoading';
 import DuvduLoading from '../../elements/duvduLoading';
 import { userReview } from '../../../redux/action/apis/reviews/users';
 import { useTranslation } from 'react-i18next';
-
+import Reviews from "../../../components/pages/stduiosAndProject/review";
 
 function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
     const { t } = useTranslation();
@@ -54,9 +55,10 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     //     GetUserProject({})
     // }, [])
     useEffect(() => {
-        if (user?.username)
-            userReview({ username: user.username })
+        if (user?.username){
+            userReview({ username: user?.username })
             GetUserProject({ username: user?.username });
+        }
     }, [user?.username])
 
     function removeQueryParameter() {
@@ -137,17 +139,16 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             user &&
                 <>
                     <Followers id={"show-followers"} />
-                    
                     {user?.loading? 
                           <div className="bg-gray-200 dark:bg-[#1f1f1f] h-36 md:h-72 w-full animate-pulse rounded-b-[50px] mb-4"></div>:
                           <Conver converPic={userInfo?.coverImage} />
                     }
                     
-                    <div className='flex gap-3 pt-7 flex-col lg:flex-row'>
+                    <div className='flex lg:grid lg:grid-cols-6  gap-3 pt-7 flex-col lg:flex-row'>
                         {user?.loading?
                         <DuvduLoading loadingIn={""} type='profileCard'/>
                         :
-                        <div className='sm:bg-white sm:dark:bg-[#1A2024] sm:py-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
+                        <div className='col-span-2 sm:bg-white sm:dark:bg-[#1A2024] sm:py-10 left-side rounded-[55px] flex-1 relative -translate-y-[80px] sm:-translate-y-0'>
                             <div className='relative px-6 sm:px-10'>
                                 <Info
                                     src={userInfo?.profileImage}
@@ -181,19 +182,10 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                     <p className='pt-6' id='about-paragraph'>{userInfo?.about || '---'}</p>
                                 </div>}
                             <div className='h-divider my-7'></div>
-                            {userReview_respond?.data.length>0 && 
-                             <>
-                                <div className='h-divider my-7'></div>
-                                <div className='px-10'>
-                                    <div className='flex flex-col gap-4'>
-                                        {userReview_respond?.data?.map((comment) => (
-                                            <Comment key={comment._id} comment={comment} />
-                                        ))}
-                                    </div>
-                                </div>
-                            </>
-                            }   
-                            <div className='px-10'>
+                            <div className='ps-5 md:ps-10 '>
+                                <Reviews userName={user?.username} data={userReview_respond?.data} />
+                            </div>
+                            <div className='px-5 md:px-10 '>
                             <GoogleMap
                                 width={'100%'} value={{ 'lat': userInfo?.location?.lat, 'lng': userInfo?.location?.lng }}
                                 isreadOnly={true}
@@ -201,7 +193,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                 height={200}
                                 inputclass={"my-0 bg-transparent font-bold"}
                                 fullscreenControl={false}
-                            />
+                                />
                             </div>
                             {
                                 !showAddPanal &&
@@ -234,7 +226,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                             </div>
 
                         }
-                        <div className='right-side mb-10 -translate-y-[80px] sm:-translate-y-0'>
+                        <div className='col-span-4 w-full mb-10 -translate-y-[80px] sm:-translate-y-0'>
                             {projects?.loading?
                             <DuvduLoading loadingIn={""} type='profileProjects'/>
                             :
