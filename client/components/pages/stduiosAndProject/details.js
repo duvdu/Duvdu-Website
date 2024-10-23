@@ -114,6 +114,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                 <h1 className="text-xl capitalize opacity-80 font-bold">
                     {data?.name || data?.title}
                 </h1>
+                {islogin===true && 
                 <Selector
                         options={user?.username===data?.user?.username?[
                             {
@@ -130,6 +131,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                         onSelect={handleDropdownSelect}
                         className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-10 h-10 cursor-pointer"
                 />
+                }
             </div>
             <div className="w-full flex my-5">
                 <span className=" capitalize opacity-50 font-medium">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>

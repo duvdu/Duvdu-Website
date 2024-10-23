@@ -105,7 +105,7 @@ const Projects = ({
             project && (
                     
                     <>
-                        <EditProject data={project} isOpen={isOpenEdit}  id={project?._id} toggleDrawer={toggleDrawerEdit} />
+                        <EditProject data={project} isOpen={isOpenEdit}  id={project?._id} setIsOpenEdit={setIsOpenEdit} />
                         <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav} />
                         <Report />
                         <ThanksMSG />

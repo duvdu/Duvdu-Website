@@ -25,12 +25,14 @@ import { useTranslation } from 'react-i18next';
 import DuvduLoading from "../../components/elements/duvduLoading";
 import Share from "../../components/popsup/Share";
 import { userReview } from '../../redux/action/apis/reviews/users';
+import EditRental from './../../components/drawer/edit/editrental';
 
 const Studio = ({
     GetStudios,
     studios_respond,
     Getstudio,
     studio_respond,
+    update_respond,
     chat_respond,
     user,
     auth,
@@ -44,6 +46,7 @@ const Studio = ({
     const [studio, setStudio] = useState(studio_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
+    const [isOpenEdit, setIsOpenEdit] = useState(false);
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
     useEffect(() => {
         if (studio_respond?.data?.user?.username)
@@ -52,7 +55,7 @@ const Studio = ({
 
     useEffect(() => {
         setStudio(studio_respond?.data);
-    }, [studio_respond?.data]);
+    }, [studio_respond?.data , update_respond?.message]);
 
     useEffect(() => {
         if (studioId) {
@@ -93,6 +96,9 @@ const Studio = ({
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
+    const toggleDrawerEdit = () => {
+        setIsOpenEdit(!isOpenEdit);
+    };
     const handleAudioPlay = (newAudioRef) => {
         if (playingAudioRef && playingAudioRef !== newAudioRef) {
           playingAudioRef.pause();
@@ -110,6 +116,7 @@ const Studio = ({
                 studio &&
                     (
                         <>
+                            <EditRental data={studio} isOpen={isOpenEdit}  id={studio?._id} setIsOpenEdit={setIsOpenEdit} />
                             <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav} />
                             <AddToTeam />
                             <Report />
@@ -123,7 +130,7 @@ const Studio = ({
                                     </section> */}
                                     <div className="flex lg:flex-row flex-col gap-3">
                                         <section className="lg:w-1/3 mt-6 lg:mt-0">
-                                            <Details onAudioPlay={handleAudioPlay} data={studio} />
+                                        <Details toggleDrawerEdit={toggleDrawerEdit} onAudioPlay={handleAudioPlay} data={studio} />
                                         </section>
                                         <section className="lg:w-2/3">
                                             {studio?.attachments.length > 1 ?
@@ -210,6 +217,7 @@ const Studio = ({
 const mapStateToProps = (state) => ({
     studios_respond: state.api.GetStudios,
     studio_respond: state.api.Getstudio,
+    update_respond: state.api.UpdateRental,
     projectReview_respond: state.api.projectReview,
     user: state.user.profile,
     auth: state.auth,

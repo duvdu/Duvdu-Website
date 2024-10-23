@@ -12,7 +12,7 @@ import { UpdateKeysAndValues, filterByCycle } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import ListInput from "../../elements/listInput";
 import { useTranslation } from 'react-i18next';
-
+import { GetProject } from "../../../redux/action/apis/cycles/projects/getOne";
 import Drawer from "../../elements/drawer";
 import { UpdateProject } from "../../../redux/action/apis/cycles/projects/edit";
 import CategorySelection from "./../create/assets/CategorySelection";
@@ -24,7 +24,7 @@ import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
 
 
-const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respond,toggleDrawer, UpdateFormData, addprojectState, categories, resetForm }) => {
+const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, update_respond,GetProject,setIsOpenEdit, UpdateFormData, addprojectState, categories, resetForm }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const { project: projectId } = router.query;
@@ -51,11 +51,25 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
     useEffect(()=>{
         UpdateFormData('category' , data.category._id)
     },[data])
+    const AreObjectsEqual = (arr1, arr2) => {
+        if (arr1.length !== arr2.length) return false;
+      
+        for (let i = 0; i < arr1.length; i++) {
+          const obj1 = arr1[i];
+          const obj2 = arr2[i];
+      
+          if (JSON.stringify(obj1) !== JSON.stringify(obj2)) {
+            return false;
+          }
+        }
+        return true;
+    };
+      
     const convertToFormData = () => {
         const UpdatedData = new FormData();
 
         // Append simple string and number values directly from the state
-        // UpdateKeysAndValues(formData, (key, value) => UpdatedData.append(key, value), ['attachments','subCategory', 'location', 'tools', 'creatives','invitedCreatives','searchKeyWords','audioCover', 'functions'])
+        // UpdateKeysAndValues(formData, (key, value) => UpdatedData.append(key, value), ['attachments','subCategory', 'location', 'tools', 'creatives','invitedCreatives','searchKeywords','audioCover', 'functions'])
         // UpdatedData.append('projectBudget', formData.projectBudget);
         // UpdatedData.append('projectScale[scale]', formData.duration);
         // if(formData.subCategory?.length===0) delete formData.subCategory;
@@ -81,18 +95,18 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
             UpdatedData.append('projectScale[current]',formData['projectScale[current]'])
         if(formData['projectScale[pricerPerUnit]']  && (data.projectScale.pricerPerUnit!==formData['projectScale[pricerPerUnit]']))
             UpdatedData.append('projectScale[pricerPerUnit]',formData['projectScale[pricerPerUnit]'])
-        if(formData.category && (data.category!==formData.category._id))
+        if(formData.category && (data.category._id!==formData.category))
             UpdatedData.append('category',formData.category)
         if(formData.subCategory && (data.subCategory!==formData.subCategory))
-            UpdatedData.append('subCategory',formData.subCategory)
+            UpdatedData.append('subCategoryId',formData.subCategory)
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
                 UpdatedData.append(`tags[${index}]`, tag);
             });
 
-        if (formData.searchKeyWords)
-            formData.searchKeyWords.forEach((searchKeyWords, index) => {
-                UpdatedData.append(`searchKeyWords[${index}]`, searchKeyWords);
+        if (formData.searchKeywords && !AreObjectsEqual(formData.searchKeywords, data.searchKeywords))
+                formData.searchKeywords.forEach((searchKeywords, index) => {
+                UpdatedData.append(`searchKeywords[${index}]`, searchKeywords);
             });
     
         if (formData.cover && (data.name!==formData.name)) {
@@ -117,7 +131,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
         };
 
 
-        if (formData.creatives) {
+        if (formData.creatives && !AreObjectsEqual(formData.creatives, data.creatives)) {
             formData.creatives.forEach((item, index) => {
                 // UpdatedData.append(`creatives[${index}]`, item.name);
                 UpdatedData.append(`creatives[${index}][creative]`, item._id);
@@ -130,14 +144,14 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
             });
         }
 
-        if (formData.tools) {
+        if (formData.tools  && !AreObjectsEqual(formData.tools, data.tools)) {
             formData.tools.forEach((item, index) => {
                 UpdatedData.append(`tools[${index}][name]`, item.name);
                 UpdatedData.append(`tools[${index}][unitPrice]`, item.unitPrice);
             });
         }
 
-        if (formData.functions) {
+        if (formData.functions  && !AreObjectsEqual(formData.functions, data.functions)) {
             formData.functions.forEach((item, index) => {
                 UpdatedData.append(`functions[${index}][name]`, item.name);
                 UpdatedData.append(`functions[${index}][unitPrice]`, item.unitPrice);
@@ -158,7 +172,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
         if ((formData.description?.length || 0) < 6) errors.description = 'Description must be at least 6 characters long';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'Duration is required';
-        if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeyWords = 'Search keywords are required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
@@ -203,13 +217,12 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
     };
     const Publish = (e) => {
         // setNextstep(1)
-        UpdateProject(projectId,convertToFormData())
+        UpdateProject(projectId,convertToFormData()).then(async()=>{
+            setPost_success(true)
+            setNextstep(1)
+        })
     };
 
-    useEffect(() => {
-        if (respond?.data)
-            setPost_success(true)
-    }, [respond?.message])
 
 
     useEffect(() => {
@@ -222,13 +235,14 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
         UpdateFormData("cover", data.cover)
         UpdateFormData("creatives", data.creatives)
         UpdateFormData("address", data.address)
+        UpdateFormData("showOnHome", data.showOnHome)
         UpdateFormData("functions", data.functions)
         UpdateFormData("tools", data.tools)
         UpdateFormData('location', {
             lat:data.location.lat,
             lng:data.location.lng
         })
-        UpdateFormData("searchKeyWords", data.searchKeyWords)
+        UpdateFormData("searchKeywords", data.searchKeywords)
         UpdateFormData("projectScale[pricerPerUnit]", data.projectScale.pricerPerUnit)
         UpdateFormData("projectScale[unit]", data.projectScale.unit)
         UpdateFormData("projectScale[minimum]", data.projectScale.minimum)
@@ -236,27 +250,26 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
         UpdateFormData("projectScale[current]", data.projectScale.current)
     }, [data])
     
-    useEffect(() => {
-        if (auth.login === false)
-            router.push({ pathname: "/" });
-    }, [auth.login])
+    // useEffect(() => {
+    //     if (auth.login === false)
+    //         router.push({ pathname: "/" });
+    // }, [auth.login])
 
-    const toggleDrawer1 = () => {
-        // UpdateProject(-1)
-        
+    const toggleDrawer = () => {        
         setPost_success(false)
         if (nextstep == 2) {
             setNextstep(1)
             return
         }
-        toggleDrawer()
-        // resetForm()
-        // router.replace({
-        //     pathname: `/creative/${auth.username}`,
-        // })
+        setIsOpenEdit(false)
     }
     const AudioIndex = categories.indexOf(categories.map(item=> item.title).includes('Audio'))
     const AudioId =  (AudioIndex===-1 ? categories[categories.length -1] : categories[AudioIndex])?._id
+    const closeDrawer = ()=>{
+        setPost_success(false)
+        setIsOpenEdit(false)
+        GetProject(projectId)
+    }
 
     return (
         <>
@@ -265,10 +278,10 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
             <AddOtherCreatives onSubmit={(value) =>{
              value.invitedCreatives?InsertToArray('invitedCreatives', value) :InsertToArray('creatives', value)}} />
 
-            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer1} message="Creating" />
-            <Drawer isOpen={isOpen} id={id} name={'add project'} toggleDrawer={toggleDrawer1}>
+            <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Creating" />
+            <Drawer isOpen={isOpen} id={id} name={'update project'} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
-                    <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
+                    <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
                 ) :
                     (
                         <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
@@ -376,8 +389,8 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
                             </section>
 
                             <section>
-                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeyWords } onChange={(value) => UpdateFormData('searchKeyWords', value)} />
-                                <ErrorMessage ErrorMsg={ErrorMsg.searchKeyWords}/>
+                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords } onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span>{t("Set location")}</span>
@@ -461,7 +474,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respo
 const mapStateToProps = (state) => ({
     auth: state.auth,
     user: state.user,
-    respond: state.api.UpdateProject,
+    update_respond: state.api.UpdateProject,
     addprojectState: state.addproject,
     categories: state.categories
 });
@@ -470,8 +483,8 @@ const mapDispatchToProps = {
     UpdateFormData,
     InsertToArray,
     UpdateProject,
+    GetProject,
     resetForm
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProject);

@@ -31,7 +31,7 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
         if(isLogin ===false)
             Router.push('/')
     },[isLogin])
-    
+
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
