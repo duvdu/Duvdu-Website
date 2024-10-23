@@ -30,7 +30,6 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
     const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords , Platforms } = Router.query
 
     const { asPath } = Router;
-    console.log({Platforms})
     // Remove leading slash
     const path = asPath.startsWith('/') ? asPath.substring(1) : asPath;
 

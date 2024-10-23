@@ -17,20 +17,19 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
     useEffect(() => {
         onValidateChange(validationError)
     },[validationError])
-
     useEffect(() => {
         const selectedCategory = categories?.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
 
         if (selectedCategory) {
             const selectedSubCategories = value?.subCategories?.map(subCatObj =>
-                selectedCategory.subCategories.find(subcategory => subcategory._id === subCatObj.subcategory)
+                selectedCategory.subCategories.find(subcategory => subcategory._id === subCatObj.subCategory)
             ).filter(Boolean);
             setSelectedSubCategories(selectedSubCategories || []);
 
             const selectedTags = value?.subCategories?.reduce((acc, subCatObj) => {
                 const tags = subCatObj.tags?.map(tagId => {
-                    const subcategory = selectedCategory.subCategories.find(sub => sub._id === subCatObj.subcategory);
+                    const subcategory = selectedCategory.subCategories.find(sub => sub._id === subCatObj.subCategory);
                     return subcategory?.tags.find(tag => tag._id === tagId);
                 }).filter(Boolean);
                 return tags ? [...acc, ...tags]:[...acc];

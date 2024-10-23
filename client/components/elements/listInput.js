@@ -6,7 +6,6 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
     const { t } = useTranslation();
     const [word, setWord] = useState('')
     const [list, setList] = useState([])
-    console.log({listdiv})
 
     useEffect(() => {
         if (onChange)

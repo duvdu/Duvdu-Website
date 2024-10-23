@@ -128,10 +128,11 @@ function OtherProfile({
                             {islogin && (
                                 <div className='flex gap-3 items-center mt-7'>
                                     <AppButton
+                                        
                                         className={`w-full z-0 ${isFollow ? 'opacity-60' : ''}`}
-                                        onClick={handleSwapFollow}
+                                        onClick={swapFollowRespond?.loading?null:handleSwapFollow}
                                     >
-                                        {api.loading && api.req === "swapFollow" ? (
+                                        {swapFollowRespond?.loading ? (
                                             <img className={"load mx-auto transition duration-500 ease-in-out w-10 h-10"} src="/assets/imgs/loading.gif" alt="loading" />
                                         ) : (
                                             isFollow ? 'Unfollow' : 'Follow'

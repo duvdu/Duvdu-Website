@@ -1,30 +1,30 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
-let socket;
+// let socket;
 
 export const GetAllMessageInChat = (id, limit) => {
     const req = "GetAllMessageInChat"
     return async dispatch => {
-        if (!socket) {
-            socket = io(process.env.BASE_URL,{
-                extraHeaders:{
-                    cookie:''
-                }
-            });
-            socket.on("connect", () => console.log("Connected to socket"));
+        // if (!socket) {
+        //     socket = io(process.env.BASE_URL,{
+        //         extraHeaders:{
+        //             cookie:''
+        //         }
+        //     });
+        //     socket.on("connect", () => console.log("Connected to socket"));
 
-            socket.on("new_message", () => {
-                console.log("new_message");
-            });
+        //     socket.on("new_message", () => {
+        //         console.log("new_message");
+        //     });
 
-            socket.on("new_follower", () => {
-                console.log("new_follower");
-            });
+        //     socket.on("new_follower", () => {
+        //         console.log("new_follower");
+        //     });
 
-            socket.on("disconnect", () => console.log("Disconnected from socket"));
-        }
+        //     socket.on("disconnect", () => console.log("Disconnected from socket"));
+        // }
 
 
         if (!id) {

@@ -17,7 +17,6 @@ function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond
     function handleResize() {
         setIsMob(window.innerWidth < 1024);
     }
-
     useEffect(() => {
         window.addEventListener('resize', handleResize);
 
@@ -45,10 +44,10 @@ function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond
                             :
                             <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
                         }
-                        {chats?.length==0 ?
+                        {chats?.loading?
                             <DuvduLoading loadingIn={""} type='notification' />
                         :
-                        <ViewFew Type={'messages'} onChoose={onChoose} list={chats || []} t={t} onViewAll={() => setViewAllState(2)} />
+                        <ViewFew Type={'messages'} onChoose={onChoose} list={chats?.data || []} t={t} onViewAll={() => setViewAllState(2)} />
                                                 }
                         </>
                     }
@@ -58,7 +57,7 @@ function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond
                     }
                     {
                         (viewAllState == 2 ) &&
-                        <ViewAll Type={'messages'} list={chats || []} t={t} onChoose={onChoose}/>
+                        <ViewAll Type={'messages'} list={chats?.data || []} t={t} onChoose={onChoose}/>
                     }
                 </div>
             </div>
@@ -108,7 +107,7 @@ const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
 
 const NotificationTile = ({ tile }) =>
     <Link href={tile.type==='new tag'?`/project/projectInvitations`:`/contracts?contract=${tile.target}`}>
-        <div className="w-64 flex gap-4">
+        <div className="w-full lg:w-64 flex gap-4">
             <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
             <div className="flex flex-col justify-center">
                 <span className="line-clamp-2 cursor-pointer">
@@ -124,7 +123,7 @@ const NotificationTile = ({ tile }) =>
 
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
-    chats: state.chats.list,
+    chats: state.api.GetAllChats,
     GetNotifications_resond: state.api.GetNotifications,    
     AvailableUserChat_resond: state.api.AvailableUserChat,    
 });

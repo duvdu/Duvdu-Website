@@ -8,18 +8,38 @@ import { useRouter } from "next/router";
 import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
 import Setting from "./HeaderComponents/setting";
 import { useTranslation } from 'react-i18next';
+import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
+import { AvailableUserChat } from "../../redux/action/apis/realTime/messages/availableUserChat";
+import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
+import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
 
 
-const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user }) => {
+const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,
+    MarkNotificationsAsRead,
+    GetNotifications,
+    GetAllChats_respond,
+    GetAllChats,
+    AvailableUserChat,
+    getheaderpopup,
+
+ }) => {
     const { t } = useTranslation();
-
     const [page, setPage] = useState(isToggled);
     const router = useRouter();
     useEffect(() => {
 
         if (isToggled != page) setPage(isToggled)
     }, [isToggled])
-
+    useEffect(()=>{
+        if(page ===4){
+            MarkNotificationsAsRead()
+            GetNotifications()
+            if(!GetAllChats_respond?.data){
+                AvailableUserChat()
+                GetAllChats()
+            }
+        }
+    },[page])
     const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)
 
     const Header = ({ onClose, toggleOpenSearch, openSearch }) => {
@@ -300,10 +320,16 @@ const mapStateToProps = (state) => ({
     categories: state.api.getCategory,
     islogin: state.auth.login,
     user: state.user.profile,
+    GetAllChats_respond: state.api.GetAllChats,
+    getheaderpopup: state.setting.headerpopup,
 
 });
 
 const mapDispatchToProps = {
+    GetNotifications,
+    GetAllChats,
+    AvailableUserChat,
+    MarkNotificationsAsRead,
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MobileMenu);

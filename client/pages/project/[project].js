@@ -24,6 +24,7 @@ import Icon from "../../components/Icons";
 import { useTranslation } from 'react-i18next';
 import DuvduLoading from "../../components/elements/duvduLoading";
 import { userReview } from '../../redux/action/apis/reviews/users';
+import EditProject from './../../components/drawer/edit/editproject';
 
 // Install Swiper modules
 SwiperCore.use([Autoplay, Navigation, EffectFade, Pagination]);
@@ -46,6 +47,7 @@ const Projects = ({
     const [project, setProject] = useState(project_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);
+    const [isOpenEdit, setIsOpenEdit] = useState(false);
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
     useEffect(() => {
         if (project_respond?.data?.user?.username)
@@ -83,6 +85,9 @@ const Projects = ({
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };
+    const toggleDrawerEdit = () => {
+        setIsOpenEdit(!isOpenEdit);
+    };
     const handleAudioPlay = (newAudioRef) => {
         if (playingAudioRef && playingAudioRef !== newAudioRef) {
           playingAudioRef.pause();
@@ -100,6 +105,7 @@ const Projects = ({
             project && (
                     
                     <>
+                        <EditProject data={project} isOpen={isOpenEdit}  id={project?._id} toggleDrawer={toggleDrawerEdit} />
                         <AddToSaved isOpen={isOpenFav} toggleDrawerAddFav={toggleDrawerAddFav} />
                         <Report />
                         <ThanksMSG />
@@ -112,7 +118,7 @@ const Projects = ({
                                 </section> */}
                                     <div className="flex lg:flex-row flex-col gap-3">
                                     <section className="lg:w-1/3 mt-10 lg:mt-0">
-                                        <Details onAudioPlay={handleAudioPlay} data={project} />
+                                        <Details toggleDrawerEdit={toggleDrawerEdit} onAudioPlay={handleAudioPlay} data={project} />
                                     </section>
                                     <section className="lg:w-2/3">
                                         {project?.attachments.length > 1 ?

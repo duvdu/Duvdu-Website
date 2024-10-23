@@ -1,7 +1,9 @@
 import { convertHoursTo__,  } from "../../../util/util";
 import { useTranslation } from 'react-i18next';
 import { useState, useRef } from 'react';
+import { useRouter } from "next/router";
 import GoogleMap from "../../elements/googleMap";
+import Selector from "../../elements/CustomSelector";
 import dateFormat from "dateformat";
 import { isVideo  } from '../../../util/util';
 import Icon from '../../Icons';
@@ -9,18 +11,39 @@ import ProjectCover from './projectShow';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import 'swiper/swiper-bundle.css';
+import { connect } from "react-redux";
+import RatingProject from "../../popsup/ratingProject";
+import { OpenPopUp } from "../../../util/util";
+import ReportProject from "../../popsup/report-project";
 
-const Details = ({ data , onAudioPlay }) => {
+const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
     const { t } = useTranslation();
+    const router = useRouter();
+    const { project: projectId } = router.query;
+
     const handleAudioPlay = (newAudioRef) => {
         if (playingAudioRef && playingAudioRef !== newAudioRef) {
           playingAudioRef.pause();
         }
         setPlayingAudioRef(newAudioRef);
       };
+      const handleDropdownSelect = (v) => {
+        if (islogin===false) {
+            OpenPopUp("registration-required")
+            return
+        }
+        if (v == "Rate") OpenPopUp("Rating-project")
+        else if (v == "Report") OpenPopUp("report-project2")
+        else if (v == "Edit") toggleDrawerEdit()
+    };
 
     return (
+        <>
+        <RatingProject data={data} />
+        {islogin ===true &&
+            <ReportProject data={data} />
+        }
         <div className="!sticky top-header rounded-[30px] mx-5 md:mx-0">
             {/* <div className='rounded-[50px] overflow-hidden block lg:hidden'>
                 <ProjectCover onAudioPlay={onAudioPlay} hidden={true} data={data?.attachments[0]} cover={data?.cover}/>
@@ -87,10 +110,27 @@ const Details = ({ data , onAudioPlay }) => {
         
         </div> */}
         <div className="bg-white dark:bg-[#1A2024] p-4 rounded-[30px] pt-6">
-            <h1 className="text-xl capitalize opacity-80 font-bold">
-                {data?.name || data?.title}
-            </h1>
-
+            <div className='flex items-center justify-between'>
+                <h1 className="text-xl capitalize opacity-80 font-bold">
+                    {data?.name || data?.title}
+                </h1>
+                <Selector
+                        options={user?.username===data?.user?.username?[
+                            {
+                                value:"Edit"
+                            }
+                        ]:[
+                            {
+                                value: "Rate",
+                            },
+                            {
+                                value: "Report",
+                            },
+                        ]}
+                        onSelect={handleDropdownSelect}
+                        className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-10 h-10 cursor-pointer"
+                />
+            </div>
             <div className="w-full flex my-5">
                 <span className=" capitalize opacity-50 font-medium">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>
             </div>
@@ -145,7 +185,7 @@ const Details = ({ data , onAudioPlay }) => {
                     </div>
                     <div className="flex flex-col gap-2">
                         {data?.creatives.map(creative => [
-                            { value: creative?.name, isActive: false, img: creative?.creative?.profileImage },
+                            { value: creative?.name, isActive: false, img: creative?.profileImage },
                             { value: "", isActive: false },
                             { value: 'CATEGOREY', isActive: false },
                         ]).map((creativeGroup, i) => (
@@ -153,8 +193,8 @@ const Details = ({ data , onAudioPlay }) => {
                                 {creativeGroup.map((creative, j) => (
                                     <div key={j} className={`flex rounded-3xl ${creative.isActive ? 'bg-primary' : 'bg-[#00000040]'}`}>
                                         {creative.img ?
-                                            <img className="h-10 aspect-square rounded-full object-cover object-top" src={creative.img} alt="profile" /> :
-                                            <div className="h-10" />
+                                            <img className="size-8 aspect-square rounded-full object-cover object-top" src={creative.img} alt="profile" /> :
+                                            <div className="h-8" />
                                         }
                                         {
                                             creative.value &&
@@ -213,7 +253,16 @@ const Details = ({ data , onAudioPlay }) => {
 
         </div>
         </div>
+        </>
     )
 }
+const mapStateToProps = (state) => ({
+    islogin: state.auth.login,
+    user: state.user.profile,
+});
 
-export default Details
+const mapDispatchToProps = {
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Details);

@@ -7,7 +7,6 @@ import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent, } from 
 import { isVideo , isAudio } from '../../../util/util';
 
 import { useTranslation } from 'react-i18next';
-import { io } from "socket.io-client";
 import AudioRecorder from '../recording';
 import Link from 'next/link';
 import PopUpImage from '../popUpImage';

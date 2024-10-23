@@ -77,7 +77,6 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
       audio.removeEventListener("ended", handleAudioEnd);
     };
   }, [audioRef]);
-  console.log({duration})
   return (
     <>
       <div className="audio-player-chat">

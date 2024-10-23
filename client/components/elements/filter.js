@@ -156,7 +156,6 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                 case "Platforms":
                     // Check if filter.data exists and is not empty
                     if (filter.data && filter.data.length > 0) {
-                        console.log({platforms:filter.data})
                         params.Platforms = filter.data;
                     }
                     break;

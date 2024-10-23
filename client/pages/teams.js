@@ -114,7 +114,6 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
         return () => window.removeEventListener('scroll', handleScroll);
     }, [page, pagganation?.totalPages]);
 
-    console.log({get_respond})
     useEffect(()=>{
         if(isLogin === false)
             route.push('/')

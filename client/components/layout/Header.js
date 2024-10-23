@@ -83,7 +83,6 @@ const Header = ({
     }, [getheaderpopup]);
 
 
-
     useEffect(() => {
 
         var root = document.documentElement;

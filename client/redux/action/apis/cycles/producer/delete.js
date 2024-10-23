@@ -12,7 +12,9 @@ export const DeleteProducer = (data) => {
                 return
             }
             const response = await mainApiInstance.delete(`/api/producers/producer/user`,);
-            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
+            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: {
+                message:'success'
+             }, req: req });
             dispatch({ type: Types.SET_DATA, payload: response.data.data });
         } catch (error) {
             // 

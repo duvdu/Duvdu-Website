@@ -41,7 +41,6 @@ const Studio = ({
     const router = useRouter()
     const { studio: studioId } = router.query;
     const projects = studios_respond?.data?.filter(item=> item._id !==studioId) || []
-    console.log({projects:studios_respond})
     const [studio, setStudio] = useState(studio_respond?.data);
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenFav, setIsOpenFav] = useState(false);

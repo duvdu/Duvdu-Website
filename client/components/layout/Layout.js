@@ -6,7 +6,7 @@ import MobileMenu from "./MobileMenu";
 import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
-import { GetNotifications, cleanupSocket } from "../../redux/action/apis/realTime/notification/getAllNotification";
+import { GetNotifications, } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import { getCategory } from "../../redux/action/apis/category/getCategories";
 import { init } from "../../redux/action/apis/init/getdata";
 import { useRouter } from "next/router";
@@ -37,7 +37,7 @@ const Layout = ({
     getCategory_respond,
     logout_respond,
     LogOut,
-    cleanupSocket,
+    
     init
 
 }) => {
@@ -125,7 +125,7 @@ const mapDispatchToProps = {
     getMyprofile,
     GetAllChats,
     GetNotifications,
-    cleanupSocket,
+    
     LogOut,
     init,
     getCategory

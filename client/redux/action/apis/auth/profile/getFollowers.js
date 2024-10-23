@@ -1,6 +1,5 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
-import { io } from "socket.io-client";
 
 
 export const getFollower = () => {

@@ -10,20 +10,24 @@ import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/
 import { useRouter } from "next/router";
 import { UpdateKeysAndValues, filterByCycle } from "../../../util/util";
 import SuccessfullyPosting from "../../popsup/post_successfully_posting";
-import SetCover from "./assets/addCover";
 import ListInput from "../../elements/listInput";
 import { useTranslation } from 'react-i18next';
 
 import Drawer from "../../elements/drawer";
-import { CreateProject } from "../../../redux/action/apis/cycles/projects/create";
-import CategorySelection from "./assets/CategorySelection";
+import { UpdateProject } from "../../../redux/action/apis/cycles/projects/edit";
+import CategorySelection from "./../create/assets/CategorySelection";
 import AddAttachment from "../../elements/attachment";
 import GoogleMap from "../../elements/googleMap";
+import SetCover from './../create/assets/addCover';
+import AddToolUsed from '../../popsup/create/addToolUsed';
+import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
+import FunctionUsed from '../../popsup/create/FunctionsUsed';
 
 
-const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState, categories, resetForm }) => {
+const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, respond,toggleDrawer, UpdateFormData, addprojectState, categories, resetForm }) => {
     const { t } = useTranslation();
     const router = useRouter();
+    const { project: projectId } = router.query;
     const formData = addprojectState.formData;
     const [errors, setErrors] = useState({});
     const [validFormCheck, setValidFormCheck] = useState(false);
@@ -31,10 +35,9 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
-
     categories = filterByCycle(categories, 'project')
     const categoryDetails = categories.find(i => i._id == formData.category)
-
+    console.log({data , formData})
     const listDropDown =
         categoryDetails ? (categoryDetails?.media === 'image'
             ? ['image']
@@ -46,88 +49,107 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
     useEffect(()=>{
-        // if(formData.category == undefined)
-            UpdateFormData('attachments' , null)
-    },[formData.category])
+        UpdateFormData('category' , data.category._id)
+    },[data])
     const convertToFormData = () => {
-        const data = new FormData();
+        const UpdatedData = new FormData();
 
         // Append simple string and number values directly from the state
-        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments','subCategoryId', 'location', 'tools','tagsId', 'creatives','invitedCreatives' , 'searchKeywords','audioCover', 'functions'])
-        // data.append('projectBudget', formData.projectBudget);
-        // data.append('projectScale[scale]', formData.duration);
-        // if(formData.subCategoryId?.length===0) delete formData.subCategoryId;
+        // UpdateKeysAndValues(formData, (key, value) => UpdatedData.append(key, value), ['attachments','subCategory', 'location', 'tools', 'creatives','invitedCreatives','searchKeyWords','audioCover', 'functions'])
+        // UpdatedData.append('projectBudget', formData.projectBudget);
+        // UpdatedData.append('projectScale[scale]', formData.duration);
+        // if(formData.subCategory?.length===0) delete formData.subCategory;
         // formData?.subcategory?.map(item=>
         //     (item.tags?.length===0)? delete item.tags: item.tags
         // )
-        if(formData.subCategoryId)
-            data.append('subCategoryId',formData.subCategoryId)
-        if (formData.tagsId)
-            formData.tagsId.forEach((tag, index) => {
-                data.append(`tagsId[${index}]`, tag);
+        if(formData.name && (data.name!==formData.name)){
+            UpdatedData.append('name',formData.name)
+        }
+        if(formData.description && (data.description!==formData.description))
+            UpdatedData.append('description',formData.description)
+        if(formData.duration)
+            UpdatedData.append('duration',formData.duration)
+        if(formData.address && (data.address!==formData.address))
+            UpdatedData.append('address',formData.address)
+        if(formData['projectScale[unit]'] && (data.projectScale.unit!==formData['projectScale[unit]']))
+            UpdatedData.append('projectScale[unit]',formData['projectScale[unit]'])
+        if(formData['projectScale[minimum]']  && (data.projectScale.minimum!==formData['projectScale[minimum]']))
+            UpdatedData.append('projectScale[minimum]',formData['projectScale[minimum]'])
+        if(formData['projectScale[maximum]']  && (data.projectScale.maximum!==formData['projectScale[maximum]']))
+            UpdatedData.append('projectScale[maximum]',formData['projectScale[maximum]'])
+        if(formData['projectScale[current]']  && (data.projectScale.current!==formData['projectScale[current]']))
+            UpdatedData.append('projectScale[current]',formData['projectScale[current]'])
+        if(formData['projectScale[pricerPerUnit]']  && (data.projectScale.pricerPerUnit!==formData['projectScale[pricerPerUnit]']))
+            UpdatedData.append('projectScale[pricerPerUnit]',formData['projectScale[pricerPerUnit]'])
+        if(formData.category && (data.category!==formData.category._id))
+            UpdatedData.append('category',formData.category)
+        if(formData.subCategory && (data.subCategory!==formData.subCategory))
+            UpdatedData.append('subCategory',formData.subCategory)
+        if (formData.tags)
+            formData.tags.forEach((tag, index) => {
+                UpdatedData.append(`tags[${index}]`, tag);
             });
-            
-        if (formData.searchKeywords)
-            formData.searchKeywords.forEach((searchKeywords, index) => {
-                data.append(`searchKeywords[${index}]`, searchKeywords);
-            });
-        // Append searchKeywords
 
-        if (formData.cover) {
-            data.append('cover', formData.cover);
+        if (formData.searchKeyWords)
+            formData.searchKeyWords.forEach((searchKeyWords, index) => {
+                UpdatedData.append(`searchKeyWords[${index}]`, searchKeyWords);
+            });
+    
+        if (formData.cover && (data.name!==formData.name)) {
+            UpdatedData.append('cover', formData.cover);
         }
 
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
                 const file = formData.attachments[i];
-                data.append(`attachments`, file.file);
+                UpdatedData.append(`attachments`, file.file);
         }
 
         if (formData.audioCover)
             for (let i = 0; i < formData.audioCover.length; i++) {
                 const file = formData.audioCover[i];
-                data.append(`audioCover`, file.file);
+                UpdatedData.append(`audioCover`, file.file);
             }
 
-        if (formData.location) {
-            data.append('location[lat]', formData.location.lat);
-            data.append('location[lng]', formData.location.lng);
+        if (formData.location && (data.name!==formData.name)) {
+            UpdatedData.append('location[lat]', formData.location.lat);
+            UpdatedData.append('location[lng]', formData.location.lng);
         };
 
 
         if (formData.creatives) {
             formData.creatives.forEach((item, index) => {
-                // data.append(`creatives[${index}]`, item.name);
-                data.append(`creatives[${index}][creative]`, item._id);
+                // UpdatedData.append(`creatives[${index}]`, item.name);
+                UpdatedData.append(`creatives[${index}][creative]`, item._id);
             });
         }
 
         if (formData.invitedCreatives) {
             formData.invitedCreatives.forEach((item, index) => {
-                data.append(`number[${index}]`, item._id);
+                UpdatedData.append(`number[${index}]`, item._id);
             });
         }
 
         if (formData.tools) {
             formData.tools.forEach((item, index) => {
-                data.append(`tools[${index}][name]`, item.name);
-                data.append(`tools[${index}][unitPrice]`, item.unitPrice);
+                UpdatedData.append(`tools[${index}][name]`, item.name);
+                UpdatedData.append(`tools[${index}][unitPrice]`, item.unitPrice);
             });
         }
 
         if (formData.functions) {
             formData.functions.forEach((item, index) => {
-                data.append(`functions[${index}][name]`, item.name);
-                data.append(`functions[${index}][unitPrice]`, item.unitPrice);
+                UpdatedData.append(`functions[${index}][name]`, item.name);
+                UpdatedData.append(`functions[${index}][unitPrice]`, item.unitPrice);
             });
         }
-        return data;
+        return UpdatedData;
     }
     const validateRequiredFields = () => {
         const errors = {};
 
         if (!formData.category) errors.category = 'Category is required';
-        // if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
+        // if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
         // if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
         if (!formData.name) errors.title = 'Title is required';
         if (!formData.tools || !formData.tools.length) errors.tools = 'Tools is required';
@@ -136,7 +158,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if ((formData.description?.length || 0) < 6) errors.description = 'Description must be at least 6 characters long';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'Duration is required';
-        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeyWords = 'Search keywords are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
@@ -145,25 +167,17 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         return errors;
     };
     const CheckNext=()=>{
-        setValidFormCheck(true)
-        validateRequiredFields()
-        const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-        else return setCover()
+        // setValidFormCheck(true)
+        // validateRequiredFields()
+        // const isEnable = Object.keys(validateRequiredFields()).length == 0
+        // if (!isEnable) setErrorMsg(validateRequiredFields())
+        // else 
+        return setCover()
     }
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
     },[formData])
-    const setCover = (e) => {
-        const validationErrors = validateRequiredFields();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-        setErrors({});
-        setNextstep(2)
-    }
 
     const handleInputChange = (e) => {
         let { name, value } = e.target;
@@ -171,6 +185,15 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             value = Math.abs(Number(value));
         }
         UpdateFormData(name, value);
+    };
+    const setCover = () => {
+        // const validationErrors = validateRequiredFields();
+        // if (Object.keys(validationErrors).length > 0) {
+        //     setErrors(validationErrors);
+        //     return;
+        // }
+        // setErrors({});
+        setNextstep(2)
     };
 
     const removeFromArray = (arrayName, index) => {
@@ -180,7 +203,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     };
     const Publish = (e) => {
         // setNextstep(1)
-        CreateProject(convertToFormData())
+        UpdateProject(projectId,convertToFormData())
     };
 
     useEffect(() => {
@@ -190,35 +213,60 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
 
 
     useEffect(() => {
-        // UpdateFormData("duration", 10)
-
-    }, [])
-
+        UpdateFormData("name", data.name)
+        UpdateFormData("description", data.description)
+        UpdateFormData("subCategory", data.subCategory)
+        UpdateFormData("tags", data.tags)
+        UpdateFormData("duration", data.duration)
+        UpdateFormData("category", data?.category?._id)
+        UpdateFormData("cover", data.cover)
+        UpdateFormData("creatives", data.creatives)
+        UpdateFormData("address", data.address)
+        UpdateFormData("functions", data.functions)
+        UpdateFormData("tools", data.tools)
+        UpdateFormData('location', {
+            lat:data.location.lat,
+            lng:data.location.lng
+        })
+        UpdateFormData("searchKeyWords", data.searchKeyWords)
+        UpdateFormData("projectScale[pricerPerUnit]", data.projectScale.pricerPerUnit)
+        UpdateFormData("projectScale[unit]", data.projectScale.unit)
+        UpdateFormData("projectScale[minimum]", data.projectScale.minimum)
+        UpdateFormData("projectScale[maximum]", data.projectScale.maximum)
+        UpdateFormData("projectScale[current]", data.projectScale.current)
+    }, [data])
+    
     useEffect(() => {
         if (auth.login === false)
             router.push({ pathname: "/" });
     }, [auth.login])
 
-    const toggleDrawer = () => {
-        CreateProject(-1)
+    const toggleDrawer1 = () => {
+        // UpdateProject(-1)
+        
         setPost_success(false)
         if (nextstep == 2) {
             setNextstep(1)
             return
         }
-        resetForm()
-        router.replace({
-            pathname: `/creative/${auth.username}`,
-        })
+        toggleDrawer()
+        // resetForm()
+        // router.replace({
+        //     pathname: `/creative/${auth.username}`,
+        // })
     }
     const AudioIndex = categories.indexOf(categories.map(item=> item.title).includes('Audio'))
     const AudioId =  (AudioIndex===-1 ? categories[categories.length -1] : categories[AudioIndex])?._id
-    console.log({formData})
 
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
-            <Drawer isOpen={true} name={'add project'} toggleDrawer={toggleDrawer}>
+            <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
+            <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
+            <AddOtherCreatives onSubmit={(value) =>{
+             value.invitedCreatives?InsertToArray('invitedCreatives', value) :InsertToArray('creatives', value)}} />
+
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer1} message="Creating" />
+            <Drawer isOpen={isOpen} id={id} name={'add project'} toggleDrawer={toggleDrawer1}>
                 {nextstep == 2 ? (
                     <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
                 ) :
@@ -228,14 +276,14 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <CategorySelection
                                     filterIn={'project'}
                                     value={{
-                                        'category': formData.category,
-                                        'subCategoryId': formData.subCategoryId,
-                                        'tagsId': formData.tagsId,
+                                        'category':formData.category|| data?.category?._id ,
+                                        'subCategory': formData.subCategory || data.subCategory ,
+                                        'tags': formData.tags || data.tags,
                                     }}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
-                                        UpdateFormData('subCategoryId', value.subCategoryId)
-                                        UpdateFormData('tagsId', value.tagsId)
+                                        UpdateFormData('subCategory', value.subCategory)
+                                        UpdateFormData('tags', value.tags)
                                     }}
                                 />
                                 <ErrorMessage ErrorMsg={ErrorMsg.category}/>
@@ -246,15 +294,15 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                             </section>
                             <section>
-                                <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || ""} onChange={handleInputChange} name="name" />
+                                <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || data.name } onChange={handleInputChange} name="name" />
                                 <ErrorMessage ErrorMsg={ErrorMsg.title}/>
                             </section>
                             <section>
-                                <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || ""} onChange={handleInputChange} name="description" />
+                                <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || data.description } onChange={handleInputChange} name="description" />
                                 <ErrorMessage ErrorMsg={ErrorMsg.description}/>
                             </section>
                             <section>
-                                <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || ""} onChange={handleInputChange} name="duration" />
+                                <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || data.duration} onChange={handleInputChange} name="duration" />
                                 <ErrorMessage ErrorMsg={ErrorMsg.duration}/>
                             </section>
                             <section>
@@ -296,9 +344,10 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                     placeholder={t("tag creatives")}
                                     target="addOtherCreatives"
                                     enable={false}
+                                    value={data.creatives}
                                 >
                                     <div className="flex flex-wrap gap-3">
-                                     {formData?.invitedCreatives?.length>0 && formData?.invitedCreatives?.map((e, i) => (
+                                     {formData?.invitedCreatives?.length>0 && (data.invitedCreatives || formData.invitedCreatives)?.map((e, i) => (
                                          <div key={i} className="border border-primary rounded-2xl px-1 mt-2 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
                                             <div className="flex gap-2 items-center">
                                                 {e.name}
@@ -308,7 +357,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                             </div>
                                         </div>
                                     ))}
-                                     {formData?.creatives && formData.creatives?.map((e, i) => (
+                                     {(formData?.creatives||data.creatives) && (formData.creatives||data.creatives)?.map((e, i) => (
                                          <div key={i} className="border border-primary rounded-2xl px-1 mt-2 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
                                                 <a href={`/creative/${e.username}`} target="_blank" rel="noopener noreferrer">
                                                     <div className="flex gap-2 items-center">
@@ -327,12 +376,12 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                             </section>
 
                             <section>
-                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
+                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeyWords } onChange={(value) => UpdateFormData('searchKeyWords', value)} />
+                                <ErrorMessage ErrorMsg={ErrorMsg.searchKeyWords}/>
                             </section>
                             <section className="h-96 relative overflow-hidden">
                                 <span>{t("Set location")}</span>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
+                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat || data.location.lat, 'lng': formData.location?.lng || data.location.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                             </section>
 
                             <section className="flex flex-col gap-8">
@@ -358,7 +407,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                     <h3 className='font-bold text-lg'>{t("Project Scale Unit")}</h3>
                                     <select
                                         className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
-                                        value={formData['projectScale[unit]']}
+                                        value={formData['projectScale[unit]'] || data.projectScale.unit}
                                         onChange={handleInputChange}
                                         name="projectScale[unit]"
                                         required
@@ -368,21 +417,21 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                         ))}
                                     </select>
                                 </div>
-                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || data.projectScale.pricerPerUnit } onChange={handleInputChange} className={"inputStyle1"} />
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]']  || data.projectScale.minimum } onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]'] || ""} onChange={handleInputChange} placeholder={t("current")} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]']  || data.projectScale.current} onChange={handleInputChange} placeholder={t("current")} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]']  || data.projectScale.maximum} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                 </div>
@@ -394,7 +443,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                             </section>
 
                             <div className='flex justify-center gap-3 mt-1'>
-                                <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
+                                <Switch value={formData.showOnHome || data.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
                             
@@ -412,7 +461,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
 const mapStateToProps = (state) => ({
     auth: state.auth,
     user: state.user,
-    respond: state.api.CreateProject,
+    respond: state.api.UpdateProject,
     addprojectState: state.addproject,
     categories: state.categories
 });
@@ -420,10 +469,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     UpdateFormData,
     InsertToArray,
-    CreateProject,
+    UpdateProject,
     resetForm
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddPost);
-
+export default connect(mapStateToProps, mapDispatchToProps)(EditProject);

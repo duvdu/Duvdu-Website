@@ -95,7 +95,6 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
         }));
         setCreatives([])
     };
-    console.log({formData , searchTo })
     return (
         <>
             <Comman id={"addOtherCreatives"} header={"Add Other Creatives"} onCancel={onCancel}>

@@ -5,7 +5,7 @@ import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/message
 import { SendMessages } from '../../../redux/action/apis/realTime/messages/sendmessage';
 import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent, } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 import dateFormat from "dateformat";
 import AudioRecorder from '../recording';
@@ -135,46 +135,47 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         }
         return { _id: messages._id }
     }
-    useEffect(() => {
-        async function setupSocket() {
-          try {
-            // Fetch the 'connect.sid' cookie only on the client-side
-            const sid = CacheHelper.get('connect.sid'); 
+    // useEffect(() => {
+    //     async function setupSocket() {
+    //       try {
+    //         // Fetch the 'connect.sid' cookie only on the client-side
+    //         const sid = CacheHelper.get('connect.sid'); 
     
-            if (!sid) {
-              console.error('No connect.sid cookie found!');
-              return;
-            }
+    //         if (!sid) {
+    //           console.error('No connect.sid cookie found!');
+    //           return;
+    //         }
     
-            const socket = io('https://api.duvdu.com/', {
-              transports: ['websocket'],
-              extraHeaders: {
-                'cookie': `connect.sid=${sid}` // Attach 'connect.sid' cookie to headers
-              }
-            });
+    //         const socket = io('https://api.duvdu.com/', {
+    //           transports: ['websocket'],
+    //           extraHeaders: {
+    //             'cookie': `connect.sid=${sid}` // Attach 'connect.sid' cookie to headers
+    //           }
+    //         });
     
-            socket.on('connect', () => {
-              console.log('----------CONNECTED-----------');
-            });
+    //         socket.on('connect', () => {
+    //           console.log('----------CONNECTED-----------');
+    //         });
     
-            socket.on('new_message', (data) => {
-              if (data.message != null) {
-                console.log('Message received:', data.message);
-                // Handle message and scroll logic here
-              }
-            });
+    //         socket.on('new_message', (data) => {
+    //           if (data.message != null) {
+    //             console.log('Message received:', data.message);
+    //             // Handle message and scroll logic here
+    //           }
+    //         });
     
-            socket.on('error', (err) => {
-              console.error('Socket error:', err);
-            });
-          } catch (error) {
-            console.error('Socket connection failed:', error);
-          }
-        }
+    //         socket.on('error', (err) => {
+    //           console.error('Socket error:', err);
+    //         });
+    //       } catch (error) {
+    //         console.error('Socket connection failed:', error);
+    //       }
+    //     }
     
-        // Call the function only when the component mounts
-        setupSocket();
-      }, []);    const loadMore = () => {
+    //     // Call the function only when the component mounts
+    //     setupSocket();
+    //   }, []);    
+      const loadMore = () => {
         if(chat_respond?.pagination?.currentPage < chat_respond?.pagination?.totalPages)
         setLimit(prev => prev + 50)
         // Your custom logic to load more messages

@@ -113,8 +113,8 @@ const AddProducer = ({
     }, [createProducer_respond]);
 
     useEffect(() => {
-        if (deleteProducer_respond?.data) OpenPopUp(SuccessfullyDeletePopupId);
-    }, [deleteProducer_respond]);
+        if (deleteProducer_respond?.message==="success") OpenPopUp(SuccessfullyDeletePopupId);
+    }, [deleteProducer_respond?.message]);
 
     useEffect(() => {
         if (updateProducer_respond?.data) OpenPopUp(SuccessfullyUpdatePopupId);
@@ -227,8 +227,8 @@ const AddProducer = ({
                             <ProducerCategorySelection
                                 filterIn={"producer"}
                                 value={{
-                                    "category": formData.category || producerData?.category,
-                                    "subCategories": formData.subcategory || producerData?.subCategories
+                                    "category": formData.category || producerData?.category._id,
+                                    "subCategories":  formData.subcategory?.tags? formData.subcategory : producerData?.subCategories
                                 }}
                                 onValidateChange={(v) => setValidateTags(v.length == 0)}
                                 onChange={(value) => {
@@ -281,7 +281,7 @@ const AddProducer = ({
                             <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                         </div>
                     </div>
-
+                    <ErrorMessage ErrorMsg={convertError?.data?.errors[0].message}/>
                     {
                         !isProducer ?
                             <ArrowBtn loading={createProducer_respond?.loading} isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :

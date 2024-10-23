@@ -9,7 +9,6 @@ const PlatformFilter = ({ platforms, cycle, onSelect, onFilterChange, toggleDraw
     const { t } = useTranslation();
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
     const [filteredPlatforms, setFilteredPlatforms] = useState([]);
-    console.log({platforms})
     useEffect(() => {
         if (cycle) {
             // const categoriesInCycle = platforms?.filter(cat => cat.cycle === cycle);
@@ -36,7 +35,6 @@ const PlatformFilter = ({ platforms, cycle, onSelect, onFilterChange, toggleDraw
     const handleApplyClick = () => {
         onSelect(selectedPlatforms);
     };
-    console.log({filteredPlatforms})
     return (
         <FilterContainer toggleDrawer={toggleDrawer}>
             <FilterHeader>{t("Platforms")}</FilterHeader>
