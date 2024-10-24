@@ -121,9 +121,9 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                                 value:"Edit"
                             }
                         ]:[
-                            {
-                                value: "Rate",
-                            },
+                            // {
+                            //     value: "Rate",
+                            // },
                             {
                                 value: "Report",
                             },

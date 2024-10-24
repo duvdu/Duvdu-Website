@@ -197,8 +197,8 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         UpdateFormData("title", data.title)
         UpdateFormData("description", data.description)
         UpdateFormData("category", data.category._id)
-        UpdateFormData("subCategory", data?.subCategory)
-        UpdateFormData("tags", data.tags)
+        UpdateFormData("subCategory", data?.subCategory?._id)
+        UpdateFormData("tags", data.tags.map(item => item._id))
         UpdateFormData("phoneNumber", data.phoneNumber)
         UpdateFormData("email", data.email)
         UpdateFormData("address", data.address)
@@ -245,7 +245,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     value={{
                                         'category':formData.category|| data?.category?._id ,
                                         'subCategory': formData.subCategory || data.subCategory ,
-                                        'tags': formData.tags || data.tags,
+                                        'tags': formData.tags || data.tags.map(item => item._id),
                                     }}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
