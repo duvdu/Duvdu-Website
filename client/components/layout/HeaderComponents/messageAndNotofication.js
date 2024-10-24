@@ -104,9 +104,18 @@ const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
     </div>
 );
 
-
+const NotificationTypeLink = (type , target ,username)=>{
+    switch(type){
+        case ('new tag'):
+            return '/project/projectInvitations';
+        case ('new_follower'):
+            return `/creative/${username}`
+        default:
+            return `/contracts?contract=${target}`
+    }
+}
 const NotificationTile = ({ tile }) =>
-    <Link href={tile.type==='new tag'?`/project/projectInvitations`:`/contracts?contract=${tile.target}`}>
+    <Link href={NotificationTypeLink(tile.type ,tile.target , tile.sourceUser.username )}>
         <div className="w-full lg:w-64 flex gap-4">
             <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
             <div className="flex flex-col justify-center">
