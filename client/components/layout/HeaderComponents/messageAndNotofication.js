@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import MessageTile from "../../elements/MessageTile";
 import DuvduLoading from "../../elements/duvduLoading.js";
 import DraggableList from "../../../components/pages/home/dragList";
-
+ 
 import Link from 'next/link';
 
 
@@ -30,8 +30,7 @@ function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond
     }, [getheaderpopup == Types.SHOWNOTOFICATION])
 
     if (getheaderpopup != Types.SHOWNOTOFICATION && window.innerWidth > 1024) return
-
-
+  
     return (
         <div className={isMob ? " dark:bg-black h-screen" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
             <div className={isMob ? "" : "dialog dialog-1"}>

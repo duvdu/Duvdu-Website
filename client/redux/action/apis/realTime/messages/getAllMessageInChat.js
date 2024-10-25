@@ -26,7 +26,6 @@ export const GetAllMessageInChat = (id, limit) => {
         //     socket.on("disconnect", () => console.log("Disconnected from socket"));
         // }
 
-
         if (!id) {
             dispatch({ type: Types.RESET_CHAT });
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });

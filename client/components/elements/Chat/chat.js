@@ -5,7 +5,7 @@ import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/message
 import { SendMessages } from '../../../redux/action/apis/realTime/messages/sendmessage';
 import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent, } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 import dateFormat from "dateformat";
 import AudioRecorder from '../recording';
@@ -50,6 +50,33 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
     ///////////////////////////
 
+    const [socket, setSocket] = useState(null);
+    const [newMessage, setNewMessage] = useState('');
+
+    useEffect(() => {
+      const socketInstance = io(process.env.BASE_URL, {
+        withCredentials: true,
+        transports: ['websocket', 'polling'],
+      });
+      socketInstance.on("connect", () => console.log("Connected to socket"));
+      setSocket(socketInstance);
+
+      // Listen to a sample event from the server
+      socketInstance.on('new_message', (data) => {
+        console.log('Message received from server:', data);
+        setNewMessage(data); // Set the message in the state
+      });
+      
+      socketInstance.on('disconnect', () => {
+        console.log('Disconnected from server');
+      });
+      
+      // Cleanup on component unmount
+      return () => {
+        socketInstance.disconnect();
+      };
+    }, []);
+
     useEffect(() => {
         if (respond?.data)
 
@@ -69,9 +96,12 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         if (messages.list)
             setMessagesList(messages.list)
     }, [messages.list]);
-
+    useEffect(()=>{
+        setMessagesList((prev)=> [...prev ,newMessage.message ])
+    },[newMessage])
+    console.log({newMessage})
     const msglist = [...messagesList]
-
+    console.log({msglist})
     useEffect(() => {
         // Scroll to the bottom of the chat when component updates
         if (chatRef.current) {
@@ -135,46 +165,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         }
         return { _id: messages._id }
     }
-    // useEffect(() => {
-    //     async function setupSocket() {
-    //       try {
-    //         // Fetch the 'connect.sid' cookie only on the client-side
-    //         const sid = CacheHelper.get('connect.sid'); 
-    
-    //         if (!sid) {
-    //           console.error('No connect.sid cookie found!');
-    //           return;
-    //         }
-    
-    //         const socket = io('https://api.duvdu.com/', {
-    //           transports: ['websocket'],
-    //           extraHeaders: {
-    //             'cookie': `connect.sid=${sid}` // Attach 'connect.sid' cookie to headers
-    //           }
-    //         });
-    
-    //         socket.on('connect', () => {
-    //           console.log('----------CONNECTED-----------');
-    //         });
-    
-    //         socket.on('new_message', (data) => {
-    //           if (data.message != null) {
-    //             console.log('Message received:', data.message);
-    //             // Handle message and scroll logic here
-    //           }
-    //         });
-    
-    //         socket.on('error', (err) => {
-    //           console.error('Socket error:', err);
-    //         });
-    //       } catch (error) {
-    //         console.error('Socket connection failed:', error);
-    //       }
-    //     }
-    
-    //     // Call the function only when the component mounts
-    //     setupSocket();
-    //   }, []);    
       const loadMore = () => {
         if(chat_respond?.pagination?.currentPage < chat_respond?.pagination?.totalPages)
         setLimit(prev => prev + 50)
@@ -284,7 +274,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                     <div className='pb-20'>
                         {chat_respond?.loading?
                         <DuvduLoading loadingIn={""} type='chat' />:
-                        msglist.map((message, index) => {
+                        msglist?.map((message, index) => {
                             // if (message.type === 'time') {
                             //     return (
                             //         <div key={message._id} className="time">
