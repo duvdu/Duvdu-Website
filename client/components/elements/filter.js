@@ -146,13 +146,11 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     // Handle switch change
     const handleSwitchChange = (switchName) => (isChecked) => {
         const updatedSwitchState = { ...switchState, [switchName]: isChecked };
-        console.log({switchName ,isChecked  , switchState , updatedSwitchState , selectedFilters})
         setSwitchState(updatedSwitchState);
         updateFilterList(selectedFilters, updatedSwitchState);
     };
     // Update filter list and notify parent component
     const updateFilterList = (filters, switches) => {
-        console.log({filters, switches})
         const filterList = [
             ...Object.entries(filters).map(([key, option]) => ({
                 name: getFilterNameByValue(filterData, parseInt(key, 10)),
@@ -179,6 +177,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     };
 
     const handleFilterChange = (selectedFilters) => {
+        console.log({selectedFilters})
         // Initialize params object
         const params = {};
         selectedFilters.forEach(filter => {
@@ -225,11 +224,11 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     break;
                 case "instantProject":
                     // Handle the case where filter.data might be undefined
-                    if (filter.data) {
+                    if (filter.name) {
                         params.instant = filter.data;
                     }
                     break;
-                    case "Insurance":
+                case "Insurance":
                     // Handle the case where filter.data might be undefined
                     if (filter.data) {
                         params.Insurance = filter.data;
@@ -237,7 +236,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     break;
                 case "priceInclusive":
                     // Handle the case where filter.data might be undefined
-                    if (filter.data) {
+                    if (filter.name) {
                         params.inclusive = filter.data;
                     }
                     break;

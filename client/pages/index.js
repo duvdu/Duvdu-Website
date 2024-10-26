@@ -305,7 +305,7 @@ const Home = ({
                                         </SwiperSlide>
                                     })}
                                 </Swiper>
-                                <div className='flex items-center justify-center gap-5 mt-5'>
+                                {/* <div className='flex items-center justify-center gap-5 mt-5'>
                                     <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                         onMouseDown={() => startScroll('prev' , CategoryRef)} // Start scrolling when mouse is down
                                         onMouseUp={stopScroll} // Stop scrolling when mouse is released
@@ -313,7 +313,6 @@ const Home = ({
                                         >
                                         <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
                                     </button>
-                                    {/* </div> */}
                                     <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                         onMouseDown={() => startScroll('next' , CategoryRef)} // Start scrolling when mouse is down
                                         onMouseUp={stopScroll} // Stop scrolling when mouse is released
@@ -321,7 +320,7 @@ const Home = ({
                                         >
                                         <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
                                     </button>
-                                </div>
+                                </div> */}
                                 </>
                                 }
                         </div>
@@ -380,7 +379,7 @@ const Home = ({
                                    </SwiperSlide>
                                })}
                            </Swiper>
-                           <div className='flex items-center justify-center gap-5 mt-5'>
+                           {/* <div className='flex items-center justify-center gap-5 mt-5'>
                                 <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                     onMouseDown={() => startScroll('prev' , TagRef)} // Start scrolling when mouse is down
                                     onMouseUp={stopScroll} // Stop scrolling when mouse is released
@@ -388,7 +387,6 @@ const Home = ({
                                     >
                                     <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
                                 </button>
-                                {/* </div> */}
                                 <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                     onMouseDown={() => startScroll('next' , TagRef)} // Start scrolling when mouse is down
                                     onMouseUp={stopScroll} // Stop scrolling when mouse is released
@@ -396,7 +394,7 @@ const Home = ({
                                     >
                                     <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
                                 </button>
-                            </div>
+                            </div> */}
                            </>
                             }
                         </section>
@@ -455,7 +453,7 @@ const Home = ({
                                 </SwiperSlide>
                                 ))}
                             </Swiper>
-                            <div className='flex items-center justify-center gap-5 mt-5'>
+                            {/* <div className='flex items-center justify-center gap-5 mt-5'>
                                 <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                     onMouseDown={() => startScroll('prev',TopCategoryRef)} // Start scrolling when mouse is down
                                     onMouseUp={stopScroll} // Stop scrolling when mouse is released
@@ -463,7 +461,6 @@ const Home = ({
                                     >
                                     <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
                                 </button>
-                                {/* </div> */}
                                 <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                     onMouseDown={() => startScroll('next',TopCategoryRef)} // Start scrolling when mouse is down
                                     onMouseUp={stopScroll} // Stop scrolling when mouse is released
@@ -471,7 +468,7 @@ const Home = ({
                                     >
                                     <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
                                 </button>
-                            </div>
+                            </div> */}
                                 </>
                                 }
                             </div>
@@ -544,7 +541,7 @@ const Home = ({
                                    </SwiperSlide>
                                })}
                            </Swiper>
-                           <div className='flex items-center justify-center gap-5 mt-5'>
+                           {/* <div className='flex items-center justify-center gap-5 mt-5'>
                                     <button className='left-[45%] custom-swiper-prev2 prev1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                         onMouseDown={() => startScroll('prev' , SubCategoryRef)} // Start scrolling when mouse is down
                                         onMouseUp={stopScroll} // Stop scrolling when mouse is released
@@ -552,15 +549,14 @@ const Home = ({
                                         >
                                         <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
                                     </button>
-                                    {/* </div> */}
-                                    <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+                                        <button className='right-[45%] custom-swiper-next2 next1 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
                                         onMouseDown={() => startScroll('next' , SubCategoryRef)} // Start scrolling when mouse is down
                                         onMouseUp={stopScroll} // Stop scrolling when mouse is released
                                         onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                               
                                         >
                                         <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
                                     </button>
-                                </div>
+                                </div> */}
                            </>
                         }
                     </div>

@@ -64,6 +64,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
       // Listen to a sample event from the server
       socketInstance.on('new_message', (data) => {
         // console.log('Message received from server:', data);
+        console.log(data)
+        if(data.data.sourceUser._id === messages._id)
         setNewMessage(data); // Set the message in the state
       });
       

@@ -77,23 +77,23 @@ const Reviews = ({ data, userName , project=false }) => {
         ))}
     </Swiper>
     {data?.length>1 &&
-    <div className='flex items-center justify-center gap-5 mt-5'>
-        <button className='left-[45%] custom-swiper-prev2 prev4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
-            onMouseDown={() => startScroll('prev',reviewRef)} // Start scrolling when mouse is down
-            onMouseUp={stopScroll} // Stop scrolling when mouse is released
-            onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                                
-            >
-            <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
-        </button>
-        {/* </div> */}
-        <button className='right-[45%] custom-swiper-next2 next4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
-            onMouseDown={() => startScroll('next',reviewRef)} // Start scrolling when mouse is down
-            onMouseUp={stopScroll} // Stop scrolling when mouse is released
-            onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                               
-            >
-            <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
-        </button>
-    </div>
+    // <div className='flex items-center justify-center gap-5 mt-5'>
+    //     <button className='left-[45%] custom-swiper-prev2 prev4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+    //         onMouseDown={() => startScroll('prev',reviewRef)} // Start scrolling when mouse is down
+    //         onMouseUp={stopScroll} // Stop scrolling when mouse is released
+    //         onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                                
+    //         >
+    //         <Icon className='dark:text-white text-black !w-[10px] ' name={"chevron-left"} />
+    //     </button>
+    //     <button className='right-[45%] custom-swiper-next2 next4 dark:bg-[#caded333] backdrop-blur-sm border-2 rounded-full p-2 flex flex-row items-center justify-center'
+    //         onMouseDown={() => startScroll('next',reviewRef)} // Start scrolling when mouse is down
+    //         onMouseUp={stopScroll} // Stop scrolling when mouse is released
+    //         onMouseLeave={stopScroll} // Stop scrolling when mouse leaves the button                               
+    //         >
+    //         <Icon className='dark:text-white text-black !w-[10px]' name={"chevron-right"} />
+    //     </button>
+    // </div>
+    <></>
     }
     </>
     };
