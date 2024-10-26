@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
+import {useRouter} from 'next/router'
 import Switch from "./switcher2";
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -12,7 +13,7 @@ import InsuranceFilter from './filterAsset/InsuranceFilter';
 import Icon from '../Icons';
 import Drawer from './drawer';
 import AppButton from './button';
-import KeyWords from './filterAsset/keywords';
+import KeywordsFilter from './filterAsset/keywords';
 import PlatformFilter from './filterAsset/Platforms';
 
 // Utility function to find filter name by value
@@ -37,7 +38,7 @@ const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelec
         case 7:
             return <InsuranceFilter onFiltersApply={filters => handleSelect(7, filters.insurance, true)} onFilterChange={filters => handleSelect(7, filters.insurance)} toggleDrawer={toggleDrawer} />;
         case 8:
-            return <KeyWords onFiltersApply={filters => handleSelect(8, filters.KeyWords, true)} onFilterChange={filters => handleSelect(8, filters.KeyWords)} toggleDrawer={toggleDrawer} />;
+            return <KeywordsFilter onFiltersApply={filters => handleSelect(8, filters.keywords, true)} onFilterChange={filters => handleSelect(8, filters.keywords)} toggleDrawer={toggleDrawer} />;
         case 9:
             return <PlatformFilter platforms={platforms?.data} cycle={cycle} onSelect={platform => handleSelect(9, platform, true)} onFilterChange={platform => handleSelect(9, platform)} toggleDrawer={toggleDrawer} />;
         default:
@@ -54,20 +55,57 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
         instantProject: false,
         priceInclusive: cycle === "project" ? false : undefined,
     });
-
-    // Initialize filter data
+    const router = useRouter()
+    useEffect(()=>{
+        const newFilters = {};
+        Object.entries(router.query).forEach(([key, value]) => {
+            console.log({key,value})
+            switch (key) {
+              case 'category':
+                newFilters[1] =[value.includes(",") ? value.split(",") : value]
+              case 'subCategory':
+                newFilters[2] =[value.includes(",") ? [value.split(",")] : value]
+                break;
+              case 'tag':
+                newFilters[3] =[value.includes(",") ? value.split(",") : value]
+                break;
+              case 'location':
+                newFilters[4] = value;
+                break;
+              case 'range':
+                newFilters[5] = value;
+                break;
+              case 'duration':
+                newFilters[6] = value;
+                break;
+              case 'Insurance':
+                newFilters[7] = value;
+                break;
+              case 'keywords':
+                newFilters[8] = value;
+                break;
+              case 'Platforms':
+                newFilters[9] =[value.includes(",") ? value.split(",") : value]
+                break;
+                default:
+                null;
+            }
+          });
+          setSelectedFilters(newFilters);
+    },[router.query])
+    
+    // Initialize  filter data
     const filterData = [
-        { value: 1, name: "Category" },
-        { value: 2, name: "Sub-category" },
-        { value: 3, name: "Tags" },
     ];
     // { value: 4, name: "Location" },
-
-    if (cycle === "rentals") filterData.push({ value: 7, name: "Insurance" });
+    
+    if (cycle === "project") filterData.push({ value: 1, name: "Category" });
+    filterData.push({ value: 2, name: "Sub-category" });
+    filterData.push({ value: 3, name: "Tags" });
     if (cycle === "copy-rights" || cycle === "producer" || cycle === "rentals") {
         filterData.push({ value: 5, name: "Budget Range" });
     }
-
+    if (cycle === "rentals") filterData.push({ value: 7, name: "Insurance" });
     if (cycle === "copy-rights" || cycle === "project") {
         filterData.push({ value: 6, name: "Duration" });
     }
@@ -83,9 +121,15 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     const closeDropDown = (value) => {
         setOpenIndex(null);
     };
-
     // Handle filter selection
     const handleSelect = (value, option, istakeAction) => {
+        if(value=== 1){
+            delete selectedFilters[2]
+            delete selectedFilters[3]
+        }
+        if(value===2){
+            delete selectedFilters[3]
+        }
         const newSelectedFilters = { ...selectedFilters, [value]: option };
         setSelectedFilters(newSelectedFilters);
         if (istakeAction) {
@@ -99,16 +143,16 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
         if (mobileFiltersVisible)
             toggleMobileFilters()
     };
-
     // Handle switch change
     const handleSwitchChange = (switchName) => (isChecked) => {
         const updatedSwitchState = { ...switchState, [switchName]: isChecked };
+        console.log({switchName ,isChecked  , switchState , updatedSwitchState , selectedFilters})
         setSwitchState(updatedSwitchState);
         updateFilterList(selectedFilters, updatedSwitchState);
     };
-
     // Update filter list and notify parent component
     const updateFilterList = (filters, switches) => {
+        console.log({filters, switches})
         const filterList = [
             ...Object.entries(filters).map(([key, option]) => ({
                 name: getFilterNameByValue(filterData, parseInt(key, 10)),
@@ -119,7 +163,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                 data: value,
             }))
         ];
-
+        console.log({onFilterChange , filterList})
         if (!onFilterChange) {
             handleFilterChange(filterList)
         }
@@ -135,10 +179,8 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     };
 
     const handleFilterChange = (selectedFilters) => {
-
         // Initialize params object
         const params = {};
-
         selectedFilters.forEach(filter => {
             switch (filter.name) {
                 case "Category":
@@ -186,7 +228,8 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     if (filter.data) {
                         params.instant = filter.data;
                     }
-                case "Insurance":
+                    break;
+                    case "Insurance":
                     // Handle the case where filter.data might be undefined
                     if (filter.data) {
                         params.Insurance = filter.data;
@@ -208,15 +251,17 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     break;
             }
         });
-
         // Update query parameters with selected filters
         const queryString = new URLSearchParams({
             ...params,
         }).toString();
 
-        if (setParams)
+        if (queryString)
             setParams(queryString)
 
+    };
+    const clearAllQueries = () => {
+        router.push(router.pathname, undefined, { shallow: true });
     };
 
     return (
@@ -242,6 +287,14 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                             </div>
                         </div>
                     ))}
+                    {/* <div className="relative">
+                        <button
+                            className="flex gap-2 items-center border border-[#E6E6E6] dark:border-gray-700 rounded-xl py-2 px-3 text-DS_black dark:text-white appearance-none w-min cursor-pointer bg-white dark:bg-gray-900"
+                            onClick={clearAllQueries}
+                        >
+                            <Icon name={"refresh"} className='dark:text-white' />
+                        </button>
+                    </div> */}
                 </div>
                 {!hideSwitch && (
                     <div className="flex items-center justify-end gap-2">

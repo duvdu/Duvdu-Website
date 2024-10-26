@@ -30,6 +30,7 @@ const IsincludesSVG = [
   "pause-video",
   "play-video",
   "filter",
+  "refresh",
   "drop-icon",
   "file-error",
   "favorites",
@@ -100,6 +101,8 @@ const GetIconSVG = ({ name, className, ...rest }) => {
       return <PlayVieo className={className} {...rest} />
     case "drop-icon":
       return <DropIcon className={className} {...rest} />
+    case "refresh":
+      return <RefreshIcon className={className} {...rest} />
     case "filter":
       return <Filter className={className} {...rest} />
       case "favorites":
@@ -402,6 +405,13 @@ const DropIcon = ({ className, ...rest }) =>
       <path d="M7.5 7L14.8612 0.25H0.138784L7.5 7Z" fill="currentColor" />
     </svg>
   </div>
+
+const RefreshIcon = ({ className, ...rest }) => (
+  <div className={className} {...rest}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+    </svg>
+  </div>);
 
 const FavIcon = ({ className, ...rest }) =>
   <div className={className} {...rest}>

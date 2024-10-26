@@ -63,12 +63,12 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
       // Listen to a sample event from the server
       socketInstance.on('new_message', (data) => {
-        console.log('Message received from server:', data);
+        // console.log('Message received from server:', data);
         setNewMessage(data); // Set the message in the state
       });
       
       socketInstance.on('disconnect', () => {
-        console.log('Disconnected from server');
+        // console.log('Disconnected from server');
       });
       
       // Cleanup on component unmount
@@ -97,11 +97,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
             setMessagesList(messages.list)
     }, [messages.list]);
     useEffect(()=>{
+        if(newMessage)
         setMessagesList((prev)=> [...prev ,newMessage.message ])
     },[newMessage])
-    console.log({newMessage})
     const msglist = [...messagesList]
-    console.log({msglist})
     useEffect(() => {
         // Scroll to the bottom of the chat when component updates
         if (chatRef.current) {

@@ -99,6 +99,7 @@ const Home = ({
             const queryString = new URLSearchParams(params).toString();
 
             // Call GetCopyrights with the constructed query string
+            if(queryString && Router.isReady)
             GetProjects(queryString)
 
         }
@@ -172,6 +173,7 @@ const Home = ({
         }).toString();
 
         // Call GetCopyrights with updated query string
+        if(queryString && Router.isReady)
         GetProjects(queryString)
 
     };
@@ -209,7 +211,9 @@ const Home = ({
       clearInterval(scrollInterval);
       setScrollInterval(null);
     };
-  
+    const setParams = (queryString) => {
+        Router.push(`?${queryString}`);
+    };
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -566,7 +570,7 @@ const Home = ({
                 <section className="py-12">
                     <div className='container'>
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-5 lg:mb-8">{t("explore recommended projects")}</h2>
-                        <Filter cycle={cycle} onFilterChange={handleFilterChange} />
+                        <Filter cycle={cycle} setParams={setParams} />
                         <div className="h-5" />
                         {projects?.loading ?
                         <>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useRouter} from 'next/router'
 import FilterContainer from './comman/FilterContainer';
 import BoolOfPadges from './comman/BoolOfPadges';
 import AppButton from '../button';
@@ -9,6 +10,7 @@ const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDra
     const { t } = useTranslation();
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [filteredCategories, setFilteredCategories] = useState([]);
+    const router = useRouter()
 
     useEffect(() => {
         // Filter categories based on the cycle
@@ -27,22 +29,30 @@ const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDra
             ? selectedCategories.filter(cat => cat !== selectedCategory._id)
             : [...selectedCategories, selectedCategory._id];
 
-        setSelectedCategories(newSelectedCategories);
+        setSelectedCategories([selectedCategory._id]);
         // Optionally, you can trigger the filter change immediately when a category is selected
         if (onFilterChange) {
-            onFilterChange(newSelectedCategories);
+            onFilterChange([selectedCategory._id]);
         }
     };
 
     const handleApplyClick = () => {
         // Pass selected categories to the parent component
         onSelect(selectedCategories);
+        
         // Trigger the onFilterChange callback if needed
         if (onFilterChange) {
             onFilterChange(selectedCategories);
         }
     };
-
+    useEffect(()=>{
+        Object.entries(router.query).forEach(([key, value]) => {
+            switch (key) {
+              case 'category':
+                setSelectedCategories([value])
+                console.log({value})
+            }})
+    },[router.query])
     
     return (
         <FilterContainer toggleDrawer={toggleDrawer}>

@@ -24,7 +24,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
+    const { category, subCategory, tag, priceFrom, priceTo, duration, Insurance,instant, inclusive, keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -55,16 +55,18 @@ const Studio = ({ projects, GetStudios, api }) => {
             if (priceFrom) params.minBudget = priceFrom;
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
+            if (Insurance) params.insurance = Insurance;
             if (inclusive) params.inclusive = inclusive;
-            if (keywords) params.keywords = keywords;
+            if (keywords) params.search = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
 
             // Call GetCopyrights with the constructed query string
+            if(queryString && Router.isReady)
             GetStudios(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration,instant, Insurance, inclusive, keywords]);
 
 
     useEffect(() => {

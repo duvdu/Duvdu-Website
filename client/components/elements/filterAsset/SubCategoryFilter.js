@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useRouter} from 'next/router'
 import FilterContainer from './comman/FilterContainer';
 import BoolOfPadges from './comman/BoolOfPadges';
 import AppButton from '../button';
@@ -9,35 +10,43 @@ const SubCategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggle
     const { t } = useTranslation();
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
     const [filteredSubCategories, setFilteredSubCategories] = useState([]);
-
+    const router = useRouter()
+    const { category}=router.query
     useEffect(() => {
         if (cycle) {
-            const categoriesInCycle = categories.filter(cat => cat.cycle === cycle);
+            const categoriesInCycle = category? categories.filter(cat => cat._id === category) : categories.filter(cat => cat.cycle === cycle);
             const subCategories = categoriesInCycle.flatMap(cat => cat.subCategories) || [];
             setFilteredSubCategories(subCategories);
         } else {
             setFilteredSubCategories([]);
         }
-    }, [cycle, categories]);
+    }, [cycle, categories ,  category]);
 
     const handleSelectSubCategory = (selectedSubCategory) => {
         const newSelectedSubCategories = selectedSubCategories.includes(selectedSubCategory._id)
             ? selectedSubCategories.filter(sub => sub !== selectedSubCategory._id)
             : [...selectedSubCategories, selectedSubCategory._id];
-
-        setSelectedSubCategories(newSelectedSubCategories);
+        setSelectedSubCategories([selectedSubCategory._id]);
 
         // Call onFilterChange immediately when selection changes
         if (onFilterChange) {
-            onFilterChange(newSelectedSubCategories);
+            onFilterChange([selectedSubCategory._id]);
         }
     };
 
     const handleApplyClick = () => {
         onSelect(selectedSubCategories);
     };
-
-    return (
+    useEffect(()=>{
+        Object.entries(router.query).forEach(([key, value]) => {
+            if(key ==='subCategory'){
+                setSelectedSubCategories([value])
+            }else if(key ==='category'){
+                setSelectedSubCategories([])
+            }
+        })
+    },[router.query])
+        return (
         <FilterContainer toggleDrawer={toggleDrawer}>
             <FilterHeader>{t("Subcategories")}</FilterHeader>
             <div className='h-6'></div>

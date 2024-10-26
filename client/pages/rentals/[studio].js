@@ -81,6 +81,7 @@ const Studio = ({
         if (categoryId) {
             params.category = categoryId;
             const queryString = new URLSearchParams(params).toString();
+            if(queryString && Router.isReady)
             GetStudios(queryString);
         }
     }, [studio_respond?.data?.category?._id]);

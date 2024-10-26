@@ -7,25 +7,6 @@ import { mainApiInstance } from '../../axiosInstances'
 export const GetAllMessageInChat = (id, limit) => {
     const req = "GetAllMessageInChat"
     return async dispatch => {
-        // if (!socket) {
-        //     socket = io(process.env.BASE_URL,{
-        //         extraHeaders:{
-        //             cookie:''
-        //         }
-        //     });
-        //     socket.on("connect", () => console.log("Connected to socket"));
-
-        //     socket.on("new_message", () => {
-        //         console.log("new_message");
-        //     });
-
-        //     socket.on("new_follower", () => {
-        //         console.log("new_follower");
-        //     });
-
-        //     socket.on("disconnect", () => console.log("Disconnected from socket"));
-        // }
-
         if (!id) {
             dispatch({ type: Types.RESET_CHAT });
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });

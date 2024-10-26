@@ -37,7 +37,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
     const [attachmentValidation, setAttachmentValidation] = useState(false);
     categories = filterByCycle(categories, 'project')
     const categoryDetails = categories.find(i => i._id == formData.category)
-    console.log({data , formData})
     const listDropDown =
         categoryDetails ? (categoryDetails?.media === 'image'
             ? ['image']

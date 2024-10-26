@@ -46,7 +46,6 @@ const Header = ({
     GetBoards_respond,
     user,
 }) => {
-
     const { i18n, t } = useTranslation();
 
     const [width, setWidth] = useState(0);

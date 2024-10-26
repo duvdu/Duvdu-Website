@@ -66,7 +66,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
             if (inclusive) params.inclusive = inclusive;
-            if (keywords) params.keywords = keywords;
+            if (keywords) params.search = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();

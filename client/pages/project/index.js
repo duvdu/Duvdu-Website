@@ -40,7 +40,6 @@ const Projects = ({ projects, GetProjects, api }) => {
                 limit: limit,
                 page: page,
             };
-
             // Add search parameter if search term is defined and not empty
             if (searchTerm?.length > 0) {
                 params.search = searchTerm;
@@ -55,13 +54,14 @@ const Projects = ({ projects, GetProjects, api }) => {
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
             if (inclusive) params.inclusive = inclusive;
-            if (keywords) params.keywords = keywords;
+            if (keywords) params.search = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
-
             // Call GetCopyrights with the constructed query string
-            GetProjects(queryString);
+            if(queryString && Router.isReady){
+                GetProjects(queryString);
+            }
         }
     }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
 

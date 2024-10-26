@@ -59,6 +59,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
             if (duration) params.duration = duration;
             if (instant !== undefined) params.instant = instant;
             if (inclusive !== undefined) params.inclusive = inclusive;
+            if (keywords) params.search = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();

@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 import MessageTile from "../../elements/MessageTile";
 import DuvduLoading from "../../elements/duvduLoading.js";
 import DraggableList from "../../../components/pages/home/dragList";
- 
+import { GetAllMessageInChat } from "../../../redux/action/apis/realTime/messages/getAllMessageInChat";
+
 import Link from 'next/link';
 
 
-function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond  , AvailableUserChat_resond , AvailableUserChat, onChoose  }) {
+function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond , GetAllMessageInChat  , AvailableUserChat_resond , onChoose  }) {
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
-
     function handleResize() {
         setIsMob(window.innerWidth < 1024);
     }
@@ -41,13 +41,13 @@ function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond
                             {GetNotifications_resond?.loading?
                             <DuvduLoading loadingIn={""} type='notification' />
                             :
-                            <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
+                            <ViewFew Type={'notification'} GetAllMessageInChat={GetAllMessageInChat} AvailableUserChat_resond={AvailableUserChat_resond} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
                         }
                         {chats?.loading?
                             <DuvduLoading loadingIn={""} type='notification' />
                         :
-                        <ViewFew Type={'messages'} onChoose={onChoose} list={chats?.data || []} t={t} onViewAll={() => setViewAllState(2)} />
-                                                }
+                        <ViewFew Type={'messages'} GetAllMessageInChat={GetAllMessageInChat} AvailableUserChat_resond={AvailableUserChat_resond} onChoose={onChoose} list={chats?.data || []} t={t} onViewAll={() => setViewAllState(2)} />
+                        }
                         </>
                     }
                     {
@@ -77,7 +77,7 @@ const ViewAll = ({ Type, list, t , onChoose }) =>
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
     </div>
 
-const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
+const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserChat_resond, onChoose }) => (
 
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] p-7">
         <div className="flex items-center justify-between">
@@ -87,15 +87,21 @@ const ViewFew = ({ Type, list, t, onViewAll , onChoose }) => (
             }
         </div>
         {Type === "messages" &&
-        <div className="flex items-center mt-5">
-            <DraggableList>
-
-                <img className="size-9 rounded-full object-cover object-top" src={''} alt="user" width="45" height="45" />
-            </DraggableList>
+        <div className="overflow-auto max-w-64 mt-8 hide-scrollable-container">
+            <div className="flex">
+                <DraggableList>
+                    {AvailableUserChat_resond?.data?.map(item=>
+                        <div className="me-2 flex flex-col items-center gap-1">
+                            <img onClick={()=>GetAllMessageInChat(item._id)} className="size-12 rounded-full cursor-pointer object-cover object-top" src={item.profileImage} alt="user" width="45" height="45" />
+                            <div className="font-semibold text-xs">{item.name?.split(' ')[0].length>6?item.name?.split(' ')[0].slice(0,6):item.name?.split(' ')[0]} </div>
+                        </div>
+                    )}
+                </DraggableList>
+            </div>
         </div>
         }
         {list.length > 0 ?
-            <div className="flex flex-col gap-4 mt-8 overflow-y-hidden">
+            <div className={`flex flex-col gap-4 ${Type === "messages"?'mt-4':' mt-8'} overflow-y-hidden`}>
                 {list.slice(0, 4).map((tile, index) => (
                     Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
@@ -136,6 +142,6 @@ const mapStateToProps = (state) => ({
     AvailableUserChat_resond: state.api.AvailableUserChat,    
 });
 const mapDispatchToProps = {
-    // AvailableUserChat
+    GetAllMessageInChat
 };
 export default connect(mapStateToProps, mapDispatchToProps)(MessageAndNotofication);

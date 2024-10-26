@@ -10,22 +10,6 @@ export const GetNotifications = () => {
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
         try {
             const response = await mainApiInstance.get(`api/notification`);
-            
-            // if (!socket) {
-            //     socket = io(process.env.BASE_URL); // BASE_URL = https://www.duvdu.com/
-            //     socket.on("connect", () => console.log("Connected to socket"));
-
-            //     socket.on("new_message", () => {
-            //         console.log("new_message");
-            //     });
-
-            //     socket.on("new_follower", () => {
-            //         console.log("new_follower");
-            //     });
-
-            //     socket.on("disconnect", () => console.log("Disconnected from socket"));
-            // }
-
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
         } catch (error) {
             

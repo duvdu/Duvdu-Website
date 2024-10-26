@@ -213,7 +213,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     }
     const AudioIndex = categories.indexOf(categories.map(item=> item.title).includes('Audio'))
     const AudioId =  (AudioIndex===-1 ? categories[categories.length -1] : categories[AudioIndex])?._id
-    console.log({formData})
 
     return (
         <>
