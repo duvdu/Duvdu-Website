@@ -114,7 +114,6 @@ const ProjectId = cardData.details._id
   const isVideoCover = isVideo(cardData.details.cover)
   const isAudioCover = isAudio(cardData.details?.audioCover);
   const type = cardData.cycle
-  console.log({isAudioCover})
   return (
     <>
       <DeleteBoard onClick={()=> DeleteProjectFromBoard(boardId, ProjectId)} id={boardId} />
