@@ -7,20 +7,25 @@ export default function ProjectView({contract}){
     const { t } = useTranslation();
     return <>
     <section className='grid grid-cols-2 w-full'>
+        {contract.totalPrice && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.totalPrice} EGP
             </span>
         </div>
+        }
+        {contract.details && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.details}
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
+        {contract?.tools?.length>0 && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Tools Used")}</h2>
             {contract?.tools?.map(item=>
@@ -29,6 +34,8 @@ export default function ProjectView({contract}){
             </div>
             )}
         </div>
+        }
+        {contract?.functions?.length>0 && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Functions Used")}</h2>
             {contract?.functions?.map(item=>
@@ -37,6 +44,7 @@ export default function ProjectView({contract}){
             </div>
             )}
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
             <div className='w-full'>
@@ -86,7 +94,7 @@ export default function ProjectView({contract}){
                 </div>
             </div>
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid grid-cols-1 w-full'>
             <a
                 href={contract.address ? `https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}` : null}
                 target="_blank"

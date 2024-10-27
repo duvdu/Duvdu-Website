@@ -7,32 +7,40 @@ export default function TeamView({contract}){
     const { t } = useTranslation();
     return <>
     <section className='grid grid-cols-3 w-full'>
+        {contract.workHours && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Work Hour")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.workHours}
             </span>
         </div>
+        }
+        {contract.hourPrice && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Price Per Hour")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.hourPrice} EGP
             </span>
         </div>
+        }
+        {contract.totalAmount && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Total Amount")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.totalAmount} EGP
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
+        {contract.details && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.details}
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
             <div className='w-full'>

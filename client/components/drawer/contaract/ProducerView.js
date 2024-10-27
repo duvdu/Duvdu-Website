@@ -7,48 +7,60 @@ export default function ProducerView({contract}){
     const { t } = useTranslation();
     return <>
     <section className='grid grid-cols-2 w-full'>
+        {contract.platform && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Platform")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.platform}
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
+        {contract.projectDetails && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.projectDetails}
             </span>
         </div>
+        }
     </section>
     <section className='grid grid-cols-2 w-full'>
+        {contract.episodesNumber && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episodes Number")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.episodesNumber}
             </span>
         </div>
+        }
+        {contract.episodesDuration && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episode Duration")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.episodesDuration}
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
+        {contract.expectedBudget && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episode budget")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.expectedBudget} EGP
             </span>
         </div>
+        }
+        {contract.expectedProfits && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episode profits")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.expectedProfits} EGP
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
             <div className='w-full '>
@@ -75,7 +87,7 @@ export default function ProducerView({contract}){
                 </div>
             </div>
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid grid-cols-1 w-full'>
             <a
                 href={contract.address ? `https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}` : null}
                 target="_blank"

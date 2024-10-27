@@ -8,9 +8,11 @@ import { formattedDeadline } from "../../../util/format-date";
 import { toggleContractData } from "../../../redux/action/contractDetails";
 import { useTranslation } from 'react-i18next';
 import DuvduLoading from "../../elements/duvduLoading.js";
+import { useRouter } from "next/router";
 
 const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex }) => {
     const { t } = useTranslation();
+    const router = useRouter()
 
 
     const handleStatus = (status) => {
@@ -63,7 +65,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         </Link>
     const MoreIcon = () => <Icon className='cursor-pointer' name={'more'} />
 
-    const HisTory = ({ data, isCanceled }) => {
+    const HisTory = ({ data, isCanceled,router }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
         return <>
             {/* max-w-[370px] ahmed */}
@@ -124,7 +126,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                     <span className='text-[24px] md:text-[40px] flex items-center ml-3 gap-2'>
                         <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} flex gap-2`}>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>$</span>
-                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.expectedProfits}</span>
+                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.totalPrice || data.contract.totalAmount}</span>
                         </span>
                     </span>
                     <div className='h-auto w-[1px] bg-black opacity-15' />
@@ -162,7 +164,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                             <div className="w-full md:min-w-80">
                                 {
                                     data?.map((value, i) => (
-                                        <HisTory key={i} data={value} isCanceled={handleStatus(value.contract.status) === -1} />
+                                        <HisTory key={i} data={value} router={router} isCanceled={handleStatus(value.contract.status) === -1} />
                                     ))
                                 }
                             </div>

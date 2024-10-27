@@ -7,26 +7,32 @@ export default function RentalView({contract}){
     const { t } = useTranslation();
     return <>
     <section className='grid grid-cols-2 w-full'>
+        {contract.totalPrice &&
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.totalPrice} EGP
             </span>
         </div>
+        }
+        {contract.insurance && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("insurance")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.insurance} EGP
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
+        {contract.details && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.details}
             </span>
         </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
             <div className='w-full'>
@@ -76,7 +82,7 @@ export default function RentalView({contract}){
                 </div>
             </div>
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid grid-cols-1 w-full'>
             <a
                 href={contract.address ? `https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}` : null}
                 target="_blank"
@@ -107,7 +113,7 @@ export default function RentalView({contract}){
                 </div>
             </a>
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    {/* <section className='grid grid-cols-2 w-full'>
             <div className='w-full '>
                 <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>
                 <div className='flex gap-4'>
@@ -131,7 +137,7 @@ export default function RentalView({contract}){
                     </div>
                 </div>
             </div>
-    </section>   
+    </section>    */}
     
     </>  
 } 
