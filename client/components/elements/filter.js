@@ -98,9 +98,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     filterData.push({ value: 1, name: "Category" });
     filterData.push({ value: 2, name: "Sub-category" });
     filterData.push({ value: 3, name: "Tags" });
-    if (cycle === "copy-rights" || cycle === "producer" || cycle === "rentals") {
-        filterData.push({ value: 5, name: "Budget Range" });
-    }
+    filterData.push({ value: 5, name: "Budget Range" });
     if (cycle === "rentals") filterData.push({ value: 7, name: "Insurance" });
     if (cycle === "copy-rights" || cycle === "project") {
         filterData.push({ value: 6, name: "Duration" });
