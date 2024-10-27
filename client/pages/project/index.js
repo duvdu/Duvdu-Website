@@ -53,7 +53,7 @@ const Projects = ({ projects, GetProjects, api }) => {
             if (priceTo) params.maxBudget = priceTo;
             if (duration) params.duration = duration;
             if (instant) params.instant = instant;
-            if (inclusive) params.inclusive = inclusive;
+            // if (inclusive) params.inclusive = inclusive;
             if (keywords) params.search = keywords;
 
             // Construct query string from params object
@@ -63,7 +63,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                 GetProjects(queryString);
             }
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, keywords]);
 
 
 
@@ -111,7 +111,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                                     {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
-                                    <ProjectCard cardData={item} />
+                                    <ProjectCard cardData={item} inclusive={inclusive} />
                                 </React.Fragment>
                             ))}
                         </div>

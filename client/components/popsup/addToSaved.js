@@ -29,6 +29,10 @@ function AddToSaved({
         if(addProjectToBoard_respond?.message==='success')
         init()
     },[addProjectToBoard_respond?.data])
+    useEffect(()=>{
+        if(!getBoards_respond && isOpen)
+        init()
+    },[getBoards_respond,isOpen])
     useEffect(() => {
         if (addProjectToBoard_respond?.message) {
             close()
@@ -64,7 +68,8 @@ function AddToSaved({
         <>
             <SuccessfullyPosting id="addProjectToBoard-popup" message="Add To board" onCancel={()=> ClosePopUp('addProjectToBoard-popup') } />
             <Drawer className='z-30' toggleDrawer={toggleDrawerAddFav} name={t('Add To Saved Projects')} isOpen={isOpen}>
-                <DuvduLoading loadingIn={"AddProjectToBoard"} />
+                {getBoards_respond?.loading ?
+                <DuvduLoading loadingIn={""} type="bookmarks" />:
                 <div className='flex flex-col w-full overflow-y-scroll'>
                     {boards?.filter(board => !isProjectInBoard(board, projectId)).map((board, index) => (
                         <div key={index} className="h-20 rounded-full mt-9 relative overflow-hidden cursor-pointer" onClick={() => handleNextStep(board._id)}>
@@ -87,6 +92,7 @@ function AddToSaved({
                         </div>
                     )}
                 </div>
+                }
             </Drawer>
         </>
     );

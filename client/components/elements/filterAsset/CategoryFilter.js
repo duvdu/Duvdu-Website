@@ -50,7 +50,6 @@ const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDra
             switch (key) {
               case 'category':
                 setSelectedCategories([value])
-                console.log({value})
             }})
     },[router.query])
     

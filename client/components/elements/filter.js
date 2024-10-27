@@ -59,10 +59,10 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     useEffect(()=>{
         const newFilters = {};
         Object.entries(router.query).forEach(([key, value]) => {
-            console.log({key,value})
             switch (key) {
               case 'category':
                 newFilters[1] =[value.includes(",") ? value.split(",") : value]
+                break;
               case 'subCategory':
                 newFilters[2] =[value.includes(",") ? [value.split(",")] : value]
                 break;
@@ -99,7 +99,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     ];
     // { value: 4, name: "Location" },
     
-    if (cycle === "project") filterData.push({ value: 1, name: "Category" });
+    filterData.push({ value: 1, name: "Category" });
     filterData.push({ value: 2, name: "Sub-category" });
     filterData.push({ value: 3, name: "Tags" });
     if (cycle === "copy-rights" || cycle === "producer" || cycle === "rentals") {
@@ -161,7 +161,6 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                 data: value,
             }))
         ];
-        console.log({onFilterChange , filterList})
         if (!onFilterChange) {
             handleFilterChange(filterList)
         }
@@ -177,7 +176,6 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     };
 
     const handleFilterChange = (selectedFilters) => {
-        console.log({selectedFilters})
         // Initialize params object
         const params = {};
         selectedFilters.forEach(filter => {
@@ -224,7 +222,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     break;
                 case "instantProject":
                     // Handle the case where filter.data might be undefined
-                    if (filter.name) {
+                    if (filter.data) {
                         params.instant = filter.data;
                     }
                     break;
@@ -236,7 +234,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     break;
                 case "priceInclusive":
                     // Handle the case where filter.data might be undefined
-                    if (filter.name) {
+                    if (filter.data) {
                         params.inclusive = filter.data;
                     }
                     break;
@@ -255,7 +253,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
             ...params,
         }).toString();
 
-        if (queryString)
+        if (setParams)
             setParams(queryString)
 
     };

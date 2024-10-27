@@ -36,7 +36,7 @@ const Projects = ({
     }, [get_respond]);
 
     useEffect(() => {
-        if (delete_respond?.data || boardId || swap_respond?.data) {
+        if (delete_respond?.data || boardId || swap_respond?.data || !get_respond) {
             GetFavList({});
         }
     }, [delete_respond, boardId, swap_respond]);

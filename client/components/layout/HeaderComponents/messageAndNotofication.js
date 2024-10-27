@@ -34,7 +34,7 @@ function MessageAndNotofication({ getheaderpopup,chats , GetNotifications_resond
     return (
         <div className={isMob ? " dark:bg-black h-screen" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
             <div className={isMob ? "" : "dialog dialog-1"}>
-                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2 px-1 py-4">
+                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2 ps-2 py-4">
                     {
                         viewAllState == 0 &&
                         <>

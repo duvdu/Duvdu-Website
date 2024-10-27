@@ -13,6 +13,7 @@ import OTPSkeleton from "../skeletons/OTPSkeleton";
 import ContractDetailsSkeleton from "../skeletons/ContractDetailsSkeleton";
 import NotificationSkeleton from "../skeletons/NotificationSkeleton";
 import TeamProjectSkeleton from "../skeletons/TeamProjectSkeleton";
+import BookmarksSkeleton from "../skeletons/BookmarksSkeleton";
 
 const DuvduLoading = ({ loadingIn, api, test = false, type }) => {
   return (
@@ -46,6 +47,8 @@ const DuvduLoading = ({ loadingIn, api, test = false, type }) => {
                 return <NotificationSkeleton />;
               case "teamProject":
                 return <TeamProjectSkeleton />;
+              case "bookmarks":
+                return <BookmarksSkeleton />;
               default:
                 return <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-primary rounded-full m-2 mx-auto" />
             }

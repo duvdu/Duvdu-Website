@@ -212,7 +212,7 @@ const Home = ({
       setScrollInterval(null);
     };
     const setParams = (queryString) => {
-        Router.push(`?${queryString}`);
+        Router.push(`?${queryString}`, undefined, { scroll: false });
     };
     return (
         <>
@@ -222,7 +222,7 @@ const Home = ({
                 <section className="w-full">
                     <div className="mt-8 lg:my-20 mx-auto w-min">
                         <h1 className="text-center my-4">
-                            <span className="font-black text-[#263257] dark:text-white text-3xl lg:text-8xl capitalize whitespace-nowrap trap">{t("explore")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[10px] pb-0 trap" style={TheBeststyle}>
+                            <span className="font-black text-[#263257] dark:text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl capitalize whitespace-nowrap trap">{t("explore")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[10px] lg:px-[20px] pb-0 trap" style={TheBeststyle}>
                                 {t("the best")} </span> {t("of")}
                             </span>
                             <div className="relative h-[50px] lg:h-[120px]">
@@ -231,7 +231,7 @@ const Home = ({
                                         {
                                             words?.map((i, index) =>
                                                 <div className="h-[50px] lg:h-[120px] flex flex-col justify-center items-center my-2" key={index}>
-                                                    <p className="text-[#1A73EB] font-black text-3xl lg:text-8xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
+                                                    <p className="text-[#1A73EB] font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
                                                 </div>
                                             )
                                         }
