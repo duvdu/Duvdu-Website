@@ -19,7 +19,7 @@ const User = ({ info }) => {
     return (
         <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden w-[350px]" >
             <div className="flex w-full overflow-hidden h-32">
-                <img className="w-full" src={info?.coverImage} alt={`Profile Image`} />
+                <img className="w-full bg-gray-300 dark:bg-[#ffffff20]" src={info?.coverImage} />
             </div>
             <div className='p-5'>
                 <div className='flex items-start gap-4 -translate-y-4 h-11'>
@@ -55,7 +55,7 @@ const UserSearch = ({ users }) => {
 
     return (
         <div className=''>  
-            <h2 className=" text-2xl font-semibold opacity-60 capitalize mb-8">{t("creatives")}</h2>
+            <h2 className=" text-2xl font-semibold opacity-60 capitalize mb-3 lg:mb-5">{t("creatives")}</h2>
              <DraggableList>
             <div className="flex gap-5">
                 {users?.map((value, index) => (

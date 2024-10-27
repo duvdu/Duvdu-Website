@@ -34,7 +34,6 @@ const Search = ({categories}) => {
     const handleSearch = () => {
         if (searchTerm) {
             const updatedHistory = [searchTerm, ...searchHistory.filter(term => term !== searchTerm)].slice(0, 10); // Keep last 10 unique terms
-            setSearchHistory(updatedHistory);
             localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
         }
         const query = searchTerm ? { search: searchTerm } : {};

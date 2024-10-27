@@ -38,8 +38,8 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
             setFav(cardData?.isFavourite);
     }, [cardData?.isFavourite, enbablelove]);
 
-    const totalFunctionsUnitPrice = cardData?.functions.reduce((total, item) => total + item.unitPrice, 0);
-    const totalToolsUnitPrice = cardData?.tools.reduce((total, item) => total + item.unitPrice, 0);
+    const totalFunctionsUnitPrice = cardData?.functions?.reduce((total, item) => total + item.unitPrice, 0);
+    const totalToolsUnitPrice = cardData?.tools?.reduce((total, item) => total + item.unitPrice, 0);
     const inclusivePrice = cardData?.projectScale.current * (totalToolsUnitPrice + totalFunctionsUnitPrice + cardData?.projectScale.pricerPerUnit);
   
     const loveIconName = fav ? 'fas' : 'far'

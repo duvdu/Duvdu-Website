@@ -49,6 +49,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         // if(formData.category == undefined)
             UpdateFormData('attachments' , null)
     },[formData.category])
+    console.log({formData})
     const convertToFormData = () => {
         const data = new FormData();
 
@@ -233,8 +234,8 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                     }}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
-                                        UpdateFormData('subCategoryId', value.subCategoryId)
-                                        UpdateFormData('tagsId', value.tagsId)
+                                        UpdateFormData('subCategoryId', value.subCategory)
+                                        UpdateFormData('tagsId', value.tags)
                                     }}
                                 />
                                 <ErrorMessage ErrorMsg={ErrorMsg.category}/>

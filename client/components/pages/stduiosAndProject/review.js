@@ -40,7 +40,7 @@ const Reviews = ({ data, userName , project=false }) => {
         ref={reviewRef}
         modules={[Autoplay, Navigation, EffectFade, Pagination]}
         spaceBetween={10}
-        slidesPerView={2}
+        slidesPerView={1.2} 
         loop={data?.length==1?false:true}
         pagination={{
             clickable: true,

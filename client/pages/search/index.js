@@ -13,6 +13,7 @@ import { GetAllSearch } from "../../redux/action/apis/search/getall";
 import DraggableList from "../../components/pages/home/dragList";
 import { useTranslation } from 'react-i18next';
 import UserSearch from "../../components/pages/search/users";
+import CategorySearch from "../../components/pages/search/category";
 import ProjectSearch from "../../components/pages/search/projects";
 
 const Search = ({
@@ -30,7 +31,12 @@ const Search = ({
     return (
         <>
             <Layout isbodyWhite={true}>
-                <div className='flex flex-col gap-12 py-12'>
+                <div className='flex flex-col gap-5 md:gap-8 lg:gap-12 py-12'>
+                    {search?.data?.users.length>0 && 
+                    <section className="container">
+                        <CategorySearch category={search?.data?.category}/>
+                    </section>
+                    }
                     {search?.data?.users.length>0 && 
                     <section className="container">
                         <UserSearch users={search?.data?.users}/>

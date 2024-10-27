@@ -12,7 +12,7 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState({});
     const [selectedTags, setSelectedTags] = useState([]);
-
+    console.log(selectedSubCategory)
     useEffect(() => {
         const selectedCategory = categories.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
