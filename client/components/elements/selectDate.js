@@ -84,10 +84,10 @@ const SelectDate = ({ onChange, value }) => {
                 </span>
                 <div className="flex gap-3 items-center font-medium text-[#8A96BC] cursor-pointer text-sm">
                     <button onClick={() => handleScroll(-1)}>
-                    <Icon className="text-[#222E54] dark:text-white w-3" name="angle-left"  />
+                    <Icon className="text-[#222E54] dark:text-white w-3 rtl:rotate-180" name="angle-left"  />
                     </button>
                     <button onClick={() => handleScroll(1)}>
-                    <Icon className="text-[#222E54] dark:text-white w-3 -rotate-180" name="angle-left" />
+                    <Icon className="text-[#222E54] dark:text-white w-3 ltr:-rotate-180" name="angle-left" />
                     </button>
                 </div>
             </div>

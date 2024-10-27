@@ -290,7 +290,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                 {!hideSwitch && (
                     <div className="flex items-center justify-end gap-2">
                         <Switch
-                            defaultValue={switchState.instantProject}
+                            defaultValue={switchState?.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
                         />
                         <span className="opacity-70 font-semibold">{t("instant project")}</span>
@@ -298,7 +298,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                         {cycle === "project" && (
                             <>
                                 <Switch
-                                    defaultValue={switchState.priceInclusive}
+                                    defaultValue={switchState?.priceInclusive}
                                     onSwitchChange={handleSwitchChange('priceInclusive')}
                                 />
                                 <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
@@ -313,7 +313,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                 {!hideSwitch && (
                     <div className="flex items-center justify-end gap-2">
                         <Switch
-                            defaultValue={switchState.instantProject}
+                            defaultValue={switchState?.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
                         />
                         <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
@@ -321,7 +321,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                             <>
                                 <div className='hidden md:block'>
                                     <Switch
-                                        defaultValue={switchState.priceInclusive}
+                                        defaultValue={switchState?.priceInclusive}
                                         onSwitchChange={handleSwitchChange('priceInclusive')}
                                     />
                                 </div>
@@ -344,7 +344,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                         {cycle === "project" && (
                             <>
                                 <Switch
-                                    checked={switchState.priceInclusive}
+                                    checked={switchState?.priceInclusive}
                                     onSwitchChange={handleSwitchChange('priceInclusive')}
                                 />
                                 <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>

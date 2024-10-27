@@ -64,7 +64,7 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" }
                     <Icon className="text-primary w-4" name={"image"} />
                 </div>
                 <span className="ltr:pl-5 rtl:pr-5 w-full text-blue-600">{t("Open gallery")}</span>
-                <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
+                <Icon name={"angle-right"} className={"mr-2 w-2 text-primary rtl:!rotate-180"} />
             </label>
             <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" accept={getAcceptType()} type="file" multiple />
             {

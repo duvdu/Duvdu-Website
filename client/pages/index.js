@@ -36,6 +36,10 @@ const Home = ({
     categories
 }) => {
     const { t, i18n } = useTranslation();
+    const [switchState, setSwitchState] = useState({
+        instantProject: false,
+        priceInclusive: true ,
+    });
 
     useEffect(() => {
         if(islogin===false)
@@ -92,7 +96,7 @@ const Home = ({
             if (priceTo) params.priceTo = priceTo;
             if (duration) params.duration = duration;
             if (instant !== undefined) params.instant = instant;
-            if (inclusive !== undefined) params.inclusive = inclusive;
+            // if (inclusive !== undefined) params.inclusive = inclusive;
             if (keywords) params.keywords = keywords;
 
             // Construct query string from params object
@@ -103,7 +107,7 @@ const Home = ({
             GetProjects(queryString)
 
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, keywords]);
 
 
     const handleFilterChange = (selectedFilters) => {
@@ -566,7 +570,7 @@ const Home = ({
                 <section className="py-12">
                     <div className='container'>
                         <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-5 lg:mb-8">{t("explore recommended projects")}</h2>
-                        <Filter cycle={cycle} setParams={setParams} />
+                        <Filter cycle={cycle} setSwitchState={setSwitchState} switchState={switchState} setParams={setParams} />
                         <div className="h-5" />
                         {projects?.loading ?
                         <>
