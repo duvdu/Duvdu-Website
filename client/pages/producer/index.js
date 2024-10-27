@@ -24,6 +24,10 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
+    const [switchState, setSwitchState] = useState({
+        instantProject: false,
+        priceInclusive: undefined,
+    });
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
@@ -119,8 +123,8 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
 
-                        <Filter cycle={cycle} setParams={setParams} />
-                        <div className="h-7" />
+                    <Filter setSwitchState={setSwitchState} switchState={switchState} cycle={cycle} setParams={setParams} />
+                    <div className="h-7" />
                         
                         {producers?.length > 0 &&
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>

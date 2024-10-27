@@ -15,6 +15,10 @@ import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Projects = ({ projects, GetProjects, api }) => {
     const { t } = useTranslation();
+    const [switchState, setSwitchState] = useState({
+        instantProject: false,
+        priceInclusive: true ,
+    });
     const projectsList = projects?.data
     const pagganation = projects?.pagination
     const page = 1;
@@ -65,8 +69,6 @@ const Projects = ({ projects, GetProjects, api }) => {
         }
     }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, keywords]);
 
-
-
     useEffect(() => {
         const handleScroll = () => {
             if (pagganation?.totalPages > page) {
@@ -88,14 +90,13 @@ const Projects = ({ projects, GetProjects, api }) => {
     const setParams = (queryString) => {
         Router.push(`/${cycle}?${queryString}`);
     };
-
     return (
         <>
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
                 <section className="my-12">
                     <div className="container mb-30">
                             {/* // searchTerm && */}
-                            <Filter cycle={cycle} setParams={setParams} />
+                            <Filter cycle={cycle} setSwitchState={setSwitchState} switchState={switchState} setParams={setParams} />
                         <div className="h-7" />
                         {projectsList?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
@@ -111,7 +112,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                                     {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
                                     {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
                                     {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
-                                    <ProjectCard cardData={item} inclusive={inclusive} />
+                                    <ProjectCard cardData={item} inclusive={switchState.priceInclusive} />
                                 </React.Fragment>
                             ))}
                         </div>

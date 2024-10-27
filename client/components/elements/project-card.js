@@ -16,12 +16,15 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
+  const [defaultInclusive, setDefaultInclusive] = useState(true);
   const videoRef = useRef(null);
   const audioRef = useRef(null);
   const cardData = initialCardData;
-
   const [fav, setFav] = useState(false);
-
+  // useEffect(()=>{
+  //   if(inclusive && inclusive =='true')
+  //     setDefaultInclusive(false)
+  // },[inclusive])
   useEffect(() => {
     if (cardData?._id === (swapProjectToFav_respond?.projectId || -1)) {
       setFav(swapProjectToFav_respond.action === "add");
@@ -209,7 +212,7 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
         <p className='text-xl opacity-70 font-medium my-1'>{cardData?.name || cardData?.title}</p>
         {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
         (cardData?.projectScale?.current? 
-        (inclusive && inclusive=='true'?<>
+        ((inclusive)?<>
           <span className='text-xl font-bold'>{inclusivePrice}$</span>
           </>:
           <>

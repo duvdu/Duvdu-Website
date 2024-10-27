@@ -19,6 +19,10 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
     const Router = useRouter();
     const showLimit = 12;
     const page = 1;
+    const [switchState, setSwitchState] = useState({
+        instantProject: false,
+        priceInclusive: undefined ,
+    });
 
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
@@ -115,7 +119,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                 <section className="mt-12 mb-12">
                     <div className="container mb-30">
 
-                        <Filter cycle={cycle} setParams={setParams} />
+                    <Filter setSwitchState={setSwitchState} switchState={switchState} cycle={cycle} setParams={setParams} />
 
                         {CopyRight?.length === 0 ?
                             <div className='mt-4'>

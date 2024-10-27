@@ -16,6 +16,10 @@ import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Studio = ({ projects, GetStudios, api }) => {
     const { t } = useTranslation();
+    const [switchState, setSwitchState] = useState({
+        instantProject: false,
+        priceInclusive: undefined ,
+    });
 
     const page = 1;
     const showLimit = 24;
@@ -106,7 +110,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                     <div className="container mb-30">
                         {
                             // searchTerm && 
-                            <Filter cycle={cycle} setParams={setParams} />
+                            <Filter setSwitchState={setSwitchState} switchState={switchState} cycle={cycle} setParams={setParams} />
                         }
                         {
                             !searchTerm &&
