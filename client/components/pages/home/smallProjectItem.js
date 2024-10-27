@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '../../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration, isVideo } from '../../../util/util';
+import { convertDuration,isAudio, isVideo } from '../../../util/util';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
@@ -18,6 +18,7 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
     const [isMuted, setIsMuted] = useState(false);
     const [Duration, setDuration] = useState(0);
     const videoRef = useRef(null);
+    const audioRef = useRef(null);
     const cardData = initialCardData;
 
     const [fav, setFav] = useState(false);
@@ -36,39 +37,59 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
             setFav(cardData.isFavourite);
     }, [cardData?.isFavourite, enbablelove]);
 
-
+    const totalFunctionsUnitPrice = cardData?.functions.reduce((total, item) => total + item.unitPrice, 0);
+    const totalToolsUnitPrice = cardData?.tools.reduce((total, item) => total + item.unitPrice, 0);
+    const inclusivePrice = cardData?.projectScale.current * (totalToolsUnitPrice + totalFunctionsUnitPrice + cardData?.projectScale.pricerPerUnit);
     const loveIconName = fav ? 'fas' : 'far'
 
     useEffect(() => {
         if (videoRef.current) {
-            const timerId = setInterval(() => {
-                if (videoRef.current?.duration) {
-                    setDuration(videoRef.current.duration);
-                    clearInterval(timerId);
-                }
-            }, 10)
+          const timerId = setInterval(() => {
+            if (videoRef.current?.duration) {
+              setDuration(videoRef.current.duration);
+              clearInterval(timerId);
+            }
+          }, 10)
         }
-    }, [videoRef.current?.duration == NaN]);
+        if (audioRef.current) {    
+          audioRef.current.addEventListener('loadedmetadata', () => {
+            setDuration(audioRef.current?.duration);
+          });
+        }
+      }, [videoRef.current?.duration, audioRef.current?.duration]);
 
     const loveToggleAction = () => {
         SwapProjectToFav({ projectId: cardData._id, action: fav ? "remove" : "add" })
     };
 
     const timeUpdate = () => {
-        setDuration(videoRef.current.duration - videoRef.current.currentTime);
-    }
+        if (videoRef.current) {
+          setDuration(videoRef.current.duration - videoRef.current.currentTime);
+        } else if (audioRef.current) {
+          setDuration(audioRef.current.duration - audioRef.current.currentTime);
+        }
+      };
+
     const handleSoundIconClick = () => {
         setIsMuted(soundIconName === 'volume-xmark' ? true : false)
         setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark')
-        if (videoRef.current)
+        if (videoRef.current){
             videoRef.current.muted = soundIconName === 'volume-high';
-    };
+          }
+          if (audioRef.current) {
+            audioRef.current.muted = soundIconName === 'volume-high';
+          }
+          };
 
     const handleHover = () => {
         if (videoRef.current) {
             videoRef.current.play();
             videoRef.current.muted = !isMuted;
         }
+        if (isAudioCover && audioRef.current) {
+            audioRef.current.play();
+            audioRef.current.muted = !isMuted;
+        }      
     };
 
     const handleLeave = () => {
@@ -77,6 +98,10 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
             videoRef.current.currentTime = 0;
             setDuration(videoRef.current.duration);
         }
+        if (audioRef.current) {
+            audioRef.current.pause();
+            // audioRef.current.currentTime = 0;
+        }      
 
     };
 
@@ -111,7 +136,8 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
     // }, [cardData._id, getBoards_respond,addProjectToBoard_respond]);
 
     const isVideoCover = isVideo(cardData.cover)
-    
+    const isAudioCover = isAudio(cardData?.audioCover);
+
     return (
         <>
             <div className={`select-none project-card flex flex-col ${className}`} onClick={() => { }} >
@@ -140,7 +166,21 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                                         </span>
                                     </div>
                                 </>
-                            ) : (
+                            ) : isAudioCover ? (
+                                <Link href={`/${type}/${cardData?._id}`}>
+                                  <a>
+                                    <img className='cardimg cursor-pointer' src={cardData?.cover} alt="project" />
+                                    <audio ref={audioRef} onTimeUpdate={timeUpdate} loop>
+                                      <source src={cardData?.audioCover} type='audio/mp3' />
+                                    </audio>
+                                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                                      <span className="text-white">
+                                        {convertDuration(Duration * 1000)}
+                                      </span>
+                                    </div>
+                                  </a>
+                                </Link>
+                              ) :(
                                 <img className='cardimg cursor-pointer' src={cardData.cover} alt="project" />
                             )
                         }
@@ -196,8 +236,7 @@ const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'p
                             <div className='absolute bottom-0 home-card-shadow size-full z-[1]' />
                         </a>
                     </Link>
-                    {
-                        isVideoCover &&
+                    {(isVideoCover || isAudioCover) &&
                         <div>
                             <div onClick={handleSoundIconClick} className="blur-container small sound z-[1]">
                                 <Icon className={`cursor-pointer h-3 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />

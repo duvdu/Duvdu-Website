@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Icon from '../Icons';
-import { useState, useRef, useEffect } from 'react';
-import { convertDuration, isVideo } from '../../util/util';
+import { convertDuration, isAudio, isVideo } from '../../util/util';
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { connect } from "react-redux";
 import Link from 'next/link';
-
 import 'swiper/swiper-bundle.css';
 import { AddProjectToBoard } from '../../redux/action/apis/bookmarks/bookmarkItem/add';
 import { DeleteProjectFromBoard } from '../../redux/action/apis/bookmarks/bookmarkItem/remove';
@@ -14,11 +12,12 @@ import { SwapProjectToFav } from '../../redux/action/apis/bookmarks/fav/favActio
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 import DuvduLoading from './duvduLoading';
 
-const ProjectCard = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
   const cardData = initialCardData;
 
   const [fav, setFav] = useState(false);
@@ -34,10 +33,10 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
     if (cardData?.isFavourite)
       setFav(cardData?.isFavourite);
   }, [cardData?.isFavourite, enbablelove]);
-
-
+  const totalFunctionsUnitPrice = cardData?.functions?.reduce((total, item) => total + item.unitPrice, 0);
+  const totalToolsUnitPrice = cardData?.tools?.reduce((total, item) => total + item.unitPrice, 0);
+  const inclusivePrice = cardData?.projectScale.current * (totalToolsUnitPrice + totalFunctionsUnitPrice + cardData?.projectScale.pricerPerUnit);
   const loveIconName = fav ? 'fas' : 'far'
-  
   enbablelove ? loveIconName = 'fas' : loveIconName
 
   useEffect(() => {
@@ -49,26 +48,44 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
         }
       }, 10)
     }
-  }, [videoRef.current?.duration == NaN]);
+    if (audioRef.current) {
+      audioRef.current.addEventListener('loadedmetadata', () => {
+        setDuration(audioRef.current?.duration);
+      });
+    }
+  }, [videoRef.current?.duration, audioRef.current?.duration]);
 
   const loveToggleAction = () => {
-    SwapProjectToFav({ projectId: cardData?._id, action: (fav || enbablelove) ? "remove" : "add" })
+    SwapProjectToFav({ projectId: cardData?._id, action: (fav || enbablelove) ? "remove" : "add" });
   };
 
   const timeUpdate = () => {
-    setDuration(videoRef.current.duration - videoRef.current.currentTime);
-  }
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration - videoRef.current.currentTime);
+    } else if (audioRef.current) {
+      setDuration(audioRef.current.duration - audioRef.current.currentTime);
+    }
+  };
+
   const handleSoundIconClick = () => {
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
     setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark')
-    if (videoRef.current)
+    if (videoRef.current){
       videoRef.current.muted = soundIconName === 'volume-high';
+    }
+    if (audioRef.current) {
+      audioRef.current.muted = soundIconName === 'volume-high';
+    }
   };
 
   const handleHover = () => {
-    if (videoRef.current) {
+    if (isVideoCover && videoRef.current) {
       videoRef.current.play();
       videoRef.current.muted = !isMuted;
+    }
+    if (isAudioCover && audioRef.current) {
+      audioRef.current.play();
+      audioRef.current.muted = !isMuted;
     }
   };
 
@@ -78,21 +95,24 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
       videoRef.current.currentTime = 0;
       setDuration(videoRef.current.duration);
     }
-
+    if (audioRef.current) {
+      audioRef.current.pause();
+      // audioRef.current.currentTime = 0;
+    }
   };
 
-  const isVideoCover = isVideo(cardData?.cover)
+  const isVideoCover = isVideo(cardData?.cover);
+  const isAudioCover = isAudio(cardData?.audioCover);
+
   return (
     <>
-      <div className={`select-none project-card ${className}`} onClick={() => { }} >
+      <div className={`select-none project-card ${className}`} onClick={() => { }}>
         <div
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
           className='project'>
           <>
-            {
-              // cardData?.cover.length == 1 &&
-              isVideoCover ? ( // Check if source is a video
+            {isVideoCover ? (
                 <Link href={`/${type}/${cardData?._id}`}>
                   <a>
                     <video
@@ -110,14 +130,27 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
                     </div>
                   </a>
                 </Link>
+              ) : isAudioCover ? (
+                <Link href={`/${type}/${cardData?._id}`}>
+                  <a>
+                    <img className='cardimg cursor-pointer' src={cardData?.cover} alt="project" />
+                    <audio ref={audioRef} onTimeUpdate={timeUpdate} loop>
+                      <source src={cardData?.audioCover} type='audio/mp3' />
+                    </audio>
+                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                      <span className="text-white">
+                        {convertDuration(Duration * 1000)}
+                      </span>
+                    </div>
+                  </a>
+                </Link>
               ) : (
                 <Link href={`/${type}/${cardData?._id}`}>
                   <a>
                     <img className='cardimg cursor-pointer' src={cardData?.cover} alt="project" />
                   </a>
                 </Link>
-              )
-            }
+              )}
             {
               false &&
               cardData?.backgroundImages.length > 1 &&
@@ -149,8 +182,7 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
               <DuvduLoading loadingIn={"SwapProjectToFav"} />
             </div>
           }
-          {
-            isVideoCover &&
+          {(isVideoCover || isAudioCover) &&
             <div onClick={handleSoundIconClick} className="blur-container sound left-[15px] z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
@@ -176,13 +208,18 @@ const ProjectCard = ({ cardData: initialCardData, className = "", type = 'projec
         </div>
         <p className='text-xl opacity-70 font-medium my-1'>{cardData?.name || cardData?.title}</p>
         {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
+        (cardData?.projectScale?.current? 
+        (inclusive && inclusive=='true'?<>
+          <span className='text-xl font-bold'>{inclusivePrice}$</span>
+          </>:
           <>
-            <span className='text-xl font-bold'>{cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit}$</span>
-            {(cardData?.projectScale?.unit) &&
-              <span className='text-xl ml-2 opacity-60'>
-                per {cardData?.projectScale?.unit}
-              </span>}
-          </>
+            <span className='text-xl font-bold'>{cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current}$</span>
+          </>)
+:(
+  <span className='text-xl font-bold'>{cardData?.projectScale?.pricerPerUnit}$</span>
+
+)
+        )
         }
       </div>
     </>
@@ -196,7 +233,6 @@ const mapStateToProps = (state) => ({
   addProjectToBoard_respond: state.api.AddProjectToBoard,
   swapProjectToFav_respond: state.api.SwapProjectToFav,
   GetProject_respond: state.api.GetProject,
-
 });
 
 const mapDispatchToProps = {

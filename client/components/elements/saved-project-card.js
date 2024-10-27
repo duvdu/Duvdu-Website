@@ -2,7 +2,7 @@
 import React from 'react';
 import Icon from '../Icons';
 import { useState, useRef, useEffect } from 'react';
-import { convertDuration, isVideo, OpenPopUp } from '../../util/util';
+import { convertDuration, isAudio,isVideo, OpenPopUp } from '../../util/util';
 import { login } from "../../redux/action/apis/auth/signin/signin";
 import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -32,6 +32,10 @@ const ProjectCard = ({
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
+  const totalFunctionsUnitPrice = cardData?.details?.functions?.reduce((total, item) => total + item.unitPrice, 0);
+  const totalToolsUnitPrice = cardData?.details?.tools?.reduce((total, item) => total + item.unitPrice, 0);
+  const inclusivePrice = cardData?.details?.projectScale?.current * (totalToolsUnitPrice + totalFunctionsUnitPrice + cardData?.details?.projectScale?.pricerPerUnit);
   const dropdown = [
     {
       value: "Delete",
@@ -46,18 +50,31 @@ const ProjectCard = ({
         }
       }, 10)
     }
-  }, [videoRef.current?.duration == NaN]);
+    if (audioRef.current) {
+      audioRef.current.addEventListener('loadedmetadata', () => {
+        setDuration(audioRef.current?.duration);
+      });
+    }
+  }, [videoRef.current?.duration, audioRef.current?.duration]);
 
 
   const timeUpdate = () => {
-    setDuration(videoRef.current.duration - videoRef.current.currentTime);
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration - videoRef.current.currentTime);
+    } else if (audioRef.current) {
+      setDuration(audioRef.current.duration - audioRef.current.currentTime);
+    }
+  };
 
-  }
   const handleSoundIconClick = () => {
     setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark');
     setIsMuted(soundIconName === 'volume-xmark' ? true : false)
-    if (videoRef.current)
+    if (videoRef.current){
       videoRef.current.muted = soundIconName === 'volume-high';
+    }
+    if (audioRef.current) {
+      audioRef.current.muted = soundIconName === 'volume-high';
+    }
 
   };
 
@@ -67,28 +84,37 @@ const ProjectCard = ({
 
   const handleHover = () => {
     if (videoRef.current) {
-      videoRef.current.play();
-      videoRef.current.muted = !isMuted;
+        videoRef.current.play();
+        videoRef.current.muted = !isMuted;
     }
-  };
+    if (isAudioCover && audioRef.current) {
+        audioRef.current.play();
+        audioRef.current.muted = !isMuted;
+    }      
+};
 
-  const handleLeave = () => {
-    if (videoRef.current) {
+const handleLeave = () => {
+  if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
       setDuration(videoRef.current.duration);
-    }
+  }
+  if (audioRef.current) {
+      audioRef.current.pause();
+      // audioRef.current.currentTime = 0;
+  }      
 
-  };
-  const ProjectId = cardData.details._id
+};
+const ProjectId = cardData.details._id
   // cardData = cardData.project
   const handleSelectClick = (event) => {
     event.stopPropagation();
   };
   
   const isVideoCover = isVideo(cardData.details.cover)
+  const isAudioCover = isAudio(cardData.details?.audioCover);
   const type = cardData.cycle
-
+  console.log({isAudioCover})
   return (
     <>
       <DeleteBoard onClick={()=> DeleteProjectFromBoard(boardId, ProjectId)} id={boardId} />
@@ -111,6 +137,20 @@ const ProjectCard = ({
                     >
                       <source src={cardData.details.cover} type='video/mp4' />
                     </video>
+                    <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
+                      <span className="text-white">
+                        {convertDuration(Duration * 1000)}
+                      </span>
+                    </div>
+                  </a>
+                </Link>
+              ) : isAudioCover ? (
+                <Link href={`/${type}/${cardData?.details?._id}`}>
+                  <a>
+                    <img className='cardimg cursor-pointer' src={cardData?.details?.cover} alt="project" />
+                    <audio ref={audioRef} onTimeUpdate={timeUpdate} loop>
+                      <source src={cardData?.details?.audioCover} type='audio/mp3' />
+                    </audio>
                     <div className="absolute right-3 bottom-3 bg-[#CADED333] rounded-full cursor-pointer py-1 px-3">
                       <span className="text-white">
                         {convertDuration(Duration * 1000)}
@@ -168,8 +208,7 @@ const ProjectCard = ({
               </div>
             }
             {/* </Selector> */}
-          {
-            isVideoCover &&
+            {(isVideoCover || isAudioCover) &&
             <div onClick={handleSoundIconClick} className="blur-container sound left-[15px] z-[1]">
               <Icon className={`cursor-pointer h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
             </div>
@@ -193,13 +232,13 @@ const ProjectCard = ({
             <Icon className='text-primary size-4' name={'star'} />
           </div>
         </div>
-        <p className='text-xl opacity-70 font-medium my-1'>{cardData.details.name || cardData.details.studioName}</p>
+        <p className='text-xl opacity-70 font-medium my-1'>{cardData.details.name || cardData.details.title}</p>
         {(cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit) &&
           <>
             <span className='text-xl font-bold'>{cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit}$</span>
             {(cardData.details.projectScale?.unit) &&
               <span className='text-xl ml-2 opacity-60'>
-                per {cardData.projectScale?.unit}
+                per {cardData.details.projectScale?.unit}
               </span>}
           </>
         }
