@@ -278,14 +278,14 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                             </div>
                         </div>
                     ))}
-                    {/* <div className="relative">
+                    <div className="relative">
                         <button
                             className="flex gap-2 items-center border border-[#E6E6E6] dark:border-gray-700 rounded-xl py-2 px-3 text-DS_black dark:text-white appearance-none w-min cursor-pointer bg-white dark:bg-gray-900"
                             onClick={clearAllQueries}
                         >
                             <Icon name={"refresh"} className='dark:text-white' />
                         </button>
-                    </div> */}
+                    </div>
                 </div>
                 {!hideSwitch && (
                     <div className="flex items-center justify-end gap-2">

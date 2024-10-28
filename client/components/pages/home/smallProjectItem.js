@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../../redux/action/apis/bookmarks/fav/favAction';
 import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 
-const SmallProjectItem = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false, isbig }) => {
+const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false, isbig }) => {
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
     const [Duration, setDuration] = useState(0);

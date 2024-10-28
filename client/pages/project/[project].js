@@ -180,7 +180,7 @@ const Projects = ({
                                 <div className='py-10'>
                                     <DuvduLoading loadingIn={""} type='projects'/>
                                 </div>
-                                :
+                                :projects.length> 0 &&
                                     <Recommended projects={projects} />
                                 }
                                 </section>

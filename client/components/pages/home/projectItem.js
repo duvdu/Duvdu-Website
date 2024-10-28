@@ -15,7 +15,7 @@ import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 import { useTranslation } from 'react-i18next';
 
 
-const ProjectItem = ({ cardData: initialCardData, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
     const { t, i18n } = useTranslation();
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
@@ -239,18 +239,20 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                     <div>
                         {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) && (
                             <>
-                                {i18n.language !== "Arabic" ? (
-                                    <>
+                                {/* {i18n.language !== "Arabic" ? ( */}
+                                {inclusive?
                                         <span className="text-xs opacity-60 font-semibold">
-                                            from {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} L.E
-                                        </span>
-                                        {cardData?.projectScale?.unit && (
+                                        { inclusivePrice} L.E
+                                        </span>:
+                                        <span className="text-xs opacity-60 font-semibold">
+                                        { cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current} L.E
+                                        </span>}
+                                        {/* {cardData?.projectScale?.unit && (
                                             <span className="text-xs ml-1 opacity-60 font-semibold">
                                                 per {cardData?.projectScale?.unit}
                                             </span>
-                                        )}
-                                    </>
-                                ) : (
+                                        )} */}
+                                {/* ) : (
                                     <>
                                         <span className="text-xs opacity-60 font-semibold">
                                          {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} ج.م </span>
@@ -260,7 +262,7 @@ const ProjectItem = ({ cardData: initialCardData, className = "", type = 'projec
                                             </span>
                                         )}
                                     </>
-                                )}
+                                )} */}
                             </>
                         )}
 

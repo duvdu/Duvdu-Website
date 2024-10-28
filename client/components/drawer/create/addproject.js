@@ -148,12 +148,11 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         return errors;
     };
     const CheckNext=()=>{
-        // setValidFormCheck(true)
-        // validateRequiredFields()
-        // const isEnable = Object.keys(validateRequiredFields()).length == 0
-        // if (!isEnable) setErrorMsg(validateRequiredFields())
-        // else return 
-        setCover()
+        setValidFormCheck(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) setErrorMsg(validateRequiredFields())
+        else return setCover()
     }
     useEffect(()=>{
         if(validFormCheck)

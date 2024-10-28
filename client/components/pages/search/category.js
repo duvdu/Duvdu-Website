@@ -34,7 +34,7 @@ const CategorySearch = ({ category }) => {
 
     return (
         <div className=''>  
-            <h2 className=" text-2xl font-semibold opacity-60 capitalize mb-3 lg:mb-5">{t("creatives")}</h2>
+            <h2 className=" text-2xl font-semibold opacity-60 capitalize mb-3 lg:mb-5">{t("categories")}</h2>
              <DraggableList>
             <div className="flex gap-5">
                 {category?.map((value, index) => (

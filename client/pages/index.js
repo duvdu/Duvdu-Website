@@ -577,7 +577,7 @@ const Home = ({
                         <DuvduLoading loadingIn={""} type='projects' />
                         <DuvduLoading loadingIn={""} type='projects' />
                         </>:
-                        <SectionProjects projects={projects?.data} />
+                        <SectionProjects inclusive={switchState.priceInclusive} projects={projects?.data} />
                         }
                     </div>
                 </section>

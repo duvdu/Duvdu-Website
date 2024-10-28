@@ -168,11 +168,8 @@ const Studio = ({
                                                     >
                                                         {studio?.attachments.map((item, index) => {
                                                             return <SwiperSlide key={index}>
-                                                                <ProjectCover data={item} cover={studio?.cover} />
-                                                            </SwiperSlide>
-                                                            return <SwiperSlide key={index}>
                                                                 <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={studio?.cover} />
-                                                            </SwiperSlide>                                                        
+                                                            </SwiperSlide>
                                                         })}
                                                     </Swiper>
                                                     {/* Pagination Bullets */}
@@ -195,8 +192,8 @@ const Studio = ({
                                         <div className='py-10'>
                                         <DuvduLoading loadingIn={""} type='projects'/>
                                     </div>
-                                    :
-                                    <Recommended projects={projects} type={"rentals"} />
+                                    :projects.length> 0 &&
+                                        <Recommended projects={projects} type={"rentals"} />
                                 }
                                     </section>
                                 </div>

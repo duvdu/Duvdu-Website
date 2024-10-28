@@ -32,7 +32,7 @@ const Search = ({
         <>
             <Layout isbodyWhite={true}>
                 <div className='flex flex-col gap-5 md:gap-8 lg:gap-12 py-12'>
-                    {search?.data?.users.length>0 && 
+                    {search?.data?.category.length>0 && 
                     <section className="container">
                         <CategorySearch category={search?.data?.category}/>
                     </section>
