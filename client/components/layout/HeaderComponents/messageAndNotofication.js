@@ -86,7 +86,7 @@ const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserCh
                 <div onClick={onViewAll} className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</div>
             }
         </div>
-        {Type === "messages" &&
+        {Type === "messages" && AvailableUserChat_resond?.data?.length>0 &&
         <div className="overflow-auto max-w-64 mt-8 hide-scrollable-container">
             <div className="flex">
                 <DraggableList>
@@ -120,7 +120,7 @@ const NotificationTypeLink = (type , target ,username)=>{
     }
 }
 const NotificationTile = ({ tile }) =>
-    <Link href={NotificationTypeLink(tile.type ,tile.target , tile.sourceUser.username )}>
+    <Link href={NotificationTypeLink(tile.type ,tile.target , tile.sourceUser?.username )}>
         <div className="w-full lg:w-64 flex gap-4">
             <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
             <div className="flex flex-col justify-center">

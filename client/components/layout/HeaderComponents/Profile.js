@@ -80,7 +80,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                         <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden min-h-[242px]">
                             <div className="flex w-full overflow-hidden h-20">
                                 <img
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover bg-gray-300 dark:bg-[#ffffff20]"
                                     src={user.coverImage || process.env.DEFULT_COVER_PATH}
                                     alt="cover"
                                 />
@@ -89,7 +89,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                 <div className='flex items-start gap-4 -translate-y-4 h-12'>
                                     <div>
                                     <div className='size-[72px] bg-cover relative bg-no-repeat'>
-                                        <img className='w-full h-full rounded-full border-2 dark:border-[#1A2024] shadow -translate-y-8 object-cover object-top' src={user.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
+                                        <img className='w-full h-full rounded-full border-2 bg-gray-300 dark:bg-[#ffffff20] dark:border-[#1A2024] shadow -translate-y-8 object-cover object-top' src={user.profileImage || process.env.DEFULT_COVER_PATH} alt="" />
                                     </div>
                                     </div>
                                     <div className='flex-2 flex-col'>

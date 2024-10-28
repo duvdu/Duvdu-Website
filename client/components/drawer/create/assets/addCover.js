@@ -140,9 +140,9 @@ const Preview = ({ title, price, media, coverType }) => {
             <div className='flex flex-col justify-between p-3 h-full w-full absolute'>
                 <div className='flex justify-between'>
                     <div />
-                    <span className='text-white bg-black px-3 py-1 bg-opacity-20 rounded-full'>
+                    {/* <span className='text-white bg-black px-3 py-1 bg-opacity-20 rounded-full'>
                         {price} $
-                    </span>
+                    </span> */}
                 </div>
                 {coverType == "image" &&
                 <span className='text-white font-bold text-xl text-center capitalize'>

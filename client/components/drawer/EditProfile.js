@@ -39,7 +39,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             UpdateFormData("pricePerHour", userInfo?.pricePerHour);
             UpdateFormData("about", userInfo?.about);
             UpdateFormData("location[lat]", userInfo?.location?.lat);
-            UpdateFormData("location[lng]", userInfo?.location?.lng);
+            UpdateFormData("location[lng]", userInfo?.location?.lang || userInfo?.location?.lng);
         }
         else {
             resetForm()
@@ -152,10 +152,10 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                     </label>
                     <input onClick={handleRemoveEvent} onChange={coverUpload} className='hidden' id="cover-file-upload" type="file" accept="image/*" />
 
-                    <img className='card w-full h-52 mt-5 object-cover bg-bottom' src={gettFileURL(cover) || formData.coverImage} alt="cover pic" />
+                    <img className='card w-full h-52 mt-5 object-cover bg-bottom bg-gray-300 dark:bg-[#ffffff20]' src={gettFileURL(cover) || formData.coverImage} alt="" />
 
                     <div className='absolute bottom-0 edit size-28 transform translate-y-1/2 rtl:-translate-x-1/2 ltr:translate-x-1/2'>
-                        <img className='rounded-full w-full h-full object-cover object-top' src={gettFileURL(profileImage) || formData.profileImage} alt="profile picture" />
+                        <img className='rounded-full w-full h-full object-cover object-top bg-gray-300 dark:bg-[#ffffff20]' src={gettFileURL(profileImage) || formData.profileImage} alt="" />
 
                         <label htmlFor="profile-file-upload" >
                             <Controller className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full cursor-pointer flex items-center justify-center border-[#0000001A]" >
@@ -216,9 +216,12 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             <GoogleMap
                                 width={'100%'}
                                 setDefult={false}
-                                value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
+                                value={{ 'lat': formData['location[lat]'] , 'lng': formData['location[lng]']  }}
+                                // value={{ 'lat': formData['location[lat]'], 'lng': formData['location[lng]'] }}
                                 onChangeAddress={handleInputChange}
-                                onsetLocation={(value) => { UpdateFormData('location[lat]', value.lat); UpdateFormData('location[lng]', value.lng) }}
+                                onsetLocation={(value) => { 
+                                    UpdateFormData('location[lat]', value.lat);
+                                     UpdateFormData('location[lng]', value.lng) }}
                                 inputclass="edit app-field"
                             />
                         </section>

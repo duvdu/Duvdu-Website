@@ -145,7 +145,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                     <div className="flex flex-col gap-2">
                         {(data?.tools || data?.equipments).map(tool => [
                             { value: tool.name, isActive: false , isPrice:false},
-                            { value: tool.unitPrice, isActive: false, isPrice:true }
+                            { value:  tool.unitPrice * data.projectScale?.current, isActive: false, isPrice:true }
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
@@ -167,7 +167,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                     <div className="flex flex-col gap-2 mb-4">
                         {(data?.functions).map(tool => [
                             { value: tool.name, isActive: false , isPrice:false },
-                            { value: tool.unitPrice, isActive: false , isPrice:true}
+                            { value: tool.unitPrice * data.projectScale?.current, isActive: false , isPrice:true}
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (

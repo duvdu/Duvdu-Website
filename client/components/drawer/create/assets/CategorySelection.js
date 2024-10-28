@@ -5,14 +5,13 @@ import { filterByCycle as filterByCycleCategory, } from "../../../../util/util";
 import { useTranslation } from 'react-i18next';
 
 
-function CategorySelection({ categories, onChange, value, filterIn }) {
+function CategorySelection({ categories, onChange, value, filterIn , isRemove }) {
     const { t } = useTranslation();
     categories = filterByCycleCategory(categories, filterIn)
 
     const [selectedCategory, setSelectedCategory] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState({});
     const [selectedTags, setSelectedTags] = useState([]);
-    console.log(selectedSubCategory)
     useEffect(() => {
         const selectedCategory = categories.find(category => category._id === value?.category);
         setSelectedCategory(selectedCategory || {});
@@ -35,7 +34,7 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
             onChange({
                 category: selectedCategory._id,
                 subCategory: selectedSubCategory._id,
-                tags: selectedTags.map(tag => tag?._id || tag),
+                tags: selectedTags.map(tag => tag),
             })
         
     }
@@ -82,9 +81,11 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
                     <div className="py-1 px-2 border border-primary rounded-full cursor-pointer w-min" >
                         <div className="whitespace-nowrap font-medium text-primary opacity-80 flex gap-2 items-center">
                             {selectedCategory.title}
+                            {!isRemove  && 
                             <div className='bg-primary rounded-full aspect-square size-5 flex flex-col justify-center items-center' onClick={() => handleCategorySelect({})}>
                                 <Icon name={'xmark'} className='text-white size-4' />
                             </div>
+                            }
                         </div>
                     </div>
                 )}
@@ -128,9 +129,9 @@ function CategorySelection({ categories, onChange, value, filterIn }) {
                         <div className="flex gap-3 flex-wrap">
                             {selectedSubCategory.tags.map((tag,index) => (
                                 <div key={index}
-                                    className={`py-1 px-2 border ${selectedTags.some(t => t?._id === tag._id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
-                                    onClick={() => toggleTag(tag)}>
-                                    <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t?._id === tag._id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                    className={`py-1 px-2 border ${selectedTags.some(t => t === tag._id) ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                                    onClick={() => toggleTag(tag._id)}>
+                                    <div className={`whitespace-nowrap font-medium ${selectedTags.some(t => t === tag._id) ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
                                         {tag.title}
                                     </div>
                                 </div>

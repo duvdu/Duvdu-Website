@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Switch from '../../elements/switcher'
 import { connect } from "react-redux";
 import Button from '../../elements/button';
+import Loading from '../../elements/loading';
 import ErrorMessage from '../../elements/ErrorMessage';
 
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
@@ -96,15 +97,15 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             UpdatedData.append('projectScale[pricerPerUnit]',formData['projectScale[pricerPerUnit]'])
         if(formData.category && (data.category._id!==formData.category))
             UpdatedData.append('category',formData.category)
-        if(formData.subCategory && (data.subCategory!==formData.subCategory))
+        if(formData.subCategory && (data.subCategory?._id!==formData.subCategory))
             UpdatedData.append('subCategoryId',formData.subCategory)
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
-                UpdatedData.append(`tags[${index}]`, tag);
+                UpdatedData.append(`tagsId[${index}]`, tag);
             });
 
-        if (formData.searchKeywords && !AreObjectsEqual(formData.searchKeywords, data.searchKeywords))
-                formData.searchKeywords.forEach((searchKeywords, index) => {
+        if (formData.searchKeyWords && !AreObjectsEqual(formData.searchKeyWords, data.searchKeyWords))
+                formData.searchKeyWords.forEach((searchKeywords, index) => {
                 UpdatedData.append(`searchKeywords[${index}]`, searchKeywords);
             });
     
@@ -112,11 +113,11 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             UpdatedData.append('cover', formData.cover);
         }
 
-        if (formData.attachments)
-            for (let i = 0; i < formData.attachments.length; i++) {
-                const file = formData.attachments[i];
-                UpdatedData.append(`attachments`, file.file);
-        }
+        // if (formData.attachments)
+        //     for (let i = 0; i < formData.attachments.length; i++) {
+        //         const file = formData.attachments[i];
+        //         UpdatedData.append(`attachments`, file.file);
+        // }
 
         if (formData.audioCover)
             for (let i = 0; i < formData.audioCover.length; i++) {
@@ -130,18 +131,18 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         };
 
 
-        if (formData.creatives && !AreObjectsEqual(formData.creatives, data.creatives)) {
-            formData.creatives.forEach((item, index) => {
-                // UpdatedData.append(`creatives[${index}]`, item.name);
-                UpdatedData.append(`creatives[${index}][creative]`, item._id);
-            });
-        }
+        // if (formData.creatives && !AreObjectsEqual(formData.creatives, data.creatives)) {
+        //     formData.creatives.forEach((item, index) => {
+        //         // UpdatedData.append(`creatives[${index}]`, item.name);
+        //         UpdatedData.append(`creatives[${index}][creative]`, item._id);
+        //     });
+        // }
 
-        if (formData.invitedCreatives) {
-            formData.invitedCreatives.forEach((item, index) => {
-                UpdatedData.append(`number[${index}]`, item._id);
-            });
-        }
+        // if (formData.invitedCreatives) {
+        //     formData.invitedCreatives.forEach((item, index) => {
+        //         UpdatedData.append(`number[${index}]`, item._id);
+        //     });
+        // }
 
         if (formData.tools  && !AreObjectsEqual(formData.tools, data.tools)) {
             formData.tools.forEach((item, index) => {
@@ -171,7 +172,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         if ((formData.description?.length || 0) < 6) errors.description = 'Description must be at least 6 characters long';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'Duration is required';
-        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeywords = 'Search keywords are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
@@ -185,7 +186,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         // const isEnable = Object.keys(validateRequiredFields()).length == 0
         // if (!isEnable) setErrorMsg(validateRequiredFields())
         // else 
-        return setCover()
+    return setCover()
     }
     useEffect(()=>{
         if(validFormCheck)
@@ -218,7 +219,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         // setNextstep(1)
         UpdateProject(projectId,convertToFormData()).then(async()=>{
             setPost_success(true)
-            setNextstep(1)
         })
     };
 
@@ -227,8 +227,8 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
     useEffect(() => {
         UpdateFormData("name", data.name)
         UpdateFormData("description", data.description)
-        UpdateFormData("subCategory", data.subCategory)
-        UpdateFormData("tags", data.tags)
+        UpdateFormData("subCategory", data.subCategory._id)
+        UpdateFormData("tags", data.tags.map(item=>item._id))
         UpdateFormData("duration", data.duration)
         UpdateFormData("category", data?.category?._id)
         UpdateFormData("cover", data.cover)
@@ -241,7 +241,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             lat:data.location.lat,
             lng:data.location.lng
         })
-        UpdateFormData("searchKeywords", data.searchKeywords)
+        UpdateFormData("searchKeyWords", data.searchKeyWords)
         UpdateFormData("projectScale[pricerPerUnit]", data.projectScale.pricerPerUnit)
         UpdateFormData("projectScale[unit]", data.projectScale.unit)
         UpdateFormData("projectScale[minimum]", data.projectScale.minimum)
@@ -269,7 +269,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         setIsOpenEdit(false)
         GetProject(projectId)
     }
-
+    console.log(data.tags.map(item => item._id))
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -287,10 +287,11 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                             <div className="my-5">
                                 <CategorySelection
                                     filterIn={'project'}
+                                    isRemove={true}
                                     value={{
-                                        'category':formData.category|| data?.category?._id ,
-                                        'subCategory': formData.subCategory || data.subCategory ,
-                                        'tags': formData.tags || data.tags,
+                                        'category':formData.category|| data?.category._id ,
+                                        'subCategory': formData.subCategory || data.subCategory._id ,
+                                        'tags': formData.tags || data.tags.map(item => item._id),
                                     }}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
@@ -300,11 +301,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                 />
                                 <ErrorMessage ErrorMsg={ErrorMsg.category}/>
                             </div>
-                            <section>
-                                <h3 className="capitalize opacity-60">{t("attachments")}</h3>
-                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
-                                <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
-                            </section>
                             <section>
                                 <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || data.name } onChange={handleInputChange} name="name" />
                                 <ErrorMessage ErrorMsg={ErrorMsg.title}/>
@@ -351,44 +347,9 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                 />
                                 <ErrorMessage ErrorMsg={ErrorMsg.functions}/>
                             </section>
-                            <section>
-                                <ListInput
-                                    placeholder={t("tag creatives")}
-                                    target="addOtherCreatives"
-                                    enable={false}
-                                    value={data.creatives}
-                                >
-                                    <div className="flex flex-wrap gap-3">
-                                     {formData?.invitedCreatives?.length>0 && (data.invitedCreatives || formData.invitedCreatives)?.map((e, i) => (
-                                         <div key={i} className="border border-primary rounded-2xl px-1 mt-2 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
-                                            <div className="flex gap-2 items-center">
-                                                {e.name}
-                                            </div>
-                                            <div onClick={() => removeFromArray('invitedCreatives',i)} className='cursor-pointer'>
-                                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                     {(formData?.creatives||data.creatives) && (formData.creatives||data.creatives)?.map((e, i) => (
-                                         <div key={i} className="border border-primary rounded-2xl px-1 mt-2 py-1 flex gap-2 items-start justify-between min-w-40 text-primary">
-                                                <a href={`/creative/${e.username}`} target="_blank" rel="noopener noreferrer">
-                                                    <div className="flex gap-2 items-center">
-                                                        <img className="size-6 rounded-full" src={e.profileImage} alt={`${e.name}'s profile image`} />
-                                                        {e.name}
-                                                    </div>
-                                                </a>
-                                            <div onClick={() => removeFromArray('creatives',i)} className='cursor-pointer'>
-                                                <Icon name='remove' className="size-6 p-1 text-white bg-primary rounded-full" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                    </div>
-                                </ListInput>
-                                <ErrorMessage ErrorMsg={ErrorMsg.creatives}/>
-                            </section>
 
                             <section>
-                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords } onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeyWords } onChange={(value) => UpdateFormData('searchKeyWords', value)} />
                                 <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                             </section>
                             <section className="h-96 relative overflow-hidden">
@@ -459,8 +420,8 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
                             
-                            <Button onClick={CheckNext} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
-                                <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
+                            <Button isEnabled={!update_respond?.loading} onClick={Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
+                            {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t("Update")}</span>}
                             </Button>
 
                         </form>

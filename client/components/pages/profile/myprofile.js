@@ -75,8 +75,10 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             switch (type) {
                 case 'rental':
                     return <AddStudioBooking />
+                    break;
                 case 'equipment-rental':
                     removeQueryParameter()
+                    break;
                 // return <EquipmentRental />
                 case 'music-audio':
                     removeQueryParameter()

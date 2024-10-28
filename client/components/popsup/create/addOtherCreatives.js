@@ -83,7 +83,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
         });
         setCreatives([])
     };
-
+    console.log(formData)
     const handleCreativeSelect = (selectedCreative) => {
         setFormData(prev=>({
             ...prev,
@@ -116,7 +116,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                             </div>
                         }
                         <ul className="flex flex-wrap gap-2">
-                            {searchTo && searchTo !==formData.name  && 
+                            {creatives?.length===0 && searchTo && searchTo !==formData.name  && 
                                 <li
                                     className="flex items-center text-base opacity-80 font-medium border-[1.5px] border-[#0000004d] dark:border-[#ffffff4d] rounded-full cursor-pointer"
                                     onClick={() => handleCreativeSelect({
@@ -149,7 +149,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                         </span>
                     </div>
                     <div>
-                        <AppButton onClick={onclick} className={'w-full'}>{t("Add")}</AppButton>
+                        <AppButton onClick={onclick} className={'w-full'}>{(formData.invitedCreatives)?t("Invite"):t("Add")}</AppButton>
                     </div>
                 </div>
             </Comman>

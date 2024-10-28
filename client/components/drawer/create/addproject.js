@@ -46,10 +46,12 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
     useEffect(()=>{
-        // if(formData.category == undefined)
-            UpdateFormData('attachments' , null)
+        UpdateFormData('attachments' , null)
     },[formData.category])
-    console.log({formData})
+    useEffect(() => {
+        UpdateFormData('showOnHome', true)
+    }, [])
+
     const convertToFormData = () => {
         const data = new FormData();
 
@@ -70,7 +72,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             
         if (formData.searchKeywords)
             formData.searchKeywords.forEach((searchKeywords, index) => {
-                data.append(`searchKeywords[${index}]`, searchKeywords);
+                data.append(`searchKeyWords[${index}]`, searchKeywords);
             });
         // Append searchKeywords
 
@@ -146,23 +148,18 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         return errors;
     };
     const CheckNext=()=>{
-        setValidFormCheck(true)
-        validateRequiredFields()
-        const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-        else return setCover()
+        // setValidFormCheck(true)
+        // validateRequiredFields()
+        // const isEnable = Object.keys(validateRequiredFields()).length == 0
+        // if (!isEnable) setErrorMsg(validateRequiredFields())
+        // else return 
+        setCover()
     }
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
     },[formData])
-    const setCover = (e) => {
-        const validationErrors = validateRequiredFields();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-        setErrors({});
+    const setCover = () => {
         setNextstep(2)
     }
 
@@ -188,12 +185,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (respond?.data)
             setPost_success(true)
     }, [respond?.message])
-
-
-    useEffect(() => {
-        // UpdateFormData("duration", 10)
-
-    }, [])
 
     useEffect(() => {
         if (auth.login === false)

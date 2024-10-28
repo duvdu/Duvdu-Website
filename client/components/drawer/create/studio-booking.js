@@ -99,23 +99,20 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         setErrorMsg(validateRequiredFields())
     },[formData])
     const setCover = (e) => {
-        const validationErrors = validateRequiredFields();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-        setErrors({});
         setNextstep(2)
     }
+    useEffect(() => {
+        UpdateFormData('showOnHome', true)
+    }, [])
 
     const Publish = () => {
-        setNextstep(1)
-        const validationErrors = validateRequiredFields();
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
-        setErrors({});
+        // setNextstep(1)
+        // const validationErrors = validateRequiredFields();
+        // if (Object.keys(validationErrors).length > 0) {
+        //     setErrors(validationErrors);
+        //     return;
+        // }
+        // setErrors({});
         CreateStudio(converting());
     };
 
@@ -147,6 +144,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
 
     const toggleDrawer = () => {
         CreateStudio(-1)
+        setPost_success(false)
         if (nextstep == 2) {
             setNextstep(1)
             return
@@ -236,7 +234,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                     >
 
                                         {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
-                                            <option key={index} value={value.toLowerCase()}>{value}</option>
+                                            <option key={index} value={value}>{value}</option>
                                         ))}
                                     </select>
                                 </div>

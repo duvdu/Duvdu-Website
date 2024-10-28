@@ -24,10 +24,11 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     const [validFormCheck, setValidFormCheck] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
+    console.log({categories})
     useEffect(() => {
-        if (categories.length)
-            UpdateFormData('category', categories[0]._id)
-        UpdateFormData('showOnHome', false)
+        // if (categories.length)
+        //     UpdateFormData('category', categories[0]._id)
+        UpdateFormData('showOnHome', true)
     }, [])
     
     const handlelocationChange = (location) => {
@@ -48,13 +49,14 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     };
 
     const handleSubmit = (e) => {
+        const durationValue = formData.duration
         e.preventDefault();
         setValidFormCheck(true)
         const validationErrors = validateRequiredFields();
         const isEnable = Object.keys(validateRequiredFields()).length == 0
         if (!isEnable) return setErrorMsg(validateRequiredFields())
         formData.duration = {
-            value : formData.duration,
+            value : durationValue,
             unit: "days"
         }
         CreateCopyrights(formData);

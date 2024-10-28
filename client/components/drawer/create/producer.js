@@ -186,7 +186,7 @@ const AddProducer = ({
         if (!formData.minBudget || !formData.minBudget) errors.minBudget = 'MinBudget are required';
         if (!formData.maxBudget) errors.maxBudget = 'MaxBudget is required';
         if (parseInt(formData.minBudget) > parseInt(formData.maxBudget)) errors.minBudget = 'Minimum value should not be greater than maximum value';
-        if (!formData.platforms || !formData.platforms.length) errors.platforms = 'platforms is required';
+        // if (!formData.platforms || !formData.platforms.length) errors.platforms = 'platforms is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         return errors;
     };

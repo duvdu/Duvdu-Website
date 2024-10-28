@@ -17,6 +17,8 @@ import GoogleMap from "../../elements/googleMap";
 import SetCover from './../create/assets/addCover';
 import CategorySelection from './../create/assets/CategorySelection';
 import AppButton from '../../elements/button';
+import Button from '../../elements/button';
+import Loading from '../../elements/loading';
 import AddAttachment from '../../elements/attachment';
 import Share from '../../popsup/Share';
 import { useTranslation } from 'react-i18next';
@@ -228,24 +230,21 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         setIsOpenEdit(false)
         Getstudio(studioId)
     }
+    console.log({data:data.tags.map(item => item._id)})
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="updating" />
             <Share url={window.location.href} title={'See that 👀'} />
             <Drawer isOpen={isOpen} name={'update rental'} toggleDrawer={toggleDrawer}>
-                {nextstep == 2 ? (
-                    <SetCover Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
-                ) :
-                    (
                         <form className='flex flex-col gap-5 container mx-auto'>
                             <div className="my-5">
                                 <CategorySelection
                                     filterIn={"rentals"}
                                     value={{
                                         'category':formData.category|| data?.category?._id ,
-                                        'subCategory': formData.subCategory || data.subCategory ,
-                                        'tags': formData.tags || data.tags.map(item => item._id),
+                                        'subCategory': formData.subCategory || data.subCategory?._id ,
+                                        'tags': formData.tags || data.tags,
                                     }}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
@@ -259,11 +258,6 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                         <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
                                     )} */}
                             </div>
-                            <section className="w-full ">
-                                <h3 className="capitalize opacity-60">{t("attachments")}</h3>
-                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
-                                <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
-                            </section>
                             <section className='gap-8'>
                                 <section>
                                     <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
@@ -336,13 +330,10 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </section>
-
-                            <AppButton onClick={CheckNext} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
-                                <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
-                            </AppButton>
-
+                            <Button isEnabled={!update_respond?.loading} onClick={Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
+                            {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t("Update")}</span>}
+                            </Button>
                         </form>
-                    )}
             </Drawer>
         </>
 
