@@ -21,14 +21,14 @@ const getFilterNameByValue = (data, value) => {
     return data.find(item => item.value === value)?.name || '';
 };
 
-const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelect, toggleDrawer }) => {
+const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelect, toggleDrawer , isMobile }) => {
     switch (value) {
         case 1:
-            return <CategoryFilter categories={categories} cycle={cycle} onSelect={category => handleSelect(1, category, true)} onFilterChange={category => handleSelect(1, category)} toggleDrawer={toggleDrawer} />;
+            return <CategoryFilter categories={categories} cycle={cycle} onSelect={category => handleSelect(1, category, true)} onFilterChange={category => handleSelect(1, category, false , true)} toggleDrawer={toggleDrawer}/>;
         case 2:
-            return <SubCategoryFilter categories={categories} cycle={cycle} onSelect={subCategory => handleSelect(2, subCategory, true)} onFilterChange={subCategory => handleSelect(2, subCategory)} toggleDrawer={toggleDrawer} />;
+            return <SubCategoryFilter categories={categories} cycle={cycle} onSelect={subCategory => handleSelect(2, subCategory, true)} onFilterChange={subCategory => handleSelect(2, subCategory, false , true)} toggleDrawer={toggleDrawer}/>;
         case 3:
-            return <TagsFilter categories={categories} cycle={cycle} onSelect={tags => handleSelect(3, tags, true)} onFilterChange={tags => handleSelect(3, tags)} toggleDrawer={toggleDrawer} />;
+            return <TagsFilter categories={categories} cycle={cycle} onSelect={tags => handleSelect(3, tags, true)} onFilterChange={tags => handleSelect(3, tags, false , true)} toggleDrawer={toggleDrawer} />;
         case 4:
             return <LocationFilter toggleDrawer={toggleDrawer} />;
         case 5:
@@ -116,7 +116,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
         setOpenIndex(null);
     };
     // Handle filter selection
-    const handleSelect = (value, option, istakeAction) => {
+    const handleSelect = (value, option, istakeAction , isMobile) => {
         if(value=== 1){
             delete selectedFilters[2]
             delete selectedFilters[3]
@@ -126,6 +126,9 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
         }
         const newSelectedFilters = { ...selectedFilters, [value]: option };
         setSelectedFilters(newSelectedFilters);
+        if(isMobile){
+            return updateFilterList(newSelectedFilters, switchState);
+        }
         if (istakeAction) {
             takeAction()
         }
@@ -274,7 +277,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                             </button>
 
                             <div className={openIndex === value ? "absolute" : "hidden"}>
-                                <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} handleFilterChange={onFilterChange} toggleDrawer={closeDropDown} />
+                                <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} handleFilterChange={onFilterChange} toggleDrawer={closeDropDown} isMobile={false} />
                             </div>
                         </div>
                     ))}
@@ -316,7 +319,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                             defaultValue={switchState?.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
                         />
-                        <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
+                        <span className="opacity-70 font-semibold">{t("instant project")}</span>
                         {cycle === "project" && (
                             <>
                                 <div className='hidden md:block'>
@@ -354,7 +357,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
 
                     {filterData.map(({ value, name }) => (
                         <div key={value} className="relative" >
-                            <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} />
+                            <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} isMobile={true}/>
                         </div>
                     ))}
                     <AppButton onClick={takeAction} className='block md:hidden h-[60px] m-5' contentClassName='text-base'>
