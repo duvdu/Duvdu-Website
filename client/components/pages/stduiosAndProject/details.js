@@ -68,7 +68,6 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                                                         loop={true}
                                                         pagination={{
                                                             clickable: true,
-                                                            el: '.swiper-pagination',
                                                         }}
                                                         onSlideChange={() => {
                                                             if (playingAudioRef) {
