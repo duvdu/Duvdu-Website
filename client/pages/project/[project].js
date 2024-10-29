@@ -141,8 +141,7 @@ const Projects = ({
                                                     loop={true}
                                                     pagination={{
                                                         clickable: true,
-                                                        el: '.swiper-pagination',
-                                                    }}
+                                                    }}                                                    
                                                     onSlideChange={() => {
                                                         if (playingAudioRef) {
                                                           playingAudioRef.pause();  // Pause the currently playing audio when the slide changes
@@ -159,7 +158,6 @@ const Projects = ({
                                                         </SwiperSlide>
                                                     })}
                                                 </Swiper>
-                                                {/* Pagination Bullets */}
                                                 <div className="swiper-pagination"></div>
                                             </div> :
                                                 <div className='mx-5 md:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>

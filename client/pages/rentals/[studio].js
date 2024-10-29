@@ -154,7 +154,6 @@ const Studio = ({
                                                         loop={true}
                                                         pagination={{
                                                             clickable: true,
-                                                            el: '.swiper-pagination',
                                                         }}
                                                         onSlideChange={() => {
                                                             if (playingAudioRef) {
