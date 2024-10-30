@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import AppButton from '../button';
 import FilterContainer from './comman/FilterContainer';
 import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
 import { useTranslation } from 'react-i18next';
 
-const DurationFilter = ({ onDurationApply, onFilterChange,toggleDrawer }) => {
+const DurationFilter = ({ onDurationApply, onFilterChange,toggleDrawer, clearFilter ,setClearFilter }) => {
     const { t } = useTranslation();
     const [duration, setDuration] = useState('');
+    useEffect(()=>{
+        if(clearFilter)
+            setDuration('')
+    },[clearFilter])
 
     const handleDurationChange = (e) => {
         const newDuration = e.target.value;
@@ -20,6 +24,7 @@ const DurationFilter = ({ onDurationApply, onFilterChange,toggleDrawer }) => {
     };
 
     const handleDurationApply = () => {
+        setClearFilter('')
         if (onDurationApply) {
             onDurationApply(duration);
         }

@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import AppButton from '../button';
 import FilterContainer from './comman/FilterContainer';
 import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
 import { useTranslation } from 'react-i18next';
 
-const InsuranceFilter = ({ onFiltersApply, onFilterChange,toggleDrawer }) => {
+const InsuranceFilter = ({ onFiltersApply, onFilterChange,toggleDrawer , clearFilter ,setClearFilter }) => {
     const { t } = useTranslation();
     const [filters, setFilters] = useState({
         insurance: '',
         // Add other filter values here if needed
     });
+    useEffect(()=>{
+        if(clearFilter)
+            setFilters({
+                insurance: '',
+            })
+    },[clearFilter])
 
     const handleFilterChange = (name) => (e) => {
         const value = e.target.value;
@@ -26,6 +32,7 @@ const InsuranceFilter = ({ onFiltersApply, onFilterChange,toggleDrawer }) => {
     };
 
     const handleApply = () => {
+        setClearFilter(false)
         if (onFiltersApply) {
             onFiltersApply(filters);
         }

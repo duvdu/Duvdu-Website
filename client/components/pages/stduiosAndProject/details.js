@@ -81,7 +81,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                                                     >
                                                         {data?.attachments.map((item, index) => {
                                                             return <SwiperSlide key={index}>
-                                                                <ProjectCover data={item} cover={data?.cover} />
+                                                                <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={data?.cover} />
                                                             </SwiperSlide>
                                                             return <SwiperSlide key={index}>
                                                                 <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={data?.cover} />

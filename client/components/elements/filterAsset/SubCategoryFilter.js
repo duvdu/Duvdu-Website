@@ -6,12 +6,16 @@ import AppButton from '../button';
 import FilterHeader from './comman/FilterHeader';
 import { useTranslation } from 'react-i18next';
 
-const SubCategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDrawer }) => {
+const SubCategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDrawer, clearFilter ,setClearFilter }) => {
     const { t } = useTranslation();
     const [selectedSubCategories, setSelectedSubCategories] = useState([]);
     const [filteredSubCategories, setFilteredSubCategories] = useState([]);
     const router = useRouter()
     const { category}=router.query
+    useEffect(()=>{
+        if(clearFilter)
+            setSelectedSubCategories([])
+    },[clearFilter])
     useEffect(() => {
         if (cycle) {
             const categoriesInCycle = category? categories.filter(cat => cat._id === category) : categories.filter(cat => cat.cycle === cycle);
@@ -27,7 +31,7 @@ const SubCategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggle
             ? selectedSubCategories.filter(sub => sub !== selectedSubCategory._id)
             : [...selectedSubCategories, selectedSubCategory._id];
         setSelectedSubCategories([selectedSubCategory._id]);
-
+        setClearFilter(false)
         // Call onFilterChange immediately when selection changes
         if (onFilterChange) {
             onFilterChange([selectedSubCategory._id]);

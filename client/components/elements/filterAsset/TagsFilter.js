@@ -6,12 +6,16 @@ import AppButton from '../button';
 import FilterHeader from './comman/FilterHeader';
 import { useTranslation } from 'react-i18next';
 
-const Tags = ({ categories, cycle , onSelect, onFilterChange,toggleDrawer }) => {
+const Tags = ({ categories, cycle , onSelect, onFilterChange,toggleDrawer , clearFilter ,setClearFilter}) => {
     const { t } = useTranslation();
     const [selectedTags, setSelectedTags] = useState([]);
     const [filteredTags, setFilteredTags] = useState([]);
     const router = useRouter();
     const { category,subCategory}=router.query
+    useEffect(()=>{
+        if(clearFilter)
+            setSelectedTags([])
+    },[clearFilter])
     useEffect(() => {
         if (cycle) {
             // Find categories that match the selected cycle
@@ -32,7 +36,7 @@ const Tags = ({ categories, cycle , onSelect, onFilterChange,toggleDrawer }) => 
         const newSelectedTags = selectedTags.includes(tagId)
             ? selectedTags.filter(tag => tag !== tagId)
             : [...selectedTags, tagId];
-        
+        setClearFilter(false)
         setSelectedTags(newSelectedTags);
 
         // Notify parent component with real-time updates

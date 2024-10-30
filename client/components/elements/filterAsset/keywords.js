@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import AppButton from '../button';
 import FilterContainer from './comman/FilterContainer';
 import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
 import { useTranslation } from 'react-i18next';
 
-const KeywordsFilter = ({ onFiltersApply, onFilterChange,toggleDrawer }) => {
+const KeywordsFilter = ({ onFiltersApply, onFilterChange,toggleDrawer , clearFilter ,setClearFilter}) => {
     const { t } = useTranslation();
     const [filters, setFilters] = useState({
         keywords: '',
         // Add other filter values here if needed
     });
+    useEffect(()=>{
+        if(clearFilter)
+            setFilters({
+                keywords: '',
+            })
+    },[clearFilter])
 
     const handleFilterChange = (name) => (e) => {
         const value = e.target.value;
@@ -18,7 +24,6 @@ const KeywordsFilter = ({ onFiltersApply, onFilterChange,toggleDrawer }) => {
             ...prevFilters,
             [name]: value,
         }));
-
         // Call onFilterChange immediately when the filter value changes
         if (onFilterChange) {
             onFilterChange({ ...filters, [name]: value });
@@ -26,6 +31,7 @@ const KeywordsFilter = ({ onFiltersApply, onFilterChange,toggleDrawer }) => {
     };
 
     const handleApply = () => {
+        setClearFilter(false)
         if (onFiltersApply) {
             onFiltersApply(filters);
         }

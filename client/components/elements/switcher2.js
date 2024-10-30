@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 
-const Switch = ({ onSwitchChange,defaultValue }) => {
+const Switch = ({ onSwitchChange,defaultValue  , setClearFilter , clearFilter}) => {
   const [isFreedom, setIsFreedom] = useState(defaultValue !== null ? defaultValue : false);
+  useEffect(()=>{
+    if(clearFilter)
+      setIsFreedom(false)
+    },[clearFilter])
 
   const handleSwitchClick = () => {
     const newState = !isFreedom;
     setIsFreedom(newState);
-
+    setClearFilter(false)
     // Call the callback function with the new state
     onSwitchChange(newState);
   };

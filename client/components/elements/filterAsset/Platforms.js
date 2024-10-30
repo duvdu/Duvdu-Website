@@ -5,10 +5,15 @@ import AppButton from '../button';
 import FilterHeader from './comman/FilterHeader';
 import { useTranslation } from 'react-i18next';
 
-const PlatformFilter = ({ platforms, cycle, onSelect, onFilterChange, toggleDrawer }) => {
+const PlatformFilter = ({ platforms, cycle, onSelect, onFilterChange, toggleDrawer, clearFilter ,setClearFilter }) => {
     const { t } = useTranslation();
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
     const [filteredPlatforms, setFilteredPlatforms] = useState([]);
+    useEffect(()=>{
+        if(clearFilter)
+            setSelectedPlatforms([])
+    },[clearFilter])
+
     useEffect(() => {
         if (cycle) {
             // const categoriesInCycle = platforms?.filter(cat => cat.cycle === cycle);
@@ -25,7 +30,7 @@ const PlatformFilter = ({ platforms, cycle, onSelect, onFilterChange, toggleDraw
             : [...selectedPlatforms, selectedSubCategory._id];
 
         setSelectedPlatforms(newSelectedPlatforms);
-
+        setClearFilter(false)
         // Call onFilterChange immediately when selection changes
         if (onFilterChange) {
             onFilterChange(newSelectedPlatforms);

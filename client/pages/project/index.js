@@ -98,6 +98,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                             {/* // searchTerm && */}
                             <Filter cycle={cycle} setSwitchState={setSwitchState} switchState={switchState} setParams={setParams} />
                         <div className="h-7" />
+                        {<RelatedCategories className=" col-span-full" />}
                         {projectsList?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}
@@ -109,9 +110,8 @@ const Projects = ({ projects, GetProjects, api }) => {
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (
                                 <React.Fragment key={item._id}>
-                                    {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
-                                    {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
-                                    {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
+                                    {/* {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
+                                    {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />} */}
                                     <ProjectCard cardData={item} inclusive={switchState.priceInclusive} />
                                 </React.Fragment>
                             ))}

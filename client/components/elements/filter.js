@@ -21,26 +21,26 @@ const getFilterNameByValue = (data, value) => {
     return data.find(item => item.value === value)?.name || '';
 };
 
-const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelect, toggleDrawer , isMobile }) => {
+const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelect, toggleDrawer , isMobile , clearFilter , setClearFilter }) => {
     switch (value) {
         case 1:
-            return <CategoryFilter categories={categories} cycle={cycle} onSelect={category => handleSelect(1, category, true)} onFilterChange={category => handleSelect(1, category, false , true)} toggleDrawer={toggleDrawer}/>;
+            return <CategoryFilter categories={categories} clearFilter={clearFilter} setClearFilter={setClearFilter} cycle={cycle} onSelect={category => handleSelect(1, category, true)} onFilterChange={category => handleSelect(1, category, false , true)} toggleDrawer={toggleDrawer}/>;
         case 2:
-            return <SubCategoryFilter categories={categories} cycle={cycle} onSelect={subCategory => handleSelect(2, subCategory, true)} onFilterChange={subCategory => handleSelect(2, subCategory, false , true)} toggleDrawer={toggleDrawer}/>;
+            return <SubCategoryFilter categories={categories} clearFilter={clearFilter} setClearFilter={setClearFilter} cycle={cycle} onSelect={subCategory => handleSelect(2, subCategory, true)} onFilterChange={subCategory => handleSelect(2, subCategory, false , true)} toggleDrawer={toggleDrawer}/>;
         case 3:
-            return <TagsFilter categories={categories} cycle={cycle} onSelect={tags => handleSelect(3, tags, true)} onFilterChange={tags => handleSelect(3, tags, false , true)} toggleDrawer={toggleDrawer} />;
+            return <TagsFilter categories={categories} clearFilter={clearFilter} setClearFilter={setClearFilter} cycle={cycle} onSelect={tags => handleSelect(3, tags, true)} onFilterChange={tags => handleSelect(3, tags, false , true)} toggleDrawer={toggleDrawer} />;
         case 4:
             return <LocationFilter toggleDrawer={toggleDrawer} />;
         case 5:
-            return <BudgetRangeFilter onBudgetRangeApply={budgetRange => handleSelect(5, budgetRange, true)} onFilterChange={budgetRange => handleSelect(5, budgetRange)} toggleDrawer={toggleDrawer} />;
+            return <BudgetRangeFilter onBudgetRangeApply={budgetRange => handleSelect(5, budgetRange, true)} clearFilter={clearFilter} setClearFilter={setClearFilter} onFilterChange={budgetRange => handleSelect(5, budgetRange)} toggleDrawer={toggleDrawer} />;
         case 6:
-            return <DurationFilter onDurationApply={duration => handleSelect(6, duration, true)} onFilterChange={duration => handleSelect(6, duration)} toggleDrawer={toggleDrawer} />;
+            return <DurationFilter onDurationApply={duration => handleSelect(6, duration, true)} clearFilter={clearFilter} setClearFilter={setClearFilter} onFilterChange={duration => handleSelect(6, duration)} toggleDrawer={toggleDrawer} />;
         case 7:
-            return <InsuranceFilter onFiltersApply={filters => handleSelect(7, filters.insurance, true)} onFilterChange={filters => handleSelect(7, filters.insurance)} toggleDrawer={toggleDrawer} />;
+            return <InsuranceFilter onFiltersApply={filters => handleSelect(7, filters.insurance, true)} clearFilter={clearFilter} setClearFilter={setClearFilter} onFilterChange={filters => handleSelect(7, filters.insurance)} toggleDrawer={toggleDrawer} />;
         case 8:
-            return <KeywordsFilter onFiltersApply={filters => handleSelect(8, filters.keywords, true)} onFilterChange={filters => handleSelect(8, filters.keywords)} toggleDrawer={toggleDrawer} />;
+            return <KeywordsFilter onFiltersApply={filters => handleSelect(8, filters.keywords, true)} clearFilter={clearFilter} setClearFilter={setClearFilter} onFilterChange={filters => handleSelect(8, filters.keywords)} toggleDrawer={toggleDrawer} />;
         case 9:
-            return <PlatformFilter platforms={platforms?.data} cycle={cycle} onSelect={platform => handleSelect(9, platform, true)} onFilterChange={platform => handleSelect(9, platform)} toggleDrawer={toggleDrawer} />;
+            return <PlatformFilter platforms={platforms?.data} clearFilter={clearFilter} setClearFilter={setClearFilter} cycle={cycle} onSelect={platform => handleSelect(9, platform, true)} onFilterChange={platform => handleSelect(9, platform)} toggleDrawer={toggleDrawer} />;
         default:
             return null;
     }
@@ -51,7 +51,15 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     const [selectedFilters, setSelectedFilters] = useState({});
     const [openIndex, setOpenIndex] = useState(null);
     const [mobileFiltersVisible, setMobileFiltersVisible] = useState(false);
+    const [clearFilter, setClearFilter] = useState(false);
     const router = useRouter()
+    useEffect(()=>{
+        if(clearFilter)
+            setSwitchState({
+            instantProject: false,
+            priceInclusive: true ,        
+        })
+    },[clearFilter])
     useEffect(()=>{
         const newFilters = {};
         Object.entries(router.query).forEach(([key, value]) => {
@@ -256,6 +264,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     };
     const clearAllQueries = () => {
         router.push(router.pathname, undefined, { shallow: true });
+        setClearFilter(true)
     };
 
     return (
@@ -277,7 +286,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                             </button>
 
                             <div className={openIndex === value ? "absolute" : "hidden"}>
-                                <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} handleFilterChange={onFilterChange} toggleDrawer={closeDropDown} isMobile={false} />
+                                <RenderFilterComponent clearFilter={clearFilter} setClearFilter={setClearFilter} platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} handleFilterChange={onFilterChange} toggleDrawer={closeDropDown} isMobile={false} />
                             </div>
                         </div>
                     ))}
@@ -295,6 +304,8 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                         <Switch
                             defaultValue={switchState?.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
+                            setClearFilter={setClearFilter}
+                            clearFilter={clearFilter}
                         />
                         <span className="opacity-70 font-semibold">{t("instant project")}</span>
 
@@ -303,6 +314,8 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                                 <Switch
                                     defaultValue={switchState?.priceInclusive}
                                     onSwitchChange={handleSwitchChange('priceInclusive')}
+                                    setClearFilter={setClearFilter}
+                                    clearFilter={clearFilter}        
                                 />
                                 <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
                             </>
@@ -318,6 +331,8 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                         <Switch
                             defaultValue={switchState?.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
+                            setClearFilter={setClearFilter}
+                            clearFilter={clearFilter}
                         />
                         <span className="opacity-70 font-semibold">{t("instant project")}</span>
                         {cycle === "project" && (
@@ -326,6 +341,8 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                                     <Switch
                                         defaultValue={switchState?.priceInclusive}
                                         onSwitchChange={handleSwitchChange('priceInclusive')}
+                                        setClearFilter={setClearFilter}
+                                        clearFilter={clearFilter}            
                                     />
                                 </div>
                                 <span className="opacity-70 font-semibold hidden md:block">{t("price is inclusive")}</span>
@@ -347,8 +364,10 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                         {cycle === "project" && (
                             <>
                                 <Switch
-                                    checked={switchState?.priceInclusive}
+                                    defaultValue={switchState?.priceInclusive}
                                     onSwitchChange={handleSwitchChange('priceInclusive')}
+                                    setClearFilter={setClearFilter}
+                                    clearFilter={clearFilter}        
                                 />
                                 <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
                             </>
@@ -357,7 +376,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
 
                     {filterData.map(({ value, name }) => (
                         <div key={value} className="relative" >
-                            <RenderFilterComponent platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} isMobile={true}/>
+                            <RenderFilterComponent clearFilter={clearFilter} setClearFilter={setClearFilter} platforms={platforms} value={value} categories={categories} cycle={cycle} handleSelect={handleSelect} isMobile={true}/>
                         </div>
                     ))}
                     <AppButton onClick={takeAction} className='block md:hidden h-[60px] m-5' contentClassName='text-base'>

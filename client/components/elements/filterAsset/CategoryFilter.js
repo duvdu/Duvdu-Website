@@ -6,13 +6,16 @@ import AppButton from '../button';
 import FilterHeader from './comman/FilterHeader';
 import { useTranslation } from 'react-i18next';
 
-const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDrawer }) => {
+const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDrawer , clearFilter ,setClearFilter  }) => {
     const { t } = useTranslation();
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [filteredCategories, setFilteredCategories] = useState([]);
     const router = useRouter()
-
-    useEffect(() => {
+    useEffect(()=>{
+        if(clearFilter)
+            setSelectedCategories([])
+    },[clearFilter])
+    useEffect(() => {   
         // Filter categories based on the cycle
         if (cycle) {
             const filtered = categories.filter(category => category.cycle === cycle);
@@ -28,7 +31,7 @@ const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDra
         const newSelectedCategories = selectedCategories.includes(selectedCategory._id)
             ? selectedCategories.filter(cat => cat !== selectedCategory._id)
             : [...selectedCategories, selectedCategory._id];
-
+        setClearFilter(false)
         setSelectedCategories([selectedCategory._id]);
         // Optionally, you can trigger the filter change immediately when a category is selected
         if (onFilterChange) {

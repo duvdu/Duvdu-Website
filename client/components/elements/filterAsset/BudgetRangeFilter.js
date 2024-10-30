@@ -5,9 +5,13 @@ import FilterInput from './comman/FilterInput';
 import AppButton from '../button';
 import { useTranslation } from 'react-i18next';
 
-const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange, toggleDrawer }) => {
+const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange, toggleDrawer, clearFilter ,setClearFilter }) => {
     const { t } = useTranslation();
     const [budgetRange, setBudgetRange] = useState({ min: '', max: '' });
+    useEffect(()=>{
+        if(clearFilter)
+            setBudgetRange({ min: '', max: '' })
+    },[clearFilter])
 
     const handleBudgetRangeChange = (e) => {
         const { name, value } = e.target;
@@ -25,6 +29,7 @@ const BudgetRangeFilter = ({ onBudgetRangeApply, onFilterChange, toggleDrawer })
     };
 
     const handleBudgetRangeApply = () => {
+        setClearFilter(false)
         if (onBudgetRangeApply) {
             onBudgetRangeApply(budgetRange);
         }
