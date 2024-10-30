@@ -14,6 +14,7 @@ import EmptyComponent from '../../components/pages/contracts/emptyComponent';
 import Loading from '../../components/elements/duvduLoading';
 import DuvduLoading from '../../components/elements/duvduLoading';
 import { GetPlatforms } from '../../redux/action/apis/cycles/producer/platform';
+import RelatedCategories from "../../components/elements/relatedCategories";
 
 const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin }) => {
     const { t } = useTranslation();
@@ -125,7 +126,8 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
 
                     <Filter setSwitchState={setSwitchState} switchState={switchState} cycle={cycle} setParams={setParams} />
                     <div className="h-7" />
-                        
+                    {<RelatedCategories className=" col-span-full" />}
+
                         {producers?.length > 0 &&
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }

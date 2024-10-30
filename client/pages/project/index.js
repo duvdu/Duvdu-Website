@@ -24,7 +24,6 @@ const Projects = ({ projects, GetProjects, api }) => {
     const page = 1;
     const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
-
     const Router = useRouter();
     const searchTerm = Router.query.search;
     const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
@@ -110,8 +109,6 @@ const Projects = ({ projects, GetProjects, api }) => {
                         <div className="grid minmax-280 gap-5">
                             {projectsList?.map((item, i) => (
                                 <React.Fragment key={item._id}>
-                                    {/* {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
-                                    {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />} */}
                                     <ProjectCard cardData={item} inclusive={switchState.priceInclusive} />
                                 </React.Fragment>
                             ))}

@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 import EmptyComponent from './../../components/pages/contracts/emptyComponent';
 import DuvduLoading from '../../components/elements/duvduLoading';
+import RelatedCategories from "../../components/elements/relatedCategories";
 
 
 const Permit = ({ GetCopyrights, respond, api, islogin }) => {
@@ -120,12 +121,13 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                     <div className="container mb-30">
 
                     <Filter setSwitchState={setSwitchState} switchState={switchState} cycle={cycle} setParams={setParams} />
-
+                    <div className="h-7" />
+                    {<RelatedCategories className=" col-span-full" />}
                         {CopyRight?.length === 0 ?
                             <div className='mt-4'>
                                 <EmptyComponent message="No CopyRight Now" />
                             </div> :
-                            <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
+                            <h1 className="page-header  pb-9">{t("most popular on duvdu")}</h1>
                         }
                         {respond?.loading?
                        <DuvduLoading loadingIn={""} type='category'/>:    
@@ -135,7 +137,6 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                             )}
                         </div>
                         }
-                        {/* <DuvduLoading loadingIn={"GetCopyrights"} /> */}
                         <Formsubmited />
                     </div>
                 </section>

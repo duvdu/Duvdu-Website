@@ -57,7 +57,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
         if(clearFilter)
             setSwitchState({
             instantProject: false,
-            priceInclusive: true ,        
+            priceInclusive: false ,        
         })
     },[clearFilter])
     useEffect(()=>{
@@ -254,10 +254,10 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
             }
         });
         // Update query parameters with selected filters
+
         const queryString = new URLSearchParams({
             ...params,
         }).toString();
-
         if (setParams)
             setParams(queryString)
 

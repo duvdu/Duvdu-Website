@@ -17,8 +17,7 @@ import CategorySearch from "../../components/pages/search/category";
 import ProjectSearch from "../../components/pages/search/projects";
 
 const Search = ({
-    search, GetAllSearch
-}) => {
+    search, GetAllSearch}) => {
     const { t, i18n } = useTranslation();
     const Router = useRouter();
     const searchTerm = Router.query.search;

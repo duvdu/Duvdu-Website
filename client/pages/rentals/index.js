@@ -116,6 +116,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                             !searchTerm &&
                             <div className="h-7" />
                         }
+                        {<RelatedCategories className=" col-span-full" />}
                         {getPaginatedProjects?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}
@@ -130,9 +131,6 @@ const Studio = ({ projects, GetStudios, api }) => {
                        <div className="grid minmax-280 gap-5">
                             {getPaginatedProjects?.map((item, i) => (
                                 <React.Fragment key={item.id || i}>
-                                    {i === 0 && <RelatedCategories NeedTranslate={false} className="block lg:hidden xl:hidden col-span-full" />}
-                                    {i === 3 && <RelatedCategories className="hidden lg:block xl:hidden col-span-full" />}
-                                    {i === 4 && <RelatedCategories className="hidden xl:block col-span-full" />}
                                     <ProjectCard cardData={item} type="rentals" />
                                 </React.Fragment>
                             ))}
