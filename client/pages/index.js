@@ -280,11 +280,8 @@ const Home = ({
                                         640: {
                                             slidesPerView: 1.7, // For mobile screens
                                           },
-                                          768: {
-                                            slidesPerView: 2, // For tablets
-                                          },
                                           1024: {
-                                            slidesPerView: 3, // For desktop
+                                            slidesPerView: 2, // For desktop
                                           },
                                         }}                                    
                                     >
