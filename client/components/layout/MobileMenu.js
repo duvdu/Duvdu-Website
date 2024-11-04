@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Icon from "../Icons";
 import headerMen from '../../public/static/header_content.json';
 import Search from "../elements/SearchMobile";
+import Menu from '../elements/menu';
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
@@ -14,7 +15,7 @@ import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notifi
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
 
 
-const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,
+const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayout,
     MarkNotificationsAsRead,
     GetNotifications,
     GetAllChats_respond,
@@ -76,8 +77,8 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,
                     </div>
                     <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={onClose}>
                         <Icon className="size-6 items-center justify-center" name={'x-icon'} />
-                    </div>
-                </div>
+                   </div>
+               </div>
             </div>
         </div>
     }
@@ -179,7 +180,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,
 
                     return (
                         <li key={index} className="cursor-pointer">
-                            <div className="flex w-full justify-between items-center p-5">
+                            <div className="flex  w-full justify-between items-center p-5">
                                 <div className="w-3" />
                                 <Link href={`/${category.cycle}`}>
                                     <span className="text-[#4F5E7B] dark:text-[#B3B3B3] font-semibold text-sm" >

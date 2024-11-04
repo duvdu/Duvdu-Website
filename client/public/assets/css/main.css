@@ -1180,10 +1180,10 @@ table p {
   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, var(--home-list-gradaint2) 100%);
 }
 
-.hide-scrollable-container {
+/* .hide-scrollable-container {
   overflow: hidden;
-  /* Hide the scrollbar */
-}
+  /* Hide the scrollbar 
+} */
 
 .hide-scrollable-container::-webkit-scrollbar {
   display: none;
@@ -1319,7 +1319,7 @@ table p {
   display: flex;
   gap: 15px;
   width: fit-content;
-  top: 102%;
+  top: 100%;
   background-color: var(--body-background);
   padding: 40px 44px 40px 44px;
   opacity: 0;
@@ -1482,8 +1482,8 @@ table p {
 
 
 @media only screen and (max-width: 1024px) {
-
-  .header-wrap .header-right {
+  
+    .header-wrap .header-right {
     overflow: hidden;
   }
 

@@ -27,8 +27,8 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
           playingAudioRef.pause();
         }
         setPlayingAudioRef(newAudioRef);
-      };
-      const handleDropdownSelect = (v) => {
+    };
+    const handleDropdownSelect = (v) => {
         if (islogin===false) {
             OpenPopUp("registration-required")
             return

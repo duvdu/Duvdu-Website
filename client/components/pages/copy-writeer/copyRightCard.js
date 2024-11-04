@@ -4,33 +4,59 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getRankStyle } from '../../../util/util';
+import Selector from "../../elements/CustomSelector";
+import EditCopyrights from '../../../components/drawer/edit/editcopyrighter';
+import { OpenPopUp } from "../../../util/util";
 
-const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
+const CopyRightCard = ({ cardData, className = "", onClick, user  , islogin , QueryString}) => {
+  const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const { t } = useTranslation();
  const price = cardData?.price?.toString()
+ const toggleDrawerEdit = () => {
+  setIsOpenEdit(!isOpenEdit);
+};
+ const handleDropdownSelect = (v) => {
+  if (v == "Edit") toggleDrawerEdit()
+};
+
   return (
+    <>
+    <EditCopyrights data={cardData} QueryString={QueryString} isOpen={isOpenEdit}  id={cardData?._id} setIsOpenEdit={setIsOpenEdit} />
     <div className={`border border-50 border-solid border-gray-300 dark:border-opacity-40 p-10 h-full flex flex-col gap-5 justify-between ${className}`}>
+        <div className='flex items-center justify-between'>
       <Link href={`/creative/${cardData?.user?.username}`}>
-        <div className='flex items-center justify-center text-center cursor-pointer'>
+          <div className='flex items-center  text-center cursor-pointer'>
+            <img
+              className='profileImgture-2 me-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top'
+              src={cardData?.user?.profileImage || '/default-profile.png'} // Providing a default image
+              alt="profile picture"
+            />
 
-          <img
-            className='profileImgture-2 m-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top'
-            src={cardData?.user?.profileImage || '/default-profile.png'} // Providing a default image
-            alt="profile picture"
-          />
-
-          <div className='flex-2 flex-col gap-1'>
-            <h3 className='opacity-80 text-lg font-bold text-start'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0] || "Unknown User"}</h3>
-            <span className='flex items-start justify-start opacity-40'>
-              <div>
-                <Icon className='opacity-50 mr-1 mt-1 w-3' name='location-dot' />
-              </div>
-              <span className="text-start line-clamp-2">{cardData?.address || "UNKNOWN"}</span>
-            </span>
+            <div className='flex-2 flex-col gap-1'>
+              <h3 className='opacity-80 text-lg font-bold text-start'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0] || "Unknown User"}</h3>
+              <span className='flex items-start justify-start opacity-40'>
+                <div>
+                  <Icon className='opacity-50 mr-1 mt-1 w-3' name='location-dot' />
+                </div>
+                <span className="text-start line-clamp-2">{cardData?.address || "UNKNOWN"}</span>
+              </span>
+            </div>
           </div>
+        </Link>
+          {islogin===true &&  user?.profile?.username === cardData?.user?.username &&
+                <Selector
+                        options={[
+                            {
+                                value:"Edit"
+                            }
+                        ]}
+                        onSelect={handleDropdownSelect}
+                        className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-10 h-10 cursor-pointer"
+                />
+                }
         </div>
-      </Link>
-      <div className='flex justify-center items-center gap-3'>
+      
+      <div className='flex  items- gap-3'>
         
           <div className='border rounded-full px-3 py-1 font-bold text-lg' style={getRankStyle(cardData?.user?.rank?.color)}>
             {cardData?.user?.rank?.title || "Unranked"}
@@ -69,11 +95,13 @@ const CopyRightCard = ({ cardData, className = "", onClick, user }) => {
       }
       </div>
     </div>
+    </>
   );
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  islogin: state.auth.login,
 });
 
 // mapDispatchToProps can be removed if not used

@@ -253,9 +253,9 @@ const Header = ({
                             </div>
                         </div>
                     </div>
-                    <div className={"border-borderColor header-bottom-bg-color py-2 lg:py-0 " + (!fromlayout.shortheader ? " border-y" : "")}>
+                    <div className={"border-borderColor header-bottom-bg-color pt-2 lg:py-0 " + (!fromlayout.shortheader ? " border-y" : "")}>
                         <div className="container">
-                            <div className="header-wrap header-space-between relative">
+                            <div className="header-wrap header-space-between pb-2 lg:pb-0 relative">
                                 <div className="logo block lg:hidden w-full">
                                     <Link href="/">
                                         <div className="cursor-pointer">
@@ -292,6 +292,16 @@ const Header = ({
                                     </div>
                                 </div>
                             </div>
+                            {
+                                !fromlayout.shortheader &&
+                                <div className="header-nav w-full">
+                                    <div className="main-menu main-menu-lh-2 font-heading block lg:hidden">
+                                        <nav>
+                                            <Menu />
+                                        </nav>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </header>}

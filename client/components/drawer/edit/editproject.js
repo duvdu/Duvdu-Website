@@ -269,7 +269,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         setIsOpenEdit(false)
         GetProject(projectId)
     }
-    console.log(data.tags.map(item => item._id))
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />

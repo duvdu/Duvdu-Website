@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 const MegaMenu = ({ language, api, categories }) => {
   return (
-    <ul className='flex flex-wrap gap-x-4'>
+    <ul className='flex flex-nowrap gap-x-4 overflow-x-auto hide-scrollable-container'>
       {categories &&
         categories.map((category, index) => (
           <Category key={index} category={category} language={language} />
@@ -46,12 +46,12 @@ const Category = ({ category, language }) => {
   return (
     <li className='header-category'>
       <div
-        className='category-name cursor-pointer border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'
+        className='category-name cursor-pointer whitespace-nowrap border-b-4 border-t-4 border-transparent opacity-70 lg:text-[13px] xl:text-base capitalize py-1'
         onClick={() => handleNavigation(`/${category.cycle}?category=${category._id}`)}
       >
         {category.title}
       </div>
-      <ul className="hover-menu" ref={megaMenuRef}>
+      <ul className="hover-menu flex-col lg:flex-row" ref={megaMenuRef}>
         <div>
           {category.subCategories.map((subcategory, subIndex) => (
             subIndex / category.subCategories.length < 0.5 &&

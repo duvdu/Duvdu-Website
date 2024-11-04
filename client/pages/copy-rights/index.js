@@ -20,6 +20,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
     const Router = useRouter();
     const showLimit = 12;
     const page = 1;
+    const [QueryString, setQueryString] = useState()
     const [switchState, setSwitchState] = useState({
         instantProject: false,
         priceInclusive: undefined ,
@@ -68,7 +69,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
-
+            setQueryString(queryString)
             // Call GetCopyrights with the constructed query string
             GetCopyrights(queryString);
         }
@@ -133,7 +134,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                        <DuvduLoading loadingIn={""} type='category'/>:    
                        <div className="grid grid-cols-3 gap-5">
                             {CopyRight?.map((item, i) =>
-                                <CopyRightCard key={i} onClick={() => handlesetdata(item)} cardData={item} />
+                                <CopyRightCard QueryString={QueryString} key={i} onClick={() => handlesetdata(item)} cardData={item} />
                             )}
                         </div>
                         }

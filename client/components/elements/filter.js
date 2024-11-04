@@ -270,7 +270,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     return (
         <>
             {/* Desktop version */}
-            <div className="hidden md:flex justify-between items-center">
+            <div className="hidden md:flex lg:flex-row gap-5 flex-col justify-between lg:items-center lg:pb-0 pb-5">
                 <div className="flex gap-2 items-end">
                     {filterData.map(({ value, name }) => (
                         <div key={value} className="relative">
@@ -300,7 +300,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     </div>
                 </div>
                 {!hideSwitch && (
-                    <div className="flex items-center justify-end gap-2">
+                    <div className="flex items-center lg:justify-end gap-2">
                         <Switch
                             defaultValue={switchState?.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}
@@ -325,7 +325,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
             </div>
 
             {/* Mobile version */}
-            <div className="flex md:hidden justify-between items-center">
+            <div className="flex md:hidden justify-between items-center pb-5">
                 {!hideSwitch && (
                     <div className="flex items-center justify-end gap-2">
                         <Switch

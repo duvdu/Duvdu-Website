@@ -30,7 +30,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
   const [passwordError, setPasswordError] = useState({ isError: false, message: '' });
 
   const [showPassword, setShowPassword] = useState(false);
-  const NotBackPages = ['/register' , '/forgetPassword'] 
+  const NotBackPages = ['/register' , '/forgetPassword' , '/login'] 
   var convertError = JSON.parse(login_respond?.error ?? null)
   useEffect(() => {
     if (login_respond?.message === 'success') {

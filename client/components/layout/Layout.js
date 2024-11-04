@@ -99,7 +99,7 @@ const Layout = ({
 
             <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite, showTabs: showTabs, iSsticky: iSsticky }} />
 
-            <MobileMenu isToggled={isToggled} toggleClick={toggleClick} />
+            <MobileMenu isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader }} />
 
             <main className="main bg-body" >
                 {children}

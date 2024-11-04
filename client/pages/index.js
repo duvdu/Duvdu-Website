@@ -279,10 +279,14 @@ const Home = ({
                                           },
                                         640: {
                                             slidesPerView: 1.7, // For mobile screens
+                                          },    
+                                        768: {
+                                            slidesPerView: 2, // For tablets
                                           },
-                                          1024: {
-                                            slidesPerView: 2, // For desktop
+                                        1024: {
+                                            slidesPerView: 3, // For desktop
                                           },
+
                                         }}                                    
                                     >
                                     {list &&list?.map((data, index) => {
@@ -360,10 +364,10 @@ const Home = ({
                                    640: {
                                      slidesPerView: 3,
                                    },
-                                   1024: {
-                                     slidesPerView: 4, // For desktop
-                                   },
-                                 }}                                    
+                                  1024: {
+                                    slidesPerView: 4, // For desktop
+                                  },
+                            }}                                    
                            >
                                {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => {
                                    return <SwiperSlide key={index}>                                                            
