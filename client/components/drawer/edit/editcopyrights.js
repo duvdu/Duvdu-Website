@@ -7,7 +7,7 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import { UpdateFormData, InsertToArray, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import Switch from "../../elements/switcher";
 import Drawer from "../../elements/drawer";
-import CategorySelection from "./../create/assets/CategorySelection";
+import CategorySelection from "../create/assets/CategorySelection";
 import { filterByCycle } from "../../../util/util";
 import { CreateCopyrights } from '../../../redux/action/apis/cycles/copywriter/create';
 import GoogleMap from '../../elements/googleMap';
@@ -25,7 +25,19 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
     const [validFormCheck, setValidFormCheck] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
-    console.log({categories})
+    const AreObjectsEqual = (arr1, arr2) => {
+        if (arr1.length !== arr2.length) return false;
+      
+        for (let i = 0; i < arr1.length; i++) {
+          const obj1 = arr1[i];
+          const obj2 = arr2[i];
+      
+          if (JSON.stringify(obj1) !== JSON.stringify(obj2)) {
+            return false;
+          }
+        }
+        return true;
+    };
 
     useEffect(() => {
         // if (categories.length)
@@ -38,38 +50,36 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
         UpdateFormData('location.lng', location.lng)
     };
     const convertToFormData = () => {
-        const UpdatedData = new FormData();
-        if(formData.duration && (data.duration.value!==formData.duration))
-            const durationValue = formData.duration
+        const UpdatedData ={
+
+        }
+        const durationValue = formData.duration
+        if(formData.duration && (data.duration.value!==formData.duration)){
             formData.duration = {
                 value : durationValue,
                 unit: "days"
             }    
-            UpdatedData.append('duration',formData.duration)
+            UpdatedData.duration=formData.duration
         }
         if(formData.price && (data.price!==formData.price))
-            UpdatedData.append('price',formData.price)
+            UpdatedData.price=formData.price
         if(formData.address && (data.address!==formData.address))
-            UpdatedData.append('address',formData.address)
+            UpdatedData.address=formData.address
         if(formData.category && (data.category._id!==formData.category))
-            UpdatedData.append('category',formData.category)
+            UpdatedData.category=formData.category
         if(formData.subCategory && (data.subCategory?._id!==formData.subCategory))
-            UpdatedData.append('subCategoryId',formData.subCategory)
-        if (formData.tags)
-            formData.tags.forEach((tag, index) => {
-                UpdatedData.append(`tagsId[${index}]`, tag);
-            });
-
+            UpdatedData.subCategoryId=formData.subCategory
+        if (formData.tags && !AreObjectsEqual(formData.tags, data.tags))
+            UpdatedData.tags = formData.tags
         if (formData.searchKeyWords && !AreObjectsEqual(formData.searchKeyWords, data.searchKeyWords))
-                formData.searchKeyWords.forEach((searchKeywords, index) => {
-                UpdatedData.append(`searchKeywords[${index}]`, searchKeywords);
-            });
-    
+            UpdatedData.searchKeywords =formData.searchKeyWords
         if (formData.location && (data.location.lat!==formData.location.lat) && (data.location.lng!==formData.location.lng)) {
-            UpdatedData.append('location[lat]', formData.location.lat);
-            UpdatedData.append('location[lng]', formData.location.lng);
+            UpdatedData.location={
+                lat:formData.location.lat,
+                lng:formData.location.lng
+            }   
         };
-
+        console.log({UpdatedData})
         return UpdatedData;
     }
 

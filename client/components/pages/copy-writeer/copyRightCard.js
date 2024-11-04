@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { getRankStyle } from '../../../util/util';
 import Selector from "../../elements/CustomSelector";
-import EditCopyrights from '../../../components/drawer/edit/editcopyrighter';
+import EditCopyrights from '../../drawer/edit/editcopyrights';
 import { OpenPopUp } from "../../../util/util";
 
 const CopyRightCard = ({ cardData, className = "", onClick, user  , islogin , QueryString}) => {
@@ -23,7 +23,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , islogin , Qu
     <>
     <EditCopyrights data={cardData} QueryString={QueryString} isOpen={isOpenEdit}  id={cardData?._id} setIsOpenEdit={setIsOpenEdit} />
     <div className={`border border-50 border-solid border-gray-300 dark:border-opacity-40 p-10 h-full flex flex-col gap-5 justify-between ${className}`}>
-        <div className='flex items-center justify-between'>
+        <div className='flex justify-between'>
       <Link href={`/creative/${cardData?.user?.username}`}>
           <div className='flex items-center  text-center cursor-pointer'>
             <img
