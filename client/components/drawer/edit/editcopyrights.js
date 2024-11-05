@@ -119,13 +119,6 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
         UpdateFormData(name, value);
     };
 
-    useEffect(() => {
-        if (auth.login === false)
-            router.push({
-                pathname: "/",
-            });
-    }, [auth.login])
-
     const closeDrawer = () => {        
         setPost_success(false)
         setIsOpenEdit(false)
