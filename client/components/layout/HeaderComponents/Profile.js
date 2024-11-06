@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as Types from '../../../redux/constants/actionTypes'
+import { SetheaderPopUp } from "../../../redux/action/setting";
 import Icon from "../../Icons";
 import Link from 'next/link';
 
-function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) {
+function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , SetheaderPopUp }) {
 
     const { t } = useTranslation();
 
@@ -69,7 +70,9 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
     useEffect(()=>{
         setShowMiddleCard(false)
     },[hasVerificationBadge])
-
+    const CloseProfile=()=>{
+        SetheaderPopUp(Types.NONEPOPUP)
+    }
     if (user == null) return <></>
     if (getheaderpopup != Types.SHOWPROFILE) return
     else
@@ -104,7 +107,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                 </div>
                                 <div className="flex gap-3 mt-3">
                                     <Link href={`/creative/${user.username}`} >
-                                        <div className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
+                                        <div onClick={CloseProfile} className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
                                             <span className="text-primary font-bold text-base">
                                                 {t('view profile')}
                                             </span>
@@ -178,11 +181,11 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                             <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[45px] mb-2">
                                 <h4 className="opacity-70 text-sm font-semibold m-2 flex justify-between">
                                     {t('saved projects')}
-                                    <Link href="/saved" className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</Link>
+                                    <Link href="/saved"><span className="font-semibold text-primary cursor-pointer" onClick={CloseProfile} >{t('view all')}</span></Link>
                                 </h4>
                                 <div className="flex justify-between gap-3">
                                     <Link href={`/save/favorites`} >
-                                        <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
+                                        <div onClick={CloseProfile}  className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
                                                 // favCover ? (favCover!=='color'?<img className='rounded-[30px] h-full w-full object-cover' src={favCover} /> :
                                                 //     <div style={{backgroundColor:color}} className={`aspect-square rounded-[30px] w-full flex justify-center items-center cursor-pointer]`}>
@@ -199,7 +202,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond }) 
                                         </div>
                                     </Link>
                                     <Link href="/saved" >
-                                        <div className="aspect-square w-1/2 overflow-hidden cursor-pointer">
+                                        <div onClick={CloseProfile}  className="aspect-square w-1/2 overflow-hidden cursor-pointer">
                                             {
                                                 // saved[0] && false ? <img className='rounded-[30px] h-full object-cover' src={saved[0]} /> :
                                                 //     <div className='aspect-square rounded-[30px] w-full flex justify-center items-center bg-[#DADCDE] cursor-pointer'>
@@ -237,6 +240,9 @@ const mapStateToProps = (state) => ({
     fav_respond: state.api.GetFavList,
 
 });
+const mapDispatchToProps = {
+    SetheaderPopUp,
+};
 
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps,mapDispatchToProps)(Profile);

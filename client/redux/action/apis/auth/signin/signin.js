@@ -8,7 +8,7 @@ export const login = ({ username, password  ,notificationToken}) => {
       const response = await mainApiInstance.post('api/users/auth/signin', {
         login: username,
         password: password,
-        notificationToken:notificationToken??null
+        // notificationToken:notificationToken??null
       });
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data , req: 'login'});
       } catch (error) {

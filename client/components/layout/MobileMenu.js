@@ -13,6 +13,7 @@ import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { AvailableUserChat } from "../../redux/action/apis/realTime/messages/availableUserChat";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
+import * as Types from '../../redux/constants/actionTypes'
 
 
 const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayout,
@@ -22,7 +23,6 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
     GetAllChats,
     AvailableUserChat,
     getheaderpopup,
-
  }) => {
     const { t } = useTranslation();
     const [page, setPage] = useState(isToggled);
@@ -89,7 +89,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
         </div>
     </div>
 
-    const Tabs2 = () => {
+    const Tabs2 = ({onClose}) => {    
         return (
             <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
                 {
@@ -107,7 +107,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
                     ].map(({ url, icon, name, click }, index) => (
                         url ? (
                             <Link key={`${name}-${index}`} href={url}>
-                                <div className="flex gap-1 items-center cursor-pointer">
+                                <div onClick={onClose} className="flex gap-1 items-center cursor-pointer">
                                     <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={icon} />
                                     <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{t(name)}</span>
                                 </div>
@@ -123,7 +123,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
             </div>
         )
     }
-    const Tabs = () => {
+    const Tabs = ({onClose}) => {
         return (
             <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33] border-t dark:border-t-[#FFFFFF33]">
 
@@ -144,9 +144,14 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
                             icon: 'teams',
                             name: 'team projects',
                         },
+                        {
+                            url: '/saved',
+                            icon: 'saved',
+                            name: 'saved',
+                        },
                     ].map((item, index) =>
                         <Link key={index} href={item.url}>
-                            <div className="flex justify-center items-center cursor-pointer">
+                            <div onClick={onClose} className="flex justify-center items-center cursor-pointer">
                                 <Icon className="mx-1 text-[#666666] dark:text-[#B3B3B3]" name={item.icon} />
                                 <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3]">{t(item.name)}</span>
                             </div>
@@ -227,13 +232,13 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
     };
 
 
-    const Auth = () =>
+    const Auth = ({onClose}) =>
         <div className="flex px-5 gap-3 my-8 max-w-[470px] mx-auto">
             <Link href="/login">
-                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold">{t("log-in")}</div>
+                <div onClick={onClose} className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold cursor-pointer">{t("log-in")}</div>
             </Link>
             <Link href="/register">
-                <div className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm">{t("register")}</div>
+                <div onClick={onClose} className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm cursor-pointer">{t("register")}</div>
             </Link>
         </div>
 
@@ -288,14 +293,14 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
                             {
                                 islogin &&
                                 <>
-                                    <Tabs />
-                                    <Tabs2 />
+                                    <Tabs onClose={() => toggleClick(1)} />
+                                    <Tabs2 onClose={() => toggleClick(1)} />
                                 </>
                             }
                             <Menu />
                             {
                                 !islogin &&
-                                <Auth />
+                                <Auth onClose={() => toggleClick(1)}/>
                             }
                             <DownLoadApp />
                         </>

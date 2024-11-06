@@ -192,7 +192,7 @@ function Setting({
         <div className={isMob ? "" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"}>
             <div className={isMob ? "" : "dialog flex flex-col"}>
                 <div className={"overflow-y-scroll rounded-b-[60px] p-3"}>
-                    <div className="p-6 sm:bg-white sm:dark:bg-[#1A2024] w-full sm:w-72 rounded-[45px]">
+                    <div className="p-6 sm:bg-white sm:dark:bg-[#1A2024] w-full lg:w-72 rounded-[45px]">
                         {open === 0 && <Main />}
                         {open === 1 && <ContactUs setOpened={setOpened} />}
                         {open === 2 && <Language />}
