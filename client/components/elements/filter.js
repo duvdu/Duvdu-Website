@@ -270,8 +270,8 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     return (
         <>
             {/* Desktop version */}
-            <div className="hidden md:flex lg:flex-row gap-5 flex-col justify-between lg:items-center lg:pb-0 pb-5">
-                <div className="flex gap-2 items-end">
+            <div className="hidden md:flex lg:flex-row flex-wrap w-full gap-5 justify-between items-center lg:pb-0 pb-5">
+                <div className="flex gap-2 items-end flex-wrap">
                     {filterData.map(({ value, name }) => (
                         <div key={value} className="relative">
                             <button
@@ -300,7 +300,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                     </div>
                 </div>
                 {!hideSwitch && (
-                    <div className="flex items-center lg:justify-end gap-2">
+                    <div className="flex items-center gap-2">
                         <Switch
                             defaultValue={switchState?.instantProject}
                             onSwitchChange={handleSwitchChange('instantProject')}

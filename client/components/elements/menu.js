@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { getCategory } from '../../redux/action/apis/category/getCategories';
-import Link from 'next/link';
 import { useRouter } from "next/router";
 
 const MegaMenu = ({ language, api, categories }) => {
@@ -13,29 +11,47 @@ const MegaMenu = ({ language, api, categories }) => {
         ))}
     </ul>
   );
-}
+};
 
 const Category = ({ category, language }) => {
   const megaMenuRef = useRef(null);
   const router = useRouter();
 
-  useEffect(() => {
+  const adjustMenuPosition = () => {
     if (megaMenuRef.current) {
       const computedStyle = window.getComputedStyle(megaMenuRef.current);
       megaMenuRef.current.removeAttribute('style');
-      if (language == 'English') {
-        const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
-        if (rightPosition < 0) {
-          megaMenuRef.current.style.right = '0px';
+
+      // if (window.innerWidth <= 768) {
+      //   // Force right alignment on mobile view
+      //   megaMenuRef.current.style.right = '0px';
+      // } else {
+        // Apply language-based alignment for larger screens
+        if (language === 'English') {
+          const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
+          if (rightPosition < 0) {
+            megaMenuRef.current.style.right = '0px';
+          }
+        } else {
+          const leftPosition = parseFloat(computedStyle.getPropertyValue('left'));
+          if (leftPosition < 0) {
+            megaMenuRef.current.style.left = '0px';
+          }
         }
-      }
-      else {
-        const leftPosition = parseFloat(computedStyle.getPropertyValue('left'));
-        if (leftPosition < 0) {
-          megaMenuRef.current.style.left = '0px';
-        }
-      }
+      // }
     }
+  };
+
+  useEffect(() => {
+    // Run the alignment function initially
+    adjustMenuPosition();
+    // Add resize event listener to adjust on screen size changes
+    window.addEventListener('resize', adjustMenuPosition);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', adjustMenuPosition);
+    };
   }, [language]);
 
   const handleNavigation = (path, query) => {
@@ -81,7 +97,7 @@ const Category = ({ category, language }) => {
       </ul>
     </li>
   );
-}
+};
 
 const MenuItem = ({ title, items, onClick, cycle }) => (
   items.length > 0 &&
