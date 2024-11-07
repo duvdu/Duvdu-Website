@@ -176,7 +176,14 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         GetAllMessageInChat(null)
         ClearChatInput()
     }
+    try {
+        useEffect(() => {
+            onClose()
+        }, [window.location.href]);
+    }
+    catch (error) {
 
+    }
     const onSend = async () => {
         const data = new FormData()
         data.append("receiver", receiver)
@@ -238,28 +245,28 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     //       }
     //     });
     //   };
-      
+    
     return (
         <div className={`fixed bottom-0 z-20 md:px-8 ${messages.openchat ? '' : 'hidden'}`} >
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
                 <div className="chat w-screen sm:w-[400px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl">
                     <div className="flex p-2 h-16 border-b border-[#00000040] dark:border-[#FFFFFF40]">
-                        <Link href={`/creative/${otherUser.username || ""}`} >
+                        <Link href={`/creative/${chat_respond?.user?.username || ""}`} >
                             <div className="relative cursor-pointer">
-                                <img className="h-full object-cover object-top aspect-square rounded-full" src={otherUser.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
-                                {otherUser.isOnline && (
+                                <img className="h-full object-cover object-top aspect-square rounded-full" src={chat_respond?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
+                                {chat_respond?.user?.isOnline && (
                                     <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                                 )}
-                                {!otherUser.isOnline && (
+                                {!chat_respond?.user?.isOnline && (
                                     <div className="absolute w-4 h-4 bg-gray-500 border-2 b order-white rounded-full right-0 -translate-y-3" />
                                 )}
                             </div>
                         </Link>
                         <div className="px-3 place-self-center">
-                            <Link href={`/creative/${otherUser.username || ""}`} >
+                            <Link href={`/creative/${chat_respond?.user?.username || ""}`} >
                                 <div className="capitalize font-bold text-black dark:text-white cursor-pointer">
-                                    {otherUser.name?.split(' ')[0].length>6?otherUser.name?.split(' ')[0].slice(0,6):otherUser.name?.split(' ')[0]}
+                                    {chat_respond?.user?.name?.split(' ')[0].length>6?chat_respond?.user?.name?.split(' ')[0].slice(0,6):chat_respond?.user?.name?.split(' ')[0]}
                                 </div>
                             </Link>
                             <div />

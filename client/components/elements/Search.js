@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import { connect } from "react-redux";
 
-const Search = ({categories}) => {
+const Search = ({categories , onSearch}) => {
     const { t } = useTranslation();
     const [searchTerm, setSearchTerm] = useState("");
     const [searchHistory, setSearchHistory] = useState([]);
@@ -29,15 +29,15 @@ const Search = ({categories}) => {
     }, []);
     useEffect(() => {
         setSearchTerm(searchquery)
+        onSearch()
     }, [searchquery]);
-
     const handleSearch = () => {
         if (searchTerm) {
             const updatedHistory = [searchTerm, ...searchHistory.filter(term => term !== searchTerm)].slice(0, 10); // Keep last 10 unique terms
             localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
         }
         const query = searchTerm ? { search: searchTerm } : {};
-
+        
         router.push({
             pathname: "/search/",
             query: query,

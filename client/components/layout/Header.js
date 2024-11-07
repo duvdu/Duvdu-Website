@@ -200,7 +200,7 @@ const Header = ({
                                     }
 
                                     <div className="search-style-2 flex justify-end">
-                                        <Search />
+                                        <Search onSearch={() => toggleClick(1)} />
                                     </div>
                                     <div className="hidden lg:flex min-w-max">
 

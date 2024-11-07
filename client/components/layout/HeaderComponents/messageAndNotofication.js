@@ -92,7 +92,10 @@ const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserCh
                 <DraggableList>
                     {AvailableUserChat_resond?.data?.map(item=>
                         <div className="me-2 flex flex-col items-center gap-1">
-                            <img onClick={()=>GetAllMessageInChat(item._id)} className="size-12 rounded-full cursor-pointer object-cover object-top" src={item.profileImage} alt="user" width="45" height="45" />
+                            <img onClick={()=>{
+                                GetAllMessageInChat(item._id)
+                                onChoose?.()
+                                }} className="size-12 rounded-full cursor-pointer object-cover object-top" src={item.profileImage} alt="user" width="45" height="45" />
                             <div className="font-semibold text-xs">{item.name?.split(' ')[0].length>6?item.name?.split(' ')[0].slice(0,6):item.name?.split(' ')[0]} </div>
                         </div>
                     )}
