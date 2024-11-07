@@ -34,11 +34,11 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
     const validateRequiredFields = () => {
         const errors = {};
         if (!formData.startDate) errors.startDate = 'StartDate is required';
-        if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
-        if (!formData.details) errors.details = 'Details is required';
+        // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
+        // if (!formData.details) errors.details = 'Details is required';
         if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
         if (!formData.address) errors.address = 'Address is required';
-        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         return errors;
     };
     const CheckNext=()=>{
@@ -165,12 +165,14 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                             <h2 className='opacity-60 capitalize mb-3'>{t("project type")}</h2>
                             <span className='flex flex-col border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>{t("shooting permits")}</span>
                         </section>
+                        {formData.details && 
                         <section className="w-full">
                             <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
                             <span className='capitalize mb-8 opacity-80 w-min font-bold'>
                                 {formData.details}
                             </span>
                         </section>
+                        }
 
                         <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 mt-4 cursor-pointer">
                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] border-8 aspect-square">

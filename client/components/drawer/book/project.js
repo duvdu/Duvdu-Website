@@ -73,7 +73,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         const errors = {};
 
         if (!formData.startDate) errors.startDate = 'StartDate is required';
-        if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
+        // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
         if (!formData.details) errors.details = 'Details is required';
         if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
         if (!formData.address) errors.address = 'Address is required';

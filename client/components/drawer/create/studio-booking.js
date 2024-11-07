@@ -73,7 +73,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             errors.phoneNumber = 'Invalid Egyptian phone number.';
         }
         if (!formData.email) errors.email = 'Studio email is required';
-        if (!formData.description || formData.description.length < 6) errors.description = 'Description is required';
+        if (!formData.description) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         // if (!formData.insurance) errors.insurance = 'Insurance is required';
