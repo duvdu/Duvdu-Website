@@ -11,6 +11,8 @@ import { BookProducer } from "../../../redux/action/apis/cycles/producer/book";
 import { useTranslation } from 'react-i18next';
 import AddAttachment from "../../elements/attachment";
 import { GetPlatforms } from '../../../redux/action/apis/cycles/producer/platform';
+import ErrorMessage from '../../elements/ErrorMessage';
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 
 const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, UpdateFormData, BookProducer, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const { t } = useTranslation();
@@ -19,42 +21,24 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
     
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
+    const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
+    const [ErrorMsg, setErrorMsg] = useState({});
+    const [errorRespond, setErrorRespond] = useState({});
 
-    function validateForm() {
-        let missingFields = [];
+    const validateRequiredFields = () => {
+        const errors = {};
 
-        if (!formData.producer || formData.producer.length === 0) {
-            missingFields.push('Producer');
-        }
-        if (!formData.projectDetails || formData.projectDetails.length === 0) {
-            missingFields.push('Project Details');
-        }
-        if (!formData.episodesDuration || formData.episodesDuration.length === 0) {
-            missingFields.push('Episodes Duration');
-        }
-        if (!formData.expectedBudget || formData.expectedBudget.length === 0) {
-            missingFields.push('Expected Budget');
-        }
-        if (!formData.episodesNumber || formData.episodesNumber.length === 0) {
-            missingFields.push('Episodes Number');
-        }
-        if (!formData.expectedProfits || formData.expectedProfits.length === 0) {
-            missingFields.push('Expected Profits');
-        }
-        if (!formData.platform || formData.platform.length === 0) {
-            missingFields.push('Platform');
-        }
-        if (!formData.appointmentDate) {
-            missingFields.push('Appointment Date');
-        }
-        if (!formData.attachments || attachmentValidation <= 0) {
-            missingFields.push('Attachments');
-        }
-
-        return missingFields
-    }
-
-    const enableBtn = validateForm().length == 0;
+        if (!formData.platform) errors.platform = 'platform is required';
+        if (!formData.projectDetails) errors.projectDetails = 'projectDetails is required';
+        if (!formData.episodesNumber) errors.episodesNumber = 'episodesNumber is required';
+        if (!formData.episodesDuration) errors.episodesDuration = 'episodesDuration is required';
+        if (!formData.expectedBudget) errors.expectedBudget = 'expectedBudget is required';
+        if (!formData.expectedProfits) errors.expectedProfits = 'expectedProfits is required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
+        return errors;
+    };
 
     function OnSucess() {
         reset()
@@ -67,9 +51,6 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
             toggleDrawer()
     }
 
-
-
-
     useEffect(() => {
         UpdateFormData('producer', data._id)
     }, [isOpen])
@@ -81,9 +62,18 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
 
 
     function onSubmit() {
-        if(!enableBtn) return
-        if (submit)
-            submit()
+        setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000); // Hide after 3 seconds
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }else{
+            clearTimeout(timer)
         const form = new FormData()
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments'])
 
@@ -94,6 +84,13 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
             }
         BookProducer(data._id, form)
     }
+    }
+    useEffect(()=>{
+        if(validFormCheck)
+        setErrorMsg(validateRequiredFields())
+        setErrorPopup(false);
+    },[formData])
+
 
     const handlelocationChange = (location) => {
         UpdateFormData('location.lat', location.lat)
@@ -112,7 +109,16 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
         GetPlatforms({search:[]})
     },[])
 
-
+    useEffect(()=>{
+        if(respond?.error){
+            setErrorPopup(true)
+            setErrorRespond(JSON.parse(respond?.error))
+            const timer = setTimeout(() => {
+                setErrorPopup(false);
+            }, 3000); // Hide after 3 seconds
+    
+        }
+    },[respond?.error])
     // const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
     const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
     
@@ -125,6 +131,7 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                     <section>
                         <h3 className="capitalize opacity-60 mt-10">{t("Platform")}</h3>
                         <input type="text" placeholder={t("Enter Platform...")} className={inputStyle} value={formData.platform || ""} onChange={handleInputChange} name="platform" />
+                        <ErrorMessage ErrorMsg={ErrorMsg.platform}/>
                     </section>
                     {formData.platform && platforms?.data?.filter(platform => platform.name.toLowerCase().includes(formData.platform.toLowerCase()))  &&
                     <div className="flex gap-3 flex-wrap">
@@ -158,13 +165,12 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                     <section>
                         <h3 className="capitalize opacity-60">{t("Project Details")}</h3>
                         <textarea name="projectDetails" value={formData.projectDetails || ""} onChange={handleInputChange} placeholder={t("Main Idea")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32" />
+                        <ErrorMessage ErrorMsg={ErrorMsg.projectDetails}/>
                     </section>
 
                     <section className="h-96 relative overflow-hidden">
                         <span>{t("Project Location")}</span>
                         <GoogleMap width={'100%'} value={{ 'lat': formData['location.lat'], 'lng': formData["location.lng"] }} onsetLocation={(value) => handlelocationChange(value)} onChangeAddress={handleInputChange} />
-
-
                     </section>
                     <div className="flex w-full justify-between gap-3">
                         <section className="w-full">
@@ -172,12 +178,14 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                             <div className='flex items-center justify-start gap-4'>
                                 <input type="number" min={0} value={formData.episodesNumber || ""} onChange={handleInputChange} name='episodesNumber' placeholder={t("Ex. 5")} className={inputStyle} />
                             </div>
+                        <ErrorMessage ErrorMsg={ErrorMsg.episodesNumber}/>
                         </section>
                         <section className="w-full">
                             <p className="capitalize opacity-60">{t("Episode Duration")}</p>
                             <div className='flex items-center justify-start gap-4'>
                                 <input type="number" min={0} value={formData.episodesDuration || ""} onChange={handleInputChange} name='episodesDuration' placeholder={t("Ex. 15 minutes")} className={inputStyle} />
                             </div>
+                        <ErrorMessage ErrorMsg={ErrorMsg.episodesDuration}/>
                         </section>
                     </div>
                     
@@ -194,6 +202,7 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                             <div className='flex items-center justify-start gap-4'>
                                 <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder={t("Ex. 10$")} className={inputStyle} />
                             </div>
+                            <ErrorMessage ErrorMsg={ErrorMsg.expectedBudget}/>
                         </section>
 
                         <section className="w-full">
@@ -201,21 +210,30 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                             <div className='flex items-center justify-start gap-4'>
                                 <input type="number" min={0} value={formData.expectedProfits || ""} onChange={handleInputChange} name='expectedProfits' placeholder={t("Ex. 10$")} className={inputStyle} />
                             </div>
+                            <ErrorMessage ErrorMsg={ErrorMsg.expectedProfits}/>
                         </section>
                     </div>
 
                     <section className="w-full ">
                         <h3 className="capitalize opacity-60">{t("Upload Media")}</h3>
                         <AddAttachment name="attachments" value={formData.attachments || ""} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
-
+                        <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                     </section>
 
                     <section className="justify-between gap-7">
                         <h3 className="capitalize opacity-60 mb-5">{t("Select Appointment Date")}</h3>
                         <SelectDate value={formData.appointmentDate} onChange={(value) => UpdateFormData('appointmentDate', value)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.appointmentDate}/>
                     </section>
-                    <ArrowBtn isEnable={enableBtn} onClick={onSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Submit" shadow={true} shadowHeight={"14"} />
-
+                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
+                        <div>
+                            <div className='relative'>
+                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={errorRespond?.data?.errors[0].message}/>
+                                <ArrowBtn onClick={onSubmit} loading={respond?.loading} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Submit" shadow={true} shadowHeight={"14"} />
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </Drawer >
         </>

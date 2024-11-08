@@ -13,7 +13,7 @@ import { CreateCopyrights } from '../../../redux/action/apis/cycles/copywriter/c
 import GoogleMap from '../../elements/googleMap';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../elements/ErrorMessage';
-
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 
 
 const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState, UpdateFormData, InsertToArray, categories, resetForm }) => {
@@ -22,6 +22,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     const formData = addprojectState.formData;
     const router = useRouter();
     const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
     console.log({categories})
@@ -52,9 +53,16 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
         const durationValue = formData.duration
         e.preventDefault();
         setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000); // Hide after 3 seconds
         const validationErrors = validateRequiredFields();
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) return setErrorMsg(validateRequiredFields())
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }
         formData.duration = {
             value : durationValue,
             unit: "days"
@@ -64,6 +72,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
+        setErrorPopup(false);
     },[formData])
 
     const handleInputChange = (e) => {
@@ -90,6 +99,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     const toggleDrawer = () => {
         CreateCopyrights(-1);
         setPost_success(false)
+        setErrorMsg({})
         resetForm()
         router.replace({
             pathname: `/creative/${auth.username}`,
@@ -141,13 +151,16 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                         <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} id='showOnHome' />
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </section>
-                    <Button onClick={handleSubmit} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
-                        {respond?.loading ? 
-                         <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />
-                        :
-                        <span className='text-white font-bold capitalize text-lg'>{t("Publish")}</span>
-                        }
-                    </Button>
+                    <div className='relative'>
+                        <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                        <Button onClick={handleSubmit} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                            {respond?.loading ? 
+                            <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />
+                            :
+                            <span className='text-white font-bold capitalize text-lg'>{t("Publish")}</span>
+                            }
+                        </Button>
+                    </div>
                 </form>
             </Drawer>
         </>

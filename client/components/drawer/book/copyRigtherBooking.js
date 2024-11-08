@@ -12,6 +12,7 @@ import SuccessfullyPosting from "../../popsup/post_successfully_posting";
 import AddAttachment from "../../elements/attachment";
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from '../../elements/ErrorMessage';
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 
 const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState, UpdateFormData, BookCopyrights, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const { t } = useTranslation();
@@ -21,6 +22,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
     const [post_success, setPost_success] = useState(false);
     const [attachmentValidation, setAttachmentValidation] = useState(true);
     const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     let durationInDays = 0
     if (formData.appointmentDate && formData.startDate) {
@@ -43,14 +45,24 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
     };
     const CheckNext=()=>{
         setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000); // Hide after 3 seconds
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-        else return onsubmit()
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }else{
+            onsubmit()
+            clearTimeout(timer)
+        }
     }
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
+        setErrorPopup(false)
     },[formData])
 
 
@@ -154,7 +166,10 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
-                            <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                            <div className='relative'>
+                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                                <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -205,7 +220,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
                         </div>
                     </div>
 
-                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] border-t border-[#00000033]`}>
+                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-white dark:bg-[#1A2024] border-t border-[#00000033]`}>
                         <div className='text-center'>
                             <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
                         </div>

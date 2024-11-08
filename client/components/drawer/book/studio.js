@@ -13,10 +13,12 @@ import CustomSlider from "../../elements/customSlider";
 import ErrorMessage from '../../elements/ErrorMessage';
 import AddAttachment from "../../elements/attachment";
 import { UpdateKeysAndValues } from "../../../util/util";
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 
 const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData, StudopBooking, resetForm, data = {}, isOpen, toggleDrawer, submit }) => {
     const { t } = useTranslation();
     const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const formData = addprojectState.formData
     const [preview, setPreview] = useState(false);
@@ -27,23 +29,33 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
     let date = new Date(formData.startDate);
     const validateRequiredFields = () => {
         const errors = {};
-        if (!formData.startDate) errors.startDate = 'Start date is required';
-        if (!formData.timeDate) errors.timeDate = 'Time date is required';
         // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
         // if (!formData.details) errors.details = 'Details is required';
         // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        if (!formData.startDate) errors.startDate = 'Start date is required';
+        if (!formData.timeDate) errors.timeDate = 'Time date is required';
         return errors;
     };
     const CheckNext=()=>{
         setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000); // Hide after 3 seconds
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-        else return onsubmit()
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }else{
+            onsubmit()
+            clearTimeout(timer)
+        }
     }
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
+        setErrorPopup(false);
     },[formData])
 
     useEffect(() => {
@@ -157,7 +169,10 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                     </section>
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div className="flex justify-center">
-                            <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                            <div className='relative'>
+                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                                <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                            </div>
                         </div>
                     </section>
                 </div>
@@ -202,8 +217,8 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                         </div>
                     </div>
 
-                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-[#F7F9FB] dark:bg-[#080604] border-t border-[#00000033]`}>
-                        <div className='text-center'>
+                    <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 bg-white dark:bg-[#1A2024] border-t border-[#00000033]`}>
+                    <div className='text-center'>
                             <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
                         </div>
                         <div className="w-full flex px-8 justify-between">

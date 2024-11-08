@@ -19,6 +19,7 @@ import AppButton from '../../elements/button';
 import AddAttachment from '../../elements/attachment';
 import Share from '../../popsup/Share';
 import { useTranslation } from 'react-i18next';
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 
 
 const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
@@ -28,6 +29,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const formData = addprojectState.formData;
     const [errors, setErrors] = useState({});
     const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
@@ -66,13 +68,13 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         // if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
         // if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
-        if (!formData.title) errors.title = 'Studio name is required';
+        if (!formData.title) errors.title = 'Title is required';
         if (!formData.phoneNumber) {
-            errors.phoneNumber = 'Studio number is required';
+            errors.phoneNumber = 'Phone number is required';
         } else if (!egyptianPhoneRegex.test(formData.phoneNumber)) {
             errors.phoneNumber = 'Invalid Egyptian phone number.';
         }
-        if (!formData.email) errors.email = 'Studio email is required';
+        if (!formData.email) errors.email = 'Email is required';
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
@@ -89,14 +91,25 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     };
     const CheckNext=()=>{
         setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000); // Hide after 3 seconds
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-        else return setCover()
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }
+        else{
+            setCover()
+            clearTimeout(timer);
+        }
     }
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
+        setErrorPopup(false);
     },[formData])
     const setCover = (e) => {
         setNextstep(2)
@@ -149,6 +162,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             setNextstep(1)
             return
         }
+        setErrorMsg({})
         resetForm()
         router.replace({
             pathname: `/creative/${auth.username}`,
@@ -264,11 +278,12 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </section>
-
-                            <AppButton onClick={CheckNext} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
-                                <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
-                            </AppButton>
-
+                            <div className='relative'>
+                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                                <AppButton onClick={CheckNext} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                                    <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
+                                </AppButton>
+                            </div>
                         </form>
                     )}
             </Drawer>

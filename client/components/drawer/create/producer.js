@@ -18,7 +18,7 @@ import { CreateProducer } from "../../../redux/action/apis/cycles/producer/creat
 import { DeleteProducer } from '../../../redux/action/apis/cycles/producer/delete';
 import { UpdateProducer } from '../../../redux/action/apis/cycles/producer/update';
 import PlatformMultiSelection from '../../elements/platformMultiSelection';
-
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 const transformKeys = (obj) => {
     if (Array.isArray(obj)) {
         return obj.map(transformKeys);
@@ -83,6 +83,7 @@ const AddProducer = ({
     const [validateTags, setValidateTags] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
     const producerData = getIsLoggedProducer_respond?.data;
     if (producerData && Array.isArray(producerData.subCategories)) {
         producerData.subCategories = convertSubCategoryData(producerData.subCategories);
@@ -157,6 +158,7 @@ const AddProducer = ({
         [SuccessfullyCreatePopupId, SuccessfullyDeletePopupId, SuccessfullyUpdatePopupId].forEach(ClosePopUp);
         [CreateProducer, DeleteProducer, UpdateProducer].forEach((action) => action(-1));
         router.replace({ pathname: `/creative/${auth.username}` });
+        setErrorMsg({})
         resetForm();
     };
 
@@ -193,20 +195,28 @@ const AddProducer = ({
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
+        setErrorPopup(false);
     },[formData])
     const CheckNext=()=>{
         setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000);
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-            else {
-                if(formData.subcategory?.length===0) delete formData.subcategory;
-                formData?.subcategory?.map(item=>
-                    (item.tagsId?.length===0)? delete item.tagsId: item.tagsId
-                )
-                CreateProducer(formData);
-        
-            }
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }    
+        else {
+            if(formData.subcategory?.length===0) delete formData.subcategory;
+            formData?.subcategory?.map(item=>
+                (item.tagsId?.length===0)? delete item.tagsId: item.tagsId
+            )
+            CreateProducer(formData);
+            clearTimeout(timer);
+        }
     }
     const canDelete = true;
     var convertError = JSON.parse(deleteProducer_respond?.error ?? null)

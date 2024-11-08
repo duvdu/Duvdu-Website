@@ -15,7 +15,7 @@ import BookTeam from "../../elements/teams";
 import AddAttachment from "../../elements/attachment";
 import CustomSlider from "../../elements/customSlider";
 import ErrorMessage from '../../elements/ErrorMessage';
-
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject, resetForm, data = {}, isOpen, toggleDrawer, submit, user }) => {
     const { t } = useTranslation();
 
@@ -23,6 +23,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const [openMap, setOpenMap] = useState(false);
     const [preview, setPreview] = useState(false);
     const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
 
     const [post_success, setPost_success] = useState(false);
@@ -72,25 +73,35 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const validateRequiredFields = () => {
         const errors = {};
 
-        if (!formData.startDate) errors.startDate = 'StartDate is required';
-        // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
         if (!formData.details) errors.details = 'Details is required';
-        if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData['location[lat]'] || !formData['location[lng]']) errors.location = 'Location is required';
+        // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
+        if (!formData.startDate) errors.startDate = 'StartDate is required';
         return errors;
     };
     const CheckNext=()=>{
         setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000); // Hide after 3 seconds
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-        else return onsubmit()
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }else{
+            onsubmit()
+            clearTimeout(timer)
+        }
     }
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
+        setErrorPopup(false);
     },[formData])
 
     // const enableBtn = Object.keys(validateRequiredFields()).length == 0
@@ -106,12 +117,14 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
             resetForm()
             toggleDrawer()
         }
-        else
+        else{
             resetForm()
+        }
     }
     function OnSucess() {
         BookProject(null)
         setPost_success(false)
+        setErrorMsg({})
         resetForm()
         toggleDrawer()
         ontoggleDrawer()
@@ -247,7 +260,10 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                                 <div className="flex justify-center">
-                                    <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                                    <div className='relative'>
+                                        <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                                        <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                                    </div>
                                 </div>
                             </section>
                         </div>
@@ -325,6 +341,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                         <span className="text-2xl font-bold">${calculateTotalPrice()}</span>
                                     </div>
                                     <div className="flex justify-center">
+                                        <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
                                         <ArrowBtn loading={respond?.loading} onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
                                     </div>
                                 </section>

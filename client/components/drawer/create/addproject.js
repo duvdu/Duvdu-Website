@@ -19,6 +19,7 @@ import { CreateProject } from "../../../redux/action/apis/cycles/projects/create
 import CategorySelection from "./assets/CategorySelection";
 import AddAttachment from "../../elements/attachment";
 import GoogleMap from "../../elements/googleMap";
+import PopupErrorMessage from '../../elements/PopupErrorMessage';
 
 
 const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState, categories, resetForm }) => {
@@ -27,6 +28,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const formData = addprojectState.formData;
     const [errors, setErrors] = useState({});
     const [validFormCheck, setValidFormCheck] = useState(false);
+    const [errorPopup, setErrorPopup] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
@@ -149,14 +151,26 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     };
     const CheckNext=()=>{
         setValidFormCheck(true)
+        setErrorPopup(true)
+        const timer = setTimeout(() => {
+            setErrorPopup(false);
+        }, 3000); // Hide after 3 seconds
+        
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
-        if (!isEnable) setErrorMsg(validateRequiredFields())
-        else return setCover()
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return () => clearTimeout(timer);
+        }
+        else{
+            setCover()
+            clearTimeout(timer);
+        }
     }
     useEffect(()=>{
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
+        setErrorPopup(false);
     },[formData])
     const setCover = () => {
         setNextstep(2)
@@ -197,6 +211,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             setNextstep(1)
             return
         }
+        setErrorMsg({})
         resetForm()
         router.replace({
             pathname: `/creative/${auth.username}`,
@@ -387,10 +402,12 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
-                            
-                            <Button onClick={CheckNext} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
-                                <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
-                            </Button>
+                            <div className='relative'>
+                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                                <Button onClick={CheckNext} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
+                                    <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
+                                </Button>
+                            </div>
 
                         </form>
                     )}
