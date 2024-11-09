@@ -73,11 +73,11 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const validateRequiredFields = () => {
         const errors = {};
 
-        if (!formData.details) errors.details = 'Details is required';
+        // if (!formData.details) errors.details = 'Details is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData['location[lat]'] || !formData['location[lng]']) errors.location = 'Location is required';
         // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
-        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
         if (!formData.startDate) errors.startDate = 'StartDate is required';
         return errors;
