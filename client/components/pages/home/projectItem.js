@@ -144,6 +144,7 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
                                 <Link href={`/${type}/${cardData?._id}`}>
                                     <a>
                                         <video
+                                            poster={cardData?.cover}
                                             className='cardvideo h-full'
                                             ref={videoRef}
                                             id={cardData?._id}
