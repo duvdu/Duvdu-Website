@@ -8,7 +8,7 @@ import Selector from "../../elements/CustomSelector";
 import EditCopyrights from '../../drawer/edit/editcopyrights';
 import { OpenPopUp } from "../../../util/util";
 
-const CopyRightCard = ({ cardData, className = "", onClick, user  , islogin , QueryString}) => {
+const CopyRightCard = ({ cardData, className = "", onClick, user  , isLogin , QueryString}) => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const { t } = useTranslation();
  const price = cardData?.price?.toString()
@@ -43,7 +43,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , islogin , Qu
             </div>
           </div>
         </Link>
-          {islogin===true &&  user?.profile?.username === cardData?.user?.username &&
+          {isLogin===true &&  user?.profile?.username === cardData?.user?.username &&
                 <Selector
                         options={[
                             {
@@ -101,7 +101,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , islogin , Qu
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  islogin: state.auth.login,
+  isLogin: state.auth.login,
 });
 
 // mapDispatchToProps can be removed if not used

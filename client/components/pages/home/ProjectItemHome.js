@@ -14,7 +14,7 @@ import { SwapProjectToFav } from '../../../redux/action/apis/bookmarks/fav/favAc
 import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 import { useTranslation } from 'react-i18next';
 
-const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', isLogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
     const { t, i18n } = useTranslation();
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
@@ -278,7 +278,7 @@ const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', i
 
 const mapStateToProps = (state) => ({
     api: state.api,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     getBoards_respond: state.api.GetBoards,
     addProjectToBoard_respond: state.api.AddProjectToBoard,
     swapProjectToFav_respond: state.api.SwapProjectToFav,

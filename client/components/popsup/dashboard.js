@@ -10,14 +10,14 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 
-function dashboard({ islogin}) {
+function dashboard({ isLogin}) {
     const { t } = useTranslation();
     const router = useRouter();
     useEffect(() => {
-        if (islogin === false){
+        if (isLogin === false){
             OpenPopUp("dashboard-registration-required")
         }
-    }, [islogin])
+    }, [isLogin])
     const onCancel = () => {
         router.push('/');
     }
@@ -41,7 +41,7 @@ function dashboard({ islogin}) {
 }
 
 const mapStateToProps = (state) => ({
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
 
 });
 

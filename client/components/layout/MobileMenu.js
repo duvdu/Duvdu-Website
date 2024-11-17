@@ -16,7 +16,7 @@ import { GetNotifications } from "../../redux/action/apis/realTime/notification/
 import * as Types from '../../redux/constants/actionTypes'
 
 
-const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayout,
+const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayout,
     MarkNotificationsAsRead,
     GetNotifications,
     GetAllChats_respond,
@@ -67,7 +67,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
 
                 <div className="flex items-center justify-center gap-2">
 
-                    {islogin === true &&
+                    {isLogin === true &&
                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
                             <Icon className="items-center justify-center" name={'bell'} />
                         </div>}
@@ -291,7 +291,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
                     {page == 2 &&
                         <>
                             {
-                                islogin ===  true&&
+                                isLogin ===  true&&
                                 <>
                                     <Tabs onClose={() => toggleClick(1)} />
                                     <Tabs2 onClose={() => toggleClick(1)} />
@@ -299,7 +299,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
                             }
                             <Menu />
                             {
-                                islogin ===  false&&
+                                isLogin ===  false&&
                                 <Auth onClose={() => toggleClick(1)}/>
                             }
                             <DownLoadApp />
@@ -324,7 +324,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
 
 const mapStateToProps = (state) => ({
     categories: state.api.getCategory,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     user: state.user.profile,
     GetAllChats_respond: state.api.GetAllChats,
     getheaderpopup: state.setting.headerpopup,

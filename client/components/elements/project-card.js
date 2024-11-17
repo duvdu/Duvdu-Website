@@ -12,7 +12,7 @@ import { SwapProjectToFav } from '../../redux/action/apis/bookmarks/fav/favActio
 import { GetProject } from '../../redux/action/apis/cycles/projects/getOne';
 import DuvduLoading from './duvduLoading';
 
-const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", type = 'project', isLogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
   const [isMuted, setIsMuted] = useState(false);
   const [Duration, setDuration] = useState(0);
@@ -179,7 +179,7 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
               </Link>
             }
           </>
-          {islogin ===true &&
+          {isLogin ===true &&
             <div onClick={loveToggleAction} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
               <DuvduLoading loadingIn={"SwapProjectToFav"} />
@@ -231,7 +231,7 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
 
 const mapStateToProps = (state) => ({
   api: state.api,
-  islogin: state.auth.login,
+  isLogin: state.auth.login,
   getBoards_respond: state.api.GetBoards,
   addProjectToBoard_respond: state.api.AddProjectToBoard,
   swapProjectToFav_respond: state.api.SwapProjectToFav,

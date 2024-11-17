@@ -55,7 +55,7 @@ function OtherProfile({
     swapFollow,
     swapFollowRespond,
     api,
-    islogin,
+    isLogin,
     userReview, 
     userReview_respond
 }) {
@@ -125,7 +125,7 @@ function OtherProfile({
                                 occupation={userInfo?.category?.title}
                                 rates={userInfo?.rate.totalRates.toFixed(1)}
                             />
-                            {islogin ===true && (
+                            {isLogin ===true && (
                                 <div className='flex gap-3 items-center mt-7'>
                                     <AppButton
                                         
@@ -208,7 +208,7 @@ function OtherProfile({
 }
 
 const mapStateToProps = (state) => ({
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     api: state.api,
     user: state.api.getOtherprofile,
     projects: state.api.GetUserProject,

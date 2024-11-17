@@ -15,7 +15,7 @@ import DuvduLoading from '../../components/elements/duvduLoading';
 import RelatedCategories from "../../components/elements/relatedCategories";
 
 
-const Permit = ({ GetCopyrights, respond, api, islogin }) => {
+const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
     const { t } = useTranslation();
     const Router = useRouter();
     const showLimit = 12;
@@ -97,7 +97,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
 
     const handlesetdata = (item) => {
-        if (islogin) {
+        if (isLogin) {
             setdata(item)
             setIsOpen(!isOpen);
         }
@@ -142,7 +142,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                     </div>
                 </section>
                 {
-                    islogin === true &&
+                    isLogin === true &&
                     <CopyRigtherBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                 }
             </Layout>
@@ -152,7 +152,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
 
 const mapStateToProps = (state) => ({
     api: state.api,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     respond: state.api.GetCopyrights,
 });
 

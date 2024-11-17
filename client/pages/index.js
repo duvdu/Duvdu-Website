@@ -32,7 +32,7 @@ const Home = ({
 
     GetProjects,
     projects,
-    islogin,
+    isLogin,
     categories
 }) => {
     const { t, i18n } = useTranslation();
@@ -42,9 +42,9 @@ const Home = ({
     });
 
     useEffect(() => {
-        if(islogin===false)
+        if(isLogin===false)
         Promise.all([HomeTreny(), HomeDiscover(), popularSub()]);
-    }, [islogin]);
+    }, [isLogin]);
     const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
     const wordsRef = useRef(null);
     const list =  homeTreny_respond?.data || [];
@@ -221,7 +221,7 @@ const Home = ({
     return (
         <>
             <Layout isbodyWhite={true}>
-            {islogin===false && 
+            {isLogin===false && 
             <>
                 <section className="w-full">
                     <div className="mt-8 lg:my-20 mx-auto w-min">
@@ -621,7 +621,7 @@ const mapStateToProps = (state) => ({
     homeDiscover_respond: state.api.HomeDiscover,
     popularSub_respond: state.api.popularSub,
     projects: state.api.GetProjects,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
 
 });
 

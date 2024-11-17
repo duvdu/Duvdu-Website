@@ -16,7 +16,7 @@ import RatingProject from "../../popsup/ratingProject";
 import { OpenPopUp } from "../../../util/util";
 import ReportProject from "../../popsup/report-project";
 
-const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
+const Details = ({ data , onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
     const { t } = useTranslation();
     const router = useRouter();
@@ -29,7 +29,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
         setPlayingAudioRef(newAudioRef);
     };
     const handleDropdownSelect = (v) => {
-        if (islogin===false) {
+        if (isLogin===false) {
             OpenPopUp("registration-required")
             return
         }
@@ -41,7 +41,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
     return (
         <>
         <RatingProject data={data} />
-        {islogin ===true &&
+        {isLogin ===true &&
             <ReportProject data={data} />
         }
         <div className="!sticky top-header rounded-[30px] mx-5 md:mx-0">
@@ -113,7 +113,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
                 <h1 className="text-xl capitalize opacity-80 font-bold">
                     {data?.name || data?.title}
                 </h1>
-                {islogin===true && 
+                {isLogin===true && 
                 <Selector
                         options={user?.username===data?.user?.username?[
                             {
@@ -258,7 +258,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , islogin , user }) => {
     )
 }
 const mapStateToProps = (state) => ({
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     user: state.user.profile,
 });
 

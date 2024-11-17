@@ -16,7 +16,7 @@ import DuvduLoading from '../../components/elements/duvduLoading';
 import { GetPlatforms } from '../../redux/action/apis/cycles/producer/platform';
 import RelatedCategories from "../../components/elements/relatedCategories";
 
-const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin }) => {
+const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin }) => {
     const { t } = useTranslation();
     const producers = respond?.data
     const pagganation = respond?.pagination
@@ -102,7 +102,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
 
 
     const handlesetdata = (item) => {
-        if (islogin) {
+        if (isLogin) {
             setdata(item)
             setIsOpen(!isOpen);
         }
@@ -156,7 +156,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
 const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.GetProducer,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     platform: state.api.GetPlatforms,
 });
 

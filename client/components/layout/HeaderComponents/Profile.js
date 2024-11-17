@@ -232,7 +232,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
 
 const mapStateToProps = (state) => ({
     isDark: state.setting.ISDARK,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     getheaderpopup: state.setting.headerpopup,
     api: state.api,
     user: state.user.profile,

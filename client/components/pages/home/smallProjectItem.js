@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { SwapProjectToFav } from '../../../redux/action/apis/bookmarks/fav/favAction';
 import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 
-const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false, isbig }) => {
+const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "", type = 'project', isLogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false, isbig }) => {
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
     const [Duration, setDuration] = useState(0);
@@ -244,7 +244,7 @@ const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "",
                         </div>
                     }
 
-                    {islogin === true &&
+                    {isLogin === true &&
                         <div onClick={loveToggleAction} className="blur-container small love z-[1]">
                             <Icon className={`cursor-pointer h-3 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
                         </div>
@@ -257,7 +257,7 @@ const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "",
 
 const mapStateToProps = (state) => ({
     api: state.api,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     getBoards_respond: state.api.GetBoards,
     addProjectToBoard_respond: state.api.AddProjectToBoard,
     swapProjectToFav_respond: state.api.SwapProjectToFav,

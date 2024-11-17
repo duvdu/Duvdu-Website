@@ -6,10 +6,10 @@ import { OpenPopUp } from "../../../util/util";
 import ReportProject from "../../popsup/report-project";
 import { connect } from "react-redux";
 
-const Header = ({ data, islogin,toggleDrawerAddFav }) => {
+const Header = ({ data, isLogin,toggleDrawerAddFav }) => {
 
     const handleDropdownSelect = (v) => {
-        if (islogin ===false) {
+        if (isLogin ===false) {
             OpenPopUp("registration-required")
             return
         }
@@ -20,7 +20,7 @@ const Header = ({ data, islogin,toggleDrawerAddFav }) => {
     return (
         <>
             <RatingProject data={data} />
-            {islogin === true &&
+            {isLogin === true &&
                 <ReportProject data={data} />
             }
             <h1 className="text-xl capitalize opacity-80 font-bold">
@@ -70,7 +70,7 @@ const Header = ({ data, islogin,toggleDrawerAddFav }) => {
 };
 
 const mapStateToProps = (state) => ({
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
 });
 
 const mapDispatchToProps = {

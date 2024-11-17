@@ -15,7 +15,7 @@ import { GetProject } from '../../../redux/action/apis/cycles/projects/getOne';
 import { useTranslation } from 'react-i18next';
 
 
-const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type = 'project', islogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
+const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type = 'project', isLogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
     const { t, i18n } = useTranslation();
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
@@ -206,7 +206,7 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
                             </Link>
                         }
                     </>
-                    {islogin === true &&
+                    {isLogin === true &&
                         <div onClick={loveToggleAction} className="blur-container love z-[1]">
                             <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
                         </div>
@@ -275,7 +275,7 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
 
 const mapStateToProps = (state) => ({
     api: state.api,
-    islogin: state.auth.login,
+    isLogin: state.auth.login,
     getBoards_respond: state.api.GetBoards,
     addProjectToBoard_respond: state.api.AddProjectToBoard,
     swapProjectToFav_respond: state.api.SwapProjectToFav,
