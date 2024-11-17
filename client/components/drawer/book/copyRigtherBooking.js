@@ -136,7 +136,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
     }
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours"/>
             <Drawer name={preview ? 'Review Booking' : data?.user?.name?.split(' ')[0].length>6?data?.user?.name?.split(' ')[0].slice(0,6):data?.user?.name?.split(' ')[0]} img={data?.user?.profileImage} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll" padding={false}>
                 <div className={preview ? ' hidden p-8 pt-8' : 'p-8 pt-8'}>
                     <section>

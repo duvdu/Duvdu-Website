@@ -125,7 +125,7 @@ function OtherProfile({
                                 occupation={userInfo?.category?.title}
                                 rates={userInfo?.rate.totalRates.toFixed(1)}
                             />
-                            {islogin && (
+                            {islogin ===true && (
                                 <div className='flex gap-3 items-center mt-7'>
                                     <AppButton
                                         

@@ -3,7 +3,7 @@ import Icon from '../Icons';
 import Popup from '../elements/popup';
 import { useTranslation } from 'react-i18next';
 
-function SuccessfullyPosting({ id = "Report-sent-successfully",isShow, onCancel , message = 'Posted' }) {
+function SuccessfullyPosting({ id = "Report-sent-successfully",isShow, onCancel , message = 'Posted' , secondMessage }) {
     const { t } = useTranslation();
     const [showPopup, setShowPopup] = useState(false);
     
@@ -28,6 +28,9 @@ function SuccessfullyPosting({ id = "Report-sent-successfully",isShow, onCancel 
                             <Icon name={"done"} className="mb-9" />
                         </div>
                         <h1 className="text-3xl font-semibold my-5">{t(`Successfully ${message}`)}</h1>
+                        {secondMessage && 
+                            <h3 className="text-xl font-medium my-5">{t(`${secondMessage}`)}</h3>
+                        }
                     </div>
                     <div className="flex justify-center items-center">
                         <button onClick={Cancel} className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">{t("Close")}</button>

@@ -319,9 +319,9 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                     name={"tools"}
                                     listdiv={formData.tools && formData.tools.map((e, i) => (
                                         <span className='mx-2' key={i}>
-                                            <span><strong>{t("tool :")}</strong> {e.name} </span>
+                                            <span><strong>{t("tool :")}</strong> {e?.name} </span>
                                             <br />
-                                            <span> <strong>{t("price :")}</strong> {e.unitPrice} $ </span>
+                                            <span> <strong>{t("price :")}</strong> {e?.unitPrice} $ </span>
                                         </span>
                                     ))}
                                     remove={(value) => removeFromArray('tools', value)}

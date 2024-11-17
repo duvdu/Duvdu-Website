@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-function CustomSlider({ initValue = 0, values, onValueChange }) {
+function CustomSlider({ minimum = 0,initValue=0, values, onValueChange }) {
     const sliderContainerRef = useRef(null);
     const [value, setValue] = useState(initValue);
 
@@ -19,13 +19,14 @@ function CustomSlider({ initValue = 0, values, onValueChange }) {
         const updateSlider = (left) => {
             const sliderRect = slider.getBoundingClientRect();
             left = Math.max(0, Math.min(left, sliderRect.width));
-            const part = sliderRect.width / (values - initValue);
+            const part = sliderRect.width / (values - minimum);
             const stopin = Math.round(left / part) * part;
             thumb.style.left = stopin + 'px';
             sliderAfter.style.left = stopin + 'px';
             sliderAfter.style.width = sliderRect.width - stopin + 'px';
             sliderBefore.style.width = stopin + 'px';
-            const currentValue = Math.round(left / part) + initValue;
+            const currentValue = Math.round(left / part) + minimum;
+            console.log(currentValue)
             setValue(currentValue);
         };
 
@@ -45,7 +46,7 @@ function CustomSlider({ initValue = 0, values, onValueChange }) {
             isDragging = false;
         };
 
-        if (initValue !== undefined) {
+        if (minimum !== undefined) {
             const sliderRect = slider.getBoundingClientRect();
             const value = (sliderRect.width / values) * initValue;
             updateSlider(value);
@@ -68,7 +69,7 @@ function CustomSlider({ initValue = 0, values, onValueChange }) {
             document.removeEventListener('touchmove', handleMove);
             document.removeEventListener('touchend', handleEnd);
         };
-    }, [initValue, values]);
+    }, [minimum,initValue, values]);
 
     return (
         <>
@@ -80,19 +81,20 @@ function CustomSlider({ initValue = 0, values, onValueChange }) {
                         <div className="slider-after"></div>
                         <div className="slider-thumb"></div>
                     </div>
-                    <Ruler startIndex={initValue} endIndex={values} />
+                    <Ruler startIndex={minimum} endIndex={values} />
                 </div>
             </div>
         </>
     );
 }
 
-const Ruler = ({ startIndex = 0, endIndex = 10 }) => {
+const Ruler = ({ startIndex, endIndex }) => {
+    console.log({startIndex, endIndex})
     endIndex = endIndex * 2 + 1;
     startIndex = startIndex * 2 + 1;
     const step = (endIndex - startIndex) / 10;
     const ruler = Array.from({ length: 11 }, (_, index) => index * step + startIndex);
-
+    console.log({ruler})
     return (
         <div className="flex justify-between mt-3">
             {ruler.map((num) => (

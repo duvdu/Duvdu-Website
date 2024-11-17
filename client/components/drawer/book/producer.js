@@ -124,7 +124,7 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
     
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />
             <Drawer name={data.user?.name} img={data.user?.profileImage} isOpen={isOpen} toggleDrawer={reset} className="overflow-scroll">
                 <div className='flex flex-col gap-7 container mx-auto'>
 

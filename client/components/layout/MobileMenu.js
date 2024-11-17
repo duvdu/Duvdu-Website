@@ -67,7 +67,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
 
                 <div className="flex items-center justify-center gap-2">
 
-                    {islogin &&
+                    {islogin === true &&
                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
                             <Icon className="items-center justify-center" name={'bell'} />
                         </div>}
@@ -291,7 +291,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
                     {page == 2 &&
                         <>
                             {
-                                islogin &&
+                                islogin ===  true&&
                                 <>
                                     <Tabs onClose={() => toggleClick(1)} />
                                     <Tabs2 onClose={() => toggleClick(1)} />
@@ -299,7 +299,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, islogin, user,fromlayo
                             }
                             <Menu />
                             {
-                                !islogin &&
+                                islogin ===  false&&
                                 <Auth onClose={() => toggleClick(1)}/>
                             }
                             <DownLoadApp />

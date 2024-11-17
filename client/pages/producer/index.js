@@ -145,7 +145,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, islogin })
                         <Formsubmited />
                     </div>
                 </section>
-                {islogin &&
+                {isLogin === true &&
                     <ProducerBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />}
 
             </Layout>

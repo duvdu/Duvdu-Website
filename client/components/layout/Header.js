@@ -279,7 +279,7 @@ const Header = ({
                                     </div>
                                 }
                                 <div className="flex lg:hidden items-center justify-center gap-2">
-                                    {islogin &&
+                                    {islogin === true &&
                                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
                                             <Icon className="items-center justify-center" name={'bell'} />
                                         </div>}

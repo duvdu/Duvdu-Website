@@ -142,7 +142,7 @@ const Permit = ({ GetCopyrights, respond, api, islogin }) => {
                     </div>
                 </section>
                 {
-                    islogin &&
+                    islogin === true &&
                     <CopyRigtherBooking data={data} isOpen={isOpen} toggleDrawer={toggleDrawer} />
                 }
             </Layout>

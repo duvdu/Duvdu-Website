@@ -578,7 +578,11 @@ function ReceiveProjectFiles({
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
+                                        {takeAction_respond?.loading?
+                                        <Loading/>
+                                        :
                                         <span className='text-white font-bold capitalize text-lg'>{t("Update Appointment")}</span>
+                                        }
                                     </Button>
                                 </section>
                             }

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Icon from '../Icons';
 import { useTranslation } from 'react-i18next';
 
-const BookTeam = ({ team, onChange , mainremovable = true }) => {
+const BookTeam = ({ team,current, onChange ,pricerPerUnit, mainremovable = true }) => {
     const { t } = useTranslation();
     const [localteam, setLocalTeam] = useState(team);
     const handleRemoveItem = (id) => {
@@ -10,7 +10,7 @@ const BookTeam = ({ team, onChange , mainremovable = true }) => {
     };
     useEffect(() => setLocalTeam(team) , [])
     useEffect(() => onChange?.(localteam?.map((i)=> i._id)) , [localteam])
-    
+    console.log(localteam)
     return (
         localteam &&
         localteam.map((item, i) => (
@@ -18,11 +18,13 @@ const BookTeam = ({ team, onChange , mainremovable = true }) => {
                 <div key={i} className="team-padge">
                     {item.profileImage&& <img className='object-cover object-top rounded-full aspect-square' src={item.profileImage} alt="user" />}
                     <span className="mx-3">{item.name}</span>
+                    {pricerPerUnit && <span className="mx-3">{pricerPerUnit*current} $</span>}
                 </div>
+                
                 {
                     item.unitPrice &&
                     <div className="team-padge">
-                        <span className="mx-3">{item.unitPrice} $</span>
+                        <span className="mx-3">{item.unitPrice*current} $</span>
                     </div>
                 }
                 {

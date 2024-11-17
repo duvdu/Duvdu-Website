@@ -33,40 +33,35 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     function calculateTotalPrice() {
         // Extract project scale information from formdata
         const numberOfUnits = formData['projectScale[numberOfUnits]'];
-
         // Extract price per unit from data
         const pricePerUnit = data.projectScale.pricerPerUnit;
-
-        // Calculate the project scale cost
-        const projectScaleCost = numberOfUnits * pricePerUnit;
 
         // Calculate the tools cost
         let toolsCost = 0;
         if (formData.tools && formData.tools.length > 0) {
-            const toolIds = formData.tools;
+            const toolIds = formData?.tools?.map(item=>item._id);
             toolsCost = data.tools.reduce((total, tool) => {
-                if (toolIds.includes(tool._id)) {
+                if (toolIds?.includes(tool._id)) {
                     return total + tool.unitPrice;
                 }
                 return total;
             }, 0);
         }
-
         // Calculate the functions cost
         let functionsCost = 0;
         if (formData.functions && formData.functions.length > 0) {
-            const functionIds = formData.functions;
+            const functionIds = formData.functions.map(item=>item._id);
             functionsCost = data.functions.reduce((total, func) => {
-                if (functionIds.includes(func._id)) {
+                if (functionIds?.includes(func._id)) {
                     return total + func.unitPrice;
                 }
                 return total;
             }, 0);
         }
+        console.log(pricePerUnit + toolsCost + functionsCost)
 
         // Calculate the total price
-        const totalPrice = projectScaleCost + toolsCost + functionsCost;
-
+        const totalPrice = (pricePerUnit + toolsCost + functionsCost) * numberOfUnits;
         return totalPrice;
     }
 
@@ -141,6 +136,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         }
         UpdateFormData('tools', data?.tools || [])
         UpdateFormData('functions', data?.functions || [])
+        UpdateFormData('projectScale[numberOfUnits]', data?.projectScale?.current)
     }, [isOpen])
 
     var convertError = JSON.parse(respond?.error ?? null)
@@ -188,12 +184,11 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         UpdateFormData('location[lat]', location.lat)
         UpdateFormData('location[lng]', location.lng)
     };
-
+    console.log({formData ,data})
     const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
-
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" />
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />
 
             <Drawer name={preview ? 'Review Booking' : data.user?.name} img={data.user?.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} padding={false}>
                 {!isOpen ?
@@ -201,11 +196,11 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                     <>
                         <div className={preview ? ' hidden' : 'p-8 pt-0'}>
                             {
-                                (data?.tools || data?.equipments)?.length > 0 &&
+                                (data?.tools || data?.functions)?.length > 0 &&
                                 <section className="my-11">
-                                    <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} />
-                                    <BookTeam team={(formData?.tools || formData?.equipments)} onChange={(value) => UpdateFormData('tools', value)} />
-                                    <BookTeam team={(formData?.functions)} onChange={(value) => UpdateFormData('functions', value)} />
+                                    <BookTeam current={formData["projectScale[numberOfUnits]"]} pricerPerUnit={data.projectScale.pricerPerUnit} team={creatives.map(i => ({ ...i, name: i.name }))} />
+                                    <BookTeam current={formData["projectScale[numberOfUnits]"]} team={(formData?.tools)} onChange={(value) => UpdateFormData('tools', value)} />
+                                    <BookTeam current={formData["projectScale[numberOfUnits]"]} team={(formData?.functions)} onChange={(value) => UpdateFormData('functions', value)} />
                                 </section>
                             }
                             <section className="mt-7">
@@ -246,7 +241,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     <h3 className="capitalize opacity-60 mb-4">set number of {data.projectScale.unit}</h3>
                                     <span className="capitalize opacity-60 mb-4">{formData['projectScale[numberOfUnits]']} {data.projectScale.unit}</span>
                                 </div>
-                                <CustomSlider initValue={data.projectScale.minimum} values={data.projectScale.maximum} onValueChange={(v) => UpdateFormData('projectScale[numberOfUnits]', v)} />
+                                <CustomSlider minimum={data.projectScale.minimum} initValue={data.projectScale.current} values={data.projectScale.maximum} onValueChange={(v) => UpdateFormData('projectScale[numberOfUnits]', v)} />
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("appointment Date")}</h3>
@@ -272,20 +267,22 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <div className='flex flex-col gap-9 h-full'>
                                 <div className="flex flex-col gap-9 overflow-y-scroll overflow-x-hidden p-8 h-full">
                                     <section>
-                                        <BookTeam team={creatives.map(i => ({ ...i, name: i.name }))} mainremovable={false} />
-                                        <BookTeam team={(formData?.tools || formData?.equipments || [])} mainremovable={false} />
-                                        <BookTeam team={(formData?.functions || [])} mainremovable={false} />
+                                        <BookTeam current={formData["projectScale[numberOfUnits]"]} pricerPerUnit={data.projectScale.pricerPerUnit} team={creatives.map(i => ({ ...i, name: i.name }))} mainremovable={false} />
+                                        <BookTeam current={formData["projectScale[numberOfUnits]"]} team={formData?.tools} mainremovable={false} />
+                                        <BookTeam current={formData["projectScale[numberOfUnits]"]} team={formData?.functions} mainremovable={false} />
                                     </section>
                                     <section className="w-full hidden">
                                         <h2 className='opacity-60 mb-3'>{t("project type")}</h2>
                                         <span className='flex flex-col h-full border-2 text-[#000000D9] border-[#000000D9] rounded-full px-3 py-[6px] capitalize mb-8 opacity-80 w-min whitespace-nowrap'>{t("shooting permits")}</span>
                                     </section>
+                                    {formData.details && 
                                     <section className="w-full">
                                         <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
                                         <span className='capitalize mb-8 opacity-80 w-min font-bold'>
                                             {formData.details}
                                         </span>
                                     </section>
+                                    }
 
                                     <section className="w-full">
                                         <h2 className='opacity-60 capitalize mb-3'>{t("Custom Requirements")}</h2>

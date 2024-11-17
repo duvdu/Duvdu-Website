@@ -12,7 +12,7 @@ function Contracts({isLogin}) {
     const [indexTab, setIndexTab] = React.useState(0);
     const route = useRouter()
     React.useEffect(()=>{
-        if(!isLogin)
+        if(isLogin === false)
             route.push('/')
     },[isLogin])
 
