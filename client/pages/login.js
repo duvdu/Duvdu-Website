@@ -30,12 +30,11 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
   const [passwordError, setPasswordError] = useState({ isError: false, message: '' });
 
   const [showPassword, setShowPassword] = useState(false);
-  const NotBackPages = ['/register' , '/forgetPassword' , '/login'] 
   var convertError = JSON.parse(login_respond?.error ?? null)
   useEffect(() => {
     if (login_respond?.message === 'success') {
       getMyprofile().then(() => {
-        if (NotBackPages.includs(document.referrer)) {
+        if ((document.referrer === '/register' || document.referrer === '/forgetPassword' || document.referrer === '/login' )) {
           router.push('/');
         } else {
           router.back();
