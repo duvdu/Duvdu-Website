@@ -46,6 +46,20 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
 
     useEffect(() => {
         if (videoRef.current) {
+            videoRef.current.play();
+            videoRef.current.muted = true; 
+    
+            const timeout = setTimeout(() => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0; 
+            }, 500); 
+    
+            return () => clearTimeout(timeout);
+        }
+    }, [videoRef.current]);
+
+    useEffect(() => {
+        if (videoRef.current) {
           const timerId = setInterval(() => {
             if (videoRef.current?.duration) {
               setDuration(videoRef.current.duration);
