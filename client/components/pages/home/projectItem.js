@@ -208,7 +208,7 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
                             </Link>
                         }
                     </>
-                    {isLogin && isLogin === true &&
+                    {isLogin === true &&
                         <div onClick={loveToggleAction} className="blur-container love z-[1]">
                             <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
                         </div>

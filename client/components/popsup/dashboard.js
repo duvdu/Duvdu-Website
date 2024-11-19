@@ -14,7 +14,7 @@ function dashboard({ isLogin}) {
     const { t } = useTranslation();
     const router = useRouter();
     useEffect(() => {
-        if (isLogin && isLogin === false){
+        if (isLogin === false){
             OpenPopUp("dashboard-registration-required")
         }
     }, [isLogin])

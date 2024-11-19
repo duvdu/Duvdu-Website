@@ -115,7 +115,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
     }, [page, pagganation?.totalPages]);
 
     useEffect(()=>{
-        if(isLogin && isLogin === false)
+        if(isLogin === false)
             route.push('/')
     },[isLogin])
     return (

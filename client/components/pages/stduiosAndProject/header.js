@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 const Header = ({ data, isLogin,toggleDrawerAddFav }) => {
 
     const handleDropdownSelect = (v) => {
-        if (isLogin && isLogin ===false) {
+        if (isLogin ===false) {
             OpenPopUp("registration-required")
             return
         }
@@ -20,7 +20,7 @@ const Header = ({ data, isLogin,toggleDrawerAddFav }) => {
     return (
         <>
             <RatingProject data={data} />
-            {isLogin && isLogin === true &&
+            {isLogin === true &&
                 <ReportProject data={data} />
             }
             <h1 className="text-xl capitalize opacity-80 font-bold">

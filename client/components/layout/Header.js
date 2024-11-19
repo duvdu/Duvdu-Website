@@ -164,7 +164,7 @@ const Header = ({
                                     </Link>
                                 </div>
                                 <div className="header-right">
-                                    {fromlayout.showTabs && isLogin && isLogin === true &&
+                                    {fromlayout.showTabs && isLogin === true &&
                                         <div className="header-tabs">
                                             <div className="">
                                                 <Link href="/dashboard">
@@ -205,7 +205,7 @@ const Header = ({
                                     <div className="hidden lg:flex min-w-max">
 
                                         {
-                                            isLogin && isLogin === true&&
+                                            isLogin === true&&
                                             <div className="header-action-2 flex items-center ">
                                                 <div className="header-action-icon-2 z-10" >
                                                     <div className="icon-holder cursor-pointer" onClick={() =>
@@ -238,7 +238,7 @@ const Header = ({
                                             </div>
                                         }
                                         {
-                                            isLogin && isLogin === false &&
+                                            isLogin === false &&
                                             <div className="header-action-2 flex gap-6 items-center">
                                                 <Link href="/login">
                                                     <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</div>
@@ -279,7 +279,7 @@ const Header = ({
                                     </div>
                                 }
                                 <div className="flex lg:hidden items-center justify-center gap-2">
-                                    {isLogin && isLogin === true &&
+                                    {isLogin === true &&
                                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
                                             <Icon className="items-center justify-center" name={'bell'} />
                                         </div>}

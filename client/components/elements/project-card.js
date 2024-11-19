@@ -179,7 +179,7 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
               </Link>
             }
           </>
-          {isLogin && isLogin ===true &&
+          {isLogin ===true &&
             <div onClick={loveToggleAction} className="blur-container love z-[1]">
               <Icon className={`cursor-pointer h-4 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
               <DuvduLoading loadingIn={"SwapProjectToFav"} />
