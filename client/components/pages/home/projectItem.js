@@ -144,7 +144,8 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
                                 <Link href={`/${type}/${cardData?._id}`}>
                                     <a>
                                         <video
-                                            autoplay muted playsinline
+                                            autoPlay muted playsInline
+                                            // autoplay muted playsinline
                                             className='cardvideo h-full'
                                             ref={videoRef}
                                             id={cardData?._id}
