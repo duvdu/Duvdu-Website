@@ -76,7 +76,7 @@ const TheTeam = ({
         DeleteCategoryTeam({teamId , categoryId})
     }
     useEffect(()=>{
-        if(isLogin ===false)
+        if(isLogin && isLogin ===false)
             router.push('/')
     },[isLogin])
 

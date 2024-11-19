@@ -244,7 +244,7 @@ const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "",
                         </div>
                     }
 
-                    {isLogin === true &&
+                    {isLogin && isLogin === true &&
                         <div onClick={loveToggleAction} className="blur-container small love z-[1]">
                             <Icon className={`cursor-pointer h-3 ${loveIconName === "far" ? 'text-white' : 'text-primary'}`} name={'heart'} type={loveIconName} />
                         </div>

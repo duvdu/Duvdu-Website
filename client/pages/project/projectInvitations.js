@@ -28,7 +28,7 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
         GetProjectInvitations();
     }, [acceptInvitation_respond?.data]);
     useEffect(()=>{
-        if(isLogin ===false)
+        if(isLogin && isLogin ===false)
             Router.push('/')
     },[isLogin])
 

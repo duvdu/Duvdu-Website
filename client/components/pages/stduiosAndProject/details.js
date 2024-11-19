@@ -41,7 +41,7 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
     return (
         <>
         <RatingProject data={data} />
-        {isLogin ===true &&
+        {isLogin && isLogin ===true &&
             <ReportProject data={data} />
         }
         <div className="!sticky top-header rounded-[30px] mx-5 md:mx-0">
