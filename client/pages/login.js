@@ -172,7 +172,9 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             <p className="px-4 font-bold my-10 ">{t("OR")}</p>
             <div className="border-t border-black opacity-20 w-full my-4"></div>
           </div>
+        <GoogleOAuthProvider clientId={clientId}>
           <SocialLogin/>
+         </GoogleOAuthProvider>
         </form>
       </Auth>
     </>
