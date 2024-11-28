@@ -30,6 +30,8 @@ function Popup({ isfree = false }) {
 }
 
 const StartFree = () => {
+    const { t } = useTranslation();
+
     return (
         <div className='p-7 flex flex-col justify-center items-center'>
             <div className='max-w-[450px] flex flex-col justify-center items-center'>
@@ -50,7 +52,9 @@ const StartFree = () => {
 
     )
 }
-const Subscribe = () => {
+const Subscribe = () => {  
+      const { t } = useTranslation();
+
     return (
         <div className='p-7 flex flex-col justify-center items-center'>
             <div className='max-w-[450px] flex flex-col justify-center items-center'>

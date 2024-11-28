@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import Icon from '../../Icons';
 
 const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setIsAnimating}) => {
@@ -12,11 +12,26 @@ const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setI
     setIsPlaying(!isPlaying);
     setIsAnimating(!isPlaying)
   };
+  React.useEffect(() => {
+    if (audioRef.current) {
+        audioRef.current.play();
+        audioRef.current.muted = true;     
+        const timeout = setTimeout(() => {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+        }, 300); 
+        return () => clearTimeout(timeout);
+    }
+  }, [audioRef.current]);
+
   return (
     <div className='w-full h-full relative'>
     <video
       ref={audioRef}
       controls
+      // autoPlay
+      // playsInline
+      // muted
       className='w-full h-full bg-[#000] md:object-cover' 
       loop
     >

@@ -128,6 +128,18 @@ const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "",
     const handleTouchEnd = () => {
         setStartLongPress(false);
     };
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play();
+            videoRef.current.muted = true;     
+            const timeout = setTimeout(() => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }, 300); 
+            return () => clearTimeout(timeout);
+        }
+    }, [videoRef.current]);
+    
 
     // useEffect(() => {
     //   if (cardData._id) {
@@ -154,7 +166,7 @@ const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "",
                                 <>
                                     <video
                                         className='cardvideo h-full'
-                                        autoPlay muted playsInline
+                                        // autoPlay muted playsInline
                                         ref={videoRef}
                                         onTimeUpdate={timeUpdate}
                                         loop

@@ -62,7 +62,7 @@ function Person({ data }) {
             <div className='flex rounded-full justify-center items-center gap-2 border border-primary p-4 cursor-pointer'>
                 <span className='hidden sm:block text-primary text-sm font-semibold capitalize'>{t("message")}</span>
                 <div className='w-5 h-5'>
-                <Icon name={'chat'} />
+                <Icon name={'chat24'} />
                 </div>
             </div>
         </div>
