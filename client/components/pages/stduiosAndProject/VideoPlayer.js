@@ -29,9 +29,9 @@ const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setI
     <video
       ref={audioRef}
       controls
-      // autoPlay
-      // playsInline
-      // muted
+      autoPlay
+      playsInline
+      muted
       className='w-full h-full bg-[#000] md:object-cover' 
       loop
     >

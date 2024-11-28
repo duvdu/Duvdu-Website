@@ -166,7 +166,7 @@ const SmallProjectItem = ({ cardData: initialCardData,inclusive, className = "",
                                 <>
                                     <video
                                         className='cardvideo h-full'
-                                        // autoPlay muted playsInline
+                                        autoPlay muted playsInline
                                         ref={videoRef}
                                         onTimeUpdate={timeUpdate}
                                         loop

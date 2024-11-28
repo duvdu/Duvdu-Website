@@ -127,7 +127,18 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
 
     const isVideoCover = isVideo(cardData?.cover);
     const isAudioCover = isAudio(cardData?.audioCover);
-  
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play();
+            videoRef.current.muted = true;     
+            const timeout = setTimeout(() => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }, 300); 
+            return () => clearTimeout(timeout);
+        }
+    }, [videoRef.current]);
+
     return (
         <>
             <div className={`select-none project-card flex flex-col ${className}`} onClick={() => { }} >
