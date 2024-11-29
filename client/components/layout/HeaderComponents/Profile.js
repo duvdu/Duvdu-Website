@@ -6,11 +6,11 @@ import * as Types from '../../../redux/constants/actionTypes'
 import { SetheaderPopUp } from "../../../redux/action/setting";
 import Icon from "../../Icons";
 import Link from 'next/link';
+import FaceVerification from '../../elements/FaceVerification';
 
 function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , SetheaderPopUp }) {
 
     const { t } = useTranslation();
-
     const [showMiddleCard, setShowMiddleCard] = useState(true);
     const handleCloseMiddleCard = () => {
         setShowMiddleCard(false);
@@ -74,9 +74,9 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
         SetheaderPopUp(Types.NONEPOPUP)
     }
     if (user == null) return <></>
-    if (getheaderpopup != Types.SHOWPROFILE) return
+    if (getheaderpopup != Types.SHOWPROFILE) return     
     else
-        return (
+        return (<>
             <div className="cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active">
                 <div className="dialog dialog-2 flex flex-col">
                     <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between w-[320px] gap-3 h-full">
@@ -117,6 +117,18 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
                                 </div>
                             </div>
                         </div>
+                        <FaceVerification CloseProfile={CloseProfile} />
+                        {user?.avaliableContracts == 0 && 
+                        <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
+                            <button data-popup-toggle="popup" data-popup-target={'subscribe-notfree'}>
+                                <div className="flex items-center w-full ">
+                                    <p className="font-semibold text-center"> {t('Subscription')}</p>
+                                    
+                                </div>
+                            </button>
+                        </div>
+                        }
+
                         {
                             showMiddleCard &&
                             <div className="p-6 bg-white dark:bg-[#1A2024] rounded-[45px]">
@@ -227,6 +239,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
                     </div>
                 </div>
             </div>
+            </>
         )
 }
 
