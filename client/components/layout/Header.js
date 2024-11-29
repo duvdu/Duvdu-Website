@@ -12,6 +12,7 @@ import * as Types from "../../redux/constants/actionTypes";
 import { OpenPopUp, errorConvertedMessage, exclude_error, exclude_loading, noScroll } from "../../util/util";
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
+import { UnReadNotification } from "../../redux/action/apis/realTime/notification/unread";
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { AvailableUserChat } from "../../redux/action/apis/realTime/messages/availableUserChat";
 import { GetBoards } from "../../redux/action/apis/bookmarks/bookmark/get";
@@ -36,7 +37,10 @@ const Header = ({
     toggleDarkMode,
     MarkNotificationsAsRead,
     GetNotifications,
+    UnReadNotification,
+    UnReadNotification_respond,
     GetAllChats_respond,
+    GetNotifications_respond,
     GetAllChats,
     AvailableUserChat,
     LogOut,
@@ -49,7 +53,8 @@ const Header = ({
     const { i18n, t } = useTranslation();
 
     const [width, setWidth] = useState(0);
-
+    const [countUnRead, setCountUnRead] = useState(0);
+    
 
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
@@ -65,10 +70,20 @@ const Header = ({
     useEffect(() => {
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
-
+    useEffect(()=>{
+        if(isLogin)
+            UnReadNotification()
+    },[isLogin])
+    useEffect(()=>{
+        if(UnReadNotification_respond?.data?.count)
+            setCountUnRead(UnReadNotification_respond?.data?.count)
+    },[UnReadNotification_respond?.data?.count])
     useEffect(() => {
         if (getheaderpopup == Types.SHOWNOTOFICATION) {
-            MarkNotificationsAsRead()
+            MarkNotificationsAsRead().then(()=>{
+                if(isLogin)
+                    UnReadNotification()
+            })
             GetNotifications()
             if(!GetAllChats_respond?.data){
                 AvailableUserChat()
@@ -79,7 +94,7 @@ const Header = ({
             if (!GetBoards_respond)
                 GetBoards({})
         }
-    }, [getheaderpopup]);
+    }, [getheaderpopup , isLogin]);
 
 
     useEffect(() => {
@@ -137,9 +152,8 @@ const Header = ({
 
     }, []);
 
-
-    const totalUnreadMessages = api?.GetAllChats?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
-    const totalUnwatchedNotification = api?.GetNotifications?.unWatchiedCount
+    const totalUnreadMessages = GetAllChats_respond?.data?.reduce((total, item) => total + item.unreadMessageCount, 0) || 0;
+    const totalUnwatchedNotification = GetNotifications_respond?.unWatchiedCount
     // .data?.filter(message => !message.watched).length;
     const totalNews = totalUnreadMessages + totalUnwatchedNotification
 
@@ -212,8 +226,8 @@ const Header = ({
                                                         SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)
 
                                                     }>
-                                                        {totalNews > 0 &&
-                                                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{totalNews}</span>
+                                                        {countUnRead > 0 &&
+                                                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead}</span>
                                                         }
                                                         <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                     </div>
@@ -281,7 +295,12 @@ const Header = ({
                                 <div className="flex lg:hidden items-center justify-center gap-2">
                                     {isLogin === true &&
                                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
-                                            <Icon className="items-center justify-center" name={'bell'} />
+                                            <div className='relative'>  
+                                                    {countUnRead > 0 &&
+                                                <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead}</span>
+                                                }
+                                                <Icon className="items-center justify-center" name={'bell'} />
+                                            </div> 
                                         </div>}
 
                                     <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer " onClick={() => toggleClick(3)}>
@@ -317,6 +336,8 @@ const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
     isLogin: state.auth.login,
     GetAllChats_respond: state.api.GetAllChats,
+    GetNotifications_respond:state.api.GetNotifications,
+    UnReadNotification_respond:state.api.UnReadNotification,
     api: state.api,
     error: state.errors,
     user: state.auth.user,
@@ -329,6 +350,7 @@ const mapDispatchToProps = {
     toggleDarkMode,
     SetheaderPopUp,
     MarkNotificationsAsRead,
+    UnReadNotification,
     GetNotifications,
     GetAllChats,
     AvailableUserChat,

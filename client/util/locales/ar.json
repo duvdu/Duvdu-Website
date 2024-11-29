@@ -496,5 +496,13 @@
     "minutes": "دقيقة",
     "image": "صورة",
     "category_description": "استكشف مشاريع التصوير الفوتوغرافي الجديدة واكتشف المبدعين الموهوبين",
+    "Face Verification Required": "التحقق من الوجه مطلوب",
+    "To accept contracts, we need to verify your identity.": "لقبول العقود، نحتاج إلى التحقق من هويتك.",
+    "Verification Failed": "فشل التحقق",
+    "Verification Successful": "تم التحقق بنجاح",
+    "We couldn't verify your identity. Please try again with a clearer image or ensure the lighting is sufficient.": "لم نتمكن من التحقق من هويتك. يرجى المحاولة مرة أخرى بصورة أوضح أو التأكد من وجود إضاءة كافية",
+    "Your identity has been successfully verified. Thank you!": "تم التحقق من هويتك بنجاح. يمكنك الآن المتابعة.",
+    "To proceed, we need to verify your identity. Please upload a clear image of your face.": "للمتابعة، نحتاج إلى التحقق من هويتك. يرجى رفع صورة واضحة لوجهك.",
+    "Upload Face Image": "رفع صورة الوجه",
     "": ""
 }

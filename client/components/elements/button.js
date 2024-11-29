@@ -9,7 +9,7 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
       buttonClass = 'bg-[#D30000]';
       isbuttonred = true
       break;
-    case 'bg-[#5666F7]':
+    case 'bg-[#5666F7]'||'#5666F7':
       buttonClass = 'bg-[#5666F7]';
       break;
     default:
