@@ -87,7 +87,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     }, [respond])
 
     useEffect(() => {
-        setReceiver(otherUser._id)
+        setReceiver(otherUser._id || chat_respond?.user?._id)
     }, [otherUser])
 
     useEffect(() => {
@@ -109,6 +109,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
         setOtherUser(getotherdata())
+        
 
     }, [JSON.stringify(msglist)]);
 
@@ -245,7 +246,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     //       }
     //     });
     //   };
-    
     return (
         <div className={`fixed bottom-0 z-20 md:px-8 ${messages.openchat ? '' : 'hidden'}`} >
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />

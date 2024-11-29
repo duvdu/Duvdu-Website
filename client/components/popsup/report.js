@@ -34,7 +34,7 @@ function Report() {
                         !file &&
                         <div className='bg-white dark:bg-[#1A2024] border-dashed border-4 border-[#CBD0DC] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 p-4'>
                             <div className='rounded-full p-4 bg-[#F5F5F5]'>
-                                <Icon name={"add-file"} />
+                                <Icon name={"add-file2"} />
                             </div>
                             <span className="text-black text-3xl">{t("Choose a file or drag & drop it here")}</span>
                             <span className="text-[#A9ACB4] text-xl">{t("JPEG, PNG, PDG, and MP4 formats, up to 50MB")}</span>
