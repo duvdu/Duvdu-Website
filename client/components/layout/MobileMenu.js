@@ -14,6 +14,8 @@ import { AvailableUserChat } from "../../redux/action/apis/realTime/messages/ava
 import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notification/markasread";
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import * as Types from '../../redux/constants/actionTypes'
+import FaceVerification from "../elements/FaceVerification";
+import { UnReadNotification } from "../../redux/action/apis/realTime/notification/unread";
 
 
 const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayout,
@@ -23,24 +25,38 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
     GetAllChats,
     AvailableUserChat,
     getheaderpopup,
+    UnReadNotification_respond,
+    UnReadNotification
  }) => {
     const { t } = useTranslation();
     const [page, setPage] = useState(isToggled);
+    const [countUnRead, setCountUnRead] = useState(0);
     const router = useRouter();
     useEffect(() => {
 
         if (isToggled != page) setPage(isToggled)
     }, [isToggled])
     useEffect(()=>{
+        if(isLogin)
+            UnReadNotification()
+    },[isLogin])
+    useEffect(()=>{
+        if(UnReadNotification_respond?.data?.count)
+            setCountUnRead(UnReadNotification_respond?.data?.count)
+    },[UnReadNotification_respond?.data?.count])
+    useEffect(()=>{
         if(page ===4){
-            MarkNotificationsAsRead()
+            MarkNotificationsAsRead().then(()=>{
+                if(isLogin)
+                    UnReadNotification()
+            })
             GetNotifications()
             if(!GetAllChats_respond?.data){
                 AvailableUserChat()
                 GetAllChats()
             }
         }
-    },[page])
+    },[page , isLogin])
     const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)
 
     const Header = ({ onClose, toggleOpenSearch, openSearch }) => {
@@ -69,7 +85,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
 
                     {isLogin === true &&
                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
+                           <div className='relative'>  
+                                {countUnRead > 0 &&
+                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead}</span>
+                            }
                             <Icon className="items-center justify-center" name={'bell'} />
+                           </div> 
                         </div>}
 
                     <div className="p-3 rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer" onClick={toggleOpenSearch}>
@@ -302,7 +323,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                                 isLogin ===  false&&
                                 <Auth onClose={() => toggleClick(1)}/>
                             }
-                            <DownLoadApp />
+                        <div className='mx-5'>
+                        <FaceVerification />
+                        </div>
+                        <DownLoadApp />
                         </>
                     }
                     {page == 3 &&
@@ -327,6 +351,7 @@ const mapStateToProps = (state) => ({
     isLogin: state.auth.login,
     user: state.user.profile,
     GetAllChats_respond: state.api.GetAllChats,
+    UnReadNotification_respond: state.api.UnReadNotification,
     getheaderpopup: state.setting.headerpopup,
 
 });
@@ -335,6 +360,7 @@ const mapDispatchToProps = {
     GetNotifications,
     GetAllChats,
     AvailableUserChat,
+    UnReadNotification,
     MarkNotificationsAsRead,
 
 };

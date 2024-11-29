@@ -5,6 +5,7 @@ import Popup from '../components/popsup/verify';
 import Subscribe from '../components/popsup/subscribe';
 import AddToTeam from '../components/popsup/AddToTeam';
 import Report from '../components/popsup/report';
+import FaceVerification from '../components/popsup/faceVerification';
 import Report2 from '../components/popsup/report-project';
 import ThanksMSG from '../components/popsup/thanksMSG';
 import Report_sent_successfully from '../components/popsup/Report_sent_successfully';
@@ -48,6 +49,7 @@ function Test() {
                         <BTN target='add-to-team'> AddToTeam </BTN>
                         <BTN target='report-project'> Report </BTN>
                         <BTN target='report-project2'> Report 2 </BTN>
+                        <BTN target='face-verification'> FaceVerification </BTN>
                         <BTN target='thanks-meesage'> ThanksMSG </BTN>
                         <BTN target='Report-sent-successfully'> Report sent successfully </BTN>
                         <BTN target='clients'> clients </BTN>
@@ -91,6 +93,7 @@ function Test() {
                     <ChooseCategory />
                     <Verify_account_now />
                     {/* <QRScanner /> */}
+                    <FaceVerification />
                 </div>
               
             </Layout>
