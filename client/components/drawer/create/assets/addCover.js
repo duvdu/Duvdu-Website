@@ -84,7 +84,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
                 <div className='w-full '>
                     <div className='flex flex-col justify-between h-full'>
                         <section>
-                            <label htmlFor="file-upload" >
+                            <label htmlFor="my-file-upload" >
                                 <div className={`border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-white dark:bg-[#1A2024] ${media ? "" : "aspect-square"}`}>
                                     <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
                                         <Icon name={"add-file"} className='size-7' />
@@ -93,7 +93,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
                                 </div>
                                 {renderMediaPreview()}
                             </label>
-                            <input onClick={handleRemoveEvent} id="file-upload" type="file" className="hidden" onChange={profileUpload} accept={coverType === 'image' ? 'image/*' : coverType === 'video' ? 'video/*' : 'image/*'} />
+                            <input onClick={handleRemoveEvent} id="my-file-upload" type="file" className="hidden" onChange={profileUpload} accept={coverType === 'video' ? 'video/*' : 'image/*'} />
                         </section>
                         <section className='mt-5'>
                             <span className='opacity-40 text-base capitalize'>{t("preview")}</span>
