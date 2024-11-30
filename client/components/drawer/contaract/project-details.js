@@ -30,7 +30,7 @@ import TeamView from './TeamView'
 import ReportContract from '../../popsup/report-contract';
 import Loading from '../../elements/loading';
 import DuvduLoading from '../../elements/duvduLoading';
-
+import ErrorMessage from '../../elements/ErrorMessage';
 
 function ReceiveProjectFiles({
     getAllContracts,
@@ -62,6 +62,8 @@ function ReceiveProjectFiles({
     const sp = contract_respond?.data?.sp;
     const status = contract?.status
     const [timeLeft, setTimeLeft] = useState("");
+    const [paymentError ,setPaymentError] = useState(null)
+    const [actionError ,setActionError] = useState(null)
     const [actionSuccess, setActionSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [appointmentDate, setdAppointmentDate] = useState(null);
@@ -157,21 +159,38 @@ function ReceiveProjectFiles({
     useEffect(() => {
         if (takeAction_respond?.message) {
             getAllContracts()
-            setActionSuccess(true)
             toggleDrawer()
+            setActionSuccess(true)
         }
     }, [takeAction_respond]);
-
     useEffect(() => {
         UpdateFormData("functions", contract?.functions)
         UpdateFormData("tools", contract?.tools)
     }, [contract?.tools, contract?.functions]);
-
+    console.log(payment_respond)
+    useEffect(()=>{
+        if(payment_respond?.error){
+            const convertPaymentError = JSON.parse(payment_respond?.error ?? null)
+            setPaymentError(convertPaymentError)
+            const timer = setTimeout(() => {
+                setPaymentError(null)
+            },5000)
+            return () => clearTimeout(timer);
+        }
+        if(takeAction_respond?.error){
+            var convertActionError = JSON.parse(takeAction_respond?.error ?? null)
+            setActionError(convertActionError)
+            const timer2 = setTimeout(() => {
+                setActionError(null)
+            },5000)
+            return () => clearTimeout(timer2);
+        }   
+    },[payment_respond?.error , takeAction_respond?.error])
     useEffect(() => {
-        if (payment_respond?.message) {
+        if (payment_respond?.data || payment_respond?.message) {
             getAllContracts()
-            setPaymentSuccess(true)
             toggleDrawer()
+            setPaymentSuccess(true)
         }
     }, [payment_respond]);
 
@@ -258,6 +277,7 @@ function ReceiveProjectFiles({
     };
 
     const handlePayment = () => {
+        setActionAccept(true)
         const type = getType()
         payment({ id: contract?.paymentLink, type: type })
     };
@@ -331,6 +351,7 @@ function ReceiveProjectFiles({
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
+            <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="Action" />
             <RatingProject data={contract}/>
             <ReportContract data={contract} />
             
@@ -576,6 +597,12 @@ function ReceiveProjectFiles({
                                         </>
                                     }
                                 </div>}
+                                {(paymentError || actionError) && 
+                                <div className='text-center'>
+                                    <ErrorMessage ErrorMsg={paymentError}/>
+                                    <ErrorMessage ErrorMsg={actionError}/>
+                                </div>
+                                }
                             {canReview &&
                                 <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                     <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={openReview}>

@@ -31,6 +31,14 @@ export default function TeamView({contract}){
             </span>
         </div>
         }
+        {contract.totalPrice &&
+        <div>
+            <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
+            <span className='font-semibold capitalize max-w-[543px]'>
+            {contract.totalPrice} EGP
+            </span>
+        </div>
+        }
     </section>   
     <section className='grid grid-cols-2 w-full'>
         {contract.details && 

@@ -31,7 +31,7 @@ export const payment = ({ id, type }) => {
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });
                     return;
             }
-            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req });
+            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: {message:"success"}, req });
         } catch (error) {
             dispatch({ type: Types.FETCH_DATA_FAILURE, payload: error.response ? JSON.stringify(error.response.data) : error.message, req });
         }
