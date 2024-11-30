@@ -521,6 +521,8 @@ function ReceiveProjectFiles({
                                                 <h3 className="capitalize opacity-60 mb-4">{t("number Of Units")}</h3>
                                                 <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract?.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
                                             </section>
+                                            {formData?.tools.length>0 && 
+                                            <>
                                             <div className='h-divider my-6' />
                                             <section>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("Tools Used")}</h3>
@@ -543,6 +545,10 @@ function ReceiveProjectFiles({
                                                     </div>
                                                 ))}
                                             </section>
+                                            </>
+                                            }
+                                            {formData?.functions.length>0 && 
+                                            <>
                                             <div className='h-divider my-6' />
                                             <section className='mb-4'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("Functions Used")}</h3>
@@ -565,6 +571,8 @@ function ReceiveProjectFiles({
                                                     </div>
                                                 ))}
                                             </section>
+                                            </>
+                                            }
                                         </>
                                     }
                                 </div>}
