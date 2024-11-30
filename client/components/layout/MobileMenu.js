@@ -15,6 +15,7 @@ import { MarkNotificationsAsRead } from "../../redux/action/apis/realTime/notifi
 import { GetNotifications } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import * as Types from '../../redux/constants/actionTypes'
 import FaceVerification from "../elements/FaceVerification";
+import Subscription from "../elements/Subscription";
 import { UnReadNotification } from "../../redux/action/apis/realTime/notification/unread";
 
 
@@ -324,7 +325,8 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                                 <Auth onClose={() => toggleClick(1)}/>
                             }
                         <div className='mx-5'>
-                        <FaceVerification />
+                        <FaceVerification CloseProfile={() => toggleClick(1)} />
+                        <Subscription CloseProfile={() => toggleClick(1)}/>
                         </div>
                         <DownLoadApp />
                         </>

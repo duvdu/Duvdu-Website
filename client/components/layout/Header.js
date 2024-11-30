@@ -71,7 +71,7 @@ const Header = ({
         noScroll(getheaderpopup != Types.NONEPOPUP)
     }, [getheaderpopup]);
     useEffect(()=>{
-        if(isLogin)
+        if(isLogin===true)
             UnReadNotification()
     },[isLogin])
     useEffect(()=>{
@@ -81,7 +81,7 @@ const Header = ({
     useEffect(() => {
         if (getheaderpopup == Types.SHOWNOTOFICATION) {
             MarkNotificationsAsRead().then(()=>{
-                if(isLogin)
+                if(isLogin===true)
                     UnReadNotification()
             })
             GetNotifications()

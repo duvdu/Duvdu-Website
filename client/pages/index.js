@@ -369,7 +369,7 @@ const Home = ({
                                   },
                             }}                                    
                            >
-                               {homeDiscover_respond?.data[0]?.subCategories?.map((data, index) => {
+                               {homeDiscover_respond?.data?.[0]?.subCategories?.map((data, index) => {
                                    return <SwiperSlide key={index}>                                                            
                                        <Link key={index} href={data.cycle ? `/${data.cycle}?category=${data.categoryId}&subCategory=${data._id}` : ''}  >
                                                 <div

@@ -238,7 +238,7 @@
     "share via": "مشاركة عبر",
     "access 5 free contracts": "الوصول إلى 5 عقود مجانًا",
     "Enjoy 5 contracts for free, and then we have a subscription plan to access more.": "استمتع بـ 5 عقود مجانًا، ومن ثم لدينا خطة اشتراك للوصول إلى المزيد.",
-    "/for 5 contracts": "/لـ 5 عقود",
+    "EGY /for 5 contracts": "جنيه مصري / لعدد 5 عقود",
     "start free trial": "بدء الفترة التجريبية المجانية",
     "subscribe now": "اشترك الآن",
     "Thanks for letting us know": "شكرًا لإعلامنا",
@@ -504,5 +504,12 @@
     "Your identity has been successfully verified. Thank you!": "تم التحقق من هويتك بنجاح. يمكنك الآن المتابعة.",
     "To proceed, we need to verify your identity. Please upload a clear image of your face.": "للمتابعة، نحتاج إلى التحقق من هويتك. يرجى رفع صورة واضحة لوجهك.",
     "Upload Face Image": "رفع صورة الوجه",
-    "": ""
+    "Contract Subscription Required": "الاشتراك في العقد مطلوب",
+    "To accept contracts, we need to subscribe to get new 5 contracts.": "لقبول العقود، نحتاج للاشتراك للحصول على 5 عقود جديدة.",
+    "Subscription Successfully": "الاشتراك تم بنجاح",
+    "You have successfully subscribed. You now have 5 contracts available.": "لقد اشتركت بنجاح. لديك الآن 5 عقود متاحة.",
+    "Now you have": "الآن لديك",
+    "Subscribe to get access to more amazing projects & clients.":"اشترك للحصول على الوصول إلى مشاريع وعملاء مدهشين.",
+    "avilable contract": "متاحة عقود",
+    "":""
 }

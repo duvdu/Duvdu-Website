@@ -122,7 +122,16 @@ const NotificationTypeLink = (type , target ,username)=>{
             return `/contracts?contract=${target}`
     }
 }
+const TypeCase = (type) =>{
+    switch(type){
+        case ('contract_subscription'):
+            return 'popup';
+        default:
+            return 'link'
+    }
+}
 const NotificationTile = ({ tile }) =>
+    TypeCase(tile.type) === "link" ? 
     <Link href={NotificationTypeLink(tile.type ,tile.target , tile.sourceUser?.username )}>
         <div className="w-full lg:w-64 flex gap-4">
             <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
@@ -134,9 +143,17 @@ const NotificationTile = ({ tile }) =>
                 </span>
             </div>
         </div>
-    </Link>
-
-
+    </Link>:
+    <button data-popup-toggle="popup" data-popup-target={tile.type} className="w-full lg:w-64 flex gap-4">
+        <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
+        <div className="flex flex-col justify-center">
+            <span className="line-clamp-2 cursor-pointer !text-start">
+                <span className="rtl:hidden font-bold">{tile.sourceUser?.name?.split(' ')[0].length>6?tile.sourceUser?.name?.split(' ')[0].slice(0,6):tile.sourceUser?.name?.split(' ')[0] || 'DUVDU'} </span>
+                <span className="text-xs opacity-60 mx-2">{tile.title}</span>
+                <div className="font-bold">{tile.message} </div>
+            </span>
+        </div>
+    </button>
 
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,

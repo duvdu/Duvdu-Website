@@ -37,6 +37,7 @@ import { userReview } from '../../../redux/action/apis/reviews/users';
 import { useTranslation } from 'react-i18next';
 import Reviews from "../../../components/pages/stduiosAndProject/review";
 import FaceVerification from "../../elements/FaceVerification";
+import Subscription from "../../elements/Subscription";
 
 function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
     const { t } = useTranslation();
@@ -184,10 +185,22 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                     <h3 className='pt-6' id='about-header'>{t("about")}</h3>
                                     <p className='pt-6' id='about-paragraph'>{userInfo?.about || '---'}</p>
                                 </div>}
-                            <div className='h-divider my-7'></div>
+                            {!userInfo?.faceRecognition &&
+                            <>
+                                <div className='h-divider my-7'></div>
                                 <div className='ps-5 md:ps-10 '>
                                     <FaceVerification />
                                 </div>
+                            </>
+                            }
+                            {userInfo?.avaliableContracts == 0 &&
+                            <>
+                                <div className='h-divider my-7'></div>
+                                <div className='ps-5 md:ps-10 '>
+                                    <Subscription />
+                                </div>
+                            </>
+                            }
                             <div className='h-divider my-7'></div>
                             <div className='ps-5 md:ps-10 '>
                                 <Reviews userName={user?.username} data={userReview_respond?.data} />

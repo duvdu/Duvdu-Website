@@ -9,24 +9,36 @@ import { subscribe } from './../../redux/action/apis/auth/subscription/subscribe
 import { checkSubscribe } from './../../redux/action/apis/auth/subscription/checkSubscribe';
 import React, { useEffect, useState } from "react";
 import Loading from '../elements/loading';
+import { useRouter } from 'next/router';
+import SuccessSubscription from './successSubscription';
 
-function Popup({ isfree = false , isLogin , checkSubscribe , checkSubscribe_response , subscribe_response , subscribe }) {
+function Popup({ isfree=false , isLogin , checkSubscribe , checkSubscribe_response , subscribe_response , subscribe }) {
     const { t } = useTranslation();
     const [canSubscribe , setCanSubscribe ] = useState(false)
     const [haveSubscribe , setHaveSubscribe ] = useState(null)
+    const [post_success, setPost_success] = useState(false);
+    const [price , setPrice ] = useState(null)
+    const router = useRouter();
     function subscriber(){
-        subscribe()
+        subscribe().then(()=>{
+            setPost_success(true)
+        })
     }
  
     useEffect(()=>{
-        if(isLogin)
-        checkSubscribe()        
+        if(isLogin===true)
+            checkSubscribe()
     },[isLogin])
     var convertError = JSON.parse(checkSubscribe_response?.error ?? null)
+    function OnSucess() {
+        setPost_success(false)
+    }
 
     useEffect(()=>{
-        if(checkSubscribe_response?.data)
+        if(checkSubscribe_response?.data){
             setCanSubscribe(true)
+            setPrice(checkSubscribe_response?.data?.newFiveContractsPrice)
+        }
         if(checkSubscribe_response?.error){
             setHaveSubscribe(convertError?.data?.avaliableContracts)
             setCanSubscribe(false)
@@ -34,10 +46,9 @@ function Popup({ isfree = false , isLogin , checkSubscribe , checkSubscribe_resp
     },[checkSubscribe_response?.data , checkSubscribe_response?.error])
     return (
         <>
-        {}
-            <div id={`subscribe-${isfree ? 'free' : 'notfree'}`} className="popup z-30 ">
+            <div id={'contract_subscription'} className="popup z-30 ">
                 <div data-popup-dismiss="popup" className="flex overlay blur" ></div>
-                <div className='card overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] bg-no-repeat relative sm:w-auto sm:mx-auto w-full mx-5' style={{ backgroundImage: "url(assets/imgs/authswiper/login-3.png)" }}>
+                <div className='card overflow-hidden bg-[#F7F9FB] dark:bg-[#131313] bg-no-repeat relative sm:w-auto sm:mx-auto w-full mx-5' style={{ backgroundImage: "url(/assets/imgs/authswiper/login-3.png)" }}>
                     <div className='flex gap-3 absolute top-5 left-5'>
                         <div data-popup-dismiss="popup" className='flex rounded-full border p-3 border-white border-opacity-50 bg-[#FFFFFF1A] blur-4px cursor-pointer justify-center items-center'>
                             <Icon name={'xmark'} className='w-6 h-6 text-white' />
@@ -49,53 +60,32 @@ function Popup({ isfree = false , isLogin , checkSubscribe , checkSubscribe_resp
                         <div className='w-full h-[213px] absolute -translate-y-full verify-linear' />
                          
                         {/* {isfree && canSubscribe ? <StartFree /> : <Subscribe />} */}
-                        {!isfree &&  <Subscribe subscribe_response={subscribe_response} subscriber={subscriber} haveSubscribe={haveSubscribe} canSubscribe={canSubscribe}/>}
+                        <Subscribe price={price} subscribe_response={subscribe_response} subscriber={subscriber} haveSubscribe={haveSubscribe} canSubscribe={canSubscribe}/>
                     </div>
                         
                 </div>
             </div>
+            <SuccessSubscription isShow={post_success} onCancel={OnSucess} />
         </>
     );
 }
 
-const StartFree = () => {
-    const { t } = useTranslation();
 
-    return (
-        <div className='p-7 flex flex-col justify-center items-center'>
-            <div className='max-w-[450px] flex flex-col justify-center items-center'>
-                <h1 className='text-primary text-3xl font-extrabold capitalize text-center'>{t("access 5 free contracts")}</h1>
-                <p className='opacity-60 text-lg font-semibold mt-3 text-center'>{t("Enjoy 5 contracts for free, and then we have a subscription plan to access more.")}</p>
-                <span className='text-primary text-lg capitalize line-through text-center mt-11 mb-4'>
-                    $17.99
-                    <span className='opacity-70 text-primary'>{t("/for 5 contracts")}</span>
-                </span>
-                <Button className="w-full mb-7" shadow={true} shadowHeight={"14"}>
-                    <span className='text-white font-bold capitalize text-lg'>{t("start free trial")}</span>
-                </Button>
-            </div>
-            <Link href="/terms_conditions">
-                <span className="text-DS_black text-sm opacity-50 cursor-pointer" >{t("terms & conditions")}</span>
-            </Link>
-        </div>
-
-    )
-}
-const Subscribe = ({canSubscribe , haveSubscribe , subscribe_response , subscriber}) => {  
+const Subscribe = ({canSubscribe , price , haveSubscribe , subscribe_response , subscriber}) => {  
       const { t } = useTranslation();
 
     return (
         <div className='p-7 flex flex-col justify-center items-center'>
             <div className='max-w-[450px] flex flex-col justify-center items-center'>
                 <h1 className='text-primary text-3xl font-extrabold capitalize text-center'>{t("access 5 free contracts")}</h1>
-                <p className='opacity-60 text-lg font-semibold mt-3 text-center'>{t("Enjoy 5 contracts for free, and then we have a subscription plan to access more.")}</p>
+                <p className='opacity-60 text-lg font-semibold mt-3 text-center'>{t("Subscribe to get access to more amazing projects & clients.")}</p>
                     {canSubscribe ?
                     <span className='text-primary text-lg capitalize text-center mt-11 mb-4'>
-                    $17.99
-                        <span className='opacity-70 text-primary'>{t("/for 5 contracts")}</span>
+                    {price}
+                        <span className='opacity-70 text-primary'>{t("EGY /for 5 contracts")}</span>
                     </span>:
                     <span className='text-primary text-lg capitalize text-center mt-11 mb-4'>
-                        <span className='opacity-70 text-primary'>{t('you have available contract')} {haveSubscribe} {t('')}</span>
+                        <span className='opacity-70 text-primary'>{t(`Now you have`)} {haveSubscribe} {t('avilable contract')}</span>
                     </span>
                     }  
                     {canSubscribe && 

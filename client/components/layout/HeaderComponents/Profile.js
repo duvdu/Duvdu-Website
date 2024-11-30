@@ -7,6 +7,7 @@ import { SetheaderPopUp } from "../../../redux/action/setting";
 import Icon from "../../Icons";
 import Link from 'next/link';
 import FaceVerification from '../../elements/FaceVerification';
+import Subscription from '../../elements/Subscription';
 
 function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , SetheaderPopUp }) {
 
@@ -118,17 +119,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
                             </div>
                         </div>
                         <FaceVerification CloseProfile={CloseProfile} />
-                        {user?.avaliableContracts == 0 && 
-                        <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
-                            <button data-popup-toggle="popup" data-popup-target={'subscribe-notfree'}>
-                                <div className="flex items-center w-full ">
-                                    <p className="font-semibold text-center"> {t('Subscription')}</p>
-                                    
-                                </div>
-                            </button>
-                        </div>
-                        }
-
+                        <Subscription CloseProfile={CloseProfile}/>
                         {
                             showMiddleCard &&
                             <div className="p-6 bg-white dark:bg-[#1A2024] rounded-[45px]">
