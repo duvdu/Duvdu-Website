@@ -5,9 +5,42 @@ import { takeAction } from "../../../redux/action/apis/contracts/takeaction";
 import dateFormat from "dateformat";
 import { formattedCreatedAt, formattedDeadline } from './../../../util/format-date';
 import { useTranslation } from 'react-i18next';
+import TimeLeft from "./TimeLeft";
 
 const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
-   
+    const status = data.contract.status
+    const uiStatus = () => {
+        const items = {
+            status: status,
+            stageExpiration: data?.contract?.stageExpiration,
+            deadline: data?.contract?.deadline,
+            actionAt: data?.contract?.actionAt,
+            createdAt: data?.contract?.createdAt,
+        };
+
+        switch (status) {
+            case 'pending':
+                return <TimeLeft data={items} msgstatus={"pending"} />;
+            case 'waiting-for-payment':
+                return <TimeLeft data={items} msgstatus={"waiting for payment"} />;
+            case 'waiting-for-pay-10':
+                return <TimeLeft data={items} msgstatus={"waiting for pay 10"} />;
+            case 'update-after-first-Payment':
+                return <TimeLeft data={items} msgstatus={"update after first Payment"} />;
+            case 'waiting-for-total-payment':
+                return <TimeLeft data={items} msgstatus={"waiting for total payment"} />;
+            case 'ongoing':
+                return <TimeLeft data={items} msgstatus={"complate task"} />;
+            case 'completed':
+                return <NormalState value={"Completed"} />;
+            case 'rejected':
+                return <NormalState value={"Rejected"} />;
+            case 'canceled':
+                return <NormalState value={"Canceled"} />;
+            default:
+                return "Unknown"; // Handle unknown cases as needed
+        }
+    };
     const Deadline = formattedDeadline(data?.contract?.deadline)
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
     const { t } = useTranslation();
@@ -26,15 +59,19 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
                 {/*********/}
 
                 {/* type */}
-                <span className='flex flex-col h-full text-white border-2 border-white rounded-full px-3 py-[6px] capitalize mb-8 opacity-70'>
+                <span className='flex flex-col h-full text-white border-2 border-white rounded-full px-3 py-[6px] capitalize mb-3 opacity-70'>
                     {data.ref}
                 </span>
                 {/*********/}
+                <div className='flex ml-3 flex-col xl:flex-row justify-between items-center w-full'>
+                            {uiStatus()}
+                        <div className={`border-2 border-primary text-primary font-bold rounded-full flex justify-center items-center w-full max-w-[345px] h-[65px] active capitalize cursor-pointer hidden`}>{t("respond")}</div>
+                    </div>
 
                 {/* deadline */}
                 <div className='flex flex-col xl:flex-row justify-between items-center w-full gap-3'>
-                    <div className='flex gap-3'>
-                        <span className='text-[40px] flex items-center ml-3 gap-2'>  <span className='opacity-50 text-white'>$</span> <span className='text-white'>{t("490")}</span> </span>
+                    <div className='flex gap-3 w-full'>
+                        <span className='text-[40px] flex items-center ml-3 gap-2'>  <span className='opacity-50 text-white'>$</span> <span className='text-white'>{data?.contract?.totalPrice}</span> </span>
                         <div className='h-auto w-[1px] bg-white opacity-15' />
                         <div>
                             <span className='opacity-50 text-white'>{t("deadline")}</span>

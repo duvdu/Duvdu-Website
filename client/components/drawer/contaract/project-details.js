@@ -31,6 +31,7 @@ import ReportContract from '../../popsup/report-contract';
 import Loading from '../../elements/loading';
 import DuvduLoading from '../../elements/duvduLoading';
 import ErrorMessage from '../../elements/ErrorMessage';
+import Uploading from '../../../components/popsup/uploading_project_files';
 
 function ReceiveProjectFiles({
     getAllContracts,
@@ -46,6 +47,7 @@ function ReceiveProjectFiles({
     UpdateFormData,
     InsertToArray,
     resetForm,
+    submitFile_respond,
     user }) {
     const router = useRouter();
     const contractId  = router.query
@@ -65,10 +67,11 @@ function ReceiveProjectFiles({
     const [paymentError ,setPaymentError] = useState(null)
     const [actionError ,setActionError] = useState(null)
     const [actionSuccess, setActionSuccess] = useState(false);
+    const [submitFileSuccess, setSubmitFileSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [appointmentDate, setdAppointmentDate] = useState(null);
     const [actionAccept , setActionAccept] = useState(false)
-
+    console.log({contract})
     const [canEdit, setCanEdit] = useState(null);
 
     const NormalState = ({ value }) => (
@@ -164,10 +167,16 @@ function ReceiveProjectFiles({
         }
     }, [takeAction_respond]);
     useEffect(() => {
+        if (submitFile_respond?.message) {
+            getAllContracts()
+            toggleDrawer()
+            setSubmitFileSuccess(true)
+        }
+    }, [submitFile_respond]);
+    useEffect(() => {
         UpdateFormData("functions", contract?.functions)
         UpdateFormData("tools", contract?.tools)
     }, [contract?.tools, contract?.functions]);
-    console.log(payment_respond)
     useEffect(()=>{
         if(payment_respond?.error){
             const convertPaymentError = JSON.parse(payment_respond?.error ?? null)
@@ -288,7 +297,9 @@ function ReceiveProjectFiles({
     const openComplain = () => {
         OpenPopUp('report-contract')
     };
-
+    const openSubmitFiles = ()=>{
+        OpenPopUp('uploading_project_files')
+    }
     const handleRefuse = () => {
         if (!contract_respond?.data?.ref) return
         const type = getType()
@@ -302,6 +313,7 @@ function ReceiveProjectFiles({
         router.push('/contracts')
         toggleContractData(null)
         setActionSuccess(false)
+        setSubmitFileSuccess(false)
         setPaymentSuccess(false)
         setdAppointmentDate(null)
         takeAction({ id: -1 })      // for remove respond state
@@ -320,6 +332,7 @@ function ReceiveProjectFiles({
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
     const canReview = (IsImSp() && status === "completed")
+    const canSubmitFile = (IsImSp() && status === "ongoing" &&  (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -352,8 +365,10 @@ function ReceiveProjectFiles({
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
             <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="Action" />
+            <SuccessfullyPosting isShow={submitFileSuccess} onCancel={toggleDrawer} message="Submit File" />
             <RatingProject data={contract}/>
             <ReportContract data={contract} />
+            <Uploading type={getType()} id={contractId.contract} />
             
             <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
                 {
@@ -431,7 +446,22 @@ function ReceiveProjectFiles({
                                 <TeamView contract={contract}/>
                                 </>
                                 }
-
+                                {contract?.submitFiles?.link && 
+                                <section className='w-full'>
+                                    <h2 className='opacity-60 capitalize mb-3'>{t("Submit Files Link")}</h2>
+                                    <a className='font-semibold max-w-[543px]' href={contract?.submitFiles.link} target="_blank">
+                                        {contract?.submitFiles.link}
+                                    </a>
+                                </section>                                
+                                }
+                                {contract?.submitFiles?.notes && 
+                                <section className='w-full'>
+                                    <h2 className='opacity-60 capitalize mb-3'>{t("Submit Files Notes")}</h2>
+                                    <span className='font-semibold capitalize max-w-[543px]'>
+                                    {contract?.submitFiles?.notes}
+                                    </span>
+                                </section>                                
+                                }
                                 {
                                     contract?.attachments?.length > 0 &&
                                     <section className='w-full'>
@@ -721,6 +751,14 @@ function ReceiveProjectFiles({
                                         !status?.includes("waiting-for-pay") && false &&
                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">{t("Cancel")}</button>
                                     }
+                                    {canSubmitFile && !contract?.submitFiles?.link && 
+                                    <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                        <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#5666F7"}  onClick={openSubmitFiles}>
+                                            <span className='text-white font-bold capitalize text-lg'>{t("submit files")}</span>
+                                        </Button>
+                                    </section>
+                                    }
+
                                     {
                                     <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                         <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#D30000"}  onClick={openComplain}>
@@ -747,6 +785,7 @@ const mapStateToProps = (state) => ({
     payment_respond: state.api.payment,
     addprojectState: state.addproject,
     rateContract_respond: state.api.RateContract,
+    submitFile_respond:state.api.submitFile
 
 });
 

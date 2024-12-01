@@ -43,7 +43,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
     }
     const data = getAllContracts_respond?.
         data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username))
-    
+    console.log(data)
     // useEffect(() => {
     //     const _data = data.filter(value => tabindex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
     //     setData(_data)
@@ -67,6 +67,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
 
     const HisTory = ({ data, isCanceled,router }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
+        console.log(data)
         return <>
             {/* max-w-[370px] ahmed */}
             <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4 cursor-pointer'
@@ -122,13 +123,15 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 {/*********/}
 
                 {/* deadline */}
-                <div className='flex gap-3 mt-9'>
+                <div className='flex gap-3 mt-3'>
+                    {data.contract.totalPrice && 
                     <span className='text-[24px] md:text-[40px] flex items-center ml-3 gap-2'>
                         <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} flex gap-2`}>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>$</span>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.totalPrice || data.contract.totalAmount}</span>
                         </span>
                     </span>
+                    }
                     <div className='h-auto w-[1px] bg-black opacity-15' />
                     <div className='text-start'>
                         <span className={`opacity-50 capitalize ${isCanceled ? 'text-[#FF4646]' : ''}`}>{t("deadline")}</span>
