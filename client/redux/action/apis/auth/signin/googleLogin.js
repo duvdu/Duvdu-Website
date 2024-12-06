@@ -6,7 +6,7 @@ export const googleLogin = ({ username, id, name , email ,notificationToken}) =>
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'login' });
     try {
       const response = await mainApiInstance.post('api/users/auth/provider', {
-        username,
+        username:username.toLowerCase(),
         name,
         email,
         googleId: id,

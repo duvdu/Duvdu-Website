@@ -6,7 +6,7 @@ export const retreiveUsername = ({ username }) => {
       dispatch({ type: Types.FETCH_DATA_REQUEST });
       try {
         const response = await mainApiInstance.post('api/users/auth/retreive-username', {
-          username: username,
+          username: username.toLowerCase(),
         });
         dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data });
       } catch (error) {

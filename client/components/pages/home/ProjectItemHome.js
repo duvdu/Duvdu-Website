@@ -127,6 +127,18 @@ const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', i
             setDuration(videoRef.current.duration);
         }
     };    
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play();
+            videoRef.current.muted = true;     
+            const timeout = setTimeout(() => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }, 300); 
+            return () => clearTimeout(timeout);
+        }
+    }, [videoRef.current]);
+
     return (
         <>
             <div className={isbig ? 'profile-project big w-full xl:w-68% cursor-pointer relative' : 'profile-project small w-48% xl:w-28% cursor-pointer relative'} onClick={() => { }} >
@@ -152,6 +164,7 @@ const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', i
                                 <Link href={`/${type}/${cardData?._id}`}>
                                     <a>
                                         <video
+                                            autoPlay muted playsInline
                                             id={cardData?._id}
                                             className='cardvideo h-full'
                                             ref={videoRef}

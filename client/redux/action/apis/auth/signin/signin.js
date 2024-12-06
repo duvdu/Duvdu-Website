@@ -6,7 +6,7 @@ export const login = ({ username, password  ,notificationToken}) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'login' });
     try {
       const response = await mainApiInstance.post('api/users/auth/signin', {
-        login: username,
+        login: username.toLowerCase(),
         password: password,
         // notificationToken:notificationToken??null
       });

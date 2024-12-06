@@ -4,7 +4,46 @@ import { useTranslation } from 'react-i18next';
 import Icon from '../../Icons';
 
 export default function ProducerView({contract}){
-    const { t } = useTranslation();
+    const { t , i18n } = useTranslation();
+    const currentLanguage = i18n.language; // Get current language
+    const arabicMonths = {
+        January: "يناير",
+        February: "فبراير",
+        March: "مارس",
+        April: "أبريل",
+        May: "مايو",
+        June: "يونيو",
+        July: "يوليو",
+        August: "أغسطس",
+        September: "سبتمبر",
+        October: "أكتوبر",
+        November: "نوفمبر",
+        December: "ديسمبر"
+      };      
+      const convertToArabicNumbers = (str) => {
+        return str.replace(/\d/g, (digit) => "٠١٢٣٤٥٦٧٨٩"[digit]);
+      };      
+      const formatDate = (isoDateString) => {
+        const formattedDate = dateFormat(isoDateString, "UTC:d mmmm, yyyy");
+        const monthInEnglish = formattedDate.match(/([a-zA-Z]+)/)[0]; // Extract English month
+        const arabicMonth = arabicMonths[monthInEnglish]; // Map to Arabic month
+        const arabicDate = formattedDate.replace(monthInEnglish, arabicMonth); // Replace month
+        if(currentLanguage==='Arabic'){
+            return convertToArabicNumbers(arabicDate); // Convert numbers to Arabic
+        }else{
+            return formattedDate
+        }
+      };
+       const formatTime = (isoDateString) => {
+        const date = new Date(isoDateString);
+        return date.toLocaleTimeString(`${currentLanguage==='Arabic'?'ar-EG':'en-US'}`, {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+          timeZone: 'UTC', // Change to your time zone if needed
+        });
+      };   
+    
     return <>
     <section className='grid grid-cols-2 w-full'>
         {contract.platform && 
@@ -16,7 +55,7 @@ export default function ProducerView({contract}){
         </div>
         }
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    <section className='w-full'>
         {contract.projectDetails && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
@@ -49,7 +88,7 @@ export default function ProducerView({contract}){
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episode budget")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
-            {contract.expectedBudget} EGP
+            {contract.expectedBudget} {t('EGP')}
             </span>
         </div>
         }
@@ -57,7 +96,7 @@ export default function ProducerView({contract}){
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episode profits")}</h2>
             <span className='font-semibold max-w-[543px]'>
-            {contract.expectedProfits} EGP
+            {contract.expectedProfits} {t('EGP')}
             </span>
         </div>
         }
@@ -75,12 +114,12 @@ export default function ProducerView({contract}){
                     <div>
                         <div>
                             <span className='opacity-85 text-base'>
-                                {dateFormat(contract.appointmentDate, 'd mmmm , yyyy')}
+                            {formatDate(contract.appointmentDate)}
                             </span>
                         </div>
                         <div>
                             <span className='text-xs text-[#747688]'>
-                                {dateFormat(contract.appointmentDate, 'dddd')}
+                            {t(dateFormat(contract.appointmentDate, 'dddd'))}
                             </span>
                         </div>
                     </div>

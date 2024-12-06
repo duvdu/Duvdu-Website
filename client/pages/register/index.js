@@ -193,7 +193,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    
+    console.log(formData)
     return (
         <Auth>
             <form method="post" onSubmit={handleSubmit}>
@@ -239,7 +239,7 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                             type="text"
                             name="username"
                             value={formData.username || ""}
-                            onChange={handleChange}
+                            onChange={(e)=> setFormData({ ...formData, username: e.target.value})}
                             placeholder={t("@username")}
                             className={formErrors.username.isError ? "app-field error" : "app-field"}
                         />

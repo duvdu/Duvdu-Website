@@ -254,7 +254,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
                             </section>
                             <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
-                                <div className="flex justify-center">
+                                <div className="flex justify-center w-full">
                                     <div className='relative'>
                                         <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
                                         <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
@@ -293,7 +293,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
 
                                     <section className="w-full h-16 sm:w-96 p-2 mt-4">
                                         <h2 className='opacity-60 capitalize mb-3'>  </h2>
-                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
+                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 mt-4 cursor-pointer">
                                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary' name={"calendar"} />
                                             </div>
@@ -305,7 +305,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     </section>
 
                                     <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
+                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 mt-4 cursor-pointer">
                                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary' name={"calendar"} />
                                             </div>
@@ -317,12 +317,12 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     </section>
 
                                     <section className="w-full h-16 sm:w-96 p-2 mt-4">
-                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024]">
-                        <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
-                                                <Icon className='text-primary w-6' name={"location-dot"} />
+                                        <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 mt-4 cursor-pointer">
+                                            <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
+                                                <Icon className='text-primary w-4' name={"location-dot"} />
                                             </div>
                                             <div className="flex flex-col pl-5 w-full">
-                                                <span className="font-normal text-base capitalize">{t("address")}</span>
+                                                <span className="font-normal text-base capitalize">{t("project location")}</span>
                                                 <span className="font-normal text-base">{formData.address}</span>
                                             </div>
                                         </div>

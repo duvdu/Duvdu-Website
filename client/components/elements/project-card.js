@@ -106,6 +106,17 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
 
   const isVideoCover = isVideo(cardData?.cover);
   const isAudioCover = isAudio(cardData?.audioCover);
+  useEffect(() => {
+    if (videoRef.current) {
+        videoRef.current.play();
+        videoRef.current.muted = true;     
+        const timeout = setTimeout(() => {
+            videoRef.current.pause();
+            videoRef.current.currentTime = 0;
+        }, 300); 
+        return () => clearTimeout(timeout);
+    }
+}, [videoRef.current]);
 
   return (
     <>
@@ -119,6 +130,7 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
                 <Link href={`/${type}/${cardData?._id}`}>
                   <a>
                     <video
+                      autoPlay muted playsInline
                       className='cardvideo'
                       ref={videoRef}
                       onTimeUpdate={timeUpdate}

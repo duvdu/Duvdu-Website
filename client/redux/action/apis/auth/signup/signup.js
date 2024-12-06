@@ -7,7 +7,7 @@ export const signup = ({ name, username, password, phoneNumber ,email }) => {
       try {
         const response = await mainApiInstance.post('api/users/auth/signup', {
           name: name,
-          username: username,
+          username: username.toLowerCase(),
           password: password,
           email:email,
           phoneNumber: {

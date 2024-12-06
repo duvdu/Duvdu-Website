@@ -34,7 +34,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             case 'completed':
                 return -1;
             case 'accepted':
-                return -1;    
+                return -2;    
             case 'rejected':
                 return -1;
             default:
@@ -52,7 +52,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
     const Title = ({ title }) => <h2 className="font-bold text-start text-lg capitalize opacity-80 mt-3">{title}</h2>
 
     const Recents = ({ img, name, address }) =>
-        <Link href='/creative/youseff_abdulla'>
+        // <Link href='/creative/youseff_abdulla'>
             <div className="cursor-pointer">
                 <div className='h-14 w-full flex gap-1 rounded-full border border-[#00000033] dark:border-[#FFFFFF33] ' >
                     <img src={img} alt='user' className='rounded-full m-1 object-cover object-top' />
@@ -62,7 +62,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                     </div>
                 </div>
             </div>
-        </Link>
+        // </Link>
     const MoreIcon = () => <Icon className='cursor-pointer' name={'more'} />
 
     const HisTory = ({ data, isCanceled,router }) => {
@@ -97,7 +97,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 {/*********/}
                 
                 {/* profile */}
-                <Link href={`/creative/${tabindex == 0 ? (data?.customer?.username?.split(' ')[0].length>6?data?.customer?.username?.split(' ')[0].slice(0,6):data?.customer?.username?.split(' ')[0]) : (data?.sp?.username?.split(' ')[0].length>6?data?.sp?.username?.split(' ')[0].slice(0,6):data?.sp?.username?.split(' ')[0])}`}>
+                {/* <Link href={`/creative/${tabindex == 0 ? (data?.customer?.username?.split(' ')[0].length>6?data?.customer?.username?.split(' ')[0].slice(0,6):data?.customer?.username?.split(' ')[0]) : (data?.sp?.username?.split(' ')[0].length>6?data?.sp?.username?.split(' ')[0].slice(0,6):data?.sp?.username?.split(' ')[0])}`}> */}
                     <div className="cursor-pointer">
                         <div className='flex gap-3 items-center'>
                             <img className='size-14 rounded-full object-cover object-top' src={tabindex == 0 ? data.customer.profileImage : data.sp.profileImage} alt="profile picture" />
@@ -107,14 +107,14 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                             </div>
                         </div>
                     </div>
-                </Link>
+                {/* </Link> */}
                 {/*********/}
 
                 {/* types */}
                 <div className='flex flex-wrap mt-4 gap-3'>
                     {
                         [data.contract.status, data.cycle].map((item, i) =>
-                            <span key={i} className={`flex flex-col h-full border-[1.5px] ${isCanceled ? 'border-[#FF4646]' : 'border-[#000000D9] dark:border-[#FFFFFFD9]'} rounded-full px-3 py-[6px] mb-8 ${isCanceled ? 'text-[#FF4646]' : 'text-[#000000D9] dark:text-[#FFFFFFD9]'} capitalize`}>
+                            <span key={i} className={`flex flex-col h-full border-[1.5px] ${isCanceled ? 'border-[#FF4646]' : 'border-[#000000D9] dark:border-[#FFFFFFD9]'} rounded-full px-3 py-[6px] ${((data.contract.status !== ('rejected'&&'accepted'))&& data.contract.totalPrice) && 'mb-8'} ${isCanceled ? 'text-[#FF4646]' : 'text-[#000000D9] dark:text-[#FFFFFFD9]'} capitalize`}>
                                 {item}
                             </span>
                         )
@@ -123,7 +123,8 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 {/*********/}
 
                 {/* deadline */}
-                <div className='flex gap-3 mt-3'>
+               
+                <div className={(data.contract.status !== ('rejected'&&'accepted'))?'flex gap-3 mt-3':''}>
                     {data.contract.totalPrice && 
                     <span className='text-[24px] md:text-[40px] flex items-center ml-3 gap-2'>
                         <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} flex gap-2`}>
@@ -132,13 +133,17 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                         </span>
                     </span>
                     }
+                    {(data.contract.status !== ('rejected'&&'accepted')) &&
+                    <>
                     <div className='h-auto w-[1px] bg-black opacity-15' />
                     <div className='text-start'>
                         <span className={`opacity-50 capitalize ${isCanceled ? 'text-[#FF4646]' : ''}`}>{t("deadline")}</span>
                         <br />
-                        <span className={`capitalize line-through opacity-60 ${isCanceled ? 'text-[#FF4646]' : ''}`}>{Deadline}</span>
+                        <span className={`capitalize opacity-60 ${isCanceled ? 'text-[#FF4646] line-through' : ''}`}>{Deadline}</span>
                     </div>
+                    </>}
                 </div>
+                
                 {/*********/}
             </div>
         </>

@@ -28,7 +28,7 @@ const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setI
     <div className='w-full h-full relative'>
     <video
       ref={audioRef}
-      controls
+      // controls
       autoPlay
       playsInline
       muted

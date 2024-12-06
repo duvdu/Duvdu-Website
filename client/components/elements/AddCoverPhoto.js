@@ -11,17 +11,17 @@ function AddCoverPhoto({ UpdateFormData, header,initalValue }) {
         UpdateFormData('cover', uploadedFile.file);
         setCover(URL.createObjectURL(uploadedFile.file));
     };
-
+    console.log(cover || initalValue)
     return (
         <>
             <input
-                id="file-upload"
+                id="my-new-file-upload"
                 type="file"
                 onChange={coverUpload}
                 className="hidden"
                 onClick={handleRemoveEvent}
             />
-            <label htmlFor="file-upload" className='rounded-full p-4  cursor-pointer'>
+            <label htmlFor="my-new-file-upload" className='rounded-full p-4  cursor-pointer'>
                 <div className='border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5'>
                     {cover || initalValue? (
                         <img src={cover || initalValue} alt="Uploaded Cover" className="mt-3 max-h-56 rounded-lg" style={{ maxWidth: '100%' }} />

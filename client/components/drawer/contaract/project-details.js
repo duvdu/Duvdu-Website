@@ -71,7 +71,7 @@ function ReceiveProjectFiles({
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [appointmentDate, setdAppointmentDate] = useState(null);
     const [actionAccept , setActionAccept] = useState(false)
-    console.log({contract})
+    console.log({paymentError , contract , actionError})
     const [canEdit, setCanEdit] = useState(null);
 
     const NormalState = ({ value }) => (
@@ -255,6 +255,10 @@ function ReceiveProjectFiles({
         const type = getType()
 
         const data = {}
+        if (type === 'producer'){
+            if(appointmentDate !== contract?.appointmentDate)
+            data['appointmentDate'] = appointmentDate
+        }
         if (type == "copyrights") {
             data['details'] = formData['details']
             data['totalPrice'] = formData['totalPrice']
@@ -266,13 +270,13 @@ function ReceiveProjectFiles({
         else {
             if (formData['numberOfUnits']) data['projectScale.numberOfUnits'] = formData['numberOfUnits'];
             if (formData['tools'] || formData['functions']) data['equipment'] = {}
-            if (formData['tools']) {
+            if (formData['tools'] && formData['tools'].length>0) {
                 data['equipment']['tools'] = formData['tools'].map((value) => ({
                     unitPrice: value.unitPrice,
                     id: value._id
                 }));
             }
-            if (formData['functions']) {
+            if (formData['functions']  && formData['functions'].length>0) {
                 data['equipment']['functions'] = formData['functions'].map((value) => ({
                     unitPrice: value.unitPrice,
                     id: value._id
@@ -327,12 +331,13 @@ function ReceiveProjectFiles({
         UpdateFormData(arrayName, newArray);
     };
 
-
+    console.log(status)
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
-    const canReview = (IsImSp() && status === "completed")
+    const canReview = (!IsImSp() && (status === "completed" || status === "accepted"))
     const canSubmitFile = (IsImSp() && status === "ongoing" &&  (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    console.log({appointmentDate ,a: contract?.appointmentDate , formData})
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -364,22 +369,22 @@ function ReceiveProjectFiles({
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
-            <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="Action" />
+            {/* <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="Action" /> */}
             <SuccessfullyPosting isShow={submitFileSuccess} onCancel={toggleDrawer} message="Submit File" />
             <RatingProject data={contract}/>
             <ReportContract data={contract} />
             <Uploading type={getType()} id={contractId.contract} />
             
-            <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>
+            <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name={t("booking details")} header={t("booking details")}>
                 {
                     contract_respond?.loading?
                     <DuvduLoading loadingIn={""} type={'contractDetails'}/>:
                     <>
                         <div className='flex flex-col justify-between h-drawer'>
                             <div className={`flex flex-col justify-start items-center px-0 gap-6 ${canEdit ? 'hidden' : ''}`}>
-                                <section>
+                                {/* <section>
                                     {uiStatus()}
-                                </section>
+                                </section> */}
                                 {
                                     (getType() == "project" || getType() == "rental") &&
                                     <section className='w-full flex-col'>
@@ -395,11 +400,21 @@ function ReceiveProjectFiles({
                                             </div>
                                         </div>
                                     </section>}
-                                <section className='w-full'>
+                                <section className='grid grid-cols-2 w-full'>
+                                <div>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("status")}</h2>
                                     <span className='font-semibold capitalize max-w-[543px]'>
-                                    {contract?.status}
+                                    {status}
                                     </span>
+                                </div>
+                                {status ==='rejected' && 
+                                <div>
+                                    <h2 className='opacity-60 capitalize mb-3'>{t("rejected by")}</h2>
+                                    <span className='font-semibold capitalize max-w-[543px]'>
+                                    {contract?.rejectedBy}
+                                    </span>
+                                </div>
+                                }
                                 </section>
 
                                 <section className='grid grid-cols-2 w-full'>
@@ -572,7 +587,7 @@ function ReceiveProjectFiles({
                                                 <h3 className="capitalize opacity-60 mb-4">{t("number Of Units")}</h3>
                                                 <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract?.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
                                             </section>
-                                            {formData?.tools.length>0 && 
+                                            {formData?.tools?.length>0 && 
                                             <>
                                             <div className='h-divider my-6' />
                                             <section>
@@ -598,7 +613,7 @@ function ReceiveProjectFiles({
                                             </section>
                                             </>
                                             }
-                                            {formData?.functions.length>0 && 
+                                            {formData?.functions?.length>0 && 
                                             <>
                                             <div className='h-divider my-6' />
                                             <section className='mb-4'>
@@ -627,19 +642,16 @@ function ReceiveProjectFiles({
                                         </>
                                     }
                                 </div>}
-                                {(paymentError || actionError) && 
+                                {(paymentError?.errors || actionError?.errors) && 
                                 <div className='text-center'>
-                                    <ErrorMessage ErrorMsg={paymentError}/>
-                                    <ErrorMessage ErrorMsg={actionError}/>
+                                    {paymentError?.errors && 
+                                    <ErrorMessage ErrorMsg={paymentError?.errors[0]?.message}/>
+                                    }
+                                    {actionError?.errors && 
+                                    <ErrorMessage ErrorMsg={actionError?.errors[0]?.message}/>
+                                    }
                                 </div>
                                 }
-                            {canReview &&
-                                <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={openReview}>
-                                        <span className='text-white font-bold capitalize text-lg'>{t("review")}</span>
-                                    </Button>
-                                </section>
-                            }
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
@@ -648,6 +660,13 @@ function ReceiveProjectFiles({
                                         :
                                         <span className='text-white font-bold capitalize text-lg'>{t("Update Appointment")}</span>
                                         }
+                                    </Button>
+                                </section>
+                            }
+                            {canReview &&
+                                <section className='flex mx-5 gap-7 justify-center'>
+                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={openReview}>
+                                        <span className='text-white font-bold capitalize text-lg'>{t("review")}</span>
                                     </Button>
                                 </section>
                             }
@@ -685,7 +704,7 @@ function ReceiveProjectFiles({
                                     </div>
                                     {
                                         !IsImSp() &&
-                                        status == "waiting-for-pay-10" &&
+                                        status == "waiting-for-pay-10"&&
                                         <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                             {payment_respond?.loading && actionAccept ? 
@@ -706,13 +725,19 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
-                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())||true} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())|| true} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 {payment_respond?.loading && actionAccept ? 
                                                     <Loading/>
                                                     :
                                                     <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 90 % )")}</span>
                                                 }
                                             </Button>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            {takeAction_respond?.loading && !actionAccept ? 
+                                                <Loading/>
+                                                :
+                                                t("Refuse")}
+                                            </button>
                                         </div>
                                     }
                                     {

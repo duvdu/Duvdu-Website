@@ -192,7 +192,7 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                     <section>
                         <h3 className="capitalize opacity-60 mb-4">{t("budget range")}</h3>
                         <div className="flex gap-2">
-                            <div className="border border-[#00000040] px-3 py-1 rounded-full"> {data.minBudget} to {data.maxBudget} </div>
+                            <div className="border border-[#00000040] px-3 py-1 rounded-full"> {data.minBudget} {t('to')} {data.maxBudget} </div>
                         </div>
                     </section>
 

@@ -34,7 +34,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
   useEffect(() => {
     if (login_respond?.message === 'success') {
       getMyprofile().then(() => {
-        if ((document.referrer === '/register' || document.referrer === '/forgetPassword' || document.referrer === '/login' )) {
+        if ((document.referrer.include('/register') || document.referrer === '/forgetPassword' || document.referrer === '/login' )) {
           router.push('/');
         } else {
           router.back();
@@ -116,7 +116,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
             <h1 className="auth-title">{t("Welcome Back !!")}</h1>
           </div>
           <div className={`mb-4 ${userNameError.isError && 'error'}`}>
-            <input autoComplete="on" type="text" value={username|| ""} onChange={(e) => setUsername(e.target.value.toLowerCase())} placeholder={t("phone or email or username")} className={userNameError.isError ? "app-field error" : "app-field"} />
+            <input autoComplete="on" type="text" value={username|| ""} onChange={(e) => setUsername(e.target.value)} placeholder={t("phone or email or username")} className={userNameError.isError ? "app-field error" : "app-field"} />
             {userNameError.isError && <p className="error-msg">{userNameError.message}</p>}
           </div>
           <div className={`${passwordError.isError && 'error'}`}>
