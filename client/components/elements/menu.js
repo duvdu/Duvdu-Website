@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
+import { useTranslation } from 'react-i18next';
 
 const MegaMenu = ({ language, api, categories }) => {
   return (
@@ -15,6 +16,8 @@ const MegaMenu = ({ language, api, categories }) => {
 
 const Category = ({ category, language }) => {
   const megaMenuRef = useRef(null);
+  const { t , i18n } = useTranslation();
+
   const router = useRouter();
 
   const adjustMenuPosition = () => {
@@ -27,7 +30,7 @@ const Category = ({ category, language }) => {
       //   megaMenuRef.current.style.right = '0px';
       // } else {
         // Apply language-based alignment for larger screens
-        if (language === 'English') {
+        if (i18n.language !== "Arabic") {
           const rightPosition = parseFloat(computedStyle.getPropertyValue('right'));
           if (rightPosition < 0) {
             megaMenuRef.current.style.right = '0px';

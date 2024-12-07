@@ -2,6 +2,8 @@ import React from "react";
 import Icon from '../../Icons';
 
 const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setIsAnimating}) => {
+  const [soundIconName, setSoundIconName] = React.useState('volume-xmark');
+  const [isMuted, setIsMuted] = React.useState(false);
   const togglePlayPause = () => {
     const audio = audioRef.current;
     if (isPlaying) {
@@ -24,6 +26,15 @@ const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setI
     }
   }, [audioRef.current]);
 
+  const handleSoundIconClick = () => {
+    setIsMuted(soundIconName === 'volume-xmark' ? true : false)
+    setSoundIconName(soundIconName === 'volume-xmark' ? 'volume-high' : 'volume-xmark')
+    if (audioRef.current) {
+        audioRef.current.muted = soundIconName === 'volume-high';
+    }
+
+  };
+
   return (
     <div className='w-full h-full relative'>
     <video
@@ -37,23 +48,27 @@ const VideoPlayer = ({ src, audioRef, isPlaying, setIsPlaying, isAnimating, setI
     >
       <source src={src} type='video/mp4' />
     </video>
+
+    <div onClick={handleSoundIconClick} className="absolute cursor-pointer top-[15px] blur-container sound p-2 left-[15px] z-[1]">
+        <Icon className={`h-4 ${soundIconName === "volume-xmark" ? 'text-white' : 'text-primary'}`} name={soundIconName} />
+    </div>
+    {(!isPlaying) &&
+    <div onClick={togglePlayPause} className="absolute cursor-pointer top-1/2 p-6 blur-container sound left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1]">
+        <Icon className={`h-4 w-4`} name={'play-video'} />
+    </div>
+    }
+    {(isAnimating && isPlaying) &&
+    <div onClick={togglePlayPause} className="absolute cursor-pointer animate-ping top-1/2 p-6 blur-container sound left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1]">
+        <Icon className={`animate-ping h-4 w-4`} name={'pause-video'} />
+    </div>
+    }
+      {(isPlaying) &&
     <div
-      className={`absolute inset-x-0 top-0 bottom-20 flex flex-row items-center justify-center ${isAnimating ? 'animate-ping' : ''}`}
+      className={`absolute cursor-pointer inset-x-0 top-0 bottom-20 flex flex-row items-center justify-center ${isAnimating ? 'animate-ping' : ''}`}
       onClick={togglePlayPause}
     >
-      {(isAnimating && isPlaying) &&
-        <div  className='top-1/2 left-1/2 translate-y-1/2 icon-pause rounded-full ps-10 p-7 size-16 flex flex-row items-center justify-center'>
-          <Icon className='text-white my-auto text-center'  name={"pause-video"} />
-        </div>
-      }
-   
-
-      {(!isPlaying) &&
-        <div className='top-1/2 left-1/2 translate-y-1/2 icon-pause rounded-full p-7 size-16 flex flex-row items-center justify-center'>
-          <Icon className='text-white ' name={"play-video"} />
-          </div>
-      }
     </div>
+      }
   </div>
 );
 };
