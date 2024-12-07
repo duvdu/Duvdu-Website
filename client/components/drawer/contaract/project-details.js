@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { toggleContractData } from '../../../redux/action/contractDetails';
 import dateFormat from "dateformat";
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
+import { acceptFiles } from '../../../redux/action/apis/contracts/acceptFiles';
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import { payment } from '../../../redux/action/apis/contracts/pay';
 import SelectDate from '../../elements/selectDate';
@@ -20,7 +21,7 @@ import TimeLeft from '../../pages/contracts/TimeLeft';
 import { RateContract } from '../../../redux/action/apis/rateContract';
 import { GetContract } from '../../../redux/action/apis/contracts/getOne';
 import RatingProject from '../../popsup/ratingProject';
-import { OpenPopUp,  } from '../../../util/util';
+import { OpenPopUp,ClosePopUp  } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
 import ProjectView from './ProjectView'
 import RentalView from './RentalView'
@@ -48,6 +49,9 @@ function ReceiveProjectFiles({
     InsertToArray,
     resetForm,
     submitFile_respond,
+    acceptFiles_respond,
+    acceptFiles,
+    report_respond,
     user }) {
     const router = useRouter();
     const contractId  = router.query
@@ -170,6 +174,7 @@ function ReceiveProjectFiles({
         if (submitFile_respond?.message) {
             getAllContracts()
             toggleDrawer()
+            ClosePopUp('uploading_project_files')
             setSubmitFileSuccess(true)
         }
     }, [submitFile_respond]);
@@ -202,6 +207,17 @@ function ReceiveProjectFiles({
             setPaymentSuccess(true)
         }
     }, [payment_respond]);
+    useEffect(() => {
+        if (acceptFiles_respond?.data || acceptFiles_respond?.message) {
+            toggleDrawer()
+        }
+    }, [acceptFiles_respond]);
+    useEffect(() => {
+        if (report_respond?.data || report_respond?.message) {
+            toggleDrawer()
+            ClosePopUp('report-contract')
+        }
+    }, [report_respond]);
 
     useEffect(() => {
         if (getType() == "producer") {
@@ -242,6 +258,11 @@ function ReceiveProjectFiles({
         const type = getType()
         takeAction({ id: contract?._id, data: true, type: type })
     };
+    const handleAcceptFiles = () => {
+        if (!contract_respond?.data?.ref) return
+        acceptFiles({ id: contract?._id, data:{reference: contract_respond?.data?.ref}})
+    };
+    
     const handleCancel = () => {
         setActionAccept(true)
         if (!contract_respond?.data?.ref) return
@@ -331,13 +352,12 @@ function ReceiveProjectFiles({
         UpdateFormData(arrayName, newArray);
     };
 
-    console.log(status)
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
     const canReview = (!IsImSp() && (status === "completed" || status === "accepted"))
-    const canSubmitFile = (IsImSp() && status === "ongoing" &&  (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
-    console.log({appointmentDate ,a: contract?.appointmentDate , formData})
+    const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    const canAnswerSubmitFile = (!IsImSp() &&  contract?.submitFiles?.link && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -776,6 +796,17 @@ function ReceiveProjectFiles({
                                         !status?.includes("waiting-for-pay") && false &&
                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">{t("Cancel")}</button>
                                     }
+                                    {canAnswerSubmitFile &&
+                                        <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                            <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={handleAcceptFiles}>
+                                                {acceptFiles_respond?.loading ?
+                                                    <Loading/>
+                                                :
+                                                    <span className='text-white font-bold capitalize text-lg'>{t("Accept Files")}</span>
+                                                }
+                                            </Button>
+                                        </section>
+                                    }
                                     {canSubmitFile && !contract?.submitFiles?.link && 
                                     <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                         <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#5666F7"}  onClick={openSubmitFiles}>
@@ -810,13 +841,16 @@ const mapStateToProps = (state) => ({
     payment_respond: state.api.payment,
     addprojectState: state.addproject,
     rateContract_respond: state.api.RateContract,
-    submitFile_respond:state.api.submitFile
+    submitFile_respond:state.api.submitFile,
+    acceptFiles_respond:state.api.acceptFiles,
+    report_respond: state.api.contractReport,
 
 });
 
 const mapDispatchToProps = {
     toggleContractData,
     takeAction,
+    acceptFiles,
     getAllContracts,
     payment,
     UpdateFormData,

@@ -15,11 +15,12 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import SocialLogin from "../components/pages/Login/SocialLogin";
 import Loading from '../components/elements/loading';
 
-function Login({ api, login_respond, login, resendCode, getMyprofile }) {
+function Login({ api, login_respond , getMyprofile_respond, login, resendCode, getMyprofile }) {
     const { t } = useTranslation();
     const { fcmToken,notificationPermissionStatus } = useFcmToken();
   
 
+  const [profileLoading, setProfileLoading] = useState(false);
   const [errorMSG, setErrorMSG] = useState(null);
   const router = useRouter();
 
@@ -33,6 +34,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
   var convertError = JSON.parse(login_respond?.error ?? null)
   useEffect(() => {
     if (login_respond?.message === 'success') {
+      setProfileLoading(true)
       getMyprofile().then(() => {
         if ((document.referrer.include('/register') || document.referrer === '/forgetPassword' || document.referrer === '/login' )) {
           router.push('/');
@@ -160,7 +162,7 @@ function Login({ api, login_respond, login, resendCode, getMyprofile }) {
           <div className="login_footer mb-4"></div>
 
           <button type="submit" className="mb-4 relative mb-30 w-full">
-            <Button name="login" shadow={true}>{login_respond?.loading ?<Loading/>:t("Login")}</Button>
+            <Button name="login" shadow={true}>{login_respond?.loading || (getMyprofile_respond?.loading && profileLoading) ?<Loading/>:t("Login")}</Button>
             <div className="submit-btn"></div>
           </button>
           <div className="have-account">
@@ -185,6 +187,7 @@ const mapStateToProps = (state) => ({
   api: state.api,
   login_respond: state.api.login,
   resendCode_respond: state.api.resendCode,
+  getMyprofile_respond: state.api.getMyprofile,
   user: state.auth
 });
 
