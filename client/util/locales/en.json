@@ -1,9 +1,17 @@
 {
 "dashboard":"dashboard",
 "category_description":"Explore new photography projects & discover talented creatives",
-"waiting-for-pay-10":"Waiting for pay 10",
-"waiting-for-payment":"waiting for payment",
 "phoneNumber.number is already exists":"Phone Number is already exists",
-"update-after-first-Payment":"update after first Payment",
-"waiting-for-total-payment":"waiting for total payment"
+"waiting-for-pay-10":"Waiting for Payment",
+"waiting-for-total-payment":"waiting for total payment",
+"canceled": "Canceled",
+"pending": "Pending",
+"waiting-for-first-payment": "First Payment",
+"waiting-for-payment": "Waiting for Payment",
+"update-after-first-payment": "Updates after First Payment",
+"accepted-with-update": "Rescheduled",
+"ongoing": "Ongoing",
+"completed": "Completed",
+"rejected": "Rejected",
+"complaint": "Complaint"
 }

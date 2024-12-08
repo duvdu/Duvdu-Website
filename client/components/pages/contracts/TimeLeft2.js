@@ -34,19 +34,20 @@ const TimeLeft2 = ({ data, msgstatus }) => {
 
 
     const days = Math.floor(calculatedTimeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(calculatedTimeLeft / (1000 * 60 * 60));
-    const minutes = Math.floor((calculatedTimeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((calculatedTimeLeft % (1000 * 60)) / 1000);
+    const hours = Math.floor((calculatedTimeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Hours after days
+    const minutes = Math.floor((calculatedTimeLeft % (1000 * 60 * 60)) / (1000 * 60)); // Minutes after hours
+    const seconds = Math.floor((calculatedTimeLeft % (1000 * 60)) / 1000); // Seconds after minutes
+
     return (
         <div className='text-lg ml-auto mr-auto'>
 
-            <span className='opacity-50 mx-1'>{t("remain time")}</span>
+            {/* <span className='opacity-50 mx-1'>
+            {t('left')} 
+            </span> */}
+            <span className='opacity-50 mx-1'>{t("left")}</span>
             <span className='text-primary'>
             {calculatedTimeLeft && calculatedTimeLeft >0?
             `${days}d ${hours}h ${minutes}m ${seconds}s`:'Expire Date'}
-            </span>
-            <span className='opacity-50 mx-1'>
-                for {msgstatus}
             </span>
                
         </div>

@@ -156,7 +156,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         if (submit)
             submit()
         const form = new FormData()
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments', 'tools', 'functions'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments', 'tools', 'functions' ,'location'])
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
                 const file = formData.attachments[i];
@@ -184,7 +184,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         UpdateFormData('location[lat]', location.lat)
         UpdateFormData('location[lng]', location.lng)
     };
-    console.log({formData ,data})
     const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
     return (
         <>
@@ -226,7 +225,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                         <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] border-8 aspect-square">
                                             <Icon className='text-primary w-4' name={"location-dot"} />
                                         </div>
-                                        <span className="pl-5 w-full">{t("New Yourk, USA")}</span>
+                                        <span className="ps-5 w-full">{t("New Yourk, USA")}</span>
                                         <Icon name={"angle-right"} className={"mr-2 w-2 text-primary"} />
                                     </div>
                                 </div>
@@ -297,7 +296,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary' name={"calendar"} />
                                             </div>
-                                            <div className="flex flex-col pl-5 w-full">
+                                            <div className="flex flex-col ps-5 w-full">
                                                 <span className="font-normal text-base capitalize">{t("Appointment Date")}</span>
                                                 <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
                                             </div>
@@ -309,7 +308,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary' name={"calendar"} />
                                             </div>
-                                            <div className="flex flex-col pl-5 w-full">
+                                            <div className="flex flex-col ps-5 w-full">
                                                 <span className="font-normal text-base capitalize">{t("Start Date")}</span>
                                                 <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
                                             </div>
@@ -321,7 +320,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                             <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
                                                 <Icon className='text-primary w-4' name={"location-dot"} />
                                             </div>
-                                            <div className="flex flex-col pl-5 w-full">
+                                            <div className="flex flex-col ps-5 w-full">
                                                 <span className="font-normal text-base capitalize">{t("project location")}</span>
                                                 <span className="font-normal text-base">{formData.address}</span>
                                             </div>

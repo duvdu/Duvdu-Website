@@ -63,37 +63,19 @@ export default function ProjectView({contract}){
         </div>
         }
     </section>   
-    <section className='grid grid-cols-2 w-full'>
-        {contract.firstPaymentAmount && 
-        <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("First Payment")}</h2>
-            <span className='font-semibold capitalize max-w-[543px]'>
-            {contract.firstPaymentAmount} {t('EGP')}
-            </span>
-        </div>
-        }
-        {contract.secondPaymentAmount && 
-        <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Second Payment")}</h2>
-            <span className='font-semibold max-w-[543px]'>
-            {contract.secondPaymentAmount} {t('EGP')}
-            </span>
-        </div>
-        }
-    </section>   
-    <section className='w-full'>
         {contract.details && 
-        <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
-            <span className='font-semibold max-w-[543px]'>
-            {contract.details}
-            </span>
-        </div>
-        }
+        <section className='w-full'>
+            <div>
+                <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
+                <span className='font-semibold max-w-[543px]'>
+                {contract.details}
+                </span>
+            </div>
         </section>   
+        }
 
-    <section className='grid grid-cols-2 w-full'>
         {contract?.tools?.length>0 && 
+    <section className='w-full'>
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Tools Used")}</h2>
             {contract?.tools?.map(item=>
@@ -102,8 +84,10 @@ export default function ProjectView({contract}){
             </div>
             )}
         </div>
+    </section>
         }
         {contract?.functions?.length>0 && 
+    <section className='w-full'>
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Functions Used")}</h2>
             {contract?.functions?.map(item=>
@@ -112,8 +96,28 @@ export default function ProjectView({contract}){
             </div>
             )}
         </div>
+    </section>
         }
-    </section>   
+        {(contract.firstPaymentAmount>0 || contract.secondPaymentAmount>0 ) && 
+        <section className='grid grid-cols-2 w-full'>
+            {contract.firstPaymentAmount>0 && 
+            <div>
+                <h2 className='opacity-60 capitalize mb-3'>{t("First Payment")}</h2>
+                <span className='font-semibold capitalize max-w-[543px]'>
+                {contract.firstPaymentAmount} {t('EGP')}
+                </span>
+            </div>
+            }
+            {contract.secondPaymentAmount>0 && 
+            <div>
+                <h2 className='opacity-60 capitalize mb-3'>{t("Second Payment")}</h2>
+                <span className='font-semibold max-w-[543px]'>
+                {contract.secondPaymentAmount} {t('EGP')}
+                </span>
+            </div>
+            }
+        </section>   
+        }
     <section className='grid grid-cols-2 w-full'>
             <div className='w-full '>
                 <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>

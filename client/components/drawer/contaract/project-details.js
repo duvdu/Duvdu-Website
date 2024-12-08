@@ -100,6 +100,7 @@ function ReceiveProjectFiles({
     }
 
     const uiStatus = () => {
+        
         const items = {
             status: status,
             stageExpiration: contract?.stageExpiration,
@@ -112,23 +113,25 @@ function ReceiveProjectFiles({
             case 'pending':
                 return <TimeLeft data={items} msgstatus={"pending"} />;
             case 'waiting-for-payment':
-                return <TimeLeft data={items} msgstatus={"waiting for payment"} />;
+                return getType() == "rental" && <TimeLeft data={items} msgstatus={status} />;
             case 'waiting-for-pay-10':
-                return <TimeLeft data={items} msgstatus={"waiting for pay 10"} />;
+                return (getType() == "project" || getType() == "copyrights")&& <TimeLeft data={items} msgstatus={status} />;
             case 'update-after-first-Payment':
-                return <TimeLeft data={items} msgstatus={"update after first Payment"} />;
+                return (getType() == "project" || getType() == "copyrights")&& <TimeLeft data={items} msgstatus={status} />;
             case 'waiting-for-total-payment':
-                return <TimeLeft data={items} msgstatus={"waiting for total payment"} />;
+                return (getType() == "project" || getType() == "copyrights" || getType()==='team')&&  <TimeLeft data={items} msgstatus={status} />;
+            case 'accepted-with-update':
+                return (getType() == "producer") && <TimeLeft data={items} msgstatus={status} />;
             case 'ongoing':
-                return <TimeLeft data={items} msgstatus={"complate task"} />;
-            case 'completed':
-                return <NormalState value={"Completed"} />;
-            case 'rejected':
-                return <NormalState value={"Rejected"} />;
-            case 'canceled':
-                return <NormalState value={"Canceled"} />;
-            case 'accepted':
-                return <NormalState value={"Accepted"} />;
+                return (getType() !== "producer") && <TimeLeft data={items} msgstatus={status} />;
+            // case 'completed':
+            //     return <NormalState value={"Completed"} />;
+            // case 'rejected':
+            //     return <NormalState value={"Rejected"} />;
+            // case 'canceled':
+            //     return <NormalState value={"Canceled"} />;
+            // case 'accepted':
+            //     return <NormalState value={"Accepted"} />;
             default:
                 return "";
         }
@@ -169,7 +172,7 @@ function ReceiveProjectFiles({
             toggleDrawer()
             setActionSuccess(true)
         }
-    }, [takeAction_respond]);
+    }, [takeAction_respond?.message]);
     useEffect(() => {
         if (submitFile_respond?.message) {
             getAllContracts()
@@ -177,7 +180,7 @@ function ReceiveProjectFiles({
             ClosePopUp('uploading_project_files')
             setSubmitFileSuccess(true)
         }
-    }, [submitFile_respond]);
+    }, [submitFile_respond?.message]);
     useEffect(() => {
         UpdateFormData("functions", contract?.functions)
         UpdateFormData("tools", contract?.tools)
@@ -206,18 +209,18 @@ function ReceiveProjectFiles({
             toggleDrawer()
             setPaymentSuccess(true)
         }
-    }, [payment_respond]);
+    }, [payment_respond?.data || payment_respond?.message]);
     useEffect(() => {
         if (acceptFiles_respond?.data || acceptFiles_respond?.message) {
             toggleDrawer()
         }
-    }, [acceptFiles_respond]);
+    }, [acceptFiles_respond?.data || acceptFiles_respond?.message]);
     useEffect(() => {
         if (report_respond?.data || report_respond?.message) {
             toggleDrawer()
             ClosePopUp('report-contract')
         }
-    }, [report_respond]);
+    }, [report_respond?.data || report_respond?.message]);
 
     useEffect(() => {
         if (getType() == "producer") {
@@ -356,8 +359,8 @@ function ReceiveProjectFiles({
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
     const canReview = (!IsImSp() && (status === "completed" || status === "accepted"))
-    const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
-    const canAnswerSubmitFile = (!IsImSp() &&  contract?.submitFiles?.link && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    const canSubmitFile = (IsImSp() && status === "ongoing" && !contract?.submitFiles?.link && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && contract?.submitFiles?.link && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -402,9 +405,9 @@ function ReceiveProjectFiles({
                     <>
                         <div className='flex flex-col justify-between h-drawer'>
                             <div className={`flex flex-col justify-start items-center px-0 gap-6 ${canEdit ? 'hidden' : ''}`}>
-                                {/* <section>
+                                <section>
                                     {uiStatus()}
-                                </section> */}
+                                </section>
                                 {
                                     (getType() == "project" || getType() == "rental") &&
                                     <section className='w-full flex-col'>
@@ -424,7 +427,7 @@ function ReceiveProjectFiles({
                                 <div>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("status")}</h2>
                                     <span className='font-semibold capitalize max-w-[543px]'>
-                                    {status}
+                                    {t(status)}
                                     </span>
                                 </div>
                                 {status ==='rejected' && 

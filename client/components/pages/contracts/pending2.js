@@ -10,6 +10,7 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
   
     const { t } = useTranslation();
     const [timeLeft, setTimeLeft] = useState("");
+    const status = data?.contract?.status
 
 
     const NormalState = ({ value }) => (
@@ -17,6 +18,18 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
             {value}
         </span>
     );
+    const getType = () => {
+        if (data?.ref.includes("copyright"))
+            return "copyrights"
+        else if (data?.ref.includes("rental"))
+            return "rental"
+        else if (data?.ref.includes("producer"))
+            return "producer"
+        else if (data?.ref.includes("project"))
+            return "project"
+        else if (data?.ref.includes("team"))
+            return "team"
+    }
 
     const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
     useEffect(() => {
@@ -43,34 +56,38 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
 
     const uiStatus = () => {
         const items = {
-            status: data.contract.status,
+            status: status,
             stageExpiration: data?.contract?.stageExpiration,
             deadline: data?.contract?.deadline,
             actionAt: data?.contract?.actionAt,
             createdAt: data?.contract?.createdAt,
         };
 
-        switch (items.status) {
+        switch (status) {
             case 'pending':
                 return <TimeLeft2 data={items} msgstatus={"pending"} />;
             case 'waiting-for-payment':
-                return <TimeLeft2 data={items} msgstatus={"waiting for payment"} />;
+                return getType() == "rental" && <TimeLeft2 data={items} msgstatus={"waiting for payment"} />;
             case 'waiting-for-pay-10':
-                return <TimeLeft2 data={items} msgstatus={"waiting for pay 10"} />;
+                return (getType() == "project" || getType() == "copyrights")&& <TimeLeft2 data={items} msgstatus={"waiting for pay 10"} />;
             case 'update-after-first-Payment':
-                return <TimeLeft2 data={items} msgstatus={"update after first Payment"} />;
+                return (getType() == "project" || getType() == "copyrights")&& <TimeLeft2 data={items} msgstatus={"update after first Payment"} />;
             case 'waiting-for-total-payment':
-                return <TimeLeft2 data={items} msgstatus={"waiting for total payment"} />;
+                return (getType() == "project" || getType() == "copyrights" || getType()==='team')&&  <TimeLeft2 data={items} msgstatus={"waiting for total payment"} />;
+            case 'accepted-with-update':
+                return (getType() == "producer") && <TimeLeft2 data={items} msgstatus={"complate task"} />;
             case 'ongoing':
-                return <TimeLeft2 data={items} msgstatus={"complate task"} />;
-            case 'completed':
-                return <NormalState value={"Completed"} />;
-            case 'rejected':
-                return <NormalState value={"Rejected"} />;
-            case 'canceled':
-                return <NormalState value={"Canceled"} />;
+                return (getType() !== "producer") && <TimeLeft2 data={items} msgstatus={"complate task"} />;
+            // case 'completed':
+            //     return <NormalState value={"Completed"} />;
+            // case 'rejected':
+            //     return <NormalState value={"Rejected"} />;
+            // case 'canceled':
+            //     return <NormalState value={"Canceled"} />;
+            // case 'accepted':
+            //     return <NormalState value={"Accepted"} />;
             default:
-                return "Unknown"; // Handle unknown cases as needed
+                return "";
         }
     };
 

@@ -32,7 +32,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             case 'ongoing':
                 return 1;
             case 'completed':
-                return -1;
+                return -2;
             case 'accepted':
                 return -2;    
             case 'rejected':
@@ -67,7 +67,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
 
     const HisTory = ({ data, isCanceled,router }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
-        console.log(data)
+        const { t } = useTranslation();
         return <>
             {/* max-w-[370px] ahmed */}
             <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4 cursor-pointer'
@@ -115,7 +115,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                     {
                         [data.contract.status, data.cycle].map((item, i) =>
                             <span key={i} className={`flex flex-col h-full border-[1.5px] ${isCanceled ? 'border-[#FF4646]' : 'border-[#000000D9] dark:border-[#FFFFFFD9]'} rounded-full px-3 py-[6px] ${((data.contract.status !== ('rejected'&&'accepted'))&& data.contract.totalPrice) && 'mb-8'} ${isCanceled ? 'text-[#FF4646]' : 'text-[#000000D9] dark:text-[#FFFFFFD9]'} capitalize`}>
-                                {item}
+                                {t(item)}
                             </span>
                         )
                     }

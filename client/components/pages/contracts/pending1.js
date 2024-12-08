@@ -61,28 +61,32 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
 
         switch (status) {
             case 'pending':
-                return <TimeLeft data={items} msgstatus={"pending"} />;
+                return <TimeLeft data={items} msgstatus={status}/>;
             case 'waiting-for-payment':
-                return <TimeLeft data={items} msgstatus={"waiting for payment"} />;
+                return getType() == "rental" && <TimeLeft data={items} msgstatus={status} />;
             case 'waiting-for-pay-10':
-                return <TimeLeft data={items} msgstatus={"waiting for pay 10"} />;
+                return (getType() == "project" || getType() == "copyrights")&& <TimeLeft data={items} msgstatus={status} />;
             case 'update-after-first-Payment':
-                return <TimeLeft data={items} msgstatus={"update after first Payment"} />;
+                return (getType() == "project" || getType() == "copyrights")&& <TimeLeft data={items} msgstatus={status} />;
             case 'waiting-for-total-payment':
-                return <TimeLeft data={items} msgstatus={"waiting for total payment"} />;
+                return (getType() == "project" || getType() == "copyrights" || getType()==='team')&&  <TimeLeft data={items} msgstatus={status} />;
+            case 'accepted-with-update':
+                return (getType() == "producer") && <TimeLeft data={items} msgstatus={status} />;
             case 'ongoing':
-                return <TimeLeft data={items} msgstatus={"complate task"} />;
-            case 'completed':
-                return <NormalState value={"Completed"} />;
-            case 'rejected':
-                return <NormalState value={"Rejected"} />;
-            case 'canceled':
-                return <NormalState value={"Canceled"} />;
+                return (getType() !== "producer") && <TimeLeft data={items} msgstatus={status} />;
+            // case 'completed':
+            //     return <NormalState value={"Completed"} />;
+            // case 'rejected':
+            //     return <NormalState value={"Rejected"} />;
+            // case 'canceled':
+            //     return <NormalState value={"Canceled"} />;
+            // case 'accepted':
+            //     return <NormalState value={"Accepted"} />;
             default:
-                return "Unknown"; // Handle unknown cases as needed
+                return "";
         }
     };
-
+    
     const getType = () => {
         if (data?.ref.includes("copyright"))
             return "copyrights"
