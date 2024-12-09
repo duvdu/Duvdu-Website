@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 import Drawer from "../../elements/drawer";
 import { CreateProject } from "../../../redux/action/apis/cycles/projects/create";
-import CategorySelection from "./assets/CategorySelection";
+import CategorySelection from "./assets/projectCategorySelection";
 import AddAttachment from "../../elements/attachment";
 import GoogleMap from "../../elements/googleMap";
 import PopupErrorMessage from '../../elements/PopupErrorMessage';
@@ -58,7 +58,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         const data = new FormData();
 
         // Append simple string and number values directly from the state
-        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments','subCategoryId', 'location', 'tools','tagsId', 'creatives','invitedCreatives' , 'searchKeywords','audioCover', 'functions'])
+        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments','subCategoryId', 'location', 'tools','tagsId', 'creatives','invitedCreatives' , 'searchKeywords','audioCover', 'functions' , 'relatedCategory' , 'relatedSubCategory','relatedTags'])
         // data.append('projectBudget', formData.projectBudget);
         // data.append('projectScale[scale]', formData.duration);
         // if(formData.subCategoryId?.length===0) delete formData.subCategoryId;
@@ -70,6 +70,14 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (formData.tagsId)
             formData.tagsId.forEach((tag, index) => {
                 data.append(`tagsId[${index}]`, tag);
+            });
+        if(formData.relatedCategory)
+            data.append('relatedCategory[0][category]',formData.relatedCategory)
+        if(formData.relatedSubCategory)
+            data.append('relatedCategory[0][subCategories][0][subCategory]',formData.relatedSubCategory)
+        if (formData.relatedTags.length>0)
+            formData.relatedTags.forEach((tag, index) => {
+                data.append(`relatedCategory[0][subCategories][0][tags][${index}][tag]`, tag);
             });
             
         if (formData.searchKeywords)
@@ -237,11 +245,17 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                         'category': formData.category,
                                         'subCategoryId': formData.subCategoryId,
                                         'tagsId': formData.tagsId,
+                                        'relatedCategory': formData.relatedCategory,
+                                        'relatedSubCategory':formData.relatedSubCategory,
+                                        'relatedTags': formData.relatedTags
                                     }}
                                     onChange={(value) => {
                                         UpdateFormData('category', value.category)
                                         UpdateFormData('subCategoryId', value.subCategory)
                                         UpdateFormData('tagsId', value.tags)
+                                        UpdateFormData('relatedCategory', value.relatedCategory)
+                                        UpdateFormData('relatedSubCategory', value.relatedSubCategory)
+                                        UpdateFormData('relatedTags', value.relatedTags)
                                     }}
                                 />
                                 <ErrorMessage ErrorMsg={ErrorMsg.category}/>
