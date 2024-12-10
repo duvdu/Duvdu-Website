@@ -27,7 +27,6 @@ const RelatedCategories = ({ className, NeedTranslate = true, categories, querie
             query: newQuery,
         });
     };
-    console.log(categoriesInCycle)
     return ( subCategories.length>0 &&
         <div className={className + (NeedTranslate ? " h-26 -translate-y-8" : "")}>
             <h2 className="opacity-70 font-semibold text-lg lg:mt-6 capitalize">{t("Related Categories")}</h2>
