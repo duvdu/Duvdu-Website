@@ -15,22 +15,22 @@ const RelatedCategories = ({ className, NeedTranslate = true, categories, querie
         ? categories.filter(cat => cat._id === category)
         : categories.filter(cat => cat.cycle === cycle);
     
-    const subCategories = categoriesInCycle.flatMap(cat => cat.subCategories) || [];
+    const subCategories = categoriesInCycle.flatMap(cat => cat.relatedCategory) || [];
     
     const handleNavigation = (subCategoryId) => {
         const newQuery = { ...router.query };
         if (subCategoryId) {
-            newQuery.subCategory = subCategoryId;
+            newQuery.relatedCategory = subCategoryId;
         }
         router.push({
             pathname: `/${cycle}`,
             query: newQuery,
         });
     };
-
-    return (
+    console.log(categoriesInCycle)
+    return ( subCategories.length>0 &&
         <div className={className + (NeedTranslate ? " h-26 -translate-y-8" : "")}>
-            <h2 className="opacity-70 font-semibold text-lg lg:mt-6 capitalize">{t("Related subCategories")}</h2>
+            <h2 className="opacity-70 font-semibold text-lg lg:mt-6 capitalize">{t("Related Categories")}</h2>
             <div className="mt-4 relative">
                 <DraggableList>
                     {subCategories.map((item, index) => (

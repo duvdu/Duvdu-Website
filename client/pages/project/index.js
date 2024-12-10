@@ -26,7 +26,7 @@ const Projects = ({ projects, GetProjects, api }) => {
     const [limit, setLimit] = useState(showLimit);
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
+    const { category, subCategory, relatedCategory,tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -51,6 +51,10 @@ const Projects = ({ projects, GetProjects, api }) => {
             // Include the query parameters from the URL if they exist
             if (category) params.category = category;
             if (subCategory) params.subCategory = subCategory;
+            if (relatedCategory) {
+                params['relatedCategory[0]'] = relatedCategory;
+            }
+    
             if (tag) params.tag = tag;
             if (priceFrom) params.minBudget = priceFrom;
             if (priceTo) params.maxBudget = priceTo;
@@ -62,11 +66,13 @@ const Projects = ({ projects, GetProjects, api }) => {
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
             // Call GetCopyrights with the constructed query string
+            console.log(queryString)
+
             if(queryString && Router.isReady){
                 GetProjects(queryString);
             }
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, keywords]);
+    }, [limit, searchTerm, page, category, subCategory, tag,relatedCategory, priceFrom, priceTo, duration, instant, keywords]);
 
     useEffect(() => {
         const handleScroll = () => {
