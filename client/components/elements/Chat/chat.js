@@ -53,6 +53,20 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const [socket, setSocket] = useState(null);
     const [newMessage, setNewMessage] = useState('');
 
+
+        const videoRef = useRef(null);
+        useEffect(() => {
+            if (videoRef.current) {
+                videoRef.current.play();
+                videoRef.current.muted = true;     
+                const timeout = setTimeout(() => {
+                    videoRef.current.pause();
+                    videoRef.current.currentTime = 0;
+                }, 300); 
+                return () => clearTimeout(timeout);
+            }
+        }, [videoRef.current]);
+    
     useEffect(() => {
       const socketInstance = io(process.env.BASE_URL, {
         withCredentials: true,
@@ -330,7 +344,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                                     case file.fileType.includes('video'):
                                         return (
                                             <div key={index} className="size-72 text-gray-400">
-                                                <video controls>
+                                                <video ref={videoRef} autoPlay muted playsInline controls>
                                                     <source src={URL.createObjectURL(file.file)} type={file.fileType} />{t("Your browser does not support the video tag.")}</video>
                                             </div>
                                         );
