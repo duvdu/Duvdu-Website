@@ -65,13 +65,13 @@ const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDra
                 onSelect={handleSelectCategory}
                 isSelected={selectedCategories}
             />
-            <div className='h-12' />
+            {/* <div className='h-12' />
             {categoryTitles.length > 0 && (
                 <AppButton onClick={handleApplyClick} className='hidden md:block h-[60px]' contentClassName='text-base'>
                 {t("Apply")}
 
                 </AppButton>
-            )}
+            )} */}
         </FilterContainer>
     );
 };

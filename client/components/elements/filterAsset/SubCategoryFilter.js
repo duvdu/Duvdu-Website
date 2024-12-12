@@ -59,13 +59,13 @@ const SubCategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggle
                 onSelect={handleSelectSubCategory}
                 isSelected={selectedSubCategories}
             />
-            <div className='h-12' />
+            {/* <div className='h-12' />
             {filteredSubCategories.length > 0 && (
                 <AppButton onClick={handleApplyClick} className='hidden md:block h-[60px]' contentClassName='text-base'>
                 {t("Apply")}
 
                 </AppButton>
-            )}
+            )} */}
         </FilterContainer>
     );
 };

@@ -262,8 +262,9 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
             setParams(queryString)
 
     };
-    const clearAllQueries = () => {
-        router.push(router.pathname, undefined, { shallow: true });
+    const clearAllQueries = () => {    
+        const clearRouter = `?category=${router.query.category}`
+        router.push(router.query.category?clearRouter:router.pathname, undefined , { shallow: true });
         setClearFilter(true)
     };
 
@@ -360,9 +361,9 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
             <Drawer isOpen={mobileFiltersVisible} toggleDrawer={toggleMobileFilters} name={t("filter")} padding={false}>
                 <div className="flex flex-col gap-2 mt-2 bg-white dark:bg-black">
 
-                    <div className="flex items-center m-4 gap-2">
+                    <div className="flex justify-between items-center m-4 gap-2">
                         {cycle === "project" && (
-                            <>
+                            <div className='flex items-center gap-2'>
                                 <Switch
                                     defaultValue={switchState?.priceInclusive}
                                     onSwitchChange={handleSwitchChange('priceInclusive')}
@@ -370,8 +371,16 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                                     clearFilter={clearFilter}        
                                 />
                                 <span className="opacity-70 font-semibold">{t("price is inclusive")}</span>
-                            </>
+                            </div>
                         )}
+                        <div className="relative">
+                            <button
+                                className="flex gap-2 items-center border border-[#E6E6E6] dark:border-gray-700 rounded-xl py-2 px-3 text-DS_black dark:text-white appearance-none w-min cursor-pointer bg-white dark:bg-gray-900"
+                                onClick={clearAllQueries}
+                            >
+                                <Icon name={"refresh"} className='dark:text-white' />
+                            </button>
+                        </div>
                     </div>
 
                     {filterData.map(({ value, name }) => (

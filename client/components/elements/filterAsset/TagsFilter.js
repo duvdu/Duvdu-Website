@@ -66,12 +66,12 @@ const Tags = ({ categories, cycle , onSelect, onFilterChange,toggleDrawer , clea
                 onSelect={handleSelectTag}
                 isSelected={selectedTags}
             />
-            <div className='h-12' />
+            {/* <div className='h-12' />
             {tagTitles.length > 0 && (
                 <AppButton onClick={handleApplyClick} className='hidden md:block h-[60px]' contentClassName='text-base'>
                     {t("Apply")}
                 </AppButton>
-            )}
+            )} */}
         </FilterContainer>
     );
 };

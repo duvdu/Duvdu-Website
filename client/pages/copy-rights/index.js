@@ -123,7 +123,7 @@ const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
 
                     <Filter setSwitchState={setSwitchState} switchState={switchState} cycle={cycle} setParams={setParams} />
                     <div className="h-7" />
-                    {<RelatedCategories className=" col-span-full" />}
+                    {/* {<RelatedCategories className=" col-span-full" />} */}
                         {CopyRight?.length === 0 ?
                             <div className='mt-4'>
                                 <EmptyComponent message="No CopyRight Now" />
@@ -132,7 +132,7 @@ const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
                         }
                         {respond?.loading?
                        <DuvduLoading loadingIn={""} type='category'/>:    
-                       <div className="grid grid-cols-3 gap-5">
+                       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                             {CopyRight?.map((item, i) =>
                                 <CopyRightCard QueryString={QueryString} key={i} onClick={() => handlesetdata(item)} cardData={item} />
                             )}

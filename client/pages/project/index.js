@@ -103,7 +103,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                             {/* // searchTerm && */}
                             <Filter cycle={cycle} setSwitchState={setSwitchState} switchState={switchState} setParams={setParams} />
                         <div className="h-7" />
-                        {<RelatedCategories className=" col-span-full" />}
+                        {Router.query.category && <RelatedCategories className=" col-span-full" />}
                         {projectsList?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}

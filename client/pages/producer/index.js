@@ -126,7 +126,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin })
 
                     <Filter setSwitchState={setSwitchState} switchState={switchState} cycle={cycle} setParams={setParams} />
                     <div className="h-7" />
-                    {<RelatedCategories className=" col-span-full" />}
+                    {/* {<RelatedCategories className=" col-span-full" />} */}
 
                         {producers?.length > 0 &&
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
