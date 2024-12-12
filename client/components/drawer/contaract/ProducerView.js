@@ -45,7 +45,7 @@ export default function ProducerView({contract}){
       };   
     
     return <>
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
         {contract.platform && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Platform")}</h2>
@@ -65,7 +65,7 @@ export default function ProducerView({contract}){
         </div>
         }
     </section>
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
         {contract.episodesNumber && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episodes Number")}</h2>
@@ -83,7 +83,7 @@ export default function ProducerView({contract}){
         </div>
         }
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
         {contract.expectedBudget && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Episode budget")}</h2>
@@ -101,7 +101,7 @@ export default function ProducerView({contract}){
         </div>
         }
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full '>
                 <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>
                 <div className='flex gap-4'>

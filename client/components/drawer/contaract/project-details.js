@@ -423,7 +423,7 @@ function ReceiveProjectFiles({
                                             </div>
                                         </div>
                                     </section>}
-                                <section className='grid grid-cols-2 w-full'>
+                                <section className='grid md:grid-cols-2 w-full'>
                                 <div>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("status")}</h2>
                                     <span className='font-semibold capitalize max-w-[543px]'>
@@ -440,7 +440,7 @@ function ReceiveProjectFiles({
                                 }
                                 </section>
 
-                                <section className='grid grid-cols-2 w-full'>
+                                <section className='grid md:grid-cols-2 w-full'>
                                 {contract_respond?.data?.ref &&
                                     <div>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("contract type")}</h2>

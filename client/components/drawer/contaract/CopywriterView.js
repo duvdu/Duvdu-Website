@@ -45,7 +45,7 @@ export default function CopywriterView({contract}){
       };   
     
     return <>
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
         {contract.totalPrice &&
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
@@ -63,7 +63,7 @@ export default function CopywriterView({contract}){
         </div>
         }
     </section>   
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
         {contract.firstPaymentAmount && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("First Payment")}</h2>
@@ -91,7 +91,7 @@ export default function CopywriterView({contract}){
         </div>
     </section>   
     }
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full '>
                 <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>
                 <div className='flex gap-4'>
@@ -116,7 +116,7 @@ export default function CopywriterView({contract}){
                 </div>
             </div>
     </section>
-    <section className='grid grid-cols-2 w-full'>
+    <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full'>
                 <h2 className='opacity-60 capitalize mb-3'>{t("Booking Date")}</h2>
                 <div className='flex gap-4'>
