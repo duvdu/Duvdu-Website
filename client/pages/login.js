@@ -36,7 +36,7 @@ function Login({ api, login_respond , getMyprofile_respond, login, resendCode, g
     if (login_respond?.message === 'success') {
       setProfileLoading(true)
       getMyprofile().then(() => {
-        if ((document.referrer.include('/register') || document.referrer === '/forgetPassword' || document.referrer === '/login' )) {
+        if ((document.referrer==='/register' || document.referrer === '/forgetPassword' || document.referrer === '/login' )) {
           router.push('/');
         } else {
           router.back();
