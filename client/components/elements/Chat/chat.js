@@ -64,7 +64,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
       // Listen to a sample event from the server
       socketInstance.on('new_message', (data) => {
         // console.log('Message received from server:', data);
-        console.log(data)
         if(data.data.sourceUser._id === messages._id)
         setNewMessage(data); // Set the message in the state
       });
@@ -348,6 +347,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
                         </div>
                     }
+                    {chat_respond?.user?.canChat === true && 
 
                     <div className="flex justify-end items-center w-full gap-2 p-3 absolute bottom-0 backdrop-blur-md">
                         <AudioRecorder
@@ -402,6 +402,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                         }
 
                     </div>
+                    }
                 </div>}
         </div>
 
