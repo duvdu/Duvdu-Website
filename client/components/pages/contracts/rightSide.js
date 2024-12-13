@@ -43,7 +43,6 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
     }
     const data = getAllContracts_respond?.
         data?.filter(data => handleStatus(data.contract.status) < 0 && (tabindex == 0 ? data.sp.username == user?.username : data.sp.username != user?.username))
-    console.log(data)
     // useEffect(() => {
     //     const _data = data.filter(value => tabindex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
     //     setData(_data)

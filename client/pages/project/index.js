@@ -66,8 +66,6 @@ const Projects = ({ projects, GetProjects, api }) => {
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
             // Call GetCopyrights with the constructed query string
-            console.log(queryString)
-
             if(queryString && Router.isReady){
                 GetProjects(queryString);
             }

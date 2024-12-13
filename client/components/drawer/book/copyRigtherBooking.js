@@ -82,7 +82,9 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
         setPost_success(false)
         resetForm()
         toggleDrawer()
-        ontoggleDrawer()
+        setPreview(false)
+        setValidFormCheck(false)
+        // ontoggleDrawer()
     }
     
     var convertError = JSON.parse(bookCopyrights_respond?.error ?? null)

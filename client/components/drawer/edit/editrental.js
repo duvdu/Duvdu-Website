@@ -230,7 +230,6 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         setIsOpenEdit(false)
         Getstudio(studioId)
     }
-    console.log({data:data.tags.map(item => item._id)})
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />

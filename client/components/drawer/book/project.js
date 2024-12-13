@@ -58,7 +58,6 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                 return total;
             }, 0);
         }
-        console.log(pricePerUnit + toolsCost + functionsCost)
 
         // Calculate the total price
         const totalPrice = (pricePerUnit + toolsCost + functionsCost) * numberOfUnits;
@@ -103,7 +102,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     // let ErrorMsg = ""
     // if(!enableBtn) ErrorMsg = Object.values(validateRequiredFields())[0]
 
-    function ontoggleDrawer(all) {
+    function ontoggleDrawer() {
         if (preview)
             setPreview(false)
         else if (openMap)
@@ -122,7 +121,10 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         setErrorMsg({})
         resetForm()
         toggleDrawer()
-        ontoggleDrawer()
+        setPreview(false)
+        setValidFormCheck(false)
+        // ontoggleDrawer()
+
     }
 
     useEffect(() => {
@@ -185,6 +187,10 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         UpdateFormData('location[lng]', location.lng)
     };
     const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
+    if (!isOpen) {
+        return <Drawer name={data.user.name?.split(' ')[0].length>6?data.user.name?.split(' ')[0].slice(0,6):data.user.name?.split(' ')[0]} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
+        </Drawer >
+    }
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />

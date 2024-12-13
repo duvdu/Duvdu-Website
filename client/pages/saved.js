@@ -66,7 +66,7 @@ const Saved = ({
                 <DeleteBoard onClick={deleteSavedBoard} id={id} />
                 <EditBoard id={id} onSbmit={(v) => UpdateBoard(v, id)} defultValue={{title , image:img1}} />
                 <div className="boards-card h-[400px]">
-                    <div className="absolute top-7 right-7" onClick={handleSelectClick}>
+                    <div className="absolute top-7 end-7" onClick={handleSelectClick}>
                         {!isFav &&
                             <Selector options={dropdown} onSelect={handleDropdownSelect}>
                                 <div className="border rounded-full size-9 flex justify-center items-center">

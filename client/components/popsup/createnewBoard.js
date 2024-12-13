@@ -19,13 +19,14 @@ function createnewBoard({onSbmit , loading}) {
         }
     };
     const toggleDirectorConfirmed = () => {
-        setBoardName('')
-        setFile(null)
         const formData = new FormData();
         formData.append('title' , board)
         if(file)
             formData.append('image' , file)
-        onSbmit?.(formData);
+        onSbmit?.(formData).then(()=>{
+            setBoardName('')
+            setFile(null)
+        });
     }
     const profileUpload = (e) => {
         const file = handleFileUpload(e)?.file;
@@ -48,13 +49,14 @@ function createnewBoard({onSbmit , loading}) {
     return (
         <>
             <Popup id="create-new-board" header={"create new bookmark"} >
-                <div method="post" onSubmit={handleSubmit} className='mt-12 w-96'>
+                <div method="post" onSubmit={handleSubmit} className='mt-12 w-full md:w-96'>
                     <div className={`mb-12 ${boardError.isError && 'error'}`}>
+
                     <section>
                             <label htmlFor="file-upload" >
                                 <div className={`border-dashed border border-[#CACACA] flex flex-col items-center justify-center rounded-3xl py-6 mt-5 bg-white dark:bg-[#1A2024] ${prev ? "" : "aspect-square"}`}>
-                                    <div className='rounded-full size-14 flex justify-center items-center bg-[#F5F5F5]'>
-                                        <Icon name={"add-file"} className='size-7' />
+                                    <div className='rounded-full p-4 cursor-pointer flex justify-center items-center bg-[#F5F5F5]'>
+                                        <Icon name={"add-file"} className='size-6' />
                                     </div>
                                     <span className="text-primary text-sm font-bold mt-3">Click to {prev ? 'Change' : 'Upload'}</span>
                                 </div>

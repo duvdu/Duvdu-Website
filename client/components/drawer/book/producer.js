@@ -46,6 +46,7 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
     function reset() {
         BookProducer(null)
         setPost_success(false)
+        setValidFormCheck(false)
         resetForm()
         if (isOpen)
             toggleDrawer()
@@ -121,7 +122,10 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
     },[respond?.error])
     // const inputStyle = "bg-transparent text-lg py-4 focus:border-b-primary border-b w-full placeholder:capitalize placeholder:focus:opacity-50 pl-2";
     const inputStyle = "bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 p-5 w-full";
-    
+    if (!isOpen) {
+        return <Drawer name={data.user?.name?.split(' ')[0].length>6?data.user?.name?.split(' ')[0].slice(0,6):data.user?.name?.split(' ')[0]} img={data.user?.img} isOpen={isOpen} toggleDrawer={reset} className="overflow-scroll">
+        </Drawer >
+    }
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />

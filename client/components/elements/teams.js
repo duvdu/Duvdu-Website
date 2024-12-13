@@ -10,7 +10,6 @@ const BookTeam = ({ team,current, onChange ,pricerPerUnit, mainremovable = true 
     };
     useEffect(() => setLocalTeam(team) , [])
     useEffect(() => onChange?.(localteam?.map((i)=> i._id)) , [localteam])
-    console.log(localteam)
     return (
         localteam &&
         localteam.map((item, i) => (

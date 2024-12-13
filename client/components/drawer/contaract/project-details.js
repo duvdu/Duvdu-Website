@@ -75,7 +75,6 @@ function ReceiveProjectFiles({
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [appointmentDate, setdAppointmentDate] = useState(null);
     const [actionAccept , setActionAccept] = useState(false)
-    console.log({paymentError , contract , actionError})
     const [canEdit, setCanEdit] = useState(null);
 
     const NormalState = ({ value }) => (

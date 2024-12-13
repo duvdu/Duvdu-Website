@@ -96,7 +96,6 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
             _id: ''
         })
     }
-    console.log({searchTo})
     return (
         <>
             <Comman id={"addOtherCreatives"} header={"Add Other Creatives"} onCancel={onCancel}>

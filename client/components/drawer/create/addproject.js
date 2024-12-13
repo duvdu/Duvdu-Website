@@ -157,7 +157,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
         return errors;
     };
-    console.log(formData)
     const CheckNext=()=>{
         setValidFormCheck(true)
         setErrorPopup(true)

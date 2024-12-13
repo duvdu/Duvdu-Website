@@ -52,7 +52,7 @@ function EditBoard({onSbmit ,id , defultValue}) {
     return (
         <>
             <Popup id={"edit-board-"+id} header={"Edit Bookmark Title"} >
-                <form method="patch" onSubmit={handleSubmit} className='mt-12 w-96'>
+                <form method="patch" onSubmit={handleSubmit} className='mt-12 w-full md:w-96'>
                     <div className={`mb-12 ${boardError.isError && 'error'}`}>
                     <section className='relative'>
                             <label htmlFor="edit-file-upload" >

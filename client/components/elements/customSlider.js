@@ -26,7 +26,6 @@ function CustomSlider({ minimum = 0,initValue=0, values, onValueChange }) {
             sliderAfter.style.width = sliderRect.width - stopin + 'px';
             sliderBefore.style.width = stopin + 'px';
             const currentValue = Math.round(left / part) + minimum;
-            console.log(currentValue)
             setValue(currentValue);
         };
 
@@ -89,12 +88,10 @@ function CustomSlider({ minimum = 0,initValue=0, values, onValueChange }) {
 }
 
 const Ruler = ({ startIndex, endIndex }) => {
-    console.log({startIndex, endIndex})
     endIndex = endIndex * 2 + 1;
     startIndex = startIndex * 2 + 1;
     const step = (endIndex - startIndex) / 10;
     const ruler = Array.from({ length: 11 }, (_, index) => index * step + startIndex);
-    console.log({ruler})
     return (
         <div className="flex justify-between mt-3">
             {ruler.map((num) => (

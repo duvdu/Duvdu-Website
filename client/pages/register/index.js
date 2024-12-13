@@ -193,7 +193,6 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    console.log(formData)
     return (
         <Auth>
             <form method="post" onSubmit={handleSubmit}>

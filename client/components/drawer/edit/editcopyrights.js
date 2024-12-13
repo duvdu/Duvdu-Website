@@ -20,7 +20,6 @@ import { GetCopyrights } from '../../../redux/action/apis/cycles/copywriter/get'
 const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, QueryString, respond, data,isOpen, auth,id, update_respond,setIsOpenEdit, UpdateFormData, addprojectState, categories, resetForm }) => {
     const { t } = useTranslation();
     const formData = addprojectState.formData;
-    console.log({data , formData})
     const router = useRouter();
     const [validFormCheck, setValidFormCheck] = useState(false);
     const [ErrorMsg, setErrorMsg] = useState({});
@@ -79,7 +78,6 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
                 lng:formData.location.lng
             }   
         };
-        console.log({UpdatedData})
         return UpdatedData;
     }
 

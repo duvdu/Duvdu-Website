@@ -11,7 +11,6 @@ function AddCoverPhoto({ UpdateFormData, header,initalValue }) {
         UpdateFormData('cover', uploadedFile.file);
         setCover(URL.createObjectURL(uploadedFile.file));
     };
-    console.log(cover || initalValue)
     return (
         <>
             <input
