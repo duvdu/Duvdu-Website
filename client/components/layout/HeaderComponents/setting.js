@@ -21,6 +21,7 @@ function Setting({
     LogOut,
     user,
     updateProfile,
+    onChoose,
     updateProfile_respond
 
 }) {
@@ -178,7 +179,7 @@ function Setting({
                     </div>
                 ))
             }
-            <div onClick={() => LogOut()} className="flex py-4 gap-4 text-red-950 cursor-pointer">
+            <div onClick={() => LogOut().then(()=> onChoose())} className="flex py-4 gap-4 text-red-950 cursor-pointer">
                 <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/logout-icon.svg`} />
                 <p className="text-[12px] w-full font-semibold text-red-500"> {t('Logout')} </p>
             </div>

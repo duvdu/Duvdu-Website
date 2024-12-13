@@ -272,7 +272,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                                     <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                                 )}
                                 {!chat_respond?.user?.isOnline && (
-                                    <div className="absolute w-4 h-4 bg-gray-500 border-2 b order-white rounded-full right-0 -translate-y-3" />
+                                    <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
                                 )}
                             </div>
                         </Link>

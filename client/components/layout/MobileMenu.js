@@ -340,7 +340,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                     }
 
                     {page == 5 &&
-                        <Setting />
+                        <Setting onChoose={() => toggleClick(1)} />
                     }
                 </div>
             </div>
