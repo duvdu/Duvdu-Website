@@ -248,24 +248,24 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                     >
 
                                         {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
-                                            <option key={index} value={value}>{value}</option>
+                                            <option key={index} value={value}>{t(value)}</option>
                                         ))}
                                     </select>
                                 </div>
                                 <section>
-                                    <input placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} type='number' className={"inputStyle1"} />
+                                    <input placeholder={t(`price per ${formData['projectScale.unit'] || 'unit'}`)} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} type='number' className={"inputStyle1"} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.pricerPerUnit}/>
                                 </section>
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale.minimum' value={formData['projectScale.minimum'] || ""} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale.minimum' value={formData['projectScale.minimum'] || ""} onChange={handleInputChange} placeholder={t(`minimum ${formData['projectScale.unit'] || 'unit'}`)} className={"inputStyle1"} />
                                         </div>
                                     </div>
 
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale.maximum' value={formData['projectScale.maximum'] || ""} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale.maximum' value={formData['projectScale.maximum'] || ""} onChange={handleInputChange} placeholder={t(`maximum ${formData['projectScale.unit'] || 'unit'}`)} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                 </div>
