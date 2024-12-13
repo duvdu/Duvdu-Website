@@ -114,6 +114,18 @@ const ProjectId = cardData.details._id
   const isVideoCover = isVideo(cardData.details.cover)
   const isAudioCover = isAudio(cardData.details?.audioCover);
   const type = cardData.cycle
+  useEffect(() => {
+      if (videoRef.current) {
+          videoRef.current.play();
+          videoRef.current.muted = true;     
+          const timeout = setTimeout(() => {
+              videoRef.current.pause();
+              videoRef.current.currentTime = 0;
+          }, 300); 
+          return () => clearTimeout(timeout);
+      }
+  }, [videoRef.current]);
+
   return (
     <>
       <DeleteBoard onClick={()=> DeleteProjectFromBoard(boardId, ProjectId)} id={boardId} />
@@ -129,6 +141,7 @@ const ProjectId = cardData.details._id
                 <Link href={`/${type}/${cardData.details._id}`}>
                   <a>
                     <video
+                      autoPlay muted playsInline
                       className='cardvideo'
                       ref={videoRef}
                       onTimeUpdate={timeUpdate}
