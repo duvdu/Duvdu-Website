@@ -19,12 +19,25 @@ const ProjectShow = ({ data }) => {
             setIsPlaying(false);
         }
     };
+        useEffect(() => {
+            if (videoRef.current) {
+                videoRef.current.play();
+                videoRef.current.muted = true;     
+                const timeout = setTimeout(() => {
+                    videoRef.current.pause();
+                    videoRef.current.currentTime = 0;
+                }, 300); 
+                return () => clearTimeout(timeout);
+            }
+        }, [videoRef.current]);
+    
     return (
         <div className="relative">
             <video
                 className="sm:rounded-[50px] w-full"
                 src={data.projectImg}
                 controls
+                autoPlay muted playsInline
                 ref={videoRef}
                 onClick={handlePlayPause}
                 onEnded={() => setIsPlaying(false)}

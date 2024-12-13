@@ -81,6 +81,18 @@ const FavCard = ({
   const removeSaved = () => {
     SwapProjectToFav({ projectId: cardData._id, action: "remove" })
   };
+  useEffect(() => {
+    if (videoRef.current) {
+        videoRef.current.play();
+        videoRef.current.muted = true;     
+        const timeout = setTimeout(() => {
+            videoRef.current.pause();
+            videoRef.current.currentTime = 0;
+        }, 300); 
+        return () => clearTimeout(timeout);
+    }
+}, [videoRef.current]);
+
   return (
     <>
       <div className={`select-none project-card ${className}`} onClick={() => { }} >
@@ -105,6 +117,7 @@ const FavCard = ({
                     <video
                       className='cardvideo relative'
                       loop
+                      autoPlay muted playsInline
                       ref={videoRef}
                       onTimeUpdate={timeUpdate}
                     >

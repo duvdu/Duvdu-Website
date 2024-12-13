@@ -15,6 +15,7 @@ import AudioPlayer from './AudioPlayer';
 const Me = ({ message , playAudio }) => {
     const { t } = useTranslation();
     const audioRef = useRef(null);
+    const videoRef = useRef(null);
     const convertTime = (timestamp) => {
         const date = new Date(timestamp);
         
@@ -28,7 +29,18 @@ const Me = ({ message , playAudio }) => {
         return new Intl.DateTimeFormat('en-US', options).format(date);
       };
       
-      
+      useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play();
+            videoRef.current.muted = true;     
+            const timeout = setTimeout(() => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }, 300); 
+            return () => clearTimeout(timeout);
+        }
+    }, [videoRef.current]);
+
       
     return (
         message?.media[0]?.type.includes("audio")?
@@ -78,7 +90,10 @@ const Me = ({ message , playAudio }) => {
                                 } else if (media.type.includes("video")) {
                                     return (
                                         <div key={`video-${index}`} className='ms-auto rounded-xl h-[200px] w-[200px] overflow-hidden'>
-                                            <video controls className=''>
+                                            <video
+                                            ref={videoRef}
+                                            autoPlay muted playsInline                                            
+                                            controls className=''>
                                                 <source src={media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
                                             </div>
                                         
