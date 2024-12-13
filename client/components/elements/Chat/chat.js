@@ -28,7 +28,7 @@ const CacheHelper = {
   };
   
   
-const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_respond, api }) => {
+const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_respond, api , isLogin }) => {
     const { t } = useTranslation();
     const chatRef = useRef(null);
     const [messagesList, setMessagesList] = useState([])
@@ -198,6 +198,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     catch (error) {
 
     }
+    useEffect(()=>{
+        if(isLogin===false)
+        onClose()
+    },[isLogin])
     const onSend = async () => {
         const data = new FormData()
         data.append("receiver", receiver)
@@ -268,12 +272,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                         <Link href={`/creative/${chat_respond?.user?.username || ""}`} >
                             <div className="relative cursor-pointer">
                                 <img className="h-full object-cover object-top aspect-square rounded-full" src={chat_respond?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
-                                {chat_respond?.user?.isOnline && (
-                                    <div className="absolute w-4 h-4 bg-green-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                )}
-                                {!chat_respond?.user?.isOnline && (
-                                    <div className="absolute w-4 h-4 bg-gray-500 border-2 border-white rounded-full right-0 -translate-y-3" />
-                                )}
+                                <div className={`absolute ${chat_respond?.user?.isOnline?'bg-green-500':'bg-gray-500'} w-4 h-4  border-2 border-white rounded-full right-0 -translate-y-3`} />
                             </div>
                         </Link>
                         <div className="px-3 place-self-center">
@@ -288,7 +287,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                     </div>
 
                     
-                    <div onClick={onClose} className='absolute right-4 top-4 cursor-pointer'>
+                    <div onClick={onClose} className='absolute end-4 top-4 cursor-pointer'>
                         <Icon name={'xmark'} className='text-xl opacity-50 w-3' />
                     </div>
                     <div className="messages-chat h-full" id="chat" ref={chatRef}>
@@ -355,13 +354,13 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                                         );
                                 }
                             })}
-                            <button className="absolute top-0 right-0 m-2 text-white cursor-pointer bg-red rounded-full size-6 flex justify-center items-center" onClick={clearattachments}>
+                            <button className="absolute top-0 end-0 m-2 text-white cursor-pointer bg-red rounded-full size-6 flex justify-center items-center" onClick={clearattachments}>
                                 <Icon className='p-1' name={"xmark"} />
                             </button>
 
                         </div>
                     }
-                    {chat_respond?.user?.canChat === true && 
+                    {chat_respond?.canChat === true && 
 
                     <div className="flex justify-end items-center w-full gap-2 p-3 absolute bottom-0 backdrop-blur-md">
                         <AudioRecorder
@@ -431,6 +430,7 @@ const mapStateToProps = (state) => ({
     chat_respond: state.api.GetAllMessageInChat,
     messages: state.messages,
     user: state.user,
+    isLogin: state.auth.login
 
 })
 const mapDispatchToProps = {

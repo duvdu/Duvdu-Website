@@ -20,13 +20,15 @@ import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,AcceptInvitation, GetProjectInvitations, isLogin }) => {
     const { t } = useTranslation();
-    const [isAccept,setIsAccept] = useState()
+    const [isAccept,setIsAccept] = useState(false)
+    const [actionId,setActionId] = useState(null)
     const projectsList = projectInvitations_respond?.data
     const Router = useRouter();
     const searchTerm = Router.query.search;
     useEffect(() => {
+        if(acceptInvitation_respond?.message==='success')
         GetProjectInvitations();
-    }, [acceptInvitation_respond?.data]);
+    }, [acceptInvitation_respond]);
     useEffect(()=>{
         if(isLogin ===false)
             Router.push('/')
@@ -76,22 +78,24 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
                                         </Link>
                                         <div className='flex flex-nowrap gap-2'>
                                             <button className="rounded-full w-full h-[66px] text-white bg-primary text-lg font-bold mt-2" onClick={()=>{
-                                                AcceptInvitation(item._id , true)
                                                 setIsAccept(true)
+                                            setActionId(item._id)
+                                                AcceptInvitation(item._id , true)
                                             }}>
-                                            {acceptInvitation_respond?.loading && isAccept===true ? 
+                                            {acceptInvitation_respond?.loading && item._id == actionId && isAccept===true ? 
                                                 <Loading/>
                                                 :
                                                 t("Accept")}
                                             </button>
-                                            <button className="rounded-full w-full h-[66px] col-span-1 text-white bg-[#EB1A40] text-lg font-bold mt-2" onClick={()=>{
-                                                AcceptInvitation(item._id , false)
+                                            <button className="rounded-full w-full h-[66px] capitalize col-span-1 text-white bg-[#EB1A40] text-lg font-bold mt-2" onClick={()=>{
                                                 setIsAccept(false)
+                                                setActionId(item._id)
+                                                AcceptInvitation(item._id , false)
                                                 }}>
-                                            {acceptInvitation_respond?.loading && isAccept===false ? 
+                                            {acceptInvitation_respond?.loading && item._id == actionId && isAccept===false ? 
                                                 <Loading/>
                                                 :
-                                                t("Reject")}
+                                                t("reject")}
                                             </button>
                                         </div>
                                         </div> 
