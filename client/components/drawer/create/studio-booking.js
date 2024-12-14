@@ -175,9 +175,9 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Share url={window.location.href} title={'See that 👀'} />
-            <Drawer isOpen={true} name={'Create Rental'} toggleDrawer={toggleDrawer}>
+            <Drawer isOpen={true} name={t('create rental')  } toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
-                    <SetCover Publish={Publish} oncancel={() => setNextstep(1)} />
+                    <SetCover Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
                 ) :
                     (
                         <form className='flex flex-col gap-5 container mx-auto'>

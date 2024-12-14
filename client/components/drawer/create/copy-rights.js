@@ -109,7 +109,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
-            <Drawer isOpen={true} name={'copy right'} toggleDrawer={toggleDrawer}>
+            <Drawer isOpen={true} name={t('copy right')} toggleDrawer={toggleDrawer}>
                 <form className='flex flex-col gap-5 container mx-auto' onSubmit={handleSubmit}>
                     <section>
                         <div className="my-5">

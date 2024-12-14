@@ -120,6 +120,12 @@
   background: #2F80ED;
   color: white;
 }
+.chat .messages-chat .message.me.ar {
+  margin: 0.5rem auto 0.5rem 0 !important;
+  font-size: 13.696px;
+  background: #2F80ED;
+  color: white;
+}
 .chat .messages-chat .message .typing {
   display: inline-block;
   width: 0.8rem;

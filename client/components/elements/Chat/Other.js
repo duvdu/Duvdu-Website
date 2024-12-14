@@ -55,7 +55,7 @@ const Other = ({ message , playAudio }) => {
             />      
             </div>:
             <div className='flex flex-col'>
-
+                {message.content && 
                 <div className="message other dark:bg-[#4d4c4c] bg-[#f1f1f1]">
                     <div className="flex-col">
                         <div>
@@ -70,54 +70,66 @@ const Other = ({ message , playAudio }) => {
                         </span>
                     </div>
                 </div>
+                }
 
-                    <div className="flex flex-col gap-2">
-                        {
-                            message.media?.length > 0 &&
-                            message.media?.map((media, index) => {
-                                if (media.type.includes("image")) {
-                                    return (
-                                    <div key={media.url} className='me-auto rounded-xl max-h-[200px] w-[200px] overflow-hidden'>
+                    {
+                        message.media?.length > 0 &&
+                <div className="flex flex-col message other dark:bg-[#4d4c4c] bg-[#f1f1f1] gap-2">
+                        {message.media?.map((media, index) => {
+                            if (media.type.includes("image")) {
+                                return (
+                                <div key={media.url}>
+                                    <div className='me-auto rounded-xl max-h-[200px] w-[200px] overflow-hidden'>
                                         <PopUpImage>
                                             <img src={media.url} alt="media" className='cursor-pointer w-full' />
                                         </PopUpImage>
                                     </div>
-                                    );
-                                } else if (media.type.includes("video")) {
-                                    return (
+                                    <span className="text-black dark:text-white text-xs">
+                                        {convertTime(message.createdAt, 'hh:mm')}
+                                    </span>
+                                </div>
+                                );
+                            } else if (media.type.includes("video")) {
+                                return (
+                                    <div key={`video-${index}`}>
                                         
-                                        <div key={`video-${index}`} className='me-auto rounded-xl h-[200px] w-[200px] overflow-hidden'>
-                                            <video
-                                            ref={videoRef}
-                                            autoPlay muted playsInline
-                                            controls className=''>
-                                                <source src={media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
-                                            </div>
-                                        
-                                    );
-                                } else {
-                                    return (
-                                        <div key={media.url} className=''>
-                                            <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
-                                                <div className='relative size-14 flex justify-center items-center cursor-pointer'>
-                                                    <Icon name="file" className="absolute size-full opacity-50" />
-                                                    <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
-                                                </div>
-                                            </a>
-                                            <div className="w-full text-end">
-                                                <span className="text-black dark:text-white text-xs">
-                                                    {convertTime(message.createdAt, 'hh:mm')}
-                                                </span>
-                                            </div>
+                                    <div className='me-auto rounded-xl h-[200px] w-[200px] overflow-hidden'>
+                                        <video
+                                        ref={videoRef}
+                                        autoPlay muted playsInline
+                                        controls className=''>
+                                        <source src={media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
                                     </div>
+                                    <span className="text-black dark:text-white text-xs">
+                                        {convertTime(message.createdAt, 'hh:mm')}
+                                    </span>
+                                </div>
+                                    
+                                );
+                            } else {
+                                return (
+                                    <div key={media.url} className=''>
+                                        <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
+                                            <div className='relative size-14 flex justify-center items-center cursor-pointer'>
+                                                <Icon name="file" className="absolute size-full opacity-50" />
+                                                <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
+                                            </div>
+                                        </a>
+                                        <div className="w-full text-end">
+                                            <span className="text-black dark:text-white text-xs">
+                                                {convertTime(message.createdAt, 'hh:mm')}
+                                            </span>
+                                        </div>
+                                </div>
 
-                                    );
-                                }
-                            })
-                        }
-                        
-                    </div>
-                    </div>
+                                );
+                            }
+                        })
+                    }
+                    
+                </div>
+                }
+            </div>
     );
 
 };

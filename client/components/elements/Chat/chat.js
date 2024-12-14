@@ -91,7 +91,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         socketInstance.disconnect();
       };
     }, []);
-
     useEffect(() => {
         if (respond?.data)
 
@@ -101,7 +100,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
     useEffect(() => {
         setReceiver(otherUser._id || chat_respond?.user?._id)
-    }, [otherUser])
+    }, [otherUser , chat_respond])
 
     useEffect(() => {
         GetAllMessageInChat(messages._id, limit)
@@ -211,19 +210,22 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                 const file = attachments[i];
                 data.append(`attachments`, file.file);
             }
-
-        if (recordobject) {
-            const wavFile = new File([recordobject], 'audio.wav', { type: 'audio/wav' });
+            if (recordobject) {
+                const wavFile = new File([recordobject], 'audio.wav', { type: 'audio/wav' });
             data.append('attachments', wavFile)
-            data.append('content', "NULL")
+            // data.append('content', "")
         }
-        else
+        else if(content)
             data.append('content', content)
         // data.append('attachments', _attachments);
 
 
         //////// SENDING MESSAGE ///////////////
-        SendMessages(data)
+        SendMessages(data).then(()=>{
+            if(attachments){
+                GetAllMessageInChat(messages._id, limit)
+            }
+        })
         ClearChatInput()
     }
     const onChange = (event) => {
@@ -272,7 +274,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                         <Link href={`/creative/${chat_respond?.user?.username || ""}`} >
                             <div className="relative cursor-pointer">
                                 <img className="h-full object-cover object-top aspect-square rounded-full" src={chat_respond?.user?.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' />
-                                <div className={`absolute ${chat_respond?.user?.isOnline?'bg-green-500':'bg-gray-500'} w-4 h-4  border-2 border-white rounded-full right-0 -translate-y-3`} />
+                                <div className={`absolute ${chat_respond?.user?.isOnline?'bg-green-500':'bg-gray-500'} w-4 h-4  border-2 border-white rounded-full end-0 -translate-y-3`} />
                             </div>
                         </Link>
                         <div className="px-3 place-self-center">
@@ -360,7 +362,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
                         </div>
                     }
-                    {chat_respond?.canChat === true && 
+                    {chat_respond?.canChat === true || chat_respond?.user?.canChat === true && 
 
                     <div className="flex justify-end items-center w-full gap-2 p-3 absolute bottom-0 backdrop-blur-md">
                         <AudioRecorder

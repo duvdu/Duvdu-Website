@@ -13,7 +13,7 @@ import PopUpImage from '../popUpImage';
 import AudioPlayer from './AudioPlayer';
 
 const Me = ({ message , playAudio }) => {
-    const { t } = useTranslation();
+    const { t  , i18n } = useTranslation();
     const audioRef = useRef(null);
     const videoRef = useRef(null);
     const convertTime = (timestamp) => {
@@ -54,8 +54,8 @@ const Me = ({ message , playAudio }) => {
             />      
             </div>:
             <div className='flex flex-col'>
-
-                <div className="message me">
+                {message.content && 
+                <div className={`message me ${i18n.language == "Arabic" && 'ar'}`}>
                     <div className="flex-col">
                         <div>
                             <span className="text-white">
@@ -69,58 +69,65 @@ const Me = ({ message , playAudio }) => {
                         </span>
                     </div>
                 </div>
+                }
 
-                    <div className="flex flex-col gap-2">
-                        {
-                            message.media?.length > 0 &&
-                            message.media?.map((media, index) => {
-                                if (media.type.includes("image")) {
-                                    return (
-                                    <div key={`image-${index}`} className='ms-auto rounded-xl h-[200px] w-[200px] overflow-hidden'>
-                                        <PopUpImage >
-                                            <img src={media.url} alt="media" className='cursor-pointer' />
-                                        </PopUpImage>
+                    {
+                        message.media?.length > 0 &&
+                    <div className={`message me ${i18n.language == "Arabic" && 'ar'} flex flex-col gap-2`}>
+                        {message.media?.map((media, index) => {
+                            if (media.type.includes("image")) {
+                                return (
+                                <div key={`image-${index}`}>
+                                <div className='ms-auto rounded-xl max-h-[200px] w-[200px] overflow-hidden'>
+                                    <PopUpImage >
+                                        <img src={media.url} alt="media" className='cursor-pointer w-full' />
+                                    </PopUpImage>
+                                </div>
+                                <span className="text-black dark:text-white text-xs">
+                                    {convertTime(message.createdAt, 'hh:mm')}
+                                </span>
+                            </div>
+                                );
+                            } else if (media.type.includes("video")) {
+                                return (
+                                <div key={`video-${index}`}>
+                                    <div className='ms-auto rounded-xl h-[200px] w-[200px] overflow-hidden'>
+                                        <video
+                                        ref={videoRef}
+                                        autoPlay muted playsInline                                            
+                                        controls className=''>
+                                            <source src={media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
+                                    </div>
+                                    <span className="text-black dark:text-white text-xs">
+                                        {convertTime(message.createdAt, 'hh:mm')}
+                                    </span>
+                                </div>
+                                
+                                );
+                            } else {
+                                return (
+                                    <div key={media.url} className=''>
+                                        <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
+                                            <div className='relative size-14 flex justify-center items-center cursor-pointer'>
+                                                <Icon name="file" className="absolute size-full opacity-50" />
+                                                <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
+                                            </div>
+                                        </a>
                                         <div className="w-full text-end">
                                             <span className="text-white text-xs">
                                                 {convertTime(message.createdAt, 'hh:mm')}
                                             </span>
                                         </div>
-                                    </div>
-                                    );
-                                } else if (media.type.includes("video")) {
-                                    return (
-                                        <div key={`video-${index}`} className='ms-auto rounded-xl h-[200px] w-[200px] overflow-hidden'>
-                                            <video
-                                            ref={videoRef}
-                                            autoPlay muted playsInline                                            
-                                            controls className=''>
-                                                <source src={media.url} type={media.type} />{t("Your browser does not support the video tag.")}</video>
-                                            </div>
-                                        
-                                    );
-                                } else {
-                                    return (
-                                        <div key={media.url} className=''>
-                                            <a href={ media.url} key={`file-${index}`} target="_blank" rel="noopener noreferrer">
-                                                <div className='relative size-14 flex justify-center items-center cursor-pointer'>
-                                                    <Icon name="file" className="absolute size-full opacity-50" />
-                                                    <Icon name="download" className="absolute size-8 opacity-40 hover:opacity-100" />
-                                                </div>
-                                            </a>
-                                            <div className="w-full text-end">
-                                                <span className="text-white text-xs">
-                                                    {convertTime(message.createdAt, 'hh:mm')}
-                                                </span>
-                                            </div>
-                                    </div>
+                                </div>
 
-                                    );
-                                }
-                            })
-                        }
-                        
-                    </div>
-                    </div>
+                                );
+                            }
+                        })
+                    }
+                    
+                </div>
+                }
+            </div>
     );
 };
 export default Me;

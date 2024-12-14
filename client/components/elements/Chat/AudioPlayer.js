@@ -1,16 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
 import Icon from "../../Icons";
-
+import { useTranslation } from 'react-i18next';
 const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
+  const { t  , i18n } = useTranslation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [hoverProgress, setHoverProgress] = useState(null); // To store the hover position
 
-  // Play/Pause the audio
+  // Play/Pause th e audio
   const togglePlayPause = () => {
     const audio = audioRef.current;
-
     if (isPlaying) {
       audio.pause();
     } else {
@@ -26,7 +26,8 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
   };
 
   const handleLoadedMetadata = () => {
-    setDuration(audioRef.current.duration);
+    const durationValue = audioRef.current.duration;
+    setDuration(Number.isFinite(durationValue) ? durationValue : 1.5);
   };
 
   const handleAudioEnd = () => {
@@ -46,10 +47,12 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
     const clickPosition = e.nativeEvent.offsetX;
     const progressBarWidth = progressBar.offsetWidth;
     const newTime = (clickPosition / progressBarWidth) * duration;
-
-    // Update currentTime in audio and in state
-    audioRef.current.currentTime = newTime;
-    setCurrentTime(newTime);
+    if (Number.isFinite(newTime) && newTime >= 0) {
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    } else {
+      console.warn("Invalid newTime:", newTime);
+    }
   };
 
   
@@ -79,7 +82,7 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
   }, [audioRef]);
   return (
     <>
-      <div className="audio-player-chat">
+      <div dir={'ltr'} className="audio-player-chat">
         <audio
           ref={audioRef}
           onTimeUpdate={handleTimeUpdate}
@@ -107,7 +110,7 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
             <div
               className="progress-chat"
               style={{
-                width: `${(currentTime / (duration =='Infinity'?2 : duration)) * 100}%`,
+                width: `${(currentTime / (Number.isFinite(duration) ? duration : 1.5)) * 100}%`,
               }}
             ></div>
             {hoverProgress !== null && (
@@ -130,7 +133,7 @@ const AudioPlayer = ({ src, audioRef, isMe, time , playAudio }) => {
         <div className="time-display">
           <span>{formatTime(currentTime)}</span>
           <span>/</span>
-          <span>{formatTime(duration =='Infinity'?2 : duration)}</span>
+          <span>{formatTime(Number.isFinite(duration) ? duration : 1.5)}</span>
         </div>
         <span>{time}</span>
       </div>

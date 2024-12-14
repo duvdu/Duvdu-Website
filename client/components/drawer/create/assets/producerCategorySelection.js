@@ -145,7 +145,7 @@ function ProducerCategorySelection({ categories, onChange, value, filterIn, onVa
 
             {selectedSubCategories.map((subcategory) => (
                 <section key={subcategory._id}>
-                    <h3 className='opacity-60 my-2 text-lg font-bold'>{subcategory.title} Tags</h3>
+                    <h3 className='opacity-60 my-2 text-lg font-bold'>{subcategory.title} {t("Tags")}</h3>
                     <div className="flex gap-3 flex-wrap">
                         {subcategory.tags.map((tag) => (
                             <div key={tag._id}

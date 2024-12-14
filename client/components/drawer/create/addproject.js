@@ -231,7 +231,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
-            <Drawer isOpen={true} name={'add project'} toggleDrawer={toggleDrawer}>
+            <Drawer isOpen={true} name={t('add project')} toggleDrawer={toggleDrawer}>
                 {nextstep == 2 ? (
                     <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
                 ) :

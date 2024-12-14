@@ -193,14 +193,10 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                 </div>
                             </>
                             }
-                            {userInfo?.avaliableContracts == 0 &&
-                            <>
                                 <div className='h-divider my-7'></div>
                                 <div className='ps-5 md:ps-10 '>
                                     <Subscription />
                                 </div>
-                            </>
-                            }
                             <div className='h-divider my-7'></div>
                             <div className='ps-5 md:ps-10 '>
                                 <Reviews userName={user?.username} data={userReview_respond?.data} />

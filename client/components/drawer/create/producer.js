@@ -226,7 +226,7 @@ const AddProducer = ({
             <SuccessfullyPosting id={SuccessfullyUpdatePopupId} onCancel={toggleDrawer} message="Update" />
             <SuccessfullyPosting id={SuccessfullyDeletePopupId} onCancel={toggleDrawer} message="Delete" />
             <SuccessfullyPosting id={SuccessfullyCreatePopupId} onCancel={toggleDrawer} message="Create" />
-            <Drawer isOpen={true} name={'add producer'} toggleDrawer={toggleDrawer} padding={false}>
+            <Drawer isOpen={true} name={t('add producer')} toggleDrawer={toggleDrawer} padding={false}>
                 {
                 (getIsLoggedProducer_respond?.loading?
                 <DuvduLoading loadingIn={''} type=''/>
@@ -296,8 +296,8 @@ const AddProducer = ({
                         !isProducer ?
                             <ArrowBtn loading={createProducer_respond?.loading} isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
                             <div className='flex flex-col left-0 bottom-10 sticky mt-14 w-auto mx-14 gap-3'>
-                                <ArrowBtn loading={deleteProducer_respond?.loading} isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text="delete" shadow={true} shadowHeight={"14"} />
-                                <ArrowBtn loading={updateProducer_respond?.loading} isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text="update" shadow={true} shadowHeight={"14"} />
+                                <ArrowBtn loading={deleteProducer_respond?.loading} isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text={t("Delete")} shadow={true} shadowHeight={"14"} />
+                                <ArrowBtn loading={updateProducer_respond?.loading} isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text={t("Update")} shadow={true} shadowHeight={"14"} />
                             </div>
                     }
 
