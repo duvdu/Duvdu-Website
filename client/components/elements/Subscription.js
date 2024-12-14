@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 
 function Subscription({CloseProfile , isLogin , user}) {
     const { t } = useTranslation();
-    return (isLogin && user?.avaliableContracts == 0 ? 
+    return (isLogin &&
+        ( user?.avaliableContracts == 0 ? 
         <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
             <button data-popup-toggle="popup" data-popup-target={'contract_subscription'} onClick={CloseProfile ? CloseProfile : null} className="flex !text-start !items-start gap-3">
                 <div className='bg-[#FFE7E7] rounded-md h-14 min-w-14 flex items-center justify-center'>
@@ -28,7 +29,7 @@ function Subscription({CloseProfile , isLogin , user}) {
                     <p className="text-[#808080] text-sm leading-4">{t('Now you have')} {user?.avaliableContracts} {t('available contracts')}</p>
                 </div>
             </button>
-        </div>
+        </div>)
     );
 }
 const mapStateToProps = (state) => ({
