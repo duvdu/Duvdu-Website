@@ -114,13 +114,14 @@ const AddToTeam = ({ CreateTeamProject, create_respond, categories, addprojectSt
         const [categoryId, setCategoryId] = useState();
 
         const togglePage = (value) => {
-
-            if (typeof (value) == 'string')
+            if (typeof (value) == 'string'){
                 setCategoryId(value)
-            else
+                setIsAddToTeamPage(!isAddToTeamPage);
+            }
+            else{
                 onAddOne?.({ ...value, category: categoryId })
+            }
 
-            setIsAddToTeamPage(!isAddToTeamPage);
         };
 
         const data = respond?.creatives || [];

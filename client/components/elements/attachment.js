@@ -47,6 +47,8 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" }
                 return 'image/*';
             case 'video':
                 return 'video/*';
+            case 'image_video':
+                return 'image/*,video/*';
             case 'audio':
                 return 'audio/mpeg, audio/ogg, audio/mp4, audio/aac, audio/flac, audio/x-ms-wma';  // Explicitly list audio types
                 case 'documents':

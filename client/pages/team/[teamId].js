@@ -52,9 +52,39 @@ const TheTeam = ({
         if (teamId) {
             GetTeamProject({ id: teamId });
         }
-    }, [teamId, add_creative, delete_respond, update_respond , add_category_respond , delete_category_respond]);
+    }, [teamId]);
+    useEffect(() => {
+        if (add_creative?.message==='success') {
+            GetTeamProject({ id: teamId });
+        }
+    }, [add_creative]);
+    useEffect(() => {
+        if (delete_respond?.message==='success') {
+            GetTeamProject({ id: teamId });
+        }
+    }, [ delete_respond?.message]);
+    useEffect(() => {
+        if ( update_respond?.message==='success') {
+            GetTeamProject({ id: teamId });
+        }
+    }, [ update_respond?.message]);
+    useEffect(() => {
+        if ( add_category_respond?.message==='success') {
+            GetTeamProject({ id: teamId });
+        }
+    }, [  add_category_respond?.message ]);
+    useEffect(() => {
+        if (delete_category_respond?.message==='success') {
+            GetTeamProject({ id: teamId });
+        }
+    }, [delete_category_respond?.message]);
     const updateTeamProject = (data) => {
-        AddTeamProject(data, teamId);
+        AddTeamProject(data, teamId).then(()=>{
+            const popup = document.querySelector('.ADD_HOURS_TO_CREATIVE');
+            if (popup) {
+                popup.classList.remove('show');
+            }    
+        });
     }
     const handleUpdate = (alldata) => {
         
@@ -69,11 +99,13 @@ const TheTeam = ({
 
     const addNewCategory = (categoryId)=>{
         AddNewCategoryTeam({teamId , categoryId})
-        if(add_category_respond?.data)
+        if(add_category_respond?.message==='success')
             ClosePopUp('AddCategoryToTeam')
     }
     const deleteCategory = (categoryId)=>{
-        DeleteCategoryTeam({teamId , categoryId})
+        DeleteCategoryTeam({teamId , categoryId}).then(()=>{
+            ClosePopUp("delete-category-team-"+categoryId)
+        })
     }
     useEffect(()=>{
         if(isLogin ===false)
@@ -86,14 +118,14 @@ const TheTeam = ({
                 {state === 0 && <Empty />}
                 {state === 1 && (
                     <div className="flex flex-col lg:flex-row gap-7 items-center">
-                        <LeftSide add_category_respond={add_category_respond} deleteCategory={deleteCategory} addNewCategory={addNewCategory} handleOpenChat={handleOpenChat} respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleUpdate={handleUpdate} />
+                        <LeftSide add_category_respond={add_category_respond} add_creative={add_creative} delete_category_respond={delete_category_respond} deleteCategory={deleteCategory} addNewCategory={addNewCategory} handleOpenChat={handleOpenChat} respond={get_respond} onAddOne={(v) => updateTeamProject(v)} handleUpdate={handleUpdate} />
                         <RightSide onDeleteTeam={onDeleteTeam} data={get_respond?.data || {}} respond={get_respond} onClick={() => setState(1)} teamId={teamId} />
                     </div>
                 )}
                 {state === 2 && (
                     <div className="flex flex-col lg:flex-row gap-7">
                         <Cover />
-                        <LeftSide add_category_respond={add_category_respond} deleteCategory={deleteCategory} addNewCategory={addNewCategory} handleOpenChat={handleOpenChat} isSolid={true} respond={get_respond} handleUpdate={handleUpdate} />
+                        <LeftSide add_category_respond={add_category_respond} add_creative={add_creative} delete_category_respond={delete_category_respond} deleteCategory={deleteCategory} addNewCategory={addNewCategory} handleOpenChat={handleOpenChat} isSolid={true} respond={get_respond} handleUpdate={handleUpdate} />
                         <RightSide onDeleteTeam={onDeleteTeam} data={get_respond?.data || {}} respond={get_respond} isSolid={true} teamId={teamId}/>
                     </div>
                 )}
@@ -104,7 +136,7 @@ const TheTeam = ({
 
 
 
-const LeftSide = ({isSolid, respond, onAddOne, handleDelete, handleUpdate  , handleOpenChat , addNewCategory , add_category_respond , deleteCategory}) => {
+const LeftSide = ({isSolid, respond, onAddOne, handleDelete, handleUpdate  , handleOpenChat , addNewCategory , add_category_respond , deleteCategory , delete_category_respond , add_creative}) => {
     const { t } = useTranslation();
 
     const [isAddToTeamPage, setIsAddToTeamPage] = useState(false);
@@ -113,15 +145,20 @@ const LeftSide = ({isSolid, respond, onAddOne, handleDelete, handleUpdate  , han
 
     const togglePage = (value) => {
 
-        if (typeof (value) == 'string')
+        if (typeof (value) == 'string'){
             setCategoryId(value)
+            setIsAddToTeamPage(!isAddToTeamPage);
+        }
         else{
             value.append('category',categoryId )
             onAddOne?.(value)
+            
         }
-        setIsAddToTeamPage(!isAddToTeamPage);
     };
-
+    useEffect(()=>{
+        if(add_creative?.message==='success')
+            setIsAddToTeamPage(!isAddToTeamPage);
+    },[add_creative])
     const data = respond?.data?.creatives || [];
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -138,7 +175,7 @@ const LeftSide = ({isSolid, respond, onAddOne, handleDelete, handleUpdate  , han
     }
 
     return (respond &&
-        <div className="md:h-body w-full overflow-y-scroll py-14 addUserScroll">
+        <div className="md:h-body w-full overflow-y-scroll pt-14 md:py-14 addUserScroll">
             {respond?.loading?<DuvduLoading loadingIn={""} type={'teamProject'}/>:(
             !isAddToTeamPage ? (
                 <>
@@ -146,17 +183,17 @@ const LeftSide = ({isSolid, respond, onAddOne, handleDelete, handleUpdate  , han
                     <Cover respond={respond} />
                     {data.map((section, index) => (
                         <div key={index}>
-                            <Sections deleteCategory={deleteCategory} isSolid={isSolid} AddTeam={()=> togglePage(section.category._id)} section={section} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} handleOpenChat={handleOpenChat} />
+                            <Sections delete_category_respond={delete_category_respond} deleteCategory={deleteCategory} isSolid={isSolid} AddTeam={()=> togglePage(section.category._id)} section={section} handleUpdate={(v) => { handleUpdate({ ...v, craetiveScope: section._id }) }} handleOpenChat={handleOpenChat} />
                             <div className="bg-[#00000033] dark:bg-[#FFFFFF33] h-1 w-full"></div>
                         </div>
                     ))}
                     
                     <AddCategory onClick={()=> OpenPopUp(`AddCategoryToTeam`)} />
-                     <Popup id={"AddCategoryToTeam"} header={'Add New Category'} onCancel={onCancel}>
+                     <Popup id={"AddCategoryToTeam"} header={t('add new category')} onCancel={onCancel}>
                             <div className='flex gap-9 max-w-72 h-full justify-center items-center flex-col mt-10'>                            
                                 <CategorySelectOne value={data.map(item=> item.category._id)} onChange={(v) => { setNewCategoryId(v) }} />
                                 <AppButton  onClick={() => addNewCategory(newCategoryId )} className={" mt-10 mx-16 px-20 sm:px-40"} >
-                                    {add_category_respond?.loading ? <Loading/>:'Confirm'}
+                                    {add_category_respond?.loading ? <Loading/>:t('Confirm')}
                                 </AppButton>
                             </div>
                         </Popup>
@@ -175,20 +212,20 @@ const LeftSide = ({isSolid, respond, onAddOne, handleDelete, handleUpdate  , han
     );
 };
 
-const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate ,handleOpenChat , deleteCategory}) => {
+const Sections = ({ section, AddTeam, isSolid, handleDelete, handleUpdate ,handleOpenChat , deleteCategory , delete_category_respond}) => {
     const { t } = useTranslation();
     return (
     <>
-        <DeleteCategory onClick={()=> deleteCategory(section?.category?._id)} id={section?.category?._id} />
+        <DeleteCategory respond={delete_category_respond} onClick={()=> deleteCategory(section?.category?._id)} id={section?.category?._id} />
         <div className="flex justify-between items-center m-[10px]">
             <span className="opacity-60 capitalize font-medium">
                 {section?.category?.title}
             </span>
             {section?.users.length ===0 && (
-                <div className="flex gap-2 cursor-pointer items-center">
+                <button onClick={()=> OpenPopUp('delete-category-team-' + section?.category?._id)}  className="flex gap-2 cursor-pointer items-center">
                     <Icon className="text-[#FF4646] w-4 h-4" name="xmark" />
-                    <span className="text-[#FF4646] font-medium" onClick={()=> OpenPopUp('delete-category-team-' + section?.category?._id)}>{t("Remove")}</span>
-                </div>
+                    <span className="text-[#FF4646] font-medium" >{t("Remove")}</span>
+                </button>
             )}
         </div>
         <div className="w-full h-[1px] bg-black opacity-15" />
@@ -237,7 +274,7 @@ const Person = ({ person, onUpdate,handleOpenChat }) => {
                         <span className="text-xl opacity-50">{t("amount")}</span>
                     </div>
                     <AppButton  onClick={(e) => onupdate()} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
-                        Confirm
+                        {t('Confirm')}
                     </AppButton>
                 </div>
             </Popup>

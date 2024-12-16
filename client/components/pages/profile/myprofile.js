@@ -179,12 +179,15 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                 </span>
                             </div>
 
-                            <div className='h-divider'></div>
                             {userInfo?.about &&
+                            <>
+                            <div className='h-divider'></div>
                                 <div className='px-10'>
                                     <h3 className='pt-6' id='about-header'>{t("about")}</h3>
                                     <p className='pt-6' id='about-paragraph'>{userInfo?.about || '---'}</p>
-                                </div>}
+                                </div>
+                            </>
+                            }
                             {!userInfo?.faceRecognition &&
                             <>
                                 <div className='h-divider my-7'></div>
@@ -193,10 +196,10 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                 </div>
                             </>
                             }
-                                <div className='h-divider my-7'></div>
-                                <div className='ps-5 md:ps-10 '>
-                                    <Subscription />
-                                </div>
+                            <div className='h-divider my-7'></div>
+                            <div className='ps-5 md:ps-10 '>
+                                <Subscription />
+                            </div>
                             <div className='h-divider my-7'></div>
                             <div className='ps-5 md:ps-10 '>
                                 <Reviews userName={user?.username} data={userReview_respond?.data} />

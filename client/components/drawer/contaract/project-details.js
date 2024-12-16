@@ -74,7 +74,7 @@ function ReceiveProjectFiles({
     const [submitFileSuccess, setSubmitFileSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [appointmentDate, setdAppointmentDate] = useState(null);
-    const [actionAccept , setActionAccept] = useState(false)
+    const [actionAccept , setActionAccept] = useState(null)
     const [canEdit, setCanEdit] = useState(null);
 
     const NormalState = ({ value }) => (
@@ -255,7 +255,7 @@ function ReceiveProjectFiles({
     }, [contract?.deadline]);
 
     const handleAccept = () => {
-        setActionAccept(true)
+        setActionAccept('accept')
         if (!contract_respond?.data?.ref) return
         const type = getType()
         takeAction({ id: contract?._id, data: true, type: type })
@@ -266,14 +266,14 @@ function ReceiveProjectFiles({
     };
     
     const handleCancel = () => {
-        setActionAccept(true)
+        setActionAccept('cancle')
         if (!contract_respond?.data?.ref) return
         const type = getType()
         takeAction({ id: contract?._id, data: 'cancel', type: type })
     };
 
     const handleUpdate = () => {
-        setActionAccept(false)
+        setActionAccept('update')
         if (!contract_respond?.data?.ref) return
         const type = getType()
 
@@ -313,7 +313,7 @@ function ReceiveProjectFiles({
     };
 
     const handlePayment = () => {
-        setActionAccept(true)
+        setActionAccept('payment')
         const type = getType()
         payment({ id: contract?.paymentLink, type: type })
     };
@@ -328,6 +328,7 @@ function ReceiveProjectFiles({
         OpenPopUp('uploading_project_files')
     }
     const handleRefuse = () => {
+        setActionAccept('refuse')
         if (!contract_respond?.data?.ref) return
         const type = getType()
         takeAction({ id: contract?._id, data: false, type: type })
@@ -677,7 +678,7 @@ function ReceiveProjectFiles({
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
-                                        {takeAction_respond?.loading?
+                                        {takeAction_respond?.loading && actionAccept ==='update'?
                                         <Loading/>
                                         :
                                         <span className='text-white font-bold capitalize text-lg'>{t("Update Appointment")}</span>
@@ -699,7 +700,7 @@ function ReceiveProjectFiles({
                                         {
                                             acceptBtn &&
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
-                                                {takeAction_respond?.loading && actionAccept?
+                                                {takeAction_respond?.loading && actionAccept==='accept'?
                                                     <Loading/>
                                                 :
                                                     <span className='text-white font-bold capitalize text-lg'>{t("Accept")}</span>
@@ -709,7 +710,7 @@ function ReceiveProjectFiles({
                                         {
                                             refuse &&
                                             <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                               {takeAction_respond?.loading && !actionAccept ? 
+                                               {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
                                                 t("Refuse")}
@@ -717,7 +718,7 @@ function ReceiveProjectFiles({
                                         }
                                         {cancle && 
                                          <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleCancel}>
-                                         {takeAction_respond?.loading  ? 
+                                         {takeAction_respond?.loading  && actionAccept === 'cancle'? 
                                             <Loading/>
                                             :
                                             t("Cancel")}
@@ -729,7 +730,7 @@ function ReceiveProjectFiles({
                                         status == "waiting-for-pay-10"&&
                                         <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                            {payment_respond?.loading && actionAccept ? 
+                                            {payment_respond?.loading && actionAccept==='payment' ? 
                                                 <Loading/>
                                                 :
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now 10%")}</span>
@@ -737,7 +738,7 @@ function ReceiveProjectFiles({
 
                                             </Button>
                                             <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                            {takeAction_respond?.loading && !actionAccept ? 
+                                            {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
                                                 t("Refuse")}
@@ -748,14 +749,14 @@ function ReceiveProjectFiles({
                                         !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
                                             <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())|| true} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                {payment_respond?.loading && actionAccept ? 
+                                                {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
                                                     <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 90 % )")}</span>
                                                 }
                                             </Button>
                                             <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                            {takeAction_respond?.loading && !actionAccept ? 
+                                            {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
                                                 t("Refuse")}
@@ -766,7 +767,7 @@ function ReceiveProjectFiles({
                                         !IsImSp() && getType() === 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
                                             <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())||true} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                                {payment_respond?.loading && actionAccept ? 
+                                                {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 100 % )")}</span>
@@ -778,14 +779,14 @@ function ReceiveProjectFiles({
                                         !IsImSp() && status == "waiting-for-payment" &&
                                         <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                             <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
-                                            {payment_respond?.loading && actionAccept ? 
+                                            {payment_respond?.loading && actionAccept==='payment' ? 
                                                 <Loading/>
                                                 :
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Pay Now")}</span>
                                             }
                                             </Button>
                                             <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
-                                            {takeAction_respond?.loading && !actionAccept ? 
+                                            {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
                                                 t("Refuse")

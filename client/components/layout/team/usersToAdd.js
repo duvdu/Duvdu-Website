@@ -73,7 +73,7 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
     );
 }
 
-const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
+const AddToTeamPage = ({ goback,categoryId, FindUser, respond, add_creative, api }) => {
     const {t} = useTranslation()
     const [id, setId] = useState(null);
     const [hours, setHours] = useState(null);
@@ -94,17 +94,17 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
         return errors;
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-
     const page = 1;
     const showLimit = 12;
     const [limit, setLimit] = useState(showLimit);
     const pagganation = respond?.pagination;
     const observerRef = useRef();
     useEffect(()=>{
+        if(respond?.message ==='success')
         setData(respond?.data)
-    },[respond?.data])
+    },[respond])
     useEffect(() => {
-        if(respond?.pagination?.totalPages!==1 || respond?.pagination?.totalPages!==0)
+        if((respond?.pagination?.totalPages!==1 || respond?.pagination?.totalPages!==0) && (respond?.pagination?.resultCount === undefined || respond?.pagination?.resultCount >= limit ) )
         FindUser({ limit: limit, page: page , category:categoryId });
     }, [limit , categoryId]);
 
@@ -144,10 +144,6 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
             }
 
 
-        const popup = document.querySelector('.ADD_HOURS_TO_CREATIVE');
-        if (popup) {
-            popup.classList.remove('show');
-        }
         
         goback(form);
     };
@@ -167,21 +163,24 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
                         <input type="number" min={0} onChange={(e) => setPrice(Math.abs(e.target.value))} placeholder={t("Amount Per Hour")} className="col-span-1 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                         <input type="number" min={0} onChange={(e) => setDurations(e.target.value)} placeholder={t("Duration Per Day")} className="col-span-2 bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 p-4" />
                     </div>
-                    <div className='grid grid-cols-12 gap-9 full'>
-                        <span className="col-span-3 text-lg opacity-50">{t("Start Date")}</span>
-                        <div className="col-span-9">
+                    <div className='grid md:grid-cols-12 gap-5 md:gap-9 w-full'>
+                        <span className="md:col-span-3 text-lg opacity-50">{t("Start Date")}</span>
+                        <div className="md:col-span-9 w-full overflow-auto">
                             <SelectDate onChange={(value) => setStartDate(value)} />
                         </div>
                     </div>  
-                    <div className='grid grid-cols-5 items-center gap-9 full'>
+                    <div className='grid md:grid-cols-5 items-center gap-5 md:gap-9 full'>
                         <span className="col-span-1 text-lg opacity-50">{t("Attachment")}</span>
                         <div className="col-span-4">
-                            <AddAttachment name="attachments" value={attachments} onChange={(e)=> setAttachments(e.target.value)} />
+                            <AddAttachment media='image_video' name="attachments" value={attachments} onChange={(e)=> setAttachments(e.target.value)} />
                         </div>
                     </div>
 
                     <AppButton isEnabled={isEnable} onClick={(e) => onadd()} className={"mb-20 mt-10 mx-16 px-20 sm:px-40"} >
-                        Confirm
+                    {add_creative?.loading? 
+                        <DuvduLoading loadingIn={""} />:
+                        t('Confirm')
+                    }
                     </AppButton>
                 </div>
             </Popup>
@@ -191,26 +190,15 @@ const AddToTeamPage = ({ goback,categoryId, FindUser, respond, api }) => {
                 ))}
             </div>
             <div ref={observerRef}></div>
-            {respond?.loading && 
-            <DuvduLoading loadingIn={""} />
-            }
+                {respond?.loading && 
+                <DuvduLoading loadingIn={""} />
+                }
         </>
     )
 };
-
-const Result = () =>
-    <div className="h-body flex flex-col justify-center">
-        <div className='container flex flex-col justify-center items-center text-center w-full'>
-            <img src='/assets/imgs/theme/TeamProjects.svg' className='lg:w-[540px] lg:h-[450px]' />
-            <h3 className='text-[40px] font-semibold mt-8 mb-4'>{t("Team Projects")}<p className="text-2xl opacity-50">
-                    “Team Projects” are a great way to build teams for your project.
-                </p>
-            </h3>
-        </div>
-    </div>;
-
 const mapStateToProps = (state) => ({
     respond: state.api.FindUser,
+    add_creative: state.api.AddTeamProject,
     api: state.api,
 });
 

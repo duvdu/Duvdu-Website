@@ -77,11 +77,11 @@ const Search = ({categories , onSearch}) => {
                 <h4 className="text-lg font-medium opacity-80 mt-12 mb-5" href="#">{t("Suggestions")}</h4>
                 <ul className="flex flex-wrap gap-2">
                     {subCategories.map((item, index) => (
-                        <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] dark:border-[#FFFFFF4D] rounded-full" key={index} onClick={close}>
-                            <Link href={item ? `/${cycle(item.cycle)}?subCategory=${item._id}` : '/search'}>
+                    <Link key={index} href={item?`/${cycle(item.cycle)}?subCategory=${item._id}`:'/search'}>
+                        <li className="text-base px-3 py-1 opacity-80 font-medium border-[1.5px] border-[#0000004d] dark:border-[#FFFFFF4D] rounded-full">
                                 <div className="cursor-pointer text-[#000000BF] dark:text-[#FFFFFFBF] capitalize">{item.title}</div>
-                            </Link>
                         </li>
+                    </Link>
                     ))}
                 </ul>
             </div>}
