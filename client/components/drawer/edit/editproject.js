@@ -278,153 +278,151 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
 
             <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Creating" />
             <Drawer isOpen={isOpen} id={id} name={'update project'} toggleDrawer={toggleDrawer}>
-                {nextstep == 2 ? (
+                <div className={nextstep == 1 && 'hidden'}>
                     <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
-                ) :
-                    (
-                        <form className='flex flex-col gap-5 mx-5 sm:mx-auto' >
-                            <div className="my-5">
-                                <CategorySelection
-                                    filterIn={'project'}
-                                    isRemove={true}
-                                    value={{
-                                        'category':formData.category|| data?.category._id ,
-                                        'subCategory': formData.subCategory || data.subCategory._id ,
-                                        'tags': formData.tags || data.tags.map(item => item._id),
-                                    }}
-                                    onChange={(value) => {
-                                        UpdateFormData('category', value.category)
-                                        UpdateFormData('subCategory', value.subCategory)
-                                        UpdateFormData('tags', value.tags)
-                                    }}
-                                />
-                                <ErrorMessage ErrorMsg={ErrorMsg.category}/>
+                </div>
+                <form className={`${nextstep == 2 && 'hidden'} flex flex-col gap-5 container mx-auto`}>
+                    <div className="my-5">
+                        <CategorySelection
+                            filterIn={'project'}
+                            isRemove={true}
+                            value={{
+                                'category':formData.category|| data?.category._id ,
+                                'subCategory': formData.subCategory || data.subCategory._id ,
+                                'tags': formData.tags || data.tags.map(item => item._id),
+                            }}
+                            onChange={(value) => {
+                                UpdateFormData('category', value.category)
+                                UpdateFormData('subCategory', value.subCategory)
+                                UpdateFormData('tags', value.tags)
+                            }}
+                        />
+                        <ErrorMessage ErrorMsg={ErrorMsg.category}/>
+                    </div>
+                    <section>
+                        <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || data.name } onChange={handleInputChange} name="name" />
+                        <ErrorMessage ErrorMsg={ErrorMsg.title}/>
+                    </section>
+                    <section>
+                        <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || data.description } onChange={handleInputChange} name="description" />
+                        <ErrorMessage ErrorMsg={ErrorMsg.description}/>
+                    </section>
+                    <section>
+                        <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || data.duration} onChange={handleInputChange} name="duration" />
+                        <ErrorMessage ErrorMsg={ErrorMsg.duration}/>
+                    </section>
+                    <section>
+                        <ListInput
+                            placeholder={t("tools used")}
+                            target="AddToolUsed"
+                            name={"tools"}
+                            listdiv={formData.tools && formData.tools.map((e, i) => (
+                                <span className='mx-2' key={i}>
+                                    <span><strong>{t("tool :")}</strong> {e?.name} </span>
+                                    <br />
+                                    <span> <strong>{t("price :")}</strong> {e?.unitPrice} $ </span>
+                                </span>
+                            ))}
+                            remove={(value) => removeFromArray('tools', value)}
+                            enable={false}
+                        />
+                        <ErrorMessage ErrorMsg={ErrorMsg.tools}/>
+                    </section>
+                    <section>
+                        <ListInput
+                            placeholder={t("Functions used")}
+                            target="Addfunctions"
+                            name={"functions"}
+                            listdiv={formData.functions && formData.functions.map((e, i) =>
+                                <span className='mx-2' key={i}>
+                                    <span><strong>{t("function :")}</strong> {e.name} </span>
+                                    <br />
+                                    <span> <strong>{t("price :")}</strong> {e.unitPrice} $ </span>
+                                </span>
+                            )}
+                            remove={(value) => removeFromArray('functions', value)}
+                            enable={false}
+                        />
+                        <ErrorMessage ErrorMsg={ErrorMsg.functions}/>
+                    </section>
+
+                    <section>
+                        <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeyWords } onChange={(value) => UpdateFormData('searchKeyWords', value)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
+                    </section>
+                    <section className="h-96 relative overflow-hidden">
+                        <span>{t("Set location")}</span>
+                        <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat || data.location.lat, 'lng': formData.location?.lng || data.location.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
+                    </section>
+
+                    <section className="flex flex-col gap-8">
+                        <section className="hidden">
+                            <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Select Project Media")}</h3>
+                            <div className="flex gap-3 flex-wrap">
+                                {[
+                                    'Videos',
+                                    'Photos',
+                                    'Audios'
+                                ].map((media, index) => (
+                                    <div key={index}
+                                        className={`py-1 px-2 border ${formData.media ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
+                                        onClick={() => UpdateFormData('media', media)}>
+                                        <div className={`whitespace-nowrap font-medium ${formData.media ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
+                                            {media}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                            <section>
-                                <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || data.name } onChange={handleInputChange} name="name" />
-                                <ErrorMessage ErrorMsg={ErrorMsg.title}/>
-                            </section>
-                            <section>
-                                <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || data.description } onChange={handleInputChange} name="description" />
-                                <ErrorMessage ErrorMsg={ErrorMsg.description}/>
-                            </section>
-                            <section>
-                                <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || data.duration} onChange={handleInputChange} name="duration" />
-                                <ErrorMessage ErrorMsg={ErrorMsg.duration}/>
-                            </section>
-                            <section>
-                                <ListInput
-                                    placeholder={t("tools used")}
-                                    target="AddToolUsed"
-                                    name={"tools"}
-                                    listdiv={formData.tools && formData.tools.map((e, i) => (
-                                        <span className='mx-2' key={i}>
-                                            <span><strong>{t("tool :")}</strong> {e?.name} </span>
-                                            <br />
-                                            <span> <strong>{t("price :")}</strong> {e?.unitPrice} $ </span>
-                                        </span>
-                                    ))}
-                                    remove={(value) => removeFromArray('tools', value)}
-                                    enable={false}
-                                />
-                                <ErrorMessage ErrorMsg={ErrorMsg.tools}/>
-                            </section>
-                            <section>
-                                <ListInput
-                                    placeholder={t("Functions used")}
-                                    target="Addfunctions"
-                                    name={"functions"}
-                                    listdiv={formData.functions && formData.functions.map((e, i) =>
-                                        <span className='mx-2' key={i}>
-                                            <span><strong>{t("function :")}</strong> {e.name} </span>
-                                            <br />
-                                            <span> <strong>{t("price :")}</strong> {e.unitPrice} $ </span>
-                                        </span>
-                                    )}
-                                    remove={(value) => removeFromArray('functions', value)}
-                                    enable={false}
-                                />
-                                <ErrorMessage ErrorMsg={ErrorMsg.functions}/>
-                            </section>
-
-                            <section>
-                                <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeyWords } onChange={(value) => UpdateFormData('searchKeyWords', value)} />
-                                <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
-                            </section>
-                            <section className="h-96 relative overflow-hidden">
-                                <span>{t("Set location")}</span>
-                                <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat || data.location.lat, 'lng': formData.location?.lng || data.location.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
-                            </section>
-
-                            <section className="flex flex-col gap-8">
-                                <section className="hidden">
-                                    <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Select Project Media")}</h3>
-                                    <div className="flex gap-3 flex-wrap">
-                                        {[
-                                            'Videos',
-                                            'Photos',
-                                            'Audios'
-                                        ].map((media, index) => (
-                                            <div key={index}
-                                                className={`py-1 px-2 border ${formData.media ? 'border-primary' : 'border-[#0000004c] dark:border-[#FFFFFF4D]'} rounded-full cursor-pointer`}
-                                                onClick={() => UpdateFormData('media', media)}>
-                                                <div className={`whitespace-nowrap font-medium ${formData.media ? 'text-primary' : 'dark:text-[#FFFFFFBF] text-[#3E3E3E]'} opacity-80`}>
-                                                    {media}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </section>
-                                <div className='flex items-center justify-between'>
-                                    <h3 className='font-bold text-lg'>{t("Project Scale Unit")}</h3>
-                                    <select
-                                        className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
-                                        value={formData['projectScale[unit]'] || data.projectScale.unit}
-                                        onChange={handleInputChange}
-                                        name="projectScale[unit]"
-                                        required
-                                    >
-                                        {listDropDown.map((value, index) => (
-                                            <option key={index} value={value.toLowerCase()}>{value}</option>
-                                        ))}
-                                    </select>
+                        </section>
+                        <div className='flex items-center justify-between'>
+                            <h3 className='font-bold text-lg'>{t("Project Scale Unit")}</h3>
+                            <select
+                                className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
+                                value={formData['projectScale[unit]'] || data.projectScale.unit}
+                                onChange={handleInputChange}
+                                name="projectScale[unit]"
+                                required
+                            >
+                                {listDropDown.map((value, index) => (
+                                    <option key={index} value={value.toLowerCase()}>{value}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || data.projectScale.pricerPerUnit } onChange={handleInputChange} className={"inputStyle1"} />
+                        <div className="flex w-full justify-between gap-3">
+                            <div className="w-full">
+                                <div className='flex items-center justify-start gap-4'>
+                                    <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]']  || data.projectScale.minimum } onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
                                 </div>
-                                <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || data.projectScale.pricerPerUnit } onChange={handleInputChange} className={"inputStyle1"} />
-                                <div className="flex w-full justify-between gap-3">
-                                    <div className="w-full">
-                                        <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]']  || data.projectScale.minimum } onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
-                                        </div>
-                                    </div>
-                                    <div className="w-full">
-                                        <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]']  || data.projectScale.current} onChange={handleInputChange} placeholder={t("current")} className={"inputStyle1"} />
-                                        </div>
-                                    </div>
-                                    <div className="w-full">
-                                        <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]']  || data.projectScale.maximum} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                <ErrorMessage ErrorMsg={ErrorMsg.projectScale}/>
-                                <ErrorMessage ErrorMsg={ErrorMsg.current}/>
-                                <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
-                                </div>
-                            </section>
-
-                            <div className='flex justify-center gap-3 mt-1'>
-                                <Switch value={formData.showOnHome || data.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
-                                <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </div>
-                            
-                            <Button isEnabled={!update_respond?.loading} onClick={Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
-                            {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t("Update")}</span>}
-                            </Button>
+                            <div className="w-full">
+                                <div className='flex items-center justify-start gap-4'>
+                                    <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]']  || data.projectScale.current} onChange={handleInputChange} placeholder={t("current")} className={"inputStyle1"} />
+                                </div>
+                            </div>
+                            <div className="w-full">
+                                <div className='flex items-center justify-start gap-4'>
+                                    <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]']  || data.projectScale.maximum} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                        <ErrorMessage ErrorMsg={ErrorMsg.projectScale}/>
+                        <ErrorMessage ErrorMsg={ErrorMsg.current}/>
+                        <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
+                        </div>
+                    </section>
 
-                        </form>
-                    )}
+                    <div className='flex justify-center gap-3 mt-1'>
+                        <Switch value={formData.showOnHome || data.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
+                        <p className='opacity-70'>{t("Show on home feed & profile")}</p>
+                    </div>
+                    
+                    <Button isEnabled={!update_respond?.loading} onClick={Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
+                    {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t("Update")}</span>}
+                    </Button>
+
+                </form>
             </Drawer>
         </>
     );

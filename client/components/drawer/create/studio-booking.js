@@ -176,116 +176,114 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Share url={window.location.href} title={'See that 👀'} />
             <Drawer isOpen={true} name={t('create rental')  } toggleDrawer={toggleDrawer}>
-                {nextstep == 2 ? (
-                    <SetCover Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
-                ) :
-                    (
-                        <form className='flex flex-col gap-5 container mx-auto'>
-                            <div className="my-5">
-                                <CategorySelection
-                                    filterIn={"rentals"}
-                                    value={{
-                                        'category': formData.category,
-                                        'subCategory': formData.subCategory,
-                                        'tags': formData.tags,
-                                    }}
-                                    onChange={(value) => {
-                                        UpdateFormData('category', value.category)
-                                        UpdateFormData('subCategory', value.subCategory)
-                                        UpdateFormData('tags', value.tags)
-                                    }} />
-                                    {/* {ErrorMsg.category ? */}
-                                    <ErrorMessage ErrorMsg={ErrorMsg.category}/>
-                                    {/* :(
-                                        ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
-                                        <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
-                                    )} */}
-                            </div>
-                            <section className="w-full ">
-                                <h3 className="capitalize opacity-60">{t("attachments")}</h3>
-                                <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
-                                <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
-                            </section>
-                            <section className='gap-8'>
-                                <section>
-                                    <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                    <ErrorMessage ErrorMsg={ErrorMsg.title}/>
-                                </section>
-                                <section>
-                                    <input placeholder={t("Phone number")} type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                    <ErrorMessage ErrorMsg={ErrorMsg.phoneNumber}/>
-                                </section>
-                                <section>
-                                    <input placeholder={t("Email")} type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                    <ErrorMessage ErrorMsg={ErrorMsg.email}/>
-                                </section>
-                                <section>
-                                    <input placeholder={t("Description")} name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                    <ErrorMessage ErrorMsg={ErrorMsg.description}/>
-                                </section>
-                                <section className="h-96 relative overflow-hidden mt-5">
-                                    <h3>{t("location")}</h3>
-                                    <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
-                                </section>
-                                <section>
-                                    <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                                    <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
-                                </section>
-                                <section>
-                                    <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                                    {/* <ErrorMessage ErrorMsg={ErrorMsg.insurance}/> */}
-                                </section>
-                            </section>
-                            <section className="flex flex-col gap-8">
-                                <div className='flex items-center justify-between'>
-                                    <h3 className='font-bold text-lg'>{t("Project Scale Unit")}</h3>
-                                    <select
-                                        className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
-                                        value={formData.projectScale?.unit}
-                                        onChange={handleInputChange}
-                                        name="projectScale.unit"
-                                        required
-                                    >
+                <div className={nextstep == 1 && 'hidden'}>
+                <SetCover Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
+                </div>
+                <form className={`${nextstep == 2 && 'hidden'} flex flex-col gap-5 container mx-auto`}>
+                    <div className="my-5">
+                        <CategorySelection
+                            filterIn={"rentals"}
+                            value={{
+                                'category': formData.category,
+                                'subCategory': formData.subCategory,
+                                'tags': formData.tags,
+                            }}
+                            onChange={(value) => {
+                                UpdateFormData('category', value.category)
+                                UpdateFormData('subCategory', value.subCategory)
+                                UpdateFormData('tags', value.tags)
+                            }} />
+                            {/* {ErrorMsg.category ? */}
+                            <ErrorMessage ErrorMsg={ErrorMsg.category}/>
+                            {/* :(
+                                ErrorMsg.subCategory?<ErrorMessage ErrorMsg={ErrorMsg.subCategory}/>:
+                                <ErrorMessage ErrorMsg={ErrorMsg.tags}/>
+                            )} */}
+                    </div>
+                    <section className="w-full ">
+                        <h3 className="capitalize opacity-60">{t("attachments")}</h3>
+                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
+                    </section>
+                    <section className='gap-8'>
+                        <section>
+                            <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.title}/>
+                        </section>
+                        <section>
+                            <input placeholder={t("Phone number")} type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.phoneNumber}/>
+                        </section>
+                        <section>
+                            <input placeholder={t("Email")} type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.email}/>
+                        </section>
+                        <section>
+                            <input placeholder={t("Description")} name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.description}/>
+                        </section>
+                        <section className="h-96 relative overflow-hidden mt-5">
+                            <h3>{t("location")}</h3>
+                            <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
+                        </section>
+                        <section>
+                            <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
+                        </section>
+                        <section>
+                            <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                            {/* <ErrorMessage ErrorMsg={ErrorMsg.insurance}/> */}
+                        </section>
+                    </section>
+                    <section className="flex flex-col gap-8">
+                        <div className='flex items-center justify-between'>
+                            <h3 className='font-bold text-lg'>{t("Project Scale Unit")}</h3>
+                            <select
+                                className="shadow-sm px-3 text-lg font-medium text-primary appearance-none w-min select-custom pr-8 capitalizez"
+                                value={formData.projectScale?.unit}
+                                onChange={handleInputChange}
+                                name="projectScale.unit"
+                                required
+                            >
 
-                                        {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
-                                            <option key={index} value={value}>{t(value)}</option>
-                                        ))}
-                                    </select>
+                                {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
+                                    <option key={index} value={value}>{t(value)}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <section>
+                            <input placeholder={t(`price per ${formData['projectScale.unit'] || 'unit'}`)} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} type='number' className={"inputStyle1"} />
+                            <ErrorMessage ErrorMsg={ErrorMsg.pricerPerUnit}/>
+                        </section>
+                        <div className="flex w-full justify-between gap-3">
+                            <div className="w-full">
+                                <div className='flex items-center justify-start gap-4'>
+                                    <input type="number" min={0} name='projectScale.minimum' value={formData['projectScale.minimum'] || ""} onChange={handleInputChange} placeholder={t(`minimum ${formData['projectScale.unit'] || 'unit'}`)} className={"inputStyle1"} />
                                 </div>
-                                <section>
-                                    <input placeholder={t(`price per ${formData['projectScale.unit'] || 'unit'}`)} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} type='number' className={"inputStyle1"} />
-                                    <ErrorMessage ErrorMsg={ErrorMsg.pricerPerUnit}/>
-                                </section>
-                                <div className="flex w-full justify-between gap-3">
-                                    <div className="w-full">
-                                        <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale.minimum' value={formData['projectScale.minimum'] || ""} onChange={handleInputChange} placeholder={t(`minimum ${formData['projectScale.unit'] || 'unit'}`)} className={"inputStyle1"} />
-                                        </div>
-                                    </div>
-
-                                    <div className="w-full">
-                                        <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale.maximum' value={formData['projectScale.maximum'] || ""} onChange={handleInputChange} placeholder={t(`maximum ${formData['projectScale.unit'] || 'unit'}`)} className={"inputStyle1"} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
-                                    <ErrorMessage ErrorMsg={ErrorMsg.minimum}/>
-                                </div >
-                            </section>
-                            <section className='flex justify-center gap-3 mt-10'>
-                                <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
-                                <p className='opacity-70'>{t("Show on home feed & profile")}</p>
-                            </section>
-                            <div className='relative'>
-                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
-                                <AppButton onClick={CheckNext} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
-                                    <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
-                                </AppButton>
                             </div>
-                        </form>
-                    )}
+
+                            <div className="w-full">
+                                <div className='flex items-center justify-start gap-4'>
+                                    <input type="number" min={0} name='projectScale.maximum' value={formData['projectScale.maximum'] || ""} onChange={handleInputChange} placeholder={t(`maximum ${formData['projectScale.unit'] || 'unit'}`)} className={"inputStyle1"} />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
+                            <ErrorMessage ErrorMsg={ErrorMsg.minimum}/>
+                        </div >
+                    </section>
+                    <section className='flex justify-center gap-3 mt-10'>
+                        <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
+                        <p className='opacity-70'>{t("Show on home feed & profile")}</p>
+                    </section>
+                    <div className='relative'>
+                        <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+                        <AppButton onClick={CheckNext} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
+                            <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
+                        </AppButton>
+                    </div>
+                </form>
             </Drawer>
         </>
 
