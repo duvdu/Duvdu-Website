@@ -23,6 +23,17 @@ function CategorySelection({ categories, onChange, value, filterIn, isRemove }) 
         if (selectedCategory) {
             const selectedSubCategory = selectedCategory.subCategories.find(subCategory => subCategory._id === value?.subCategory);
             setSelectedSubCategory(selectedSubCategory || {});
+            if(selectedSubCategory){
+                const selectedRelatedCategory = selectedCategory.relatedCategory.find(related => related._id === value?.relatedCategory);
+                setSelectedRelatedCategory(selectedRelatedCategory || {})
+                if(selectedRelatedCategory){
+                    const selectedRelatedSubCategory = selectedRelatedCategory.subCategories.find(related => related._id === value?.relatedSubCategory);
+                    setSelectedRelatedSubCategory(selectedRelatedSubCategory || {})
+                    if(selectedRelatedSubCategory){
+                        setSelectedRelatedTags(value?.relatedTags || []);
+                    }
+                }
+            }
         } else {
             setSelectedSubCategory({});
         }
@@ -50,11 +61,17 @@ function CategorySelection({ categories, onChange, value, filterIn, isRemove }) 
         setSelectedCategory(category);
         setSelectedSubCategory({});
         setSelectedTags([]);
+        setSelectedRelatedCategory({})
+        setSelectedRelatedSubCategory({});
+        setSelectedRelatedTags([]);
     };
 
     const handleSubCategorySelect = (subCategory) => {
         setSelectedSubCategory(subCategory);
         setSelectedTags([]);
+        setSelectedRelatedCategory({})
+        setSelectedRelatedSubCategory({});
+        setSelectedRelatedTags([]);
     };
 
     const toggleTag = (tag) => {
@@ -166,7 +183,7 @@ function CategorySelection({ categories, onChange, value, filterIn, isRemove }) 
                     </section>
                 )}
 
-            {selectedCategory.relatedCategory?.length > 0 && selectedCategory._id &&  (
+            {selectedCategory.relatedCategory?.length > 0 && selectedCategory._id  && selectedSubCategory._id &&  (
                 <section>
                     <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Related Category")}</h3>
                     {!selectedRelatedCategory._id ? (
@@ -193,7 +210,7 @@ function CategorySelection({ categories, onChange, value, filterIn, isRemove }) 
                     )}
                 </section>
             )}
-            {selectedRelatedCategory._id && selectedCategory._id && (
+            {selectedRelatedCategory._id && selectedCategory._id && selectedSubCategory._id && (
                 <section>
                     <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Related Subcategories")}</h3>
                     <div className="flex gap-3 flex-wrap">
@@ -226,6 +243,7 @@ function CategorySelection({ categories, onChange, value, filterIn, isRemove }) 
                 selectedRelatedCategory._id &&
                 selectedRelatedSubCategory._id && 
                 selectedCategory._id &&
+                selectedSubCategory._id &&
                 (
                     <section>
                         <h3 className='opacity-60 my-2 text-lg font-bold'>{t("Related Tags")}</h3>

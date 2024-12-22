@@ -153,8 +153,8 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
         if (parseFloat(formData['projectScale[minimum]']) <=0 ) errors.current = 'Minimum should be greater than 0';
-        if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.current = 'current should be greater than minimum';
-        if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
+        if ((parseFloat(formData['projectScale[minimum]'])) > (parseFloat(formData['projectScale[current]']))) errors.current = 'current should be greater than minimum';
+        if (parseFloat(formData['projectScale[current]']) > parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
         // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         return errors;
     };

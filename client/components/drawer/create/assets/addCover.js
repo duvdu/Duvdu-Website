@@ -52,7 +52,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
                     backgroundRepeat: 'no-repeat'
                 }} />;
             case 'video':
-                return <video controls className='w-full h-52 mt-5' src={media} />;
+                return <video autoPlay muted playInline controls className='w-full h-52 mt-5' src={media} />;
             case 'audio':
                 return <><div className='card w-full h-52 mt-5 object-cover bg-bottom' style={{
                     backgroundImage: `url(${media})`,

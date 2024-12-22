@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { GetProject } from "../../../redux/action/apis/cycles/projects/getOne";
 import Drawer from "../../elements/drawer";
 import { UpdateProject } from "../../../redux/action/apis/cycles/projects/edit";
-import CategorySelection from "./../create/assets/CategorySelection";
+import CategorySelection from "./../create/assets/projectCategorySelection";
 import AddAttachment from "../../elements/attachment";
 import GoogleMap from "../../elements/googleMap";
 import SetCover from './../create/assets/addCover';
@@ -223,7 +223,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
     };
 
 
-
+    console.log({formData , data})
     useEffect(() => {
         UpdateFormData("name", data.name)
         UpdateFormData("description", data.description)
@@ -247,7 +247,13 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         UpdateFormData("projectScale[minimum]", data.projectScale.minimum)
         UpdateFormData("projectScale[maximum]", data.projectScale.maximum)
         UpdateFormData("projectScale[current]", data.projectScale.current)
+        // 
+        // 
+        UpdateFormData("relatedCategory" , data.relatedCategory?.[0]?.category?._id)
+        UpdateFormData("relatedSubCategory" , data.relatedCategory?.[0]?.category?.subCategories?.[0]?._id)
+        UpdateFormData("relatedTags" , data?.relatedCategory?.[0]?.category?.subCategories?.[0]?.tags?.map(item=>item?._id))
     }, [data])
+    console.log({tags:data?.relatedCategory?.[0]?.category?.subCategories?.[0]?.tags?.map(item=>item?._id)})
     
     // useEffect(() => {
     //     if (auth.login === false)
@@ -277,7 +283,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
              value.invitedCreatives?InsertToArray('invitedCreatives', value) :InsertToArray('creatives', value)}} />
 
             <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Creating" />
-            <Drawer isOpen={isOpen} id={id} name={'update project'} toggleDrawer={toggleDrawer}>
+            <Drawer isOpen={isOpen} id={id} name={t('edit project')} toggleDrawer={toggleDrawer}>
                 <div className={nextstep == 1 && 'hidden'}>
                     <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
                 </div>
@@ -290,11 +296,17 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                 'category':formData.category|| data?.category._id ,
                                 'subCategory': formData.subCategory || data.subCategory._id ,
                                 'tags': formData.tags || data.tags.map(item => item._id),
+                                'relatedCategory': formData.relatedCategory || data.relatedCategory?.[0]?.category?._id,
+                                'relatedSubCategory':formData.relatedSubCategory || data.relatedCategory?.[0]?.category?.subCategories?.[0]?._id,
+                                'relatedTags': formData.relatedTags || data?.relatedCategory?.[0]?.category?.subCategories?.[0]?.tags?.map(item=>item?._id)
                             }}
                             onChange={(value) => {
                                 UpdateFormData('category', value.category)
                                 UpdateFormData('subCategory', value.subCategory)
                                 UpdateFormData('tags', value.tags)
+                                UpdateFormData('relatedCategory', value.relatedCategory)
+                                UpdateFormData('relatedSubCategory', value.relatedSubCategory)
+                                UpdateFormData('relatedTags', value.relatedTags)
                             }}
                         />
                         <ErrorMessage ErrorMsg={ErrorMsg.category}/>
@@ -384,7 +396,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                 required
                             >
                                 {listDropDown.map((value, index) => (
-                                    <option key={index} value={value.toLowerCase()}>{value}</option>
+                                    <option key={index} value={value.toLowerCase()}>{t(value)}</option>
                                 ))}
                             </select>
                         </div>
@@ -392,7 +404,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                         <div className="flex w-full justify-between gap-3">
                             <div className="w-full">
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]']  || data.projectScale.minimum } onChange={handleInputChange} placeholder={`minimum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                    <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]']  || data.projectScale.minimum } onChange={handleInputChange} placeholder={t(`minimum ${formData['projectScale[unit]'] || 'unit'}`)} className={"inputStyle1"} />
                                 </div>
                             </div>
                             <div className="w-full">
@@ -402,7 +414,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                             </div>
                             <div className="w-full">
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]']  || data.projectScale.maximum} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale[unit]'] || 'unit'}`} className={"inputStyle1"} />
+                                    <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]']  || data.projectScale.maximum} onChange={handleInputChange} placeholder={t(`maximum ${formData['projectScale[unit]'] || 'unit'}`)} className={"inputStyle1"} />
                                 </div>
                             </div>
                         </div>
@@ -414,7 +426,10 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                     </section>
 
                     <div className='flex justify-center gap-3 mt-1'>
-                        <Switch value={formData.showOnHome || data.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
+                        <Switch value={formData.showOnHome || data.showOnHome} onSwitchChange={(checked) => {
+                            UpdateFormData('showOnHome', checked)
+                            console.log({checked ,showOnHome:formData.showOnHome })
+                            }} />
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </div>
                     
