@@ -253,7 +253,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         UpdateFormData("relatedSubCategory" , data.relatedCategory?.[0]?.category?.subCategories?.[0]?._id)
         UpdateFormData("relatedTags" , data?.relatedCategory?.[0]?.category?.subCategories?.[0]?.tags?.map(item=>item?._id))
     }, [data])
-    console.log({tags:data?.relatedCategory?.[0]?.category?.subCategories?.[0]?.tags?.map(item=>item?._id)})
     
     // useEffect(() => {
     //     if (auth.login === false)
@@ -426,11 +425,8 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                     </section>
 
                     <div className='flex justify-center gap-3 mt-1'>
-                        <Switch value={formData.showOnHome || data.showOnHome} onSwitchChange={(checked) => {
-                            UpdateFormData('showOnHome', checked)
-                            console.log({checked ,showOnHome:formData.showOnHome })
-                            }} />
-                        <p className='opacity-70'>{t("Show on home feed & profile")}</p>
+                    <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
+                    <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </div>
                     
                     <Button isEnabled={!update_respond?.loading} onClick={Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>

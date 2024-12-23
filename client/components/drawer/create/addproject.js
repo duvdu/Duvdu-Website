@@ -50,10 +50,11 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     useEffect(()=>{
         UpdateFormData('attachments' , null)
     },[formData.category])
+
     useEffect(() => {
         UpdateFormData('showOnHome', true)
     }, [])
-
+    
     const convertToFormData = () => {
         const data = new FormData();
 
