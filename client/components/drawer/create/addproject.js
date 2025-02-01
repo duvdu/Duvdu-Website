@@ -152,11 +152,29 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (!formData.duration) errors.duration = 'Duration is required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
-        if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
-        if (parseFloat(formData['projectScale[minimum]']) <=0 ) errors.current = 'Minimum should be greater than 0';
-        if ((parseFloat(formData['projectScale[minimum]'])) > (parseFloat(formData['projectScale[current]']))) errors.current = 'current should be greater than minimum';
-        if (parseFloat(formData['projectScale[current]']) > parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
         // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        const minimum = parseFloat(formData['projectScale[minimum]']);
+        const current = parseFloat(formData['projectScale[current]']);
+        const maximum = parseFloat(formData['projectScale[maximum]']);
+
+        if (!formData['projectScale[unit]'] || 
+            !formData['projectScale[pricerPerUnit]'] || 
+            !formData['projectScale[minimum]'] || 
+            !formData['projectScale[current]'] || 
+            !formData['projectScale[maximum]']) {
+            errors.projectScale = 'Project Scale is required';
+        } else {
+            if (minimum <= 0) {
+                errors.minimum = 'Minimum should be greater than 0';
+            }
+            if (current < minimum) {
+                errors.current = 'Current should be greater than or equal to minimum';
+            }
+            if (maximum < current) {
+                errors.maximum = 'Maximum should be greater than or equal to current';
+            }
+        }
+
         return errors;
     };
     const CheckNext=()=>{
@@ -216,12 +234,12 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     }, [auth.login])
 
     const toggleDrawer = () => {
-        // CreateProject(-1)
+        CreateProject(-1)
+        setPost_success(false)
         if (nextstep == 2) {
             setNextstep(1)
             return
         }
-        setPost_success(false)
         setValidFormCheck(false)
         setErrorMsg({})
         resetForm()
@@ -264,7 +282,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                     </div>
                     <section>
                         <h3 className="capitalize opacity-60">{t("attachments")}</h3>
-                        <AddAttachment name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
+                        <AddAttachment id={'attachments'} name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
                         <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                     </section>
                     <section>

@@ -19,6 +19,8 @@ const Projects = ({ projects, GetProjects, api }) => {
         instantProject: false,
         priceInclusive: true ,
     });
+    const [localProjects, setLocalProjects] = useState([]);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const projectsList = projects?.data
     const pagganation = projects?.pagination
     const page = 1;
@@ -73,6 +75,17 @@ const Projects = ({ projects, GetProjects, api }) => {
     }, [limit, searchTerm, page, category, subCategory, tag,relatedCategory, priceFrom, priceTo, duration, instant, keywords]);
 
     useEffect(() => {
+        if (projectsList) {
+            if (limit === showLimit) {
+                setLocalProjects(projectsList);
+            } else {
+                setLocalProjects(prev => [...prev, ...projectsList.slice(prev.length)]);
+            }
+            setIsLoadingMore(false);
+        }
+    }, [projectsList]);
+
+    useEffect(() => {
         const handleScroll = () => {
             if (pagganation?.totalPages > page) {
                 const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -80,15 +93,16 @@ const Projects = ({ projects, GetProjects, api }) => {
                 const clientHeight = document.documentElement.clientHeight || window.innerHeight;
                 const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-                if (scrolledToBottom) {
-                    setLimit(showLimit + limit);
+                if (scrolledToBottom && !isLoadingMore) {
+                    setIsLoadingMore(true);
+                    setLimit(prev => showLimit + prev);
                 }
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [page, pagganation?.totalPages]);
+    }, [page, pagganation?.totalPages, isLoadingMore]);
 
     const setParams = (queryString) => {
         Router.push(`/${cycle}?${queryString}`);
@@ -102,24 +116,22 @@ const Projects = ({ projects, GetProjects, api }) => {
                             <Filter cycle={cycle} setSwitchState={setSwitchState} switchState={switchState} setParams={setParams} />
                         <div className="h-7" />
                         {Router.query.category && <RelatedCategories className=" col-span-full" />}
-                        {projectsList?.length > 0 && (
+                        {localProjects?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}
                         {projectsList?.length === 0 && (
                             <EmptyComponent message="No projects Found" />
                         )}
-                        {(projects?.loading)?
+                        {(projects?.loading && localProjects?.length== 0)?
                        <DuvduLoading loadingIn={""} type='projects'/>:    
                         <div className="grid minmax-280 gap-5">
-                            {projectsList?.map((item, i) => (
+                            {localProjects?.map((item, i) => (
                                 <React.Fragment key={item._id}>
                                     <ProjectCard cardData={item} inclusive={switchState.priceInclusive} />
                                 </React.Fragment>
                             ))}
-                        </div>
-                        }
-                        {/* <div className="w-0 h-0" />
-                        <DuvduLoading loadingIn={"GetProjects"} /> */}
+                        </div>}
+                        {isLoadingMore && <div className='mt-5'><DuvduLoading loadingIn={""} type='projects'/></div>}
                     </div>
                 </section>
             </Layout>

@@ -29,6 +29,8 @@ const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
     const [limit, setLimit] = useState(showLimit);
     const [isOpen, setIsOpen] = useState(false);
     const [data, setdata] = useState({});
+    const [localCopyRights, setLocalCopyRights] = useState([]);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const CopyRight = respond?.data
 
     const pagganation = respond?.pagination
@@ -75,7 +77,16 @@ const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
         }
     }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
 
-
+    useEffect(() => {
+        if (CopyRight) {
+            if (limit === showLimit) {
+                setLocalCopyRights(CopyRight);
+            } else {
+                setLocalCopyRights(prev => [...prev, ...CopyRight.slice(prev.length)]);
+            }
+            setIsLoadingMore(false);
+        }
+    }, [CopyRight]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -85,15 +96,16 @@ const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
                 const clientHeight = document.documentElement.clientHeight || window.innerHeight;
                 const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-                if (scrolledToBottom) {
-                    setLimit(prevPage => showLimit + limit);
+                if (scrolledToBottom && !isLoadingMore) {
+                    setIsLoadingMore(true);
+                    setLimit(prevPage => showLimit + prevPage);
                 }
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [page, pagganation?.totalPages]);
+    }, [page, pagganation?.totalPages, isLoadingMore]);
 
 
     const handlesetdata = (item) => {
@@ -130,14 +142,15 @@ const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
                             </div> :
                             <h1 className="page-header  pb-9">{t("most popular on duvdu")}</h1>
                         }
-                        {respond?.loading?
-                       <DuvduLoading loadingIn={""} type='category'/>:    
-                       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                            {CopyRight?.map((item, i) =>
-                                <CopyRightCard QueryString={QueryString} key={i} onClick={() => handlesetdata(item)} cardData={item} />
-                            )}
-                        </div>
+                        {(respond?.loading && localCopyRights?.length === 0) ?
+                            <DuvduLoading loadingIn={""} type='category'/> :    
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                                {localCopyRights?.map((item, i) =>
+                                    <CopyRightCard QueryString={QueryString} key={i} onClick={() => handlesetdata(item)} cardData={item} />
+                                )}
+                            </div>
                         }
+                        {isLoadingMore && <div className='mt-5'><DuvduLoading loadingIn={""} type='category'/></div>}
                         <Formsubmited />
                     </div>
                 </section>

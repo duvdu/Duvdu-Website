@@ -22,7 +22,7 @@ const Studio = ({ projects, GetStudios, api }) => {
     });
 
     const page = 1;
-    const showLimit = 24;
+    const showLimit = 12;
     const pagganation = projects?.pagination
     const [limit, setLimit] = useState(showLimit);
 
@@ -38,6 +38,8 @@ const Studio = ({ projects, GetStudios, api }) => {
     // Extract the path part of the URL
     const cycle = path.split('?')[0];
 
+    const [localStudios, setLocalStudios] = useState([]);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     useEffect(() => {
         if (limit) {
@@ -72,6 +74,16 @@ const Studio = ({ projects, GetStudios, api }) => {
         }
     }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration,instant, Insurance, inclusive, keywords]);
 
+    useEffect(() => {
+        if (projects?.data) {
+            if (limit === showLimit) {
+                setLocalStudios(projects.data);
+            } else {
+                setLocalStudios(prev => [...prev, ...projects.data.slice(prev.length)]);
+            }
+            setIsLoadingMore(false);
+        }
+    }, [projects?.data]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -80,16 +92,17 @@ const Studio = ({ projects, GetStudios, api }) => {
                 const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
                 const clientHeight = document.documentElement.clientHeight || window.innerHeight;
                 const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-                if (scrolledToBottom) {
-                    setLimit(showLimit + limit);
+
+                if (scrolledToBottom && !isLoadingMore) {
+                    setIsLoadingMore(true);
+                    setLimit(prev => showLimit + prev);
                 }
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [page, pagganation?.totalPages]);
-
+    }, [page, pagganation?.totalPages, isLoadingMore]);
 
     const handlesetdata = (item) => {
         setdata(item)
@@ -117,26 +130,26 @@ const Studio = ({ projects, GetStudios, api }) => {
                             <div className="h-7" />
                         }
                         {/* {<RelatedCategories className=" col-span-full" />} */}
-                        {getPaginatedProjects?.length > 0 && (
+                        {localStudios?.length > 0 && (
                             <h1 className="page-header pb-9">{t("most popular on duvdu")}</h1>
                         )}
 
                         {getPaginatedProjects?.length === 0 && (
                             <div className="mt-10">
-                                <EmptyComponent message="No projects Found" />
+                                <EmptyComponent message="No Studios Found" />
                             </div>
                         )}
-                        {projects?.loading?
-                       <DuvduLoading loadingIn={""} type='projects'/>:    
-                       <div className="grid minmax-280 gap-5">
-                            {getPaginatedProjects?.map((item, i) => (
-                                <React.Fragment key={item.id || i}>
-                                    <ProjectCard cardData={item} type="rentals" />
-                                </React.Fragment>
-                            ))}
-                        </div>
-                    }
-                        {/* <DuvduLoading loadingIn={"GetStudios"} /> */}
+                        {(projects?.loading && localStudios?.length === 0) ?
+                            <DuvduLoading loadingIn={""} type='projects'/> :    
+                            <div className="grid minmax-280 gap-5">
+                                {localStudios?.map((item, i) => (
+                                    <React.Fragment key={item.id || i}>
+                                        <ProjectCard cardData={item} type="rentals" />
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                        }
+                        {isLoadingMore && <div className='mt-5'><DuvduLoading loadingIn={""} type='projects'/></div>}
                     </div>
                 </section>
             </Layout>

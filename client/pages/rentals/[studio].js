@@ -134,7 +134,7 @@ const Studio = ({
                                         <Details toggleDrawerEdit={toggleDrawerEdit} onAudioPlay={handleAudioPlay} data={studio} />
                                         </section>
                                         <section className="lg:w-2/3">
-                                            {studio?.attachments.length > 1 ?
+                                            {[...studio?.attachments,studio.cover].length > 1 ?
                                                 <div className='mx-5 lg:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>
                                                     {/* Custom Arrows */}
                                                     {/* <div className="swiper-button-prev"> */}
@@ -165,7 +165,7 @@ const Studio = ({
                                                             nextEl: '.custom-swiper-next',
                                                         }}
                                                     >
-                                                        {studio?.attachments.map((item, index) => {
+                                                        {[...studio?.attachments,studio.cover].map((item, index) => {
                                                             return <SwiperSlide key={index}>
                                                                 <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={studio?.cover} />
                                                             </SwiperSlide>

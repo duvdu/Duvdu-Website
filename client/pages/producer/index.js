@@ -18,6 +18,8 @@ import RelatedCategories from "../../components/elements/relatedCategories";
 
 const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin }) => {
     const { t } = useTranslation();
+    const [localProducers, setLocalProducers] = useState([]);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const producers = respond?.data
     const pagganation = respond?.pagination
     const page = 1;
@@ -81,6 +83,16 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin })
         }
     }, [limit, searchTerm, page, category, Platforms, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
 
+    useEffect(() => {
+        if (producers) {
+            if (limit === showLimit) {
+                setLocalProducers(producers);
+            } else {
+                setLocalProducers(prev => [...prev, ...producers.slice(prev.length)]);
+            }
+            setIsLoadingMore(false);
+        }
+    }, [producers]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -90,16 +102,16 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin })
                 const clientHeight = document.documentElement.clientHeight || window.innerHeight;
                 const scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-                if (scrolledToBottom) {
-                    setLimit(showLimit + limit);
+                if (scrolledToBottom && !isLoadingMore) {
+                    setIsLoadingMore(true);
+                    setLimit(prev => showLimit + prev);
                 }
             }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [page, pagganation?.totalPages]);
-
+    }, [page, pagganation?.totalPages, isLoadingMore]);
 
     const handlesetdata = (item) => {
         if (isLogin) {
@@ -128,20 +140,23 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin })
                     <div className="h-7" />
                     {/* {<RelatedCategories className=" col-span-full" />} */}
 
-                        {producers?.length > 0 &&
+                        {localProducers?.length > 0 &&
                             <h1 className="page-header my-6">{t("most popular on duvdu")}</h1>
                         }
 
                         {producers && producers.length === 0 &&
                             <EmptyComponent message="No Producers Now" />
                         }
-                        {respond?.loading?
-                       <DuvduLoading loadingIn={""} type='category'/>:    
-                        <div className="grid minmax-360">
-                            {producers?.map((item, i) =>
-                                <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />
-                            )}
-                        </div>}
+                        {(respond?.loading && localProducers?.length === 0) ? 
+                            <DuvduLoading loadingIn={""} type='category'/> 
+                        :    
+                            <div className="grid minmax-360">
+                                {localProducers?.map((item, i) =>
+                                    <ProducerCard onClick={() => handlesetdata(item)} key={i} cardData={item} />
+                                )}
+                            </div>
+                        }
+                        {isLoadingMore && <div className='mt-5'><DuvduLoading loadingIn={""} type='category'/></div>}
                         <Formsubmited />
                     </div>
                 </section>

@@ -2,6 +2,7 @@ import { convertToK, getRankStyle } from "../../../util/util";
 import { useTranslation } from 'react-i18next';
 import Icon from "../../Icons";
 import React from 'react';
+import Link from 'next/link';
 
 const About = ({ data }) => {
     const { t } = useTranslation();
@@ -12,12 +13,16 @@ const About = ({ data }) => {
             <h2 className="font-bold text-lg capitalize opacity-80 mb-4 mt-6 md:mt-10 mx-5 sm:mx-0">{t("about the creative")}</h2>
             <div className="border border-50 border-solid border-[#00000040] dark:border-[#FFFFFF40] mx-5 pb-10 md:mx-0">
                 <div className='flex items-center justify-center px-10 pt-10'>
-                    <div className='w-32 h-32 relative'>
-                        <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
-                        <img className='profileImgture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
-                    </div>
+                    <Link href={`/creative/${data?.user.username}`}>
+                        <div className='w-32 h-32 relative cursor-pointer'>
+                            <img className='profile-frame absolute rounded-full' src="/assets/imgs/theme/profile-frame.svg" alt="profile frame" />
+                            <img className='profileImgture absolute rounded-full object-cover object-top' src={data?.user.profileImage} alt="profile picture" />
+                        </div>
+                    </Link>
                     <div className='flex-2 flex-col gap-1'>
-                        <h3 className="capitalize font-semibold text-lg">{data?.user.name?.split(' ')[0].length>6?data?.user.name?.split(' ')[0].slice(0,6):data?.user.name?.split(' ')[0]}</h3>
+                        <Link href={`/creative/${data?.user.username}`}>
+                            <h3 className="capitalize cursor-pointer font-semibold text-lg">{data?.user.name?.split(' ')[0].length>6?data?.user.name?.split(' ')[0].slice(0,6):data?.user.name?.split(' ')[0]}</h3>
+                        </Link>
                         <span className='flex items-center gap-2'>
                             <Icon className='opacity-50 w-3' name='location-dot' />
                             <span className="location">{data?.user.address || "UNKNOWN"}</span>
