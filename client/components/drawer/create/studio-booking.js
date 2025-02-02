@@ -68,7 +68,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         // if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
         // if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
-        if (!formData.title) errors.title = 'Title is required';
+        if (!formData.title) errors.title = 'Name is required';
         if (!formData.phoneNumber) {
             errors.phoneNumber = 'Phone number is required';
         } else if (!egyptianPhoneRegex.test(formData.phoneNumber)) {
@@ -77,7 +77,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData.email) errors.email = 'Email is required';
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
-        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
         // if (!formData.insurance) errors.insurance = 'Insurance is required';
         // showOnHome
         if (!formData['projectScale.unit']) errors.projectScaleunit = 'Project Scale Unit is required';

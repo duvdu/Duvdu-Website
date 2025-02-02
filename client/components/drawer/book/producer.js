@@ -33,9 +33,15 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
         if (!formData.projectDetails) errors.projectDetails = 'projectDetails is required';
         if (!formData.episodesNumber) errors.episodesNumber = 'episodesNumber is required';
         if (!formData.episodesDuration) errors.episodesDuration = 'episodesDuration is required';
-        if (!formData.expectedBudget) errors.expectedBudget = 'expectedBudget is required';
+        if (!formData.expectedBudget) {
+            errors.expectedBudget = 'expectedBudget is required';
+        } else if (Number(formData.expectedBudget) < Number(data.minBudget)) {
+            errors.expectedBudget = `Expected budget must be greater than minimum budget (${data.minBudget})`;
+        } else if (Number(formData.expectedBudget) > Number(data.maxBudget)) {
+            errors.expectedBudget = `Expected budget must be Less than maximum budget (${data.minBudget})`;
+        }
         if (!formData.expectedProfits) errors.expectedProfits = 'expectedProfits is required';
-        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
         return errors;
     };
@@ -204,7 +210,7 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                         <section className="w-full">
                             <p className="capitalize opacity-60">{t("Expected Budget")}</p>
                             <div className='flex items-center justify-start gap-4'>
-                                <input type="number" min={0} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder={t("Ex. 10$")} className={inputStyle} />
+                                <input type="number" min={data.minBudget} value={formData.expectedBudget || ""} onChange={handleInputChange} name='expectedBudget' placeholder={t("Ex. 10$")} className={inputStyle} />
                             </div>
                             <ErrorMessage ErrorMsg={ErrorMsg.expectedBudget}/>
                         </section>
