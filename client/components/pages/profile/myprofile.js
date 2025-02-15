@@ -25,7 +25,7 @@ import AddToolUsed from '../../popsup/create/addToolUsed';
 import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
 import EquipmentAvailable from '../../popsup/create/equipmentAvailable';
 import Followers from '../../popsup/followes';
-import { GetUserProject } from '../../../redux/action/apis/auth/profile/getUserProjects';
+import { GetUserProject , GetTaggedProject } from '../../../redux/action/apis/auth/profile/getUserProjects';
 import Conver from './conver';
 import Info from './info';
 import Projects from './projects';
@@ -39,7 +39,7 @@ import Reviews from "../../../components/pages/stduiosAndProject/review";
 import FaceVerification from "../../elements/FaceVerification";
 import Subscription from "../../elements/Subscription";
 
-function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects,GetTaggedProject, taggedProjects , UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
     const { t } = useTranslation();
     const route = useRouter()
     
@@ -49,6 +49,42 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
     const [userInfo, setUserInfo] = useState(user);
     const projectData = projects?.data?.projects || []
 
+    const transformApiResponse = (data) => {
+        return {
+            _id: data._id,
+            project: {
+                _id: data._id,
+                user: {
+                    _id: data.user._id,
+                    username: data.user.username,
+                    isOnline: data.user.isOnline,
+                    profileImage: data.user.profileImage,
+                    name: data.user.name,
+                },
+                category: {
+                    _id: data.category._id,
+                    title: data.category.title,
+                    cycle: "project", // Assuming a static value as in API 1
+                    image: "" // No equivalent in API 2
+                },
+                cover: data.cover,
+                audioCover: data.audioCover,
+                name: data.name,
+                creatives: data.creatives || []
+            },
+            ref: "portfolio-post",
+            user: data.user._id,
+            rate: {
+                ratersCounter: data.user.rate.ratersCounter,
+                totalRates: data.user.rate.totalRates
+            },
+            createdAt: data.createdAt,
+            updatedAt: data.updatedAt,
+            __v: 0
+        };
+    };    
+    const taggedProjectData = taggedProjects?.data || []
+    console.log({taggedProjects})
     useEffect(() => {
         setUserInfo(user)
     }, [user])
@@ -60,6 +96,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
         if (user?.username){
             userReview({ username: user?.username })
             GetUserProject({ username: user?.username });
+            GetTaggedProject({inviteStatus:'accepted'});
         }
     }, [user?.username])
 
@@ -167,7 +204,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
                                         followers: userInfo?.followCount.followers,
                                         views: userInfo?.profileViews,
                                     }}
-                                    rates={userInfo?.rate.totalRates.toFixed(1)}
+                                    rates={userInfo?.rate.totalRates}
                                     isMe={true}
                                 />
                             </div>
@@ -246,15 +283,27 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
 
                         }
                         <div className='col-span-4 w-full mb-10 -translate-y-[80px] sm:-translate-y-0'>
+                            {taggedProjects?.loading?
+                            <DuvduLoading loadingIn={""} type='profileProjects'/>
+                            :
+                            taggedProjects?.data?.length > 0 &&
+                                <>
+                                <h3 className='pb-4 !font-bold' id='about-header'>{t("tagged projects")}</h3>
+                                <Projects projects={taggedProjectData.map(item=>transformApiResponse(item))} />
+                                </>
+                            }
                             {projects?.loading?
                             <DuvduLoading loadingIn={""} type='profileProjects'/>
                             :
-                            (projects?.data?.projects?.length > 0 ?
-                                <Projects projects={projectData} />:
+                            projects?.data?.projects?.length > 0 &&
+                            <>
+                            <h3 className='pb-4 !font-bold' id='about-header'>{t("my projects")}</h3>
+                            <Projects projects={projectData} />
+                            </>
+                            }
 
-                                projects?.data?.projects && 
-                                    <EmptyComponent message="No Projects Yet!" />
-                            )
+                            { projects?.data?.projects?.length==0 &&  taggedProjects?.data?.length ===0 && 
+                                <EmptyComponent message="No Projects Yet!" />
                             }
                             
                         </div>
@@ -270,7 +319,8 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects, Upd
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <AddOtherCreatives onSubmit={(value) =>{
-             value.invitedCreatives?InsertToArray('invitedCreatives', value) :InsertToArray('creatives', value)}} />
+                value.invitedCreatives?InsertToArray('invitedCreatives', value) :InsertToArray('creatives', value)
+            }} />
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <InputDrawer />
             {
@@ -303,6 +353,7 @@ const mapStateToProps = (state) => ({
     user: state.user.profile,
     updateProfile_respond: state.api.updateProfile,
     projects: state.api.GetUserProject,
+    taggedProjects: state.api.GetTaggedProject,
     userReview_respond: state.api.userReview,
 });
 
@@ -312,6 +363,7 @@ const mapDispatchToProps = {
     updateProfile,
     getMyprofile,
     GetUserProject,
+    GetTaggedProject,
     InsertToArray,
     userReview
 };

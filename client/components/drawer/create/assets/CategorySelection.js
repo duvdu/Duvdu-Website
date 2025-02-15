@@ -5,7 +5,7 @@ import { filterByCycle as filterByCycleCategory, } from "../../../../util/util";
 import { useTranslation } from 'react-i18next';
 
 
-function CategorySelection({ categories, onChange, value, filterIn , isRemove }) {
+function CategorySelection({ categories, onChange, value, filterIn , isRemove , isReset , setIsReset }) {
     const { t } = useTranslation();
     categories = filterByCycleCategory(categories, filterIn)
 
@@ -25,7 +25,6 @@ function CategorySelection({ categories, onChange, value, filterIn , isRemove })
 
         setSelectedTags(value?.tags || []);
     }, []);
-
     useEffect(() => {
         Change()
     }, [selectedCategory, selectedSubCategory, selectedTags])
@@ -60,6 +59,13 @@ function CategorySelection({ categories, onChange, value, filterIn , isRemove })
         }
 
     };
+    
+    useEffect(()=>{
+        if(isReset==true){
+            handleCategorySelect({})
+            setIsReset(false)
+        }
+    },[isReset])
     if (!categories || categories.length === 0) return <p>{t("No categories available.")}</p>;
     return (
         <>

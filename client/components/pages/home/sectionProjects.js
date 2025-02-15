@@ -51,15 +51,15 @@ function SectionProjects({ projects , inclusive }) {
     return projects?.length > 0 && (
         <div>
             <div className="sm:hidden grid minmax-150 gap-3">
-                {repeatedProjects?.map((item, i) => (
+                {projects?.map((item, i) => (
                     item &&
                     <SmallProjectItem key={i} inclusive={inclusive} cardData={item} className={i % 3 === 0 ? 'col-span-2 row-span-2' : ''} isbig={i % 3 === 0} />
                 ))}
             </div>
             <div className="hidden sm:grid minmax-280 gap-4">
-                {repeatedProjects?.map((item, i) => (
+                {projects?.map((item, i) => (
                     item &&
-                    <ProjectItem key={i} inclusive={inclusive} cardData={item} className={isInSequence(i) ? 'col-span-2 row-span-2' : ''} />
+                    <ProjectItem key={item._id} inclusive={inclusive} cardData={item} className={isInSequence(i) ? 'col-span-2 row-span-2' : ''} />
                 ))}
             </div> 
             {/* <video controls width="500" height="500">

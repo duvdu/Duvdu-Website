@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Icon from '../Icons';
 import { useTranslation } from 'react-i18next';
 
-const BookTeam = ({ team,current, onChange ,pricerPerUnit, mainremovable = true }) => {
+const BookTeam = ({ team,current, unit , onChange ,pricerPerUnit, mainremovable = true }) => {
     const { t } = useTranslation();
     const [localteam, setLocalTeam] = useState(team);
     const handleRemoveItem = (id) => {
@@ -17,7 +17,7 @@ const BookTeam = ({ team,current, onChange ,pricerPerUnit, mainremovable = true 
                 <div key={i} className="team-padge">
                     {item.profileImage&& <img className='object-cover object-top rounded-full aspect-square' src={item.profileImage} alt="user" />}
                     <span className="mx-3">{item.name}</span>
-                    {pricerPerUnit && <span className="mx-3">{pricerPerUnit*current} $</span>}
+                    {pricerPerUnit && <span className="mx-3">{current} {unit}s {pricerPerUnit*current} EGP</span>}
                 </div>
                 
                 {

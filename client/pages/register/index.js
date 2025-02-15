@@ -6,14 +6,16 @@ import Icon from '../../components/Icons';
 import { connect } from "react-redux";
 import { signup } from "../../redux/action/apis/auth/signup/signup";
 import { useRouter } from 'next/router';
-import { CheckUsernameExists } from "../../redux/action/apis/auth/signin/CheckUsernameExists";
+import { CheckUsernameExists , CheckEmailExists , CheckPhoneExists } from "../../redux/action/apis/auth/signin/CheckUsernameExists";
 import { validatePassword } from "../../util/util";
 import { useTranslation } from 'react-i18next';
 
 
-const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => {
+const Register = ({ signup, api, respond, userExists , emailExists , phoneExists, CheckUsernameExists , CheckEmailExists , CheckPhoneExists }) => {
     const { t } = useTranslation();
-    const [isUsernameExists, setIsUsernameExists] = useState(userExists?.isUsernameExists);
+    const [isUsernameExists, setIsUsernameExists] = useState(userExists?.isExists);
+    const [isEmailExists, setIsEmailExists] = useState(emailExists?.isExists);
+    const [isPhoneExists, setIsPhoneExists] = useState(phoneExists?.isExists);
     const [errorMSG, setErrorMSG] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
@@ -33,25 +35,53 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
     const [showPassword, setShowPassword] = useState(false);
     const [termsAgreed, setTermsAgreed] = useState(false);
     const [lastCheckedUsername, setLastCheckedUsername] = useState(''); // State to track the last checked username
+    const [lastCheckedEmail, setLastCheckedEmail] = useState(''); // State to track the last checked username
+    const [lastCheckedPhone, setLastCheckedPhone] = useState(''); // State to track the last checked username
     const router = useRouter();
-
     // change status of @username icon
     useEffect(() => {
         if (api.req === "CheckUsernameExists" && api.loading) {
             setIsUsernameExists("loading");
         } else {
-            setIsUsernameExists(userExists?.isUsernameExists);
+            setIsUsernameExists(userExists?.isExists);
         }
     }, [userExists, api]);
+    useEffect(() => {
+        if (api.req === "CheckEmailExists" && api.loading) {
+            setIsEmailExists("loading");
+        } else {
+            setIsEmailExists(emailExists?.isExists);
+        }
+    }, [emailExists, api]);
+    useEffect(() => {
+        if (api.req === "CheckPhoneExists" && api.loading) {
+            setIsPhoneExists("loading");
+        } else {
+            setIsPhoneExists(phoneExists?.isExists);
+        }
+    }, [phoneExists, api]);
 
 
     useEffect(() => {
-        // Check username availability if it changes and has more than 5 characters, but only if it's different from the last checked username
         if (isUsernameExists !== 'loading' && formData.username.length > 5 && formData.username !== lastCheckedUsername) {
             CheckUsernameExists(formData.username);
             setLastCheckedUsername(formData.username);
         }
     }, [formData.username, isUsernameExists]);
+
+    useEffect(() => {
+        if (isEmailExists !== 'loading' && formData.email && formData.email !== lastCheckedEmail) {
+            CheckEmailExists(formData.email);
+            setLastCheckedEmail(formData.email);
+        }
+    }, [formData.email, lastCheckedEmail]);
+
+    useEffect(() => {
+        if (isPhoneExists !== 'loading' && formData.phone && formData.phone !== lastCheckedPhone) {
+            CheckPhoneExists(formData.phone);
+            setLastCheckedPhone(formData.phone);
+        }
+    }, [formData.phone, isPhoneExists]);
 
 
 
@@ -143,6 +173,8 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
             errors.phone = { isError: true, message: 'Phone is required.' };
         } else if (!egyptianPhoneRegex.test(formData.phone)) {
             errors.phone = { isError: true, message: 'Invalid Egyptian phone number.' };
+        } else if (isPhoneExists) {
+            errors.phone = { isError: true, message: 'Phone already exists.' };
         } else {
             errors.phone = { isError: false, message: '' };
 
@@ -153,6 +185,8 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
             errors.email = { isError: true, message: 'Email is required.' };
         } else if (!EmailRegex.test(formData.email)) {
             errors.email = { isError: true, message: 'Invalid Email.' };
+        } else if (isEmailExists) {
+            errors.email = { isError: true, message: 'Email already exists.' };
         } else {
             errors.email = { isError: false, message: '' };
         }
@@ -210,27 +244,67 @@ const Register = ({ signup, api, respond, userExists, CheckUsernameExists }) => 
                     />
                     {formErrors.name.isError && <p className="error-msg">{formErrors.name.message}</p>}
                 </div>
-                <div className={`mb-4 ${formErrors.email.isError ? 'error' : ''}`}>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email|| ""}
-                        onChange={handleChange}
-                        placeholder={t("email")}
-                        className={formErrors.email.isError ? "app-field error" : "app-field"}
-                    />
-                    {formErrors.email.isError && <p className="error-msg">{formErrors.email.message}</p>}
+                <div className="relative mb-4">
+                    <div className={`mb-4 ${formErrors.email.isError ? 'error' : ''}`}>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email|| ""}
+                            onChange={handleChange}
+                            placeholder={t("email")}
+                            className={formErrors.email.isError ? "app-field error" : "app-field"}
+                        />
+                            {formData.email &&
+                            <div className="absolute -right-8 top-6">
+                                {isEmailExists === false && (
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="check" />
+                                    </div>
+                                )}
+                                {isEmailExists === true && (
+                                    <div className="bg-red rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="xmark" />
+                                    </div>
+                                )}
+                                {isEmailExists === 'loading' && (
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="circle" />
+                                    </div>
+                                )}
+                            </div>}
+                        {formErrors.email.isError && <p className="error-msg">{formErrors.email.message}</p>}
+                    </div>
                 </div>
-                <div className={`mb-4 ${formErrors.phone.isError ? 'error' : ''}`}>
-                    <input
-                        type="phone"
-                        name="phone"
-                        value={formData.phone || ""}
-                        onChange={handleChange}
-                        placeholder={t("Phone")}
-                        className={formErrors.phone.isError ? "app-field error" : "app-field"}
-                    />
-                    {formErrors.phone.isError && <p className="error-msg">{formErrors.phone.message}</p>}
+                <div className="relative mb-4">
+                    <div className={`mb-4 ${formErrors.phone.isError ? 'error' : ''}`}>
+                        <input
+                            type="phone"
+                            name="phone"
+                            value={formData.phone || ""}
+                            onChange={handleChange}
+                            placeholder={t("Phone")}
+                            className={formErrors.phone.isError ? "app-field error" : "app-field"}
+                        />
+                        {formData.phone &&
+                            <div className="absolute -right-8 top-6">
+                                {isPhoneExists === false && (
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="check" />
+                                    </div>
+                                )}
+                                {isPhoneExists === true && (
+                                    <div className="bg-red rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="xmark" />
+                                    </div>
+                                )}
+                                {isPhoneExists === 'loading' && (
+                                    <div className="bg-primary rounded-full size-6 flex items-center justify-center">
+                                        <Icon className="w-3 text-white" name="circle" />
+                                    </div>
+                                )}
+                            </div>}
+                        {formErrors.phone.isError && <p className="error-msg">{formErrors.phone.message}</p>}
+                    </div>
                 </div>
                 <div className="relative mb-4">
                     <div className={`${formErrors.username.isError ? 'error' : ''}`}>
@@ -323,11 +397,15 @@ const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.signup,
     userExists: state.api.CheckUsernameExists,
+    emailExists: state.api.CheckEmailExists,
+    phoneExists: state.api.CheckPhoneExists,
 });
 
 const mapDispatchToProps = {
     signup,
     CheckUsernameExists,
+    CheckEmailExists,
+    CheckPhoneExists,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

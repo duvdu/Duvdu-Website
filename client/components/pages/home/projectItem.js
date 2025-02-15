@@ -40,7 +40,7 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
 
     const totalFunctionsUnitPrice = cardData?.functions?.reduce((total, item) => total + item.unitPrice, 0);
     const totalToolsUnitPrice = cardData?.tools?.reduce((total, item) => total + item.unitPrice, 0);
-    const inclusivePrice = cardData?.projectScale.current * (totalToolsUnitPrice + totalFunctionsUnitPrice + cardData?.projectScale.pricerPerUnit);
+    const inclusivePrice = (cardData?.projectScale.current *  cardData?.projectScale.pricerPerUnit) + totalToolsUnitPrice + totalFunctionsUnitPrice;
   
     const loveIconName = fav ? 'fas' : 'far'
 
@@ -253,33 +253,28 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
                         {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) && (
                             <>
                                 {/* {i18n.language !== "Arabic" ? ( */}
-                                {inclusive?
-                                        <span className="text-xs opacity-60 font-semibold">
-                                        { inclusivePrice} L.E
-                                        </span>:
-                                        <span className="text-xs opacity-60 font-semibold">
-                                        { cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current} L.E
-                                        </span>}
-                                        {/* {cardData?.projectScale?.unit && (
-                                            <span className="text-xs ml-1 opacity-60 font-semibold">
-                                                per {cardData?.projectScale?.unit}
-                                            </span>
-                                        )} */}
-                                {/* ) : (
-                                    <>
-                                        <span className="text-xs opacity-60 font-semibold">
-                                         {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} ج.م </span>
-                                        {cardData?.projectScale?.unit && (
-                                            <span className="text-xs ml-1 opacity-60 font-semibold">
-                                                لكل {t(cardData?.projectScale?.unit)}
-                                            </span>
-                                        )}
-                                    </>
-                                )} */}
+                                {type=='project'?
+                                    (inclusive?
+                                    <span className="text-xs opacity-60 font-semibold">
+                                    { inclusivePrice} L.E
+                                    </span>:
+                                    <span className="text-xs opacity-60 font-semibold">
+                                    { cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current} L.E
+                                    </span>)
+                                    :
+                                    <span className="text-xs opacity-60 font-semibold">
+                                    { cardData?.projectScale?.pricerPerUnit} L.E
+                                    </span>
+        
+                            }
                             </>
                         )}
 
+
                     </div>
+                </div>
+                <div>
+                    <span className='text-xl opacity-70 font-medium my-1'>{cardData?.name || cardData?.title}</span>
                 </div>
             </div>
         </>

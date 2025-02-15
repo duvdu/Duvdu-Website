@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Icon from '../Icons';
 import Popup from '../elements/popup';
+import { ClosePopUp } from "../../util/util";
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 function VerificationMessage({ id = "verification-message", isError = false, isShow, onCancel , onTryAgain , errorMessage }) {
@@ -14,7 +15,7 @@ function VerificationMessage({ id = "verification-message", isError = false, isS
     function Cancel() {
         if (onCancel) {
             onCancel();
-            router.reload()
+            ClosePopUp('face-verification')
         }
         setShowPopup(false);
     }

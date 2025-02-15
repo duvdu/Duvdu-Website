@@ -33,7 +33,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
-
+    console.log(formData)
     categories = filterByCycle(categories, 'project')
     const categoryDetails = categories.find(i => i._id == formData.category)
 
@@ -111,14 +111,47 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
 
         if (formData.creatives) {
             formData.creatives.forEach((item, index) => {
-                // data.append(`creatives[${index}]`, item.name);
                 data.append(`creatives[${index}][creative]`, item._id);
+                if (item) {
+                    if(item.category)
+                        data.append(`creatives[${index}][mainCategory][category]`,item.category)
+                    if(item.subCategoryId)
+                        data.append(`creatives[${index}][mainCategory][subCategories][subCategory]`,item.subCategoryId)
+                    if (item.tagsId)
+                        item.tagsId.forEach((tag, tagIndex) => {
+                            data.append(`creatives[${index}][mainCategory][subCategories][tags][${tagIndex}][tag]`, tag);
+                        });
+                    if(item.relatedCategory)
+                        data.append(`creatives[${index}][mainCategory][relatedCategory][category]`,item.relatedCategory)
+                    if(item.relatedSubCategory)
+                        data.append(`creatives[${index}][mainCategory][relatedCategory][subCategories][subCategory]`,item.relatedSubCategory)
+                    if (item.relatedTags.length>0)
+                        item.relatedTags.forEach((tag, tagIndex) => {
+                            data.append(`creatives[${index}][mainCategory][relatedCategory][subCategories][tags][${tagIndex}][tag]`, tag);
+                        });
+                }
             });
         }
 
         if (formData.invitedCreatives) {
             formData.invitedCreatives.forEach((item, index) => {
-                data.append(`number[${index}]`, item._id);
+                data.append(`invitedCreatives[${index}][number]`, item._id);
+                if(item.category)
+                    data.append(`invitedCreatives[${index}][mainCategory][category]`,item.category)
+                if(item.subCategoryId)
+                    data.append(`invitedCreatives[${index}][mainCategory][subCategories][subCategory]`,item.subCategoryId)
+                if (item.tagsId)
+                    item.tagsId.forEach((tag, tagIndex) => {
+                        data.append(`invitedCreatives[${index}][mainCategory][subCategories][tags][${tagIndex}][tag]`, tag);
+                    });
+                if(item.relatedCategory)
+                    data.append(`invitedCreatives[${index}][mainCategory][relatedCategory][category]`,item.relatedCategory)
+                if(item.relatedSubCategory)
+                    data.append(`invitedCreatives[${index}][mainCategory][relatedCategory][subCategories][subCategory]`,item.relatedSubCategory)
+                if (item.relatedTags.length>0)
+                    item.relatedTags.forEach((tag, tagIndex) => {
+                        data.append(`invitedCreatives[${index}][mainCategory][relatedCategory][subCategories][tags][${tagIndex}][tag]`, tag);
+                    });
             });
         }
 
@@ -137,6 +170,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         }
         return data;
     }
+    console.log(formData)
     const validateRequiredFields = () => {
         const errors = {};
 
@@ -466,4 +500,5 @@ const mapDispatchToProps = {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPost);
+
 

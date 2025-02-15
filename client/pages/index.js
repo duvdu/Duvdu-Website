@@ -77,9 +77,9 @@ const Home = ({
 
 
     useEffect(() => {
-        if (limit) {
+        // if (limit) {
             const params = {
-                limit: limit,
+                limit: 100,
                 page: page,
             };
 
@@ -106,8 +106,8 @@ const Home = ({
             if(queryString && Router.isReady)
             GetProjects(queryString)
 
-        }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, keywords]);
+        // }
+    }, [searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, keywords]);
 
 
     const handleFilterChange = (selectedFilters) => {

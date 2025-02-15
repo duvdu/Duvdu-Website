@@ -123,7 +123,7 @@ function OtherProfile({
                                 rankcolor={userInfo?.rank?.color}
                                 isMe={false}
                                 occupation={userInfo?.category?.title}
-                                rates={userInfo?.rate.totalRates.toFixed(1)}
+                                rates={userInfo?.rate.totalRates}
                             />
                             {isLogin ===true && (
                                 <div className='flex gap-3 items-center mt-7'>

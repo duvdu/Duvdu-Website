@@ -18,7 +18,7 @@ import TestOTPCode from "../popsup/testOTPCode";
 import GoogleAnalytics from "../GoogleAnalytics";
 import FaceVerification from '../popsup/faceVerification';
 import Subscribe from '../popsup/subscribe';
-
+import { IsPopUpOpen } from "../../util/util";
 
 
 const Layout = ({

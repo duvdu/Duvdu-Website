@@ -1,5 +1,4 @@
-import DuvduLoading from "../../elements/duvduLoading";
-import ProjectCard from "../../elements/project-card";
+import ProjectItem from "../home/projectItem";
 import { useTranslation } from 'react-i18next';
 
 const Recommended = ({ projects, type }) => {
@@ -12,7 +11,7 @@ const Recommended = ({ projects, type }) => {
 
             <div className="grid minmax-280 gap-5">
                 {getPaginatedProjects.map((item, i) => (
-                    <ProjectCard key={i} className='cursor-pointer' cardData={item} type={type} />
+                    <ProjectItem type={type} key={item._id} cardData={item} />
                 ))}
             </div>
         </div>

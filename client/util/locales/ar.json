@@ -137,7 +137,7 @@
     "Pay Now 10%": "ادفع الآن 10%",
     "Pay Now remain ( 90 % )": "ادفع الآن الباقي (90%)",
     "Pay Now remain ( 100 % )": "ادفع الآن الباقي (100%)",
-    "Pay Now": "ادفع الآن",
+    "Check Out": "ادفع الآن",
     "Cancel": "إلغاء",
     "attachments": "المرفقات",
     "tool :": "الأداة:",
@@ -594,5 +594,8 @@
     "Are you sure you want to delete":"هل انت متاكد من انك تريد ازالة",
     "this category?":"هذه الفئة",
     "Delete Category":"ازالة فئة",
+    "my projects":"مشاريعي",
+    "tagged projects":"المشاريع الموسومة",
+    "creatives tagged":"موسمات المبدعون",
     "":""
 }

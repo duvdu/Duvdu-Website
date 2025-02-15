@@ -17,6 +17,7 @@ import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
 import { AvailableUserChat } from "../../redux/action/apis/realTime/messages/availableUserChat";
 import { GetBoards } from "../../redux/action/apis/bookmarks/bookmark/get";
 import { GetFavList } from "../../redux/action/apis/bookmarks/fav/getAll";
+import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
 import Link from "next/link";
 import ErrorPopUp from "../popsup/errorPopUp";
 import { LogOut } from "../../redux/action/apis/auth/logout";
@@ -45,6 +46,7 @@ const Header = ({
     AvailableUserChat,
     LogOut,
     GetBoards,
+    getMyprofile,
     GetFavList,
     GetFavList_respond,
     GetBoards_respond,
@@ -93,6 +95,10 @@ const Header = ({
         if(getheaderpopup===Types.SHOWPROFILE){
             if (!GetBoards_respond)
                 GetBoards({})
+        }
+        if(getheaderpopup===Types.SHOWPROFILE){
+            if(isLogin===true)
+                getMyprofile()
         }
     }, [getheaderpopup , isLogin]);
 
@@ -357,6 +363,7 @@ const mapDispatchToProps = {
     LogOut,
     GetBoards,
     GetFavList,
+    getMyprofile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

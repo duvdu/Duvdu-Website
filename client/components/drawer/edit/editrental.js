@@ -190,7 +190,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
     // }, [auth.login])
 
     // useEffect(() => {
-    //     UpdateFormData("projectScale.unit", "minutes")
+    //     UpdateFormData("projectScale.unit", "hours")
     // }, [])
 
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
@@ -298,7 +298,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                         required
                                     >
 
-                                        {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
+                                        {['hours', 'days'].map((value, index) => (
                                             <option key={index} value={value.toLowerCase()}>{value}</option>
                                         ))}
                                     </select>

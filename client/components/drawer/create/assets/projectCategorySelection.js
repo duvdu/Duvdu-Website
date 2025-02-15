@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { filterByCycle as filterByCycleCategory } from "../../../../util/util";
 import { useTranslation } from 'react-i18next';
 
-function CategorySelection({ categories, onChange, value, filterIn, isRemove }) {
+function CategorySelection({ categories, onChange, value, filterIn, isRemove, isReset, setIsReset }) {
     const { t } = useTranslation();
     categories = filterByCycleCategory(categories, filterIn);
 
@@ -15,6 +15,18 @@ function CategorySelection({ categories, onChange, value, filterIn, isRemove }) 
     const [selectedRelatedCategory, setSelectedRelatedCategory] = useState({});
     const [selectedRelatedSubCategory, setSelectedRelatedSubCategory] = useState({});
     const [selectedRelatedTags, setSelectedRelatedTags] = useState([]);
+
+    useEffect(() => {
+        if (isReset) {
+            setSelectedCategory({});
+            setSelectedSubCategory({});
+            setSelectedTags([]);
+            setSelectedRelatedCategory({});
+            setSelectedRelatedSubCategory({});
+            setSelectedRelatedTags([]);
+            setIsReset(false);
+        }
+    }, [isReset]);
 
     useEffect(() => {
         const selectedCategory = categories.find(category => category._id === value?.category);

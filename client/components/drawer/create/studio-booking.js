@@ -35,7 +35,11 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
     categories = filterByCycleCategory(categories, 'rentals')
-
+    const isInsurance = categories.find(item=>item._id === formData.category)?.insurance ?? false;
+    useEffect(()=>{
+        if(!isInsurance)
+            UpdateFormData('insurance', '')
+    },[isInsurance])
     const converting = () => {
         const data = convertToFormData(formData, ['location', 'tags', 'attachments', 'searchKeywords'])
         if (formData.location) {
@@ -151,7 +155,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
     }, [auth.login])
 
     useEffect(() => {
-        UpdateFormData("projectScale.unit", "minutes")
+        UpdateFormData("projectScale.unit", "hours")
     }, [])
 
 
@@ -169,7 +173,6 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         })
     }
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
-
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
@@ -189,6 +192,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 'tags': formData.tags,
                             }}
                             onChange={(value) => {
+                                console.log(value)
                                 UpdateFormData('category', value.category)
                                 UpdateFormData('subCategory', value.subCategory)
                                 UpdateFormData('tags', value.tags)
@@ -230,10 +234,12 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                             <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                             <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                         </section>
-                        <section>
-                            <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
-                            {/* <ErrorMessage ErrorMsg={ErrorMsg.insurance}/> */}
-                        </section>
+                        {isInsurance &&
+                            <section>
+                                <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                {/* <ErrorMessage ErrorMsg={ErrorMsg.insurance}/> */}
+                            </section>
+                        }
                     </section>
                     <section className="flex flex-col gap-8">
                         <div className='flex items-center justify-between'>
@@ -246,7 +252,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 required
                             >
 
-                                {['minutes', 'hours', 'days', 'weeks', 'months'].map((value, index) => (
+                                {['hours', 'days'].map((value, index) => (
                                     <option key={index} value={value}>{t(value)}</option>
                                 ))}
                             </select>

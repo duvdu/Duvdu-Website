@@ -12,33 +12,39 @@ import Filter from "../../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { GetProjectInvitations } from "../../redux/action/apis/cycles/projects/getInvitation";
+import { GetTaggedProject } from "../../redux/action/apis/auth/profile/getUserProjects";
 import { AcceptInvitation } from "../../redux/action/apis/cycles/projects/acceptInvitation";
 import RelatedCategories from "../../components/elements/relatedCategories";
 import DuvduLoading from "../../components/elements/duvduLoading";
 import EmptyComponent from "../../components/pages/contracts/emptyComponent";
+import SuccessfullyPosting from "../../components/popsup/post_successfully_posting";
 
-const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,AcceptInvitation, GetProjectInvitations, isLogin }) => {
+const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,AcceptInvitation, GetTaggedProject, isLogin }) => {
     const { t } = useTranslation();
     const [isAccept,setIsAccept] = useState(false)
     const [actionId,setActionId] = useState(null)
+    const [post_success, setPost_success] = useState(false);
     const projectsList = projectInvitations_respond?.data
     const Router = useRouter();
     const searchTerm = Router.query.search;
     useEffect(() => {
         if(acceptInvitation_respond?.message==='success')
-        GetProjectInvitations();
+        GetTaggedProject({inviteStatus:'pending'});
     }, [acceptInvitation_respond]);
     useEffect(()=>{
-        GetProjectInvitations();
+        GetTaggedProject({inviteStatus:'pending'});
     },[])
     useEffect(()=>{
         if(isLogin ===false)
             Router.push('/')
     },[isLogin])
+    const toggleDrawer = () => {
+        setPost_success(false)
+    }
 
     return (
         <>
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
                 <section className="my-12">
                     <div className="container mb-30">
@@ -70,6 +76,44 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
                                                 </div>
                                             </div>
                                         </Link>
+                                        {item?.creatives?.map((creative=>
+                                        <div className='flex flex-wrap w-full pt-25 items-center gap-3'>
+                                            {creative?.mainCategory?.category?.title && 
+                                            <div className='info-container !normal-case'>
+                                                <span>{creative?.mainCategory?.category?.title}</span>
+                                            </div>
+                                            }
+                                            {creative?.mainCategory?.subCategories?.subCategory?.title && 
+                                            <div className='info-container !normal-case'>
+                                                <span>{creative?.mainCategory?.subCategories?.subCategory?.title}</span>
+                                            </div>
+                                            }
+                                            {creative?.mainCategory?.subCategories?.tags.length>0 && 
+                                                creative?.mainCategory?.subCategories?.tags.map(tag=>
+                                                <div className='info-container !normal-case'>
+                                                    <span>{tag?.title}</span>
+                                                </div>
+                                                )
+                                            }
+                                            {creative?.mainCategory?.relatedCategory?.category?.title && 
+                                            <div className='info-container !normal-case'>
+                                                <span>{creative?.mainCategory?.relatedCategory?.category?.title}</span>
+                                            </div>
+                                            }
+                                            {creative?.mainCategory?.relatedCategory?.subCategories?.subCategory?.title && 
+                                            <div className='info-container !normal-case'>
+                                                <span>{creative?.mainCategory?.relatedCategory?.subCategories?.subCategory?.title}</span>
+                                            </div>
+                                            }
+                                            {creative?.mainCategory?.relatedCategory?.subCategories?.tags.length>0 && 
+                                                creative?.mainCategory?.relatedCategory?.subCategories?.tags.map(tag=>
+                                                <div className='info-container !normal-case'>
+                                                    <span>{tag?.title}</span>
+                                                </div>
+                                                )
+                                            }
+                                        </div>
+                                        ))}
                                         <Link href={`/project/${item?._id}`}>
                                             <div className='rounded-full cursor-pointer py-5 w-full bg-gray-200 dark:bg-[#000]  text-center'>
                                                 <h3 className='font-bold flex gap-1 items-center justify-center'>
@@ -83,7 +127,9 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
                                             <button className="rounded-full w-full h-[66px] text-white bg-primary text-lg font-bold mt-2" onClick={()=>{
                                                 setIsAccept(true)
                                             setActionId(item._id)
-                                                AcceptInvitation(item._id , true)
+                                                AcceptInvitation(item._id , true).then(()=>{
+                                                    setPost_success(true)
+                                                })
                                             }}>
                                             {acceptInvitation_respond?.loading && item._id == actionId && isAccept===true ? 
                                                 <Loading/>
@@ -107,7 +153,7 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
                         </div>
                         }
                         {/* <div className="w-0 h-0" />
-                        <DuvduLoading loadingIn={"GetProjectInvitations"} /> */}
+                        <DuvduLoading loadingIn={"GetTaggedProject"} /> */}
                     </div>
                 </section>
             </Layout>
@@ -118,14 +164,14 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
 
 
 const mapStateToProps = (state) => ({
-    projectInvitations_respond: state.api.GetProjectInvitations,
+    projectInvitations_respond: state.api.GetTaggedProject,
     acceptInvitation_respond:state.api.AcceptInvitation,
     isLogin: state.auth.login,
     api: state.api,
 });
 
 const mapDispatchToProps = {
-    GetProjectInvitations,
+    GetTaggedProject,
     AcceptInvitation
 };
 

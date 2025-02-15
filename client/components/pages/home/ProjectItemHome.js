@@ -142,9 +142,9 @@ const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', i
     return (
         <>
             <div className={isbig ? 'profile-project big w-full xl:w-68% cursor-pointer relative' : 'profile-project small w-48% xl:w-28% cursor-pointer relative'} onClick={() => { }} >
-                {cardData.projectBudget && 
+                {cardData?.projectBudget && 
                 <div className='creatives'>
-                    {cardData.projectBudget} $
+                    {cardData?.projectBudget} $
                 </div>
                 }
                 <div className={`title ${isbig ? 'size-big' : 'size-small'}`}>

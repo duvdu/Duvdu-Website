@@ -16,7 +16,7 @@ import DuvduLoading from '../../components/elements/duvduLoading';
 import { GetPlatforms } from '../../redux/action/apis/cycles/producer/platform';
 import RelatedCategories from "../../components/elements/relatedCategories";
 
-const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin }) => {
+const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin , user }) => {
     const { t } = useTranslation();
     const [localProducers, setLocalProducers] = useState([]);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -34,7 +34,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin })
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords , Platforms } = Router.query
+    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords , Platforms  } = Router.query
 
     const { asPath } = Router;
     // Remove leading slash
@@ -115,13 +115,18 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin })
 
     const handlesetdata = (item) => {
         if (isLogin) {
-            setdata(item)
-            setIsOpen(!isOpen);
+            if(!user.faceRecognition){
+                OpenPopUp("face-verification");
+            }else{
+                setdata(item)
+                setIsOpen(!isOpen);
+            }
         }
         else {
             OpenPopUp("registration-required")
         }
     };
+
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
@@ -173,6 +178,7 @@ const mapStateToProps = (state) => ({
     respond: state.api.GetProducer,
     isLogin: state.auth.login,
     platform: state.api.GetPlatforms,
+    user: state.user.profile,
 });
 
 const mapDispatchToProps = {

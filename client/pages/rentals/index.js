@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 
 import { useTranslation } from 'react-i18next';
-import ProjectCard from "../../components/elements/project-card";
+import ProjectItem from "../../components/pages/home/projectItem";
 import Filter from "../../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import 'swiper/swiper-bundle.css';
@@ -143,9 +143,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                             <DuvduLoading loadingIn={""} type='projects'/> :    
                             <div className="grid minmax-280 gap-5">
                                 {localStudios?.map((item, i) => (
-                                    <React.Fragment key={item.id || i}>
-                                        <ProjectCard cardData={item} type="rentals" />
-                                    </React.Fragment>
+                                    <ProjectItem type="rentals" key={item._id} cardData={item}  />
                                 ))}
                             </div>
                         }

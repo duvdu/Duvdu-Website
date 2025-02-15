@@ -17,6 +17,7 @@ import * as Types from '../../redux/constants/actionTypes'
 import FaceVerification from "../elements/FaceVerification";
 import Subscription from "../elements/Subscription";
 import { UnReadNotification } from "../../redux/action/apis/realTime/notification/unread";
+import { IsPopUpOpen } from "../../util/util";
 
 
 const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayout,
@@ -59,7 +60,6 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
         }
     },[page , isLogin])
     const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)
-
     const Header = ({ onClose, toggleOpenSearch, openSearch }) => {
         const [isDarkMode, setIsDarkMode] = useState(true);
         useEffect(() => {

@@ -203,7 +203,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             {
                                 (data?.tools || data?.functions)?.length > 0 &&
                                 <section className="my-11">
-                                    <BookTeam current={formData["projectScale[numberOfUnits]"]} pricerPerUnit={data.projectScale.pricerPerUnit} team={creatives.map(i => ({ ...i, name: i.name }))} />
+                                    <BookTeam current={formData["projectScale[numberOfUnits]"]} pricerPerUnit={data.projectScale.pricerPerUnit} unit={formData["projectScale[unit]"]} team={creatives.map(i => ({ ...i, name: i.name }))} />
                                     <BookTeam current={formData["projectScale[numberOfUnits]"]} team={(formData?.tools)} onChange={(value) => UpdateFormData('tools', value)} />
                                     <BookTeam current={formData["projectScale[numberOfUnits]"]} team={(formData?.functions)} onChange={(value) => UpdateFormData('functions', value)} />
                                 </section>
@@ -272,7 +272,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             <div className='flex flex-col gap-9 h-full'>
                                 <div className="flex flex-col gap-9 overflow-y-scroll overflow-x-hidden p-8 h-full">
                                     <section>
-                                        <BookTeam current={formData["projectScale[numberOfUnits]"]} pricerPerUnit={data.projectScale.pricerPerUnit} team={creatives.map(i => ({ ...i, name: i.name }))} mainremovable={false} />
+                                        <BookTeam current={formData["projectScale[numberOfUnits]"]} pricerPerUnit={data.projectScale.pricerPerUnit} unit={formData["projectScale[unit]"]} team={creatives.map(i => ({ ...i, name: i.name }))} mainremovable={false} />
                                         <BookTeam current={formData["projectScale[numberOfUnits]"]} team={formData?.tools} mainremovable={false} />
                                         <BookTeam current={formData["projectScale[numberOfUnits]"]} team={formData?.functions} mainremovable={false} />
                                     </section>

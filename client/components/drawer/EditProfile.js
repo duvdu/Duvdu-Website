@@ -34,6 +34,7 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
             UpdateFormData("profileImage", userInfo?.profileImage);
             UpdateFormData("coverImage", userInfo?.coverImage);
             UpdateFormData("name", userInfo?.name);
+            UpdateFormData("email", userInfo?.email);
             UpdateFormData('categories', userInfo?.categories?.map(item=> item._id))
             UpdateFormData("address", userInfo?.address);
             UpdateFormData("pricePerHour", userInfo?.pricePerHour);
@@ -176,6 +177,16 @@ function EditDrawer({ user, updateProfile, isOpen, onClose, UpdateFormData, rese
                             type='text'
                             name='name'
                             value={formData.name || ""}
+                            onChange={handleInputChange}
+                            className="edit app-field"
+                        />
+                    </div>
+                    <div className='mb-4 w-full'>
+                        <span className='text-base font-medium opacity-50 leading-10 capitalize'>{t("email")}</span>
+                        <input
+                            type='email'
+                            name='email'
+                            value={formData.email || ""}
                             onChange={handleInputChange}
                             className="edit app-field"
                         />

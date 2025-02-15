@@ -15,7 +15,7 @@ import DuvduLoading from '../../components/elements/duvduLoading';
 import RelatedCategories from "../../components/elements/relatedCategories";
 
 
-const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
+const Permit = ({ GetCopyrights, respond, api, isLogin  , user}) => {
     const { t } = useTranslation();
     const Router = useRouter();
     const showLimit = 12;
@@ -110,8 +110,12 @@ const Permit = ({ GetCopyrights, respond, api, isLogin }) => {
 
     const handlesetdata = (item) => {
         if (isLogin) {
-            setdata(item)
-            setIsOpen(!isOpen);
+            if(!user.faceRecognition){
+                OpenPopUp("face-verification");
+            }else{
+                setdata(item)
+                setIsOpen(!isOpen);
+            }
         }
         else {
             OpenPopUp("registration-required")
@@ -167,6 +171,7 @@ const mapStateToProps = (state) => ({
     api: state.api,
     isLogin: state.auth.login,
     respond: state.api.GetCopyrights,
+    user: state.user.profile,
 });
 
 const mapDispatchToProps = {

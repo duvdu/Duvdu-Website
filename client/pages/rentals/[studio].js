@@ -89,10 +89,18 @@ const Studio = ({
 
 
     const toggleDrawer = () => {
-        if (auth.login)
-            setIsOpen(!isOpen);
-        else OpenPopUp("registration-required")
+        if (auth.login){
+            if(!user.faceRecognition){
+                OpenPopUp("face-verification");
+            }else{
+                setIsOpen(!isOpen);
+            }
+        }
+        else{
+            OpenPopUp("registration-required");
+        } 
     };
+
 
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);

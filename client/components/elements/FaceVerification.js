@@ -3,12 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Icon from "../Icons";
 import { connect } from "react-redux";
+import { OpenPopUp } from "../../util/util";
 
-function FaceVerification({CloseProfile , isLogin , user}) {
+function FaceVerification({CloseProfile , isLogin , user }) {
     const { t } = useTranslation();
+    const handleOpen=()=>{
+        if(CloseProfile)
+            CloseProfile()
+        OpenPopUp("face-verification")
+    }
     return (isLogin && !user?.faceRecognition &&
+        <>
         <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
-            <button data-popup-toggle="popup" data-popup-target={'face-verification'} onClick={CloseProfile ? CloseProfile : null} className="flex !text-start !items-start gap-3">
+            <button data-popup-toggle="popup" data-popup-target={'face-verification'} onClick={handleOpen} className="flex !text-start !items-start gap-3">
                 <div className='bg-[#FFE7E7] rounded-md h-14 min-w-14 flex items-center justify-center'>
                     <Icon className='w-[18px]' name="exclamation" />
                 </div>
@@ -19,6 +26,7 @@ function FaceVerification({CloseProfile , isLogin , user}) {
                 </div>
             </button>
         </div>
+        </>
     );
 }
 const mapStateToProps = (state) => ({

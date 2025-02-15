@@ -38,26 +38,39 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
           <div className='border rounded-full px-3 py-1 font-bold text-lg' style={getRankStyle(cardData?.user?.rank?.color)}>
               {cardData?.user?.rank?.title || "Unranked"}
           </div>
+          {cardData?.user?.acceptedProjectsCounter > 0 && 
           <span className='info-container flex gap-1'>
             <span>{cardData?.user?.acceptedProjectsCounter}</span> <span>{t("projects")}</span>
           </span>
-          <div className='info-container flex items-center gap-1'>
-            <span>{cardData.user.rate.ratersCounter}</span>
+          }
+          <div className='info-container flex justify-between items-center gap-2'>
+            <span>{cardData?.user?.rate?.totalRates || 'rising rate'}</span>
+            {cardData?.user?.rate?.totalRates >0 &&
             <div className='w-5'>
               <Icon className='text-primary' name={'star'} />
             </div>
+            }
           </div>
         </div>
         <div className='h-[1px] bg-black dark:bg-gray-400 opacity-15' />
         {cardData?.platforms?.length > 0 && 
           <div className='flex justify-center pt-25 items-center gap-3'>
-              {cardData?.platforms.map(platform=>
-              <div className='info-container !normal-case'>
+              {cardData?.platforms.map((platform,index)=>
+              <div key={index} className='info-container !normal-case'>
                 <span>{platform.name}</span>
               </div>
               )}
           </div>
         }
+        <div className='h-[2px] bg-black dark:bg-gray-400 opacity-15' />
+          <div className='flex justify-center pt-25 items-center gap-3'>
+              <div className='info-container !normal-case'>
+                <span>Min Budget {cardData.minBudget}</span>
+              </div>
+              <div className='info-container !normal-case'>
+                <span>Max Budget {cardData.maxBudget}</span>
+              </div>
+          </div>
         {
           user?.profile?.username != cardData?.user?.username ?
           <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold capitalize cursor-pointer">{t("send pitching form")}</button> :

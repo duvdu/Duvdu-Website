@@ -27,3 +27,20 @@ export const GetUserProject = ({ page = "1", limit = "", search = "", username }
     }
   };
 };
+
+export const GetTaggedProject = ({inviteStatus}) => {
+  const req = "GetTaggedProject"
+  return async dispatch => {
+    
+    dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
+    
+    try {
+      const response = await mainApiInstance.get(`api/projects/tagged?inviteStatus=${inviteStatus}`);
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
+      dispatch({ type: Types.SET_DATA, payload: response.data.data });
+
+    } catch (error) {
+      dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
+    }
+  };
+};

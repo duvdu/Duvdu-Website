@@ -56,20 +56,24 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , isLogin , Qu
                 }
         </div>
       
-      <div className='flex  items- gap-3'>
+      <div className='flex justify-center items-center gap-3'>
         
           <div className='border rounded-full px-3 py-1 font-bold text-lg' style={getRankStyle(cardData?.user?.rank?.color)}>
             {cardData?.user?.rank?.title || "Unranked"}
           </div>
         
+        {cardData?.user?.acceptedProjectsCounter > 0 && 
         <span className='info-container flex gap-1'>
-          <span>{cardData?.user?.acceptedProjectsCounter || 0}</span> <span>{t("projects")}</span>
+          <span>{cardData?.user?.acceptedProjectsCounter}</span> <span>{t("projects")}</span>
         </span>
+        }
         <div className='info-container flex justify-between items-center gap-2'>
-          <span>{cardData?.user?.rate?.ratersCounter || 0}</span>
+          <span>{cardData?.user?.rate?.totalRates || 'rising rate'}</span>
+          {cardData?.user?.rate?.totalRates >0 &&
           <div className='w-5'>
             <Icon className='text-primary' name={'star'} />
           </div>
+          }
         </div>
       </div>
       <div className='flex justify-between'>

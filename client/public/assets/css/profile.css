@@ -111,19 +111,22 @@
     text-transform: capitalize;
 }
 
-.info-container {
-    padding: 5px 15px;
-    height: 36px;
+.info-container {;
+    display:flex;
+    align-items:center;
+    padding: 5px 10px;
+    min-height: 36px;
     border-radius: 17.543px;
     border: 1.3px solid rgba(var(--black-rgb), .25);
     backdrop-filter: blur(4.385797023773193px);
     color: var(--black);
-    font-size: 17px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     text-transform: capitalize;
     opacity: 0.8;
+
 }
 
 #rating {

@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import { useTranslation } from 'react-i18next';
-import ProjectCard from "../../components/elements/project-card";
+import ProjectItem from "../../components/pages/home/projectItem";
 import Filter from "../../components/elements/filter";
 // import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -126,9 +126,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                        <DuvduLoading loadingIn={""} type='projects'/>:    
                         <div className="grid minmax-280 gap-5">
                             {localProjects?.map((item, i) => (
-                                <React.Fragment key={item._id}>
-                                    <ProjectCard cardData={item} inclusive={switchState.priceInclusive} />
-                                </React.Fragment>
+                                    <ProjectItem inclusive={switchState.priceInclusive} key={item._id} cardData={item}  />
                             ))}
                         </div>}
                         {isLoadingMore && <div className='mt-5'><DuvduLoading loadingIn={""} type='projects'/></div>}

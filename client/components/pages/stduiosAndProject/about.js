@@ -32,9 +32,9 @@ const About = ({ data }) => {
                 <div className='flex justify-center pt-25 items-center gap-1 sm:gap-3'>
                     {data?.user?.rank?.title && <p className='rank' style={getRankStyle(data?.user?.rank?.color)}>{data?.user?.rank?.title}</p>}
                     {data?.category?.title && <p className="info-container whitespace-nowrap">{data?.category?.title}</p>}
-                    <div className='info-container justify-center flex items-center gap-2 w-20'>
-                        <p>{data?.user?.rate?.totalRates || 0}</p>
-                        <Icon className='text-primary w-4' name={'star'} />
+                    <div className='info-container justify-center flex items-center gap-2 min-w-20'>
+                        <p>{data?.user?.rate?.totalRates || 'rising rate'}</p>
+                        {data?.user?.rate?.totalRates>0 && <Icon className='text-primary w-4' name={'star'} />}
                     </div>
                 </div>
                 <div className='flex justify-center pt-7 items-center'>

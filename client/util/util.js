@@ -366,6 +366,16 @@ export const ClosePopUp = (id) => {
   }
 }
 
+
+export const IsPopUpOpen = (id) => {
+  const element = document.querySelector('#' + id);
+  if (element) {
+    return element.classList.contains('show');
+  }
+  return false;
+
+}
+
 export const validatePassword = (password) => {
   if (password.length < 8) {
     return 'Password must be at least 8 characters long.';

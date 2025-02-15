@@ -8,6 +8,7 @@ import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile
 import { ClosePopUp } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
 import Icon from '../../Icons';
+import CategorySelection from '../../drawer/create/assets/projectCategorySelection';
 
 function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
     const { t } = useTranslation();
@@ -16,12 +17,20 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
     const [searchTo, setSearchTo] = useState(null);
     const [_searchTo, _setSearchTo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isReset, setIsReset] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
-        _id: ''
+        _id: '',
+        category: '',
+        subCategoryId:'',
+        tagsId: [],
+        relatedCategory: '',
+        relatedSubCategory: '',
+        relatedTags: []            
     });
     const [error, setError] = useState({
-        name: ''
+        name: '',
+        category: ''
     });
     const [selectedCreativeId, setSelectedCreativeId] = useState(null); // New state for selected creative ID
 
@@ -53,23 +62,61 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
         }
     };
 
+    const handleCategoryChange = (categoryData) => {
+        setFormData(prev => ({
+            ...prev,
+            category: categoryData.category,
+            subCategoryId:categoryData.subCategory,
+            tagsId: categoryData.tags,
+            relatedCategory: categoryData.relatedCategory,
+            relatedSubCategory: categoryData.relatedSubCategory,
+            relatedTags: categoryData.relatedTags
+        }));
+    };
+
     const onclick = () => {
-        setError({ name: '' });
+        setError({ name: '', category: '' });
 
         if (!formData.name) {
             setError(prev => ({ ...prev, name: 'Username or phone number is required.' }));
             return;
         }
+
+        if (!formData.category) {
+            setError(prev => ({ ...prev, category: 'Category selection is required.' }));
+            return;
+        }
         
-        onSubmit(formData);
+        // Format data according to whether it's an invited creative or regular creative
+        const formattedData = {
+            ...formData,
+            invitedCreatives: formData.invitedCreatives 
+                ? formData
+                : undefined,
+            creatives: !formData.invitedCreatives 
+                ? formData
+                : undefined
+        };
+
+        setFormData({ 
+            name: '',
+            _id: '',
+            category: '',
+            subCategoryId:'',
+            tagsId: [],
+            relatedCategory: '',
+            relatedSubCategory: '',
+            relatedTags: []                
+        });
+        setIsReset(true)
+        onSubmit(formattedData);
         ClosePopUp("addOtherCreatives");
-        setFormData({ name: '' });
-        setSearchTo(null)
+        setSearchTo(null);
     };
 
     const onCancel = () => {
         setFormData({ name: '' });
-        setError({ name: '' });
+        setError({ name: '', category: '' });
         setCreatives([]);
         setSearchTo(null);
         setSelectedCreativeId(null); // Reset selection on cancel
@@ -100,7 +147,7 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
         <>
             <Comman id={"addOtherCreatives"} header={"Add Other Creatives"} onCancel={onCancel}>
                 <div className='flex flex-col justify-between h-full'>
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-4'>
                         <div className='w-full'>
                             <InputFeid
                                 placeholder={t("username or phone number")}
@@ -152,12 +199,36 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond, api }) {
                             ))}
                         </ul>
                         <span className='text-xs font-semibold text-[#595959] hidden'>
-                            This creative doesn’t have an account?
+                            This creative doesn't have an account?
                             <span onClick={() => { }} className='text-primary font-bold'> Send Invitation</span>
                         </span>
+
+                        {/* {selectedCreativeId && ( */}
+                            <div className="mb-4">
+                                <CategorySelection
+                                    filterIn={'project'}
+                                    value={{
+                                        'category': formData.category,
+                                        'subCategoryId': formData.subCategoryId,
+                                        'tagsId': formData.tagsId,
+                                        'relatedCategory': formData.relatedCategory,
+                                        'relatedSubCategory':formData.relatedSubCategory,
+                                        'relatedTags': formData.relatedTags
+                                    }}
+                                    onChange={handleCategoryChange}
+                                    isReset={isReset}
+                                    setIsReset={setIsReset}
+                                />
+                                {error.category && (
+                                    <p className="text-red-500 text-sm mt-1">{error.category}</p>
+                                )}
+                            </div>
+                        {/* )} */}
                     </div>
                     <div>
-                        <AppButton onClick={onclick} className={'w-full'}>{(formData.invitedCreatives) ? t("Invite") : t("Add")}</AppButton>
+                        <AppButton onClick={onclick} className={'w-full'}>
+                            {(formData.invitedCreatives) ? t("Invite") : t("Add")}
+                        </AppButton>
                     </div>
                 </div>
             </Comman>

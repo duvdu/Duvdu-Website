@@ -75,11 +75,18 @@ const Projects = ({
             GetProjects(queryString);
         }
     }, [project_respond?.data?.category?._id]);
-
+    console.log({user})
     const toggleDrawer = () => {
-        if (auth.login)
-            setIsOpen(!isOpen);
-        else OpenPopUp("registration-required");
+        if (auth.login){
+            if(!user.faceRecognition){
+                OpenPopUp("face-verification");
+            }else{
+                setIsOpen(!isOpen);
+            }
+        }
+        else{
+            OpenPopUp("registration-required");
+        } 
     };
 
     const toggleDrawerAddFav = () => {

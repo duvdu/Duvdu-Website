@@ -17,6 +17,8 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
     const router = useRouter();
 
     const [activeIndex, setActiveIndex] = useState(0);
+    const [sPPending, setSPPending] = useState(0);
+    const [cLPending, setCLPending] = useState(0);
     const [data, setData] = useState([]);
     const handleStatus = (status) => {
         switch (status) {
@@ -50,6 +52,12 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
 
     useEffect(() => {
         const _data = respond?.data?.filter(value => activeIndex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
+        const _datasp = respond?.data?.filter(value => value.sp.username == user?.username)
+        const pendingsp = _datasp?.filter(data => handleStatus(data.contract.status) == 0)
+        const _datacl = respond?.data?.filter(value => value.sp.username != user?.username)
+        const pendingcl = _datacl?.filter(data => handleStatus(data.contract.status) == 0)
+        setSPPending(pendingsp?.length)
+        setCLPending(pendingcl?.length)
         setData(_data)
     }, [activeIndex, respond?.data])
 
@@ -89,7 +97,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
       }, {});
     const Clients = () =>
         respond?.loading?
-    <DuvduLoading loadingIn={""} type='contract' />:
+        <DuvduLoading loadingIn={""} type='contract' />:
         (pending?.length || ongoing?.length || checkout?.length) ?
             <section className="mt-11 lg:mt-36">
                 {
@@ -200,35 +208,43 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                 <div className='flex flex-col h-full mt-24 lg:mt-0'>
                     <section className='flex left-0 lg:hidden gap-3 mt-6 mb-2 fixed w-full py-4 top-16 p-0 z-[5] px-4'>
                         <div
-                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto min-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
                         >
                             {t("my clients")}
+                            {activeIndex==0 &&
+                                <span className='rounded-full bg-primary text-white ms-2 w-5 h-5 text-sm flex items-center justify-center'> {sPPending}</span>
+                            }
                         </div>
                         <div
-                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto min-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(1)}
                         >
-                        {t("my bookings")}
-                            
+                        {t("my bookings")} 
+                            {activeIndex==1 &&
+                                <span className='rounded-full bg-primary text-white ms-2 w-5 h-5 text-sm flex items-center justify-center'> {cLPending}</span>
+                            }    
                         </div>
-
                     </section>
 
                     <section className='hidden lg:flex gap-3 mt-6 mb-2 fixed py-4 p-0 z-[5]'>
                         <div
-                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto min-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
                         >
                             {t("my clients")}
-                            
+                            {activeIndex==0 &&
+                                <span className='rounded-full bg-primary text-white ms-2 w-5 h-5 text-sm flex items-center justify-center'> {sPPending}</span>
+                            }
                         </div>
                         <div
-                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto min-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(1)}
                         >
-                        {t("my bookings")}
-                            
+                        {t("my bookings")} 
+                            {activeIndex==1 &&
+                                <span className='rounded-full bg-primary text-white ms-2 w-5 h-5 text-sm flex items-center justify-center'> {cLPending}</span>
+                            }    
                         </div>
                     </section>
                     {

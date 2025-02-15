@@ -46,8 +46,8 @@ function Info({
                 </div>
             }
             <div className='info-container flex justify-between items-center gap-1 w-auto'>
-                <p>{rates}</p>
-                <Icon className='text-primary w-4' name={'star'} />
+                <p>{rates>0?rates.toFixed(1):'rising rate'}</p>
+                {rates>0 &&<Icon className='text-primary w-4' name={'star'} />}
             </div>
         </div>
         {categories && categories.length>0 &&
