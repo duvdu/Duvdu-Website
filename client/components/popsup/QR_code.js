@@ -7,7 +7,7 @@ import QRCode from "react-qr-code";
 import { useTranslation } from 'react-i18next';
 
 
-function MYQRCode({value}) {
+function MYQRCode({value=''}) {
     const { t } = useTranslation();
     console.log({value})
     return (

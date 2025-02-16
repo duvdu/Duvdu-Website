@@ -434,7 +434,7 @@ function ReceiveProjectFiles({
             <ReportContract data={contract} />
             <Uploading type={getType()} id={contractId.contract} />
             <SendReason field={field} type={getType()} id={contractId.contract} />
-            <QrCode value={`http://duvdu.com/contracts?contract=${contractId.contract}`} />
+            <QrCode value={`http://duvdu.com/contracts?contract=${contractId?.contract}`} />
             
             <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name={t("booking details")} header={t("booking details")}>
                 {
