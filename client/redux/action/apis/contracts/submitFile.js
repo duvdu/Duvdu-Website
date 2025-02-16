@@ -12,20 +12,23 @@ export const submitFile = ({ id, type , data }) => {
         try {
             let response;
             switch (type) {
-                // case "rental":
-                //     response = await mainApiInstance.patch(`/api/rentals/rental/contract/${id}/submit`,data);
-                //     break;
-                // case "producer":
-                //     response = await mainApiInstance.patch(`/api/producers/contract/${id}/submit`,data);
-                //     break;
                 case "copyrights":
-                    response = await mainApiInstance.patch(`/api/copyrights/contract/${id}/submit`,data);
+                    response = await mainApiInstance.post(`/api/contracts/contractFiles/${id}`,{
+                        ...data,
+                        cycle:'copy-rights'
+                    });
                     break;
                 case "project":
-                    response = await mainApiInstance.patch(`/api/projects/contract/${id}/submit`,data);
+                    response = await mainApiInstance.post(`/api/contracts/contractFiles/${id}`,{
+                        ...data,
+                        cycle:'project'
+                    });
                     break;
                 case "team":
-                    response = await mainApiInstance.patch(`/api/team/contract/${id}/submit`,data);
+                    response = await mainApiInstance.post(`/api/contracts/contractFiles/${id}`,{
+                        ...data,
+                        cycle:'team-project'
+                    });
                     break;
                 default:
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });

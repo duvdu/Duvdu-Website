@@ -16,6 +16,7 @@ import { getAllContracts } from '../../../redux/action/apis/contracts/getall';
 import CountdownTimer from '../../elements/CounterDownTimer';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
 import AddToolUsed from '../../popsup/create/addToolUsed';
+import QrCode from '../../popsup/QR_code';
 import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import TimeLeft from '../../pages/contracts/TimeLeft';
 import { RateContract } from '../../../redux/action/apis/rateContract';
@@ -33,6 +34,7 @@ import Loading from '../../elements/loading';
 import DuvduLoading from '../../elements/duvduLoading';
 import ErrorMessage from '../../elements/ErrorMessage';
 import Uploading from '../../../components/popsup/uploading_project_files';
+import SendReason from '../../../components/popsup/sendReason';
 
 function ReceiveProjectFiles({
     getAllContracts,
@@ -60,7 +62,6 @@ function ReceiveProjectFiles({
             GetContract(contractId.contract);
         }
     }, [contractId.contract]);
-
     const { t } = useTranslation();
     const formData = addprojectState?.formData
     const contract = contract_respond?.data?.contract;
@@ -76,6 +77,7 @@ function ReceiveProjectFiles({
     const [appointmentDate, setdAppointmentDate] = useState(null);
     const [actionAccept , setActionAccept] = useState(null)
     const [canEdit, setCanEdit] = useState(null);
+    const [field, setField] = useState(null);
 
     const NormalState = ({ value }) => (
         <span className='text-4xl'>
@@ -211,7 +213,9 @@ function ReceiveProjectFiles({
     }, [payment_respond?.data || payment_respond?.message]);
     useEffect(() => {
         if (acceptFiles_respond?.data || acceptFiles_respond?.message) {
+            getAllContracts()
             toggleDrawer()
+            ClosePopUp('send_reason')
         }
     }, [acceptFiles_respond?.data || acceptFiles_respond?.message]);
     useEffect(() => {
@@ -264,18 +268,17 @@ function ReceiveProjectFiles({
             takeAction({ id: contract?._id, data: true, type: type })
         }
     };
-    const handleAcceptFiles = () => {
-        if (!contract_respond?.data?.ref) return
-        acceptFiles({ id: contract?._id, data:{reference: contract_respond?.data?.ref}})
-    };
-    
+    const handleAcceptFiles = (field) => {
+        setActionAccept('accept')
+        acceptFiles({ id: contract?._id, field ,type:getType(), data:{ status:'approved' }})
+    };    
     const handleCancel = () => {
         setActionAccept('cancle')
         if (!contract_respond?.data?.ref) return
         const type = getType()
         takeAction({ id: contract?._id, data: 'cancel', type: type })
     };
-
+    
     const handleUpdate = () => {
         setActionAccept('update')
         if (!contract_respond?.data?.ref) return
@@ -322,6 +325,10 @@ function ReceiveProjectFiles({
         payment({ id: contract?.paymentLink, type: type })
     };
 
+    const openSendReason = (id) => {
+        setField(id)
+        OpenPopUp('send_reason')
+    };
     const openReview = () => {
         OpenPopUp('Rating-project')
     };
@@ -330,6 +337,9 @@ function ReceiveProjectFiles({
     };
     const openSubmitFiles = ()=>{
         OpenPopUp('uploading_project_files')
+    }
+    const openQR = ()=>{
+        OpenPopUp('QR-code')
     }
     const handleRefuse = () => {
         setActionAccept('refuse')
@@ -363,8 +373,14 @@ function ReceiveProjectFiles({
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
     const canReview = (!IsImSp() && (status === "completed" || status === "accepted"))
-    const canSubmitFile = (IsImSp() && status === "ongoing" && !contract?.submitFiles?.link && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
-    const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && contract?.submitFiles?.link && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    const canAnswerViewQR = (IsImSp() && status === "ongoing" && !contract?.qrCodeVerification)
+    const canUpdateData = (
+        (status == "pending" && getType() == "producer" && IsImSp()) ||
+        (status == "update-after-first-Payment" && getType() == "copyrights" && IsImSp()) ||
+        (status == "update-after-first-Payment" && getType() === "project" && IsImSp())
+    )
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -389,7 +405,23 @@ function ReceiveProjectFiles({
                 formData['duration'] ||
                 formData['unitPrice']
             ))
-
+            const formatDate = (isoString) => {
+                const date = new Date(isoString);
+              
+                // Extract components
+                const day = String(date.getUTCDate()).padStart(2, "0");
+                const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are 0-based
+                const year = date.getUTCFullYear();
+                let hours = date.getUTCHours();
+                const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+                const ampm = hours >= 12 ? "PM" : "AM";
+              
+                // Convert to 12-hour format
+                hours = hours % 12 || 12;
+              
+                return `${day}/${month}/${year} ${String(hours).padStart(2, "0")}:${minutes} ${ampm}`;
+              };
+              
     
     return (
         <>
@@ -401,6 +433,8 @@ function ReceiveProjectFiles({
             <RatingProject data={contract}/>
             <ReportContract data={contract} />
             <Uploading type={getType()} id={contractId.contract} />
+            <SendReason field={field} type={getType()} id={contractId.contract} />
+            <QrCode value={`http://duvdu.com/contracts?contract=${contractId.contract}`} />
             
             <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name={t("booking details")} header={t("booking details")}>
                 {
@@ -412,6 +446,31 @@ function ReceiveProjectFiles({
                                 <section>
                                     {uiStatus()}
                                 </section>
+                                {contract?.status !=='pendding' && 
+                                    <section className='w-full'>
+                                        <div className='flex gap-3 items-center justify-between'>
+                                            <div className='flex gap-3 items-center justify-between'>
+                                                <img className='size-16 rounded-full' src={IsImSp() ? customer?.profileImage : sp?.profileImage} />
+                                                <div className='flex flex-col overflow-hidden'>
+                                                    <span className='font-semibold capitalize max-w-[543px]'>
+                                                        {IsImSp() ? (customer?.name?.split(' ')[0].length > 6 ? customer?.name?.split(' ')[0].slice(0, 6) : customer?.name?.split(' ')[0]) : (sp?.name?.split(' ')[0].length > 6 ? sp?.name?.split(' ')[0].slice(0, 6) : sp?.name?.split(' ')[0])}
+                                                    </span>
+                                                    <div className='p-1 font-semibold text-[#353535] rounded-md bg-gray-200 dark:bg-gray-400'>
+                                                        show verification
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='flex flex-col gap-1 overflow-hidden'>
+                                                <div className='p-[5px] font-semibold text-white rounded-full bg-primary' title={IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}>
+                                                    <Icon name={'phone'} className='size-4' />
+                                                </div>
+                                                <div className='p-[5px] font-semibold text-white rounded-full bg-primary' title={IsImSp() ? customer?.email:sp?.email} onClick={() => window.location.href = `mailto:${IsImSp() ? customer?.email:sp?.email}`}>
+                                                    <Icon name={'envelope'} className='size-4' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>        
+                                }
                                 {
                                     (getType() == "project" || getType() == "rental") &&
                                     <section className='w-full flex-col'>
@@ -452,7 +511,7 @@ function ReceiveProjectFiles({
                                         {getType()}
                                         </span>
                                     </div>
-                        }
+                                }
                                 {(getType() == "project" || getType() == "rental") &&
                                     <div>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("Custom Requirements")}</h2>
@@ -465,51 +524,36 @@ function ReceiveProjectFiles({
                                  {/* Project  */}
                                 {(getType() == "project") && 
                                 <>
-                                <ProjectView contract={contract}/>
+                                <ProjectView canUpdateData={canUpdateData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "rental") && 
                                 <>
-                                <RentalView contract={contract}/>
+                                <RentalView canUpdateData={canUpdateData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "producer") && 
                                 <>
-                                <ProducerView contract={contract}/>
+                                <ProducerView canUpdateData={canUpdateData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "copyrights") && 
                                 <>
-                                <CopywriterView contract={contract}/>
+                                <CopywriterView canUpdateData={canUpdateData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "team") && 
                                 <>
-                                <TeamView contract={contract}/>
+                                <TeamView canUpdateData={canUpdateData} contract={contract}/>
                                 </>
                                 }
-                                {contract?.submitFiles?.link && 
-                                <section className='w-full'>
-                                    <h2 className='opacity-60 capitalize mb-3'>{t("Submit Files Link")}</h2>
-                                    <a className='font-semibold max-w-[543px]' href={contract?.submitFiles.link} target="_blank">
-                                        {contract?.submitFiles.link}
-                                    </a>
-                                </section>                                
-                                }
-                                {contract?.submitFiles?.notes && 
-                                <section className='w-full'>
-                                    <h2 className='opacity-60 capitalize mb-3'>{t("Submit Files Notes")}</h2>
-                                    <span className='font-semibold capitalize max-w-[543px]'>
-                                    {contract?.submitFiles?.notes}
-                                    </span>
-                                </section>                                
-                                }
+                                
                                 {
                                     contract?.attachments?.length > 0 &&
                                     <section className='w-full'>
                                         <h2 className='opacity-60 capitalize'>{t("Project Attachments")}</h2>
                                         {contract?.attachments.map((attachment, index) =>
-                                            <div key={index} className='flex gap-3 items-start p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
+                                            <div key={index} className='flex gap-3 items-center p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
                                                 <Icon key={index} name={'file'} className='size-5' />
                                                 <div className='flex flex-col'>
                                                     <span className='text-[#353535] dark:text-white text-[14px] font-medium'> {attachment.split('/').pop()} </span>
@@ -520,15 +564,63 @@ function ReceiveProjectFiles({
                                         )}
                                     </section>
                                 }
+                                {contract?.submitFiles?.length>0 && 
+                                <section className='w-full'>
+                                    <h2 className='opacity-60 capitalize mb-3'>{t("Submit Files")}</h2>
+                                    {contract?.submitFiles?.map(item=>
+                                    <div key={item._id} className='flex flex-col px-4 py-2 bg-white dark:bg-[#1a2024] rounded-md border border-[#cacaca] dark:border-opacity-25 mt-3'>
+                                        <div className='flex gap-3 items-start justify-between'>
+                                            <div className='flex gap-3 items-center justify-between'>
+                                                <Icon name={'link'} className='size-5' />
+                                                <div className='flex flex-col overflow-hidden'>
+                                                    <a className='font-semibold overflow-hidden line-clamp-1 max-w-[300px] underline' href={item.link} target="_blank">
+                                                        {item.link}
+                                                    </a>
+                                                    <div className='flex flex-col leading-5'>
+                                                        <span className='text-md text-[#747688]'>
+                                                        {item?.notes}
+                                                        </span>
+                                                        <span className='text-xs text-[#747688]'>
+                                                        {formatDate(item?.dateOfSubmission)}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='p-1 rounded-md bg-gray-200'>
+                                                {item?.status}
+                                            </div>
+                                        </div>
+                                        {item.reason && 
+                                        <div>
+                                            <span className='text-md text-red'>
+                                                {item?.reason}
+                                            </span>
+                                        </div>
+                                        }
+                                        {canAnswerSubmitFile && item.status ==='pending' &&
+                                        <div className='grid grid-cols-2 gap-2'>
+                                            <button onClick={()=> handleAcceptFiles(item._id)} className="rounded-md  py-1 border-solid bg-green-500 w-full text-[#EB1A40] text-lg font-bold mt-2">
+                                                {acceptFiles_respond?.loading && actionAccept ==='accept'?
+                                                <Loading size='md'/>
+                                                :
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Accept")}</span>
+                                                }
+                                            </button>
+                                            <button onClick={()=> openSendReason(item._id)} className="rounded-md  py-1 border-solid bg-[#EB1A40] w-full text-[#EB1A40] text-lg font-bold mt-2">
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Reject")}</span>
+                                            </button>
+                                        </div>
+                                        }
+                                    </div>
+                                    )}
+                                </section>
+                                }
+                                
 
                             </div>
                             <div className={'flex mx-5 gap-7 mt-16 justify-center' + (canEdit ? ' hidden' : '')}>
                                 {
-                                    (
-                                        (status == "pending" && getType() == "producer" && IsImSp()) ||
-                                        (status == "update-after-first-Payment" && getType() == "copyrights" && IsImSp()) ||
-                                        (status == "update-after-first-Payment" && getType() === "project" && IsImSp())
-                                    ) &&
+                                    canUpdateData &&
                                     < button className="rounded-full border-2 border-solid border-primary w-full h-[66px] text-primary text-lg font-bold mt-2" shadow={true} shadowHeight={"14"} onClick={() => setCanEdit(true)}>
                                         {t("Edit some Details")}
                                     </button>
@@ -668,7 +760,8 @@ function ReceiveProjectFiles({
                                             }
                                         </>
                                     }
-                                </div>}
+                                </div>
+                            }
                                 {(paymentError?.errors || actionError?.errors) && 
                                 <div className='text-center'>
                                     {paymentError?.errors && 
@@ -803,21 +896,17 @@ function ReceiveProjectFiles({
                                         !status?.includes("waiting-for-pay") && false &&
                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-16 max-w-[345px] mx-auto flex items-center justify-center">{t("Cancel")}</button>
                                     }
-                                    {canAnswerSubmitFile &&
-                                        <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                            <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={handleAcceptFiles}>
-                                                {acceptFiles_respond?.loading ?
-                                                    <Loading/>
-                                                :
-                                                    <span className='text-white font-bold capitalize text-lg'>{t("Accept Files")}</span>
-                                                }
-                                            </Button>
-                                        </section>
+                                    {canAnswerViewQR && 
+                                    <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                        <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#5666F7"}  onClick={openQR}>
+                                            <span className='text-white font-bold capitalize text-lg'>{t("show your qr code")}</span>
+                                        </Button>
+                                    </section>
                                     }
-                                    {canSubmitFile && !contract?.submitFiles?.link && 
+                                    {canSubmitFile && 
                                     <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                         <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#5666F7"}  onClick={openSubmitFiles}>
-                                            <span className='text-white font-bold capitalize text-lg'>{t("submit files")}</span>
+                                            <span className='text-white font-bold capitalize text-lg'>{contract?.submitFiles?.length>0 ? t('add another submit files'):t("submit files")}</span>
                                         </Button>
                                     </section>
                                     }

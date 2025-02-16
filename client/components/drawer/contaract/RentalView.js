@@ -169,7 +169,7 @@ export default function RentalView({contract}){
                 </div>
             </div>
     </section>   
-    {/* <section className='grid grid-cols-1 w-full'>
+    <section className='grid grid-cols-1 w-full'>
             <a
                 href={contract.address ? `https://www.google.com/maps?q=${contract.location?.lat},${contract.location?.lng}` : null}
                 target="_blank"
@@ -199,7 +199,7 @@ export default function RentalView({contract}){
                     </div>
                 </div>
             </a>
-    </section>    */}
+    </section>   
     {/* <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full '>
                 <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>

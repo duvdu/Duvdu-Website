@@ -3,7 +3,7 @@ import dateFormat from "dateformat";
 import { useTranslation } from 'react-i18next';
 import Icon from '../../Icons';
 
-export default function ProjectView({contract}){
+export default function ProjectView({contract , canUpdateData}){
     const { t , i18n } = useTranslation();
     const currentLanguage = i18n.language; // Get current language
     const arabicMonths = {
@@ -48,36 +48,38 @@ export default function ProjectView({contract}){
     <section className='grid md:grid-cols-2 w-full'>
         {contract.totalPrice && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
-            <span className='font-semibold capitalize max-w-[543px]'>
+            <h2 className='opacity-60 capitalize mb-3'>
+                <span className={!canUpdateData && 'bg-yellow-400'}>
+                {t("Total Price")}
+                </span>
+            </h2>
+            <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
             {contract.totalPrice} {t('EGP')}
             </span>
         </div>
         }
         {contract.duration && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("duration")}</h2>
-            <span className='font-semibold max-w-[543px]'>
+            <h2 className='opacity-60 capitalize mb-3'>
+                <span className={!canUpdateData && 'bg-yellow-400'}>
+                    {t("duration")}
+                </span>
+                </h2>
+            <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
             {contract.duration} {t('day')}
             </span>
         </div>
         }
     </section>   
-        {contract.details && 
-        <section className='w-full'>
-            <div>
-                <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
-                <span className='font-semibold max-w-[543px]'>
-                {contract.details}
-                </span>
-            </div>
-        </section>   
-        }
 
         {contract?.tools?.length>0 && 
     <section className='w-full'>
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Tools Used")}</h2>
+            <h2 className='opacity-60 capitalize mb-3'>
+                <span className={!canUpdateData && 'bg-yellow-400'}>
+                    {t("Tools Used")}
+                </span>
+                </h2>
             {contract?.tools?.map(item=>
             <div className='font-semibold max-w-[543px]'>
             {item.name}
@@ -89,7 +91,11 @@ export default function ProjectView({contract}){
         {contract?.functions?.length>0 && 
     <section className='w-full'>
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Functions Used")}</h2>
+            <h2 className='opacity-60 capitalize mb-3'>
+                <span className={!canUpdateData && 'bg-yellow-400'}>
+                    {t("Functions Used")}
+                </span>
+                </h2>
             {contract?.functions?.map(item=>
             <div className='font-semibold max-w-[543px]'>
             {item.name}
@@ -102,25 +108,52 @@ export default function ProjectView({contract}){
         <section className='grid md:grid-cols-2 w-full'>
             {contract.firstPaymentAmount>0 && 
             <div>
-                <h2 className='opacity-60 capitalize mb-3'>{t("First Payment")}</h2>
-                <span className='font-semibold capitalize max-w-[543px]'>
+                <h2 className='opacity-60 capitalize mb-3'>
+                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                        {t("First Payment")}
+                    </span>
+                </h2>
+                <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
                 {contract.firstPaymentAmount} {t('EGP')}
                 </span>
             </div>
             }
             {contract.secondPaymentAmount>0 && 
             <div>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Second Payment")}</h2>
-                <span className='font-semibold max-w-[543px]'>
+                <h2 className='opacity-60 capitalize mb-3'>
+                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                        {t("Second Payment")}
+                    </span>
+                </h2>
+                <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
                 {contract.secondPaymentAmount} {t('EGP')}
                 </span>
             </div>
             }
         </section>   
         }
+
+        {contract.details && 
+        <section className='w-full'>
+            <div>
+                <h2 className='opacity-60 capitalize mb-3'>
+                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                        {t("project details")}
+                    </span>
+                </h2>
+                <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+                {contract.details}
+                </span>
+            </div>
+        </section>   
+        }
     <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full '>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>
+                <h2 className='opacity-60 capitalize mb-3'>
+                    <span >
+                        {t("Appointment Date")}
+                    </span>
+                </h2>
                 <div className='flex gap-4'>
                     <div>
 
@@ -145,7 +178,11 @@ export default function ProjectView({contract}){
     </section>   
     <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full'>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Booking Date")}</h2>
+                <h2 className='opacity-60 capitalize mb-3'>
+                    <span>
+                        {t("Booking Date")}
+                    </span>
+                </h2>
                 <div className='flex gap-4'>
                     <div>
 
@@ -168,7 +205,11 @@ export default function ProjectView({contract}){
                 </div>
             </div>
             <div className='w-full'>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Deadline Date")}</h2>
+                <h2 className='opacity-60 capitalize mb-3'>
+                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                    {t("Deadline Date")}
+                    </span>
+                </h2>
                 <div className='flex gap-4'>
                     <div>
 
@@ -178,12 +219,12 @@ export default function ProjectView({contract}){
                     </div>
                     <div>
                         <div>
-                            <span className='opacity-85 text-base'>
+                            <span className={`opacity-85 text-base ${!canUpdateData && 'bg-yellow-400'}`}>
                             {formatDate(contract.deadline)}
                             </span>
                         </div>
                         <div>
-                            <span className='text-xs text-[#747688]'>
+                            <span className={`text-xs text-[#747688] ${!canUpdateData && 'bg-yellow-400'}`}>
                             {t(dateFormat(contract.deadline, 'dddd'))}
                             </span>
                         </div>
@@ -199,7 +240,11 @@ export default function ProjectView({contract}){
                 className='opacity-85 text-base'
             >
                 <div className='w-full'>
-                    <h2 className='opacity-60 capitalize mb-3'>{t("project location")}</h2>
+                    <h2 className='opacity-60 capitalize mb-3'>
+                        <span>
+                            {t("project location")}
+                        </span>
+                    </h2>
                     <div className='flex gap-4'>
                         <div>
                             <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>

@@ -50,7 +50,7 @@ function Uploading_project_files({type='project' , id ='123' , submitFile_respon
     useEffect(()=>{
         if(submitFile_respond?.error){
             var convertActionError = JSON.parse(submitFile_respond?.error ?? null)
-            setError(convertActionError?.errors?.[0]?.field +' '+ convertActionError?.errors?.[0]?.message)
+            setError(convertActionError?.errors?.[0]?.message)
             const timer2 = setTimeout(() => {
                 setError(null)
             },5000)
@@ -74,7 +74,7 @@ function Uploading_project_files({type='project' , id ='123' , submitFile_respon
                             </p>
                             <textarea onChange={(e)=> setNotes(e.target.value) } placeholder={t("start typing...")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-44 placeholder:capitalize placeholder:opacity-30 placeholder:text-DS_black" />
                         </section>
-                        <p className="capitalize opacity-50 mx-14 text-center">{t("if you are uploading before deadling loriem aplusim")}</p>
+                        {/* <p className="capitalize opacity-50 mx-14 text-center">{t("if you are uploading before deadling loriem aplusim")}</p> */}
                         <div className='text-center'>
                             <ErrorMessage ErrorMsg={error}/>
                         </div>
