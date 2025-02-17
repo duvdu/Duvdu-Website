@@ -133,7 +133,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         if (!formData['projectScale.pricerPerUnit']) errors.pricerPerUnit = 'Price Per Unite is required';
         if (!formData['projectScale.minimum']) errors.minimum = 'Minimum value is required';
         if (!formData['projectScale.maximum']) errors.maximum = 'Maximum value is required';
-        if (parseInt(formData['projectScale.minimum']) > parseInt(formData['projectScale.maximum'])) errors.minimum = 'Minimum value should not be greater than maximum value';
+        if (parseInt(formData['projectScale.minimum']) >= parseInt(formData['projectScale.maximum'])) errors.minimum = 'Maximum value should be greater than minimum value';
 
         // cover
         return errors;

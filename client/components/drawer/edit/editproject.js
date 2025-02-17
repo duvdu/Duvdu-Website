@@ -172,12 +172,33 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'Duration is required';
-        if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeywords = 'Search keywords are required';
+        // if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeywords = 'Search keywords are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
-        if (!formData['projectScale[unit]'] || !formData['projectScale[pricerPerUnit]'] || !formData['projectScale[minimum]'] || !formData['projectScale[current]'] || !formData['projectScale[maximum]']) errors.projectScale = 'Project Scale is required';
-        if (parseFloat(formData['projectScale[minimum]']) >= parseFloat(formData['projectScale[current]'])) errors.current = 'current should be greater than minimum';
-        if (parseFloat(formData['projectScale[current]']) >= parseFloat(formData['projectScale[maximum]'])) errors.maximum = 'maximum should be greater than current';
+        const minimum = parseFloat(formData['projectScale[minimum]']);
+        const current = parseFloat(formData['projectScale[current]']);
+        const maximum = parseFloat(formData['projectScale[maximum]']);
+
+        if (!formData['projectScale[unit]'] || 
+            !formData['projectScale[pricerPerUnit]'] || 
+            !formData['projectScale[minimum]'] || 
+            !formData['projectScale[current]'] || 
+            !formData['projectScale[maximum]']) {
+            errors.projectScale = 'Project Scale is required';
+        } else {
+            if (minimum <= 0) {
+                errors.minimum = 'Minimum should be greater than 0';
+            }
+            if (current < minimum) {
+                errors.current = 'Current should be greater than or equal to minimum';
+            }
+            if (maximum < current) {
+                errors.maximum = 'Maximum should be greater than or equal to current';
+            }
+            if (maximum == minimum) {
+                errors.maximum = 'Maximum should be not equal to minimum';
+            }
+        }
         return errors;
     };
     const CheckNext=()=>{

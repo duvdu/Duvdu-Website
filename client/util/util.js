@@ -201,7 +201,7 @@ export const convertDuration = (durationInMilliseconds) => {
   const totalSeconds = Math.floor(durationInMilliseconds / 1000);
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
-  const formattedDuration = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  const formattedDuration = `${minutes.toString().padStart(2, '0')!=='NaN'?minutes.toString().padStart(2, '0'):'00'}:${seconds.toString().padStart(2, '0')!=='NaN'?seconds.toString().padStart(2, '0'):'00'}`;
   return formattedDuration;
 };
 

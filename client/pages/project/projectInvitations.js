@@ -63,7 +63,7 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
                                         <Link href={`/creative/${item?.user?.username}`}>
                                             <div className='flex items-center cursor-pointer gap-3'>
                                                 <img
-                                                    className='profileImgture-2 rounded-full w-full h-full border-4 border-white shadow object-cover object-top'
+                                                    className='profileImgture-2 rounded-full w-10 h-10 border-4 border-white shadow object-cover object-top'
                                                     src={item?.user?.profileImage || '/default-profile.png'}
                                                     alt="profile picture"
                                                 />
@@ -118,7 +118,7 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
                                             <div className='rounded-full cursor-pointer py-5 w-full bg-gray-200 dark:bg-[#000]  text-center'>
                                                 <h3 className='font-bold flex gap-1 items-center justify-center'>
                                                     <span>View Original Project</span>
-                                                    <span><Icon className='border rounded-full border-solid border-gray-300 dark:border-opacity-40 w-5 h-5 p-[2px]' name={'exclamation'} /></span>
+                                                    <span><Icon className='w-5 h-5 p-[2px]' color='gray' name={'exclamation'} /></span>
                                                 
                                                 </h3>
                                             </div>

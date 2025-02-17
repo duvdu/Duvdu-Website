@@ -236,6 +236,15 @@ const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAu
                     </div>
                 </>
             }
+            <h3 className="capitalize opacity-50 font-medium mt-5">{t("project scale")}</h3>
+            {data?.projectScale?.current ? 
+            <div>
+                <span className="capitalize font-semibold mt-4">{data?.projectScale?.current} {data?.projectScale?.unit} {(data?.projectScale?.current * data?.projectScale?.pricerPerUnit)} {t('EGP')}</span>
+            </div>:
+            <div>
+                <span className="capitalize font-semibold mt-4">{data?.projectScale?.pricerPerUnit} {t('EGP')} per {data?.projectScale?.unit}</span>
+            </div>
+            }
             <h3 className="capitalize opacity-50 font-medium mt-5">{t("description")}</h3>
             <div>
                 <span className="capitalize font-semibold mt-4">{data?.desc || data?.description}</span>

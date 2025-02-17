@@ -207,6 +207,9 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             if (maximum < current) {
                 errors.maximum = 'Maximum should be greater than or equal to current';
             }
+            if (maximum == minimum) {
+                errors.maximum = 'Maximum should be not equal to minimum';
+            }
         }
 
         return errors;
