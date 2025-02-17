@@ -95,7 +95,7 @@ const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserCh
                             <img onClick={()=>{
                                 GetAllMessageInChat(item._id)
                                 onChoose?.()
-                                }} className="!min-w-10 !min-h-10 rounded-full cursor-pointer object-cover object-top" src={item.profileImage} alt="user" width="45" height="45" />
+                                }} className="w-10 h-10 rounded-full cursor-pointer object-cover object-top" src={item.profileImage} alt="user" />
                             <div className="font-semibold text-xs">{item.name?.split(' ')[0].length>6?item.name?.split(' ')[0].slice(0,6):item.name?.split(' ')[0]} </div>
                         </div>
                     )}

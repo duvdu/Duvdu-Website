@@ -195,6 +195,7 @@
     "Attachment": "المرفق",
     "“Team Projects” are a great way to build teams for your project.": "مشاريع الفريق هي طريقة رائعة لبناء فرق لمشروعك.",
     "pending": "قيد الانتظار",
+    "Waiting Checkout Contracts": "عقود في انتظار الدفع",
     "ongoing contracts": "العقود الجارية",
     "deadline": "الموعد النهائي",
     "submit files": "إرسال الملفات",
@@ -597,5 +598,7 @@
     "my projects":"مشاريعي",
     "tagged projects":"المشاريع الموسومة",
     "creatives tagged":"موسمات المبدعون",
+    "contract complaint reasons":"أسباب الشكوى المتعلقة بالعقد",
+    "contract complaint attachments":"مرفقات الشكوى المتعلقة بالعقد",
     "":""
 }

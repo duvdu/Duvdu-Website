@@ -1,6 +1,6 @@
 import { convertHoursTo__,  } from "../../../util/util";
 import { useTranslation } from 'react-i18next';
-import { useState, useRef } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import { useRouter } from "next/router";
 import GoogleMap from "../../elements/googleMap";
 import Selector from "../../elements/CustomSelector";
@@ -15,9 +15,13 @@ import { connect } from "react-redux";
 import RatingProject from "../../popsup/ratingProject";
 import { OpenPopUp } from "../../../util/util";
 import ReportProject from "../../popsup/report-project";
+import {DeleteTaggedCreative} from "../../../redux/action/apis/cycles/projects/removeTagedUser";
+import { GetProject } from "../../../redux/action/apis/cycles/projects/getOne";
+import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 
-const Details = ({ data , onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
+const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
+    const [success, setSuccess] = useState(false);
     const { t } = useTranslation();
     const router = useRouter();
     const { project: projectId } = router.query;
@@ -36,10 +40,25 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
         if (v == "Rate") OpenPopUp("Rating-project")
         else if (v == "Report") OpenPopUp("report-project2")
         else if (v == "Edit") toggleDrawerEdit()
+        // else if (v == "Delete") toggleDrawerEdit()
+    };
+    const RemoverTagUser = (id)=>{
+        DeleteTaggedCreative(projectId,id)
+    }
+    useEffect(()=>{
+        if(delete_response?.message){
+            setSuccess(true)
+        }
+    },[delete_response])
+    console.log({delete_response})
+    const toggleDrawer = () => {
+        setSuccess(false)
+        GetProject(projectId);
     };
 
     return (
         <>
+        <SuccessfullyPosting isShow={success} onCancel={toggleDrawer} message="Deleted" />
         <RatingProject data={data} />
         {isLogin ===true &&
             <ReportProject data={data} />
@@ -118,6 +137,9 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
                         options={user?.username===data?.user?.username?[
                             {
                                 value:"Edit"
+                            },
+                            {
+                                value:"Delete"
                             }
                         ]:[
                             // {
@@ -185,25 +207,30 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
                         <h3 className="capitalize opacity-50">{t("creatives tagged")}</h3>
                     </div>
                     <div className="flex flex-col gap-2">
-                        {data?.creatives.map(creative => [
-                            { value: creative?.name, isActive: false, img: creative?.profileImage },
-                            { value: "", isActive: false },
-                            { value: 'CATEGOREY', isActive: false },
-                        ]).map((creativeGroup, i) => (
-                            <div key={i} className="flex gap-2">
-                                {creativeGroup.map((creative, j) => (
-                                    <div key={j} className={`flex rounded-3xl border border-[#00000040]`}>
-                                        {creative.img ?
-                                            <img className="size-8 aspect-square rounded-full object-cover object-top" src={creative.img} alt="profile" /> :
-                                            <div className="h-8" />
+                        {data?.creatives.map((creative,i) =>(
+                            <div key={i} className="flex items-center gap-2">
+                                    <div className={`flex rounded-3xl border border-[#00000040]`}>
+                                        {creative?.profileImage&& 
+                                            <img className="size-8 aspect-square rounded-full object-cover object-top" src={creative?.profileImage} alt="profile" />
                                         }
                                         {
-                                            creative.value &&
+                                            creative.name &&
                                             <span className="px-4 flex items-center">
-                                                {creative.value}
+                                                {creative.name}
                                             </span>}
                                     </div>
-                                ))}
+                                    <div className={`flex rounded-3xl border border-[#00000040]`}>
+                                        {
+                                            creative?.mainCategory?.category?.title &&
+                                            <span className="px-4 flex items-center">
+                                                {creative.mainCategory.category.title}
+                                            </span>}
+                                    </div>
+                                    {user?.username===data?.user?.username && 
+                                    <div onClick={()=>RemoverTagUser(creative._id)} className={`flex rounded-full size-6 bg-red items-center justify-center`}>
+                                        <Icon className='!text-white !w-[10px]  cursor-pointer' name={"remove"} />
+                                    </div>
+                                    } 
                             </div>
                         ))}
                     </div>
@@ -260,10 +287,12 @@ const Details = ({ data , onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
 const mapStateToProps = (state) => ({
     isLogin: state.auth.login,
     user: state.user.profile,
+    delete_response: state.api.DeleteTaggedCreative
 });
 
 const mapDispatchToProps = {
-
+    DeleteTaggedCreative,
+    GetProject
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Details);

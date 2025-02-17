@@ -1,7 +1,7 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
-export const googleLogin = ({ username, id, name , email ,notificationToken}) => {
+export const googleLogin = ({ username, id, name , email}) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'login' });
     try {
@@ -10,7 +10,6 @@ export const googleLogin = ({ username, id, name , email ,notificationToken}) =>
         name,
         email,
         googleId: id,
-        notificationToken:notificationToken??null
       });
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data , req: 'login'});
       } catch (error) {

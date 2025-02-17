@@ -3,7 +3,7 @@ import dateFormat from "dateformat";
 import { useTranslation } from 'react-i18next';
 import Icon from '../../Icons';
 
-export default function CopywriterView({contract}){
+export default function CopywriterView({contract , canUpdateData}){
     const { t , i18n } = useTranslation();
     const currentLanguage = i18n.language; // Get current language
     const arabicMonths = {
@@ -48,19 +48,27 @@ export default function CopywriterView({contract}){
     <section className='grid md:grid-cols-2 w-full'>
         {contract.totalPrice &&
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
-            <span className='font-semibold capitalize max-w-[543px]'>
+            <h2 className='opacity-60 capitalize mb-3'>
+                <span className={canUpdateData && 'bg-yellow-400'}>
+                {t("Total Price")}
+                </span>
+            </h2>
+            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
             {contract.totalPrice} {t('EGP')}
             </span>
         </div>
         }
         {contract.duration.value && contract.duration.unit &&
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("duration")}</h2>
-            <span className='font-semibold max-w-[543px]'>
+            <h2 className='opacity-60 capitalize mb-3'>
+                <span className={canUpdateData && 'bg-yellow-400'}>
+                    {t("duration")}
+                </span>
+                </h2>
+            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
             {contract.duration.value} {contract.duration.unit}
             </span>
-        </div>
+        </div>    
         }
     </section>   
     <section className='grid md:grid-cols-2 w-full'>
@@ -82,11 +90,15 @@ export default function CopywriterView({contract}){
         }
     </section>   
     {contract.details && 
-    <section className='w-full'>
+        <section className='w-full'>
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
-            <span className='font-semibold max-w-[543px]'>
-                {contract.details}
+            <h2 className='opacity-60 capitalize mb-3'>
+                <span className={canUpdateData && 'bg-yellow-400'}>
+                    {t("project details")}
+                </span>
+            </h2>
+            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+            {contract.details}
             </span>
         </div>
     </section>   

@@ -3,7 +3,7 @@ import dateFormat from "dateformat";
 import { useTranslation } from 'react-i18next';
 import Icon from '../../Icons';
 
-export default function ProducerView({contract}){
+export default function ProducerView({contract , canUpdateData}){
     const { t , i18n } = useTranslation();
     const currentLanguage = i18n.language; // Get current language
     const arabicMonths = {
@@ -103,7 +103,11 @@ export default function ProducerView({contract}){
     </section>   
     <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full '>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>
+                <h2 className='opacity-60 capitalize mb-3'>
+                <span className={canUpdateData && 'bg-yellow-400'}>
+                    {t("Appointment Date")}
+                </span>
+                </h2>
                 <div className='flex gap-4'>
                     <div>
 
@@ -113,12 +117,12 @@ export default function ProducerView({contract}){
                     </div>
                     <div>
                         <div>
-                            <span className='opacity-85 text-base'>
+                            <span className={`opacity-85 text-base ${canUpdateData && 'bg-yellow-400'}`}>
                             {formatDate(contract.appointmentDate)}
                             </span>
                         </div>
                         <div>
-                            <span className='text-xs text-[#747688]'>
+                            <span className={`text-xs text-[#747688] ${canUpdateData && 'bg-yellow-400'}`}>
                             {t(dateFormat(contract.appointmentDate, 'dddd'))}
                             </span>
                         </div>

@@ -49,11 +49,11 @@ export default function ProjectView({contract , canUpdateData}){
         {contract.totalPrice && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>
-                <span className={!canUpdateData && 'bg-yellow-400'}>
+                <span className={canUpdateData && 'bg-yellow-400'}>
                 {t("Total Price")}
                 </span>
             </h2>
-            <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
             {contract.totalPrice} {t('EGP')}
             </span>
         </div>
@@ -61,22 +61,22 @@ export default function ProjectView({contract , canUpdateData}){
         {contract.duration && 
         <div>
             <h2 className='opacity-60 capitalize mb-3'>
-                <span className={!canUpdateData && 'bg-yellow-400'}>
+                <span className={canUpdateData && 'bg-yellow-400'}>
                     {t("duration")}
                 </span>
                 </h2>
-            <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
-            {contract.duration} {t('day')}
+            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+            {contract.duration.value} {contract.duration.unit}
             </span>
-        </div>
-        }
+        </div>    
+    }
     </section>   
 
         {contract?.tools?.length>0 && 
     <section className='w-full'>
         <div>
             <h2 className='opacity-60 capitalize mb-3'>
-                <span className={!canUpdateData && 'bg-yellow-400'}>
+                <span className={canUpdateData && 'bg-yellow-400'}>
                     {t("Tools Used")}
                 </span>
                 </h2>
@@ -92,7 +92,7 @@ export default function ProjectView({contract , canUpdateData}){
     <section className='w-full'>
         <div>
             <h2 className='opacity-60 capitalize mb-3'>
-                <span className={!canUpdateData && 'bg-yellow-400'}>
+                <span className={canUpdateData && 'bg-yellow-400'}>
                     {t("Functions Used")}
                 </span>
                 </h2>
@@ -109,11 +109,11 @@ export default function ProjectView({contract , canUpdateData}){
             {contract.firstPaymentAmount>0 && 
             <div>
                 <h2 className='opacity-60 capitalize mb-3'>
-                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                    <span className={canUpdateData && 'bg-yellow-400'}>
                         {t("First Payment")}
                     </span>
                 </h2>
-                <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+                <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
                 {contract.firstPaymentAmount} {t('EGP')}
                 </span>
             </div>
@@ -121,11 +121,11 @@ export default function ProjectView({contract , canUpdateData}){
             {contract.secondPaymentAmount>0 && 
             <div>
                 <h2 className='opacity-60 capitalize mb-3'>
-                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                    <span className={canUpdateData && 'bg-yellow-400'}>
                         {t("Second Payment")}
                     </span>
                 </h2>
-                <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+                <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
                 {contract.secondPaymentAmount} {t('EGP')}
                 </span>
             </div>
@@ -137,11 +137,11 @@ export default function ProjectView({contract , canUpdateData}){
         <section className='w-full'>
             <div>
                 <h2 className='opacity-60 capitalize mb-3'>
-                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                    <span className={canUpdateData && 'bg-yellow-400'}>
                         {t("project details")}
                     </span>
                 </h2>
-                <span className={`${!canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+                <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
                 {contract.details}
                 </span>
             </div>
@@ -206,7 +206,7 @@ export default function ProjectView({contract , canUpdateData}){
             </div>
             <div className='w-full'>
                 <h2 className='opacity-60 capitalize mb-3'>
-                    <span className={!canUpdateData && 'bg-yellow-400'}>
+                    <span className={canUpdateData && 'bg-yellow-400'}>
                     {t("Deadline Date")}
                     </span>
                 </h2>
@@ -219,12 +219,12 @@ export default function ProjectView({contract , canUpdateData}){
                     </div>
                     <div>
                         <div>
-                            <span className={`opacity-85 text-base ${!canUpdateData && 'bg-yellow-400'}`}>
+                            <span className={`opacity-85 text-base ${canUpdateData && 'bg-yellow-400'}`}>
                             {formatDate(contract.deadline)}
                             </span>
                         </div>
                         <div>
-                            <span className={`text-xs text-[#747688] ${!canUpdateData && 'bg-yellow-400'}`}>
+                            <span className={`text-xs text-[#747688] ${canUpdateData && 'bg-yellow-400'}`}>
                             {t(dateFormat(contract.deadline, 'dddd'))}
                             </span>
                         </div>

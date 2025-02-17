@@ -33,6 +33,8 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                 return 1;
             case 'completed':
                 return -2;
+            case 'complaint':
+                return -1;
             case 'accepted':
                 return -2;    
             case 'rejected':

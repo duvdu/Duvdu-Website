@@ -23,13 +23,16 @@ function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
                 const res = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
                   headers: { Authorization: `Bearer ${response.access_token}` },
                 })
-                console.log(res);
-                // const loginRes = await axios.get('https://api.duvdu.com/api/users/auth/provider',{
-                //     username:"mos3addev",
+                googleLogin({ username: res.data.email.split('@')[0],email:res.data.email, name:res.data.name, id: res.data.sub });
+                // console.log(res);
+                // const loginRes = await axios.post('https://api.duvdu.com/api/users/auth/provider',{
+                //     name:res.data.name,
+                //     username:res.data.email.split('@')[0],
+                //     email:res.data.email,
                 //     googleId:res.data.sub,
-                //     notificationToken:fcmToken ?? null
+                //     }).then(()=>{
+                //         getMyprofile()
                 //     })
-                    console.log({loginRes , res})
             }
             catch(error){
                 console.log(error);
@@ -47,19 +50,6 @@ function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
             getMyprofile();
         }
     }, [login_respond?.message]);
-
-    const loginWithGoogle = () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                googleLogin({ username: user?.email.split('@')[0],email:user?.email, name:user?.displayName, id: user?.uid, notificationToken: fcmToken ?? null });
-            })
-            .catch((error) => {
-                const credential = GoogleAuthProvider.credentialFromError(error);
-            });
-    };
 
     const loginWithApple = () => {
         signInWithPopup(auth, appleProvider)

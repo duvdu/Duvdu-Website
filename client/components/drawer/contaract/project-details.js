@@ -21,6 +21,7 @@ import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/
 import TimeLeft from '../../pages/contracts/TimeLeft';
 import { RateContract } from '../../../redux/action/apis/rateContract';
 import { GetContract } from '../../../redux/action/apis/contracts/getOne';
+import { GetComplaint } from '../../../redux/action/apis/contracts/complaint';
 import RatingProject from '../../popsup/ratingProject';
 import { OpenPopUp,ClosePopUp  } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
@@ -43,7 +44,9 @@ function ReceiveProjectFiles({
     takeAction,
     takeAction_respond,
     GetContract,
+    GetComplaint,
     contract_respond,
+    complaint_respond,
     payment,
     payment_respond,
     addprojectState,
@@ -66,6 +69,7 @@ function ReceiveProjectFiles({
     const formData = addprojectState?.formData
     const contract = contract_respond?.data?.contract;
     const customer = contract_respond?.data?.customer;
+    const complaint = complaint_respond?.data
     const sp = contract_respond?.data?.sp;
     const status = contract?.status
     const [timeLeft, setTimeLeft] = useState("");
@@ -78,7 +82,7 @@ function ReceiveProjectFiles({
     const [actionAccept , setActionAccept] = useState(null)
     const [canEdit, setCanEdit] = useState(null);
     const [field, setField] = useState(null);
-
+    console.log({complaint})
     const NormalState = ({ value }) => (
         <span className='text-4xl'>
             {value}
@@ -100,6 +104,11 @@ function ReceiveProjectFiles({
             return "team"
     }
 
+    useEffect(() => {
+        if (contractId?.contract && status==='complaint') {
+            GetComplaint(contractId.contract)
+        }
+    }, [contractId.contract , status]);
     const uiStatus = () => {
         
         const items = {
@@ -375,12 +384,50 @@ function ReceiveProjectFiles({
     const canReview = (!IsImSp() && (status === "completed" || status === "accepted"))
     const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
-    const canAnswerViewQR = (IsImSp() && status === "ongoing" && !contract?.qrCodeVerification)
+    const canAnswerViewQR = (IsImSp() && getType() === "rental" && status === "ongoing" && !contract?.qrCodeVerification)
     const canUpdateData = (
         (status == "pending" && getType() == "producer" && IsImSp()) ||
         (status == "update-after-first-Payment" && getType() == "copyrights" && IsImSp()) ||
         (status == "update-after-first-Payment" && getType() === "project" && IsImSp())
     )
+
+    const canViewUserInfo =
+        (getType() === "producer" && (
+            status !== "pending" ||
+            status !== "canceled" ||
+            status !== "rejected" ||
+            status !== "complaint" 
+        ))||
+        (getType() === "copyrights" && (
+            status !== "pending" ||
+            status !== "canceled" ||
+            status !== "waiting-for-pay-10" ||
+            status !== "rejected" ||
+            status !== "complaint" 
+        ))||
+        (getType() === "project" && (
+            status !== "pending" ||
+            status !== "canceled" ||
+            status !== "waiting-for-pay-10" ||
+            status !== "rejected" ||
+            status !== "complaint" 
+        ))||
+        (getType() === "rental" && (
+            status !== "pending" ||
+            status !== "canceled" ||
+            status !== "waiting-for-payment" ||
+            status !== "rejected" ||
+            status !== "complaint" 
+        ))||
+        (getType() === "team" && (
+            status !== "pending" ||
+            status !== "canceled" ||
+            status !== "waiting-for-total-payment" ||
+            status !== "rejected" ||
+            status !== "complaint" 
+        ))
+
+
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -434,8 +481,12 @@ function ReceiveProjectFiles({
             <ReportContract data={contract} />
             <Uploading type={getType()} id={contractId.contract} />
             <SendReason field={field} type={getType()} id={contractId.contract} />
-            <QrCode value={`http://duvdu.com/contracts?contract=${contractId?.contract}`} />
-            
+            <QrCode value={contractId?.contract} />
+            <Popup id='face_recognition_img'>
+                <div className="flex flex-col justify-around w-full sm:w-[604px]">
+                    <img className="w-full" src={IsImSp() ? (customer?.faceRecognition):(sp?.faceRecognition)}/>
+                </div>
+            </Popup>
             <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name={t("booking details")} header={t("booking details")}>
                 {
                     contract_respond?.loading?
@@ -446,7 +497,7 @@ function ReceiveProjectFiles({
                                 <section>
                                     {uiStatus()}
                                 </section>
-                                {contract?.status !=='pendding' && 
+                                {canViewUserInfo && 
                                     <section className='w-full'>
                                         <div className='flex gap-3 items-center justify-between'>
                                             <div className='flex gap-3 items-center justify-between'>
@@ -455,16 +506,16 @@ function ReceiveProjectFiles({
                                                     <span className='font-semibold capitalize max-w-[543px]'>
                                                         {IsImSp() ? (customer?.name?.split(' ')[0].length > 6 ? customer?.name?.split(' ')[0].slice(0, 6) : customer?.name?.split(' ')[0]) : (sp?.name?.split(' ')[0].length > 6 ? sp?.name?.split(' ')[0].slice(0, 6) : sp?.name?.split(' ')[0])}
                                                     </span>
-                                                    <div className='p-1 font-semibold text-[#353535] rounded-md bg-gray-200 dark:bg-gray-400'>
+                                                    <div onClick={()=> OpenPopUp('face_recognition_img')} className='px-1 cursor-pointer font-semibold text-[#353535] rounded-md bg-gray-200 dark:bg-gray-400'>
                                                         show verification
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='flex flex-col gap-1 overflow-hidden'>
-                                                <div className='p-[5px] font-semibold text-white rounded-full bg-primary' title={IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}>
-                                                    <Icon name={'phone'} className='size-4' />
+                                            <div className='flex flex-col items-end gap-1 overflow-hidden'>
+                                                <div className='px-[2px] cursor-pointer font-semibold text-white rounded-md bg-primary' title={IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}>
+                                                    {IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}
                                                 </div>
-                                                <div className='p-[5px] font-semibold text-white rounded-full bg-primary' title={IsImSp() ? customer?.email:sp?.email} onClick={() => window.location.href = `mailto:${IsImSp() ? customer?.email:sp?.email}`}>
+                                                <div className='p-[5px] cursor-pointer font-semibold text-white rounded-full bg-primary' title={IsImSp() ? customer?.email:sp?.email} onClick={() => window.location.href = `mailto:${IsImSp() ? customer?.email:sp?.email}`}>
                                                     <Icon name={'envelope'} className='size-4' />
                                                 </div>
                                             </div>
@@ -521,6 +572,33 @@ function ReceiveProjectFiles({
                                     </div>
                                 }
                                 </section>   
+                                {complaint && 
+                                <>
+                                <section className='w-full'>
+                                    <div>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("contract complaint reasons")}</h2>
+                                        <span className='font-semibold max-w-[543px]'>
+                                            {complaint?.desc}
+                                        </span>
+                                    </div>
+                                </section>   
+                                {complaint?.attachments?.length > 0 &&
+                                <section className='w-full'>
+                                    <h2 className='opacity-60 capitalize mb-3'>{t("contract complaint attachments")}</h2>
+                                    {complaint?.attachments.map((attachment, index) =>
+                                        <div key={index} className='flex gap-3 items-center p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
+                                            <Icon key={index} name={'file'} className='size-5' />
+                                            <div className='flex flex-col'>
+                                                <span className='text-[#353535] dark:text-white text-[14px] font-medium'> {attachment.split('/').pop()} </span>
+                                                <span className='text-[#989692] text-[12px]'> </span>
+                                                <a href={attachment} target="_blank" rel="noopener noreferrer" className='text-primary font-semibold text-[14px]'>{t("Click to view")}</a>
+                                            </div>
+                                        </div>
+                                    )}
+                                </section>
+                                } 
+                                </>
+                                }
                                  {/* Project  */}
                                 {(getType() == "project") && 
                                 <>
@@ -778,7 +856,7 @@ function ReceiveProjectFiles({
                                         {takeAction_respond?.loading && actionAccept ==='update'?
                                         <Loading/>
                                         :
-                                        <span className='text-white font-bold capitalize text-lg'>{t("Update Appointment")}</span>
+                                        <span className='text-white font-bold capitalize text-lg'>{t("Update")}</span>
                                         }
                                     </Button>
                                 </section>
@@ -940,7 +1018,7 @@ const mapStateToProps = (state) => ({
     submitFile_respond:state.api.submitFile,
     acceptFiles_respond:state.api.acceptFiles,
     report_respond: state.api.contractReport,
-
+    complaint_respond: state.api.GetComplaint
 });
 
 const mapDispatchToProps = {
@@ -953,7 +1031,8 @@ const mapDispatchToProps = {
     InsertToArray,
     RateContract,
     resetForm,
-    GetContract
+    GetContract,
+    GetComplaint
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReceiveProjectFiles);

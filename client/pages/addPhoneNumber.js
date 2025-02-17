@@ -144,7 +144,10 @@ return (
             <div className="container">
                 <div className="mx-auto flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-white dark:bg-[#1A2024] max-w-[749px]">
                     {step === 2 && <EnterNewPhone />}
-                    {step === 3 && <OTP key={1} onSuccess={() => handleNextStep(4)} username={username} />}
+                    {step === 3 && <OTP key={1} onSuccess={() => {
+                        getMyprofile()
+                        handleNextStep(4)
+                        }} username={username} />}
                     {step === 4 && <Message />}
                     {/* <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} /> */}
                 </div>

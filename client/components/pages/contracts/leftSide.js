@@ -29,7 +29,9 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
             case 'waiting-for-pay-10':
                 return 2;
             case 'update-after-first-Payment':
-                return 2;
+                return 0;
+            case 'accepted with update':
+                return 0;
             case 'waiting-for-total-payment':
                 return 2;
             case 'waiting-for-payment':
@@ -105,7 +107,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                     <section className='flex flex-col gap-4 mx-auto sm:w-auto'>
                         {Object.keys(groupedByCycle).map((cycle) => (
                             <div key={cycle}>
-                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`pending`)}</h2>
                                 <div className='flex flex-col gap-4'>
                                     {groupedByCycle[cycle].map((item, index) => (
                                     <Pending key={`pending-${item._id}`} data={item} onClick={() => router.push(`/contracts?contract=${item._id}`)} />
@@ -120,7 +122,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                     <section className='flex flex-col gap-4 mx-auto sm:w-auto'>
                         {Object.keys(groupedByCycle3).map((cycle) => (
                             <div key={cycle}>
-                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t('Waiting Checkout Contracts')}</h2>
                                 <div className='flex flex-col gap-4'>
                                     {groupedByCycle3[cycle].map((item, index) => (
                                     <Pending key={`pending-${item._id}`} data={item} onClick={() => router.push(`/contracts?contract=${item._id}`)} />
@@ -135,7 +137,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                     <section className='mt-11 flex flex-col gap-4 mx-auto sm:w-auto'>
                         {Object.keys(groupedByCycle2).map((cycle) => (
                         <div key={cycle}>
-                            <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                            <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`ongoing`)}</h2>
                             <div className='flex flex-col gap-4'>
                                 {groupedByCycle2[cycle].map((item, index) => (
                                 <Ongoing key={`pending-${item._id}`} data={item} onClick={() => router.push(`/contracts?contract=${item._id}`)} />
@@ -159,7 +161,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                     <section className=' flex flex-col gap-4 mx-auto sm:w-auto'>
                        {Object.keys(groupedByCycle).map((cycle) => (
                             <div key={cycle}>
-                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`pending`)}</h2>
                                 <div className='flex flex-col gap-4'>
                                     {groupedByCycle[cycle].map((item, index) => (
                                     <Pending2 key={`pending-${item._id}`} data={item} onClick={() => router.push(`/contracts?contract=${item._id}`)} />
@@ -175,7 +177,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                     <section className=' flex flex-col gap-4 mx-auto sm:w-auto'>
                        {Object.keys(groupedByCycle3).map((cycle) => (
                             <div key={cycle}>
-                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t('Waiting Checkout Contracts')}</h2>
                                 <div className='flex flex-col gap-4'>
                                     {groupedByCycle3[cycle].map((item, index) => (
                                     <Pending2 key={`pending-${item._id}`} data={item} onClick={() => router.push(`/contracts?contract=${item._id}`)} />
@@ -190,7 +192,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                     <section className=' flex flex-col gap-4 mx-auto sm:w-auto'>
                        {Object.keys(groupedByCycle2).map((cycle) => (
                             <div key={cycle}>
-                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`${cycle}`)}</h2>
+                                <h2 className="font-bold text-lg capitalize opacity-80 my-4">{t(`ongoing`)}</h2>
                                 <div className='flex flex-col gap-4'>
                                     {groupedByCycle2[cycle].map((item, index) => (
                                     <Ongoing2 key={`pending-${item._id}`} data={item} onClick={() => router.push(`/contracts?contract=${item._id}`)} />
