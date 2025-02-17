@@ -57,8 +57,6 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         }
         if(formData.description && (data.description!==formData.description))
             UpdatedData.append('description',formData.description)
-        if(formData.duration)
-            UpdatedData.append('duration',formData.duration)
         if(formData.address && (data.address!==formData.address))
             UpdatedData.append('address',formData.address)
         if(formData['projectScale.unit'] && (data.projectScale.unit!==formData['projectScale.unit']))
@@ -74,7 +72,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         if(formData.category && (data.category._id!==formData.category))
             UpdatedData.append('category',formData.category)
         if(formData.subCategory && (data.subCategory!==formData.subCategory))
-            UpdatedData.append('subCategoryId',formData.subCategory)
+            UpdatedData.append('subCategory',formData.subCategory)
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
                 UpdatedData.append(`tags[${index}]`, tag);
@@ -236,7 +234,13 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
             <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="updating" />
             <Share url={window.location.href} title={'See that 👀'} />
             <Drawer isOpen={isOpen} name={'update rental'} toggleDrawer={toggleDrawer}>
-                        <form className='flex flex-col gap-5 container mx-auto'>
+                    <div className={nextstep == 1 && 'hidden'}>
+                        <SetCover Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
+                    </div>
+                    <form className={`${nextstep == 2 && 'hidden'} flex flex-col gap-5 container mx-auto`}>
+                        {data.canEdit && 
+                        <>
+
                             <div className="my-5">
                                 <CategorySelection
                                     filterIn={"rentals"}
@@ -258,6 +262,11 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     )} */}
                             </div>
                             <section className='gap-8'>
+                                <section>
+                                    <h3 className="capitalize opacity-60">{t("attachments")}</h3>
+                                    <AddAttachment id={'attachments'} name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} />
+                                    <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
+                                </section>
                                 <section>
                                     <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.title}/>
@@ -325,12 +334,13 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     <ErrorMessage ErrorMsg={ErrorMsg.minimum}/>
                                 </div >
                             </section>
+                        </>}
                             <section className='flex justify-center gap-3 mt-10'>
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </section>
-                            <Button isEnabled={!update_respond?.loading} onClick={Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
-                            {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t("Update")}</span>}
+                            <Button isEnabled={!update_respond?.loading} onClick={data.canEdit?CheckNext:Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
+                            {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t(data.canEdit?"Next":"Update")}</span>}
                             </Button>
                         </form>
             </Drawer>

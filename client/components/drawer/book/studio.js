@@ -165,7 +165,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                         <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
                         <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
                         <div className='flex items-center justify-center w-full mt-2'>
-                            <input type='time' name="timeDate" value={formData.timeDate || ""} onChange={handleInputChange} className="bg-[#f8f8f8] rounded-full border-black border-opacity-10 px-5 py-5 w-1/2 text-[25px]"/>
+                            <input type='time' name="timeDate" value={formData.timeDate || ""} onChange={handleInputChange} className="bg-[#9999991A] rounded-full border-black border-opacity-10 px-5 py-5 w-1/2 text-[25px]"/>
                         </div>
                         <ErrorMessage ErrorMsg={ErrorMsg.timeDate}/>
                     </section>

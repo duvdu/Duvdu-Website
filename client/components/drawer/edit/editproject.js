@@ -28,6 +28,7 @@ import FunctionUsed from '../../popsup/create/FunctionsUsed';
 const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, update_respond,GetProject,setIsOpenEdit, UpdateFormData, addprojectState, categories, resetForm }) => {
     const { t } = useTranslation();
     const router = useRouter();
+    console.log({data})
     const { project: projectId } = router.query;
     const formData = addprojectState.formData;
     const [errors, setErrors] = useState({});
@@ -81,7 +82,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         }
         if(formData.description && (data.description!==formData.description))
             UpdatedData.append('description',formData.description)
-        if(formData.duration)
+        if(formData.duration && (data.duration !== formData.duration))
             UpdatedData.append('duration',formData.duration)
         if(formData.address && (data.address!==formData.address))
             UpdatedData.append('address',formData.address)
@@ -109,7 +110,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                 UpdatedData.append(`searchKeywords[${index}]`, searchKeywords);
             });
     
-        if (formData.cover && (data.name!==formData.name)) {
+        if (formData.cover) {
             UpdatedData.append('cover', formData.cover);
         }
 
@@ -302,12 +303,14 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             <AddOtherCreatives onSubmit={(value) =>{
              value.invitedCreatives?InsertToArray('invitedCreatives', value) :InsertToArray('creatives', value)}} />
 
-            <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Editing" />
             <Drawer isOpen={isOpen} id={id} name={t('edit project')} toggleDrawer={toggleDrawer}>
                 <div className={nextstep == 1 && 'hidden'}>
                     <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
                 </div>
                 <form className={`${nextstep == 2 && 'hidden'} flex flex-col gap-5 container mx-auto`}>
+                    {data.canEdit && 
+                    <>
                     <div className="my-5">
                         <CategorySelection
                             filterIn={'project'}
@@ -331,6 +334,11 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                         />
                         <ErrorMessage ErrorMsg={ErrorMsg.category}/>
                     </div>
+                    <section>
+                        <h3 className="capitalize opacity-60">{t("attachments")}</h3>
+                        <AddAttachment id={'attachments'} name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
+                    </section>
                     <section>
                         <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || data.name } onChange={handleInputChange} name="name" />
                         <ErrorMessage ErrorMsg={ErrorMsg.title}/>
@@ -444,14 +452,16 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                         <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
                         </div>
                     </section>
+                    </>
+                    }
 
                     <div className='flex justify-center gap-3 mt-1'>
                     <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                     <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </div>
                     
-                    <Button isEnabled={!update_respond?.loading} onClick={Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
-                    {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t("Update")}</span>}
+                    <Button isEnabled={!update_respond?.loading} onClick={data.canEdit?CheckNext:Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
+                    {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t(data.canEdit?"Next":"Update")}</span>}
                     </Button>
 
                 </form>

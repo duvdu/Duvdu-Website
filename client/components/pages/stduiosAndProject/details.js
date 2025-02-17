@@ -16,12 +16,16 @@ import RatingProject from "../../popsup/ratingProject";
 import { OpenPopUp } from "../../../util/util";
 import ReportProject from "../../popsup/report-project";
 import {DeleteTaggedCreative} from "../../../redux/action/apis/cycles/projects/removeTagedUser";
+import {DeleteProject} from "../../../redux/action/apis/cycles/projects/delete";
 import { GetProject } from "../../../redux/action/apis/cycles/projects/getOne";
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
+import DeletePopup from '../../popsup/DeletePopup';
+import DeleteCreative from '../../popsup/DeleteCreative';
 
-const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
+const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_response, GetProject,delete_response, onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(user?._id);
     const { t } = useTranslation();
     const router = useRouter();
     const { project: projectId } = router.query;
@@ -40,24 +44,27 @@ const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAu
         if (v == "Rate") OpenPopUp("Rating-project")
         else if (v == "Report") OpenPopUp("report-project2")
         else if (v == "Edit") toggleDrawerEdit()
-        // else if (v == "Delete") toggleDrawerEdit()
+        else if (v == "Delete") {
+            OpenPopUp('delete-popup-' + projectId)
+        }
+        else if (v == "Delete Tagged") {
+            OpenPopUp('delete-creative-' + projectId)
+        }
     };
     const RemoverTagUser = (id)=>{
-        DeleteTaggedCreative(projectId,id)
+        OpenPopUp('delete-creative-' + projectId)
     }
-    useEffect(()=>{
-        if(delete_response?.message){
-            setSuccess(true)
-        }
-    },[delete_response])
-    console.log({delete_response})
     const toggleDrawer = () => {
-        setSuccess(false)
-        GetProject(projectId);
+        DeleteTaggedCreative(projectId , selectedUser).then(()=>{
+            setSuccess(true)
+        })
     };
+    console.log({findTAgged:data?.creatives?.find(item=>item.username===user?.username)})
 
     return (
         <>
+        <DeletePopup onClick={()=> DeleteProject(projectId)} id={projectId} header={'delete Project'} message={'this project?'} />
+        <DeleteCreative onClick={toggleDrawer} id={projectId} header={'delete Tagged Creative'} message={'this tagged creative?'} />
         <SuccessfullyPosting isShow={success} onCancel={toggleDrawer} message="Deleted" />
         <RatingProject data={data} />
         {isLogin ===true &&
@@ -141,10 +148,14 @@ const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAu
                             {
                                 value:"Delete"
                             }
+                        ]:data?.creatives?.find(item=>item.username===user?.username)?[
+                            {
+                                value: "Delete Tagged",
+                            },
+                            {
+                                value: "Report",
+                            },
                         ]:[
-                            // {
-                            //     value: "Rate",
-                            // },
                             {
                                 value: "Report",
                             },
@@ -211,11 +222,11 @@ const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAu
                             <div key={i} className="flex items-center gap-2">
                                     <div className={`flex rounded-3xl border border-[#00000040]`}>
                                         {creative?.profileImage&& 
-                                            <img className="size-8 aspect-square rounded-full object-cover object-top" src={creative?.profileImage} alt="profile" />
+                                            <img className="size-6 aspect-square rounded-full object-cover object-top" src={creative?.profileImage} alt="profile" />
                                         }
                                         {
                                             creative.name &&
-                                            <span className="px-4 flex items-center">
+                                            <span className="px-4 flex items-center ">
                                                 {creative.name}
                                             </span>}
                                     </div>
@@ -227,7 +238,10 @@ const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAu
                                             </span>}
                                     </div>
                                     {user?.username===data?.user?.username && 
-                                    <div onClick={()=>RemoverTagUser(creative._id)} className={`flex rounded-full size-6 bg-red items-center justify-center`}>
+                                    <div onClick={()=>{
+                                        RemoverTagUser(creative._id)
+                                        setSelectedUser(creative._id)
+                                        }} className={`flex rounded-full size-6 bg-red items-center justify-center`}>
                                         <Icon className='!text-white !w-[10px]  cursor-pointer' name={"remove"} />
                                     </div>
                                     } 
@@ -296,12 +310,14 @@ const Details = ({ data ,DeleteTaggedCreative , GetProject,delete_response, onAu
 const mapStateToProps = (state) => ({
     isLogin: state.auth.login,
     user: state.user.profile,
-    delete_response: state.api.DeleteTaggedCreative
+    delete_response: state.api.DeleteTaggedCreative,
+    delete_porject_response: state.api.DeleteProject
 });
 
 const mapDispatchToProps = {
     DeleteTaggedCreative,
-    GetProject
+    GetProject,
+    DeleteProject
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Details);

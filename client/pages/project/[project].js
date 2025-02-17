@@ -75,7 +75,6 @@ const Projects = ({
             GetProjects(queryString);
         }
     }, [project_respond?.data?.category?._id]);
-    console.log({user})
     const toggleDrawer = () => {
         if (auth.login){
             if(!user.faceRecognition){
@@ -88,7 +87,13 @@ const Projects = ({
             OpenPopUp("registration-required");
         } 
     };
-
+    var convertError = JSON.parse(project_respond?.error ?? null)
+    console.log({convertError})
+    useEffect(()=>{
+        if(convertError?.status === 404){
+            router.push('/')
+        }
+    },[convertError])
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
     };

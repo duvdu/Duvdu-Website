@@ -10,7 +10,9 @@ export const DeleteTaggedCreative = (id,creativeId) => {
     try {
   
       const response = await mainApiInstance.delete(`api/projects/${id}/tagged-creative/${creativeId}`);
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: {message:'success'}, req: req });
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: {
+        message:'success'
+     }, req: req });
     } catch (error) {
        dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
     }
