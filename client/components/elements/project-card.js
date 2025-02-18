@@ -225,13 +225,13 @@ const ProjectCard = ({ cardData: initialCardData, inclusive, className = "", typ
         {(cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit) &&
         (cardData?.projectScale?.current? 
         ((inclusive)?<>
-          <span className='text-xl font-bold'>{inclusivePrice}$</span>
+          <span className='text-xl font-bold'>{inclusivePrice}{t('EGP')}</span>
           </>:
           <>
-            <span className='text-xl font-bold'>{cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current}$</span>
+            <span className='text-xl font-bold'>{cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current}{t('EGP')}</span>
           </>)
 :(
-  <span className='text-xl font-bold'>{cardData?.projectScale?.pricerPerUnit}$</span>
+  <span className='text-xl font-bold'>{cardData?.projectScale?.pricerPerUnit}{t('EGP')}</span>
 
 )
         )

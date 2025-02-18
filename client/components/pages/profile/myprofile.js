@@ -212,7 +212,7 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects,GetT
                             <div className='flex items-center justify-center my-7 gap-2'>
                                 <Switch onSwitchChange={updateInstantState} value={userInfo?.isAvaliableToInstantProjects} id='profile-instant' />
                                 <span className={userInfo?.isAvaliableToInstantProjects ? "" : "opacity-70"}>
-                                    Instant Projects is {userInfo?.isAvaliableToInstantProjects ? "open" : "disabled"}
+                                    {t(`Instant Projects is ${userInfo?.isAvaliableToInstantProjects ? "open" : "disabled"}`)}
                                 </span>
                             </div>
 

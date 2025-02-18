@@ -3,6 +3,7 @@ import { OpenPopUp, convertToK, getRankStyle } from "../../../util/util";
 import Icon from "../../Icons";
 import { getUserFollowers } from "../../../redux/action/apis/auth/profile/getFollowerList";
 import PopUpImage from "../../elements/popUpImage";
+import { useTranslation } from 'react-i18next';
 
 function Info({
     src,
@@ -17,6 +18,7 @@ function Info({
     isboronze = false,
     isMe
 }) {
+    const { t } = useTranslation();
     const openFollowers = () => {
         OpenPopUp('show-followers')
     }
@@ -46,7 +48,7 @@ function Info({
                 </div>
             }
             <div className='info-container flex justify-between items-center gap-1 w-auto'>
-                <p>{rates>0?rates.toFixed(1):'rising rate'}</p>
+                <p>{rates>0?rates.toFixed(1):t('rising rate')}</p>
                 {rates>0 &&<Icon className='text-primary w-4' name={'star'} />}
             </div>
         </div>
@@ -68,7 +70,7 @@ function Info({
                         key={key}
                     >
                         <p className='number'>{convertToK(value, 0)}</p>
-                        <p className='unit'>{key}</p>
+                        <p className='unit'>{t(key)}</p>
                     </div>
                 ))}
             </div>

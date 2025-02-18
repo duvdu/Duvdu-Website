@@ -71,7 +71,7 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
                 {/* deadline */}
                 <div className='flex flex-col xl:flex-row justify-between items-center w-full gap-3'>
                     <div className='flex gap-3 w-full'>
-                        <span className='text-[40px] flex items-center ml-3 gap-2'>  <span className='opacity-50 text-white'>$</span> <span className='text-white'>{data?.contract?.totalPrice}</span> </span>
+                        <span className='text-[40px] flex items-center ml-3 gap-2'>  <span className='opacity-50 text-white'>{t('EGP')}</span> <span className='text-white'>{data?.contract?.totalPrice}</span> </span>
                         <div className='h-auto w-[1px] bg-white opacity-15' />
                         <div>
                             <span className='opacity-50 text-white'>{t("deadline")}</span>

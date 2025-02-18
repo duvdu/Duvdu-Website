@@ -129,7 +129,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                     {data.contract.totalPrice && 
                     <span className='text-[24px] md:text-[40px] flex items-center ml-3 gap-2'>
                         <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} flex gap-2`}>
-                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>$</span>
+                            <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'} opacity-50`}>{t('EGP')}</span>
                             <span className={`text-${isCanceled ? '[#FF4646]' : 'primary'}`}> {data.contract.totalPrice || data.contract.totalAmount}</span>
                         </span>
                     </span>

@@ -54,12 +54,12 @@ const Popup = ({ id, children, onCancel, onOpen, header, className = "", img, ad
             <div className='card content bg-[#F7F9FB] dark:bg-[#1A2024] sm:w-auto sm:mx-auto w-full mx-5' style={img ? { backgroundImage: `url(${img})` } : {}}>
                 <div className='p-5 pl-[31px]'>
                     <div className='flex gap-3 top-0 -translate-x-4'>
-                        <div onClick={onCancel} data-popup-dismiss="popup" className='flex rounded-full header-border p-4 cursor-pointer justify-center items-center'>
+                        <div onClick={onCancel} data-popup-dismiss="popup" className='flex rounded-full header-border h-16 w-16 cursor-pointer justify-center items-center'>
                             <Icon name={'xmark'} className='size-6' />
                         </div>
                         {
                             header &&
-                            <span className='flex rounded-full header-border px-7 py-4 text-sm sm:text-lg font-medium'>
+                            <span className='flex items-center rounded-full header-border px-7 h-16 text-sm sm:text-lg font-medium'>
                                 {t(header)}
                             </span>
                         }

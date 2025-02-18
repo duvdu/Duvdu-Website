@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Popup from '../../elements/popup';
 import Button from '../../elements/button';
 import Icon from '../../Icons';
@@ -8,7 +9,7 @@ import { connect } from 'react-redux';
 import { toggleContractData } from '../../../redux/action/contractDetails';
 import dateFormat from "dateformat";
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
-import { acceptFiles } from '../../../redux/action/apis/contracts/acceptFiles';
+import { acceptFiles , acceptAllFiles } from '../../../redux/action/apis/contracts/acceptFiles';
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import { payment } from '../../../redux/action/apis/contracts/pay';
 import SelectDate from '../../elements/selectDate';
@@ -55,7 +56,9 @@ function ReceiveProjectFiles({
     resetForm,
     submitFile_respond,
     acceptFiles_respond,
+    acceptAllFiles_respond,
     acceptFiles,
+    acceptAllFiles,
     report_respond,
     user }) {
     const router = useRouter();
@@ -266,10 +269,12 @@ function ReceiveProjectFiles({
         return () => clearInterval(interval);
 
     }, [contract?.deadline]);
-
+    console.log({user})
     const handleAccept = () => {
       if(!user.faceRecognition){
             OpenPopUp("face-verification");
+        }else if(user?.avaliableContracts==0){
+            OpenPopUp("contract_subscription")
         }else{
             setActionAccept('accept')
             if (!contract_respond?.data?.ref) return
@@ -280,6 +285,10 @@ function ReceiveProjectFiles({
     const handleAcceptFiles = (field) => {
         setActionAccept('accept')
         acceptFiles({ id: contract?._id, field ,type:getType(), data:{ status:'approved' }})
+    };    
+    const handleAcceptAllFiles = (field) => {
+        setActionAccept('accept')
+        acceptAllFiles({ id: contract?._id})
     };    
     const handleCancel = () => {
         setActionAccept('cancle')
@@ -381,7 +390,7 @@ function ReceiveProjectFiles({
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
-    const canReview = (!IsImSp() && (status === "completed" || status === "accepted"))
+    const canReview = (!IsImSp() && (status === "completed" || status === "accepted") && !contract?.hasReview)
     const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const canAnswerViewQR = (IsImSp() && getType() === "rental" && status === "ongoing" && !contract?.qrCodeVerification)
@@ -524,19 +533,21 @@ function ReceiveProjectFiles({
                                 }
                                 {
                                     (getType() == "project" || getType() == "rental") &&
-                                    <section className='w-full flex-col'>
+                                    <Link href={`/${getType() == "project"?'project':(getType() == "rental"?'rental':'teams')}/${contract.project}`}>
+                                    <section className='w-full cursor-pointer flex-col'>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("original project")}</h2>
                                         <div className='w-full'>
                                             <div className="h-20 w-full rounded-full relative overflow-hidden">
                                                 <img className="absolute -translate-y-1/2 blur-sm" src='/assets/imgs/projects/2.jpeg' />
                                                 <div className="absolute z-20 flex items-center w-full h-full p-7">
                                                     <div className="w-full text-center p-20">
-                                                        <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{contract?.project}</span>
+                                                        <span className="text-white whitespace-nowrap overflow-hidden text-overflow: ellipsis capitalize">{t('view original project')}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>}
+                                    </section>
+                                    </Link>}
                                 <section className='grid md:grid-cols-2 w-full'>
                                 <div>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("status")}</h2>
@@ -868,6 +879,17 @@ function ReceiveProjectFiles({
                                     </Button>
                                 </section>
                             }
+                            {canAnswerSubmitFile && contract?.submitFiles?.length>0 &&
+                                <section className='flex mx-5 gap-7 justify-center'>
+                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAcceptAllFiles}>
+                                        {acceptAllFiles_respond?.loading && actionAccept ==='accept'?
+                                            <Loading size='md'/>
+                                            :
+                                            <span className='text-white font-bold capitalize text-lg'>{t("accept all files")}</span>
+                                        }
+                                    </Button>
+                                </section>
+                            }
 
                             {!canEdit &&
                                 <section className="w-full">
@@ -1016,6 +1038,7 @@ const mapStateToProps = (state) => ({
     addprojectState: state.addproject,
     rateContract_respond: state.api.RateContract,
     submitFile_respond:state.api.submitFile,
+    acceptAllFiles_respond:state.api.acceptAllFiles,
     acceptFiles_respond:state.api.acceptFiles,
     report_respond: state.api.contractReport,
     complaint_respond: state.api.GetComplaint
@@ -1025,6 +1048,7 @@ const mapDispatchToProps = {
     toggleContractData,
     takeAction,
     acceptFiles,
+    acceptAllFiles,
     getAllContracts,
     payment,
     UpdateFormData,

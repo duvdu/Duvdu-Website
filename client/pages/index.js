@@ -447,8 +447,9 @@ const Home = ({
                                                 className={`cursor-pointer bg-black h-[140px] sm:h[200px] md:h-[300px] lg:h-[380px] rounded-xl lg:rounded-3xl trendy-section flex flex-col gap-5 items-start justify-between overflow-hidden px-1 md:px-3 py-3 lg:px-7 lg:py-10`}
                                                 style={{ backgroundImage: `url(${data.image})` }}
                                                 >
-                                                    <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
-                                                        {t("150 creatives")}
+                                                    {/* <div/> */}
+                                                    <div  className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
+                                                        {`${data.creativesCounter} ${t("creatives")}`} 
                                                     </div>
                                                     <span className="text-white text-[14px] lg:text-3xl lg:font-medium capitalize text-center w-full">
                                                         {data.title}

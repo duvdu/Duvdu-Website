@@ -226,34 +226,57 @@ const ProjectId = cardData.details._id
             </div>
           }
         </div>
+        
         <div className='mt-3 flex justify-between items-center'>
-          <div className='flex items-center gap-3'>
-            <Link href={`/creative/${cardData.details.user.username}`} >
-              <div className='cursor-pointer'>
-                <img src={cardData.details.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
+          <div className='flex gap-2'>
+              <div className='flex items-center gap-3'>
+                  <Link href={`/creative/${cardData?.details?.user?.username}`} >
+                      <div className='cursor-pointer'>
+                        <img src={cardData.details.user.profileImage || process.env.DEFULT_PROFILE_PATH} alt='user' className='size-6 rounded-full object-cover object-top' />
+                      </div>
+                  </Link>
+                  <Link href={`/creative/${cardData?.details?.user?.username}`}>
+                      <div className='cursor-pointer' >
+                        <span className='text-sm font-semibold'>{cardData.details.user.name?.split(' ')[0].length>6?cardData.details.user.name?.split(' ')[0].slice(0,6):cardData.details.user.name?.split(' ')[0] || 'NONE'}</span>
+                      </div>
+                  </Link>
               </div>
-            </Link>
-            <Link href={`/creative/${cardData.details.user.username}`}>
-              <div className='cursor-pointer' >
-                <span className='text-sm font-semibold'>{cardData.details.user.name?.split(' ')[0].length>6?cardData.details.user.name?.split(' ')[0].slice(0,6):cardData.details.user.name?.split(' ')[0] || 'NONE'}</span>
+              <div className='flex items-center gap-1'>
+                  <Icon className='text-primary size-4' name={'star'} />
+                  <span className='text-xs text-primary font-medium'>{(cardData?.details?.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
               </div>
-            </Link>
           </div>
-          <div className='flex items-center gap-2'>
-            <span className='text-base opacity-80 font-medium'>{(cardData.details.user?.rate?.totalRates?.totalRates || 0).toFixed(1)}</span>
-            <Icon className='text-primary size-4' name={'star'} />
+          <div>
+              {(cardData?.details?.projectBudget || cardData?.details?.projectScale?.pricerPerUnit) && (
+                  <>
+                      {/* {i18n.language !== "Arabic" ? ( */}
+                      {type=='project'?
+                          <span className="text-xs opacity-60 font-semibold">
+                          { cardData?.details?.projectScale?.pricerPerUnit * cardData?.details?.projectScale?.current} L.E
+                          </span>
+                          :
+                          <span className="text-xs opacity-60 font-semibold">
+                          { cardData?.details?.projectScale?.pricerPerUnit} L.E
+                          </span>
+
+                  }
+                  </>
+              )}
+
+
           </div>
-        </div>
+      </div>
+    
         <p className='text-xl opacity-70 font-medium my-1'>{cardData.details.name || cardData.details.title}</p>
-        {(cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit) &&
+        {/* {(cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit) &&
           <>
-            <span className='text-xl font-bold'>{cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit}$</span>
+            <span className='text-xl font-bold'>{cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit}{t('EGP')}</span>
             {(cardData.details.projectScale?.unit) &&
               <span className='text-xl ml-2 opacity-60'>
                 per {cardData.details.projectScale?.unit}
               </span>}
           </>
-        }
+        } */}
       </div>
     </>
   );

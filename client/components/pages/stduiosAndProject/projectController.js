@@ -44,7 +44,7 @@ const ProjectController = ({ initialData,
     };
 
     const handleOpenChat = () => {
-        if (data.user.canChat)
+        // if (data.user.canChat)
             GetAllMessageInChat(data?.user?._id);
     };
 
@@ -59,7 +59,7 @@ const ProjectController = ({ initialData,
             <>
                 <div className='sticky h-32 bottom-0 z-20 max-w-full'>
                     <div className="sm:container flex justify-between items-end">
-                        {auth.login ? (
+                        {auth.login && canBook ? (
                             <div onClick={handleOpenChat} className="hidden message-shadow lg:flex rounded-full p-2 h-16 bg-white dark:bg-[#1A2024] cursor-pointer">
                                 <div className="relative">
                                     <img

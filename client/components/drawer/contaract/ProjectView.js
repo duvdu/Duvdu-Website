@@ -66,7 +66,7 @@ export default function ProjectView({contract , canUpdateData}){
                 </span>
                 </h2>
             <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
-            {contract.duration.value} {contract.duration.unit}
+            {contract.duration}
             </span>
         </div>    
     }

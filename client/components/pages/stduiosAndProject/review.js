@@ -35,7 +35,7 @@ const Reviews = ({ data, userName , project=false }) => {
     const renderComments = () => {
         return <>
         <Swiper
-        dir='ltr'
+        // dir='ltr'
         className='h-full'
         ref={reviewRef}
         modules={[Autoplay, Navigation, EffectFade, Pagination]}

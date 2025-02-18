@@ -18,7 +18,7 @@ function DeletePopup({onClick,id , header , message}) {
         <>
             <Popup id={'delete-popup-'+id} header={header} >
                 <div method="post" className='mt-12 mx-5'>
-                    <span className="text-lg font-[#2F2F2F]"> Are you sure you want to delete <span className="text-[#2F2F2F] dark:text-white">{t(message)}</span></span>
+                    <span className="text-lg font-[#2F2F2F]"> {t('Are you sure you want to delete')} <span className="text-[#2F2F2F] dark:text-white">{t(message)}</span></span>
                     <div className='mt-12'/>
                     <AppButton onClick={toggleDirectorConfirmed} className={'w-full'} color={"#D30000"} >{t("Delete")}</AppButton>
 
