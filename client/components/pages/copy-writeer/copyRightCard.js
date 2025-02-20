@@ -34,11 +34,11 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , isLogin , Qu
 
             <div className='flex-2 flex-col gap-1'>
               <h3 className='opacity-80 text-lg font-bold text-start'>{cardData?.user?.name?.split(' ')[0].length>6?cardData?.user?.name?.split(' ')[0].slice(0,6):cardData?.user?.name?.split(' ')[0] || "Unknown User"}</h3>
-              <span className='flex items-start justify-start opacity-40'>
+              <span dir="ltr" className='flex items-start justify-start opacity-40'>
                 <div>
                   <Icon className='opacity-50 mr-1 mt-1 w-3' name='location-dot' />
                 </div>
-                <span className="text-start line-clamp-2">{cardData?.address || "UNKNOWN"}</span>
+                <span className="text-start line-clamp-1">{cardData?.address || "UNKNOWN"}</span>
               </span>
             </div>
           </div>
@@ -68,7 +68,7 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , isLogin , Qu
         </span>
         }
         <div className='info-container flex justify-between items-center gap-2'>
-          <span>{cardData?.user?.rate?.totalRates || 'rising rate'}</span>
+          <span>{cardData?.user?.rate?.totalRates || t('rising rate')}</span>
           {cardData?.user?.rate?.totalRates >0 &&
           <div className='w-5'>
             <Icon className='text-primary' name={'star'} />
@@ -79,11 +79,11 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , isLogin , Qu
       <div className='flex justify-between'>
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>{t("pricing")}</p>
-          <span className='text-4xl lg:text-5xl font-medium'>{(price?.length>5 ? price.slice(0,5): price)|| 0} {price?.length>5?'':'$'}</span>
+          <span className='text-4xl lg:text-5xl font-medium'>{(price?.length>5 ? price.slice(0,5): price)|| 0} {price?.length>5?'':t('EGP')}</span>
           {price?.length>5 && 
           <>
           <br/>
-          <span className='text-4xl lg:text-5xl font-medium'>{price.slice(5,-1)} $</span>
+          <span className='text-4xl lg:text-5xl font-medium'>{price.slice(5,-1)} {t('EGP')}</span>
           </>}
         </div>
         <div className='w-[1px] bg-black opacity-15' />

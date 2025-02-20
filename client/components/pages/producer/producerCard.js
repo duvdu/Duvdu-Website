@@ -44,7 +44,7 @@ const ProducerCard = ({ cardData, className = "", onClick, user }) => {
           </span>
           }
           <div className='info-container flex justify-between items-center gap-2'>
-            <span>{cardData?.user?.rate?.totalRates || 'rising rate'}</span>
+            <span>{cardData?.user?.rate?.totalRates || t('rising rate')}</span>
             {cardData?.user?.rate?.totalRates >0 &&
             <div className='w-5'>
               <Icon className='text-primary' name={'star'} />

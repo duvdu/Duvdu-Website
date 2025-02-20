@@ -93,7 +93,7 @@ const Ruler = ({ startIndex, endIndex }) => {
     const step = (endIndex - startIndex) / 10;
     const ruler = Array.from({ length: 11 }, (_, index) => index * step + startIndex);
     return (
-        <div className="flex justify-between mt-3">
+        <div dir="ltr" className="flex justify-between mt-3">
             {ruler.map((num) => (
                 <div key={num} className="flex flex-col items-center opacity-20">
                     <div className="w-[1px] h-1 bg-black" />

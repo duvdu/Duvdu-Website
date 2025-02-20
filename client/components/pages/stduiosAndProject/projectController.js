@@ -45,6 +45,7 @@ const ProjectController = ({ initialData,
 
     const handleOpenChat = () => {
         // if (data.user.canChat)
+        // if (data.user.canChat)
             GetAllMessageInChat(data?.user?._id);
     };
 

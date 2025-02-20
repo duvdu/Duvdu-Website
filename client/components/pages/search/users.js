@@ -12,14 +12,16 @@ import AddAttachment from "../../elements/attachment";
 import { useTranslation } from 'react-i18next';
 import DraggableList from "../home/dragList";
 import Link from 'next/link';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination ,FreeMode} from 'swiper';
 
 const User = ({ info }) => {
     const { t } = useTranslation();
 
     return (
-        <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden w-[350px]" >
+        <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" >
             <div className="flex w-full overflow-hidden h-32">
-                <img className="w-full bg-gray-300 dark:bg-[#ffffff20]" src={info?.coverImage} />
+                <img className="w-full bg-gray-300 object-cover object-center dark:bg-[#ffffff20]" src={info?.coverImage} />
             </div>
             <div className='p-5'>
                 <div className='flex items-start gap-4 -translate-y-4 h-11'>
@@ -52,17 +54,54 @@ const User = ({ info }) => {
 
 const UserSearch = ({ users }) => {
     const { t, i18n } = useTranslation();
+    const CategoryRef = useRef(null);
 
     return (
         <div className=''>  
             <h2 className=" text-2xl font-semibold opacity-60 capitalize mb-3 lg:mb-5">{t("creatives")}</h2>
-             <DraggableList>
+             {/* <DraggableList> */}
+             <Swiper
+                // dir='ltr'
+                className=''
+                ref={CategoryRef}
+                modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                spaceBetween={10}
+                slidesPerView={1.2}
+                loop={true}
+                pagination={{
+                    clickable: true,
+                    el: '.swiper-pagination',
+                }}
+                navigation={{
+                    prevEl: '.custom-swiper-prev2.prev1',
+                    nextEl: '.custom-swiper-next2.next1',
+                }}
+                breakpoints={{
+                    420: {
+                        slidesPerView: 1.5, // For mobile screens
+                        },
+                    640: {
+                        slidesPerView: 2, // For mobile screens
+                        },    
+                    992: {
+                        slidesPerView: 3, // For tablets
+                        },
+                    1444:{
+                        slidesPerView: 3.5, // For desktop
+
+                    }
+                    }}                                    
+                >
+
             <div className="flex gap-5">
                 {users?.map((value, index) => (
+                <SwiperSlide>
                     <User info={value} key={index} />
+                </SwiperSlide>
                 ))}
             </div>
-             </DraggableList>
+            </Swiper>
+             {/* </DraggableList> */}
                 
         </div>
     )

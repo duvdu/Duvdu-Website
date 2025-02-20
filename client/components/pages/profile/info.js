@@ -18,6 +18,7 @@ function Info({
     isboronze = false,
     isMe
 }) {
+    const { t } = useTranslation();
     const openFollowers = () => {
         OpenPopUp('show-followers')
     }
@@ -48,7 +49,7 @@ function Info({
                 </div>
             }
             <div className='info-container flex justify-between items-center gap-1 w-auto'>
-                <p>{rates>0?rates.toFixed(1):'rising rate'}</p>
+                <p>{rates>0?rates.toFixed(1):t('rising rate')}</p>
                 {rates>0 &&<Icon className='text-primary w-4' name={'star'} />}
             </div>
         </div>

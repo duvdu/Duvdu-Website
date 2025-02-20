@@ -173,7 +173,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                         <div className="flex justify-center">
                             <div className='relative'>
                                 <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
-                                <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                                <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='Continue' />
                             </div>
                         </div>
                     </section>
