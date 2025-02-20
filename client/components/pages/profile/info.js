@@ -22,7 +22,6 @@ function Info({
     const openFollowers = () => {
         OpenPopUp('show-followers')
     }
-    const { t } = useTranslation();
 
     return <>
         <div className='flex items-end sm:items-center pb-5'>
