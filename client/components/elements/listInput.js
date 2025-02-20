@@ -41,19 +41,19 @@ function ListInput({ onChange, name, placeholder, onClick, children, listdiv, ta
         <>
             <div className="relative cursor-pointer" data-popup-toggle="popup" data-popup-target={target}>
                 {
-                    !enable ? (<div className={`${"inputStyle1"} pr-14 capitalize opacity-45`}>
+                    !enable ? (<div className={`${"inputStyle1"} pe-14 capitalize opacity-45`}>
                         {placeholder}
                     </div>
                     ) :
                         (<input
                             placeholder={placeholder}
-                            className={`${"inputStyle1"} pr-14`}
+                            className={`${"inputStyle1"} pe-14`}
                             value={word || ""}
                             onChange={(e) => { setWord(e.target.value) }}
                             name={name}
                         />)}
                 <div >
-                    <div className="absolute flex items-center w-auto right-0 top-1/2 transform -translate-y-1/2" onClick={addword ? addword : onClick}>
+                    <div className="absolute flex items-center w-auto end-0 top-1/2 transform -translate-y-1/2" onClick={addword ? addword : onClick}>
                         <span className="text-[#08D335] text-xs font-semibold">{t("Add")}</span>
                         <div className="size-5 p-1">
                             <Icon className="text-[#08D335] w-full text-sm" name="plus" />

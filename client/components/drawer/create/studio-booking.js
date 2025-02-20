@@ -71,14 +71,14 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
         if (!formData.category) errors.category = 'Category is required';
         // if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
         // if (!formData.tags || !formData.tags.length) errors.tags = 'Tags are required';
-        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment not valid';
-        if (!formData.title) errors.title = 'Name is required';
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
+        if (!formData.title) errors.title = 'Studio name is required';
         if (!formData.phoneNumber) {
-            errors.phoneNumber = 'Phone number is required';
+            errors.phoneNumber = 'Studio phone is required';
         } else if (!egyptianPhoneRegex.test(formData.phoneNumber)) {
-            errors.phoneNumber = 'Invalid Egyptian phone number.';
+            errors.phoneNumber = 'Invalid Egyptian phone number';
         }
-        if (!formData.email) errors.email = 'Email is required';
+        if (!formData.email) errors.email = 'Studio email is required';
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';

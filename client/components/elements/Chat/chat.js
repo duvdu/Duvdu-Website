@@ -364,18 +364,20 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                     }
                     {chat_respond?.canChat === true || chat_respond?.user?.canChat === true && 
 
-                    <div className="flex justify-end items-center w-full gap-2 p-3 absolute bottom-0 backdrop-blur-md">
+                    <div className="flex justify-end items-center w-full h-16 p-3 gap-2 absolute bottom-0 backdrop-blur-md">
                         <AudioRecorder
                             isstartRecording={isRecording}
                             recordingoutput={recording}
                         />
                         {audioSrc ? (
                             <>
-                            <div className="w-full flex items-center">
+                            <div className="w-full h-12 flex items-center">
                                 <audio controls controlsList="nodownload" src={audioSrc} className="w-full outline-none"></audio>
                             </div>
-                            <div className='cursor-pointer bg-red rounded-full h-12 !w-16 ms-3 flex items-center justify-center' onClick={() => setaudioSrc(null)}>
-                                <Icon className='size-5 text-white' name={'trash'} />
+                            <div className='cursor-pointer bg-red rounded-full' onClick={() => setaudioSrc(null)}>
+                                <div className='size-12 flex items-center justify-center'>
+                                    <Icon className='size-6 text-white' name={'trash'} />
+                                </div>
                             </div>
                             </>
                             ) :
@@ -386,24 +388,28 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                                         onChange={onChange}
                                         name='content'
                                         onKeyDown={handleKeyPress}
-                                        className='border-none w-full h-min rounded-full dark:bg-[#4d4c4c] bg-[#f1f1f1] p-3'
+                                        className='border-none w-full h-14 rounded-full dark:bg-[#4d4c4c] bg-[#f1f1f1] p-3'
                                         placeholder={t("Write a message...")}
                                         type="text"
                                         accept="video/*,audio/*,image/*,.pdf" />
                                 }
                                 {!content?.length>0 &&  !isRecording &&
                                 <>
-                                <label htmlFor="attachment-upload" className='rounded-full dark:bg-[#4d4c4c] bg-[#f1f1f1] h-12 !w-14 flex items-center justify-center m-0 p-0' >
-                                    <Icon className="cursor-pointer" name={'attachment'} />
+                                <label htmlFor="attachment-upload" className='rounded-full dark:bg-[#4d4c4c] bg-[#f1f1f1]' >
+                                    <div className='size-12 flex items-center justify-center'>
+                                        <Icon className="size-6 cursor-pointer text-center" name={'attachment'} />
+                                    </div>
                                 </label>
                                 <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id="attachment-upload" type="file" multiple />
                                 </>}
                                 {!content?.length > 0  && !attachments && 
-                                <div className='cursor-pointer bg-primary rounded-full h-12 !w-14 flex items-center justify-center' onClick={swapRecording}>
+                                <div className='cursor-pointer bg-primary rounded-full' onClick={swapRecording}>
+                                    <div className='size-12 flex items-center justify-center'>
                                     {!isRecording ?
-                                        <Icon className='size-5 text-white' name={'microphone'} /> :
-                                        <Icon className='size-5 text-white' name={'stop'} />
+                                        <Icon className='size-6 text-white' name={'microphone'} /> :
+                                        <Icon className='size-6 text-white' name={'stop'} />
                                     }
+                                    </div>
                                 </div>
                                 }
                             </>
@@ -411,8 +417,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
                         {
                             !isRecording && (content?.length > 0 || audioSrc || attachments) &&
-                            <div className='cursor-pointer bg-primary rounded-full h-12 !w-14 flex items-center justify-center' onClick={onSend}>
-                                <Icon className='size-5 text-white' name={'paper-plane'} />
+                            <div className='cursor-pointer bg-primary rounded-full' onClick={onSend}>
+                                <div className='size-12 flex items-center justify-center'>
+                                    <Icon className='size-6 text-white' name={'paper-plane'} />
+                                </div>
                             </div>
                         }
 

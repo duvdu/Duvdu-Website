@@ -41,12 +41,12 @@ const About = ({ data }) => {
                     <div className='flex justify-center items-center gap-10' dir="ltr">
                         {[
                             { key: "likes", value: data.user?.likes },
-                            { key: "followers", value: data.user?.followCount?.followers },
+                            { key: "Followers", value: data.user?.followCount?.followers },
                             { key: "views", value: data.user.profileViews }
                         ].map(({ key, value }, index, array) => (
                             <div className={`popularity pr-10 last:pr-0`} key={key}>
                                 <p className='number'>{convertToK(value, 0)}</p>
-                                <p className='unit'>{key}</p>
+                                <p className='unit'>{t(key)}</p>
                             </div>
                         ))}
                     </div>

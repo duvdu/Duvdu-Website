@@ -92,7 +92,7 @@ const Saved = ({
                             <div className={`boards-info projects-name flex items-center gap-2 ${isFav && '!text-[#263257] dark:!text-white'}`}>
                                 {isFav && <Icon className='hidden dark:block' name={"favorites"} />}
                                 {isFav && <Icon className='block dark:hidden w-full' name={"favorite"} />}
-                                {title}
+                                {t(title)}
                             </div>
                         </div>
                     </Link>
@@ -103,7 +103,7 @@ const Saved = ({
 
     const [initFav, setInitFav] = useState({
         _id: 'favorites',
-        title: "Favorites",
+        title: "favorites",
         image:'/assets/imgs/Favorite.svg',
         projects: [],
         totalProjects: 10
@@ -112,7 +112,7 @@ const Saved = ({
         if (getFavList_respond?.data) {
             setInitFav({
                 _id: 'favorites',
-                title: "Favorites",
+                title: "favorites",
                 image:'/assets/imgs/Favorite.svg',
                 projects: getFavList_respond.data,
                 bookmarkProjectCount: getFavList_respond.data.length

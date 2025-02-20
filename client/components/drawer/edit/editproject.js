@@ -197,7 +197,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                 errors.maximum = 'Maximum should be greater than or equal to current';
             }
             if (maximum == minimum) {
-                errors.maximum = 'Maximum should be not equal to minimum';
+                errors.maximum = 'Maximum value should be greater than minimum value';
             }
         }
         return errors;

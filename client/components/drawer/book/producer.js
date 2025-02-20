@@ -29,10 +29,10 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
     const validateRequiredFields = () => {
         const errors = {};
 
-        if (!formData.platform) errors.platform = 'platform is required';
-        if (!formData.projectDetails) errors.projectDetails = 'projectDetails is required';
-        if (!formData.episodesNumber) errors.episodesNumber = 'episodesNumber is required';
-        if (!formData.episodesDuration) errors.episodesDuration = 'episodesDuration is required';
+        if (!formData.platform) errors.platform = 'Platform is required';
+        if (!formData.projectDetails) errors.projectDetails = 'Project details is required';
+        if (!formData.episodesNumber) errors.episodesNumber = 'Episodes number is required';
+        if (!formData.episodesDuration) errors.episodesDuration = 'Episodes duration is required';
         if (!formData.expectedBudget) {
             errors.expectedBudget = 'expectedBudget is required';
         } else if (Number(formData.expectedBudget) < Number(data.minBudget)) {
@@ -40,9 +40,9 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
         } else if (Number(formData.expectedBudget) > Number(data.maxBudget)) {
             errors.expectedBudget = `Expected budget must be Less than maximum budget (${data.minBudget})`;
         }
-        if (!formData.expectedProfits) errors.expectedProfits = 'expectedProfits is required';
+        if (!formData.expectedProfits) errors.expectedProfits = 'Expected budget is required';
         // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
-        if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
+        if (!formData.appointmentDate) errors.appointmentDate = 'Appointment date is required';
         return errors;
     };
 

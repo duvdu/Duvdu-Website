@@ -470,7 +470,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                         </div>
                     </section>
 
-                    <div className='flex justify-center gap-3 mt-1'>
+                    <div className='flex gap-3 mt-1'>
                         <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </div>

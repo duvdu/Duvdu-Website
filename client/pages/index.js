@@ -258,7 +258,7 @@ const Home = ({
                             <DuvduLoading loadingIn={""} type={'category'}/>:                                
                                 <>
                                 <Swiper
-                                    dir='ltr'
+                                    //dir='ltr'
                                     className=''
                                     ref={CategoryRef}
                                     modules={[Autoplay, Navigation, EffectFade, Pagination]}
@@ -345,7 +345,7 @@ const Home = ({
 
                            <>
                            <Swiper
-                               dir='ltr'
+                               //dir='ltr'
                                className=''
                                ref={TagRef}
                                modules={[Autoplay, Navigation, EffectFade, Pagination]}
@@ -416,7 +416,7 @@ const Home = ({
                             <DuvduLoading loadingIn={""} type={'category'}/>:
                             <>
                            <Swiper
-                                dir='ltr'
+                                //dir='ltr'
                                 className=''
                                 ref={TopCategoryRef}
                                 modules={[Autoplay, Navigation, EffectFade, Pagination]}
@@ -448,7 +448,7 @@ const Home = ({
                                                 style={{ backgroundImage: `url(${data.image})` }}
                                                 >
                                                     <div className="capitalize rounded-full text-[8px] lg:text-lg font-medium text-white px-2 lg:px-6 lg:py-2 bg-black bg-opacity-50">
-                                                        {t("150 creatives")}
+                                                        {data.creativesCounter} {t("creatives")}
                                                     </div>
                                                     <span className="text-white text-[14px] lg:text-3xl lg:font-medium capitalize text-center w-full">
                                                         {data.title}
@@ -490,7 +490,7 @@ const Home = ({
                         <DuvduLoading loadingIn={""} type={'tag'} />:
                         <>
                            <Swiper
-                               dir='ltr'
+                               //dir='ltr'
                                className=''
                                ref={SubCategoryRef}
                                modules={[Autoplay, Navigation, EffectFade, Pagination]}

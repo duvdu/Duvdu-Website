@@ -119,12 +119,12 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         if (!formData.phoneNumber) {
             errors.phoneNumber = 'Studio number is required';
         } else if (!egyptianPhoneRegex.test(formData.phoneNumber)) {
-            errors.phoneNumber = 'Invalid Egyptian phone number.';
+            errors.phoneNumber = 'Invalid Egyptian phone number';
         }
         if (!formData.email) errors.email = 'Studio email is required';
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
-        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'At least one search keyword is required';
         // if (!formData.insurance) errors.insurance = 'Insurance is required';
         // showOnHome
         if (!formData['projectScale.unit']) errors.projectScaleunit = 'Project Scale Unit is required';

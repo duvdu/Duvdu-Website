@@ -72,8 +72,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         if (!formData['location[lat]'] || !formData['location[lng]']) errors.location = 'Location is required';
         // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
         // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
-        if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
-        if (!formData.startDate) errors.startDate = 'StartDate is required';
+        if (!formData.appointmentDate) errors.appointmentDate = 'Appointment date is required';
+        if (!formData.startDate) errors.startDate = 'Start date is required';
         return errors;
     };
     const CheckNext=()=>{
@@ -262,7 +262,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                 <div className="flex justify-center w-full">
                                     <div className='relative'>
                                         <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
-                                        <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='continue' />
+                                        <ArrowBtn onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='Continue' />
                                     </div>
                                 </div>
                             </section>

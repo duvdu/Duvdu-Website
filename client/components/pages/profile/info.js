@@ -3,6 +3,7 @@ import { OpenPopUp, convertToK, getRankStyle } from "../../../util/util";
 import Icon from "../../Icons";
 import { getUserFollowers } from "../../../redux/action/apis/auth/profile/getFollowerList";
 import PopUpImage from "../../elements/popUpImage";
+import { useTranslation } from 'react-i18next';
 
 function Info({
     src,
@@ -20,7 +21,8 @@ function Info({
     const openFollowers = () => {
         OpenPopUp('show-followers')
     }
-   
+    const { t } = useTranslation();
+
     return <>
         <div className='flex items-end sm:items-center pb-5'>
             <div className={`w-28 h-28 bg-cover relative p-3 ltr:mr-3 rtl:ml-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
@@ -68,7 +70,7 @@ function Info({
                         key={key}
                     >
                         <p className='number'>{convertToK(value, 0)}</p>
-                        <p className='unit'>{key}</p>
+                        <p className='unit'>{t(key)}</p>
                     </div>
                 ))}
             </div>

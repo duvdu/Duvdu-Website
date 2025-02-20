@@ -35,10 +35,10 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
     }
     const validateRequiredFields = () => {
         const errors = {};
-        if (!formData.startDate) errors.startDate = 'StartDate is required';
+        if (!formData.startDate) errors.startDate = 'Start date is required';
         // if ((formData.details?.length || 0) < 6) errors.details = 'Details must be at least 6 characters long';
         // if (!formData.details) errors.details = 'Details is required';
-        if (!formData.appointmentDate) errors.appointmentDate = 'appointmentDate is required';
+        if (!formData.appointmentDate) errors.appointmentDate = 'Appointment date is required';
         if (!formData.address) errors.address = 'Address is required';
         // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         return errors;

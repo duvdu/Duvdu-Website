@@ -74,7 +74,7 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
             {/* <div className='rounded-[50px] overflow-hidden block lg:hidden'>
                 <ProjectCover onAudioPlay={onAudioPlay} hidden={true} data={data?.attachments[0]} cover={data?.cover}/>
             </div> */}
-            {data?.attachments.length > 1 ?
+            {[data?.cover,...data?.attachments].length > 1 ?
                 <div className=' rounded-[30px] mb-10 overflow-hidden h-[400px] relative block lg:hidden'>
                                                     {/* Custom Arrows */}
                                                     {/* <div className="swiper-button-prev"> */}
@@ -105,7 +105,7 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
                                                             nextEl: '.custom-swiper-next',
                                                         }}
                                                     >
-                                                        {data?.attachments.map((item, index) => {
+                                                        {[data?.cover,...data?.attachments].map((item, index) => {
                                                             return <SwiperSlide key={index}>
                                                                 <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={data?.cover} />
                                                             </SwiperSlide>

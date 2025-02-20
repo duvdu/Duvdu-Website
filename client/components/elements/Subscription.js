@@ -21,7 +21,7 @@ function Subscription({CloseProfile , isLogin , user}) {
         </div>:
         <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
             <button data-popup-toggle="popup" data-popup-target={'contract_subscription'} onClick={CloseProfile ? CloseProfile : null} className="flex !text-start !items-start gap-3">
-                <div className='bg-[#FFE7E7] rounded-md h-14 min-w-14 flex items-center justify-center'>
+                <div className='bg-[#e4ffee] rounded-md h-14 min-w-14 flex items-center justify-center'>
                     <Icon className='w-[18px]' name="done" />
                 </div>
                 <div className="flex flex-col w-full">

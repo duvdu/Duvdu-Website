@@ -13,7 +13,7 @@ import OTP from "../components/elements/otp";
 import { useRouter } from "next/router";
 
 function AddPhoneNumber({ api, respond_addPhone, addPhone, username  , getMyprofile}) {
-    const { t } = useTranslation();
+    const { i18n, t } = useTranslation();
     const [step, setStep] = useState(2);
     const [error, setError] = useState('');
     const pages = ['', 'OTP', 'EnterPhoneNumber', 'OTP', 'PhoneChanged'];
@@ -94,7 +94,7 @@ function AddPhoneNumber({ api, respond_addPhone, addPhone, username  , getMyprof
     
 
     return (
-        <form className="w-[521px]" method="post" onSubmit={handleSubmit}>
+        <form className="md:w-[521px]" method="post" onSubmit={handleSubmit}>
             <div className="heading_s1 mb-8">
                 <h1 className="auth-title capitalize">{t("Add Phone Number")}</h1>
             </div>
@@ -136,13 +136,16 @@ function Message() {
         </div>
     )
 }
+useEffect(()=>{
+    i18n.changeLanguage(localStorage.getItem('lang') == 'Arabic' ? 'Arabic' : 'English');
 
+},[])
 
 return (
     <>
-        <Layout shortheader={true}>
+        {/* <Layout showheader={false}> */}
             <div className="container">
-                <div className="mx-auto flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-white dark:bg-[#1A2024] max-w-[749px]">
+                <div className="mx-auto py-[100px] md:py-[200px] flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-white dark:bg-[#1A2024] max-w-[749px]">
                     {step === 2 && <EnterNewPhone />}
                     {step === 3 && <OTP key={1} onSuccess={() => {
                         getMyprofile()
@@ -152,7 +155,7 @@ return (
                     {/* <span className="error-msg" dangerouslySetInnerHTML={{ __html: errorConvertedMessage(error) }} /> */}
                 </div>
             </div>
-        </Layout>
+        {/* </Layout> */}
     </>
 );
 }

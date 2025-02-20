@@ -38,7 +38,7 @@ export const CheckPhoneExists = (phone) => {
     try {
       
       const response = await mainApiInstance.post('api/users/auth/retreive-username', {
-        "phone": phone
+        "phoneNumber": phone
     });
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
     } catch (error) {

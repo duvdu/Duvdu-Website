@@ -187,9 +187,9 @@ const AddProducer = ({
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.minBudget || !formData.minBudget) errors.minBudget = 'MinBudget are required';
         if (!formData.maxBudget) errors.maxBudget = 'MaxBudget is required';
-        if (parseInt(formData.minBudget) > parseInt(formData.maxBudget)) errors.minBudget = 'Minimum value should not be greater than maximum value';
+        if (parseInt(formData.minBudget) > parseInt(formData.maxBudget)) errors.minBudget = 'Maximum value should be greater than minimum value';
         // if (!formData.platforms || !formData.platforms.length) errors.platforms = 'platforms is required';
-        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'At least one search keyword is required';
         return errors;
     };
     useEffect(()=>{
