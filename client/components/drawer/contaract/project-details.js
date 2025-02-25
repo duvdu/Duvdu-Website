@@ -390,7 +390,7 @@ function ReceiveProjectFiles({
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const cancle = (!IsImSp() && status === "pending")
-    const canReview = (!IsImSp() && (status === "completed" || status === "accepted") && !contract?.hasReview)
+    const canReview = (!IsImSp() && (status === "completed" || status === "accepted") && !contract_respond?.data?.hasReview)
     const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const canAnswerViewQR = (IsImSp() && getType() === "rental" && status === "ongoing" && !contract?.qrCodeVerification)
