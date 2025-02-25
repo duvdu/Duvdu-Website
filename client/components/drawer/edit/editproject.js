@@ -86,16 +86,19 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             UpdatedData.append('duration',formData.duration)
         if(formData.address && (data.address!==formData.address))
             UpdatedData.append('address',formData.address)
-        if(formData['projectScale[unit]'] && (data.projectScale.unit!==formData['projectScale[unit]']))
+        if(
+            (formData['projectScale[unit]'] && (data.projectScale.unit!==formData['projectScale[unit]'])) ||
+            (formData['projectScale[minimum]']  && (data.projectScale.minimum!==formData['projectScale[minimum]'])) ||
+            (formData['projectScale[maximum]']  && (data.projectScale.maximum!==formData['projectScale[maximum]'])) ||
+            (formData['projectScale[current]']  && (data.projectScale.current!==formData['projectScale[current]']))
+            (formData['projectScale[pricerPerUnit]']  && (data.projectScale.pricerPerUnit!==formData['projectScale[pricerPerUnit]']))
+        ){
             UpdatedData.append('projectScale[unit]',formData['projectScale[unit]'])
-        if(formData['projectScale[minimum]']  && (data.projectScale.minimum!==formData['projectScale[minimum]']))
             UpdatedData.append('projectScale[minimum]',formData['projectScale[minimum]'])
-        if(formData['projectScale[maximum]']  && (data.projectScale.maximum!==formData['projectScale[maximum]']))
             UpdatedData.append('projectScale[maximum]',formData['projectScale[maximum]'])
-        if(formData['projectScale[current]']  && (data.projectScale.current!==formData['projectScale[current]']))
             UpdatedData.append('projectScale[current]',formData['projectScale[current]'])
-        if(formData['projectScale[pricerPerUnit]']  && (data.projectScale.pricerPerUnit!==formData['projectScale[pricerPerUnit]']))
             UpdatedData.append('projectScale[pricerPerUnit]',formData['projectScale[pricerPerUnit]'])
+        }
         if(formData.category && (data.category._id!==formData.category))
             UpdatedData.append('category',formData.category)
         if(formData.subCategory && (data.subCategory?._id!==formData.subCategory))
@@ -237,10 +240,13 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         newArray.splice(index, 1); // Remove the item at the specified index
         UpdateFormData(arrayName, newArray);
     };
+    var convertError = JSON.parse(update_respond?.error ?? null)
     const Publish = (e) => {
         // setNextstep(1)
         UpdateProject(projectId,convertToFormData()).then(async()=>{
-            setPost_success(true)
+            if(!convertError){
+                setPost_success(true)
+            }
         })
     };
 
@@ -460,6 +466,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                     <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </div>
                     
+                    <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
                     <Button isEnabled={!update_respond?.loading} onClick={data.canEdit?CheckNext:Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
                     {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t(data.canEdit?"Next":"Update")}</span>}
                     </Button>

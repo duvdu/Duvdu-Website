@@ -15,7 +15,7 @@ export const UpdateRental = (id,data) => {
     try {
   
       const response = await mainApiInstance.patch(`api/rentals/rental/${id}`, data);
-      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
+      dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: {message:"success"}, req: req });
     } catch (error) {
        dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: req });
     }

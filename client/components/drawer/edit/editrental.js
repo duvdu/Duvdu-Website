@@ -59,16 +59,19 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
             UpdatedData.append('description',formData.description)
         if(formData.address && (data.address!==formData.address))
             UpdatedData.append('address',formData.address)
-        if(formData['projectScale.unit'] && (data.projectScale.unit!==formData['projectScale.unit']))
+        if(
+            (formData['projectScale.unit'] && (data.projectScale.unit!==formData['projectScale.unit'])) ||
+            (formData['projectScale.minimum']  && (data.projectScale.minimum!==formData['projectScale.minimum'])) ||
+            (formData['projectScale.maximum']  && (data.projectScale.maximum!==formData['projectScale.maximum'])) ||
+            (formData['projectScale.current']  && (data.projectScale.current!==formData['projectScale.current'])) ||
+            (formData['projectScale.pricerPerUnit']  && (data.projectScale.pricerPerUnit!==formData['projectScale.pricerPerUnit']))
+        ){
             UpdatedData.append('projectScale.unit',formData['projectScale.unit'])
-        if(formData['projectScale.minimum']  && (data.projectScale.minimum!==formData['projectScale.minimum']))
             UpdatedData.append('projectScale.minimum',formData['projectScale.minimum'])
-        if(formData['projectScale.maximum']  && (data.projectScale.maximum!==formData['projectScale.maximum']))
             UpdatedData.append('projectScale.maximum',formData['projectScale.maximum'])
-        if(formData['projectScale.current']  && (data.projectScale.current!==formData['projectScale.current']))
             UpdatedData.append('projectScale.current',formData['projectScale.current'])
-        // if(formData['projectScale.pricerPerUnit']  && (data.projectScale.pricerPerUnit!==formData['projectScale.pricerPerUnit']))
             UpdatedData.append('projectScale.pricerPerUnit',formData['projectScale.pricerPerUnit'])
+        }
         if(formData.category && (data.category._id!==formData.category))
             UpdatedData.append('category',formData.category)
         if(formData.subCategory && (data.subCategory!==formData.subCategory))
@@ -148,6 +151,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         if(validFormCheck)
         setErrorMsg(validateRequiredFields())
     },[formData])
+    
     const setCover = (e) => {
         // const validationErrors = validateRequiredFields();
         // if (Object.keys(validationErrors).length > 0) {
@@ -157,7 +161,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         // setErrors({});
         setNextstep(2)
     }
-
+    var convertError = JSON.parse(update_respond?.error ?? null)
     const Publish = () => {
         // setNextstep(1)
         // const validationErrors = validateRequiredFields();
@@ -166,9 +170,11 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         //     return;
         // }
         // setErrors({});
-        UpdateRental(studioId, converting()).then(async()=>{
-            setPost_success(true)
-            setNextstep(1)
+        UpdateRental(studioId, converting()).then(()=>{
+            if(!convertError){
+                setPost_success(true)
+                setNextstep(1)
+            }
         });
     };
 
@@ -228,12 +234,13 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         setIsOpenEdit(false)
         Getstudio(studioId)
     }
+
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="updating" />
             <Share url={window.location.href} title={'See that 👀'} />
-            <Drawer isOpen={isOpen} name={'update rental'} toggleDrawer={toggleDrawer}>
+            <Drawer isOpen={isOpen} name={t('edit rental')} toggleDrawer={toggleDrawer}>
                     <div className={nextstep == 1 && 'hidden'}>
                         <SetCover Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
                     </div>
@@ -339,6 +346,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                 <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} />
                                 <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                             </section>
+                            <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
                             <Button isEnabled={!update_respond?.loading} onClick={data.canEdit?CheckNext:Publish} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
                             {update_respond?.loading?<Loading/>:<span className='text-white font-bold capitalize text-lg'>{t(data.canEdit?"Next":"Update")}</span>}
                             </Button>
