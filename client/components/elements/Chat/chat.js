@@ -71,13 +71,16 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
       const socketInstance = io(process.env.BASE_URL, {
         withCredentials: true,
         transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,    
       });
       socketInstance.on("connect", () => console.log("Connected to socket"));
       setSocket(socketInstance);
 
       // Listen to a sample event from the server
       socketInstance.on('new_message', (data) => {
-        // console.log('Message received from server:', data);
+        console.log('Message received from server:', data);
         if(data.data.sourceUser._id === messages._id)
         setNewMessage(data); // Set the message in the state
       });
@@ -266,7 +269,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     //     });
     //   };
     return (
-        <div className={`fixed bottom-0 z-20 md:px-8 ${messages.openchat ? '' : 'hidden'}`} >
+        <div className={`fixed bottom-0 z-[100] md:px-8 ${messages.openchat ? '' : 'hidden'}`} >
             <div onClick={onClose} className='fixed w-screen h-screen bg-black opacity-60 top-0 left-0' />
             {messages.openchat &&
                 <div className="chat w-screen sm:w-[400px] h-[38rem] relative flex flex-col justify-between rounded-lg bg-white dark:bg-[#1A2024] shadow-xl">
