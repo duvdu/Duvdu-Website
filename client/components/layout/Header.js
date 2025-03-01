@@ -87,10 +87,10 @@ const Header = ({
                     UnReadNotification()
             })
             GetNotifications()
-            if(!GetAllChats_respond?.data){
-                AvailableUserChat()
-                GetAllChats()
-            }
+            // if(!GetAllChats_respond?.data){
+            AvailableUserChat()
+            GetAllChats()
+            // }
         }
         if(getheaderpopup===Types.SHOWPROFILE){
             if (!GetBoards_respond)

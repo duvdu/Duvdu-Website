@@ -91,7 +91,7 @@ const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserCh
             <div className="flex">
                 <DraggableList>
                     {AvailableUserChat_resond?.data?.map(item=>
-                        <div className="me-2 flex flex-col items-center gap-1">
+                        <div key={item._id} className="me-2 flex flex-col items-center gap-1">
                             <img onClick={()=>{
                                 GetAllMessageInChat(item._id)
                                 onChoose?.()
