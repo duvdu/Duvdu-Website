@@ -41,39 +41,50 @@ const Studio = ({ projects, GetStudios, api }) => {
     const [localStudios, setLocalStudios] = useState([]);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+    const Queries = ()=>{
+
+        const params = {
+            limit: limit,
+            page: page,
+        };
+
+        // Add search parameter if search term is defined and not empty
+        if (searchTerm?.length > 0) {
+            params.search = searchTerm;
+        }
+
+        // Include the query parameters from the URL if they exist
+        if (category) params.category = category;
+        if (subCategory) params.subCategory = subCategory;
+        if (tag) params.tag = tag;
+        if (priceTo) params.pricePerHourTo = priceTo;
+        if (priceFrom) params.pricePerHourFrom = priceFrom;
+        if (duration) params.duration = duration;
+        if (instant) params.instant = instant;
+        if (Insurance) params.insurance = Insurance;
+        if (inclusive) params.inclusive = inclusive;
+        if (keywords) params.search = keywords;
+
+        // Construct query string from params object
+        const queryString = new URLSearchParams(params).toString();
+        return queryString
+        // Call GetCopyrights with the constructed query string
+    }
     useEffect(() => {
         if (limit) {
-            const params = {
-                limit: limit,
-                page: page,
-            };
-
-            // Add search parameter if search term is defined and not empty
-            if (searchTerm?.length > 0) {
-                params.search = searchTerm;
+            if(Queries() && Router.isReady){
+                setLocalStudios([]);
+                setLimit(showLimit)
+                GetStudios(Queries());
             }
-
-            // Include the query parameters from the URL if they exist
-            if (category) params.category = category;
-            if (subCategory) params.subCategory = subCategory;
-            if (tag) params.tag = tag;
-            if (priceTo) params.pricePerHourTo = priceTo;
-            if (priceFrom) params.pricePerHourFrom = priceFrom;
-            if (duration) params.duration = duration;
-            if (instant) params.instant = instant;
-            if (Insurance) params.insurance = Insurance;
-            if (inclusive) params.inclusive = inclusive;
-            if (keywords) params.search = keywords;
-
-            // Construct query string from params object
-            const queryString = new URLSearchParams(params).toString();
-
-            // Call GetCopyrights with the constructed query string
-            if(queryString && Router.isReady)
-            GetStudios(queryString);
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration,instant, Insurance, inclusive, keywords]);
-
+    }, [ searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration,instant, Insurance, inclusive, keywords]);
+    useEffect(() => {
+        if (limit) {
+            if(Queries() && Router.isReady)
+            GetStudios(Queries());
+    }
+    },[limit]);
     useEffect(() => {
         if (projects?.data) {
             if (limit === showLimit) {

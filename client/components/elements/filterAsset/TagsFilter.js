@@ -41,6 +41,7 @@ const Tags = ({ categories, cycle , onSelect, onFilterChange,toggleDrawer , clea
 
         // Notify parent component with real-time updates
         if (onFilterChange) {
+            toggleDrawer()
             onFilterChange(newSelectedTags);
         }
     };

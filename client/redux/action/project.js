@@ -6,7 +6,7 @@ import * as Types from '../constants/actionTypes'
 // Fetch Project fetchProjects
 export const fetchProjects = (searchTerm, url, filters) => async dispatch => {
     try {
-
+p
         const sendRequest = await fetch(url)
         const data = await sendRequest.json()
 

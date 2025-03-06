@@ -34,6 +34,7 @@ const SubCategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggle
         setClearFilter(false)
         // Call onFilterChange immediately when selection changes
         if (onFilterChange) {
+            toggleDrawer()
             onFilterChange([selectedSubCategory._id]);
         }
     };

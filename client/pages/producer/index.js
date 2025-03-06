@@ -46,42 +46,56 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin , 
     useEffect(()=>{
         GetPlatforms({search:[]})
     },[])
+    const Queries = () => {
+        const params = {
+            limit: limit,
+            page: page,
+        };
+
+        // Add search parameter if search term is defined and not empty
+        if (searchTerm?.length > 0) {
+            params.search = searchTerm;
+        }
+
+        // Include the query parameters from the URL if they exist
+        if (category) params.category = category;
+        if (subCategory) params.subCategory = subCategory;
+        if (Platforms){
+            const arr =  Platforms.split(',')
+            arr.forEach((platform, index) => {
+                params[`platforms[${index}]`] = platform;
+            }); 
+        } 
+        if (tag) params.tag = tag;
+        if (priceFrom) params.minBudget = priceFrom;
+        if (priceTo) params.maxBudget = priceTo;
+        if (duration) params.duration = duration;
+        if (instant) params.instant = instant;
+        if (inclusive) params.inclusive = inclusive;
+        if (keywords) params.search = keywords;
+
+        // Construct query string from params object
+        const queryString = new URLSearchParams(params).toString();
+        return queryString    
+    }
     useEffect(() => {
         if (limit) {
-            const params = {
-                limit: limit,
-                page: page,
-            };
-
-            // Add search parameter if search term is defined and not empty
-            if (searchTerm?.length > 0) {
-                params.search = searchTerm;
-            }
-
-            // Include the query parameters from the URL if they exist
-            if (category) params.category = category;
-            if (subCategory) params.subCategory = subCategory;
-            if (Platforms){
-                const arr =  Platforms.split(',')
-                arr.forEach((platform, index) => {
-                    params[`platforms[${index}]`] = platform;
-                }); 
-            } 
-            if (tag) params.tag = tag;
-            if (priceFrom) params.minBudget = priceFrom;
-            if (priceTo) params.maxBudget = priceTo;
-            if (duration) params.duration = duration;
-            if (instant) params.instant = instant;
-            if (inclusive) params.inclusive = inclusive;
-            if (keywords) params.search = keywords;
-
-            // Construct query string from params object
-            const queryString = new URLSearchParams(params).toString();
-
             // Call GetCopyrights with the constructed query string
-            GetProducer(queryString);
+            if(Queries()&& Router.isReady){
+                setLocalProducers([])
+                setLimit(showLimit)
+                GetProducer(Queries());
+            }
         }
-    }, [limit, searchTerm, page, category, Platforms, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }, [searchTerm, page, category, Platforms, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    useEffect(() => {
+        if (limit) {
+            // Call GetCopyrights with the constructed query string
+            if(Queries()&& Router.isReady){
+                GetProducer(Queries());
+            }
+        }
+    }, [limit]);
 
     useEffect(() => {
         if (producers) {

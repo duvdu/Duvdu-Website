@@ -46,7 +46,7 @@ const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelec
     }
 }
 
-const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChange, setParams,  switchState , setSwitchState }) => {
+const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChange, setParams ,  switchState , setSwitchState }) => {
     const { t } = useTranslation();
     const [selectedFilters, setSelectedFilters] = useState({});
     const [openIndex, setOpenIndex] = useState(null);

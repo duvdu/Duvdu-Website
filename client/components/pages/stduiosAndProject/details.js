@@ -166,7 +166,7 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
                 }
             </div>
             <div className="w-full flex my-5">
-                <span className=" capitalize opacity-50 font-medium">{dateFormat(data?.createAt, 'mmmm d - yyyy')}</span>
+                <span className=" capitalize opacity-50 font-medium">{dateFormat(data?.createdAt, 'mmmm d - yyyy')}</span>
             </div>
 
             {(data?.tools || data?.equipments)?.length > 0 &&

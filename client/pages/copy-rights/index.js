@@ -46,7 +46,8 @@ const Permit = ({ GetCopyrights, respond, api, isLogin  , user}) => {
     const cycle = path.split('?')[0];
 
 
-    useEffect(() => {
+    const Queries = () => {
+
         if (limit) {
             const params = {
                 limit: limit,
@@ -71,11 +72,31 @@ const Permit = ({ GetCopyrights, respond, api, isLogin  , user}) => {
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
-            setQueryString(queryString)
-            // Call GetCopyrights with the constructed query string
-            GetCopyrights(queryString);
+            return queryString    
         }
-    }, [limit, searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }
+    useEffect(() => {
+        if (limit) {
+            // Call GetCopyrights with the constructed query string
+            if(Queries()&& Router.isReady){
+                setLocalCopyRights([])
+                setLimit(showLimit)
+                setQueryString(Queries())
+                GetCopyrights(Queries());
+            }
+        }
+    }, [ searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    useEffect(() => {
+        if (limit) {
+            // Call GetCopyrights with the constructed query string
+            if(Queries()&& Router.isReady){
+                setLocalCopyRights([])
+                setLimit(showLimit)
+                setQueryString(Queries())
+                GetCopyrights(Queries());
+            }
+        }
+    }, [limit]);
 
     useEffect(() => {
         if (CopyRight) {

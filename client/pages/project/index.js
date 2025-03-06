@@ -39,41 +39,53 @@ const Projects = ({ projects, GetProjects, api }) => {
     const cycle = path.split('?')[0];
 
 
+    const Queries = ()=>{
+
+        const params = {
+            limit: limit,
+            page: page,
+        };
+        // Add search parameter if search term is defined and not empty
+        if (searchTerm?.length > 0) {
+            params.search = searchTerm;
+        }
+
+        // Include the query parameters from the URL if they exist
+        if (category) params.category = category;
+        if (subCategory) params.subCategory = subCategory;
+        if (relatedCategory) {
+            params['relatedCategory[0]'] = relatedCategory;
+        }
+
+        if (tag) params.tag = tag;
+        if (priceFrom) params.minBudget = priceFrom;
+        if (priceTo) params.maxBudget = priceTo;
+        if (duration) params.duration = duration;
+        if (instant) params.instant = instant;
+        // if (inclusive) params.inclusive = inclusive;
+        if (keywords) params.search = keywords;
+
+        // Construct query string from params object
+        const queryString = new URLSearchParams(params).toString();
+        // Call GetCopyrights with the constructed query string
+        return queryString
+    }
     useEffect(() => {
         if (limit) {
-            const params = {
-                limit: limit,
-                page: page,
-            };
-            // Add search parameter if search term is defined and not empty
-            if (searchTerm?.length > 0) {
-                params.search = searchTerm;
-            }
-
-            // Include the query parameters from the URL if they exist
-            if (category) params.category = category;
-            if (subCategory) params.subCategory = subCategory;
-            if (relatedCategory) {
-                params['relatedCategory[0]'] = relatedCategory;
-            }
-    
-            if (tag) params.tag = tag;
-            if (priceFrom) params.minBudget = priceFrom;
-            if (priceTo) params.maxBudget = priceTo;
-            if (duration) params.duration = duration;
-            if (instant) params.instant = instant;
-            // if (inclusive) params.inclusive = inclusive;
-            if (keywords) params.search = keywords;
-
-            // Construct query string from params object
-            const queryString = new URLSearchParams(params).toString();
-            // Call GetCopyrights with the constructed query string
-            if(queryString && Router.isReady){
-                GetProjects(queryString);
+            if(Queries() && Router.isReady){
+                setLocalProjects([]);
+                setLimit(showLimit)
+                GetProjects(Queries());
             }
         }
-    }, [limit, searchTerm, page, category, subCategory, tag,relatedCategory, priceFrom, priceTo, duration, instant, keywords]);
-
+    }, [ searchTerm, page, category, subCategory, tag,relatedCategory, priceFrom, priceTo, duration, instant, keywords]);
+    useEffect(()=>{
+        if (limit) {
+            if(Queries() && Router.isReady){
+                GetProjects(Queries());
+            }
+        }
+    },[limit])
     useEffect(() => {
         if (projectsList) {
             if (limit === showLimit) {

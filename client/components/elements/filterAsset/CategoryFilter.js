@@ -35,6 +35,7 @@ const CategoryFilter = ({ categories, cycle, onSelect, onFilterChange, toggleDra
         setSelectedCategories([selectedCategory._id]);
         // Optionally, you can trigger the filter change immediately when a category is selected
         if (onFilterChange) {
+            toggleDrawer()
             onFilterChange([selectedCategory._id]);
         }
     };

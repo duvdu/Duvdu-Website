@@ -53,10 +53,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                     UnReadNotification()
             })
             GetNotifications()
-            if(!GetAllChats_respond?.data){
+            // if(!GetAllChats_respond?.data){
                 AvailableUserChat()
                 GetAllChats()
-            }
+            // }
         }
     },[page , isLogin])
     const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)

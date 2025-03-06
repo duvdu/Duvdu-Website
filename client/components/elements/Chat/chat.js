@@ -36,7 +36,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const [limit, setLimit] = useState(50)
     const [isRecording, setIsRecord] = useState(null)
     ///////////// inputs //////////////
-
+    console.log({messages})
     ///////////// audio //////////////
     const [audioSrc, setaudioSrc] = useState(null)
     const [recordobject, setRecordobject] = useState(null)
@@ -123,7 +123,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         if (chatRef.current) {
             chatRef.current.scrollTop = chatRef.current.scrollHeight;
         }
-        setOtherUser(getotherdata())
+        // setOtherUser(getotherdata())
         
 
     }, [JSON.stringify(msglist)]);
