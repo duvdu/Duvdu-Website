@@ -10,6 +10,7 @@ function DeletePopup({onClick,id , header , message}) {
     const { t } = useTranslation();
 
     const toggleDirectorConfirmed = () => {
+        console.log({id})
         ClosePopUp("delete-popup-"+id)
         onClick?.(id)
     }

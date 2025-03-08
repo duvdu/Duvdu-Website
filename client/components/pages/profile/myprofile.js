@@ -312,6 +312,12 @@ function MyProfile({ updateProfile, InsertToArray , GetCopyrights, GetUserProjec
                             }                            
                         </div>
                     </div>
+                    {CopyRight?.length>0 && 
+                    <>
+                    <div className="grid px-6 md:px-0 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div/>
+                        <h3 className='pb-4 !font-bold' id='about-header'>{t("My Services")}</h3>
+                    </div>
                     <div className="grid px-6 md:px-0 md:grid-cols-2 lg:grid-cols-3 pb-10 gap-5">
                         {CopyRight && CopyRight.map((item, i) =>
                         <>{i %2 ==0 && 
@@ -321,6 +327,8 @@ function MyProfile({ updateProfile, InsertToArray , GetCopyrights, GetUserProjec
                         </>
                         )}
                     </div>
+                    </>
+                    }
                 </>
         )
     }

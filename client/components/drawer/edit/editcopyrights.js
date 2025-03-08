@@ -149,8 +149,10 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Updated" />
 
-            <Drawer isOpen={isOpen} name={'update copy right'} toggleDrawer={toggleDrawer}>
+            <Drawer isOpen={isOpen} name={t('edit copy right')} toggleDrawer={toggleDrawer}>
                 <form className='flex flex-col gap-5 container mx-auto' onSubmit={handleSubmit}>
+                {data.canEdit && 
+                <>  
                     <section>
                         <div className="my-5">
                                 <CategorySelection
@@ -190,6 +192,8 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
                         <h3 className="capitalize opacity-60 mb-3">{t("Set location")}</h3>
                         <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)}  onChangeAddress={handleInputChange}/>
                     </section>
+                    </>
+                    }
                     <section className='flex justify-center gap-3 mt-1'>
                         <Switch value={formData.showOnHome} onSwitchChange={(checked) => UpdateFormData('showOnHome', checked)} id='showOnHome' />
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>

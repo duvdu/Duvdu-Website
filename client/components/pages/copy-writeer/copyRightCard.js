@@ -7,8 +7,10 @@ import { getRankStyle } from '../../../util/util';
 import Selector from "../../elements/CustomSelector";
 import EditCopyrights from '../../drawer/edit/editcopyrights';
 import { OpenPopUp } from "../../../util/util";
+import {DeleteCopyright} from "../../../redux/action/apis/cycles/copywriter/delete";
+import DeletePopup from '../../popsup/DeletePopup';
 
-const CopyRightCard = ({ cardData, className = "", onClick, user , bookButton=true  , isLogin , QueryString}) => {
+const CopyRightCard = ({ cardData,DeleteCopyright, className = "", onClick, user , bookButton=true  , isLogin , QueryString}) => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const { t } = useTranslation();
  const price = cardData?.price?.toString()
@@ -17,10 +19,13 @@ const CopyRightCard = ({ cardData, className = "", onClick, user , bookButton=tr
 };
  const handleDropdownSelect = (v) => {
   if (v == "Edit") toggleDrawerEdit()
+  else if (v == "Delete") OpenPopUp('delete-popup-' + cardData?._id)
 };
+console.log({cardData})
 
   return (
     <>
+    <DeletePopup onClick={()=> DeleteCopyright(cardData?._id)} id={cardData?._id} header={'Delete Copyright'} message={'this copyright?'} />
     <EditCopyrights data={cardData} QueryString={QueryString} isOpen={isOpenEdit}  id={cardData?._id} setIsOpenEdit={setIsOpenEdit} />
     <div className={`border border-50 border-solid border-gray-300 dark:border-opacity-40 p-10 h-full flex flex-col gap-5 justify-between ${className}`}>
         <div className='flex justify-between'>
@@ -44,16 +49,17 @@ const CopyRightCard = ({ cardData, className = "", onClick, user , bookButton=tr
           </div>
         </Link>
           {isLogin===true &&  user?.profile?.username === cardData?.user?.username &&
-                <Selector
-                        options={[
-                            {
-                                value:"Edit"
-                            }
-                        ]}
-                        onSelect={handleDropdownSelect}
-                        className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-10 h-10 cursor-pointer"
-                />
-                }
+            <Selector
+                    options={[
+                        {
+                            value:"Edit"
+                        },
+                        ...(cardData?.canEdit ? [{ value: "Delete" }] : [])
+                    ]}
+                    onSelect={handleDropdownSelect}
+                    className="relative border rounded-full border-[#00000033] dark:border-[#FFFFFF33] flex justify-center items-center w-10 h-10 cursor-pointer"
+            />
+          }
         </div>
       
       <div className='flex justify-center items-center gap-3'>
@@ -108,9 +114,13 @@ const CopyRightCard = ({ cardData, className = "", onClick, user , bookButton=tr
 const mapStateToProps = (state) => ({
   user: state.user,
   isLogin: state.auth.login,
+  delete_porject_response: state.api.DeleteCopyright
 });
 
 // mapDispatchToProps can be removed if not used
-// const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  DeleteCopyright
 
-export default connect(mapStateToProps)(CopyRightCard);
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(CopyRightCard);
