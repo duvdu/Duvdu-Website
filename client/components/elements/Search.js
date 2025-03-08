@@ -42,6 +42,7 @@ const Search = ({categories , onSearch}) => {
             pathname: "/search/",
             query: query,
         });
+        document.activeElement.blur();
     };
 
     const handleInput = (e) => {
