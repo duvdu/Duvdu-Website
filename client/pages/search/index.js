@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import UserSearch from "../../components/pages/search/users";
 import CategorySearch from "../../components/pages/search/category";
 import ProjectSearch from "../../components/pages/search/projects";
+import EmptyComponent from "../../components/pages/contracts/emptyComponent";
 
 const Search = ({
     search, GetAllSearch}) => {
@@ -23,7 +24,7 @@ const Search = ({
     const searchTerm = Router.query.search;
 
     useEffect(() => {
-            GetAllSearch({ search: searchTerm?.length > 0 ? searchTerm : 'metoo' })
+            GetAllSearch({ search: searchTerm?.length > 0 ? searchTerm : '' })
     }, [searchTerm])
 
 
@@ -31,6 +32,14 @@ const Search = ({
         <>
             <Layout isbodyWhite={true}>
                 <div className='flex flex-col gap-5 md:gap-8 lg:gap-12 py-12'>
+                    {search?.data?.category.length==0 && 
+                     search?.data?.users.length==0&& 
+                     search?.data?.projects?.length==0&&
+                     search?.data?.rentals.length==0 &&
+                     <div className="container mb-30">
+                        <EmptyComponent message="No Result Found" />
+                     </div>
+                    }
                     {search?.data?.category.length>0 && 
                     <section className="container">
                         <CategorySearch category={search?.data?.category}/>
