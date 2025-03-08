@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Switch from 'react-switch'; // Importing react-switch
 
 let globalValue = {};
 
-const Switch = ({ onSwitchChange, value,id='' }) => {
+const CustomSwitch = ({ onSwitchChange, value, id = '' }) => {
   const [isFreedom, setIsFreedom] = useState(globalValue[id]);
 
-  
   useEffect(() => {
     if (value !== isFreedom) {
       setIsFreedom(value);
@@ -13,25 +13,26 @@ const Switch = ({ onSwitchChange, value,id='' }) => {
     }
   }, [value]);
 
-  const handleSwitchClick = () => {
-    const newState = !isFreedom;
+  const handleSwitchChange = (newState) => {
+    setIsFreedom(newState);
     onSwitchChange?.(newState); // Using optional chaining to call the function
   };
 
-  const switchContainerClasses = `w-[50px] h-[20px] rounded-full relative cursor-pointer ${isFreedom ? 'bg-[#ADD2E9]' : 'bg-[#e3eaf0]'}`;
-  const knobClasses = `switch-transition switch-box-shadow absolute w-7 h-7 rounded-full top-[-20%] ${isFreedom ? 'transform translate-x-6 bg-primary' : 'bg-gray-300'  }`;
-
   return (
-    <div
-      dir="ltr"
-      className={switchContainerClasses}
-      onClick={handleSwitchClick}
-      role="switch"
-      aria-checked={isFreedom && value == isFreedom}
-    >
-      <div className={knobClasses}></div>
-    </div>
+    <Switch
+      checked={isFreedom}
+      onChange={handleSwitchChange}
+      offColor="#e3eaf0"e
+      onColor="#ADD2E9" 
+      onHandleColor="#1a73eb"
+      offHandleColor="#d1d5db"
+      uncheckedIcon={false}
+      checkedIcon={false}
+      height={20}
+      width={50}
+      handleDiameter={28}
+    />
   );
 };
 
-export default Switch;
+export default CustomSwitch;
