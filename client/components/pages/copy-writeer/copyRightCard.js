@@ -8,7 +8,7 @@ import Selector from "../../elements/CustomSelector";
 import EditCopyrights from '../../drawer/edit/editcopyrights';
 import { OpenPopUp } from "../../../util/util";
 
-const CopyRightCard = ({ cardData, className = "", onClick, user  , isLogin , QueryString}) => {
+const CopyRightCard = ({ cardData, className = "", onClick, user , bookButton=true  , isLogin , QueryString}) => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const { t } = useTranslation();
  const price = cardData?.price?.toString()
@@ -79,25 +79,27 @@ const CopyRightCard = ({ cardData, className = "", onClick, user  , isLogin , Qu
       <div className='flex justify-between'>
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>{t("pricing")}</p>
-          <span className='text-4xl lg:text-5xl font-medium'>{(price?.length>5 ? price.slice(0,5): price)|| 0} {price?.length>5?'':t('EGP')}</span>
+          <span className='text-3xl lg:text-[2.5rem] font-medium'>{(price?.length>5 ? price.slice(0,5): price)|| 0} {price?.length>5?'':t('EGP')}</span>
           {price?.length>5 && 
           <>
           <br/>
-          <span className='text-4xl lg:text-5xl font-medium'>{price.slice(5,-1)} {t('EGP')}</span>
+          <span className='text-3xl lg:text-[2.5rem] font-medium'>{price.slice(5,-1)} {t('EGP')}</span>
           </>}
         </div>
         <div className='w-[1px] bg-black opacity-15' />
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>{t("duration")}</p>
-          <span className='text-4xl lg:text-5xl font-medium'>{cardData?.duration?.value || 0} Days</span>
+          <span className='text-3xl lg:text-[2.5rem] font-medium'>{cardData?.duration?.value || 0} Days</span>
         </div>
       </div>
+      {bookButton === true && 
       <div className='pt-5'>
-      {user?.profile?.username !== cardData?.user?.username ?
+      {user?.profile?.username !== cardData?.user?.username  ?
         <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold  capitalize">{t("book")}</button> :
         <button style={{ cursor: 'not-allowed' }} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold capitalize">{t("Book")}</button>
       }
       </div>
+      }
     </div>
     </>
   );

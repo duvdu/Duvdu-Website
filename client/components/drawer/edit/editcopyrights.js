@@ -147,7 +147,7 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
     
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={closeDrawer} message="Updated" />
 
             <Drawer isOpen={isOpen} name={'update copy right'} toggleDrawer={toggleDrawer}>
                 <form className='flex flex-col gap-5 container mx-auto' onSubmit={handleSubmit}>

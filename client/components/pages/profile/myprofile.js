@@ -19,6 +19,9 @@ import AddProducer from '../../../components/drawer/create/producer'
 import PostPopup from '../../../components/popsup/create/assets/chooseCategory';
 import SelectType from '../../../components/popsup/create/assets/selectType';
 import DraggableList from "../../../components/pages/home/dragList";
+import { GetCopyrights } from '../../../redux/action/apis/cycles/copywriter/get';
+import CopyRightCard from '../../../components/pages/copy-writeer/copyRightCard';
+import CopyRigtherBooking from "../../../components/drawer/book/copyRigtherBooking";
 
 import { getMyprofile } from '../../../redux/action/apis/auth/profile/getProfile';
 import AddToolUsed from '../../popsup/create/addToolUsed';
@@ -39,7 +42,7 @@ import Reviews from "../../../components/pages/stduiosAndProject/review";
 import FaceVerification from "../../elements/FaceVerification";
 import Subscription from "../../elements/Subscription";
 
-function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects,GetTaggedProject, taggedProjects , UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
+function MyProfile({ updateProfile, InsertToArray , GetCopyrights, GetUserProject, projects,GetTaggedProject,copyRights_respond, taggedProjects , UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
     const { t } = useTranslation();
     const route = useRouter()
     
@@ -98,7 +101,10 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects,GetT
             GetUserProject({ username: user?.username });
             GetTaggedProject({inviteStatus:'accepted'});
         }
-    }, [user?.username])
+        if(user?._id)
+        GetCopyrights(`user=${user?._id}`)
+    }, [user])
+    const CopyRight = copyRights_respond?.data
 
     function removeQueryParameter() {
         if (type || category || subcategory || tags) {
@@ -142,7 +148,6 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects,GetT
         }
         removeQueryParameter()
     }
-
 
     const handlesetpost = ({ data }) => {
         setshowAddPost(false)
@@ -304,9 +309,17 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects,GetT
 
                             { projects?.data?.projects?.length==0 &&  taggedProjects?.data?.length ===0 && 
                                 <EmptyComponent message="No Projects Yet!" />
-                            }
-                            
+                            }                            
                         </div>
+                    </div>
+                    <div className="grid px-6 md:px-0 md:grid-cols-2 lg:grid-cols-3 pb-10 gap-5">
+                        {CopyRight && CopyRight.map((item, i) =>
+                        <>{i %2 ==0 && 
+                             <div className='hidden lg:block'/>
+                        }
+                            <CopyRightCard bookButton={false} QueryString={`user=${user?._id}`} key={i} cardData={item} />
+                        </>
+                        )}
                     </div>
                 </>
         )
@@ -314,7 +327,6 @@ function MyProfile({ updateProfile, InsertToArray, GetUserProject, projects,GetT
 
     return (
         <>
-
             <EditDrawer isOpen={goEdit} onClose={() => onCloseEdit()} />
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
@@ -355,6 +367,7 @@ const mapStateToProps = (state) => ({
     projects: state.api.GetUserProject,
     taggedProjects: state.api.GetTaggedProject,
     userReview_respond: state.api.userReview,
+    copyRights_respond: state.api.GetCopyrights,
 });
 
 const mapDispatchToProps = {
@@ -365,6 +378,7 @@ const mapDispatchToProps = {
     GetUserProject,
     GetTaggedProject,
     InsertToArray,
+    GetCopyrights,
     userReview
 };
 
