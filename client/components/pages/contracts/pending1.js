@@ -12,6 +12,7 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
 
     // const [<TimeLeft/>, setTimeLeft] = useState("");
     const status = data.contract.status
+    const CreatedAt = dateFormat(data.contract.createdAt, 'd mmmm , yyyy')
 
     const statuses = [
         { value: 'accept' },
@@ -109,7 +110,7 @@ const Pending = ({ data, takeAction_respond, contractDetails, takeAction, onClic
                     <img className='w-14 h-14 rounded-full object-cover object-top' src={data.customer?.profileImage} alt="profile picture" />
                     <div className='flex-col gap-1'>
                         <h3 className='opacity-80 text-lg font-bold capitalize'>{data?.customer?.name?.split(' ')[0].length>6?data?.customer?.name?.split(' ')[0].slice(0,6):data?.customer?.name?.split(' ')[0]}</h3>
-                        <span className='opacity-50'>{dateFormat(data?.contract?.createdAt, 'dddd')}</span>
+                        <span className='opacity-50'>{CreatedAt}</span>
                     </div>
                 </div>
                 {/*********/}

@@ -36,7 +36,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const [limit, setLimit] = useState(50)
     const [isRecording, setIsRecord] = useState(null)
     ///////////// inputs //////////////
-    console.log({messages})
+    console.log({messages , chat_respond})
     ///////////// audio //////////////
     const [audioSrc, setaudioSrc] = useState(null)
     const [recordobject, setRecordobject] = useState(null)
@@ -49,7 +49,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const [receiver, setReceiver] = useState(null)
 
     ///////////////////////////
-
+    console.log({receiver})
     const [socket, setSocket] = useState(null);
     const [newMessage, setNewMessage] = useState('');
 
@@ -66,7 +66,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                 return () => clearTimeout(timeout);
             }
         }, [videoRef.current]);
-    
+    useEffect(() => {
+        if(chat_respond?.user?._id)
+        setReceiver(chat_respond.user._id)
+    }, [chat_respond?.user?._id])    
     useEffect(() => {
       const socketInstance = io(process.env.BASE_URL, {
         withCredentials: true,
@@ -80,9 +83,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
       // Listen to a sample event from the server
       socketInstance.on('new_message', (data) => {
-        console.log('Message received from server:', data);
-        if(data.data.sourceUser._id === messages._id)
-        setNewMessage(data); // Set the message in the state
+            setMessagesList((prev)=> [...prev ,data.message ])
       });
       
       socketInstance.on('disconnect', () => {
@@ -100,23 +101,21 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
             setMessagesList((prevMessages) => [...prevMessages,respond?.data]);
 
     }, [respond])
+    console.log({chat_respond})
 
     useEffect(() => {
-        setReceiver(otherUser._id || chat_respond?.user?._id)
-    }, [otherUser , chat_respond])
-
-    useEffect(() => {
-        GetAllMessageInChat(messages._id, limit)
+        if(receiver)
+        GetAllMessageInChat(receiver, limit)
     }, [limit]);
 
     useEffect(() => {
         if (messages.list)
             setMessagesList(messages.list)
     }, [messages.list]);
-    useEffect(()=>{
-        if(newMessage)
-        setMessagesList((prev)=> [...prev ,newMessage.message ])
-    },[newMessage])
+    // useEffect(()=>{
+    //     if(newMessage)
+    //     setMessagesList((prev)=> [...prev ,newMessage.message ])
+    // },[newMessage])
     const msglist = [...messagesList]
     useEffect(() => {
         // Scroll to the bottom of the chat when component updates
@@ -180,7 +179,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                 return element.receiver
             }
         }
-        return { _id: messages._id }
+        return { _id: receiver }
     }
       const loadMore = () => {
         if(chat_respond?.pagination?.currentPage < chat_respond?.pagination?.totalPages)
@@ -226,7 +225,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         //////// SENDING MESSAGE ///////////////
         SendMessages(data).then(()=>{
             if(attachments){
-                GetAllMessageInChat(messages._id, limit)
+                GetAllMessageInChat(receiver, limit)
             }
         })
         ClearChatInput()

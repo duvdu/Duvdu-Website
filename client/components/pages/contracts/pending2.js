@@ -5,6 +5,7 @@ import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
 import { formattedCreatedAt } from '../../../util/format-date';
 import TimeLeft2 from './TimeLeft2';
 import { useTranslation } from 'react-i18next';
+import dateFormat from "dateformat";
 
 const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
   
@@ -31,7 +32,7 @@ const Pending2 = ({ data, takeAction_respond, takeAction, onClick }) => {
             return "team"
     }
 
-    const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
+    const CreatedAt = dateFormat(data.contract.createdAt, 'd mmmm , yyyy')
     useEffect(() => {
         if (!data?.contract?.deadline) return
         const interval = setInterval(() => {

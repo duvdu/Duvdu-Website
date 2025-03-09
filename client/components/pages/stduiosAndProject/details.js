@@ -57,9 +57,9 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
     const toggleDrawer = () => {
         DeleteTaggedCreative(projectId , selectedUser).then(()=>{
             setSuccess(true)
+            GetProject(projectId)
         })
     };
-    console.log({findTAgged:data?.creatives?.find(item=>item.username===user?.username)})
 
     return (
         <>
@@ -227,7 +227,7 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
                                         {
                                             creative.name &&
                                             <span className="px-4 flex items-center ">
-                                                {creative.name}
+                                            {creative.name?.split(' ')[0].length>6?creative.name?.split(' ')[0].slice(0,6):creative.name?.split(' ')[0]}
                                             </span>}
                                     </div>
                                     <div className={`flex rounded-3xl border border-[#00000040]`}>

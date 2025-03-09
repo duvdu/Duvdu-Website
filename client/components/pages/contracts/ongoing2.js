@@ -8,8 +8,8 @@ const Ongoing2 = ({ data,onClick }) => {
     const { t } = useTranslation();
     
     const Deadline = formattedDeadline(data?.contract?.deadline)
-    const CreatedAt = formattedCreatedAt(data?.contract?.createdAt)
-    
+    const CreatedAt = dateFormat(data.contract.createdAt, 'd mmmm , yyyy')
+
     return (    
         <div onClick={onClick} className='w-full mx-auto flex justify-between border rounded-[50px] bg-primary p-6 relative cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between'>

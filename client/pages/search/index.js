@@ -16,6 +16,7 @@ import UserSearch from "../../components/pages/search/users";
 import CategorySearch from "../../components/pages/search/category";
 import ProjectSearch from "../../components/pages/search/projects";
 import EmptyComponent from "../../components/pages/contracts/emptyComponent";
+import DuvduLoading from "../../components/elements/duvduLoading";
 
 const Search = ({
     search, GetAllSearch}) => {
@@ -24,18 +25,24 @@ const Search = ({
     const searchTerm = Router.query.search;
 
     useEffect(() => {
-            GetAllSearch({ search: searchTerm?.length > 0 ? searchTerm : '' })
+        if(searchTerm?.length > 0)
+            GetAllSearch({ search:  searchTerm })
     }, [searchTerm])
-
 
     return (
         <>
             <Layout isbodyWhite={true}>
+                {search?.loading? 
+                <div className='h-96 flex items-center justify-center'>
+                <DuvduLoading loadingIn={""} type=''/>
+                </div>
+                :
                 <div className='flex flex-col gap-5 md:gap-8 lg:gap-12 py-12'>
-                    {search?.data?.category.length==0 && 
+                    { ((search?.data?.category.length==0 && 
                      search?.data?.users.length==0&& 
                      search?.data?.projects?.length==0&&
-                     search?.data?.rentals.length==0 &&
+                     search?.data?.rentals.length==0 )||
+                     !searchTerm)&&
                      <div className="container mb-30">
                         <EmptyComponent message="No Result Found" />
                      </div>
@@ -67,6 +74,7 @@ const Search = ({
                     </section>
                     }
                 </div>
+                }
             </Layout>
 
         </>

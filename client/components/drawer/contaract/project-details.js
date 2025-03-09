@@ -76,6 +76,7 @@ function ReceiveProjectFiles({
     const sp = contract_respond?.data?.sp;
     const status = contract?.status
     const [timeLeft, setTimeLeft] = useState("");
+    const [textCopied, setTextCopied] = useState("");
     const [paymentError ,setPaymentError] = useState(null)
     const [actionError ,setActionError] = useState(null)
     const [actionSuccess, setActionSuccess] = useState(false);
@@ -476,9 +477,17 @@ function ReceiveProjectFiles({
                 hours = hours % 12 || 12;
               
                 return `${day}/${month}/${year} ${String(hours).padStart(2, "0")}:${minutes} ${ampm}`;
-              };
-              
-    
+            };
+              const copyToClipboard = (text) => {
+                navigator.clipboard.writeText(text).then(() => {
+                    setTextCopied(text)
+                    setTimeout(()=>{
+                        setTextCopied('')
+                    },3000)
+                });
+            };
+            
+            
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -496,6 +505,13 @@ function ReceiveProjectFiles({
                     <img className="w-full" src={IsImSp() ? (customer?.faceRecognition):(sp?.faceRecognition)}/>
                 </div>
             </Popup>
+            {textCopied && 
+            <div
+                className="fixed z-[1000] bg-green-300 p-2 rounded-md boredr-2 flex items-center  top-5 end-5"
+            >
+                <p class="mb-0">"{textCopied}" {t('is copied')}</p>
+            </div>
+            }
             <Drawer isOpen={contractId.contract} toggleDrawer={toggleDrawer} name={t("booking details")} header={t("booking details")}>
                 {
                     contract_respond?.loading?
@@ -511,29 +527,38 @@ function ReceiveProjectFiles({
                                         <div className='flex gap-3 items-center justify-between'>
                                             <div className='flex gap-3 items-center justify-between'>
                                                 <img className='size-16 rounded-full' src={IsImSp() ? customer?.profileImage : sp?.profileImage} />
-                                                <div className='flex flex-col overflow-hidden'>
+                                                <div className='flex flex-col gap-1 overflow-hidden'>
                                                     <span className='font-semibold capitalize max-w-[543px]'>
                                                         {IsImSp() ? (customer?.name?.split(' ')[0].length > 6 ? customer?.name?.split(' ')[0].slice(0, 6) : customer?.name?.split(' ')[0]) : (sp?.name?.split(' ')[0].length > 6 ? sp?.name?.split(' ')[0].slice(0, 6) : sp?.name?.split(' ')[0])}
                                                     </span>
                                                     <div onClick={()=> OpenPopUp('face_recognition_img')} className='px-1 cursor-pointer font-semibold text-[#353535] rounded-md bg-gray-200 dark:bg-gray-400'>
-                                                        show verification
+                                                        {t('show verification')}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className='flex flex-col items-end gap-1 overflow-hidden'>
-                                                <div className='px-[2px] cursor-pointer font-semibold text-white rounded-md bg-primary' title={IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}>
-                                                    {IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}
+                                                <div 
+                                                    className='cursor-pointer flex items-center gap-2 text-[12px] font-semibold rounded-md text-primary' 
+                                                    title={IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}
+                                                >
+                                                    {IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)} <Icon onClick={() => copyToClipboard(IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number))} name={'copy'} className='size-4'/>
                                                 </div>
-                                                <div className='p-[5px] cursor-pointer font-semibold text-white rounded-full bg-primary' title={IsImSp() ? customer?.email:sp?.email} onClick={() => window.location.href = `mailto:${IsImSp() ? customer?.email:sp?.email}`}>
-                                                    <Icon name={'envelope'} className='size-4' />
+                                                {(IsImSp() ? customer?.email:sp?.email) &&
+                                                <div 
+                                                    className='cursor-pointer flex items-center gap-2 text-[12px] font-semibold rounded-md text-primary' 
+                                                    title={IsImSp() ? customer?.email:sp?.email} 
+                                                >
+                                                    {/* <Icon name={'envelope'} className='size-4' /> */}
+                                                     {IsImSp() ? customer?.email:sp?.email}  <Icon onClick={() => copyToClipboard(IsImSp() ? customer?.email:sp?.email)} name={'copy'} className='size-4'/>
                                                 </div>
+                                                 }
                                             </div>
                                         </div>
                                     </section>        
                                 }
                                 {
                                     (getType() == "project" || getType() == "rental") &&
-                                    <Link href={`/${getType() == "project"?'project':(getType() == "rental"?'rental':'teams')}/${contract.project}`}>
+                                    <Link href={`/${getType() == "project"?'project':(getType() == "rental"?'rentals':'teams')}/${contract.project}`}>
                                     <section className='w-full cursor-pointer flex-col'>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("original project")}</h2>
                                         <div className='w-full'>

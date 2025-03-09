@@ -29,7 +29,7 @@ const User = ({ info }) => {
                         <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={info?.profileImage || process.env.DEFULT_PROFILE_PATH} alt="profile picture" />
                     </div>
                     <div className='flex-2 flex-col gap-1'>
-                        <span className='text-2xl font-bold capitalize'>{info?.name?.length > 10?`${info?.name.slice(0,10)}...`:info?.name}</span>
+                        <span className='text-2xl font-bold capitalize'>{info?.name?.split(' ')[0].length>6?info?.name?.split(' ')[0].slice(0,6):info?.name?.split(' ')[0]}</span>
                         {info.location && (
                             <span className='flex items-center gap-2 opacity-40'>
                                 <div className='w-3'>

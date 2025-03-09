@@ -24,7 +24,9 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             case 'waiting-for-pay-10':
                 return 2;
             case 'update-after-first-Payment':
-                return 2;
+                return 0;
+            case 'accepted with update':
+                return 0;
             case 'waiting-for-total-payment':
                 return 2;
             case 'waiting-for-payment':
@@ -32,11 +34,9 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             case 'ongoing':
                 return 1;
             case 'completed':
-                return -2;
-            case 'complaint':
                 return -1;
             case 'accepted':
-                return -2;    
+                return -1;
             case 'rejected':
                 return -1;
             default:
@@ -69,6 +69,8 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
     const HisTory = ({ data, isCanceled,router }) => {
         const Deadline = formattedDeadline(data?.contract?.deadline)
         const { t } = useTranslation();
+        const CreatedAt = dateFormat(data.contract.createdAt, 'd mmmm , yyyy')
+
         return <>
             {/* max-w-[370px] ahmed */}
             <div className='w-full mx-auto p-6 rounded-[50px] border border-[#00000033] dark:border-[#FFFFFF33] relative mb-4 cursor-pointer'
@@ -104,7 +106,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
                             <img className='size-14 rounded-full object-cover object-top' src={tabindex == 0 ? data.customer.profileImage : data.sp.profileImage} alt="profile picture" />
                             <div className='flex flex-col items-start justify-start'>
                                 <h3 className='opacity-80 text-lg font-bold capitalize'>{tabindex == 0 ? (data?.customer?.name?.split(' ')[0].length>6?data?.customer?.name?.split(' ')[0].slice(0,6):data?.customer?.name?.split(' ')[0]) : (data?.sp?.name?.split(' ')[0].length>6?data?.sp?.name?.split(' ')[0].slice(0,6):data?.sp?.name?.split(' ')[0]) }</h3>
-                                <span className='opacity-50'>{dateFormat(data.contract.appointmentDate, 'd mmmm , yyyy')}</span>
+                                <span className='opacity-50'>{CreatedAt}</span>
                             </div>
                         </div>
                     </div>

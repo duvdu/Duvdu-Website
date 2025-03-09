@@ -27,7 +27,7 @@ export const takeAction = ({ id, data, type, isUpdate = false }) => {
                         response = await mainApiInstance.patch(`/api/producers/contract/${id}`, data);
                     } else {
                         response = await mainApiInstance.patch(`/api/producers/contract/${id}`, {
-                            status: data==='cancel' ?"cancel" : (data===true ?   "accepted" : "rejected")
+                            status: data==='cancel' ?"canceled" : (data===true ?   "accepted" : "rejected")
                         });
                     }
                     break;
