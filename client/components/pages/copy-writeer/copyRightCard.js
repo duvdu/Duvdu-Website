@@ -21,7 +21,6 @@ const CopyRightCard = ({ cardData,DeleteCopyright, className = "", onClick, user
   if (v == "Edit") toggleDrawerEdit()
   else if (v == "Delete") OpenPopUp('delete-popup-' + cardData?._id)
 };
-console.log({cardData})
 
   return (
     <>

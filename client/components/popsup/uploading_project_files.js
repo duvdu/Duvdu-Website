@@ -40,6 +40,9 @@ function Uploading_project_files({type='project' , id ='123' , submitFile_respon
             return () => clearTimeout(timer2);
             return
         }
+        if (!link.startsWith('https://') && !link.startsWith('http://')) {
+            link = 'https://' + link; // Prepend https:// if not present
+        }
 
 
         submitFile({ id, type , data:{

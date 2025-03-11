@@ -28,7 +28,6 @@ import FunctionUsed from '../../popsup/create/FunctionsUsed';
 const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, update_respond,GetProject,setIsOpenEdit, UpdateFormData, addprojectState, categories, resetForm }) => {
     const { t } = useTranslation();
     const router = useRouter();
-    console.log({data})
     const { project: projectId } = router.query;
     const formData = addprojectState.formData;
     const [errors, setErrors] = useState({});
@@ -251,7 +250,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
     };
 
 
-    console.log({formData , data})
     useEffect(() => {
         UpdateFormData("name", data.name)
         UpdateFormData("description", data.description)

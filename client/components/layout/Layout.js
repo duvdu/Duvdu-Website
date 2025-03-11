@@ -46,7 +46,7 @@ const Layout = ({
 }) => {
     const [isToggled, setToggled] = useState(1);
     const router = useRouter();
-    
+
     const toggleClick = (type) => {
         setToggled(type);
         isToggled > 1
@@ -85,6 +85,7 @@ const Layout = ({
         LogOut(-1)
     }
     }, [logout_respond]);
+
 
     return (
         <>

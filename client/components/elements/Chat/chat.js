@@ -36,7 +36,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const [limit, setLimit] = useState(50)
     const [isRecording, setIsRecord] = useState(null)
     ///////////// inputs //////////////
-    console.log({messages , chat_respond})
     ///////////// audio //////////////
     const [audioSrc, setaudioSrc] = useState(null)
     const [recordobject, setRecordobject] = useState(null)
@@ -49,7 +48,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const [receiver, setReceiver] = useState(null)
 
     ///////////////////////////
-    console.log({receiver})
     const [socket, setSocket] = useState(null);
     const [newMessage, setNewMessage] = useState('');
 
@@ -101,7 +99,6 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
             setMessagesList((prevMessages) => [...prevMessages,respond?.data]);
 
     }, [respond])
-    console.log({chat_respond})
 
     useEffect(() => {
         if(receiver)

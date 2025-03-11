@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Icon from '../Icons';
-const Comment = ({ comment }) => {
+const Comment = ({ comment  , project}) => {
     
     const renderStars = () => {
-        const className = "text-primary scale-50 size-6"
+        const className = `text-primary scale-50 ${project===true?'size-6':'size-6'}`
         const stars = [];
         for (let i = 1; i <= 5; i++) {
             stars.push(

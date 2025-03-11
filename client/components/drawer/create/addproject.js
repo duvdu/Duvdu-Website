@@ -33,7 +33,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
-    console.log(formData)
     categories = filterByCycle(categories, 'project')
     const categoryDetails = categories.find(i => i._id == formData.category)
 
@@ -170,7 +169,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         }
         return data;
     }
-    console.log(formData)
     const validateRequiredFields = () => {
         const errors = {};
 

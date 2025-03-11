@@ -18,14 +18,71 @@ import { AvailableUserChat } from "../../redux/action/apis/realTime/messages/ava
 import { GetBoards } from "../../redux/action/apis/bookmarks/bookmark/get";
 import { GetFavList } from "../../redux/action/apis/bookmarks/fav/getAll";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
+import { GetAllMessageInChat } from "../../redux/action/apis/realTime/messages/getAllMessageInChat";
 import Link from "next/link";
 import ErrorPopUp from "../popsup/errorPopUp";
 import { LogOut } from "../../redux/action/apis/auth/logout";
 import { useRouter } from "next/router";
 import auth from "../../redux/reducer/auth";
+import { io } from "socket.io-client";
 
 
 // toggleDarkMode
+
+const CustomToast = ({ toast ,goToMessage , type, CloseToast }) => {
+    console.log({toast}) 
+    useEffect(() => {
+        // Set a timer to close the toast after 5 seconds
+        if(CloseToast) {
+            const timer = setTimeout(() => {
+                CloseToast();
+            }, 5000);
+    
+            // Cleanup timer when the component unmounts
+            return () => clearTimeout(timer);
+        }
+    }, [CloseToast]);
+    const handleGoMessage=()=>{
+        if(toast.type='message')
+            goToMessage()
+        CloseToast()
+    }
+    return (    
+        <div
+        className={`transition ${toast ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full d-none'} cursor-pointer duration-700 ease-in-out max-w-md w-full bg-white dark:bg-[#1A2024] z-[10000] fixed top-5 end-5 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+            <div className="flex-1 w-0 p-4">
+                <div onClick={handleGoMessage} className="flex items-start">
+                    {toast?.image &&
+                    <div className="flex-shrink-0 pt-0.5">
+                        <img
+                            className="h-10 w-10 rounded-full object-cover"
+                            src={toast?.image}
+                            alt=""
+                        />
+                    </div>
+                    }
+                    <div className="ms-3 flex-1">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                            {toast?.title}
+                        </p>
+                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                            {toast?.message}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="flex border-l border-gray-200 dark:border-gray-700">
+                <button
+                    onClick={CloseToast}
+                    className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400 focus:outline-none"
+                >
+                    Close
+                </button>
+            </div>
+        </div>
+    );
+};
 
 const Header = ({
     api,
@@ -40,6 +97,7 @@ const Header = ({
     GetNotifications,
     UnReadNotification,
     UnReadNotification_respond,
+    GetAllMessageInChat,
     GetAllChats_respond,
     GetNotifications_respond,
     GetAllChats,
@@ -56,7 +114,7 @@ const Header = ({
 
     const [width, setWidth] = useState(0);
     const [countUnRead, setCountUnRead] = useState(0);
-    
+    const [toast , setToast] = useState(null)
 
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
@@ -80,6 +138,7 @@ const Header = ({
         if(UnReadNotification_respond?.data?.count)
             setCountUnRead(UnReadNotification_respond?.data?.count)
     },[UnReadNotification_respond?.data?.count])
+    
     useEffect(() => {
         if (getheaderpopup == Types.SHOWNOTOFICATION) {
             MarkNotificationsAsRead().then(()=>{
@@ -102,6 +161,70 @@ const Header = ({
         }
     }, [getheaderpopup , isLogin]);
 
+    useEffect(() => {
+        // Connect to your socket server
+        const socketInstance = io(process.env.BASE_URL, {
+            withCredentials: true,
+            transports: ['websocket', 'polling'],
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000,    
+          });
+          socketInstance.on("connect", () => console.log("Connected to socket"));
+    
+        // Listen for notification events
+        socketInstance.on('notification', (data) => {
+            setCountUnRead((prev)=> prev+1)
+            console.log({data})
+            setToast({
+                type:'notification',
+                id:data.data.sorceUser._id,
+                image:data.data.sourceUser.profileImage,
+                title:data.data.title,
+                message:data.data.message
+            })
+        });
+        socketInstance.on('disconnect', () => {
+            // console.log('Disconnected from server');
+          });    
+        // Cleanup on component unmount
+        return () => {
+            socketInstance.off('notification');
+            socketInstance.disconnect();
+        };
+    }, []);
+    useEffect(() => {
+        // Connect to your socket server
+        const socketInstance = io(process.env.BASE_URL, {
+            withCredentials: true,
+            transports: ['websocket', 'polling'],
+            reconnection: true,
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000,    
+          });
+          socketInstance.on("connect", () => console.log("Connected to socket"));
+    
+        // Listen for notification events
+        socketInstance.on('new_message', (data) => {
+            console.log({data})
+            setCountUnRead((prev)=> prev+1)
+                setToast({
+                    type:'message',
+                    id:data.data.target,
+                    image:data.data.sourceUser.profileImage,
+                    title:data.data.sourceUser.name,
+                    message:'New message received'
+                })
+        });
+        socketInstance.on('disconnect', () => {
+            // console.log('Disconnected from server');
+          });    
+        // Cleanup on component unmount
+        return () => {
+            socketInstance.off('new_message');
+            socketInstance.disconnect();
+        };
+    }, []);
 
     useEffect(() => {
 
@@ -166,7 +289,14 @@ const Header = ({
 
     return (
         <>
-
+            {/* {toast &&  */}
+                <CustomToast
+                    goToMessage={()=>GetAllMessageInChat(toast.id)}
+                    toast={toast}
+                    type={toast?.type}
+                    CloseToast={()=>setToast(null)}
+                />
+            {/* } */}
             <div onClick={() => SetheaderPopUp(Types.NONEPOPUP)} className={`w-full h-full bg-black transition-opacity ${(getheaderpopup != Types.NONEPOPUP) ? 'opacity-60 visible' : 'opacity-0 invisible'} 
             left-0 right-0 fixed z-20`} />
             {
@@ -360,6 +490,7 @@ const mapDispatchToProps = {
     GetNotifications,
     GetAllChats,
     AvailableUserChat,
+    GetAllMessageInChat,
     LogOut,
     GetBoards,
     GetFavList,

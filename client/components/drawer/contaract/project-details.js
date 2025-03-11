@@ -86,7 +86,6 @@ function ReceiveProjectFiles({
     const [actionAccept , setActionAccept] = useState(null)
     const [canEdit, setCanEdit] = useState(null);
     const [field, setField] = useState(null);
-    console.log({complaint})
     const NormalState = ({ value }) => (
         <span className='text-4xl'>
             {value}
@@ -270,7 +269,6 @@ function ReceiveProjectFiles({
         return () => clearInterval(interval);
 
     }, [contract?.deadline]);
-    console.log({user})
     const handleAccept = () => {
       if(!user.faceRecognition){
             OpenPopUp("face-verification");
@@ -399,6 +397,12 @@ function ReceiveProjectFiles({
         (status == "pending" && getType() == "producer" && IsImSp()) ||
         (status == "update-after-first-Payment" && getType() == "copyrights" && IsImSp()) ||
         (status == "update-after-first-Payment" && getType() === "project" && IsImSp())
+    )
+
+    const canHeightData = (
+        (status == "update-after-total-Payment" && getType() === "project" && IsImSp()) ||
+        (status == "accepted-with-update" && getType() === "producer" && IsImSp()) ||
+        (status == "waiting-for-total-payment" && getType() === "copyrights" && IsImSp())
     )
 
     const canViewUserInfo =
@@ -580,6 +584,7 @@ function ReceiveProjectFiles({
                                     {t(status)}
                                     </span>
                                 </div>
+
                                 {status ==='rejected' && 
                                 <div>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("rejected by")}</h2>
@@ -589,7 +594,16 @@ function ReceiveProjectFiles({
                                 </div>
                                 }
                                 </section>
-
+                                {canHeightData && 
+                                <section className='grid w-full'>
+                                    <div className='flex gap-3 items-center'>
+                                        <Icon name={'info'} className='size-5 border p-[1px] rounded-full' />
+                                        <span className='capitalize max-w-[543px]'>
+                                        {t("please review updated data before pay")}
+                                        </span>
+                                    </div>
+                                </section>
+                                }
                                 <section className='grid md:grid-cols-2 w-full'>
                                 {contract_respond?.data?.ref &&
                                     <div>
@@ -638,27 +652,27 @@ function ReceiveProjectFiles({
                                  {/* Project  */}
                                 {(getType() == "project") && 
                                 <>
-                                <ProjectView canUpdateData={canUpdateData} contract={contract}/>
+                                <ProjectView canUpdateData={canHeightData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "rental") && 
                                 <>
-                                <RentalView canUpdateData={canUpdateData} contract={contract}/>
+                                <RentalView canUpdateData={canHeightData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "producer") && 
                                 <>
-                                <ProducerView canUpdateData={canUpdateData} contract={contract}/>
+                                <ProducerView canUpdateData={canHeightData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "copyrights") && 
                                 <>
-                                <CopywriterView canUpdateData={canUpdateData} contract={contract}/>
+                                <CopywriterView canUpdateData={canHeightData} contract={contract}/>
                                 </>
                                 }
                                 {(getType() == "team") && 
                                 <>
-                                <TeamView canUpdateData={canUpdateData} contract={contract}/>
+                                <TeamView canUpdateData={canHeightData} contract={contract}/>
                                 </>
                                 }
                                 

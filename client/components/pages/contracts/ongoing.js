@@ -44,7 +44,6 @@ const Ongoing = ({ data, takeAction_respond, takeAction ,onClick}) => {
     const Deadline = formattedDeadline(data?.contract?.deadline)
     const CreatedAt = dateFormat(data.contract.createdAt, 'd mmmm , yyyy')
     const { t } = useTranslation();
-    console.log({data})
     return (
         <div onClick={onClick} className='flex justify-between rounded-[50px] bg-primary p-6 relative w-full mx-auto cursor-pointer'>
             <div className='flex flex-col gap-3 items-start justify-between w-full'>

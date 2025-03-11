@@ -87,7 +87,6 @@ function MyProfile({ updateProfile, InsertToArray , GetCopyrights, GetUserProjec
         };
     };    
     const taggedProjectData = taggedProjects?.data || []
-    console.log({taggedProjects})
     useEffect(() => {
         setUserInfo(user)
     }, [user])

@@ -88,7 +88,6 @@ const Projects = ({
         } 
     };
     var convertError = JSON.parse(project_respond?.error ?? null)
-    console.log({convertError})
     useEffect(()=>{
         if(convertError?.status === 404){
             router.push('/')

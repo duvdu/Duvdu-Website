@@ -18,7 +18,6 @@ function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
     const { fcmToken, notificationPermissionStatus } = useFcmToken();
     const login =  useGoogleLogin({
         onSuccess: async(response) => {
-            console.log('Login Success:', response);
             try {
                 const res = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
                   headers: { Authorization: `Bearer ${response.access_token}` },

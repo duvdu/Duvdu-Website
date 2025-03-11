@@ -192,7 +192,6 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
                                 'tags': formData.tags,
                             }}
                             onChange={(value) => {
-                                console.log(value)
                                 UpdateFormData('category', value.category)
                                 UpdateFormData('subCategory', value.subCategory)
                                 UpdateFormData('tags', value.tags)
