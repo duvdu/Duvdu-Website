@@ -17,7 +17,7 @@ import AddToolUsed from '../../components/popsup/create/addToolUsed';
 import { InsertToArray, UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
 import TimeLeft from '../../components/pages/contracts/TimeLeft';
 import { RateContract } from '../../redux/action/apis/rateContract';
-import RatingProject from '../../components/popsup/ratingProject';
+import RatingContract from '../../components/popsup/ratingContract';
 import { OpenPopUp,  } from '../../util/util';
 import { useTranslation } from 'react-i18next';
 import ProjectView from '../../components/drawer/contaract/ProjectView'
@@ -244,7 +244,7 @@ function ReceiveProjectFiles({
     };
 
     const openReview = () => {
-        OpenPopUp('Rating-project')
+        OpenPopUp('Rating-contract')
     };
     const openComplain = () => {
         OpenPopUp('report-contract')
@@ -311,7 +311,7 @@ function ReceiveProjectFiles({
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
-            <RatingProject data={contract}/>
+            <RatingContract data={contract}/>
             <ReportContract data={contract} />
             
             <Drawer isOpen={true} toggleDrawer={toggleDrawer} name="booking details" header={"booking details"}>

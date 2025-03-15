@@ -20,10 +20,9 @@ import AddToolUsed from '../../popsup/create/addToolUsed';
 import QrCode from '../../popsup/QR_code';
 import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/logic/forms/Addproject';
 import TimeLeft from '../../pages/contracts/TimeLeft';
-import { RateContract } from '../../../redux/action/apis/rateContract';
 import { GetContract } from '../../../redux/action/apis/contracts/getOne';
 import { GetComplaint } from '../../../redux/action/apis/contracts/complaint';
-import RatingProject from '../../popsup/ratingProject';
+import RatingContract from '../../popsup/ratingContract';
 import { OpenPopUp,ClosePopUp  } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
 import ProjectView from './ProjectView'
@@ -133,7 +132,7 @@ function ReceiveProjectFiles({
                 return (getType() == "project" || getType() == "copyrights")&& <TimeLeft data={items} msgstatus={status} />;
             case 'waiting-for-total-payment':
                 return (getType() == "project" || getType() == "copyrights" || getType()==='team')&&  <TimeLeft data={items} msgstatus={status} />;
-            case 'accepted-with-update':
+            case 'accepted with update':
                 return (getType() == "producer") && <TimeLeft data={items} msgstatus={status} />;
             case 'ongoing':
                 return (getType() !== "producer") && <TimeLeft data={items} msgstatus={status} />;
@@ -347,7 +346,7 @@ function ReceiveProjectFiles({
         OpenPopUp('send_reason')
     };
     const openReview = () => {
-        OpenPopUp('Rating-project')
+        OpenPopUp('Rating-contract')
     };
     const openComplain = () => {
         OpenPopUp('report-contract')
@@ -400,9 +399,9 @@ function ReceiveProjectFiles({
     )
 
     const canHeightData = (
-        (status == "update-after-total-Payment" && getType() === "project" && IsImSp()) ||
-        (status == "accepted-with-update" && getType() === "producer" && IsImSp()) ||
-        (status == "waiting-for-total-payment" && getType() === "copyrights" && IsImSp())
+        (status == "waiting-for-total-payment" && getType() === "project" && !IsImSp()) ||
+        (status == "accepted with update" && getType() === "producer" && !IsImSp()) ||
+        (status == "waiting-for-total-payment" && getType() === "copyrights" && !IsImSp())
     )
 
     const canViewUserInfo =
@@ -499,7 +498,7 @@ function ReceiveProjectFiles({
             <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
             {/* <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="Action" /> */}
             <SuccessfullyPosting isShow={submitFileSuccess} onCancel={toggleDrawer} message="Submit File" />
-            <RatingProject data={contract}/>
+            <RatingContract data={contract}/>
             <ReportContract data={contract} />
             <Uploading type={getType()} id={contractId.contract} />
             <SendReason field={field} type={getType()} id={contractId.contract} />
@@ -543,9 +542,9 @@ function ReceiveProjectFiles({
                                             <div className='flex flex-col items-end gap-1 overflow-hidden'>
                                                 <div 
                                                     className='cursor-pointer flex items-center gap-2 text-[12px] font-semibold rounded-md text-primary' 
-                                                    title={IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)}
+                                                    title={IsImSp() ? (customer?.phoneNumber?.number):(sp?.phoneNumber?.number)}
                                                 >
-                                                    {IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number)} <Icon onClick={() => copyToClipboard(IsImSp() ? (customer?.phoneNumber?.number):(sp?.phineNumber?.number))} name={'copy'} className='size-4'/>
+                                                    {IsImSp() ? (customer?.phoneNumber?.number):(sp?.phoneNumber?.number)} <Icon onClick={() => copyToClipboard(IsImSp() ? (customer?.phoneNumber?.number):(sp?.phoneNumber?.number))} name={'copy'} className='size-4'/>
                                                 </div>
                                                 {(IsImSp() ? customer?.email:sp?.email) &&
                                                 <div 
@@ -902,7 +901,7 @@ function ReceiveProjectFiles({
                                 }
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
-                                    <Button isEnabled={UpdateBtn} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
+                                    <Button isEnabled={UpdateBtn} className="w-full" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
                                         {takeAction_respond?.loading && actionAccept ==='update'?
                                         <Loading/>
                                         :
@@ -913,14 +912,14 @@ function ReceiveProjectFiles({
                             }
                             {canReview &&
                                 <section className='flex mx-5 gap-7 justify-center'>
-                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={openReview}>
+                                    <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={openReview}>
                                         <span className='text-white font-bold capitalize text-lg'>{t("review")}</span>
                                     </Button>
                                 </section>
                             }
                             {canAnswerSubmitFile && contract?.submitFiles?.length>0 &&
                                 <section className='flex mx-5 gap-7 justify-center'>
-                                    <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAcceptAllFiles}>
+                                    <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={handleAcceptAllFiles}>
                                         {acceptAllFiles_respond?.loading && actionAccept ==='accept'?
                                             <Loading size='md'/>
                                             :
@@ -935,7 +934,7 @@ function ReceiveProjectFiles({
                                     <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
                                         {
                                             acceptBtn &&
-                                            <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
+                                            <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={handleAccept}>
                                                 {takeAction_respond?.loading && actionAccept==='accept'?
                                                     <Loading/>
                                                 :
@@ -945,7 +944,7 @@ function ReceiveProjectFiles({
                                         }
                                         {
                                             refuse &&
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
                                                {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
@@ -953,7 +952,7 @@ function ReceiveProjectFiles({
                                                 </button>
                                         }
                                         {cancle && 
-                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleCancel}>
+                                         <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleCancel}>
                                          {takeAction_respond?.loading  && actionAccept === 'cancle'? 
                                             <Loading/>
                                             :
@@ -965,7 +964,7 @@ function ReceiveProjectFiles({
                                         !IsImSp() &&
                                         status == "waiting-for-pay-10"&&
                                         <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
-                                            <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                             {payment_respond?.loading && actionAccept==='payment' ? 
                                                 <Loading/>
                                                 :
@@ -973,7 +972,7 @@ function ReceiveProjectFiles({
                                                 }
 
                                             </Button>
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
                                             {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
@@ -984,14 +983,14 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
-                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())|| true} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())|| true} className="w-full" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
                                                     <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 90 % )")}<br/>{contract?.secondPaymentAmount} {'EGP'}</span>
                                                 }
                                             </Button>
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
                                             {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
@@ -1002,7 +1001,7 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() && getType() === 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
-                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())||true} className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())||true} className="w-full" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
@@ -1014,14 +1013,14 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() && status == "waiting-for-payment" &&
                                         <div className='flex mx-5 gap-7 mb-10 mt-10 justify-center'>
-                                            <Button className="w-full max-w-[345px]" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                             {payment_respond?.loading && actionAccept==='payment' ? 
                                                 <Loading/>
                                                 :
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Check Out")}<br/>{contract?.totalPrice} {'EGP'}</span>
                                             }
                                             </Button>
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full max-w-[345px] h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
                                             {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :
@@ -1075,7 +1074,6 @@ const mapStateToProps = (state) => ({
     takeAction_respond: state.api.takeAction,
     payment_respond: state.api.payment,
     addprojectState: state.addproject,
-    rateContract_respond: state.api.RateContract,
     submitFile_respond:state.api.submitFile,
     acceptAllFiles_respond:state.api.acceptAllFiles,
     acceptFiles_respond:state.api.acceptFiles,
@@ -1092,7 +1090,6 @@ const mapDispatchToProps = {
     payment,
     UpdateFormData,
     InsertToArray,
-    RateContract,
     resetForm,
     GetContract,
     GetComplaint

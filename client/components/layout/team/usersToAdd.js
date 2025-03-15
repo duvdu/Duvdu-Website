@@ -10,10 +10,10 @@ import AppButton from "../../elements/button";
 import DuvduLoading from "../../elements/duvduLoading";
 import AddAttachment from "../../elements/attachment";
 import { useTranslation } from 'react-i18next';
+import Link from "next/link";
 
 const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
     const { t } = useTranslation();
-
     return (
         <div className="bg-white dark:bg-[#1A2024] border dark:border-[#FFFFFF33] rounded-[45px] overflow-hidden" {...rest}>
             <div className="flex w-full bg-gray-300 overflow-hidden h-32">
@@ -21,11 +21,15 @@ const AddToTeamCard = ({ info, goback, onChoose, ...rest }) => {
             </div>
             <div className='p-5'>
                 <div className='flex items-start gap-4 -translate-y-4 h-11'>
-                    <div className='w-[85px] h-[85px] bg-cover relative bg-no-repeat'>
+                    <Link href={`/creative/${info.username}`}>
+                    <div className='w-[85px] h-[85px] bg-cover cursor-pointer relative bg-no-repeat'>
                         <img className='w-full h-full rounded-full border-2 shadow -translate-y-8 object-cover object-top' src={info.profileImage || process.env.DEFULT_PROFILE_PATH} alt="" />
                     </div>
+                    </Link>
                     <div className='flex-2 flex-col gap-1'>
-                        <span className='text-2xl font-bold capitalize'>{info.name?.length > 14?`${info.name.slice(0,14)}...`:info.name}</span>
+                        <Link href={`/creative/${info.username}`}>
+                        <span className='text-2xl font-bold capitalize cursor-pointer'>{info.name?.split(' ')[0].length>6?info.name?.split(' ')[0].slice(0,6):info.name?.split(' ')[0]} </span>
+                        </Link>
                         {info.location && (
                             <span className='flex items-center gap-2 opacity-40'>
                                 <div className='w-3'>

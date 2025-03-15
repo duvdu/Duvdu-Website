@@ -53,9 +53,9 @@ const Header = ({ data, isLogin,toggleDrawerAddFav }) => {
                 </div>
                 <Selector
                     options={[
-                        {
-                            value: "Rate",
-                        },
+                        // {
+                        //     value: "Rate",
+                        // },
                         {
                             value: "Report",
                         },

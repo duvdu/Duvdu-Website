@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ArrowBtn from '../../elements/arrowBtn';
 import { OpenPopUp, UpdateKeysAndValues, handleFileUpload, } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
-
+import SuccessfullyPosting from '../post_successfully_posting';
 import AddAttachment from '../../elements/attachment';
 import AddCoverPhoto from '../../elements/AddCoverPhoto';
 import { connect } from 'react-redux';
@@ -15,10 +15,12 @@ import SelectDate from '../../elements/selectDate';
 import { CreateTeamProject } from '../../../redux/action/apis/teamproject/create';
 import GoogleMap from '../../elements/googleMap';
 import { useRouter } from 'next/router';
+import { GetTeamProjects } from '../../../redux/action/apis/teamproject/get';
 
-function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create_respond, resetForm }) {
+function CreateTeam({ UpdateFormData, addprojectState  ,GetTeamProjects, CreateTeamProject, create_respond, resetForm }) {
     const { t } = useTranslation();
     const formData = addprojectState.formData
+    const [successShow, setSuccessShow] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(true);
     const router = useRouter();
     const elementRef = useRef(null);
@@ -39,8 +41,8 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
     };
     const isEnable = Object.keys(validateRequiredFields()).length == 0
     useEffect(() => {
-        if (create_respond?.data) {
-            OpenPopUp("successfully-create-team")
+        if (create_respond?.message ==='success') {
+            setSuccessShow(true)
         }
     }, [create_respond])
 
@@ -75,7 +77,10 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
             pathname: "/teams",
         });
         resetForm()
+        setSuccessShow(false)
+        GetTeamProjects({ limit: 6, page: 1 })
     };
+    console.log({create_respond})
         const onsubmit = () => {
             const form = new FormData()
     
@@ -88,7 +93,6 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
             form.append('cover', formData?.cover)
             UpdateKeysAndValues(formData, (key, value) => form.append(key, value), [ 'category'])
             CreateTeamProject(form)
-            handleCancel()
         }
     
         // router.push({
@@ -98,6 +102,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
     return (
         <>
             <Popup id='team_uploading_files' className='' addWhiteShadow={true} header={'Create New Team'} onCancel={handleCancel} ref={elementRef}>
+                <SuccessfullyPosting isShow={successShow} onCancel={handleCancel} message="Creating" />
             {
                 isPopupVisible &&
                 <div className='lg:w-[600px]'>
@@ -150,7 +155,7 @@ function CreateTeam({ UpdateFormData, addprojectState, CreateTeamProject, create
 
                     <section className="sticky bottom-5 z-10">
                         <div className="flex justify-center">
-                            <ArrowBtn onClick={isEnable?onsubmit:null} className="cursor-pointer w-full sm:w-96 z-10" text='Continue' isEnable={isEnable} />
+                            <ArrowBtn onClick={isEnable?onsubmit:null} className="cursor-pointer w-full sm:w-96 z-10" text='Continue' isEnable={isEnable} loading={create_respond?.loading} />
                         </div>
                     </section>
                 </div>}
@@ -170,6 +175,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     UpdateFormData,
     CreateTeamProject,
+    GetTeamProjects,
     resetForm
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTeam);

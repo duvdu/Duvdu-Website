@@ -30,7 +30,6 @@ import { io } from "socket.io-client";
 // toggleDarkMode
 
 const CustomToast = ({ toast ,goToMessage , type, CloseToast }) => {
-    console.log({toast}) 
     useEffect(() => {
         // Set a timer to close the toast after 5 seconds
         if(CloseToast) {

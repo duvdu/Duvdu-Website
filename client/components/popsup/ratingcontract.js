@@ -3,31 +3,37 @@ import Button from '../elements/button';
 import Icon from '../Icons'
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { ClosePopUp, } from '../../util/util';
-import { useTranslation } from 'react-i18next';
-
+import { ContractReview } from '../../redux/action/apis/contracts/review';
+import { ClosePopUp } from '../../util/util';
 import DuvduLoading from '../elements/duvduLoading';
 import DuvduError from '../elements/duvduError';
-import { RateContract } from '../../redux/action/apis/rateContract';
+import { useTranslation } from 'react-i18next';
+import Loading from '../elements/loading';
+import ErrorMessage from '../elements/ErrorMessage';
+import SuccessfullyPosting from "../popsup/post_successfully_posting";
 
-function RatingContract({ data = {} , rate_respond , RateContract}) {
+function RatingContract({ data = {}, rate_respond, ContractReview }) {
+    const [post_success, setPost_success] = useState(false);
     const { t } = useTranslation();
     const [rate, setRate] = useState(0);
     const [desc, setDesc] = useState("");
 
     const handleSubmitRate = () => {
-        RateContract({
-            contract: data._id || "", 
-            cycle: data.cycle || "rentals",
+        ContractReview({
+            contract: data._id || "",
             rate,
-            comment:desc,
+            comment: desc,
         });
     };
-    useEffect(()=>{
-        if(rate_respond?.data?.createdAt) 
-            ClosePopUp("Rating-project")
-    },[rate_respond?.data?.createdAt])
-    
+    useEffect(() => {
+        if (rate_respond?.data?.createdAt)
+            ClosePopUp("Rating-contract")
+    }, [rate_respond?.data?.createdAt])
+
+    useEffect(() => {
+        if (rate_respond?.data)
+            setPost_success(true)
+    }, [rate_respond?.message])
 
     const handleStarClick = (rating) => {
         setRate(rating);
@@ -50,10 +56,17 @@ function RatingContract({ data = {} , rate_respond , RateContract}) {
         }
         return stars;
     };
+    var convertError = JSON.parse(rate_respond?.error ?? null)
+    function OnSucess() {
+        setPost_success(false)
+        setRate(0);
+        setDesc("");
+    }
 
-    const isEnabled = rate > 0 && desc.length > 5
+    const isEnabled = rate > 0 && desc.length>0
     return (
         <>
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Rating" />
             <Popup id="Rating-contract" header={`Rating`} onCancel={handlereset}>
                 <div className='mx-[70px] mt-4 flex flex-col justify-center items-center'>
                     <div className='flex gap-5 my-5'>
@@ -61,17 +74,18 @@ function RatingContract({ data = {} , rate_respond , RateContract}) {
                     </div>
                     <div>
                         <div className="capitalize opacity-60">{t("rating")}</div>
-                        <textarea 
-                            placeholder={t("Rating will show on creative’s profile...")} 
-                            className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none" 
-                            value={desc} 
-                            onChange={(e) => setDesc(e.target.value)} 
+                        <textarea
+                            placeholder={t("Rating will show on creative’s profile...")}
+                            className="bg-[#9999991A] rounded-3xl h-24 border-none mt-3 w-full min-w-[300px] max-w-[464px] resize-none"
+                            value={desc}
+                            onChange={(e) => setDesc(e.target.value)}
                         />
                     </div>
-                    <DuvduError req={"Rate"}/>
+                    <DuvduError req={"Rate"} />
                     <DuvduLoading loadingIn={"Rate"} />
+                    <ErrorMessage ErrorMsg={convertError?.data?.errors[0]?.message}/>
                     <Button isEnabled={isEnabled} onClick={handleSubmitRate} className="mb-7 mx-4 font-bold text-lg w-full max-w-[345px] mt-20" shadow={true}>
-                        <span className='text-white font-bold capitalize text-lg'>{t("Done")}</span>
+                        <span className='text-white font-bold capitalize text-lg'>{rate_respond?.loading ?<Loading/>:t("Done")}</span>
                     </Button>
                 </div>
             </Popup>
@@ -80,11 +94,11 @@ function RatingContract({ data = {} , rate_respond , RateContract}) {
 }
 
 const mapStateToProps = (state) => ({
-    rate_respond: state.api.RateContract
+    rate_respond: state.api.ContractReview
 });
 
 const mapDispatchToProps = {
-    RateContract
+    ContractReview
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RatingContract);

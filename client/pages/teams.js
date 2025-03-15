@@ -94,7 +94,7 @@ const CreateBoard = ({ GetTeamProjects, get_respond, DeleteTeamProjects, delete_
 
     useEffect(() => {
         GetTeamProjects({ limit: limit, search: searchTerm?.length > 0 ? searchTerm : null, page: page })
-    }, [delete_respond, create_respond, update_respond, limit, searchTerm]);
+    }, [delete_respond, update_respond, limit, searchTerm]);
 
     useEffect(() => {
         const handleScroll = () => {

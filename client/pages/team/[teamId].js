@@ -60,7 +60,8 @@ const TheTeam = ({
     }, [add_creative]);
     useEffect(() => {
         if (delete_respond?.message==='success') {
-            GetTeamProject({ id: teamId });
+            DeleteTeamProjects()
+            router.push('/teams')
         }
     }, [ delete_respond?.message]);
     useEffect(() => {
@@ -111,10 +112,20 @@ const TheTeam = ({
         if(isLogin ===false)
             router.push('/')
     },[isLogin])
+    var convertError = JSON.parse(get_respond?.error ?? null)
+    useEffect(()=>{
+        if(get_respond?.error && convertError.status == 404){
+            router.push('/teams')
+        }
+    },[get_respond?.error])
 
     return (
         <Layout shortheader={true}>
             <section className="container">
+                {delete_respond?.loading ?
+                 <DuvduLoading loadingIn={""} type={''}/>
+                :
+                <>
                 {state === 0 && <Empty />}
                 {state === 1 && (
                     <div className="flex flex-col lg:flex-row gap-7 items-center">
@@ -129,6 +140,8 @@ const TheTeam = ({
                         <RightSide onDeleteTeam={onDeleteTeam} data={get_respond?.data || {}} respond={get_respond} isSolid={true} teamId={teamId}/>
                     </div>
                 )}
+                </>
+                }
             </section>
         </Layout>
     );
@@ -260,7 +273,6 @@ const Person = ({ person, onUpdate,handleOpenChat }) => {
     // const handleDropdownSelect = (v) => {
     //     v == "delete" ? onDelete(person._id) : OpenPopUp(`Edit-creative-${person._id}`)
     // };
-
     return (
         <>
             <Popup id={"Edit-creative-" + person._id} header={'Work Details'} onCancel={onCancel}>
