@@ -17,7 +17,7 @@ function ratingProject({ data = {}, rate_respond, Rate }) {
     const { t } = useTranslation();
     const [rate, setRate] = useState(0);
     const [desc, setDesc] = useState("");
-
+    
     const handleSubmitRate = () => {
         Rate({
             project: data._id || "",

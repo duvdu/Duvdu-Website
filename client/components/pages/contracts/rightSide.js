@@ -34,9 +34,9 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
             case 'ongoing':
                 return 1;
             case 'completed':
-                return -1;
+                return -2;
             case 'accepted':
-                return -1;
+                return -2;
             case 'rejected':
                 return -1;
             default:

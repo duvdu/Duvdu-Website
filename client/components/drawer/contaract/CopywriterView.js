@@ -48,24 +48,24 @@ export default function CopywriterView({contract , canUpdateData}){
     <section className='grid md:grid-cols-2 w-full'>
         {contract.totalPrice &&
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>
-                <span className={canUpdateData && 'bg-yellow-400'}>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>
+                <span className={canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'}>
                 {t("Total Price")}
                 </span>
             </h2>
-            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+            <span className={`${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'} font-semibold capitalize max-w-[543px]`}>
             {contract.totalPrice} {t('EGP')}
             </span>
         </div>
         }
         {contract.duration.value && contract.duration.unit &&
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>
-                <span className={canUpdateData && 'bg-yellow-400'}>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>
+                <span className={canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'}>
                     {t("duration")}
                 </span>
                 </h2>
-            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+            <span className={`${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'} font-semibold capitalize max-w-[543px]`}>
             {contract.duration.value} {contract.duration.unit}
             </span>
         </div>    
@@ -74,7 +74,7 @@ export default function CopywriterView({contract , canUpdateData}){
     <section className='grid md:grid-cols-2 w-full'>
         {contract.firstPaymentAmount && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("First Payment")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("First Payment")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.firstPaymentAmount} {t('EGP')}
             </span>
@@ -82,7 +82,7 @@ export default function CopywriterView({contract , canUpdateData}){
         }
         {contract.secondPaymentAmount && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Second Payment")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Second Payment")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.secondPaymentAmount} {t('EGP')}
             </span>
@@ -92,12 +92,12 @@ export default function CopywriterView({contract , canUpdateData}){
     {contract.details && 
         <section className='w-full'>
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>
-                <span className={canUpdateData && 'bg-yellow-400'}>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>
+                <span className={canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'}>
                     {t("project details")}
                 </span>
             </h2>
-            <span className={`${canUpdateData && 'bg-yellow-400'} font-semibold capitalize max-w-[543px]`}>
+            <span className={`${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'} font-semibold capitalize max-w-[543px]`}>
             {contract.details}
             </span>
         </div>
@@ -105,7 +105,7 @@ export default function CopywriterView({contract , canUpdateData}){
     }
     <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full '>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Appointment Date")}</h2>
+                <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Appointment Date")}</h2>
                 <div className='flex gap-4'>
                     <div>
 
@@ -130,7 +130,7 @@ export default function CopywriterView({contract , canUpdateData}){
     </section>
     <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full'>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Booking Date")}</h2>
+                <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Booking Date")}</h2>
                 <div className='flex gap-4'>
                     <div>
 
@@ -153,7 +153,7 @@ export default function CopywriterView({contract , canUpdateData}){
                 </div>
             </div>
             <div className='w-full'>
-                <h2 className='opacity-60 capitalize mb-3'>{t("Deadline Date")}</h2>
+                <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Deadline Date")}</h2>
                 <div className='flex gap-4'>
                     <div>
 
@@ -184,7 +184,7 @@ export default function CopywriterView({contract , canUpdateData}){
                 className='opacity-85 text-base'
             >
                 <div className='w-full'>
-                    <h2 className='opacity-60 capitalize mb-3'>{t("project location")}</h2>
+                    <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("project location")}</h2>
                     <div className='flex gap-4'>
                         <div>
                             <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>

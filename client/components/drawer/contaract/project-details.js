@@ -314,7 +314,7 @@ function ReceiveProjectFiles({
             }
         }
         else {
-            if (formData['numberOfUnits']) data['projectScale.numberOfUnits'] = formData['numberOfUnits'];
+            if (formData['numberOfUnits']) data['numberOfUnits'] = formData['numberOfUnits'];
             if (formData['tools'] || formData['functions']) data['equipment'] = {}
             if (formData['tools'] && formData['tools'].length>0) {
                 data['equipment']['tools'] = formData['tools'].map((value) => ({
@@ -328,6 +328,7 @@ function ReceiveProjectFiles({
                     id: value._id
                 }));
             }
+            if(!formData['tools'] && !formData['functions']) delete data['equipment']
             if (formData['duration']) data.duration = formData['duration'];
             if (formData['unitPrice']) data.unitPrice = formData['unitPrice'];
         }
@@ -982,15 +983,15 @@ function ReceiveProjectFiles({
                                     }
                                     {
                                         !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
-                                        <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
-                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())|| true} className="w-full" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                        <div className='grid grid-cols-2 mx-5 gap-5 mb-10 mt-10'>
+                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())|| true} className="w-full !h-[100px]" shadow={true}   onClick={handlePayment}>
                                                 {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
-                                                    <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 90 % )")}<br/>{contract?.secondPaymentAmount} {'EGP'}</span>
+                                                    <span className='text-white font-bold capitalize text-lg flex items-center justify-center p-2'>{t("Pay Now remain ( 90 % )")} <br/> {contract?.secondPaymentAmount} {'EGP'}</span>
                                                 }
                                             </Button>
-                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
+                                            <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
                                             {takeAction_respond?.loading && actionAccept === 'refuse' ? 
                                                 <Loading/>
                                                 :

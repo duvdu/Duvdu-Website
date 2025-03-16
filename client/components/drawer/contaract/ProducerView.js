@@ -48,7 +48,7 @@ export default function ProducerView({contract , canUpdateData}){
     <section className='grid md:grid-cols-2 w-full'>
         {contract.platform && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Platform")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Platform")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.platform}
             </span>
@@ -58,7 +58,7 @@ export default function ProducerView({contract , canUpdateData}){
     <section className='w-full'>
         {contract.projectDetails && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("project details")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("project details")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.projectDetails}
             </span>
@@ -68,7 +68,7 @@ export default function ProducerView({contract , canUpdateData}){
     <section className='grid md:grid-cols-2 w-full'>
         {contract.episodesNumber && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Episodes Number")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Episodes Number")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.episodesNumber}
             </span>
@@ -76,7 +76,7 @@ export default function ProducerView({contract , canUpdateData}){
         }
         {contract.episodesDuration && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Episode Duration")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Episode Duration")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.episodesDuration}
             </span>
@@ -86,7 +86,7 @@ export default function ProducerView({contract , canUpdateData}){
     <section className='grid md:grid-cols-2 w-full'>
         {contract.expectedBudget && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Episode budget")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Episode budget")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
             {contract.expectedBudget} {t('EGP')}
             </span>
@@ -94,7 +94,7 @@ export default function ProducerView({contract , canUpdateData}){
         }
         {contract.expectedProfits && 
         <div>
-            <h2 className='opacity-60 capitalize mb-3'>{t("Episode profits")}</h2>
+            <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Episode profits")}</h2>
             <span className='font-semibold max-w-[543px]'>
             {contract.expectedProfits} {t('EGP')}
             </span>
@@ -103,8 +103,8 @@ export default function ProducerView({contract , canUpdateData}){
     </section>   
     <section className='grid md:grid-cols-2 w-full'>
             <div className='w-full '>
-                <h2 className='opacity-60 capitalize mb-3'>
-                <span className={canUpdateData && 'bg-yellow-400'}>
+                <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>
+                <span className={canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'}>
                     {t("Appointment Date")}
                 </span>
                 </h2>
@@ -117,12 +117,12 @@ export default function ProducerView({contract , canUpdateData}){
                     </div>
                     <div>
                         <div>
-                            <span className={`opacity-85 text-base ${canUpdateData && 'bg-yellow-400'}`}>
+                            <span className={`opacity-85 text-base ${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'}`}>
                             {formatDate(contract.appointmentDate)}
                             </span>
                         </div>
                         <div>
-                            <span className={`text-xs text-[#747688] ${canUpdateData && 'bg-yellow-400'}`}>
+                            <span className={`text-xs text-[#747688] ${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'}`}>
                             {t(dateFormat(contract.appointmentDate, 'dddd'))}
                             </span>
                         </div>
@@ -138,7 +138,7 @@ export default function ProducerView({contract , canUpdateData}){
                 className='opacity-85 text-base'
             >
                 <div className='w-full'>
-                    <h2 className='opacity-60 capitalize mb-3'>{t("project location")}</h2>
+                    <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("project location")}</h2>
                     <div className='flex gap-4'>
                         <div>
                             <div className='bg-[#e8f1fd] dark:bg-[#3183ed1f] rounded-xl p-3 mb-4'>
