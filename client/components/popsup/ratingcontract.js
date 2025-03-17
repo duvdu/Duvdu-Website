@@ -10,7 +10,7 @@ import DuvduError from '../elements/duvduError';
 import { useTranslation } from 'react-i18next';
 import Loading from '../elements/loading';
 import ErrorMessage from '../elements/ErrorMessage';
-import SuccessfullyPosting from "../popsup/post_successfully_posting";
+import SuccessfullyPosting from "./post_successfully_posting";
 
 function RatingContract({ data = {}, rate_respond, ContractReview }) {
     const [post_success, setPost_success] = useState(false);

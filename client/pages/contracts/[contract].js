@@ -17,7 +17,7 @@ import AddToolUsed from '../../components/popsup/create/addToolUsed';
 import { InsertToArray, UpdateFormData, resetForm } from '../../redux/action/logic/forms/Addproject';
 import TimeLeft from '../../components/pages/contracts/TimeLeft';
 import { RateContract } from '../../redux/action/apis/rateContract';
-import RatingContract from '../../components/popsup/ratingContract';
+import RatingContract from '../../components/popsup/ratingcontract';
 import { OpenPopUp,  } from '../../util/util';
 import { useTranslation } from 'react-i18next';
 import ProjectView from '../../components/drawer/contaract/ProjectView'

@@ -22,7 +22,7 @@ import { InsertToArray, UpdateFormData, resetForm } from '../../../redux/action/
 import TimeLeft from '../../pages/contracts/TimeLeft';
 import { GetContract } from '../../../redux/action/apis/contracts/getOne';
 import { GetComplaint } from '../../../redux/action/apis/contracts/complaint';
-import RatingContract from '../../popsup/ratingContract';
+import RatingContract from '../../popsup/ratingcontract';
 import { OpenPopUp,ClosePopUp  } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
 import ProjectView from './ProjectView'
