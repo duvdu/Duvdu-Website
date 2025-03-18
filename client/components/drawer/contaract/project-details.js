@@ -31,6 +31,7 @@ import ProducerView from './ProducerView'
 import CopywriterView from './CopywriterView'
 import TeamView from './TeamView'
 import ReportContract from '../../popsup/report-contract';
+import AskForCancelContract from '../../popsup/askForCancel';
 import Loading from '../../elements/loading';
 import DuvduLoading from '../../elements/duvduLoading';
 import ErrorMessage from '../../elements/ErrorMessage';
@@ -289,7 +290,7 @@ function ReceiveProjectFiles({
         acceptAllFiles({ id: contract?._id})
     };    
     const handleCancel = () => {
-        setActionAccept('cancle')
+        setActionAccept('cancel')
         if (!contract_respond?.data?.ref) return
         const type = getType()
         takeAction({ id: contract?._id, data: 'cancel', type: type })
@@ -349,6 +350,9 @@ function ReceiveProjectFiles({
     const openReview = () => {
         OpenPopUp('Rating-contract')
     };
+    const openAskForCancel = () => {
+        OpenPopUp('ask-for-cancel')
+    };
     const openComplain = () => {
         OpenPopUp('report-contract')
     };
@@ -388,7 +392,7 @@ function ReceiveProjectFiles({
 
     const acceptBtn = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
     const refuse = (IsImSp() && status === "pending") || (IsImSp() && status === "update-after-first-Payment") || (!IsImSp() && status === "accepted with update")
-    const cancle = (!IsImSp() && status === "pending")
+    const cancel = (!IsImSp() && status === "pending")
     const canReview = (!IsImSp() && (status === "completed" || status === "accepted") && !contract_respond?.data?.hasReview)
     const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
@@ -441,6 +445,25 @@ function ReceiveProjectFiles({
             status !== "complaint" 
         ))
 
+    const canAskCancel =
+    !contract_respond?.data?.haveCancleRequest &&(
+        (getType() === "copyrights" && (
+            status == "update-after-first-Payment" ||
+            status == "waiting-for-total-payment" ||
+            status == "ongoing"
+        ))||
+        (getType() === "project" && (
+            status == "update-after-first-Payment" ||
+            status == "waiting-for-total-payment" ||
+            status == "ongoing" 
+        ))||
+        (getType() === "rental" && (
+            status == "ongoing"
+        ))||
+        (getType() === "team" && (
+            status == "ongoing" 
+        ))
+    )
 
     const UpdateBtn =
         (getType() === "producer" &&
@@ -501,6 +524,7 @@ function ReceiveProjectFiles({
             <SuccessfullyPosting isShow={submitFileSuccess} onCancel={toggleDrawer} message="Submit File" />
             <RatingContract data={contract}/>
             <ReportContract data={contract} />
+            <AskForCancelContract data={contract} />
             <Uploading type={getType()} id={contractId.contract} />
             <SendReason field={field} type={getType()} id={contractId.contract} />
             <QrCode value={contractId?.contract} />
@@ -952,9 +976,9 @@ function ReceiveProjectFiles({
                                                 t("Refuse")}
                                                 </button>
                                         }
-                                        {cancle && 
+                                        {cancel && 
                                          <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleCancel}>
-                                         {takeAction_respond?.loading  && actionAccept === 'cancle'? 
+                                         {takeAction_respond?.loading  && actionAccept === 'cancel'? 
                                             <Loading/>
                                             :
                                             t("Cancel")}
@@ -1049,7 +1073,13 @@ function ReceiveProjectFiles({
                                         </Button>
                                     </section>
                                     }
-
+                                    {!canAskCancel &&
+                                        <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                            <Button color='bg-[#D30000]' className="w-full" shadow={true} shadowHeight={"14"} onClick={openAskForCancel}>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Ask For Cancel")}</span>
+                                            </Button>
+                                        </section>
+                                    }
                                     {
                                     <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                         <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#D30000"}  onClick={openComplain}>
@@ -1057,6 +1087,7 @@ function ReceiveProjectFiles({
                                         </Button>
                                     </section>
                                     }
+
                                 </section>
                             }
                         </div>

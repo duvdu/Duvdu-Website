@@ -48,7 +48,7 @@ const CustomToast = ({ toast ,goToMessage , type, CloseToast }) => {
     }
     return (    
         <div
-        className={`transition ${toast ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full d-none'} cursor-pointer duration-700 ease-in-out max-w-md w-full bg-white dark:bg-[#1A2024] z-[10000] fixed top-5 end-5 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        className={`transition ${toast ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full d-none'} cursor-pointer duration-700 ease-in-out max-w-md w-full bg-white dark:bg-[#1A2024] z-[500000] fixed top-5 end-5 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
             <div className="flex-1 w-0 p-4">
                 <div onClick={handleGoMessage} className="flex items-start">
@@ -193,36 +193,36 @@ const Header = ({
         };
     }, []);
     useEffect(() => {
-        // Connect to your socket server
-        const socketInstance = io(process.env.BASE_URL, {
-            withCredentials: true,
-            transports: ['websocket', 'polling'],
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000,    
-          });
-          socketInstance.on("connect", () => console.log("Connected to socket"));
-    
-        // Listen for notification events
-        socketInstance.on('new_message', (data) => {
-            console.log({data})
-            setCountUnRead((prev)=> prev+1)
-                setToast({
-                    type:'message',
-                    id:data.data.target,
-                    image:data.data.sourceUser.profileImage,
-                    title:data.data.sourceUser.name,
-                    message:'New message received'
-                })
-        });
-        socketInstance.on('disconnect', () => {
-            // console.log('Disconnected from server');
-          });    
-        // Cleanup on component unmount
-        return () => {
-            socketInstance.off('new_message');
-            socketInstance.disconnect();
-        };
+            // Connect to your socket server
+            const socketInstance = io(process.env.BASE_URL, {
+                withCredentials: true,
+                transports: ['websocket', 'polling'],
+                reconnection: true,
+                reconnectionAttempts: 5,
+                reconnectionDelay: 1000,    
+              });
+              socketInstance.on("connect", () => console.log("Connected to socket"));
+        
+            // Listen for notification events
+            socketInstance.on('new_message', (data) => {
+                console.log({data})
+                setCountUnRead((prev)=> prev+1)
+                    setToast({
+                        type:'message',
+                        id:data.data.target,
+                        image:data.data.sourceUser.profileImage,
+                        title:data.data.sourceUser.name,
+                        message:'New message received'
+                    })
+            });
+            socketInstance.on('disconnect', () => {
+                // console.log('Disconnected from server');
+              });    
+            // Cleanup on component unmount
+            return () => {
+                socketInstance.off('new_message');
+                socketInstance.disconnect();
+            };
     }, []);
 
     useEffect(() => {

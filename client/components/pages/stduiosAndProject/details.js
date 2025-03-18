@@ -21,6 +21,7 @@ import { GetProject } from "../../../redux/action/apis/cycles/projects/getOne";
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import DeletePopup from '../../popsup/DeletePopup';
 import DeleteCreative from '../../popsup/DeleteCreative';
+import Link from 'next/link';
 
 const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_response, GetProject,delete_response, onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
@@ -220,7 +221,8 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
                     <div className="flex flex-col gap-2">
                         {data?.creatives.map((creative,i) =>(
                             <div key={i} className="flex items-center gap-2">
-                                    <div className={`flex rounded-3xl border border-[#00000040]`}>
+                                    <Link href={`/creative/${creative?.username}`}>
+                                    <div className={`flex cursor-pointer rounded-3xl border border-[#00000040]`}>
                                         {creative?.profileImage&& 
                                             <img className="size-6 aspect-square rounded-full object-cover object-top" src={creative?.profileImage} alt="profile" />
                                         }
@@ -230,6 +232,7 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
                                             {creative.name?.split(' ')[0].length>6?creative.name?.split(' ')[0].slice(0,6):creative.name?.split(' ')[0]}
                                             </span>}
                                     </div>
+                                    </Link>
                                     <div className={`flex rounded-3xl border border-[#00000040]`}>
                                         {
                                             creative?.mainCategory?.category?.title &&

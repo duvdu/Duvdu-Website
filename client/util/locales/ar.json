@@ -649,5 +649,8 @@
     "Episodes duration is required": "مدة الحلقات مطلوبة",
     "Expected budget is required": "الميزانية المتوقعة مطلوبة",
     "Expected profits is required": "الأرباح المتوقعة مطلوبة",
+    "Ask For Cancel":"اطلب إلغاء",
+    "Reason":"السبب",
+    "":"",
     "":""
 }

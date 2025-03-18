@@ -18,7 +18,7 @@ export const GetAllMessageInChat = (id, limit) => {
         try {
 
             const params = {};
-            params.limit = limit || 100;
+            params.limit = limit || 1000;
             const queryString = new URLSearchParams(params).toString();
             const response = await mainApiInstance.get(`api/message/${id}/chat?${queryString}`);
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });

@@ -33,7 +33,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     const chatRef = useRef(null);
     const [messagesList, setMessagesList] = useState([])
     const [otherUser, setOtherUser] = useState({})
-    const [limit, setLimit] = useState(50)
+    const [limit, setLimit] = useState(1000)
     const [isRecording, setIsRecord] = useState(null)
     ///////////// inputs //////////////
     ///////////// audio //////////////
@@ -113,7 +113,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     //     if(newMessage)
     //     setMessagesList((prev)=> [...prev ,newMessage.message ])
     // },[newMessage])
-    const msglist = [...messagesList]
+    // const messagesList = [...messagesList]
     useEffect(() => {
         // Scroll to the bottom of the chat when component updates
         if (chatRef.current) {
@@ -122,10 +122,10 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         // setOtherUser(getotherdata())
         
 
-    }, [JSON.stringify(msglist)]);
+    }, [JSON.stringify(messagesList)]);
 
 
-    // msglist.reverse()
+    // messagesList.reverse()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -167,8 +167,8 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         return writer._id == user?.profile?._id
     }
     function getotherdata() {
-        for (let i = 0; i < msglist.length; i++) {
-            const element = msglist[i];
+        for (let i = 0; i < messagesList.length; i++) {
+            const element = messagesList[i];
             if (!checkIsMe(element.sender)) {
                 return element.sender
             }
@@ -180,7 +180,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     }
       const loadMore = () => {
         if(chat_respond?.pagination?.currentPage < chat_respond?.pagination?.totalPages)
-        setLimit(prev => prev + 50)
+        setLimit(prev => prev + 100)
         // Your custom logic to load more messages
     };
 
@@ -295,7 +295,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
                     <div className='pb-20'>
                         {chat_respond?.loading?
                         <DuvduLoading loadingIn={""} type='chat' />:
-                        msglist?.map((message, index) => {
+                        messagesList?.map((message, index) => {
                             // if (message.type === 'time') {
                             //     return (
                             //         <div key={message._id} className="time">
