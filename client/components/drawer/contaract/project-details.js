@@ -1073,7 +1073,7 @@ function ReceiveProjectFiles({
                                         </Button>
                                     </section>
                                     }
-                                    {!canAskCancel &&
+                                    {canAskCancel &&
                                         <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                             <Button color='bg-[#D30000]' className="w-full" shadow={true} shadowHeight={"14"} onClick={openAskForCancel}>
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Ask For Cancel")}</span>
