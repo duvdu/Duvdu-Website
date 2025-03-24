@@ -72,9 +72,9 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
       const socketInstance = io(process.env.BASE_URL, {
         withCredentials: true,
         transports: ['websocket', 'polling'],
-        reconnection: true,
-        reconnectionAttempts: 5,
-        reconnectionDelay: 1000,    
+        // reconnection: true,
+        // reconnectionAttempts: 5,
+        // reconnectionDelay: 1000,    
       });
       socketInstance.on("connect", () => console.log("Connected to socket"));
       setSocket(socketInstance);
