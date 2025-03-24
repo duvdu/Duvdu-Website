@@ -28,7 +28,7 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
   return (
     <div
       onClick={handleClick}
-      className={`relative flex rounded-full p-1 ${height} ${className}`}
+      className={`relative flex rounded-full ${height} ${className}`}
       {...rest}
     >
       <div className={`${buttonClass} absolute left-0 app-btn h-full btn leading-10 z-10 min-w-min ${isbuttonred ? 'red' : 'blue'} ${disabledClass}`}>

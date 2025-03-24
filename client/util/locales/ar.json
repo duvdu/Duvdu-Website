@@ -650,7 +650,10 @@
     "Expected budget is required": "الميزانية المتوقعة مطلوبة",
     "Expected profits is required": "الأرباح المتوقعة مطلوبة",
     "Ask For Cancel":"اطلب إلغاء",
+    "new deadline":"موعد نهائي جديد",
+    "select deadline date":"حدد تاريخ الموعد النهائي",
     "Reason":"السبب",
-    "":"",
+    "ask client new deadline":"اطلب من العميل موعدًا نهائيًا جديدًا",
+    "ask system for cancel":"اطلب من النظام الإلغاء",
     "":""
 }

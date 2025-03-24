@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { toggleContractData } from '../../../redux/action/contractDetails';
 import dateFormat from "dateformat";
 import { takeAction } from '../../../redux/action/apis/contracts/takeaction';
+import { resNewDeadline } from '../../../redux/action/apis/contracts/resNewDeadline';
 import { acceptFiles , acceptAllFiles } from '../../../redux/action/apis/contracts/acceptFiles';
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import { payment } from '../../../redux/action/apis/contracts/pay';
@@ -32,6 +33,7 @@ import CopywriterView from './CopywriterView'
 import TeamView from './TeamView'
 import ReportContract from '../../popsup/report-contract';
 import AskForCancelContract from '../../popsup/askForCancel';
+import AskForNewDeadline from '../../popsup/askForNewDeadline';
 import Loading from '../../elements/loading';
 import DuvduLoading from '../../elements/duvduLoading';
 import ErrorMessage from '../../elements/ErrorMessage';
@@ -43,6 +45,8 @@ function ReceiveProjectFiles({
     contractDetails,
     toggleContractData,
     takeAction,
+    resNewDeadline,
+    resNewDeadline_respond,
     takeAction_respond,
     GetContract,
     GetComplaint,
@@ -79,6 +83,7 @@ function ReceiveProjectFiles({
     const [textCopied, setTextCopied] = useState("");
     const [paymentError ,setPaymentError] = useState(null)
     const [actionError ,setActionError] = useState(null)
+    const [resNewDeadlineError ,setResNewDeadlineError] = useState(null)
     const [actionSuccess, setActionSuccess] = useState(false);
     const [submitFileSuccess, setSubmitFileSuccess] = useState(false);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -186,6 +191,14 @@ function ReceiveProjectFiles({
             setActionSuccess(true)
         }
     }, [takeAction_respond?.message]);
+
+    useEffect(() => {
+        if (resNewDeadline_respond?.message) {
+            getAllContracts()
+            toggleDrawer()
+            setActionSuccess(true)
+        }
+    }, [resNewDeadline_respond?.message]);
     useEffect(() => {
         if (submitFile_respond?.message) {
             getAllContracts()
@@ -215,7 +228,16 @@ function ReceiveProjectFiles({
             },5000)
             return () => clearTimeout(timer2);
         }   
-    },[payment_respond?.error , takeAction_respond?.error])
+        if(resNewDeadline_respond?.error){
+            var convertResNewDeadlineError = JSON.parse(resNewDeadline_respond?.error ?? null)
+            console.log({convertResNewDeadlineError})
+            setResNewDeadlineError(convertResNewDeadlineError?.data)
+            const timer2 = setTimeout(() => {
+                setResNewDeadlineError(null)
+            },5000)
+            return () => clearTimeout(timer2);
+        }   
+    },[payment_respond?.error , takeAction_respond?.error , resNewDeadline_respond?.error])
     useEffect(() => {
         if (payment_respond?.data || payment_respond?.message) {
             getAllContracts()
@@ -281,6 +303,15 @@ function ReceiveProjectFiles({
             takeAction({ id: contract?._id, data: true, type: type })
         }
     };
+    const handleResNewDeadline = (type)=>{
+        if(type === 'accept'){
+            setActionAccept('accept')
+            resNewDeadline({id:contract?._id,data:{status:"approved"},type: getType()})
+        }else{
+            setActionAccept('reject')
+            resNewDeadline({id:contract?._id,data:{status:"rejected"},type: getType()})
+        }
+    }
     const handleAcceptFiles = (field) => {
         setActionAccept('accept')
         acceptFiles({ id: contract?._id, field ,type:getType(), data:{ status:'approved' }})
@@ -349,6 +380,9 @@ function ReceiveProjectFiles({
     };
     const openReview = () => {
         OpenPopUp('Rating-contract')
+    };
+    const openAskForNewDeadline = () => {
+        OpenPopUp('ask-for-new-deadline')
     };
     const openAskForCancel = () => {
         OpenPopUp('ask-for-cancel')
@@ -444,7 +478,9 @@ function ReceiveProjectFiles({
             status !== "rejected" ||
             status !== "complaint" 
         ))
-
+    
+    const casAskForNewDeadline = !IsImSp() && contract?.requestedDeadline?.deadline == null && (getType() === "project" || getType() === "copyrights" || getType() === "team")
+    const canResToNewDeadline = !IsImSp() && contract?.requestedDeadline?.deadline == !null && contract?.requestedDeadline?.status == 'pending' && (getType() === "project" || getType() === "copyrights" || getType() === "team")
     const canAskCancel =
     !contract_respond?.data?.haveCancleRequest &&(
         (getType() === "copyrights" && (
@@ -525,6 +561,7 @@ function ReceiveProjectFiles({
             <RatingContract data={contract}/>
             <ReportContract data={contract} />
             <AskForCancelContract data={contract} />
+            <AskForNewDeadline data={contract} type={getType()} />
             <Uploading type={getType()} id={contractId.contract} />
             <SendReason field={field} type={getType()} id={contractId.contract} />
             <QrCode value={contractId?.contract} />
@@ -759,7 +796,7 @@ function ReceiveProjectFiles({
                                                 }
                                             </button>
                                             <button onClick={()=> openSendReason(item._id)} className="rounded-md  py-1 border-solid bg-[#EB1A40] w-full text-[#EB1A40] text-lg font-bold mt-2">
-                                                <span className='text-white font-bold capitalize text-lg'>{t("Reject")}</span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("reject")}</span>
                                             </button>
                                         </div>
                                         }
@@ -914,7 +951,7 @@ function ReceiveProjectFiles({
                                     }
                                 </div>
                             }
-                                {(paymentError?.errors || actionError?.errors) && 
+                                {(paymentError?.errors || actionError?.errors || resNewDeadlineError?.errors) && 
                                 <div className='text-center'>
                                     {paymentError?.errors && 
                                     <ErrorMessage ErrorMsg={paymentError?.errors[0]?.message}/>
@@ -922,6 +959,28 @@ function ReceiveProjectFiles({
                                     {actionError?.errors && 
                                     <ErrorMessage ErrorMsg={actionError?.errors[0]?.message}/>
                                     }
+                                    {resNewDeadlineError?.errors && 
+                                    <ErrorMessage ErrorMsg={resNewDeadlineError?.errors[0]?.message}/>
+                                    }
+                                </div>
+                                }
+                            {canResToNewDeadline &&
+                                <div className='grid grid-cols-2 gap-2'>
+                                    <button onClick={()=> handleResNewDeadline('accept')} className="rounded-md  py-1 border-solid bg-green-500 w-full text-[#EB1A40] text-lg font-bold mt-2">
+                                        {resNewDeadline_respond?.loading && actionAccept ==='accept'?
+                                        <Loading size='md'/>
+                                        :
+                                        <span className='text-white font-bold capitalize text-lg'>{t("Accept")}</span>
+                                        }
+                                    </button>
+                                    <button onClick={()=> handleResNewDeadline('reject')} className="rounded-md  py-1 border-solid bg-[#EB1A40] w-full text-[#EB1A40] text-lg font-bold mt-2">
+                                        {resNewDeadline_respond?.loading && actionAccept ==='reject'?
+                                        <Loading size='md'/>
+                                        :
+                                        <span className='text-white font-bold capitalize text-lg'>{t("reject")}</span>
+                                        }
+
+                                    </button>
                                 </div>
                                 }
                             {canEdit &&
@@ -1075,9 +1134,16 @@ function ReceiveProjectFiles({
                                     }
                                     {canAskCancel &&
                                         <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                            <Button color='bg-[#D30000]' className="w-full" shadow={true} shadowHeight={"14"} onClick={openAskForCancel}>
-                                                <span className='text-white font-bold capitalize text-lg'>{t("Ask For Cancel")}</span>
-                                            </Button>
+                                            <button className="rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
+                                                <span className='text-white font-bold capitalize text-lg'>{t("ask system for cancel")}</span>
+                                            </button>
+                                        </section>
+                                    }
+                                    {casAskForNewDeadline &&
+                                        <section className='flex mx-5 gap-7 mb-10 justify-center'>
+                                            <button className="rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
+                                                <span className='text-white font-bold capitalize text-lg'>{t("ask client new deadline")}</span>
+                                            </button>
                                         </section>
                                     }
                                     {
@@ -1104,6 +1170,7 @@ const mapStateToProps = (state) => ({
     contract_respond: state.api.GetContract,
     contractDetails: state.contractDetails,
     takeAction_respond: state.api.takeAction,
+    resNewDeadline_respond: state.api.resNewDeadline,
     payment_respond: state.api.payment,
     addprojectState: state.addproject,
     submitFile_respond:state.api.submitFile,
@@ -1116,6 +1183,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     toggleContractData,
     takeAction,
+    resNewDeadline,
     acceptFiles,
     acceptAllFiles,
     getAllContracts,
