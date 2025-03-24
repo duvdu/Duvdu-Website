@@ -81,6 +81,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
 
       // Listen to a sample event from the server
       socketInstance.on('new_message', (data) => {
+            console.log({data})
             setMessagesList((prev)=> [...prev ,data.message ])
       });
       
