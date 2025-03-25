@@ -69,29 +69,43 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         setReceiver(chat_respond.user._id)
     }, [chat_respond?.user?._id])    
     useEffect(() => {
-        if (respond?.data){
-            const socketInstance = io(process.env.BASE_URL, {
-              withCredentials: true,
-              transports: ['websocket', 'polling'],
-              reconnection: true,
-              reconnectionAttempts: 5,
-              reconnectionDelay: 1000,    
+        if (respond?.data) {
+            // Use environment variable or fallback for socket URL
+            const socketUrl = process.env.BASE_URL || window.location.origin;
+            
+            const socketInstance = io(socketUrl, {
+                withCredentials: true,
+                transports: ['websocket', 'polling'],
+                reconnection: true,
+                reconnectionAttempts: 5,
+                reconnectionDelay: 1000,
+                // Add error handling
+                autoConnect: true,
+                timeout: 10000
             });
-            socketInstance.on("connect", () => console.log("Connected New Message to socket"));
+
+            socketInstance.on("connect", () => {
+                console.log("Connected to chat socket");
+            });
+
+            socketInstance.on("connect_error", (error) => {
+                console.error("Socket connection error:", error);
+            });
+
             setSocket(socketInstance);
-      
-            // Listen to a sample event from the server
+
             socketInstance.on('new_message', (data) => {
-                  setMessagesList((prev)=> [...prev ,data.message ])
+                setMessagesList((prev) => [...prev, data.message]);
             });
-            
+
             socketInstance.on('disconnect', () => {
-              // console.log('Disconnected from server');
+                console.log('Disconnected from chat socket');
             });
-            
-            // Cleanup on component unmount
+
             return () => {
-              socketInstance.disconnect();
+                if (socketInstance) {
+                    socketInstance.disconnect();
+                }
             };
         }
     }, [respond]);
