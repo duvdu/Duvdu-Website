@@ -24,7 +24,7 @@ import ErrorPopUp from "../popsup/errorPopUp";
 import { LogOut } from "../../redux/action/apis/auth/logout";
 import { useRouter } from "next/router";
 import auth from "../../redux/reducer/auth";
-import { io } from "socket.io-client";
+import socket from "../../util/socket";
 
 
 // toggleDarkMode
@@ -161,68 +161,43 @@ const Header = ({
     }, [getheaderpopup , isLogin]);
 
     useEffect(() => {
-        // Connect to your socket server
-        const socketInstance = io(process.env.BASE_URL, {
-            withCredentials: true,
-            transports: ['websocket', 'polling'],
-            reconnection: true,
-            reconnectionAttempts: 5,
-            reconnectionDelay: 1000,    
-          });
-          socketInstance.on("connect", () => console.log("Connected to socket"));
-    
+        socket.on("connect", () => console.log("Connected to socket"));
+
         // Listen for notification events
-        socketInstance.on('notification', (data) => {
-            setCountUnRead((prev)=> prev+1)
-            console.log({data})
+        socket.on('notification', (data) => {
+            setCountUnRead((prev) => prev + 1);
             setToast({
-                type:'notification',
-                id:data.data.sorceUser._id,
-                image:data.data.sourceUser.profileImage,
-                title:data.data.title,
-                message:data.data.message
-            })
+                type: 'notification',
+                id: data.data.sourceUser._id,
+                image: data.data.sourceUser.profileImage,
+                title: data.data.title,
+                message: data.data.message
+            });
         });
-        socketInstance.on('disconnect', () => {
-            // console.log('Disconnected from server');
-          });    
+
         // Cleanup on component unmount
         return () => {
-            socketInstance.off('notification');
-            socketInstance.disconnect();
+            socket.off('notification');
         };
     }, []);
+
     useEffect(() => {
-            // Connect to your socket server
-            const socketInstance = io(process.env.BASE_URL, {
-                withCredentials: true,
-                transports: ['websocket', 'polling'],
-                reconnection: true,
-                reconnectionAttempts: 5,
-                reconnectionDelay: 1000,    
-              });
-              socketInstance.on("connect", () => console.log("Connected to socket"));
-        
-            // Listen for notification events
-            socketInstance.on('new_message', (data) => {
-                console.log({data})
-                setCountUnRead((prev)=> prev+1)
-                    setToast({
-                        type:'message',
-                        id:data.data.target,
-                        image:data.data.sourceUser.profileImage,
-                        title:data.data.sourceUser.name,
-                        message:'New message received'
-                    })
+        // Listen for new message events
+        socket.on('new_message', (data) => {
+            setCountUnRead((prev) => prev + 1);
+            setToast({
+                type: 'message',
+                id: data.data.target,
+                image: data.data.sourceUser.profileImage,
+                title: data.data.sourceUser.name,
+                message: 'New message received'
             });
-            socketInstance.on('disconnect', () => {
-                // console.log('Disconnected from server');
-              });    
-            // Cleanup on component unmount
-            return () => {
-                socketInstance.off('new_message');
-                socketInstance.disconnect();
-            };
+        });
+
+        // Cleanup on component unmount
+        return () => {
+            socket.off('new_message');
+        };
     }, []);
 
     useEffect(() => {
