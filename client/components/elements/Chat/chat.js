@@ -69,31 +69,32 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
         setReceiver(chat_respond.user._id)
     }, [chat_respond?.user?._id])    
     useEffect(() => {
-      const socketInstance = io(process.env.BASE_URL, {
-        withCredentials: true,
-        transports: ['websocket', 'polling'],
-        // reconnection: true,
-        // reconnectionAttempts: 5,
-        // reconnectionDelay: 1000,    
-      });
-      socketInstance.on("connect", () => console.log("Connected to socket"));
-      setSocket(socketInstance);
-
-      // Listen to a sample event from the server
-      socketInstance.on('new_message', (data) => {
-            console.log({data})
-            setMessagesList((prev)=> [...prev ,data.message ])
-      });
+        if (respond?.data){
+            const socketInstance = io(process.env.BASE_URL, {
+              withCredentials: true,
+              transports: ['websocket', 'polling'],
+              reconnection: true,
+              reconnectionAttempts: 5,
+              reconnectionDelay: 1000,    
+            });
+            socketInstance.on("connect", () => console.log("Connected New Message to socket"));
+            setSocket(socketInstance);
       
-      socketInstance.on('disconnect', () => {
-        // console.log('Disconnected from server');
-      });
-      
-      // Cleanup on component unmount
-      return () => {
-        socketInstance.disconnect();
-      };
-    }, []);
+            // Listen to a sample event from the server
+            socketInstance.on('new_message', (data) => {
+                  setMessagesList((prev)=> [...prev ,data.message ])
+            });
+            
+            socketInstance.on('disconnect', () => {
+              // console.log('Disconnected from server');
+            });
+            
+            // Cleanup on component unmount
+            return () => {
+              socketInstance.disconnect();
+            };
+        }
+    }, [respond]);
     useEffect(() => {
         if (respond?.data)
 
