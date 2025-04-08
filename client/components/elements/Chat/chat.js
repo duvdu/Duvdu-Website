@@ -5,7 +5,7 @@ import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/message
 import { SendMessages } from '../../../redux/action/apis/realTime/messages/sendmessage';
 import { convertToFormData, handleMultipleFileUpload, handleRemoveEvent, } from '../../../util/util';
 import { useTranslation } from 'react-i18next';
-import socket from '../../../util/socket'; // Import the socket instance
+import { useSocket } from '../../../util/socketContext'; // Import useSocket hook
 
 import dateFormat from "dateformat";
 import AudioRecorder from '../recording';
@@ -50,42 +50,40 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     ///////////////////////////
     const [newMessage, setNewMessage] = useState('');
 
+    // Get socket from context
+    const { socket } = useSocket();
 
-        const videoRef = useRef(null);
-        useEffect(() => {
-            if (videoRef.current) {
-                videoRef.current.play();
-                videoRef.current.muted = true;     
-                const timeout = setTimeout(() => {
-                    videoRef.current.pause();
-                    videoRef.current.currentTime = 0;
-                }, 300); 
-                return () => clearTimeout(timeout);
-            }
-        }, [videoRef.current]);
+    const videoRef = useRef(null);
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play();
+            videoRef.current.muted = true;     
+            const timeout = setTimeout(() => {
+                videoRef.current.pause();
+                videoRef.current.currentTime = 0;
+            }, 300); 
+            return () => clearTimeout(timeout);
+        }
+    }, [videoRef.current]);
     useEffect(() => {
         if(chat_respond?.user?._id)
         setReceiver(chat_respond.user._id)
     }, [chat_respond?.user?._id])    
     useEffect(() => {
-        // socket.on("connect", () => {
-        //     console.log("Connected to chat socket");
-        // });
+        if (socket) {
+            socket.on('new_message', (data) => {
+                setMessagesList((prev) => [...prev, data.message]);
+            });
 
-        socket.on('new_message', (data) => {
-            setMessagesList((prev) => [...prev, data.message]);
-        });
-
-        // Cleanup on component unmount
-        // return () => {
-        //     socket.off('new_message');
-        // };
-    }, []);
+            // Cleanup on component unmount
+            return () => {
+                socket.off('new_message');
+            };
+        }
+    }, [socket]);
     useEffect(() => {
         if (respond?.data)
-
             setMessagesList((prevMessages) => [...prevMessages,respond?.data]);
-
     }, [respond])
 
     useEffect(() => {

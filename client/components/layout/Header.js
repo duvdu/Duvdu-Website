@@ -24,7 +24,7 @@ import ErrorPopUp from "../popsup/errorPopUp";
 import { LogOut } from "../../redux/action/apis/auth/logout";
 import { useRouter } from "next/router";
 import auth from "../../redux/reducer/auth";
-import socket from "../../util/socket";
+import { useSocket } from "../../util/socketContext";
 
 
 // toggleDarkMode
@@ -110,10 +110,11 @@ const Header = ({
     user,
 }) => {
     const { i18n, t } = useTranslation();
+    const { socket, notifications, newMessages, unreadCount, resetUnreadCount } = useSocket();
 
     const [width, setWidth] = useState(0);
     const [countUnRead, setCountUnRead] = useState(0);
-    const [toast , setToast] = useState(null)
+    const [toast, setToast] = useState(null);
 
     if (api.error && JSON.parse(api.error).status == 423) {
         LogOut()
@@ -161,44 +162,32 @@ const Header = ({
     }, [getheaderpopup , isLogin]);
 
     useEffect(() => {
-        socket.on("connect", () => console.log("Connected to socket"));
-
-        // Listen for notification events
-        socket.on('notification', (data) => {
-            setCountUnRead((prev) => prev + 1);
-            setToast({
-                type: 'notification',
-                id: data.data.sourceUser._id,
-                image: data.data.sourceUser.profileImage,
-                title: data.data.title,
-                message: data.data.message
+        if (socket) {
+            // Listen for notification events
+            socket.on('notification', (data) => {
+                setCountUnRead((prev) => prev + 1);
+                setToast({
+                    type: 'notification',
+                    id: data.data.sourceUser._id,
+                    image: data.data.sourceUser.profileImage,
+                    title: data.data.title,
+                    message: data.data.message
+                });
             });
-        });
 
-        // Cleanup on component unmount
-        return () => {
-            socket.off('notification');
-        };
-    }, []);
-
-    useEffect(() => {
-        // Listen for new message events
-        socket.on('new_message', (data) => {
-            setCountUnRead((prev) => prev + 1);
-            setToast({
-                type: 'message',
-                id: data.data.target,
-                image: data.data.sourceUser.profileImage,
-                title: data.data.sourceUser.name,
-                message: 'New message received'
+            // Listen for new message events
+            socket.on('new_message', (data) => {
+                setCountUnRead((prev) => prev + 1);
+                setToast({
+                    type: 'message',
+                    id: data.data.target,
+                    image: data.data.sourceUser.profileImage,
+                    title: data.data.sourceUser.name,
+                    message: 'New message received'
+                });
             });
-        });
-
-        // Cleanup on component unmount
-        return () => {
-            socket.off('new_message');
-        };
-    }, []);
+        }
+    }, [socket]);
 
     useEffect(() => {
 

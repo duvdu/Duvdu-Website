@@ -25,6 +25,7 @@ import firebaseApp from '../util/firebase';
 import { getMessaging, onMessage } from 'firebase/messaging';
 import Icon from "../components/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SocketProvider } from "../util/socketContext";
 
 function MyApp({ Component, pageProps }) {
     const [loading, setLoading] = useState(false);
@@ -63,21 +64,23 @@ function MyApp({ Component, pageProps }) {
         <>
             {!loading ? (
                 <Provider store={store}>
-                    <Component {...pageProps} />
-                    {payload && (
-                        <div className="fixed bg-white shadow-lg top-2 right-2 w-96 text-white p-4 z-50 rounded-lg">
-                            <div className="flex flex-col gap-1">
-                                <div className="flex justify-between items-center">
-                                    <h4 className='font-extrabold'>{payload.notification?.title}</h4>
-                                    <div onClick={() => setPayload(null)} className="text-red w-5 h-5 flex items-center justify-center rounded-full cursor-pointer">
-                                        <FontAwesomeIcon className="text-base text-gray-600 w-3" icon="fa-solid fa-x" />
+                    <SocketProvider>
+                        <Component {...pageProps} />
+                        {payload && (
+                            <div className="fixed bg-white shadow-lg top-2 right-2 w-96 text-white p-4 z-50 rounded-lg">
+                                <div className="flex flex-col gap-1">
+                                    <div className="flex justify-between items-center">
+                                        <h4 className='font-extrabold'>{payload.notification?.title}</h4>
+                                        <div onClick={() => setPayload(null)} className="text-red w-5 h-5 flex items-center justify-center rounded-full cursor-pointer">
+                                            <FontAwesomeIcon className="text-base text-gray-600 w-3" icon="fa-solid fa-x" />
+                                        </div>
                                     </div>
+                                    <p className='text-slate-500'>{payload.notification?.body}</p>
                                 </div>
-                                <p className='text-slate-500'>{payload.notification?.body}</p>
                             </div>
-                        </div>
-                    )}
-                    <ToastContainer />
+                        )}
+                        <ToastContainer />
+                    </SocketProvider>
                 </Provider>
             ) : (
                 <Preloader />
