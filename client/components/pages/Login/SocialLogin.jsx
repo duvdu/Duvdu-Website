@@ -41,9 +41,16 @@ function SocialLogin({ api, login_respond, googleLogin, appleLogin, getMyprofile
             // Use the utility function to handle Apple Sign In
             const appleAuthData = await performAppleSignIn();
             
+            // Make sure we have valid data
+            if (!appleAuthData || !appleAuthData.user) {
+                console.error('Invalid Apple authentication data:', appleAuthData);
+                throw new Error('Could not authenticate with Apple. Missing user data.');
+            }
+            
             // Process the user data
             const userData = processAppleUserData(appleAuthData);
-            console.log({userData , appleAuthData});
+            console.log({userData, appleAuthData});
+            
             // Call the appleLogin action with the processed user data
             appleLogin({
                 username: userData.username,
@@ -53,6 +60,7 @@ function SocialLogin({ api, login_respond, googleLogin, appleLogin, getMyprofile
             });
         } catch (error) {
             console.error('Apple Login Failed:', error);
+            // You could show an error notification here
         }
     };
 

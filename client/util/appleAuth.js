@@ -19,6 +19,25 @@ export const initAppleSignIn = (clientId, redirectUri) => {
 };
 
 /**
+ * Decode a JWT token to get the payload
+ * @param {string} token - The JWT token to decode
+ * @returns {Object} The decoded payload
+ */
+const decodeJWT = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error('Error decoding JWT:', error);
+    return {};
+  }
+};
+
+/**
  * Performs the Apple Sign In flow
  * @returns {Promise} A promise that resolves with the authentication data
  */
@@ -28,16 +47,30 @@ export const performAppleSignIn = () => {
   }
 
   return window.AppleID.auth.signIn().then(response => {
-    console.log({response})
-    // Convert response to a consistent format
-    return {
-      user: response.user || response.authorization?.id_token || '',
-      email: response.email || '',
-      name: response.name || {
-        firstName: '',
-        lastName: ''
-      }
-    };
+    console.log({response});
+    
+    // The response contains authorization object with id_token
+    const idToken = response.authorization?.id_token;
+    let userData = {};
+    
+    if (idToken) {
+      // Decode the JWT token to get user information
+      const decodedToken = decodeJWT(idToken);
+      console.log('Decoded token:', decodedToken);
+      
+      userData = {
+        // 'sub' contains the unique user identifier
+        user: decodedToken.sub || '',
+        email: decodedToken.email || '',
+        // Apple doesn't provide name in the token after first login
+        name: {
+          firstName: '',
+          lastName: ''
+        }
+      };
+    }
+    
+    return userData;
   });
 };
 
@@ -49,6 +82,7 @@ export const performAppleSignIn = () => {
 export const processAppleUserData = (data) => {
   const { user, email, name } = data;
   console.log({data});
+  
   // Get name components or use defaults
   const firstName = name?.firstName || '';
   const lastName = name?.lastName || '';
