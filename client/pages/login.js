@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import SocialLogin from "../components/pages/Login/SocialLogin";
 import Loading from '../components/elements/loading';
+import Head from 'next/head';
+import { initAppleSignIn } from '../util/appleAuth';
 
 function Login({ api, login_respond , getMyprofile_respond, login, resendCode, getMyprofile }) {
     const { t } = useTranslation();
@@ -73,7 +75,32 @@ function Login({ api, login_respond , getMyprofile_respond, login, resendCode, g
       setErrorMSG(null)
   }, [login_respond?.error])
 
+  // Apple Sign In Client ID
+  const appleClientId = 'com.duvdu.duvduWeb'; // Replace with your actual Apple Client ID
 
+  // Add the Apple ID configuration
+  useEffect(() => {
+    // Load the Apple SignIn JS SDK
+    const script = document.createElement('script');
+    script.src = 'https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js';
+    script.async = true;
+    script.id = 'apple-sign-in-script';
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      // Initialize Apple SignIn using our utility function
+      initAppleSignIn(
+        appleClientId, 
+         'https://duvdu.com/auth/apple/callback'
+      );
+    };
+
+    return () => {
+      // Clean up
+      const scriptElement = document.getElementById('apple-sign-in-script');
+      if (scriptElement) document.body.removeChild(scriptElement);
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -113,6 +140,13 @@ function Login({ api, login_respond , getMyprofile_respond, login, resendCode, g
   return (
     <>
       <Auth>
+        <Head>
+          <meta name="appleid-signin-client-id" content={appleClientId} />
+          <meta name="appleid-signin-scope" content="name email" />
+          <meta name="appleid-signin-redirect-uri" content={typeof window !== 'undefined' ? window.location.origin : ''} />
+          <meta name="appleid-signin-state" content="signin" />
+          <meta name="appleid-signin-use-popup" content="true" />
+        </Head>
         <form method="post" onSubmit={handleSubmit}>
           <div className="heading_s1 mb-8">
             <h1 className="auth-title">{t("Welcome Back !!")}</h1>

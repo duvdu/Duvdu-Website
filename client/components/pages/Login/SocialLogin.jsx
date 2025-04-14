@@ -2,43 +2,29 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { connect } from "react-redux";
-import firebaseApp from '../../../util/firebase';
-import { getAuth, GoogleAuthProvider, signInWithPopup, OAuthProvider } from 'firebase/auth';
 import useFcmToken from "../../../util/hooks/useFcmToken";
 import { getMyprofile } from "../../../redux/action/apis/auth/profile/getProfile";
 import { googleLogin } from '../../../redux/action/apis/auth/signin/googleLogin';
+import { appleLogin } from '../../../redux/action/apis/auth/signin/appleLogin';
+import { performAppleSignIn, processAppleUserData } from '../../../util/appleAuth';
 import axios from 'axios';
 
-function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
-    const auth = getAuth(firebaseApp);
-    const googleProvider = new GoogleAuthProvider();
-    const appleProvider = new OAuthProvider('apple.com');
+function SocialLogin({ api, login_respond, googleLogin, appleLogin, getMyprofile }) {
     const { t } = useTranslation();
     const clientId = "475213071438-mn7lcjd3sdq0ltsv92n04pr97ipdhe9g.apps.googleusercontent.com";
     const { fcmToken, notificationPermissionStatus } = useFcmToken();
-    const login =  useGoogleLogin({
+    const login = useGoogleLogin({
         onSuccess: async(response) => {
             try {
                 const res = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
                   headers: { Authorization: `Bearer ${response.access_token}` },
                 })
-                googleLogin({ username: res.data.email.split('@')[0],email:res.data.email, name:res.data.name, id: res.data.sub });
-                // console.log(res);
-                // const loginRes = await axios.post('https://api.duvdu.com/api/users/auth/provider',{
-                //     name:res.data.name,
-                //     username:res.data.email.split('@')[0],
-                //     email:res.data.email,
-                //     googleId:res.data.sub,
-                //     }).then(()=>{
-                //         getMyprofile()
-                //     })
+                googleLogin({ username: res.data.email.split('@')[0], email:res.data.email, name:res.data.name, id: res.data.sub });
             }
             catch(error){
                 console.log(error);
             }
-
-            
-            },
+        },
         onError: (error) => {
             console.error('Login Failed:', error);
         },
@@ -50,16 +36,24 @@ function SocialLogin({ api, login_respond, googleLogin, getMyprofile }) {
         }
     }, [login_respond?.message]);
 
-    const loginWithApple = () => {
-        signInWithPopup(auth, appleProvider)
-            .then((result) => {
-                const credential = OAuthProvider.credentialFromResult(result);
-                const user = result.user;
-                googleLogin({ username: user?.email.split('@')[0],email:user?.email, name:user?.displayName, id: user?.uid, notificationToken: fcmToken ?? null });
-            })
-            .catch((error) => {
-                const credential = OAuthProvider.credentialFromError(error);
+    const loginWithApple = async () => {
+        try {
+            // Use the utility function to handle Apple Sign In
+            const appleAuthData = await performAppleSignIn();
+            
+            // Process the user data
+            const userData = processAppleUserData(appleAuthData);
+            
+            // Call the appleLogin action with the processed user data
+            appleLogin({
+                username: userData.username,
+                email: userData.email,
+                name: userData.name,
+                id: userData.id
             });
+        } catch (error) {
+            console.error('Apple Login Failed:', error);
+        }
     };
 
     return (
@@ -91,6 +85,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     googleLogin,
+    appleLogin,
     getMyprofile
 };
 
