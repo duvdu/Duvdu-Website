@@ -43,7 +43,7 @@ function SocialLogin({ api, login_respond, googleLogin, appleLogin, getMyprofile
             
             // Process the user data
             const userData = processAppleUserData(appleAuthData);
-            
+            console.log({userData});
             // Call the appleLogin action with the processed user data
             appleLogin({
                 username: userData.username,
