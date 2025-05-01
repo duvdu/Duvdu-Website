@@ -110,7 +110,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
                                     <Link href={`/creative/${user.username}`} >
                                         <div onClick={CloseProfile} className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
                                             <span className="text-primary font-bold text-base">
-                                                {t('view profile')}
+                                                {t('Access your space')}
                                             </span>
                                         </div>
                                     </Link>
@@ -183,7 +183,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
                         <div>
                             <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[45px] mb-2">
                                 <h4 className="opacity-70 text-sm font-semibold m-2 flex justify-between">
-                                    {t('saved projects')}
+                                    {t('Your Matches')}
                                     <Link href="/saved"><span className="font-semibold text-primary cursor-pointer" onClick={CloseProfile} >{t('view all')}</span></Link>
                                 </h4>
                                 <div className="flex justify-between gap-3">

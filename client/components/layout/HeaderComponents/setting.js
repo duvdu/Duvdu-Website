@@ -20,6 +20,7 @@ function Setting({
     getheaderpopup,
     LogOut,
     user,
+    isLogin,
     updateProfile,
     onChoose,
     updateProfile_respond
@@ -28,7 +29,8 @@ function Setting({
     const { t } = useTranslation();
 
     const [open, setOpened] = useState(0);
-    const [isMob, setIsMob] = useState(window.innerWidth < 1024);
+    // Determine mobile view only on client
+    const [isMob, setIsMob] = useState(typeof window !== 'undefined' && window.innerWidth < 1024);
 
     function handleResize() {
         setIsMob(window.innerWidth < 1024);
@@ -123,16 +125,18 @@ function Setting({
 
     const Main = ({ }) => (
         <>
-            {
+            {isLogin &&
                 [
                     {
                         img: 'mode-icon.svg',
                         name: 'Dark mode',
+                        login: false,
                         action: <Switch value={isDark} onSwitchChange={() => { toggle() }} />,
                     },
                     {
                         img: 'power-icon.svg',
                         name: 'Instant projects',
+                        login: false,
                         subName: 'short delivery time, More money',
                         action: <Switch onSwitchChange={updateInstantState} value={updateProfile_respond?.data?.isAvaliableToInstantProjects != null ? updateProfile_respond?.data?.isAvaliableToInstantProjects : user?.isAvaliableToInstantProjects} />,
                     },
@@ -144,24 +148,28 @@ function Setting({
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
+                        login: false,
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => setOpened(2)
                     },
                     {
                         img: 'number-icon.svg',
                         name: 'Change number',
+                        login: false,
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => router.push("/changePhoneNumber")
                     },
                     {
                         img: 'lock-icon.svg',
                         name: 'Change password',
+                        isLogin: true,
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => router.push("/changepassword")
                     },
                     {
                         img: 'chat-icon.svg',
-                        name: 'Contact Us',
+                        name: 'Let’s connect',
+                        login: false,
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => setOpened(1)
                     },
@@ -179,15 +187,59 @@ function Setting({
                     </div>
                 ))
             }
+            {!isLogin && 
+                            [
+                                {
+                                    img: 'mode-icon.svg',
+                                    name: 'Dark mode',
+                                    login: false,
+                                    action: <Switch value={isDark} onSwitchChange={() => { toggle() }} />,
+                                },
+                                
+                                // {
+                                //     img: 'notification-icon.svg',
+                                //     name: 'Notification',
+                                //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                                // },
+                                {
+                                    img: 'world-icon.svg',
+                                    name: 'Language',
+                                    login: false,
+                                    action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
+                                    onClick: () => setOpened(2)
+                                },
+                                {
+                                    img: 'chat-icon.svg',
+                                    name: 'Let’s connect',
+                                    login: false,
+                                    action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
+                                    onClick: () => setOpened(1)
+                                },
+                                // {
+                                //     img: 'about-icon.svg',
+                                //     name: 'About',
+                                //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                                // },
+            
+                            ].map((e, i) => (
+                                <div onClick={e.onClick} className="flex py-3 gap-4 cursor-pointer" key={i}>
+                                    <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/${e.img}`} />
+                                    <span className="text-[12px] text-[#4F5E7B] w-full font-semibold">{t(e.name)}</span>
+                                    <div className="action rtl:rotate-180"> {e.action} </div>
+                                </div>
+                            ))            
+            }
+            {isLogin && 
             <div onClick={() => LogOut().then(()=> onChoose && onChoose())} className="flex py-4 gap-4 text-red-950 cursor-pointer">
                 <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/logout-icon.svg`} />
                 <p className="text-[12px] w-full font-semibold text-red-500"> {t('Logout')} </p>
             </div>
+            }
         </>
     )
 
-    if (getheaderpopup != Types.SHOWSETTING && window.innerWidth > 1024) return
- 
+    // On desktop, hide unless setting popup is open
+    if (getheaderpopup !== Types.SHOWSETTING && !isMob) return null;
 
     return (
         <div className={isMob ? "" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"}>
@@ -211,6 +263,7 @@ const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
     logout_respond: state.api.LogOut,
     updateProfile_respond: state.api.updateProfile,
+    isLogin: state.auth.login,
     user: state.auth.user,
 });
 

@@ -45,15 +45,16 @@ const Home = ({
         if(isLogin===false)
         Promise.all([HomeTreny(), HomeDiscover(), popularSub()]);
     }, [isLogin]);
-    const [words, setWords] = useState(["modeling", "photography", "post production", "videography", "production", "modeling"]);
+    const [words, setWords] = useState(["Best in photography", "Videography", "branding", "content creation", "Best in photography"]);
     const wordsRef = useRef(null);
     const list =  homeTreny_respond?.data || [];
     const router = useRouter();
 
     var TheBeststyle = i18n.language == "Arabic" ? {} : {
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'bottom',
+        backgroundRepeat: 'no-repeat',
         display: 'inline-block',
     };
     // const homeTrenyList = [...list, ...Array(4 - list.length).fill({ title: '', image: '' })].slice(0, 4);
@@ -226,8 +227,8 @@ const Home = ({
                 <section className="w-full">
                     <div className="mt-8 lg:my-20 mx-auto w-min">
                         <h1 className="text-center my-4">
-                            <span className="font-black text-[#263257] dark:text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl capitalize whitespace-nowrap trap">{t("explore")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[10px] lg:px-[20px] pb-0 trap" style={TheBeststyle}>
-                                {t("the best")} </span> {t("of")}
+                            <span className="font-black text-[#263257] dark:text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl capitalize whitespace-nowrap trap">{t("Find your perfect")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[20px] lg:px-[20px] pb-0 trap" style={TheBeststyle}>
+                                {t("WORK")} </span> {t("match")}
                             </span>
                             <div className="relative h-[50px] lg:h-[120px]">
                                 <div className="absolute h-full w-full overflow-hidden">
@@ -235,7 +236,7 @@ const Home = ({
                                         {
                                             words?.map((i, index) =>
                                                 <div className="h-[50px] lg:h-[120px] flex flex-col justify-center items-center my-2" key={index}>
-                                                    <p className="text-[#1A73EB] font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
+                                                    <p className="text-[#1A73EB] font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
                                                 </div>
                                             )
                                         }
@@ -252,7 +253,7 @@ const Home = ({
                     <div className="w-full ">
                         <div className="ms-5 lg:mx-auto lg:container relative">
                             <div className="sm:container">
-                                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-5 lg:mb-8">{t("trendy categories")}</h2>
+                                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-5 lg:mb-8">{t("What’s trending?")}</h2>
                             </div>
                                 {homeTreny_respond?.loading ? 
                             <DuvduLoading loadingIn={""} type={'category'}/>:                                
@@ -338,7 +339,7 @@ const Home = ({
                     <div className="w-full  ">
                         <section className="ms-5 lg:mx-auto lg:container relative">
                             <div className="sm:container">
-                                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-5 lg:mb-8">{t("discover tags")}</h2>
+                                <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-5 lg:mb-8">{t("Still Exploring?")}</h2>
                             </div>
                             {homeDiscover_respond?.loading ? 
                            <DuvduLoading loadingIn={""} type={'tag'}/>:
@@ -405,7 +406,7 @@ const Home = ({
                         </section>
                     </div>
                 </section>}
-                {homeDiscover_respond && 
+                {homeDiscover_respond && false && 
                 <section className="py-12">
                     <div className="w-full">
                         <div className="ms-5 lg:mx-auto lg:container relative">
@@ -481,7 +482,7 @@ const Home = ({
                     </div>
                 </section>
                 }
-                {popularSub_respond && 
+                {popularSub_respond && false &&
                 
                 <section className="py-12 bg-[#F2F2F3] dark:bg-[#1A1A1C]">
                         <div className="ms-5 lg:mx-auto lg:container relative">
@@ -570,7 +571,9 @@ const Home = ({
                 {projects && 
                 <section className="py-12">
                     <div className='container'>
-                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize mb-5 lg:mb-8">{t("explore recommended projects")}</h2>
+                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize">{t("Haven’t found your match yet?")}</h2>
+                        <h4 className="text-center text-xl opacity-60 capitalize mb-5 lg:mb-8">{t("Here’s our latest picks!")}</h4>
+                        
                         <Filter cycle={cycle} setSwitchState={setSwitchState} switchState={switchState} setParams={setParams} />
                         <div className="h-5" />
                         {projects?.loading ?

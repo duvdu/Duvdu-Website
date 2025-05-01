@@ -201,7 +201,7 @@ function Login({ api, login_respond , getMyprofile_respond, login, resendCode, g
           </button>
           <div className="have-account">
             <span>{t("Don't have an account ?") + " "}</span>
-            <Link href="/register">{t("Register now")}</Link>
+            <Link href="/register">{t("Join Us Now")}</Link>
           </div>
           <div className="flex items-center">
             <div className="border-t border-black opacity-20 w-full my-4"></div>

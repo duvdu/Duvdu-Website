@@ -43,7 +43,7 @@ const User = ({ info }) => {
                 <div className="flex gap-3 mt-6 justify-center items-center">
                     <Link href={`/creative/${info?.username}`}>
                         <div className="flex items-center justify-center capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
-                            <span className="text-primary font-bold text-lg my-5">{t("view profile")}</span>
+                            <span className="text-primary font-bold text-lg my-5">{t("Access your space")}</span>
                         </div>
                     </Link>
                 </div>

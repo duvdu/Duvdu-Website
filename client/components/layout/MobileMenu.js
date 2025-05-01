@@ -114,13 +114,19 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
     const Tabs2 = ({onClose}) => {    
         return (
             <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
-                {
+                {   isLogin ? 
                     [
                         {
                             url: `/creative/${user?.username}`,
                             icon: 'user',
                             name: 'profile',
                         },
+                        {
+                            click: () => setPage(5),
+                            icon: 'gear',
+                            name: 'settings',
+                        },
+                    ]:[
                         {
                             click: () => setPage(5),
                             icon: 'gear',
@@ -154,18 +160,18 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                         {
                             url: '/dashboard',
                             icon: 'dashboard',
-                            name: 'dashboard',
+                            name: 'Performance Hub',
                         },
                         {
                             url: '/contracts',
                             icon: 'contracts',
                             name: 'contracts',
                         },
-                        {
-                            url: '/teams',
-                            icon: 'teams',
-                            name: 'team projects',
-                        },
+                        // {
+                        //     url: '/teams',
+                        //     icon: 'teams',
+                        //     name: 'team projects',
+                        // },
                         {
                             url: '/saved',
                             icon: 'saved',
@@ -316,9 +322,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                                 isLogin ===  true&&
                                 <>
                                     <Tabs onClose={() => toggleClick(1)} />
-                                    <Tabs2 onClose={() => toggleClick(1)} />
                                 </>
+                                
                             }
+                                <Tabs2 onClose={() => toggleClick(1)} />
                             <Menu />
                             {
                                 isLogin ===  false&&

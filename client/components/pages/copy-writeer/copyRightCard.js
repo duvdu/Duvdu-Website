@@ -100,8 +100,8 @@ const CopyRightCard = ({ cardData,DeleteCopyright, className = "", onClick, user
       {bookButton === true && 
       <div className='pt-5'>
       {user?.profile?.username !== cardData?.user?.username  ?
-        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold  capitalize">{t("book")}</button> :
-        <button style={{ cursor: 'not-allowed' }} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold capitalize">{t("Book")}</button>
+        <button onClick={onClick} className="rounded-full border-2 border-solid border-primary w-full h-16 text-primary text-lg font-bold  capitalize">{t("book now")}</button> :
+        <button style={{ cursor: 'not-allowed' }} className="rounded-full border-2 border-solid border-[#677A93] w-full h-16 text-[#677A93] text-lg font-bold capitalize">{t("book now")}</button>
       }
       </div>
       }

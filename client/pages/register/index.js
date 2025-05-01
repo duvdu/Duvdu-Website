@@ -239,7 +239,7 @@ const Register = ({ signup, api, respond, userExists , emailExists , phoneExists
                         name="name"
                         value={formData.name || ""}
                         onChange={handleChange}
-                        placeholder={t("Name")}
+                        placeholder={t("Full name")}
                         className={formErrors.name.isError ? "app-field error" : "app-field"}
                     />
                     {formErrors.name.isError && <p className="error-msg">{formErrors.name.message}</p>}

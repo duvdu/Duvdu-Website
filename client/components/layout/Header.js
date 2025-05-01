@@ -222,6 +222,10 @@ const Header = ({
     }, [isLogin]);
 
     useEffect(() => {
+        const dark = localStorage.getItem('darkMode')
+        if(!dark){
+            localStorage.setItem('darkMode','true')
+        }
         const isDarkMode = localStorage.getItem('darkMode') === 'true';
         toggleDarkMode(isDarkMode)
         const body = document.body;
@@ -284,7 +288,7 @@ const Header = ({
                                                     <div className="header-link">
                                                         <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
                                                         <span className="text-nowrap">
-                                                            {t('dashboard')}
+                                                            {t('Performance Hub')}
                                                         </span>
                                                     </div>
                                                 </Link>
@@ -299,7 +303,7 @@ const Header = ({
                                                     </span>
                                                 </div>
                                             </Link>
-                                            <div className="">
+                                            {/* <div className="">
                                                 <Link href="/teams" className="capitalize">
                                                     <div className="header-link whitespace-nowrap">
                                                         <Icon name={"teams"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
@@ -308,7 +312,7 @@ const Header = ({
                                                         </span>
                                                     </div>
                                                 </Link>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     }
 
@@ -317,9 +321,10 @@ const Header = ({
                                     </div>
                                     <div className="hidden lg:flex min-w-max">
 
-                                        {
-                                            isLogin === true&&
+                                        
+                                            
                                             <div className="header-action-2 flex items-center ">
+                                                {isLogin === true&&
                                                 <div className="header-action-icon-2 z-10" >
                                                     <div className="icon-holder cursor-pointer" onClick={() =>
                                                         SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)
@@ -332,12 +337,15 @@ const Header = ({
                                                     </div>
                                                     <MessageAndNotofication />
                                                 </div>
+                                                }
+                                                
                                                 <div className="header-action-icon-2 mx-6 z-50"  >
                                                     <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWSETTING ? Types.SHOWSETTING : Types.NONEPOPUP)}>
                                                         <Icon className={"dark:text-[#B3B3B3]"} name={"gear"} />
                                                     </div>
                                                     <Setting />
                                                 </div>
+                                                {isLogin === true&&
                                                 <div className="header-action-icon-2"  >
                                                     <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWPROFILE ? Types.SHOWPROFILE : Types.NONEPOPUP)}>
                                                         <div className="flex justify-center items-center h-[18px]">
@@ -348,16 +356,17 @@ const Header = ({
                                                     </div>
                                                     <Profile />
                                                 </div>
+                                                }
                                             </div>
-                                        }
+                                        
                                         {
                                             isLogin === false &&
                                             <div className="header-action-2 flex gap-6 items-center">
                                                 <Link href="/login">
-                                                    <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('log-in')}</div>
+                                                    <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('Access your space')}</div>
                                                 </Link>
                                                 <Link href="/register">
-                                                    <div className="cursor-pointer px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('register')}</div>
+                                                    <div className="cursor-pointer px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('Join Us')}</div>
                                                 </Link>
                                             </div>
                                         }
