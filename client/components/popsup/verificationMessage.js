@@ -15,9 +15,9 @@ function VerificationMessage({ id = "verification-message", isError = false, isS
     function Cancel() {
         if (onCancel) {
             onCancel();
-            ClosePopUp('face-verification')
+            // ClosePopUp('face-verification')
         }
-        setShowPopup(false);
+        // setShowPopup(false);
     }
     function OnTryAgain() {
         if (onTryAgain) {

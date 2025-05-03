@@ -58,6 +58,7 @@ function FaceVerification({ faceVerification , face_verification_response }) {
         setShowPopup(false);
         setFile(null);
         setPrev(null);
+        faceVerification({data:null})
     }
 
     function onTryAgain() {
@@ -65,6 +66,7 @@ function FaceVerification({ faceVerification , face_verification_response }) {
         setPost_success(false);
         setFile(null);
         setPrev(null);
+        // faceVerification({data:null})
     }
 
     // Use MutationObserver to track class changes on #face-verification
