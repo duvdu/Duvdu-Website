@@ -4,7 +4,7 @@ import Popup from '../elements/popup';
 import { ClosePopUp } from "../../util/util";
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-function VerificationMessage({ id = "verification-message", isError = false, isShow, onCancel , onTryAgain , errorMessage }) {
+function VerificationMessage({ id = "verification-message", isError = false, isShow, onCancel , onTryAgain , errorMessage  }) {
     const { t } = useTranslation();
     const router = useRouter();
     const [showPopup, setShowPopup] = useState(false);
@@ -29,7 +29,7 @@ function VerificationMessage({ id = "verification-message", isError = false, isS
 
     return (
         <>
-            <Popup id={id} className={showPopup ? 'show' : '' } onCancel={Cancel}>
+            <Popup id={id} className={showPopup ? 'show' : '' } onCancel={isError?OnTryAgain:Cancel}>
                 <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
                     <div className="heading_s1 mb-[48px] text-center">
                         <div className="flex w-full justify-center">
@@ -39,9 +39,9 @@ function VerificationMessage({ id = "verification-message", isError = false, isS
                             <Icon name={"done"} />
                             }
                         </div>
-                        <h1 className="text-3xl font-semibold my-5">{t(`${isError ? "Verification Failed":"Verification Successful"}`)}</h1>
-                        {errorMessage && isError &&  
-                            <h3 className="text-xl font-medium mt-5">{errorMessage} {t(`We couldn't verify your identity. Please try again with a clearer image or ensure the lighting is sufficient.`)}</h3>}
+                        <h1 className="text-3xl font-semibold my-5">{t(`${isError ? errorMessage.errors[0].message :"Verification Successful"}`)}</h1>
+                        {/* {errorMessage && isError &&  
+                            <h3 className="text-xl font-medium mt-5">{errorMessage} {t(`We couldn't verify your identity. Please try again with a clearer image or ensure the lighting is sufficient.`)}</h3>} */}
                         {!isError &&
                             <h3 className="text-xl font-medium mt-5">{t(`Your identity has been successfully verified. Thank you!`)}</h3>
                         }

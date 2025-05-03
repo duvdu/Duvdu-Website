@@ -87,7 +87,8 @@ function FaceVerification({ faceVerification , face_verification_response }) {
             observer.disconnect();
         };
     }, []);
-
+    var convertError = JSON.parse(face_verification_response?.error ?? null)
+    
     return (
         <>
             <Popup id='face-verification' onCancel={OnSucess} className={`w-full lg:w-[942px]`}>
@@ -130,6 +131,7 @@ function FaceVerification({ faceVerification , face_verification_response }) {
                         )}
                     </div>
                 </section>
+                {prev && 
                 <div className='flex justify-center w-full'>
                     <AppButton 
                         onClick={onsubmit} 
@@ -143,8 +145,9 @@ function FaceVerification({ faceVerification , face_verification_response }) {
                         }
                     </AppButton>
                 </div>
+                }
             </Popup>
-            <VerificationMessage onTryAgain={onTryAgain} isShow={post_success} isError={face_verification_response?.error} onCancel={OnSucess} message="Verification" />
+            <VerificationMessage onTryAgain={onTryAgain} isShow={post_success} errorMessage={convertError} isError={face_verification_response?.error} onCancel={OnSucess} message="Verification" />
         </>
     );
 }
