@@ -135,7 +135,7 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                                         </span>
                                     </Link>
                                     <div className="size-full max-w-[650px]">
-                                        <div className="h-full scroll-w-0 overflow-y-scroll flex flex-col justify-start">
+                                        <div className="h-full overflow-y-scroll flex flex-col justify-start">
                                             <div className="h-full flex flex-col justify-between px-5 md:px-28">
                                                 <div className="h-full min-h-36 lg:min-h-14" />
                                                 {children}
