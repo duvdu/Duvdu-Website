@@ -22,7 +22,6 @@ function Info({
     const openFollowers = () => {
         OpenPopUp('show-followers')
     }
-
     return <>
         <div className='flex items-end sm:items-center pb-5'>
             <div className={`w-28 h-28 bg-cover relative p-3 ltr:mr-3 rtl:ml-3 mb-3 bg-no-repeat boronze-frame ${isboronze}`}>
@@ -40,7 +39,7 @@ function Info({
         </div>
         <div className='flex justify-center pt-25 items-center gap-3'>
             {rank &&
-                <p className='rank' style={getRankStyle(rankcolor)}>{rank}</p>
+                <p className='rank' style={getRankStyle(rankcolor)}>{t(rank)}</p>
             }
             {occupation &&
                 <div className="info-container flex items-center justify-center">

@@ -504,6 +504,8 @@
     "Edit Bookmark Title": "تعديل عنوان اللوحة",
     "Followers": "المتابعون",
     "followers": "المتابعون",
+    "Follow":"متابعة",
+    "Unfollow":"إلغاء المتابعة",
     "choose category": "اختر الفئة",
     "project files": "ملفات المشروع",
     "Report contract": "الإبلاغ عن العقد",
@@ -666,5 +668,8 @@
     "Delete Project":"حذف المشروع",
     "this project?":"هذا المشروع؟",
     "this rental?":"هذا الاستوديو؟",
+    "Fresh Starter":"مبتدئ",
+    "Rising Star":"نجم صاعد",
+    "Duvdu Pro":"محترف دفدو",
     "":""
 }

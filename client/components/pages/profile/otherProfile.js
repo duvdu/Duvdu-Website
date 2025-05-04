@@ -135,7 +135,7 @@ function OtherProfile({
                                         {swapFollowRespond?.loading ? (
                                             <img className={"load mx-auto transition duration-500 ease-in-out w-10 h-10"} src="/assets/imgs/loading.gif" alt="loading" />
                                         ) : (
-                                            isFollow ? 'Unfollow' : 'Follow'
+                                            isFollow ? t('Unfollow') : t('Follow')
                                         )}
                                     </AppButton>
                                     <div onClick={handlechat} className={userInfo?.canChat ?"":'cursor-not-allowed'}>
