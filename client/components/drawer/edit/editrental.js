@@ -49,6 +49,14 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
         }
         return true;
     };
+    const isArrayEqual = (arr1, arr2) => {
+        if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false;
+        if (arr1.length !== arr2.length) return false;
+        for (let i = 0; i < arr1.length; i++) {
+          if (arr1[i] !== arr2[i]) return false;
+        }
+        return true;
+      };
     const converting = () => {
         const UpdatedData = new FormData();
         // const data = convertToFormData(formData, ['location', 'tags', 'attachments', 'searchKeywords'])
@@ -80,7 +88,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
             formData.tags.forEach((tag, index) => {
                 UpdatedData.append(`tags[${index}]`, tag);
             });
-        if (formData.searchKeywords && !AreObjectsEqual(formData.searchKeywords, data.searchKeywords))
+        if (formData.searchKeywords && !isArrayEqual(formData.searchKeywords, data.searchKeywords))
             formData.searchKeywords.forEach((searchKeywords, index) => {
                 UpdatedData.append(`searchKeywords[${index}]`, searchKeywords);
             });
@@ -295,7 +303,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     <GoogleMap width={'100%'} value={{ 'lat': formData.location?.lat, 'lng': formData.location?.lng }} onsetLocation={(value) => UpdateFormData('location', value)} onChangeAddress={handleInputChange} />
                                 </section>
                                 <section>
-                                    <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
+                                    <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={(formData.searchKeywords>0 && data.searchKeywords.length>0) ? formData.searchKeywords : data.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                                 </section>
                                 <section>

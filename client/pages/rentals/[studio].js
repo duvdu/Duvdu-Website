@@ -36,6 +36,7 @@ const Studio = ({
     chat_respond,
     user,
     auth,
+    delete_rental_response,
     userReview, 
     userReview_respond
 }) => {
@@ -48,6 +49,11 @@ const Studio = ({
     const [isOpenFav, setIsOpenFav] = useState(false);
     const [isOpenEdit, setIsOpenEdit] = useState(false);
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
+    useEffect(() => {
+        if (delete_rental_response?.message ==='success') {
+            Getstudio(studioId);
+        }
+    }, [delete_rental_response?.message]);
     useEffect(() => {
         if (studio_respond?.data?.user?.username)
             userReview({ username: studio_respond?.data?.user?.username })
@@ -101,6 +107,13 @@ const Studio = ({
         } 
     };
 
+    var convertError = JSON.parse(studio_respond?.error ?? null)
+    useEffect(()=>{
+        if(convertError?.status === 404){
+            Getstudio()
+            router.push('/')
+        }
+    },[convertError])
 
     const toggleDrawerAddFav = () => {
         setIsOpenFav(!isOpenFav);
@@ -139,7 +152,7 @@ const Studio = ({
                                     </section> */}
                                     <div className="flex lg:flex-row flex-col gap-3">
                                         <section className="lg:w-1/3 mt-6 lg:mt-0">
-                                        <Details toggleDrawerEdit={toggleDrawerEdit} onAudioPlay={handleAudioPlay} data={studio} />
+                                        <Details type='rental' toggleDrawerEdit={toggleDrawerEdit} onAudioPlay={handleAudioPlay} data={studio} />
                                         </section>
                                         <section className="lg:w-2/3">
                                             {[studio.cover,...studio?.attachments].length > 1 ?
@@ -227,6 +240,7 @@ const mapStateToProps = (state) => ({
     user: state.user.profile,
     auth: state.auth,
     userReview_respond: state.api.userReview,
+    delete_rental_response: state.api.DeleteRental,
 });
 
 const mapDidpatchToProps = {

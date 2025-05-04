@@ -20,9 +20,10 @@ import CategorySelection from "./assets/projectCategorySelection";
 import AddAttachment from "../../elements/attachment";
 import GoogleMap from "../../elements/googleMap";
 import PopupErrorMessage from '../../elements/PopupErrorMessage';
+import { GetUserProject } from '../../../redux/action/apis/auth/profile/getUserProjects';
 
 
-const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState, categories, resetForm }) => {
+const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState, GetUserProject, categories, resetForm }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const formData = addprojectState.formData;
@@ -58,7 +59,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         const data = new FormData();
 
         // Append simple string and number values directly from the state
-        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments','subCategoryId', 'location', 'tools','tagsId', 'creatives','invitedCreatives' , 'searchKeywords','audioCover', 'functions' , 'relatedCategory' , 'relatedSubCategory','relatedTags'])
+        UpdateKeysAndValues(formData, (key, value) => data.append(key, value), ['attachments','subCategoryId', 'location', 'tools','tagsId', 'creatives','invitedCreatives' , 'searchKeyWords','audioCover', 'functions' , 'relatedCategory' , 'relatedSubCategory','relatedTags'])
         // data.append('projectBudget', formData.projectBudget);
         // data.append('projectScale[scale]', formData.duration);
         // if(formData.subCategoryId?.length===0) delete formData.subCategoryId;
@@ -80,11 +81,11 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                 data.append(`relatedCategory[0][subCategories][0][tags][${index}][tag]`, tag);
             });
             
-        if (formData.searchKeywords)
-            formData.searchKeywords.forEach((searchKeywords, index) => {
-                data.append(`searchKeyWords[${index}]`, searchKeywords);
+        if (formData.searchKeyWords)
+            formData.searchKeyWords.forEach((searchKeyWords, index) => {
+                data.append(`searchKeyWords[${index}]`, searchKeyWords);
             });
-        // Append searchKeywords
+        // Append searchKeyWords
 
         if (formData.cover) {
             data.append('cover', formData.cover);
@@ -184,7 +185,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
         if (!formData.duration) errors.duration = 'Duration is required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
-        // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
+        // if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeyWords = 'Search keywords are required';
         const minimum = parseFloat(formData['projectScale[minimum]']);
         const current = parseFloat(formData['projectScale[current]']);
         const maximum = parseFloat(formData['projectScale[maximum]']);
@@ -284,6 +285,11 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     }
     const AudioIndex = categories.indexOf(categories.map(item=> item.title).includes('Audio'))
     const AudioId =  (AudioIndex===-1 ? categories[categories.length -1] : categories[AudioIndex])?._id
+    const CreatedSuccessfully = ()=>{
+        setNextstep(1)
+        toggleDrawer()
+        GetUserProject({ username: auth?.username });
+    }
 
     return (
         <>
@@ -402,8 +408,8 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                     </section>
 
                     <section>
-                        <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords} onChange={(value) => UpdateFormData('searchKeywords', value)} />
-                        <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
+                        <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeyWords} onChange={(value) => UpdateFormData('searchKeyWords', value)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.searchKeyWords}/>
                     </section>
                     <section className="h-96 relative overflow-hidden">
                         <span>{t("Set location")}</span>
@@ -495,6 +501,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     UpdateFormData,
     InsertToArray,
+    GetUserProject,
     CreateProject,
     resetForm
 };

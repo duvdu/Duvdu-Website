@@ -106,7 +106,12 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
                                 </div>
                             </div>
                         </section>
-                        <ErrorMessage ErrorMsg={convertError?.data.errors[0].message}/>
+                        {convertError && 
+                        <div>
+                        <ErrorMessage ErrorMsg={convertError?.data.errors[0].message} />
+                        <ErrorMessage ErrorMsg={convertError?.data.errors[0].value} />
+                        </div>
+                        }
                         <AppButton isEnabled={!respond?.loading} onClick={handleSubmit} className={'w-full'}>{respond?.loading?<Loading/>:t("Publish")}</AppButton>
                     </div>
                 </div>

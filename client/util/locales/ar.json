@@ -603,7 +603,7 @@
     "Related Subcategories":"الفئات الفرعية ذات صلة",
     "Related Tags":"العلامات ذات صلة",
     "Are you sure you want to delete":"هل انت متاكد من انك تريد ازالة",
-    "this category?":"هذه الفئة",
+    "this category?":"هذه الفئة؟",
     "this copyright?":"حقوق الطبع والنشر؟",
     "Delete Category":"ازالة فئة",
     "my projects":"مشاريعي",
@@ -659,5 +659,9 @@
     "Videography":"الفيديو",
     "branding":"البراندنج",
     "content creation":"صناعة المحتوى",
+    "Delete Rental":"حذف الاستوديو",
+    "Delete Project":"حذف المشروع",
+    "this project?":"هذا المشروع؟",
+    "this rental?":"هذا الاستوديو؟",
     "":""
 }

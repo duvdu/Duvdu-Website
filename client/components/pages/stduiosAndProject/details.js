@@ -13,23 +13,26 @@ import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper
 import 'swiper/swiper-bundle.css';
 import { connect } from "react-redux";
 import RatingProject from "../../popsup/ratingProject";
-import { OpenPopUp } from "../../../util/util";
+import { OpenPopUp,ClosePopUp } from "../../../util/util";
 import ReportProject from "../../popsup/report-project";
 import {DeleteTaggedCreative} from "../../../redux/action/apis/cycles/projects/removeTagedUser";
 import {DeleteProject} from "../../../redux/action/apis/cycles/projects/delete";
+import {DeleteRental} from "../../../redux/action/apis/cycles/rental/delete";
 import { GetProject } from "../../../redux/action/apis/cycles/projects/getOne";
 import SuccessfullyPosting from '../../popsup/post_successfully_posting';
 import DeletePopup from '../../popsup/DeletePopup';
 import DeleteCreative from '../../popsup/DeleteCreative';
 import Link from 'next/link';
 
-const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_response, GetProject,delete_response, onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
+const Details = ({ data , type='project' ,DeleteTaggedCreative ,DeleteProject,DeleteRental, delete_porject_response , delete_rental_response, GetProject,delete_response, onAudioPlay,toggleDrawerEdit , isLogin , user }) => {
     const [playingAudioRef, setPlayingAudioRef] = useState(null);
     const [success, setSuccess] = useState(false);
     const [selectedUser, setSelectedUser] = useState(user?._id);
     const { t } = useTranslation();
     const router = useRouter();
     const { project: projectId } = router.query;
+    const { studio: studioId } = router.query;
+
 
     const handleAudioPlay = (newAudioRef) => {
         if (playingAudioRef && playingAudioRef !== newAudioRef) {
@@ -46,7 +49,8 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
         else if (v == "Report") OpenPopUp("report-project2")
         else if (v == "Edit") toggleDrawerEdit()
         else if (v == "Delete") {
-            OpenPopUp('delete-popup-' + projectId)
+            const project = type==='project'?projectId:studioId
+            OpenPopUp('delete-popup-' + project)
         }
         else if (v == "Delete Tagged") {
             OpenPopUp('delete-creative-' + projectId)
@@ -61,10 +65,21 @@ const Details = ({ data ,DeleteTaggedCreative ,DeleteProject, delete_porject_res
             GetProject(projectId)
         })
     };
+    const handleDelete = ()=>{
+        if(type==='project'){
+            DeleteProject(projectId).then(()=>{
+                ClosePopUp("delete-popup-"+projectId)
+            })
+        }else{
+        DeleteRental(studioId).then(()=>{
+            ClosePopUp("delete-popup-"+studioId)
+        })
+        }
+    }
 
     return (
         <>
-        <DeletePopup onClick={()=> DeleteProject(projectId)} id={projectId} header={'Delete Project'} message={'this project?'} />
+        <DeletePopup onClick={handleDelete} respond={type==='project'?delete_porject_response:delete_rental_response} id={type==='project'? projectId:studioId} header={type==='project'?'Delete Project':'Delete Rental'} message={type==='project'?'this project?':'this rental?'} />
         <DeleteCreative onClick={toggleDrawer} id={projectId} header={'delete Tagged Creative'} message={'this tagged creative?'} />
         <SuccessfullyPosting isShow={success} onCancel={toggleDrawer} message="Deleted" />
         <RatingProject data={data} />
@@ -314,12 +329,15 @@ const mapStateToProps = (state) => ({
     isLogin: state.auth.login,
     user: state.user.profile,
     delete_response: state.api.DeleteTaggedCreative,
-    delete_porject_response: state.api.DeleteProject
+    delete_porject_response: state.api.DeleteProject,
+    delete_rental_response: state.api.DeleteRental,
+
 });
 
 const mapDispatchToProps = {
     DeleteTaggedCreative,
     GetProject,
+    DeleteRental,
     DeleteProject
 };
 

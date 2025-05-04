@@ -1,4 +1,3 @@
-
 import exclude_errors from '../public/static/exclude_errors.json'
 import exclude_loadings from '../public/static/exclude_loading.json'
 
@@ -467,4 +466,19 @@ export const formatRemainingTime = (seconds) => {
   }
 
   return timeParts.join(' ');
+};
+
+/**
+ * Checks shallow equality of two arrays of primitives.
+ * @param {Array} arr1
+ * @param {Array} arr2
+ * @returns {boolean}
+ */
+export const isArrayEqual = (arr1, arr2) => {
+  if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false;
+  if (arr1.length !== arr2.length) return false;
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) return false;
+  }
+  return true;
 };

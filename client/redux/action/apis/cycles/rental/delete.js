@@ -2,9 +2,9 @@ import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
 
-export const DeleteProject = (id) => {
+export const DeleteRental = (id) => {
   
-  const req = "DeleteProject"
+  const req = "DeleteRental"
   return async dispatch => {
     if(id == -1) {
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
@@ -14,7 +14,7 @@ export const DeleteProject = (id) => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
   
-      const response = await mainApiInstance.delete(`api/projects/${id}`);
+      const response = await mainApiInstance.delete(`api/rentals/rental/${id}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: {
         message:'success'
      }, req: req });

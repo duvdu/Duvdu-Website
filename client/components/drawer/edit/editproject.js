@@ -48,9 +48,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
     useEffect(() => {
         UpdateFormData("projectScale[unit]", listDropDown[0])
     }, [categoryDetails?.media])
-    useEffect(()=>{
-        UpdateFormData('category' , data.category._id)
-    },[data])
     const AreObjectsEqual = (arr1, arr2) => {
         if (arr1.length !== arr2.length) return false;
       
@@ -64,12 +61,19 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         }
         return true;
     };
-      
+    const isArrayEqual = (arr1, arr2) => {
+        if (!Array.isArray(arr1) || !Array.isArray(arr2)) return false;
+        if (arr1.length !== arr2.length) return false;
+        for (let i = 0; i < arr1.length; i++) {
+          if (arr1[i] !== arr2[i]) return false;
+        }
+        return true;
+      };
     const convertToFormData = () => {
         const UpdatedData = new FormData();
 
         // Append simple string and number values directly from the state
-        // UpdateKeysAndValues(formData, (key, value) => UpdatedData.append(key, value), ['attachments','subCategory', 'location', 'tools', 'creatives','invitedCreatives','searchKeywords','audioCover', 'functions'])
+        // UpdateKeysAndValues(formData, (key, value) => UpdatedData.append(key, value), ['attachments','subCategory', 'location', 'tools', 'creatives','invitedCreatives','searchKeyWords','audioCover', 'functions'])
         // UpdatedData.append('projectBudget', formData.projectBudget);
         // UpdatedData.append('projectScale[scale]', formData.duration);
         // if(formData.subCategory?.length===0) delete formData.subCategory;
@@ -89,7 +93,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             (formData['projectScale[unit]'] && (data.projectScale.unit!==formData['projectScale[unit]'])) ||
             (formData['projectScale[minimum]']  && (data.projectScale.minimum!==formData['projectScale[minimum]'])) ||
             (formData['projectScale[maximum]']  && (data.projectScale.maximum!==formData['projectScale[maximum]'])) ||
-            (formData['projectScale[current]']  && (data.projectScale.current!==formData['projectScale[current]']))
+            (formData['projectScale[current]']  && (data.projectScale.current!==formData['projectScale[current]'])) ||
             (formData['projectScale[pricerPerUnit]']  && (data.projectScale.pricerPerUnit!==formData['projectScale[pricerPerUnit]']))
         ){
             UpdatedData.append('projectScale[unit]',formData['projectScale[unit]'])
@@ -107,9 +111,9 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                 UpdatedData.append(`tagsId[${index}]`, tag);
             });
 
-        if (formData.searchKeyWords && !AreObjectsEqual(formData.searchKeyWords, data.searchKeyWords))
-                formData.searchKeyWords.forEach((searchKeywords, index) => {
-                UpdatedData.append(`searchKeywords[${index}]`, searchKeywords);
+        if (formData.searchKeyWords && !isArrayEqual(formData.searchKeyWords, data.searchKeyWords))
+                formData.searchKeyWords.forEach((searchKeyWords, index) => {
+                UpdatedData.append(`searchKeyWords[${index}]`, searchKeyWords);
             });
     
         if (formData.cover) {
@@ -175,7 +179,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.address) errors.address = 'Address is required';
         if (!formData.duration) errors.duration = 'Duration is required';
-        // if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeywords = 'Search keywords are required';
+        // if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeyWords = 'Search keywords are required';
         if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
         const minimum = parseFloat(formData['projectScale[minimum]']);
@@ -267,6 +271,8 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             lat:data.location.lat,
             lng:data.location.lng
         })
+        
+        UpdateFormData("coverShow", data.cover)
         UpdateFormData("searchKeyWords", data.searchKeyWords)
         UpdateFormData("projectScale[pricerPerUnit]", data.projectScale.pricerPerUnit)
         UpdateFormData("projectScale[unit]", data.projectScale.unit)
@@ -279,7 +285,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         UpdateFormData("relatedSubCategory" , data.relatedCategory?.[0]?.category?.subCategories?.[0]?._id)
         UpdateFormData("relatedTags" , data?.relatedCategory?.[0]?.category?.subCategories?.[0]?.tags?.map(item=>item?._id))
     }, [data])
-    
+    console.log({data})
     // useEffect(() => {
     //     if (auth.login === false)
     //         router.push({ pathname: "/" });
@@ -391,8 +397,8 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                     </section>
 
                     <section>
-                        <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeyWords } onChange={(value) => UpdateFormData('searchKeyWords', value)} />
-                        <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
+                        <ListInput name={'searchKeyWords'} placeholder={t("Search keywords")} value={(formData.searchKeyWords>0 && data.searchKeyWords.length>0) ? formData.searchKeyWords : data.searchKeyWords} onChange={(value) => UpdateFormData('searchKeyWords', value)} />
+                        <ErrorMessage ErrorMsg={ErrorMsg.searchKeyWords}/>
                     </section>
                     <section className="h-96 relative overflow-hidden">
                         <span>{t("Set location")}</span>

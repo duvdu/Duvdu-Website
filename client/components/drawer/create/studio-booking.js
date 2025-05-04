@@ -20,9 +20,9 @@ import AddAttachment from '../../elements/attachment';
 import Share from '../../popsup/Share';
 import { useTranslation } from 'react-i18next';
 import PopupErrorMessage from '../../elements/PopupErrorMessage';
+import { GetUserProject } from '../../../redux/action/apis/auth/profile/getUserProjects';
 
-
-const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
+const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUserProject, addprojectState, UpdateFormData, InsertToArray, resetForm }) => {
     const { t } = useTranslation();
 
     const router = useRouter();
@@ -166,17 +166,23 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, addpr
             setNextstep(1)
             return
         }
+        setValidFormCheck(false)
         setErrorMsg({})
         resetForm()
         router.replace({
             pathname: `/creative/${auth.username}`,
         })
     }
+    const CreatedSuccessfully = ()=>{
+        setNextstep(1)
+        toggleDrawer()
+        GetUserProject({ username: auth?.username });
+    }
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
-            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={CreatedSuccessfully} message="Creating" />
             <Share url={window.location.href} title={'See that 👀'} />
             <Drawer isOpen={true} name={t('create rental')  } toggleDrawer={toggleDrawer}>
                 <div className={nextstep == 1 && 'hidden'}>
@@ -308,6 +314,7 @@ const mapDispatchToProps = {
     CreateStudio,
     InsertToArray,
     resetForm,
+    GetUserProject,
     UpdateFormData
 };
 

@@ -6,7 +6,7 @@ function ErrorMessage({ErrorMsg}) {
     const { t } = useTranslation();
     return (
         <>
-        {ErrorMsg && <div className="text-rose-700 text-base mt-2">{t(ErrorMsg)}</div>}
+        {ErrorMsg && <span className="text-rose-700 text-base mt-2">{t(ErrorMsg)}</span>}
         </>
     );
 }

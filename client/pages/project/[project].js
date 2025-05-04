@@ -38,6 +38,7 @@ const Projects = ({
     auth,
     user,
     userReview, 
+    delete_porject_response,
     userReview_respond
 }) => {
     const { t } = useTranslation();
@@ -57,6 +58,11 @@ const Projects = ({
     useEffect(() => {
         setProject(project_respond?.data);
     }, [project_respond?.data]);
+    useEffect(() => {
+        if (delete_porject_response?.message === 'success') {
+            GetProject(projectId);
+        }
+    }, [delete_porject_response?.message]);
 
     useEffect(() => {
         if (projectId) {
@@ -90,6 +96,7 @@ const Projects = ({
     var convertError = JSON.parse(project_respond?.error ?? null)
     useEffect(()=>{
         if(convertError?.status === 404){
+            GetProject()
             router.push('/')
         }
     },[convertError])
@@ -213,6 +220,7 @@ const mapStateToProps = (state) => ({
     user: state.user.profile,
     auth: state.auth,
     userReview_respond: state.api.userReview,
+    delete_porject_response: state.api.DeleteProject,
 });
 
 const mapDidpatchToProps = {
