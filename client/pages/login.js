@@ -66,6 +66,9 @@ function Login({ api, login_respond , getMyprofile_respond, login, resendCode, g
           }
         });
       }
+      else if(convertError.status === 403){
+        router.push(`/register/${username}`);
+      }
       else {
         setErrorMSG(errorConvertedMessage(login_respond?.error))
       }
@@ -209,7 +212,7 @@ function Login({ api, login_respond , getMyprofile_respond, login, resendCode, g
             <div className="border-t border-black opacity-20 w-full my-4"></div>
           </div>
         <GoogleOAuthProvider clientId={clientId}>
-          <SocialLogin/>
+          <SocialLogin setUsername={setUsername}/>
          </GoogleOAuthProvider>
         </form>
       </Auth>

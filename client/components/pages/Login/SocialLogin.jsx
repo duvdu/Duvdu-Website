@@ -9,7 +9,7 @@ import { appleLogin } from '../../../redux/action/apis/auth/signin/appleLogin';
 import { performAppleSignIn, processAppleUserData } from '../../../util/appleAuth';
 import axios from 'axios';
 
-function SocialLogin({ api, login_respond, googleLogin, appleLogin, getMyprofile }) {
+function SocialLogin({ api,setUsername, login_respond, googleLogin, appleLogin, getMyprofile }) {
     const { t } = useTranslation();
     const clientId = "475213071438-mn7lcjd3sdq0ltsv92n04pr97ipdhe9g.apps.googleusercontent.com";
     const { fcmToken, notificationPermissionStatus } = useFcmToken();
@@ -19,6 +19,7 @@ function SocialLogin({ api, login_respond, googleLogin, appleLogin, getMyprofile
                 const res = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
                   headers: { Authorization: `Bearer ${response.access_token}` },
                 })
+                setUsername(res.data.email)
                 googleLogin({ username: res.data.email.split('@')[0], email:res.data.email, name:res.data.name, id: res.data.sub });
             }
             catch(error){
