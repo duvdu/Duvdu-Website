@@ -216,19 +216,14 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const CheckNext=()=>{
         setValidFormCheck(true)
         setErrorPopup(true)
-        const timer = setTimeout(() => {
-            setErrorPopup(false);
-        }, 3000); // Hide after 3 seconds
-        
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
         if (!isEnable) {
             setErrorMsg(validateRequiredFields())
-            return () => clearTimeout(timer);
+            return
         }
         else{
             setCover()
-            clearTimeout(timer);
         }
     }
     useEffect(()=>{
@@ -294,6 +289,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
             <Drawer isOpen={true} name={t('add project')} toggleDrawer={toggleDrawer}>
                 <div className={nextstep == 1 && 'hidden'}>
                     <SetCover coverType={categoryDetails?.media} Publish={Publish} respond={respond} oncancel={() => setNextstep(1)} />
@@ -479,7 +475,6 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </div>
                     <div className='relative'>
-                        <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
                         <Button onClick={CheckNext} className="w-auto mb-7 mx-20" shadow={true} shadowHeight={"14"}>
                             <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                         </Button>

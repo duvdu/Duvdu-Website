@@ -188,7 +188,7 @@ const AddProducer = ({
         if (!formData.minBudget || !formData.minBudget) errors.minBudget = 'MinBudget are required';
         if (!formData.maxBudget) errors.maxBudget = 'MaxBudget is required';
         if (parseInt(formData.minBudget) > parseInt(formData.maxBudget)) errors.minBudget = 'Maximum value should be greater than minimum value';
-        // if (!formData.platforms || !formData.platforms.length) errors.platforms = 'platforms is required';
+        if (!formData.platforms || !formData.platforms.length) errors.platforms = 'platforms is required';
         if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'At least one search keyword is required';
         return errors;
     };
@@ -200,14 +200,11 @@ const AddProducer = ({
     const CheckNext=()=>{
         setValidFormCheck(true)
         setErrorPopup(true)
-        const timer = setTimeout(() => {
-            setErrorPopup(false);
-        }, 3000);
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
         if (!isEnable) {
             setErrorMsg(validateRequiredFields())
-            return () => clearTimeout(timer);
+            return
         }    
         else {
             if(formData.subcategory?.length===0) delete formData.subcategory;
@@ -215,7 +212,6 @@ const AddProducer = ({
                 (item.tagsId?.length===0)? delete item.tagsId: item.tagsId
             )
             CreateProducer(formData);
-            clearTimeout(timer);
         }
     }
     const canDelete = true;
@@ -226,6 +222,7 @@ const AddProducer = ({
             <SuccessfullyPosting id={SuccessfullyUpdatePopupId} onCancel={toggleDrawer} message="Update" />
             <SuccessfullyPosting id={SuccessfullyDeletePopupId} onCancel={toggleDrawer} message="Delete" />
             <SuccessfullyPosting id={SuccessfullyCreatePopupId} onCancel={toggleDrawer} message="Create" />
+            <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
             <Drawer isOpen={true} name={t('add producer')} toggleDrawer={toggleDrawer} padding={false}>
                 {
                 (getIsLoggedProducer_respond?.loading?
@@ -294,7 +291,7 @@ const AddProducer = ({
                     <ErrorMessage ErrorMsg={convertError?.data?.errors[0].message}/>
                     {
                         !isProducer ?
-                            <ArrowBtn loading={createProducer_respond?.loading} isEnable={isFormValidForSubmit()} onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
+                            <ArrowBtn loading={createProducer_respond?.loading}  onClick={handleSubmit} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Publish" shadow={true} shadowHeight={"14"} /> :
                             <div className='flex flex-col left-0 bottom-10 sticky mt-14 w-auto mx-14 gap-3'>
                                 <ArrowBtn loading={deleteProducer_respond?.loading} isEnable={canDelete} onClick={handleDelete} className="w-full bg-red" text={t("Delete")} shadow={true} shadowHeight={"14"} />
                                 <ArrowBtn loading={updateProducer_respond?.loading} isEnable={isFormValidForUpdate()} onClick={handleUpdate} className="w-full" text={t("Update")} shadow={true} shadowHeight={"14"} />

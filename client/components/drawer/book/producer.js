@@ -71,16 +71,12 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
     function onSubmit() {
         setValidFormCheck(true)
         setErrorPopup(true)
-        const timer = setTimeout(() => {
-            setErrorPopup(false);
-        }, 3000); // Hide after 3 seconds
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
         if (!isEnable) {
             setErrorMsg(validateRequiredFields())
-            return () => clearTimeout(timer);
+            return
         }else{
-            clearTimeout(timer)
         const form = new FormData()
         UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments'])
 
@@ -120,9 +116,9 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
         if(respond?.error){
             setErrorPopup(true)
             setErrorRespond(JSON.parse(respond?.error))
-            const timer = setTimeout(() => {
-                setErrorPopup(false);
-            }, 3000); // Hide after 3 seconds
+            // const timer = setTimeout(() => {
+            //     setErrorPopup(false);
+            // }, 3000); // Hide after 3 seconds
     
         }
     },[respond?.error])
@@ -135,6 +131,8 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />
+            <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
+            <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={errorRespond?.data?.errors[0].message}/>
             <Drawer name={data.user?.name} img={data.user?.profileImage} isOpen={isOpen} toggleDrawer={reset} className="overflow-scroll">
                 <div className='flex flex-col gap-7 container mx-auto'>
 
@@ -238,8 +236,6 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
                     <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                         <div>
                             <div className='relative'>
-                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
-                                <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={errorRespond?.data?.errors[0].message}/>
                                 <ArrowBtn onClick={onSubmit} loading={respond?.loading} className="left-0 bottom-10 sticky w-auto mb-7 mt-14 mx-14" text="Submit" shadow={true} shadowHeight={"14"} />
                             </div>
                         </div>

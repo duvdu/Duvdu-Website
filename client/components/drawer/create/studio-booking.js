@@ -96,18 +96,14 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
     const CheckNext=()=>{
         setValidFormCheck(true)
         setErrorPopup(true)
-        const timer = setTimeout(() => {
-            setErrorPopup(false);
-        }, 3000); // Hide after 3 seconds
         validateRequiredFields()
         const isEnable = Object.keys(validateRequiredFields()).length == 0
         if (!isEnable) {
             setErrorMsg(validateRequiredFields())
-            return () => clearTimeout(timer);
+            return
         }
         else{
             setCover()
-            clearTimeout(timer);
         }
     }
     useEffect(()=>{
@@ -183,6 +179,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />
             <SuccessfullyPosting isShow={post_success} onCancel={CreatedSuccessfully} message="Creating" />
+            <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
             <Share url={window.location.href} title={'See that 👀'} />
             <Drawer isOpen={true} name={t('create rental')  } toggleDrawer={toggleDrawer}>
                 <div className={nextstep == 1 && 'hidden'}>
@@ -289,7 +286,6 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </section>
                     <div className='relative'>
-                        <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
                         <AppButton onClick={CheckNext} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
                             <span className='text-white font-bold capitalize text-lg'>{t("Next")}</span>
                         </AppButton>

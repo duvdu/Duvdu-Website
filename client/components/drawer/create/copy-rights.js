@@ -53,14 +53,11 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
         e.preventDefault();
         setValidFormCheck(true)
         setErrorPopup(true)
-        const timer = setTimeout(() => {
-            setErrorPopup(false);
-        }, 3000); // Hide after 3 seconds
         const validationErrors = validateRequiredFields();
         const isEnable = Object.keys(validateRequiredFields()).length == 0
         if (!isEnable) {
             setErrorMsg(validateRequiredFields())
-            return () => clearTimeout(timer);
+            return
         }
         formData.duration = {
             value : durationValue,
@@ -109,6 +106,7 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
             <Drawer isOpen={true} name={t('copy right')} toggleDrawer={toggleDrawer}>
                 <form className='flex flex-col gap-5 container mx-auto' onSubmit={handleSubmit}>
                     <section>
@@ -151,7 +149,6 @@ const AddCopyrights = ({ CreateCopyrights, user, auth, respond, addprojectState,
                         <p className='opacity-70'>{t("Show on home feed & profile")}</p>
                     </section>
                     <div className='relative'>
-                        <PopupErrorMessage errorPopup={errorPopup} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
                         <Button onClick={handleSubmit} className="w-full mb-7 mt-4" shadow={true} shadowHeight={"14"}>
                             {respond?.loading ? 
                             <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-white rounded-full m-2 mx-auto" />
