@@ -114,19 +114,14 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
     const Tabs2 = ({onClose}) => {    
         return (
             <div className="flex flex-col justify-center items-center gap-11 py-10 border-b dark:border-b-[#FFFFFF33]">
-                {   isLogin ? 
+                   
+                   {isLogin ? 
                     [
                         {
                             url: `/creative/${user?.username}`,
                             icon: 'user',
                             name: 'profile',
                         },
-                        {
-                            click: () => setPage(5),
-                            icon: 'gear',
-                            name: 'settings',
-                        },
-                    ]:[
                         {
                             click: () => setPage(5),
                             icon: 'gear',
@@ -147,7 +142,28 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                             </div>
                         )
                     ))
-                }
+                    :[
+                        {
+                            click: () => setPage(5),
+                            icon: 'gear',
+                            name: 'settings',
+                        },
+                    ].map(({ url, icon, name, click }, index) => (
+                        url ? (
+                            <Link key={`${name}-${index}`} href={url}>
+                                <div onClick={onClose} className="flex gap-1 items-center cursor-pointer">
+                                    <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={icon} />
+                                    <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{t(name)}</span>
+                                </div>
+                            </Link>
+                        ) : (
+                            <div key={`${name}-${index}`} className="flex gap-1 items-center cursor-pointer" onClick={click}>
+                                <Icon className="text-[#666666] dark:text-[#B3B3B3]" name={icon} />
+                                <span className="text-base font-bold capitalize text-[#3E3E3E] dark:text-[#B3B3B3] leading-[1]">{t(name)}</span>
+                            </div>
+                        )
+                    ))}
+                
             </div>
         )
     }
@@ -274,9 +290,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-black to-transparent border-50 p-6 mx-5">
             <div className="flex flex-col gap-3">
                 <h3 className="font-bold text-xl"> Get <span className="text-primary">{t("duvdu")}</span> on your mobile phone Now! </h3>
-
-                <img src="/assets/imgs/theme/tab/android.png" />
-                <img src="/assets/imgs/theme/tab/IOS.png" />
+                <div className='flex items-center w-full gap-2'>
+                    <img className='w-1/2 sm:w-1/3 rounded-lg' src="/assets/imgs/theme/tab/android.png" />
+                    <img className='w-1/2 sm:w-1/3 rounded-lg' src="/assets/imgs/theme/tab/IOS.png" />
+                </div>
             </div>
         </div>
     const SpeficIcon = ({ name }) => {

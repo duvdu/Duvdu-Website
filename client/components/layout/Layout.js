@@ -46,7 +46,24 @@ const Layout = ({
 }) => {
     const [isToggled, setToggled] = useState(1);
     const router = useRouter();
-
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) {
+                setToggled(1);
+                document.body.classList.remove("mobile-menu-active");
+            }
+        };
+    
+        window.addEventListener("resize", handleResize);
+    
+        // نعمل تشيك أول مرة كمان
+        handleResize();
+    
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+    
     const toggleClick = (type) => {
         setToggled(type);
         isToggled > 1
