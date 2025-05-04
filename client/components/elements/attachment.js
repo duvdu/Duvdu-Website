@@ -63,9 +63,9 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" ,
         <>
             <label htmlFor={id?id:"attachment-upload"} className="flex items-center rounded-2xl border border-gray-300 bg-white dark:bg-[#1A2024] h-16 p-2 mt-4 cursor-pointer">
                 <div className="flex items-center justify-center h-full rounded-xl border-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
-                    <Icon className="text-primary w-4" name={"image"} />
+                    <Icon className="text-primary w-4" name={media==='audio'?"music":"image"} />
                 </div>
-                <span className="ltr:pl-5 rtl:pr-5 w-full text-blue-600">{t("Open gallery")}</span>
+                <span className="ltr:pl-5 rtl:pr-5 w-full text-blue-600">{t(media==='audio' ?"Open music":"Open gallery")}</span>
                 <Icon name={"angle-right"} className={"mr-2 w-2 text-primary rtl:!rotate-180"} />
             </label>
             <input onClick={handleRemoveEvent} onChange={attachmentsUpload} className='hidden' id={id?id:"attachment-upload"} accept={getAcceptType()} type="file" multiple />
