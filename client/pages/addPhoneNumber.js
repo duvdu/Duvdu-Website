@@ -1,8 +1,6 @@
 import Link from "next/link";
-import Auth from '../components/layout/Auth';
 import Button from '../components/elements/button';
 import { useState, useEffect } from 'react';
-import Layout from "../components/layout/Layout";
 import { connect } from "react-redux";
 import Icon from '../components/Icons';
 import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
@@ -36,7 +34,7 @@ function AddPhoneNumber({ LogOut, api, respond_addPhone, addPhone, username, get
 
     useEffect(() => {
         if (respond_addPhone?.error && JSON.parse(respond_addPhone?.error).status == 423) {
-            router.push(`/`);
+            window.location.href = '/';
         } else if (respond_addPhone?.error) {
             setError(respond_addPhone?.error);
         }
@@ -51,9 +49,11 @@ function AddPhoneNumber({ LogOut, api, respond_addPhone, addPhone, username, get
     };
 
     useEffect(() => {
-        if (respond_addPhone?.message === 'success')
+        if (!username) return;
+        if (respond_addPhone?.message === 'success') {
             handleNextStep(3);
-    }, [respond_addPhone?.message]);
+        }
+    }, [respond_addPhone?.message, username]);
 
     const handlePreviousStep = () => {
         setStep(step - 1);
@@ -82,11 +82,12 @@ function AddPhoneNumber({ LogOut, api, respond_addPhone, addPhone, username, get
             }
         };
 
-        // ✅ تسجيل الخروج مع انتظار التنفيذ قبل التنقل
         const handleLogout = async () => {
             try {
                 await LogOut();
-                router.push('/'); // أو أي رابط رئيسي
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = '/'; // reload page and clear all state
             } catch (err) {
                 console.error("Logout failed:", err);
             }
@@ -147,18 +148,16 @@ function AddPhoneNumber({ LogOut, api, respond_addPhone, addPhone, username, get
     }, []);
 
     return (
-        <>
-            <div className="container">
-                <div className="mx-auto py-[100px] md:py-[200px] flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-white dark:bg-[#1A2024] max-w-[749px]">
-                    {step === 2 && <EnterNewPhone />}
-                    {step === 3 && <OTP key={1} onSuccess={() => {
-                        getMyprofile();
-                        handleNextStep(4);
-                    }} username={username} />}
-                    {step === 4 && <Message />}
-                </div>
+        <div className="container">
+            <div className="mx-auto py-[100px] md:py-[200px] flex flex-col justify-center items-center text-center my-9 h-changePhoneNumber bg-white dark:bg-[#1A2024] max-w-[749px]">
+                {step === 2 && <EnterNewPhone />}
+                {step === 3 && <OTP key={1} onSuccess={() => {
+                    getMyprofile();
+                    handleNextStep(4);
+                }} username={username} />}
+                {step === 4 && <Message />}
             </div>
-        </>
+        </div>
     );
 }
 
