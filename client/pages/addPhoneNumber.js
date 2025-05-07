@@ -11,8 +11,9 @@ import { errorConvertedMessage, } from '../util/util';
 import { useTranslation } from 'react-i18next';
 import OTP from "../components/elements/otp";
 import { useRouter } from "next/router";
+import { LogOut } from "../redux/action/apis/auth/logout";
 
-function AddPhoneNumber({ api, respond_addPhone, addPhone, username  , getMyprofile}) {
+function AddPhoneNumber({LogOut, api, respond_addPhone, addPhone, username  , getMyprofile}) {
     const { i18n, t } = useTranslation();
     const [step, setStep] = useState(2);
     const [error, setError] = useState('');
@@ -95,6 +96,10 @@ function AddPhoneNumber({ api, respond_addPhone, addPhone, username  , getMyprof
 
     return (
         <form className="md:w-[521px]" method="post" onSubmit={handleSubmit}>
+            <div onClick={() => LogOut()} className="flex py-4 gap-4 text-red-950 cursor-pointer">
+                <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/logout-icon.svg`} />
+                <p className="text-[12px] w-full font-semibold text-red-500"> {t('Logout')} </p>
+            </div>
             <div className="heading_s1 mb-8">
                 <h1 className="auth-title capitalize">{t("Add Phone Number")}</h1>
             </div>
@@ -170,6 +175,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    LogOut, 
     addPhone,
     getMyprofile
 };
