@@ -835,7 +835,7 @@ function ReceiveProjectFiles({
                                                 <h3 className="capitalize opacity-60">{t("job details")}</h3>
                                                 <textarea
                                                     name="details"
-                                                    value={formData.details || contract?.details}
+                                                    value={formData.details || (formData.details!=="" ? contract?.details:formData.details)}
                                                     onChange={handleInputChange}
                                                     placeholder={t("requirements, conditions")}
                                                     className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-32"
@@ -852,7 +852,7 @@ function ReceiveProjectFiles({
                                                         placeholder={t("unit")}
                                                         type='text'
                                                         name='unit'
-                                                        value={formData["unit"] || contract?.duration.unit}
+                                                        value={formData["unit"] || (formData["unit"]!=="" ? contract?.duration.unit:formData["unit"])}
                                                         onChange={handleInputChange}
                                                         className="edit app-field"
                                                     />
@@ -864,7 +864,7 @@ function ReceiveProjectFiles({
                                                     placeholder={t("Total price")}
                                                     type='number'
                                                     name='totalPrice'
-                                                    value={formData.totalPrice || contract?.totalPrice}
+                                                    value={formData.totalPrice || (formData.totalPrice!=="" ? contract?.totalPrice:formData.totalPrice)}
                                                     onChange={handleInputChange}
                                                     className="edit app-field"
                                                 />
@@ -878,7 +878,7 @@ function ReceiveProjectFiles({
                                         <>
                                             <section className='mb-4 mt-14'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("duration")}</h3>
-                                                <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData["duration"] || contract?.duration || ""} onChange={handleInputChange} name="duration" />
+                                                <input placeholder={t("duration")} type="number" min={0} className={"edit app-field"} value={formData.duration || (formData.duration!=="" ? contract?.duration:formData.duration)} onChange={handleInputChange} name="duration" />
                                             </section>
                                             <div className='mb-4 w-full'>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("unit Price")}</h3>
@@ -886,14 +886,14 @@ function ReceiveProjectFiles({
                                                     placeholder={t("unit price")}
                                                     type='text'
                                                     name='unitPrice'
-                                                    value={formData["unitPrice"] || contract?.projectScale.unitPrice}
+                                                    value={formData["unitPrice"] || (formData["unitPrice"]!=="" ? contract?.projectScale.unitPrice:formData["unitPrice"])}
                                                     onChange={handleInputChange}
                                                     className="edit app-field"
                                                 />
                                             </div>
                                             <section>
                                                 <h3 className="capitalize opacity-60 mb-4">{t("number Of Units")}</h3>
-                                                <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] || contract?.projectScale.numberOfUnits || ""} onChange={handleInputChange} name="numberOfUnits" />
+                                                <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] ||   (formData["numberOfUnits"]!=="" ? contract?.projectScale.numberOfUnits:formData["numberOfUnits"])} onChange={handleInputChange} name="numberOfUnits" />
                                             </section>
                                             {formData?.tools?.length>0 && 
                                             <>
