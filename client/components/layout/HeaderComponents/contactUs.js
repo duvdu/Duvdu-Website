@@ -5,15 +5,19 @@ import { CreateTicket } from '../../../redux/action/apis/tickets/createTicket';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 import { errorConvertedMessage } from '../../../util/util';
+import Loading from '../../elements/loading';
 
 const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
     const { t } = useTranslation();
     const [textareavalue, setTextareavalue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    
+    console.log({respond})
     useEffect(() => {
-        if(respond?.data)
+        if(respond?.message=='success'){
             setOpened(0)
+            setTextareavalue("")
+            CreateTicket({message:''})
+        }
     }, [respond?.message])
     
 
@@ -48,8 +52,11 @@ const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
                     setTextareavalue(event.target.value)
                 }} />
             {errorMessage && <div className="text-red-500 text-sm mt-2">{errorMessage}</div>}
-            <Button className="w-full mb-7 mt-7" shadow={true} onClick={handleSendMessage} >
-                {t('Send')}
+            <Button disable={respond?.loading} className="w-full mb-7 mt-7" shadow={true} onClick={handleSendMessage} >
+                {respond?.loading ? 
+                <Loading/>:
+                t('Send')
+                }
             </Button>
         </>
     )

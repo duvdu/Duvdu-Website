@@ -4,6 +4,10 @@ import { mainApiInstance } from '../axiosInstances'
 
 export const CreateTicket = ({ message, username, phoneNumber }) => {
     return async dispatch => {
+        if(!message){
+            dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: 'CreateTicket' });
+            return 
+        }
         dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'CreateTicket' });
         try {
             const response = await mainApiInstance.post(`api/users/tickets`, {
