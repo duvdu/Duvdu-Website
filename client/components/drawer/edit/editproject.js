@@ -23,6 +23,11 @@ import SetCover from './../create/assets/addCover';
 import AddToolUsed from '../../popsup/create/addToolUsed';
 import AddOtherCreatives from '../../popsup/create/addOtherCreatives';
 import FunctionUsed from '../../popsup/create/FunctionsUsed';
+import ProjectCover from "../../../components/pages/stduiosAndProject/projectShow";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Autoplay, Navigation, EffectFade, Pagination } from 'swiper';
+import 'swiper/swiper-bundle.css';
+SwiperCore.use([Autoplay, Navigation, EffectFade, Pagination]);
 
 
 const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, update_respond,GetProject,setIsOpenEdit, UpdateFormData, addprojectState, categories, resetForm }) => {
@@ -36,6 +41,8 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
     const [post_success, setPost_success] = useState(false);
     const [nextstep, setNextstep] = useState(1);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
+    const [playingAudioRef, setPlayingAudioRef] = useState(null);
+
     categories = filterByCycle(categories, 'project')
     const categoryDetails = categories.find(i => i._id == formData.category)
     const listDropDown =
@@ -306,6 +313,13 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         setIsOpenEdit(false)
         GetProject(projectId)
     }
+    const handleAudioPlay = (newAudioRef) => {
+        if (playingAudioRef && playingAudioRef !== newAudioRef) {
+          playingAudioRef.pause();
+        }
+        setPlayingAudioRef(newAudioRef);
+      };
+
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -347,6 +361,54 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                     <section>
                         <h3 className="capitalize opacity-60">{t("attachments")}</h3>
                         <AddAttachment id={'attachments'} name="attachments" value={formData.attachments} onChange={handleInputChange} isValidCallback={(v) => setAttachmentValidation(v)} media={categoryDetails?.media} />
+                        {(!formData.attachments || formData.attachments.length === 0) &&
+                            <>
+                            {data?.attachments.length > 1 ?
+                                <div className='mx-5 md:mx-0 rounded-[30px] overflow-hidden h-[300px] relative hidden lg:block'>
+                                    {/* Custom Arrows */}
+                                    {/* <div className="swiper-button-prev"> */}
+                                    <button className='left-[30px] custom-swiper-prev !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                        <Icon className='!text-white !w-[10px] ' name={"chevron-left"} />
+                                    </button>
+                                    {/* </button> */}
+                                    <button className='right-[30px] custom-swiper-next !text-white top-1/2 icon-pause rounded-full p-2 flex flex-row items-center justify-center'>
+                                        <Icon className='!text-white !w-[10px]' name={"chevron-right"} />
+                                    </button>
+                                    <Swiper
+                                        dir='ltr'
+                                        className='cardimg'
+                                        modules={[Autoplay, Navigation, EffectFade, Pagination]}
+                                        spaceBetween={0}
+                                        slidesPerView={1}
+                                        loop={true}
+                                        pagination={{
+                                            clickable: true,
+                                        }}                                                    
+                                        onSlideChange={() => {
+                                            if (playingAudioRef) {
+                                                playingAudioRef.pause();  // Pause the currently playing audio when the slide changes
+                                            }
+                                            }}
+                                        navigation={{
+                                            prevEl: '.custom-swiper-prev',
+                                            nextEl: '.custom-swiper-next',
+                                        }}
+                                    >
+                                        {data?.attachments.map((item, index) => {
+                                            console.log({item})
+                                            return <SwiperSlide key={index}>
+                                                <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={data?.cover} />
+                                            </SwiperSlide>
+                                        })}
+                                    </Swiper>
+                                    <div className="swiper-pagination"></div>
+                                </div> :
+                                    <div className='mx-5 md:mx-0 rounded-[30px] overflow-hidden h-[600px] relative hidden lg:block'>
+                                    <ProjectCover onAudioPlay={handleAudioPlay}  data={data?.attachments[0]} cover={data?.cover} />
+                                </div>
+                                }
+                            </>
+                        }
                         <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                     </section>
                     <section>

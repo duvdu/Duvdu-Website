@@ -74,7 +74,7 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" ,
                     parseFileSize(file.formattedFileSize) <= parseFileSize(maxFileSize) ?
                         <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
                             <Icon name={'file'} className="size-10" />
-                            <div>
+                            <div className='w-4/5 truncate'>
                                 <span className=''>{file.fileName}</span>
                                 <br />
                                 <span className='text-[#A9ACB4]'>{file.formattedFileSize}</span>
@@ -86,7 +86,7 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" ,
                         :
                         <div key={key} className='flex bg-[#EEF1F7] dark:bg-[#18140c] rounded-3xl items-center gap-4 p-2 mt-5'>
                             <Icon name={'file-error'} className="size-10" />
-                            <div>
+                            <div className='w-4/5 truncate'>
                                 <span className='text-[#C92519]'>{file.fileName}</span>
                                 <br />
                                 <span className='text-[#C92519]'>{file.formattedFileSize}</span>
