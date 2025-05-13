@@ -61,6 +61,15 @@ function Uploading_project_files({type='project' , id ='123' , submitFile_respon
         }
 
     },[submitFile_respond?.error])
+    useEffect(() => {
+        if (submitFile_respond?.message) {
+            setLink("")
+            setNotes("")
+            setError("")
+            submitFile({id})
+        }
+    }, [submitFile_respond?.message]);
+
     const { t } = useTranslation();
     return (
         <>
@@ -69,13 +78,13 @@ function Uploading_project_files({type='project' , id ='123' , submitFile_respon
                     <form className='max-w-[400px]'>
                         <section>
                             <p className="capitalize opacity-60 mt-11">{t("add project link")}</p>
-                            <input onChange={(e)=> setLink(e.target.value)} placeholder={t("example: google drive link...")} type='url' className="google-drive-link bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 sm:w-96 mt-4 p-4 placeholder:capitalize placeholder:opacity-30 placeholder:text-DS_black" />
+                            <input onChange={(e)=> setLink(e.target.value)} value={link} placeholder={t("example: google drive link...")} type='url' className="google-drive-link bg-[#9999991A] rounded-3xl border-black border-opacity-10 h-16 sm:w-96 mt-4 p-4 placeholder:capitalize placeholder:opacity-30 placeholder:text-DS_black" />
                         </section>
                         <section>
                             <p className="capitalize opacity-60 mt-11">{t("Notes")} 
                                 {/* <span className='opacity-30 text-xs '>{t("“optional”")}</span> */}
                             </p>
-                            <textarea onChange={(e)=> setNotes(e.target.value) } placeholder={t("start typing...")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-44 placeholder:capitalize placeholder:opacity-30 placeholder:text-DS_black" />
+                            <textarea onChange={(e)=> setNotes(e.target.value) } value={notes} placeholder={t("start typing...")} className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 mt-4 h-44 placeholder:capitalize placeholder:opacity-30 placeholder:text-DS_black" />
                         </section>
                         {/* <p className="capitalize opacity-50 mx-14 text-center">{t("if you are uploading before deadling loriem aplusim")}</p> */}
                         <div className='text-center'>
