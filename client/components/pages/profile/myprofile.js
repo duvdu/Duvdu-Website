@@ -220,15 +220,23 @@ function MyProfile({ updateProfile, InsertToArray , GetCopyrights, GetUserProjec
                                 </span>
                             </div>
 
+                            <div className='h-divider'></div>
                             {userInfo?.about &&
                             <>
-                            <div className='h-divider'></div>
                                 <div className='px-10'>
                                     <h3 className='pt-6' id='about-header'>{t("about")}</h3>
                                     <p className='pt-6' id='about-paragraph'>{userInfo?.about || '---'}</p>
                                 </div>
                             </>
                             }
+                            <div className='px-10'>
+                                <h3 className='pt-6' id='about-header'>{t("contact")}</h3>
+                                <p className='pt-4' id='about-paragraph'>{userInfo?.email || '---'}</p>
+                                <p className='pt-4' id='about-paragraph'>{userInfo?.phoneNumber?.number || '---'}</p>
+                                <h3 className='pt-6' id='about-header'>{t("username")}</h3>
+                                <p className='pt-4' id='about-paragraph'>{userInfo?.username || '---'}</p>
+                            </div>
+
                             {!userInfo?.faceRecognition &&
                             <>
                                 <div className='h-divider my-7'></div>
