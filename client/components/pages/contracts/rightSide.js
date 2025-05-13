@@ -19,6 +19,8 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         switch (status) {
             case 'canceled':
                 return -1;
+            case 'complaint':
+                return -1;
             case 'pending':
                 return 0;
             case 'waiting-for-pay-10':
@@ -152,7 +154,7 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         </>
     }
 
-
+    console.log({data})
     return (
         <>
             {/* <Clients /> */}

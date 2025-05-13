@@ -24,6 +24,8 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
         switch (status) {
             case 'canceled':
                 return -1;
+            case 'complaint':
+                return -1;    
             case 'pending':
                 return 0;
             case 'waiting-for-pay-10':
