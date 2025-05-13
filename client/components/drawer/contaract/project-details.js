@@ -479,7 +479,7 @@ function ReceiveProjectFiles({
             status !== "complaint" 
         ))
     
-    const casAskForNewDeadline = !IsImSp() && contract?.requestedDeadline?.deadline == null && (getType() === "project" || getType() === "copyrights" || getType() === "team")
+    const casAskForNewDeadline = IsImSp() && contract?.requestedDeadline?.deadline == null && (getType() === "project" || getType() === "copyrights" || getType() === "team")
     const canResToNewDeadline = !IsImSp() && contract?.requestedDeadline?.deadline == !null && contract?.requestedDeadline?.status == 'pending' && (getType() === "project" || getType() === "copyrights" || getType() === "team")
     const canAskCancel =
     !contract_respond?.data?.haveCancleRequest &&(
