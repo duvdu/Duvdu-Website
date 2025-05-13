@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { useTranslation } from 'react-i18next';
 import * as Types from '../../../redux/constants/actionTypes';
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef } from "react";
 import MessageTile from "../../elements/MessageTile";
 import DuvduLoading from "../../elements/duvduLoading.js";
 import DraggableList from "../../../components/pages/home/dragList";
@@ -72,7 +72,7 @@ const ViewAll = ({ Type, list, t , onChoose }) =>
         {list.length > 0 ?
             <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
                 {list.map((tile, index) => (
-                    Type == 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
+                    Type == 'notification' ? <NotificationTile t={t} key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
     </div>
@@ -106,22 +106,12 @@ const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserCh
         {list.length > 0 ?
             <div className={`flex flex-col gap-4 ${Type === "messages"?'mt-4':' mt-8'} overflow-y-hidden`}>
                 {list.slice(0, 4).map((tile, index) => (
-                    Type === 'notification' ? <NotificationTile key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
+                    Type === 'notification' ? <NotificationTile t={t} key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t(`There's No ${Type}`)}</span> </div>}
     </div>
 );
 
-const NotificationTypeLink = (type , target ,username)=>{
-    switch(type){
-        case ('new tag'):
-            return '/project/projectInvitations';
-        case ('new_follower'):
-            return `/creative/${username}`
-        default:
-            return `/contracts?contract=${target}`
-    }
-}
 const TypeCase = (type) =>{
     switch(type){
         case ('contract_subscription'):
@@ -130,30 +120,73 @@ const TypeCase = (type) =>{
             return 'link'
     }
 }
-const NotificationTile = ({ tile }) =>
-    TypeCase(tile.type) === "link" ? 
-    <Link href={NotificationTypeLink(tile.type ,tile.target , tile.sourceUser?.username )}>
-        <div className="w-full lg:w-64 flex gap-4">
-            <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
-            <div className="flex flex-col justify-center">
-                <span className="line-clamp-2 cursor-pointer">
-                    <span className="rtl:hidden font-bold">{tile.sourceUser?.name?.split(' ')[0].length>6?tile.sourceUser?.name?.split(' ')[0].slice(0,6):tile.sourceUser?.name?.split(' ')[0] || 'DUVDU'} </span>
+const NotificationTile = ({ tile , t }) => {
+    const [showAll, setShowAll] = useState(false);
+    const [hasMore, setHasMore] = useState(false);
+    const paragraphRef = useRef(null);
+    useEffect(() => {
+        if (paragraphRef.current) {
+          const lineHeight = parseInt(window.getComputedStyle(paragraphRef.current).lineHeight || '18', 10);
+          const maxHeight = lineHeight * 1;
+          if (paragraphRef.current.scrollHeight > maxHeight) {
+            setHasMore(true);
+          }
+        }
+      }, [tile.message]);
+      const toggleLines = () => {
+        setShowAll(!showAll);
+      };
+          
+    const name = tile.sourceUser?.name?.split(' ')[0];
+    const shortName = name?.length > 6 ? name.slice(0, 6) : name || 'DUVDU';
+    const NotificationTypeLink = (type , target ,username)=>{
+        switch(type){
+            case ('new tag'):
+                return '/project/projectInvitations';
+            case ('new_follower'):
+                return `/creative/${username}`
+            default:
+                return `/contracts?contract=${target}`
+        }
+    }
+    
+    const content = (
+        <div className="flex flex-col justify-center text-start">
+            {TypeCase(tile.type) === "link" ? 
+            <Link href={NotificationTypeLink(tile.type, tile.target, tile.sourceUser?.username)}>
+                <div className='cursor-pointer'>
+                    <div className="cursor-pointer">
+                        <span className="rtl:hidden font-bold">{shortName}</span>
+                        <span className="text-xs opacity-60 mx-2">{tile.title}</span>
+                    </div>
+                    <div ref={paragraphRef} className={`font-bold text-sm ${!showAll ? 'line-clamp-1' : ''}`}>
+                        {tile.message}
+                    </div>
+                </div>
+            </Link>:
+            <button data-popup-toggle="popup" data-popup-target={tile.type} className="w-full lg:w-64 flex gap-4 text-start">
+                <div className="cursor-pointer">
+                    <span className="rtl:hidden font-bold">{shortName}</span>
                     <span className="text-xs opacity-60 mx-2">{tile.title}</span>
-                    <div className="font-bold">{tile.message} </div>
-                </span>
+                </div>
+                <div ref={paragraphRef} className={`font-bold text-sm ${!showAll ? 'line-clamp-1' : ''}`}>
+                    {tile.message}
+                </div>
+            </button>
+            }
+            {hasMore && (
+                <button onClick={toggleLines} className="text-xs text-blue-500 mt-1 underline self-start">
+                    {showAll ? t('View less') : t('View more')}
+                </button>
+            )}
+        </div>
+    );
+
+    return <div className="w-full lg:w-64 flex gap-4">
+                <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" />
+                {content}
             </div>
-        </div>
-    </Link>:
-    <button data-popup-toggle="popup" data-popup-target={tile.type} className="w-full lg:w-64 flex gap-4">
-        <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" width="45" height="45" />
-        <div className="flex flex-col justify-center">
-            <span className="line-clamp-2 cursor-pointer !text-start">
-                <span className="rtl:hidden font-bold">{tile.sourceUser?.name?.split(' ')[0].length>6?tile.sourceUser?.name?.split(' ')[0].slice(0,6):tile.sourceUser?.name?.split(' ')[0] || 'DUVDU'} </span>
-                <span className="text-xs opacity-60 mx-2">{tile.title}</span>
-                <div className="font-bold">{tile.message} </div>
-            </span>
-        </div>
-    </button>
+};
 
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
