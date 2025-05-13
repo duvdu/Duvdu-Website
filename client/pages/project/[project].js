@@ -202,7 +202,7 @@ const Projects = ({
                                 </section>
                             </div>
                         </div>
-                        {!chat_respond && projects.canChat &&
+                        {!chat_respond &&
                             <ProjectController initialData={project} toggleDrawer={toggleDrawer} toggleDrawerAddFav={toggleDrawerAddFav} canBook={project.user.username != user?.username} />
                         }
                         <ProjectBooking data={project} isOpen={isOpen} toggleDrawer={toggleDrawer} />

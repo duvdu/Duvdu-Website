@@ -23,7 +23,7 @@ const BookTeam = ({ team,current, unit , onChange ,pricerPerUnit, mainremovable 
                 {
                     item.unitPrice &&
                     <div className="team-padge">
-                        <span className="mx-3">{item.unitPrice*current} {t('EGP')}</span>
+                        <span className="mx-3">{item.unitPrice} {t('EGP')}</span>
                     </div>
                 }
                 {

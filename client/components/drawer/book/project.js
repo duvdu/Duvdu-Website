@@ -35,6 +35,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         const numberOfUnits = formData['projectScale[numberOfUnits]'];
         // Extract price per unit from data
         const pricePerUnit = data.projectScale.pricerPerUnit;
+        const currentPrice = formData["projectScale[numberOfUnits]"];
 
         // Calculate the tools cost
         let toolsCost = 0;
@@ -60,7 +61,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         }
 
         // Calculate the total price
-        const totalPrice = (pricePerUnit + toolsCost + functionsCost) * numberOfUnits;
+        const totalPrice = ((currentPrice * pricePerUnit) + toolsCost + functionsCost);
         return totalPrice;
     }
 

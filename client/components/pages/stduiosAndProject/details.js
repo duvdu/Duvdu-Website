@@ -215,7 +215,7 @@ const Details = ({ data , type='project' ,DeleteTaggedCreative ,DeleteProject,De
                     <div className="flex flex-col gap-2 mb-4">
                         {(data?.functions).map(tool => [
                             { value: tool.name, isActive: false , isPrice:false },
-                            { value: tool.unitPrice * data.projectScale?.current, isActive: false , isPrice:true}
+                            { value: tool.unitPrice, isActive: false , isPrice:true}
                         ]).map((toolGroup, i) => (
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
