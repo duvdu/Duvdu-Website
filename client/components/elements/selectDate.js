@@ -66,7 +66,7 @@ const SelectDate = ({ onChange, value }) => {
         const tomorrow = new Date(today);
         tomorrow.setDate(today.getDate() + 1);
 
-        if (newDate >= tomorrow) {
+        if (newDate >= today) {
             setCurrentDate(newDate);
         }
     };
