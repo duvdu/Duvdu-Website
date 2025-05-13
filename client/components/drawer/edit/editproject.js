@@ -319,7 +319,7 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         }
         setPlayingAudioRef(newAudioRef);
       };
-
+    console.log({formData})
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -412,15 +412,15 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                         <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                     </section>
                     <section>
-                        <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || data.name } onChange={handleInputChange} name="name" />
+                        <input placeholder={t("name")} className={"inputStyle1"} value={formData.name || (formData.name!=="" ? data.name:formData.name)} onChange={handleInputChange} name="name" />
                         <ErrorMessage ErrorMsg={ErrorMsg.title}/>
                     </section>
                     <section>
-                        <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || data.description } onChange={handleInputChange} name="description" />
+                        <input placeholder={t("description")} className={"inputStyle1"} value={formData.description || (formData.description!=="" ? data.description:formData.description)} onChange={handleInputChange} name="description" />
                         <ErrorMessage ErrorMsg={ErrorMsg.description}/>
                     </section>
                     <section>
-                        <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || data.duration} onChange={handleInputChange} name="duration" />
+                        <input placeholder={t("duration")} type="number" min={0} className={"inputStyle1"} value={formData.duration || (formData.duration!=="" ? data.duration:formData.duration)} onChange={handleInputChange} name="duration" />
                         <ErrorMessage ErrorMsg={ErrorMsg.duration}/>
                     </section>
                     <section>
@@ -500,21 +500,21 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                 ))}
                             </select>
                         </div>
-                        <input placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || data.projectScale.pricerPerUnit } onChange={handleInputChange} className={"inputStyle1"} />
+                        <input type="number" placeholder={`price per ${formData['projectScale[unit]'] || 'unit'}`} name="projectScale[pricerPerUnit]" value={formData['projectScale[pricerPerUnit]'] || (formData['projectScale[pricerPerUnit]']!=="" ? data.projectScale.pricerPerUnit:formData['projectScale[pricerPerUnit]'])} onChange={handleInputChange} className={"inputStyle1"} />
                         <div className="flex w-full justify-between gap-3">
                             <div className="w-full">
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]']  || data.projectScale.minimum } onChange={handleInputChange} placeholder={t(`minimum ${formData['projectScale[unit]'] || 'unit'}`)} className={"inputStyle1"} />
+                                    <input type="number" min={0} name='projectScale[minimum]' value={formData['projectScale[minimum]'] || (formData['projectScale[minimum]']!=="" ? data.projectScale.minimum:formData['projectScale[minimum]'])} onChange={handleInputChange} placeholder={t(`minimum ${formData['projectScale[unit]'] || 'unit'}`)} className={"inputStyle1"} />
                                 </div>
                             </div>
                             <div className="w-full">
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]']  || data.projectScale.current} onChange={handleInputChange} placeholder={t("current")} className={"inputStyle1"} />
+                                    <input type="number" min={0} name='projectScale[current]' value={formData['projectScale[current]']  || (formData['projectScale[current]']!=="" ? data.projectScale.current:formData['projectScale[current]'])} onChange={handleInputChange} placeholder={t("current")} className={"inputStyle1"} />
                                 </div>
                             </div>
                             <div className="w-full">
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]']  || data.projectScale.maximum} onChange={handleInputChange} placeholder={t(`maximum ${formData['projectScale[unit]'] || 'unit'}`)} className={"inputStyle1"} />
+                                    <input type="number" min={0} name='projectScale[maximum]' value={formData['projectScale[maximum]']  || (formData['projectScale[maximum]']!=="" ? data.projectScale.maximum:formData['projectScale[maximum]'])} onChange={handleInputChange} placeholder={t(`maximum ${formData['projectScale[unit]'] || 'unit'}`)} className={"inputStyle1"} />
                                 </div>
                             </div>
                         </div>

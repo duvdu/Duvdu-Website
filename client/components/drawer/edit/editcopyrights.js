@@ -179,10 +179,10 @@ const EditCopyrights = ({ GetCopyrights  ,UpdateCopyrights ,InsertToArray, Query
 
                         </div>
                         <div>
-                            <input placeholder={t("price")} type="number" min={0} value={formData.price|| data.price} onChange={handleInputChange} name="price" className={"inputStyle1"} />
+                            <input placeholder={t("price")} type="number" min={0} value={formData.price|| (formData.price!=="" ? data.price:formData.price)} onChange={handleInputChange} name="price" className={"inputStyle1"} />
                             <ErrorMessage ErrorMsg={ErrorMsg.price}/>
                         </div>
-                        <input type="number" min={0} placeholder={t("duration Days")} value={formData.duration|| data.duration.value} onChange={handleInputChange} name="duration" className={"inputStyle1"} />
+                        <input type="number" min={0} placeholder={t("duration Days")} value={formData.duration|| (formData.duration!=="" ? data.duration.value:formData.duration)} onChange={handleInputChange} name="duration" className={"inputStyle1"} />
                         <ErrorMessage ErrorMsg={ErrorMsg.duration}/>
 
                         <ListInput name={'searchKeyword'} placeholder={t("Search keywords")} value={formData.searchKeywords } onChange={(value) => UpdateFormData('searchKeywords', value)} />

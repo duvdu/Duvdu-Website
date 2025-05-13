@@ -217,7 +217,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
                             <ErrorMessage ErrorMsg={ErrorMsg.title}/>
                         </section>
                         <section>
-                            <input placeholder={t("Phone number")} type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                            <input placeholder={t("Phone number")} type="number" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
                             <ErrorMessage ErrorMsg={ErrorMsg.phoneNumber}/>
                         </section>
                         <section>

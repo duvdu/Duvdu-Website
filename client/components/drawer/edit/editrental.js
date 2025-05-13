@@ -344,19 +344,19 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     <ErrorMessage ErrorMsg={ErrorMsg.attachments}/>
                                 </section>
                                 <section>
-                                    <input placeholder={t("Name")} name="title" value={formData.title || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <input placeholder={t("Name")} name="title" value={formData.title || (formData.title!=="" ? data.title:formData.title)} onChange={handleInputChange} className={"inputStyle1"} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.title}/>
                                 </section>
                                 <section>
-                                    <input placeholder={t("Phone number")} type="tel" name="phoneNumber" value={formData.phoneNumber || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <input placeholder={t("Phone number")} type="number" name="phoneNumber" value={formData.phoneNumber || (formData.phoneNumber!=="" ? data.phoneNumber:formData.phoneNumber)} onChange={handleInputChange} className={"inputStyle1"} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.phoneNumber}/>
                                 </section>
                                 <section>
-                                    <input placeholder={t("Email")} type="email" name="email" value={formData.email || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <input placeholder={t("Email")} type="email" name="email" value={formData.email || (formData.email!=="" ? data.email:formData.email)} onChange={handleInputChange} className={"inputStyle1"} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.email}/>
                                 </section>
                                 <section>
-                                    <input placeholder={t("Description")} name="description" value={formData.description || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <input placeholder={t("Description")} name="description" value={formData.description || (formData.description!=="" ? data.description:formData.description)} onChange={handleInputChange} className={"inputStyle1"} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.description}/>
                                 </section>
                                 <section className="h-96 relative overflow-hidden mt-5">
@@ -368,7 +368,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     <ErrorMessage ErrorMsg={ErrorMsg.searchKeywords}/>
                                 </section>
                                 <section>
-                                    <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || ""} onChange={handleInputChange} className={"inputStyle1"} />
+                                    <input type="number" min={0} placeholder={t("insurance")} name="insurance" value={formData.insurance || (formData.insurance!=="" ? data.insurance:formData.insurance)} onChange={handleInputChange} className={"inputStyle1"} />
                                     {/* <ErrorMessage ErrorMsg={ErrorMsg.insurance}/> */}
                                 </section>
                             </section>
@@ -389,19 +389,19 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     </select>
                                 </div>
                                 <section>
-                                    <input placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || ""} onChange={handleInputChange} type='number' className={"inputStyle1"} />
+                                    <input type="number" placeholder={`price per ${formData['projectScale.unit'] || 'unit'}`} name="projectScale.pricerPerUnit" value={formData['projectScale.pricerPerUnit'] || (formData['projectScale.pricerPerUnit']!=="" ? data.projectScale.pricerPerUnit:formData['projectScale.pricerPerUnit'])} onChange={handleInputChange} className={"inputStyle1"} />
                                     <ErrorMessage ErrorMsg={ErrorMsg.pricerPerUnit}/>
                                 </section>
                                 <div className="flex w-full justify-between gap-3">
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale.minimum' value={formData['projectScale.minimum'] || data.projectScale.minimum} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale.minimum' value={formData['projectScale.minimum'] || (formData['projectScale.minimum']!=="" ? data.projectScale.minimum:formData['projectScale.minimum'])} onChange={handleInputChange} placeholder={`minimum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
 
                                     <div className="w-full">
                                         <div className='flex items-center justify-start gap-4'>
-                                            <input type="number" min={0} name='projectScale.maximum' value={formData['projectScale.maximum'] || data.projectScale.maximum} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
+                                            <input type="number" min={0} name='projectScale.maximum' value={formData['projectScale.maximum'] || (formData['projectScale.maximum']!=="" ? data.projectScale.maximum:formData['projectScale.maximum'])} onChange={handleInputChange} placeholder={`maximum ${formData['projectScale.unit'] || 'unit'}`} className={"inputStyle1"} />
                                         </div>
                                     </div>
                                 </div>
