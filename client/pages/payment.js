@@ -249,7 +249,7 @@ const RightSide = ({checkSubscribe , checkSubscribe_response , subscribe_respons
                 <section>
                     <div className="flex justify-center mt-5">
                         {/* <div data-popup-toggle="popup" data-popup-target="error-message"> */}
-                            <ArrowBtn loading={subscribe_response?.loading} onClick={subscriber} className="cursor-pointer sm:w-96" text={t('subscribe now')} />
+                            <ArrowBtn loading={subscribe_response?.loading} onClick={subscriber} className="cursor-pointer lg:w-80 xl:w-96" text={t('subscribe now')} />
                         {/* </div> */}
                     </div>
                 </section>
