@@ -20,3 +20,7 @@
   text-transform: capitalize;
 }
 
+
+.about-gradaint {
+  background: linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+}

@@ -16,6 +16,7 @@ import "../public/assets/css/project.css";
 import "../public/assets/css/chat.css";
 import "../public/assets/css/home.css";
 import "../public/assets/css/mood_boards.css";
+import "../public/assets/css/rtl.css";
 import '../util/i18n';
 import { OpenChannel } from "../redux/action/apis/realTime/socket/socket";
 import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";

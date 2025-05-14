@@ -13,5 +13,38 @@
 "ongoing": "Ongoing",
 "completed": "Completed",
 "rejected": "Rejected",
-"complaint": "Complaint"
+"complaint": "Complaint",
+"common": {
+    "back": "Back to Home Screen",
+    "join": "Join Us Now"
+  },
+  "home": {
+    "title": "Hair Transplant Services",
+    "subtitle": "All Inclusive Packages For Hair Transplant",
+    "description": "Find the best hair transplant solutions tailored to your needs. Professional services at affordable prices.",
+    "cta": "Learn More"
+  },
+  "abouts": {
+    "title": "About Our Services",
+    "subtitle": "Professional Hair Restoration",
+    "description": "We provide the latest hair transplant techniques with experienced specialists.",
+    "procedures": {
+      "title": "Our Procedures",
+      "fut": "Follicular Unit Transplantation (FUT)",
+      "fue": "Follicular Unit Extraction (FUE)"
+    }
+  },
+  "faq": {
+    "title": "Everything You Need To Know",
+    "industries": "What industries do you specialize in?",
+    "integration": "Can you integrate third-party tools and APIs?",
+    "timeline": "How long does it take to develop a project?",
+    "process": "How do we start working together?",
+    "support": "Do you offer ongoing support and maintenance?"
+  },
+  "blogs": {
+    "title": "Latest Blogs",
+    "readMore": "VIEW MORE"
+  }
+
 }
