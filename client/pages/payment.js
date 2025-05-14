@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Layout from "../components/layout/Layout";
 import Icon from '../components/Icons';
 import ArrowBtn from '../components/elements/arrowBtn';
 import Popup from '../components/elements/popup';
+import SuccessSubscription from '../components/popsup/successSubscription';
 import AppButton from '../components/elements/button';
 import AddNewCard from '../components/pages/payment/AddNewCard';
 import { useTranslation } from 'react-i18next';
+import { connect } from "react-redux";
+import { subscribe } from '../redux/action/apis/auth/subscription/subscribe';
+import { checkSubscribe } from '../redux/action/apis/auth/subscription/checkSubscribe';
+import { useRouter } from 'next/router';
 
-const Payment = () => {
+const Payment = ({isLogin , checkSubscribe , checkSubscribe_response , subscribe_response , subscribe}) => {
     const { t } = useTranslation();
 
 
@@ -16,7 +21,7 @@ const Payment = () => {
             <Layout>
                 <div className='lg:flex gap-6 container'>
                     <LeftSide />
-                    <RightSide />
+                    <RightSide isLogin={isLogin} checkSubscribe={checkSubscribe} checkSubscribe_response={checkSubscribe_response} subscribe_response={subscribe_response} subscribe={subscribe} />
                 </div>
             </Layout>
         </>
@@ -27,7 +32,7 @@ const Payment = () => {
 const LeftSide = () => {
     const { t } = useTranslation();
 
-    const [showAddCard, setShowAddCard] = useState(false);
+    const [showAddCard, setShowAddCard] = useState(true);
     const [cardData, setCardData] = useState([
         {
             isSelected: true,
@@ -111,7 +116,7 @@ const LeftSide = () => {
     return (
         <>
             <div className='my-12 w-full h-full'>
-                <div className='rounded-2xl bg-white dark:bg-[#1A2024] dark:border-[#3D3D3D]'>
+                {/* <div className='rounded-2xl bg-white dark:bg-[#1A2024] dark:border-[#3D3D3D]'>
                     <div className='flex rounded-xl gap-4 p-6'>
                         <Icon name={"card"} />
                         <p className='font-medium text-base'>{t("Registered cards")}</p>
@@ -120,7 +125,7 @@ const LeftSide = () => {
                     {cardData.map((card, index) => (
                         <Card key={index} isSelected={card.isSelected} data={card.data} isLast={cardData.length - 1 === index} onClick={() => handleCardClick(index)} />
                     ))}
-                </div>
+                </div> */}
                 {!showAddCard && (
                     <div className='flex gap-4 rounded-2xl w-full border px-7 py-6 cursor-pointer' onClick={handleAddCardClick}>
                         <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px]'>
@@ -139,11 +144,42 @@ const LeftSide = () => {
 };
 
 
-const RightSide = () => {
+const RightSide = ({checkSubscribe , checkSubscribe_response , subscribe_response , subscribe ,isLogin}) => {
     const { t } = useTranslation();
-    
+    const [canSubscribe , setCanSubscribe ] = useState(false)
+    const [haveSubscribe , setHaveSubscribe ] = useState(null)
+    const [post_success, setPost_success] = useState(false);
+    const [price , setPrice ] = useState(null)
+    const router = useRouter()
+    console.log({price})
+    function subscriber(){
+        subscribe().then(()=>{
+            setPost_success(true)
+        })
+    }
+    useEffect(()=>{
+        if(isLogin===true)
+            checkSubscribe()
+    },[isLogin])
+    var convertError = JSON.parse(checkSubscribe_response?.error ?? null)
+    function OnSucess() {
+        setPost_success(false)
+    }
+
+    useEffect(()=>{
+        if(checkSubscribe_response?.data){
+            setCanSubscribe(true)
+            setPrice(checkSubscribe_response?.data?.newFiveContractsPrice)
+        }
+        if(checkSubscribe_response?.error){
+            setHaveSubscribe(convertError?.data?.avaliableContracts)
+            setCanSubscribe(false)
+        }
+    },[checkSubscribe_response?.data , checkSubscribe_response?.error])
+
     return (
         <>
+            <SuccessSubscription isShow={post_success} onCancel={OnSucess} />
             <Popup id='error-message' header={'Error Message'}>
                 <div className='flex h-full flex-col mt-24 items-center'>
                     <div className='flex gap-2 items-center justify-center mb-4'>
@@ -158,7 +194,7 @@ const RightSide = () => {
                 </div>
             </Popup>
             <div className='rounded-2xl bg-white dark:bg-[#1A2024] border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>
-                <section>
+                {/* <section>
                     <h3 className="capitalize opacity-60 mb-4">{t("project type")}</h3>
                     <span className="rounded-full border border-black border-opacity-55 px-3 py-1">{t("videography")}</span>
                 </section>
@@ -200,17 +236,21 @@ const RightSide = () => {
                             </div>
                         </div>
                     </div>
-                </section>
-                <div className='h-12' />
-                <div className='flex font-bold justify-between'>
+                </section> */}
+                {/* <div className='h-12' /> */}
+                <p className='opacity-60 text-lg font-semibold'>{t("Subscribe to get access to more amazing projects & clients.")}</p>
+                <span className='text-primary text-lg capitalize text-center mt-0 mb-4'>
+                <span className='opacity-70 text-primary'>{t("5 contracts")}</span>
+                </span>
+                <div className='flex font-bold justify-between mt-5'>
                     <span>{t("Total Amount")}</span>
-                    <span>{t("₹6,699.0")}</span>
+                    <span>{price} {t("EGP")}</span>
                 </div>
                 <section>
-                    <div className="flex justify-center mt-11">
-                        <div data-popup-toggle="popup" data-popup-target="error-message">
-                            <ArrowBtn className="cursor-pointer sm:w-96" text='Appointment Now' />
-                        </div>
+                    <div className="flex justify-center mt-5">
+                        {/* <div data-popup-toggle="popup" data-popup-target="error-message"> */}
+                            <ArrowBtn loading={subscribe_response?.loading} onClick={subscriber} className="cursor-pointer sm:w-96" text={t('subscribe now')} />
+                        {/* </div> */}
                     </div>
                 </section>
             </div>
@@ -250,4 +290,15 @@ const Card = ({ isSelected, data, isLast , onClick }) => {
 };
 
 
-export default Payment;
+const mapStateToProps = (state) => ({
+    subscribe_response: state.api.subscribe,
+    checkSubscribe_response: state.api.checkSubscribe,
+    isLogin: state.auth.login,
+});
+
+const mapDispatchToProps = {
+    subscribe,
+    checkSubscribe,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);
+

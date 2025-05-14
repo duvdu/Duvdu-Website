@@ -109,7 +109,7 @@ const Layout = ({
             {isLogin && !user?.faceRecognition && 
             <FaceVerification />
             }
-            {isLogin && user?.avaliableContracts == 0 && 
+            {isLogin  && 
             <Subscribe />
             } 
             <Head>

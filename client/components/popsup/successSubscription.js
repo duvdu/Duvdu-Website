@@ -3,6 +3,7 @@ import Icon from '../Icons';
 import Popup from '../elements/popup';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
+import { ClosePopUp } from "../../util/util";
 function SuccessSubscription({ id = "subscription-message", isShow, onCancel }) {
     const { t } = useTranslation();
     const router = useRouter();
@@ -14,7 +15,7 @@ function SuccessSubscription({ id = "subscription-message", isShow, onCancel }) 
     function Cancel() {
         if (onCancel) {
             onCancel();
-            router.reload()
+            router.push('/')
         }
         setShowPopup(false);
     }
