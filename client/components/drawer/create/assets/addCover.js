@@ -18,9 +18,17 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
     const profileUpload = (e) => {
         const file = handleFileUpload(e)?.file;
         const fileUrl = gettFileUploaded(e);
-
-        UpdateFormData('cover', file);
-        UpdateFormData('coverShow', fileUrl);
+        if(coverType === 'video'){
+            if(file.type.startsWith('video/')){
+                UpdateFormData('cover', file);
+                UpdateFormData('coverShow', fileUrl);
+            }
+        }else{
+            if(file.type.startsWith('image/')){
+                UpdateFormData('cover', file);
+                UpdateFormData('coverShow', fileUrl);
+            }
+        }
     };
     const [attachmentValidation, setAttachmentValidation] = useState(false);
 
@@ -59,7 +67,7 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
-                }} /><audio controls className='w-full mt-5' src={media} />
+                }} /><audio controls className='w-full mt-5' src={formData.audioCover} />
                 </>;
             default:
                 return null;
@@ -99,10 +107,12 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
                             <span className='opacity-40 text-base capitalize'>{t("preview")}</span>
                             <div className='flex gap-3 mb-14'>
                                 <div className='w-1/3'>
-                                    <Preview title={"test title"} price={"500"} media={coverType==='audio'?formData.audioCover:media} coverType={coverType} />
+                                {renderMediaPreview()}
+                                    {/* <Preview title={"test title"} price={"500"} media={coverType==='audio'?formData.audioCover:media} coverType={coverType} /> */}
                                 </div>
                                 <div className='w-2/3'>
-                                    <Preview title={"test title"} price={"500"} media={coverType==='audio'?formData.audioCover:media} coverType={coverType} />
+                                {renderMediaPreview()}
+                                    {/* <Preview title={"test title"} price={"500"} media={coverType==='audio'?formData.audioCover:media} coverType={coverType} /> */}
                                 </div>
                             </div>
                         </section>

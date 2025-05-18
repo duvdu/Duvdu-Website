@@ -21,19 +21,40 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" ,
         const allFilesValid = files.every(file => parseFileSize(file.formattedFileSize) <= parseFileSize(maxFileSize));
         isValidCallback && isValidCallback(allFilesValid);
     };
-
     const attachmentsUpload = (e) => {
         const files = handleMultipleFileUpload(e);
-        const newFiles = files.map(file => ({
+    
+        let filteredFiles = files;
+    
+        if (media === "All") {
+            const imageMimeTypes = ['image/*', 'video/*' , 'application/pdf'];
+            filteredFiles = files.filter(file => !imageMimeTypes.includes(file.file.type));
+        }
+        if(media === 'image'){
+            filteredFiles = files.filter(file => file.file.type.startsWith('image/'));
+        }
+        if(media === 'audio'){
+            filteredFiles = files.filter(file => file.file.type.startsWith('audio/'));
+        }
+        if(media ==='video'){
+            filteredFiles = files.filter(file => file.file.type.startsWith('video/'));
+            
+        }
+        if(media === 'image_video'){
+            const imageMimeTypes = ['image/*', 'video/*'];
+            filteredFiles = files.filter(file => !imageMimeTypes.includes(file.file.type));
+        }
+        const newFiles = filteredFiles.map(file => ({
             ...file,
             id: Date.now() + file.fileName
         }));
+    
         const updatedFiles = [...uploadedFiles, ...newFiles];
         setUploadedFiles(updatedFiles);
         onChange && onChange({ target: { name, value: updatedFiles } });
         validateFiles(updatedFiles);
     };
-
+    
     const removeAttachment = (id) => {
         const filteredFiles = uploadedFiles.filter(file => file.id !== id);
         setUploadedFiles(filteredFiles);
@@ -51,8 +72,8 @@ function AddAttachment({ value, onChange, name, isValidCallback, media = "All" ,
                 return 'image/*,video/*';
             case 'audio':
                 return 'audio/mpeg, audio/ogg, audio/mp4, audio/aac, audio/flac, audio/x-ms-wma';  // Explicitly list audio types
-                case 'documents':
-                return 'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            case 'documents':
+            return 'application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             case 'All':
             default:
                 return 'image/*, video/*,application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document';
