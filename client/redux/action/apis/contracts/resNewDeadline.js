@@ -15,10 +15,13 @@ export const resNewDeadline = ({data , id , type}) => {
             switch (type) {
                 case "project":
                     response = await mainApiInstance.patch(`api/projects/contract/${id}/respond-to-new-deadline`,data);
+                    break;
                 case "copyrights":
                     response = await mainApiInstance.patch(`api/copyrights/contract/${id}/respond-to-new-deadline`,data);
+                    break;
                 case "team":
                     response = await mainApiInstance.patch(`api/team/contract/${id}/respond-to-new-deadline`,data);
+                    break;
                 default:
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });
                     return;

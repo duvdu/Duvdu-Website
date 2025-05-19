@@ -44,38 +44,42 @@ const About = () => {
 
   return (
     <Layout isbodyWhite={true}>
-    <section className="w-full ">
-    <div className="min-h-screen bg-gray-50 pb-10 pt-1">
+    <section className="w-full bg-[#F2F2F3] dark:bg-[#1A1A1C]">
+    <div className="min-h-screen pb-10 pt-1">
       
 
       {/* Main Content */}
-      <div className="lg:mx-auto lg:container ">
-        <div className="min-h-screen bg-gray-50">
+      <div className="lg:mx-auto container ">
+        <div className="min-h-screen">
           {/* Navigation */}
-          <div className="mt-10">
-          <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">{t('faq.title')}</h1>
+          <div className="mt-5">
+          <h1 className="text-2xl font-bold mb-8  ">About Us</h1>
+          <h1 className="text-6xl font-[300] mb-2 md:mb-4 text-[#030d28cc] dark:text-[#B3B3B3]">{t('Everything')}</h1>
+          <h1 className="text-6xl font-[500] mb-6 md:mb-8 capitalize ">{t('you need to know')}</h1>
             
-            <div className="mb-16">
+            <div className="mb-16 flex flex-col gap-2">
               {faqItems.map((item, index) => (
                 <div 
                   key={index} 
-                  className="border-b border-gray-200 last:border-b-0"
+                  className=" bg-white p-4 rounded-md"
                 >
                   <button
-                    className="flex justify-between items-center w-full py-6 text-left"
+                    className="flex justify-between items-center gap-5 w-full "
                     onClick={() => toggleFaq(index)}
                   >
-                    <span className="text-xl font-medium text-gray-800">{item.question}</span>
-                    <span className={`text-2xl transition-transform duration-200 ${openFaq === index ? 'transform rotate-180' : ''}`}>
-                      +
-                    </span>
+                    <span className="text-xl font-medium text-[#404040] text-start">{item.question}</span>
+                    <div className={`text-2xl w-6 h-6  bg-gray-100 flex items-center justify-center rounded-full transition-transform duration-200 ${openFaq === index ? 'transform -rotate-180' : ''}`}>
+                      <div className='text-[#404040]'>
+                        {openFaq === index ?'-':'+'}
+                      </div>
+                    </div>
                   </button>
                   <div 
-                    className={`transition-all duration-300 overflow-hidden ${
-                      openFaq === index ? 'max-h-96 pb-6' : 'max-h-0'
+                    className={`transition-all duration-300  overflow-hidden ${
+                      openFaq === index ? 'max-h-96 pt-4' : 'max-h-0'
                     }`}
                   >
-                    <p className="text-gray-700">{item.answer}</p>
+                    <p className="text-[#404040]">{item.answer}</p>
                   </div>
                 </div>
               ))}

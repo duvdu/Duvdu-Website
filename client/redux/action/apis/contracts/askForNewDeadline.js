@@ -15,10 +15,13 @@ export const contractNewDeadline = ({data , id , type}) => {
             switch (type) {
                 case "project":
                     response = await mainApiInstance.post(`api/projects/contract/${id}/ask-for-new-deadline`,data);
+                    break;
                 case "copyrights":
                     response = await mainApiInstance.post(`api/copyrights/contract/${id}/ask-for-new-deadline`,data);
+                    break;
                 case "team":
                     response = await mainApiInstance.post(`api/team/contract/${id}/ask-for-new-deadline`,data);
+                    break;
                 default:
                     dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req });
                     return;

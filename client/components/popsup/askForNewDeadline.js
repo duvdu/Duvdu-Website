@@ -53,10 +53,8 @@ function AskForNewDeadline({ data,type, UpdateFormData, resetForm, formData, res
 
     var convertError = JSON.parse(respond?.error ?? null)
     const isEnable = Object.keys(validateRequiredFields()).length == 0
-    console.log(validateRequiredFields())
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Canceling" />
             <Popup id='ask-for-new-deadline' className={'w-full lg:w-[942px] '} header={'new deadline'} onCancel={handlereset}>
                 <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">{t("select deadline date")}</h3>
@@ -71,10 +69,11 @@ function AskForNewDeadline({ data,type, UpdateFormData, resetForm, formData, res
                 <DuvduLoading loadingIn={"contractNewDeadline"} />
                 <ErrorMessage ErrorMsg={convertError?.data?.errors[0]?.message}/>
                 <div className='flex justify-center w-full '>
-                    <AppButton onClick={onsubmit} className={'mt-9 mb-3 w-full'} color={"#D30000"} isEnabled={isEnable}>
+                    <AppButton onClick={!respond?.loading && onsubmit} className={'mt-9 mb-3 w-full'}  isEnabled={isEnable}>
                     {respond?.loading ?<Loading/>:t("Submit")}</AppButton>
                 </div>
             </Popup>
+            <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Canceling" />
         </>
     );
 }

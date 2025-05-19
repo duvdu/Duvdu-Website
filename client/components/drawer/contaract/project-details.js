@@ -47,6 +47,8 @@ function ReceiveProjectFiles({
     takeAction,
     resNewDeadline,
     resNewDeadline_respond,
+    askNewDeadline_respond,
+    contract_cancel_respond,
     takeAction_respond,
     GetContract,
     GetComplaint,
@@ -191,7 +193,7 @@ function ReceiveProjectFiles({
             setActionSuccess(true)
         }
     }, [takeAction_respond?.message]);
-
+    
     useEffect(() => {
         if (resNewDeadline_respond?.message) {
             getAllContracts()
@@ -199,6 +201,20 @@ function ReceiveProjectFiles({
             setActionSuccess(true)
         }
     }, [resNewDeadline_respond?.message]);
+    useEffect(() => {
+        if (askNewDeadline_respond?.message) {
+            getAllContracts()
+            toggleDrawer()
+            setActionSuccess(true)
+        }
+    }, [askNewDeadline_respond?.message]);
+    useEffect(() => {
+        if (contract_cancel_respond?.message) {
+            getAllContracts()
+            toggleDrawer()
+            setActionSuccess(true)
+        }
+    }, [contract_cancel_respond?.message]);
     useEffect(() => {
         if (submitFile_respond?.message) {
             getAllContracts()
@@ -429,7 +445,7 @@ function ReceiveProjectFiles({
     const cancel = (!IsImSp() && status === "pending")
     const canReview = (!IsImSp() && (status === "completed" || status === "accepted") && !contract_respond?.data?.hasReview)
     const canSubmitFile = (IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
-    const canAnswerSubmitFile = (!IsImSp() && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
+    const canAnswerSubmitFile = ((!IsImSp()) && status === "ongoing" && (getType() === "project"  || getType() === "copyrights"  || getType() === "team" ))
     const canAnswerViewQR = (IsImSp() && getType() === "rental" && status === "ongoing" && !contract?.qrCodeVerification)
     const canUpdateData = (
         (status == "pending" && getType() == "producer" && IsImSp()) ||
@@ -444,45 +460,45 @@ function ReceiveProjectFiles({
     )
 
     const canViewUserInfo =
+        (getType() === "project" && (
+            status !== "pending" &&
+            status !== "canceled" &&
+            status !== "waiting-for-pay-10" &&
+            status !== "rejected" &&
+            status !== "complaint" 
+        ))||
         (getType() === "producer" && (
-            status !== "pending" ||
-            status !== "canceled" ||
-            status !== "rejected" ||
+            status !== "pending" &&
+            status !== "canceled" &&
+            status !== "rejected" &&
             status !== "complaint" 
         ))||
         (getType() === "copyrights" && (
-            status !== "pending" ||
-            status !== "canceled" ||
-            status !== "waiting-for-pay-10" ||
-            status !== "rejected" ||
-            status !== "complaint" 
-        ))||
-        (getType() === "project" && (
-            status !== "pending" ||
-            status !== "canceled" ||
-            status !== "waiting-for-pay-10" ||
-            status !== "rejected" ||
+            status !== "pending" &&
+            status !== "canceled" &&
+            status !== "waiting-for-pay-10" &&
+            status !== "rejected" &&
             status !== "complaint" 
         ))||
         (getType() === "rental" && (
-            status !== "pending" ||
-            status !== "canceled" ||
-            status !== "waiting-for-payment" ||
-            status !== "rejected" ||
+            status !== "pending" &&
+            status !== "canceled" &&
+            status !== "waiting-for-payment" &&
+            status !== "rejected" &&
             status !== "complaint" 
         ))||
         (getType() === "team" && (
-            status !== "pending" ||
-            status !== "canceled" ||
-            status !== "waiting-for-total-payment" ||
-            status !== "rejected" ||
+            status !== "pending" &&
+            status !== "canceled" &&
+            status !== "waiting-for-total-payment" &&
+            status !== "rejected" &&
             status !== "complaint" 
         ))
     
-    const casAskForNewDeadline = IsImSp() && contract?.requestedDeadline?.deadline == null && (getType() === "project" || getType() === "copyrights" || getType() === "team")
-    const canResToNewDeadline = !IsImSp() && contract?.requestedDeadline?.deadline == !null && contract?.requestedDeadline?.status == 'pending' && (getType() === "project" || getType() === "copyrights" || getType() === "team")
+    const canAskForNewDeadline = IsImSp() && status == 'ongoing' && contract?.requestedDeadline?.deadline == null && (getType() === "project" || getType() === "copyrights" || getType() === "team")
+    const canResToNewDeadline = !IsImSp() && status == 'ongoing' && contract?.requestedDeadline?.deadline !== null && contract?.requestedDeadline?.status == 'pending' && (getType() === "project" || getType() === "copyrights" || getType() === "team")
     const canAskCancel =
-    !contract_respond?.data?.haveCancleRequest &&(
+    (!contract_respond?.data?.haveCancelRequest) &&(
         (getType() === "copyrights" && (
             status == "update-after-first-Payment" ||
             status == "waiting-for-total-payment" ||
@@ -550,7 +566,7 @@ function ReceiveProjectFiles({
                 });
             };
             
-            
+    console.log({submitFiles:contract?.submitFiles})
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -645,7 +661,8 @@ function ReceiveProjectFiles({
                                     {t(status)}
                                     </span>
                                 </div>
-
+                                
+                                
                                 {status ==='rejected' && 
                                 <div>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("rejected by")}</h2>
@@ -655,6 +672,49 @@ function ReceiveProjectFiles({
                                 </div>
                                 }
                                 </section>
+                                {canResToNewDeadline &&
+                                <section className='w-full flex flex-col gap-2'>
+                                    <div>
+                                        <span className='bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'>{t('Sp ask for new deadlasdasdine please answer accept or reject this request')}</span>
+                                    </div>
+                                    <div className='flex gap-4'>
+                                        <div>
+                                            <div className='bg-[#ffeb3b] dark:bg-[#ffeb3b6e] rounded-xl p-2 mb-4'>
+                                                <Icon name={"bag"} />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <span className='opacity-85 text-base bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'>
+                                                {formatDate(contract.requestedDeadline?.deadline)}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span className='text-xs text-[#747688] bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'>
+                                                {t(dateFormat(contract.requestedDeadline?.deadline, 'dddd'))}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='grid grid-cols-2 gap-2'>
+                                        <button onClick={()=> handleResNewDeadline('accept')} className="rounded-md  py-1 border-solid bg-green-500 w-full text-[#EB1A40] text-lg font-bold mt-2">
+                                            {resNewDeadline_respond?.loading && actionAccept ==='accept'?
+                                            <Loading size='md'/>
+                                            :
+                                            <span className='text-white font-bold capitalize text-lg'>{t("Accept")}</span>
+                                            }
+                                        </button>
+                                        <button onClick={()=> handleResNewDeadline('reject')} className="rounded-md  py-1 border-solid bg-[#EB1A40] w-full text-[#EB1A40] text-lg font-bold mt-2">
+                                            {resNewDeadline_respond?.loading && actionAccept ==='reject'?
+                                            <Loading size='md'/>
+                                            :
+                                            <span className='text-white font-bold capitalize text-lg'>{t("reject")}</span>
+                                            }
+
+                                        </button>
+                                    </div>
+                                </section>
+                                }
                                 {canHeightData && 
                                 <section className='grid w-full'>
                                     <div className='flex gap-3 items-center'>
@@ -775,7 +835,7 @@ function ReceiveProjectFiles({
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='p-1 rounded-md bg-gray-200'>
+                                            <div className='p-1 rounded-md bg-gray-200 dark:bg-gray-500'>
                                                 {item?.status}
                                             </div>
                                         </div>
@@ -964,25 +1024,6 @@ function ReceiveProjectFiles({
                                     }
                                 </div>
                                 }
-                            {canResToNewDeadline &&
-                                <div className='grid grid-cols-2 gap-2'>
-                                    <button onClick={()=> handleResNewDeadline('accept')} className="rounded-md  py-1 border-solid bg-green-500 w-full text-[#EB1A40] text-lg font-bold mt-2">
-                                        {resNewDeadline_respond?.loading && actionAccept ==='accept'?
-                                        <Loading size='md'/>
-                                        :
-                                        <span className='text-white font-bold capitalize text-lg'>{t("Accept")}</span>
-                                        }
-                                    </button>
-                                    <button onClick={()=> handleResNewDeadline('reject')} className="rounded-md  py-1 border-solid bg-[#EB1A40] w-full text-[#EB1A40] text-lg font-bold mt-2">
-                                        {resNewDeadline_respond?.loading && actionAccept ==='reject'?
-                                        <Loading size='md'/>
-                                        :
-                                        <span className='text-white font-bold capitalize text-lg'>{t("reject")}</span>
-                                        }
-
-                                    </button>
-                                </div>
-                                }
                             {canEdit &&
                                 <section className='flex mx-5 gap-7 mb-10 mt-16 justify-center'>
                                     <Button isEnabled={UpdateBtn} className="w-full" shadow={true} shadowHeight={"14"} onClick={handleUpdate}>
@@ -1001,13 +1042,13 @@ function ReceiveProjectFiles({
                                     </Button>
                                 </section>
                             }
-                            {canAnswerSubmitFile && contract?.submitFiles?.length>0 &&
+                            {canAnswerSubmitFile && contract?.submitFiles?.length>0  &&
                                 <section className='flex mx-5 gap-7 justify-center'>
                                     <Button className="w-full" shadow={true} shadowHeight={"14"} onClick={handleAcceptAllFiles}>
                                         {acceptAllFiles_respond?.loading && actionAccept ==='accept'?
                                             <Loading size='md'/>
                                             :
-                                            <span className='text-white font-bold capitalize text-lg'>{t("accept all files")}</span>
+                                            <span className='text-white font-bold capitalize text-lg'>{t("Accept files and Complete contract")}</span>
                                         }
                                     </Button>
                                 </section>
@@ -1067,7 +1108,7 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() && getType() !== 'team' && status == "waiting-for-total-payment" &&
                                         <div className='grid grid-cols-2 mx-5 gap-5 mb-10 mt-10'>
-                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())|| true} className="w-full !h-[100px]" shadow={true}   onClick={handlePayment}>
+                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())  || true} className="w-full !h-[100px]" shadow={true}   onClick={handlePayment}>
                                                 {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
@@ -1085,7 +1126,7 @@ function ReceiveProjectFiles({
                                     {
                                         !IsImSp() && getType() === 'team' && status == "waiting-for-total-payment" &&
                                         <div className='flex items-center justify-center mx-5 gap-7 mb-10 mt-10'>
-                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())||true} className="w-full" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
+                                            <Button isEnabled={(new Date(appointmentDate).getDate() >= new Date().getDate())  ||true} className="w-full" shadow={true} shadowHeight={"14"} onClick={handlePayment}>
                                                 {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
@@ -1134,14 +1175,14 @@ function ReceiveProjectFiles({
                                     }
                                     {canAskCancel &&
                                         <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                            <button className="group rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
+                                            <button onClick={openAskForCancel} className="group rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
                                                 <span className='text-[#5666F7] group-hover:text-white font-bold capitalize text-lg'>{t("ask system for cancel")}</span>
                                             </button>
                                         </section>
                                     }
-                                    {casAskForNewDeadline &&
+                                    {canAskForNewDeadline &&
                                         <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                            <button className="group rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
+                                            <button onClick={openAskForNewDeadline} className="group rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
                                                 <span className='text-[#5666F7] group-hover:text-white font-bold capitalize text-lg'>{t("ask client new deadline")}</span>
                                             </button>
                                         </section>
@@ -1171,6 +1212,8 @@ const mapStateToProps = (state) => ({
     contractDetails: state.contractDetails,
     takeAction_respond: state.api.takeAction,
     resNewDeadline_respond: state.api.resNewDeadline,
+    askNewDeadline_respond: state.api.contractNewDeadline,
+    contract_cancel_respond: state.api.contractCancel,
     payment_respond: state.api.payment,
     addprojectState: state.addproject,
     submitFile_respond:state.api.submitFile,
