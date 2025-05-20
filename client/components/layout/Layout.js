@@ -133,7 +133,7 @@ const Layout = ({
             </main>
             <GoogleAnalytics ga_id="G-L1SQRZGHZB" />
             
-            {/* <Footer /> */}
+            <Footer />
         </>
     );
 };
