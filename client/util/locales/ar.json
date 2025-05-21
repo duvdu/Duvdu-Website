@@ -242,6 +242,13 @@
     "Loading...": "جارٍ التحميل...",
     "Reviews": "المراجعات",
     "hours": "ساعات",
+    "About Us":"نبذة عنا",
+    "Let's Talk":"تواصل معنا",
+    "Blog":"المدونة",
+    "Got something on your mind? Hit us up now":"هل لديك ما يشغل بالك؟ تواصل معنا الآن",
+    "Leave us a Message":"اترك لنا رسالة",
+    "Refund Policy":"سياسة الاسترداد",
+    "Privacy Policy":"سياسة الخصوصية",
     "message": "الرسالة",
     "Create": "إنشاء",
     "to access this feature": "للوصول إلى هذه الميزة",
@@ -552,6 +559,7 @@
     "Enter a keyword": "أدخل كلمة مفتاحية",
     "Invalid Code": "ترميز خاطئ",
     "Successfully Booking": "تم الحجز بنجاح",
+    "Successfully Send Ticket": "تم إرسال التذكرة بنجاح",
     "Successfully Payment": "تم الدفع بنجاح",
     "Successfully Creating": "تم الإنشاء بنجاح",
     "Successfully Update": "تم التحديث بنجاح",
@@ -707,7 +715,8 @@
         "integration": "هل يمكنك دمج أدوات وواجهات برمجة تطبيقات الطرف الثالث؟",
         "timeline": "كم من الوقت يستغرق تطوير مشروع؟",
         "process": "كيف نبدأ العمل معًا؟",
-        "support": "هل تقدم الدعم والصيانة المستمرة؟"
+        "support": "هل تقدم الدعم والصيانة المستمرة؟",
+        "hair":"ما هو الوقت المناسب لزراعة الشعر؟"
       },
       "blogs": {
         "title": "أحدث المدونات",

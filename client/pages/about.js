@@ -37,7 +37,7 @@ const About = () => {
       answer: `Yes, we provide ongoing support and maintenance for all our clients. Our post-operative care includes regular check-ins, guidance on hair care and maintenance, and assistance with any questions or concerns that may arise during the recovery period. We also offer long-term follow-up to ensure optimal results from your hair transplant procedure.`,
     },
     {
-      question: `When is the right time for a hair transplant?`,
+      question: t('faq.hair'),
       answer: `Hair loss can affect people of all ages, but determining the ideal time for a hair transplant is crucial. Typically, it's advisable to consider a hair transplant when you have stabilized your hair loss. This means that your hair loss has not progressed significantly over the past year or so. Getting a hair transplant too early, when hair loss is still active, can result in the need for additional procedures as hair loss continues.`,
     },
   ];
@@ -61,15 +61,15 @@ const About = () => {
               {faqItems.map((item, index) => (
                 <div 
                   key={index} 
-                  className=" bg-white p-4 rounded-md"
+                  className=" bg-white dark:bg-[#404040] p-4 rounded-md"
                 >
                   <button
                     className="flex justify-between items-center gap-5 w-full "
                     onClick={() => toggleFaq(index)}
                   >
-                    <span className="text-xl font-medium text-[#404040] text-start">{item.question}</span>
-                    <div className={`text-2xl w-6 h-6  bg-gray-100 flex items-center justify-center rounded-full transition-transform duration-200 ${openFaq === index ? 'transform -rotate-180' : ''}`}>
-                      <div className='text-[#404040]'>
+                    <span className="text-xl font-medium text-[#404040] dark:text-[#B3B3B3] text-start">{item.question}</span>
+                    <div className={`text-2xl w-6 h-6  bg-gray-100 dark:bg-[#404040] flex items-center justify-center rounded-full transition-transform duration-200 ${openFaq === index ? 'transform -rotate-180' : ''}`}>
+                      <div className='text-[#404040] dark:text-[#B3B3B3]'>
                         {openFaq === index ?'-':'+'}
                       </div>
                     </div>
@@ -79,7 +79,7 @@ const About = () => {
                       openFaq === index ? 'max-h-96 pt-4' : 'max-h-0'
                     }`}
                   >
-                    <p className="text-[#404040]">{item.answer}</p>
+                    <p className="text-[#404040] dark:text-[#B3B3B3]">{item.answer}</p>
                   </div>
                 </div>
               ))}
