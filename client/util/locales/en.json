@@ -1,20 +1,20 @@
 {
-"dashboard":"dashboard",
-"category_description":"Explore new photography projects & discover talented creatives",
-"phoneNumber.number is already exists":"Phone Number is already exists",
-"waiting-for-pay-10":"First Payment",
-"waiting-for-total-payment":"waiting for total payment",
-"canceled": "Canceled",
-"pending": "Pending",
-"waiting-for-first-payment": "First Payment",
-"waiting-for-payment": "First Payment",
-"update-after-first-payment": "Updates after First Payment",
-"accepted-with-update": "Rescheduled",
-"ongoing": "Ongoing",
-"completed": "Completed",
-"rejected": "Rejected",
-"complaint": "Complaint",
-"common": {
+  "dashboard": "dashboard",
+  "category_description": "Explore new photography projects & discover talented creatives",
+  "phoneNumber.number is already exists": "Phone Number is already exists",
+  "waiting-for-pay-10": "First Payment",
+  "waiting-for-total-payment": "waiting for total payment",
+  "canceled": "Canceled",
+  "pending": "Pending",
+  "waiting-for-first-payment": "First Payment",
+  "waiting-for-payment": "First Payment",
+  "update-after-first-payment": "Updates after First Payment",
+  "accepted-with-update": "Rescheduled",
+  "ongoing": "Ongoing",
+  "completed": "Completed",
+  "rejected": "Rejected",
+  "complaint": "Complaint",
+  "common": {
     "back": "Back to Home Screen",
     "join": "Join Us Now"
   },
@@ -46,6 +46,17 @@
   "blogs": {
     "title": "Latest Blogs",
     "readMore": "VIEW MORE"
+  },
+  "contact_us": {
+    "heading": "Got something on your mind? Hit us up now",
+    "full_name": "Full Name",
+    "phone_number": "Phone Number",
+    "message": "Your Message",
+    "send": "Send Message",
+    "error_short_message": "Your message must be at least 20 characters long.",
+    "success_message": "Successfully Send Ticket",
+    "talk_title": "Let's Talk",
+    "email": "Email",
+    "phone": "Phone"
   }
-
 }
