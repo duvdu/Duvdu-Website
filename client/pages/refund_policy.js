@@ -88,7 +88,28 @@ const htmlTerms = `<div>
   </ul>
 
   <h2>Contact</h2>
-  <p>If you have any questions, please contact us at: <a href="mailto:info@duvdu.com">info@duvdu.com</a> By phone: 01282221544</p> </div>`
+  <p>If you have any questions, please contact us </p> 
+  <ul type="disc">
+    <li dir="LTR">
+        <strong>By Email</strong>: info@duvdu.com
+    </li>
+    <li dir="LTR">
+        <strong>Online</strong>: By visiting the "Contact Us" page on our website:
+        <a href="https://duvdu.com/" target="_blank">
+            https://duvdu.com/
+        </a>
+    </li>
+    <li dir="LTR">
+        <strong>By Phone</strong>: 01282221544
+    </li>
+</ul>
+
+<p>
+    We will be happy to assist you and address any issues you may have.
+</p>
+
+
+  </div>`
 
 
 
@@ -167,10 +188,25 @@ const htmlTermsAR = `<div>
 <p>9.2 إن استمرارك في استخدام المنصة بعد إجراء التعديلات يُعد موافقة ضمنية على الشروط الجديدة.</p>
 <p><br></p>
 <p><strong>10.&nbsp;</strong><strong>معلومات</strong><strong>&nbsp;</strong><strong>الاتصال</strong></p>
-<p>إذا كانت لديك أي أسئلة بخصوص هذه الشروط والأحكام الخاصة بالدفع، يُرجى التواصل معنا عبر البريد الإلكتروني: <a href="mailto:info@duvdu.com">info@duvdu.com</a>
-عبر الهاتف:  01282221544
+<p>إذا كانت لديك أي أسئلة بخصوص هذه الشروط والأحكام الخاصة بالدفع، يُرجى التواصل معنا
 </p>
-<p><br></p>
+<ul type="disc">
+    <li dir="rtl">
+        <strong>عبر البريد الإلكتروني</strong>: info@duvdu.com
+    </li>
+    <li dir="rtl">
+        <strong>عبر الإنترنت</strong>: من خلال زيارة صفحة "لنتواصل" على موقعنا:
+        <a href="https://duvdu.com/" target="_blank">
+            https://duvdu.com/
+        </a>
+    </li>
+    <li dir="rtl">
+        <strong>عبر الهاتف</strong>: 01282221544
+    </li>
+</ul>
+<p dir="RTL">
+    سيسعدنا مساعدتك.
+</p>
 </div>`
 
 const RefundPolicy = ({ api, GetTerms , respond }) => {

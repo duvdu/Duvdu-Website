@@ -508,15 +508,21 @@ const htmlTerms = `<div>
     Policy or your personal data, you can contact us through any of the
     following methods:
 </p>
-<p>
-    By email: info@duvdu.com
-</p>
-<p>
-    Online: By visiting let’s connect page on our website at https://duvdu.com/
-</p>
-<p>
-    By phone: 01282221544
-</p>
+<ul type="disc">
+    <li dir="LTR">
+        <strong>By Email</strong>: info@duvdu.com
+    </li>
+    <li dir="LTR">
+        <strong>Online</strong>: By visiting the "Contact Us" page on our website:
+        <a href="https://duvdu.com/" target="_blank">
+            https://duvdu.com/
+        </a>
+    </li>
+    <li dir="LTR">
+        <strong>By Phone</strong>: 01282221544
+    </li>
+</ul>
+
 <p>
     We will be happy to assist you and address any issues you may have.
 </p>
@@ -1077,17 +1083,16 @@ const htmlTermsAR = `<div>
     ببياناتك الشخصية، يمكنك الاتصال بنا من خلال أي من الطرق التالية:
 </p>
 <ul type="disc">
-    <li dir="RTL">
+    <li dir="rtl">
         <strong>عبر البريد الإلكتروني</strong>: info@duvdu.com
     </li>
-    <li dir="RTL">
-        <strong>عبر الإنترنت</strong>: من خلال زيارة صفحة "لنتواصل" على موقعنا
-        على الإنترنت:
-        <a href="https://duvdu.com/" target="_new">
+    <li dir="rtl">
+        <strong>عبر الإنترنت</strong>: من خلال زيارة صفحة "لنتواصل" على موقعنا:
+        <a href="https://duvdu.com/" target="_blank">
             https://duvdu.com/
         </a>
     </li>
-    <li dir="RTL">
+    <li dir="rtl">
         <strong>عبر الهاتف</strong>: 01282221544
     </li>
 </ul>
