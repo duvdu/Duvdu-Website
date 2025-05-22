@@ -58,5 +58,13 @@
     "talk_title": "Let's Talk",
     "email": "Email",
     "phone": "Phone"
+  },
+  "on_boarding": {
+    "title_1": "LET\nYOUR\nPROJECT\nSHINE",
+    "desc_1": "We Make It Fast, Simple, & Cost Effective To Find, Hire & Pay The Best Professionals Anywhere, Any Time",
+    "title_2": "LET\nYOUR\nPROJECT\nSHINE",
+    "desc_2": "We Make It Fast, Simple, & Cost Effective To Find, Hire & Pay The Best Professionals Anywhere, Any Time",
+    "title_3": "JOIN US\nNOW",
+    "desc_3": "We Make It Fast, Simple, & Cost Effective To Find, Hire & Pay The Best Professionals Anywhere, Any Time"
   }
 }
