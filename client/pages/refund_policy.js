@@ -97,6 +97,7 @@ const htmlTerms = `<div>
 
 const htmlTermsAR = `<div>
 <p><strong>شروط</strong><strong>&nbsp;</strong><strong>وأحكام</strong><strong>&nbsp;</strong><strong>الدفع</strong></p>
+<p><strong>تاريخ السريان: 1 مايو 2025</strong></p>
 <p>تحكم هذه الشروط والأحكام الخاصة بالدفع (&quot;الشروط&quot;) العمليات المالية والتعاملات المالية على منصة Duvdu (المملوكة لشركة Main Street Company LLC) &mdash; وهي سوق حر يركز على الإعلام، يربط بين العملاء والمستقلين. باستخدامك للمنصة، فإنك توافق على الالتزام بهذه الشروط.</p>
 <p><br></p>
 <p><strong>1.&nbsp;</strong><strong>نظرة</strong><strong>&nbsp;</strong><strong>عامة</strong><strong>&nbsp;</strong><strong>عامة</strong></p>
