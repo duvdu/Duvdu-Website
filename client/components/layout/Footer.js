@@ -82,14 +82,14 @@ const Footer = ({isDark}) => {
                             </Link>
                         </div>
                         <div className=" flex gap-x-4">
-                            <a href="#" className="hover:text-blue-500">
+                            <a href="https://www.instagram.com/duvdu_app?igsh=MWxtM2ZoaTFtajB1Zg==" className="hover:text-blue-500">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g opacity="0.5">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0 16.3184C0 7.4818 7.16344 0.318359 16 0.318359C24.8366 0.318359 32 7.4818 32 16.3184C32 25.1549 24.8366 32.3184 16 32.3184C7.16344 32.3184 0 25.1549 0 16.3184ZM16 8.31836C20.4 8.31836 24 11.9184 24 16.3184C24 20.3184 21.1 23.7184 17.1 24.3184V18.6184H19L19.4 16.3184H17.2V14.8184C17.2 14.2184 17.5 13.6184 18.5 13.6184H19.5V11.6184C19.5 11.6184 18.6 11.4184 17.7 11.4184C15.9 11.4184 14.7 12.5184 14.7 14.5184V16.3184H12.7V18.6184H14.7V24.2184C10.9 23.6184 8 20.3184 8 16.3184C8 11.9184 11.6 8.31836 16 8.31836Z" fill="white"/>
                                     </g>
                                 </svg>
                             </a>
-                            <a href="#" className="hover:text-blue-500">
+                            <a href="https://www.instagram.com/duvdu_app?igsh=MWxtM2ZoaTFtajB1Zg==" className="hover:text-blue-500">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g opacity="0.5">
                                         <path d="M16 19.1184C14.5 19.1184 13.2 17.9184 13.2 16.3184C13.2 14.8184 14.4 13.5184 16 13.5184C17.5 13.5184 18.8 14.7184 18.8 16.3184C18.8 17.8184 17.5 19.1184 16 19.1184Z" fill="white"/>
@@ -98,7 +98,7 @@ const Footer = ({isDark}) => {
                                     </g>
                                 </svg>
                             </a>
-                            <a href="#" className="hover:text-blue-500">
+                            <a href="https://www.instagram.com/duvdu_app?igsh=MWxtM2ZoaTFtajB1Zg==" className="hover:text-blue-500">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g opacity="0.5">
                                         <path d="M18.6 16.3184L14.4 13.9184V18.7184L18.6 16.3184Z" fill="white"/>
@@ -106,7 +106,7 @@ const Footer = ({isDark}) => {
                                     </g>
                                 </svg>
                             </a>
-                            <a href="#" className="hover:text-blue-500">
+                            <a href="https://www.instagram.com/duvdu_app?igsh=MWxtM2ZoaTFtajB1Zg==" className="hover:text-blue-500">
                                 <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g opacity="0.5">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 16.3184C0 7.4818 7.16344 0.318359 16 0.318359C24.8366 0.318359 32 7.4818 32 16.3184C32 25.1549 24.8366 32.3184 16 32.3184C7.16344 32.3184 0 25.1549 0 16.3184ZM8.2 13.6184V24.3184H11.6V13.6184H8.2ZM8 10.2184C8 11.3184 8.8 12.1184 9.9 12.1184C11 12.1184 11.8 11.3184 11.8 10.2184C11.8 9.11836 11 8.31836 9.9 8.31836C8.9 8.31836 8 9.11836 8 10.2184ZM20.6 24.3184H23.8V17.7184C23.8 14.4184 21.8 13.3184 19.9 13.3184C18.2 13.3184 17 14.4184 16.7 15.1184V13.6184H13.5V24.3184H16.9V18.6184C16.9 17.1184 17.9 16.3184 18.9 16.3184C19.9 16.3184 20.6 16.8184 20.6 18.5184V24.3184Z" fill="white"/>
