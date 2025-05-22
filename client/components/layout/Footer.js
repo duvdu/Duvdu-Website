@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link"
-import Icon from "../Icons";
 import { connect } from "react-redux";
 import { useTranslation } from 'react-i18next';
 

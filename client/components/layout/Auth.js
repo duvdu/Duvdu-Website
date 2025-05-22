@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 SwiperCore.use([Autoplay, Navigation, EffectFade]);
 
 function Auth({ children, isloading, errors, auth, api, resendCode }) {
-  const { t } = useTranslation();
+  const { t , i18n } = useTranslation();
 
   const [active, setActive] = useState(-1);
   const [swiper, setSwiper] = useState(null);
@@ -100,10 +100,11 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
                       loop={true}
                       autoplay={{ delay: 4000 }}
                       speed={1500}
+                      dir={lang==='Arabic' ? 'rtl' : 'ltr'}
                     >
                       {imageSources.map((source, index) => (
                         <SwiperSlide key={index}>
-                          <div className="relative min-h-[790px] lg:min-h-0 min-w-96 size-full">
+                          <div dir={i18n.language==='Arabic'?'rtl':'ltr'} className="relative min-h-[790px] lg:min-h-0 min-w-96 size-full">
                             <div className="absolute inset-0 flex flex-col auth-gradient px-[7px] sm:px-4 lg:px-16">
                               <div className="absolute bottom-20 ">
                                 <h1 className="text-white text-[70px] font-bold uppercase shadow1 leading-[1.2] w-min">

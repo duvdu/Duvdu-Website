@@ -46,7 +46,6 @@ const CustomToast = ({ toast ,goToMessage , type, CloseToast }) => {
             goToMessage()
         CloseToast()
     }
-        console.log(toast)
     return (    
         <div
         className={`transition ${toast ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full d-none'} cursor-pointer duration-700 ease-in-out max-w-md w-full bg-white dark:bg-[#1A2024] z-[500000] fixed top-5 end-5 shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
