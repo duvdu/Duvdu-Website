@@ -515,7 +515,7 @@ const htmlTerms = `<div>
     Online: By visiting let’s connect page on our website at https://duvdu.com/
 </p>
 <p>
-    By phone: +20 128 222 1544
+    By phone: 01282221544
 </p>
 <p>
     We will be happy to assist you and address any issues you may have.
@@ -1088,7 +1088,7 @@ const htmlTermsAR = `<div>
         </a>
     </li>
     <li dir="RTL">
-        <strong>عبر الهاتف</strong>: +20 128 222 1544
+        <strong>عبر الهاتف</strong>: 01282221544
     </li>
 </ul>
 <p dir="RTL">
