@@ -82,9 +82,9 @@ function Auth({ children, isloading, errors, auth, api, resendCode }) {
   return (
     <>
       <Layout isloading={isloading} shortheader={true} showTabs={false}>
-        <div className="h-body center-div">
+        <div className="lg:h-body center-div">
           <div className="container">
-            <div className="flex flex-col lg:flex-row gap-6 h-body py-9">
+            <div className="flex flex-col lg:flex-row gap-6 lg:h-body py-9">
               <div className="lg:w-5/12 xl:w-5/12 ">
                 <div className="left-side-auth lg:mt-0 h-full w-full">
                   <div className="flex h-full w-full">
