@@ -66,5 +66,71 @@
     "desc_2": "We Make It Fast, Simple, & Cost Effective To Find, Hire & Pay The Best Professionals Anywhere, Any Time",
     "title_3": "JOIN US\nNOW",
     "desc_3": "We Make It Fast, Simple, & Cost Effective To Find, Hire & Pay The Best Professionals Anywhere, Any Time"
+  },
+  "about_us": {
+    "heading": "About Us",
+    "intro": {
+      "p1": "At Duvdu, we specialize in connecting clients with top-tier professionals in photography, videography, branding, and content creation. Our platform is designed to help you find your perfect work match, ensuring that your creative projects are executed with excellence and precision.",
+      "p2": "Whether you’re seeking to capture a special moment, develop a compelling brand identity, or create engaging content, Duvdu provides a curated selection of talented creatives ready to bring your vision to life. Our commitment is to facilitate seamless collaborations that result in outstanding outcomes.",
+      "p3": "Duvdu is proudly owned and operated by Main Street Company, a Cairo-based firm dedicated to fostering innovative digital solutions.",
+      "p4": "Join us at Duvdu, where creativity meets opportunity, and let’s create something exceptional together."
+    },
+    "faq": {
+      "heading": "More about Duvdu",
+      "items": [
+        {
+          "q": "What is Duvdu?",
+          "a": "Duvdu is a platform designed to help freelancers in creative industries—like photography, videography, graphic design, and more—find their perfect work match. Whether you’re looking for a project or showcasing your talent, Duvdu connects you with exciting opportunities tailored just for you."
+        },
+        {
+          "q": "What makes Duvdu different from other freelance platforms?",
+          "a": "Unlike other platforms, Duvdu is all about personalization and community. We understand that every freelancer has unique skills and passions. That’s why we match you with projects based on your specific interests, helping you build a portfolio that truly represents you. We also prioritize user engagement, offering a platform where both freelancers and clients can connect and grow together."
+        },
+        {
+          "q": "How does Duvdu match freelancers with projects?",
+          "a": "When you first sign up, you choose your tags—like graphic design, photography, videography, or content creation. These tags help us match you with the most relevant projects. As you engage with the platform, Duvdu’s AI-powered engine suggests personalized opportunities that best fit your skills and interests. It’s like having your own career assistant!"
+        },
+        {
+          "q": "How can I create my portfolio on Duvdu?",
+          "a": "Once you’ve signed up, you’ll have access to your personal space where you can easily upload your work. Whether it’s a professional project or a passion project, your portfolio is your chance to showcase your creativity. The more work you upload, the better your chances of getting noticed by potential clients!"
+        },
+        {
+          "q": "Can I join Duvdu if I’m just starting out?",
+          "a": "Absolutely! Duvdu is for freelancers at all stages of their careers. If you’re just starting out, you can still upload your best demo or passion projects. Don’t worry if you don’t have a lot of client work just yet—we believe in your potential, and that’s what matters."
+        },
+        {
+          "q": "How do I get started with Duvdu?",
+          "a": "It’s simple! Just create an account, choose your tags, upload your work, and start exploring the opportunities that Duvdu has to offer. We’re here to guide you every step of the way, helping you connect with the right projects and clients."
+        },
+        {
+          "q": "Is Duvdu only for freelancers, or can businesses use it too?",
+          "a": "Duvdu is perfect for both freelancers and businesses. If you’re a business looking to find talented freelancers, you can browse through the portfolios, contact your ideal match, and collaborate on exciting projects. Our platform makes it easy for both sides to come together and create something amazing."
+        },
+        {
+          "q": "What happens after I upload a project to my portfolio?",
+          "a": "Once your project is uploaded, it will be visible to other users on the platform. Freelancers and businesses can view your work, engage with you, and potentially offer you new projects. You can track your project’s performance, see who’s liking it, and even receive direct messages from clients."
+        },
+        {
+          "q": "How can I stay connected with other creatives?",
+          "a": "Duvdu is all about community! Through our chat feature, you can connect with other freelancers, share tips, ask questions, or even collaborate on projects. Plus, we’ll keep you updated on the latest trends and opportunities through notifications."
+        },
+        {
+          "q": "How do I get feedback on my work?",
+          "a": "Clients and other freelancers can leave ratings and reviews on your projects, giving you valuable feedback. This helps you improve your skills, build trust, and enhance your reputation in the community. The more you engage with the platform, the more you’ll grow and learn."
+        },
+        {
+          "q": "How can I ensure my profile gets noticed?",
+          "a": "It’s all about being active and showcasing your best work. Make sure your portfolio is up-to-date, engage with projects that match your skills, and be responsive to potential clients. The more you interact, the higher your chances of being matched with exciting opportunities."
+        },
+        {
+          "q": "How can I become a part of Duvdu’s success story?",
+          "a": "Duvdu’s success is built on our vibrant community of creatives like you! By staying active, uploading great content, and connecting with others, you’re contributing to the platform’s growth. Together, we’ll make Duvdu a place where freelancers thrive."
+        },
+        {
+          "q": "What’s next for Duvdu?",
+          "a": "We’re constantly evolving to better serve you! From AI-powered features to more community-driven events, we’re always looking for ways to improve and provide our users with the best tools to succeed. Stay tuned for exciting new updates coming your way!"
+        }
+      ]
+    }
   }
 }

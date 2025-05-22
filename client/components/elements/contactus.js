@@ -139,8 +139,8 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
                                     <div className="hidden md:inline-block w-px h-5 bg-gray-300"></div>
                                     <div className="flex items-center gap-2">
                                         <strong className="text-sm text-gray-700">✉️ {t("contact_us.email")}:</strong>
-                                        <a href="mailto:support@duvdu.com" className="text-sm text-blue-600 hover:underline">
-                                            support@duvdu.com
+                                        <a href="mailto:info@duvdu.com" className="text-sm text-blue-600 hover:underline">
+                                            info@duvdu.com
                                         </a>
                                     </div>
                                 </div>

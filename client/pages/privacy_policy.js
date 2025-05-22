@@ -6,12 +6,10 @@ import Layout from "../components/layout/Layout";
 import { useTranslation } from "react-i18next";
 
 const htmlTerms = `<div>
-<p>
-    <strong>Privacy Policy of Main Street</strong>
-</p>
-<p>
-    <strong>Introduction</strong>
-</p>
+<p><strong>Privacy Policy of Main Street Company</strong></p>
+<p><strong>Effective Date: May 1, 2025</strong></p>
+
+<p><strong>Introduction</strong></p>
 <p>
     Main Street Company (“we”, “us”, or “our”) is committed to protecting your
     personal information. This Privacy Policy describes our policies and
@@ -22,9 +20,8 @@ const htmlTerms = `<div>
     practices to safeguard your data. By using our Service, you agree to the
     collection and use of information in accordance with this Privacy Policy.
 </p>
-<p>
-    <strong>Definitions</strong>
-</p>
+
+<p><strong>Definitions</strong></p>
 <p>
     The following terms have specific meanings in this Privacy Policy. Words
     capitalized in the text (such as “You” or “Company”) are defined as follows
@@ -529,6 +526,7 @@ const htmlTermsAR = `<div>
 <p dir="RTL">
     <strong>سياسة الخصوصية لشركة</strong> <strong>Main Street</strong> <br/>
 </p>
+<p><strong>تاريخ السريان: 1 مايو 2025</strong></p>
 <p dir="RTL">
     <strong>المقدمة</strong>
 </p>

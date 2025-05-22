@@ -38,10 +38,6 @@ const Page = ({ api, GetTerms , respond }) => {
 
         <Layout>
             <div className='container py-10'>
-
-                <h1 className='text-3xl font-medium'>{t("Terms & Conditions")}</h1>
-                <span className='opacity-80 text-xs'>{t("Last updated: December 22, 2023")}</span>
-
                 <section className='termsBody mt-8 text-lg font-medium' dangerouslySetInnerHTML={{ __html: terms }} />
             </div>
         </Layout>

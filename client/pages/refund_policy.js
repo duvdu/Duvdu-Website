@@ -88,7 +88,7 @@ const htmlTerms = `<div>
   </ul>
 
   <h2>Contact</h2>
-  <p>If you have any questions, please contact us at: <a href="mailto:info@duvdu.com">info@duvdu.com</a></p></div>`
+  <p>If you have any questions, please contact us at: <a href="mailto:info@duvdu.com">info@duvdu.com</a> By phone: +201282221544</p> </div>`
 
 
 
@@ -167,7 +167,9 @@ const htmlTermsAR = `<div>
 <p>9.2 إن استمرارك في استخدام المنصة بعد إجراء التعديلات يُعد موافقة ضمنية على الشروط الجديدة.</p>
 <p><br></p>
 <p><strong>10.&nbsp;</strong><strong>معلومات</strong><strong>&nbsp;</strong><strong>الاتصال</strong></p>
-<p>إذا كانت لديك أي أسئلة بخصوص هذه الشروط والأحكام الخاصة بالدفع، يُرجى التواصل معنا عبر البريد الإلكتروني:<br><a href="mailto:info@duvdu.com">info@duvdu.com</a></p>
+<p>إذا كانت لديك أي أسئلة بخصوص هذه الشروط والأحكام الخاصة بالدفع، يُرجى التواصل معنا عبر البريد الإلكتروني: <a href="mailto:info@duvdu.com">info@duvdu.com</a>
+عبر الهاتف: +201282221544
+</p>
 <p><br></p>
 </div>`
 
