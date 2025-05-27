@@ -21,6 +21,9 @@
 }
 
 
-.about-gradaint {
-  background: linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+.blog-gradient {
+  background: var(--blog-gradient);
+}
+.blog-gradient2 {
+  background: var(--blog-gradient2);
 }

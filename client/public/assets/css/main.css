@@ -2706,6 +2706,8 @@ input[type="time"]::-webkit-calendar-picker-indicator{
   --swiper-pagination-color: #fff;
   --swiper-pagination-bullet-inactive-opacity: .4;
   --swiper-navigation-size: 44px;
+  --blog-gradient:linear-gradient(0deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+  --blog-gradient2:linear-gradient(90deg, #3483FA 30%, rgba(255, 255, 255, 0) 100%);
 }
 
 .dark {
@@ -2725,4 +2727,6 @@ input[type="time"]::-webkit-calendar-picker-indicator{
   --water: #001F4A;
   --linear-popup: linear-gradient(180deg, rgba(19, 19, 19, 0.00) 0%, #131313 91.04%);
   --drop-white-arrow: url('../imgs/theme/icons/drop-white-arrow.svg') --padge: #FFFFFFBF;
+  --blog-gradient:linear-gradient(0deg, #171717 0%, rgba(255, 255, 255, 0) 100%);
+  --blog-gradient2:linear-gradient(90deg, #3483FA 30%, rgba(255, 255, 255, 0) 100%);
 }

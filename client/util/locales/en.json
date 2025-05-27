@@ -2,18 +2,6 @@
   "dashboard": "dashboard",
   "category_description": "Explore new photography projects & discover talented creatives",
   "phoneNumber.number is already exists": "Phone Number is already exists",
-  "waiting-for-pay-10": "First Payment",
-  "waiting-for-total-payment": "waiting for total payment",
-  "canceled": "Canceled",
-  "pending": "Pending",
-  "waiting-for-first-payment": "First Payment",
-  "waiting-for-payment": "First Payment",
-  "update-after-first-payment": "Updates after First Payment",
-  "accepted-with-update": "Rescheduled",
-  "ongoing": "Ongoing",
-  "completed": "Completed",
-  "rejected": "Rejected",
-  "complaint": "Complaint",
   "common": {
     "back": "Back to Home Screen",
     "join": "Join Us Now"
@@ -132,5 +120,21 @@
         }
       ]
     }
-  }
+  },
+  "waiting-for-pay-10": "First Payment",
+  "update-after-first-Payment": "Updates after First Payment",
+  "waiting-for-total-payment": "Second Payment",
+  "waiting-for-payment": "Waiting for Payment",
+  "ongoing": "Ongoing",
+  "completed": "Completed",
+  "canceled": "Canceled",
+  "pending": "Pending",
+  "accepted": "Accepted",
+  "rejected": "Rejected",
+  "accepted with update": "Rescheduled",
+  "complaint": "Complaint",
+  "other": "Other",
+  "update-after-first-payment": "Updates after First Payment",
+  "accepted-with-update": "Rescheduled",
+  "waiting-for-first-payment": "First Payment"
 }

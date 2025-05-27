@@ -227,7 +227,7 @@ const Home = ({
                 <section className="w-full">
                     <div className="mt-8 lg:my-20 mx-auto w-min">
                         <h1 className="text-center my-4">
-                            <span className="font-black text-[#263257] dark:text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl capitalize whitespace-nowrap trap">{t("Find your perfect")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[20px] lg:px-[20px] pb-0 trap" style={TheBeststyle}>
+                            <span className="font-black text-[#263257] dark:text-white text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl capitalize whitespace-nowrap trap">{t("Find your perfect")} <span className="text-[#263257] dark:text-white pt-[25px] lg:pt-[80px] px-[20px] lg:px-[20px] pb-0 trap" style={TheBeststyle}>
                                 {t("WORK")} </span> {t("match")}
                             </span>
                             <div className="relative h-[50px] lg:h-[120px]">

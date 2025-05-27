@@ -212,7 +212,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                 <div className='flex flex-col h-full mt-24 lg:mt-0'>
                     <section className='flex left-0 lg:hidden gap-3 mt-6 mb-2 fixed w-full py-4 top-16 p-0 z-[5] px-4'>
                         <div
-                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto min-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto max-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 0 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(0)}
                         >
                             {t("my clients")}
@@ -221,7 +221,7 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
                             }
                         </div>
                         <div
-                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto min-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
+                            className={`sm:px-10 px-0 py-5 w-full sm:w-auto max-w-[220px] contact-toggle whitespace-nowrap ${activeIndex === 1 ? 'active' : ''}`}
                             onClick={() => handleToggleClick(1)}
                         >
                         {t("my bookings")} 

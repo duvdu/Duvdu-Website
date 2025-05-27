@@ -78,7 +78,7 @@ const Category = ({ category, language }) => {
               key={subIndex}
               title={subcategory.title}
               items={subcategory.tags}
-              onClick={(tagId) => handleNavigation(`/${category.cycle}`, `category=${category._id}&subcategory=${subcategory._id}&${ tagId ? "tag=" + tagId : ''}`)}
+              onClick={(tagId) => handleNavigation(`/${category.cycle}`, `category=${category._id}&subCategory=${subcategory._id}&${ tagId ? "tag=" + tagId : ''}`)}
               cycle={category.cycle}
             />
           ))}
@@ -91,7 +91,7 @@ const Category = ({ category, language }) => {
                 key={subIndex}
                 title={subcategory.title}
                 items={subcategory.tags}
-                onClick={(tagId) => handleNavigation(`/${category.cycle}`, `subcategory=${subcategory._id}&${tagId ? "tag=" + tagId : ''}`)}
+                onClick={(tagId) => handleNavigation(`/${category.cycle}`, `category=${category._id}&subCategory=${subcategory._id}&${ tagId ? "tag=" + tagId : ''}`)}
                 cycle={category.cycle}
               />
             ))}

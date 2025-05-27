@@ -517,6 +517,10 @@ function ReceiveProjectFiles({
         ))
     )
 
+    const canReport = (
+        status !== "complaint" 
+    )
+
     const UpdateBtn =
         (getType() === "producer" &&
             IsImSp() &&
@@ -822,7 +826,7 @@ function ReceiveProjectFiles({
                                             <div className='flex gap-3 items-center justify-between'>
                                                 <Icon name={'link'} className='size-5' />
                                                 <div className='flex flex-col overflow-hidden'>
-                                                    <a className='font-semibold overflow-hidden line-clamp-1 max-w-[300px] underline' href={item.link} target="_blank">
+                                                    <a className='font-semibold overflow-hidden line-clamp-1 max-w-[200px] sm:max-w-[300px] underline' href={item.link} target="_blank">
                                                         {item.link}
                                                     </a>
                                                     <div className='flex flex-col leading-5'>
@@ -1187,7 +1191,7 @@ function ReceiveProjectFiles({
                                             </button>
                                         </section>
                                     }
-                                    {
+                                    {canReport &&
                                     <section className='flex mx-5 gap-7 mb-10 justify-center'>
                                         <Button className="w-full" shadow={true} shadowHeight={"14"} color={"#D30000"}  onClick={openComplain}>
                                             <span className='text-white font-bold capitalize text-lg'>{t("Report")}</span>
