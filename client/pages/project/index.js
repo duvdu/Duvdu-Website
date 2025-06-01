@@ -28,7 +28,7 @@ const Projects = ({ projects, GetProjects, api }) => {
     const [limit, setLimit] = useState(showLimit);
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, relatedCategory,tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
+    const { category, subCategory, relatedCategory,tags, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -57,7 +57,7 @@ const Projects = ({ projects, GetProjects, api }) => {
             params['relatedCategory[0]'] = relatedCategory;
         }
 
-        if (tag) params.tag = tag;
+        if (tags) params.tags = tags;
         if (priceFrom) params.minBudget = priceFrom;
         if (priceTo) params.maxBudget = priceTo;
         if (duration) params.duration = duration;
@@ -78,7 +78,7 @@ const Projects = ({ projects, GetProjects, api }) => {
                 GetProjects(Queries());
             }
         }
-    }, [ searchTerm, page, category, subCategory, tag,relatedCategory, priceFrom, priceTo, duration, instant, keywords]);
+    }, [ searchTerm, page, category, subCategory, tags,relatedCategory, priceFrom, priceTo, duration, instant, keywords]);
     useEffect(()=>{
         if (limit) {
             if(Queries() && Router.isReady){

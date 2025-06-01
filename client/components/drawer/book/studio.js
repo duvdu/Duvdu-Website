@@ -123,7 +123,10 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         return <Drawer name={data.user.name?.split(' ')[0].length>6?data.user.name?.split(' ')[0].slice(0,6):data.user.name?.split(' ')[0]} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
     }
-
+    const [hours, minutes] = formData?.timeDate?.split(":").map(Number);
+    const period = hours >= 12 ? "PM" : "AM";
+    const hour12 = (hours % 12 === 0 ? 12 : hours % 12);
+    const BookingTime = `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />
@@ -155,7 +158,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                             <h3 className="capitalize opacity-60 mb-4">set number of {data.projectScale.unit}</h3>
                             <span className="capitalize opacity-60 mb-4">{formData['projectScale.numberOfUnits']} {data.projectScale.unit}</span>
                         </div>
-                        <CustomSlider initValue={data.projectScale.minimum} values={data.projectScale.maximum} onValueChange={(v) => UpdateFormData('projectScale.numberOfUnits', v)} />
+                        <CustomSlider initValue={data.projectScale.minimum} minimum={data.projectScale.minimum} values={data.projectScale.maximum} onValueChange={(v) => UpdateFormData('projectScale.numberOfUnits', v)} />
                     </section>
                     <section className="my-11">
                         <h3 className="capitalize opacity-60 mb-4">{t("select Booking date")}</h3>
@@ -198,6 +201,17 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                     <div className="flex gap-2 items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                                     <span className="font-normal text-base capitalize">{t("Booking Date")}</span>
                                     <span className="font-normal text-base">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
+                                        <Icon className='text-primary' name={"calendar"} />
+                                    </div>
+                                    <div className="flex gap-2 items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
+                                    <span className="font-normal text-base capitalize">{t("Booking Time")}</span>
+                                    <span className="font-normal text-base">{BookingTime}</span>
                                     </div>
                                 </div>
                             </div>

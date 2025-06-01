@@ -34,7 +34,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin , 
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords , Platforms  } = Router.query
+    const { category, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords , Platforms  } = Router.query
 
     const { asPath } = Router;
     // Remove leading slash
@@ -66,7 +66,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin , 
                 params[`platforms[${index}]`] = platform;
             }); 
         } 
-        if (tag) params.tag = tag;
+        if (tags) params.tags = tags;
         if (priceFrom) params.minBudget = priceFrom;
         if (priceTo) params.maxBudget = priceTo;
         if (duration) params.duration = duration;
@@ -87,7 +87,7 @@ const Producers = ({ GetProducer,platform,GetPlatforms, respond, api, isLogin , 
                 GetProducer(Queries());
             }
         }
-    }, [searchTerm, page, category, Platforms, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }, [searchTerm, page, category, Platforms, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords]);
     useEffect(() => {
         if (limit) {
             // Call GetCopyrights with the constructed query string

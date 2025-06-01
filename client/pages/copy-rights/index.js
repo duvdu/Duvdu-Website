@@ -36,7 +36,7 @@ const Permit = ({ GetCopyrights, respond, api, isLogin  , user}) => {
     const pagganation = respond?.pagination
 
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
+    const { category, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
     const { asPath } = Router;
 
     // Remove leading slash
@@ -62,7 +62,7 @@ const Permit = ({ GetCopyrights, respond, api, isLogin  , user}) => {
             // Include the query parameters from the URL if they exist
             if (category) params.category = category;
             if (subCategory) params.subCategory = subCategory;
-            if (tag) params.tag = tag;
+            if (tags) params.tags = tags;
             if (priceFrom) params.priceFrom = priceFrom;
             if (priceTo) params.priceTo = priceTo;
             if (duration) params.duration = duration;
@@ -85,7 +85,7 @@ const Permit = ({ GetCopyrights, respond, api, isLogin  , user}) => {
                 GetCopyrights(Queries());
             }
         }
-    }, [ searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords]);
+    }, [ searchTerm, page, category, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords]);
     useEffect(() => {
         if (limit) {
             // Call GetCopyrights with the constructed query string

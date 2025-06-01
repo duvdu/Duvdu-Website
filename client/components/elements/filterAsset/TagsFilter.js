@@ -51,7 +51,7 @@ const Tags = ({ categories, cycle , onSelect, onFilterChange,toggleDrawer , clea
     };
     useEffect(()=>{
         Object.entries(router.query).forEach(([key, value]) => {
-            if(key ==='tag'){
+            if(key ==='tags'){
                 setSelectedTags(value.includes(",") ? value.split(",") : [value])
             }else if(key ==='category' || key ==='subCategory'){
                 setSelectedTags([])

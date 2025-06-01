@@ -41,6 +41,12 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
             UpdateFormData('insurance', '')
     },[isInsurance])
     const converting = () => {
+        if(!formData.subCategory){
+            delete formData.subCategory
+        }
+        if(!formData.insurance){
+            delete formData.insurance
+        }
         const data = convertToFormData(formData, ['location', 'tags', 'attachments', 'searchKeywords'])
         if (formData.location) {
             data.append('location[lat]', formData.location.lat);
@@ -67,6 +73,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
     const validateRequiredFields = () => {
         const errors = {};
         const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
+        const EmailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
         if (!formData.category) errors.category = 'Category is required';
         // if (!formData.subCategory) errors.subCategory = 'Subcategory is required';
@@ -79,6 +86,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
             errors.phoneNumber = 'Invalid Egyptian phone number';
         }
         if (!formData.email) errors.email = 'Studio email is required';
+        if (!EmailRegex.test(formData.email)) errors.email = 'Invalid email';
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.location || !formData.location.lat || !formData.location.lng) errors.location = 'Location is required';
         // if (!formData.searchKeywords || !formData.searchKeywords.length) errors.searchKeywords = 'Search keywords are required';
@@ -175,6 +183,7 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
         GetUserProject({ username: auth?.username });
     }
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
+    console.log({formData})
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />

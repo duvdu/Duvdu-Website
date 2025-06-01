@@ -71,7 +71,7 @@ const Home = ({
     const page = 1;
     const [limit, setLimit] = useState(showLimit);
 
-    const { category, subCategory, tag, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
+    const { category, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
 
     // Extract the path part of the URL
     const cycle = "project";
@@ -92,13 +92,13 @@ const Home = ({
             // Include the query parameters from the URL if they exist
             if (category) params.category = category;
             if (subCategory) params.subCategory = subCategory;
-            if (tag) params.tag = tag;
+            if (tags) params.tags = tags;
             if (priceFrom) params.priceFrom = priceFrom;
             if (priceTo) params.priceTo = priceTo;
             if (duration) params.duration = duration;
             if (instant !== undefined) params.instant = instant;
             // if (inclusive !== undefined) params.inclusive = inclusive;
-            if (keywords) params.keywords = keywords;
+            if (keywords) params.search = keywords;
 
             // Construct query string from params object
             const queryString = new URLSearchParams(params).toString();
@@ -108,7 +108,7 @@ const Home = ({
             GetProjects(queryString)
 
         // }
-    }, [searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration, instant, keywords]);
+    }, [searchTerm, page, category, subCategory, tags, priceFrom, priceTo, duration, instant, keywords]);
 
 
     const handleFilterChange = (selectedFilters) => {
@@ -136,7 +136,7 @@ const Home = ({
                 case "Tags":
                     // Check if filter.data exists and is not empty
                     if (filter.data && filter.data.length > 0) {
-                        params.tag = filter.data.join(',');;
+                        params.tags = filter.data.join(',');;
                     }
                     break;
                 case "Budget Range":

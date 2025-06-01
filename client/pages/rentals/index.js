@@ -28,7 +28,7 @@ const Studio = ({ projects, GetStudios, api }) => {
 
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const { category, subCategory, tag, priceFrom, priceTo, duration, Insurance,instant, inclusive, keywords } = Router.query
+    const { category, subCategory, tags, priceFrom, priceTo, duration, Insurance,instant, inclusive, keywords } = Router.query
 
     const { asPath } = Router;
 
@@ -56,7 +56,7 @@ const Studio = ({ projects, GetStudios, api }) => {
         // Include the query parameters from the URL if they exist
         if (category) params.category = category;
         if (subCategory) params.subCategory = subCategory;
-        if (tag) params.tag = tag;
+        if (tags) params.tags = tags;
         if (priceTo) params.pricePerHourTo = priceTo;
         if (priceFrom) params.pricePerHourFrom = priceFrom;
         if (duration) params.duration = duration;
@@ -78,7 +78,7 @@ const Studio = ({ projects, GetStudios, api }) => {
                 GetStudios(Queries());
             }
         }
-    }, [ searchTerm, page, category, subCategory, tag, priceFrom, priceTo, duration,instant, Insurance, inclusive, keywords]);
+    }, [ searchTerm, page, category, subCategory, tags, priceFrom, priceTo, duration,instant, Insurance, inclusive, keywords]);
     useEffect(() => {
         if (limit) {
             if(Queries() && Router.isReady)

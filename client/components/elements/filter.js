@@ -206,7 +206,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                 case "Tags":
                     // Check if filter.data exists and is not empty
                     if (filter.data && filter.data.length > 0) {
-                        params.tag = filter.data.join(',');;
+                        params.tags = filter.data.join(',');;
                     }
                     break;
                 case "Budget Range":

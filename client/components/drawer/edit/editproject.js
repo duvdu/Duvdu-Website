@@ -127,11 +127,11 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             UpdatedData.append('cover', formData.cover);
         }
 
-        // if (formData.attachments)
-        //     for (let i = 0; i < formData.attachments.length; i++) {
-        //         const file = formData.attachments[i];
-        //         UpdatedData.append(`attachments`, file.file);
-        // }
+        if (formData.attachments)
+            for (let i = 0; i < formData.attachments.length; i++) {
+                const file = formData.attachments[i];
+                UpdatedData.append(`attachments`, file.file);
+        }
 
         if (formData.audioCover)
             for (let i = 0; i < formData.audioCover.length; i++) {

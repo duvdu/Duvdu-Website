@@ -269,6 +269,12 @@ function ReceiveProjectFiles({
         }
     }, [acceptFiles_respond?.data || acceptFiles_respond?.message]);
     useEffect(() => {
+        if (acceptAllFiles_respond?.data || acceptAllFiles_respond?.message) {
+            getAllContracts()
+            toggleDrawer()
+        }
+    }, [acceptAllFiles_respond?.data || acceptAllFiles_respond?.message]);
+    useEffect(() => {
         if (report_respond?.data || report_respond?.message) {
             toggleDrawer()
             ClosePopUp('report-contract')
@@ -329,12 +335,13 @@ function ReceiveProjectFiles({
         }
     }
     const handleAcceptFiles = (field) => {
+        setField(field)
         setActionAccept('accept')
-        acceptFiles({ id: contract?._id, field ,type:getType(), data:{ status:'approved' }})
+        acceptFiles({ id: contract?._id, field , type:getType() , data:{ status:'approved' , cycle:getType()}})
     };    
     const handleAcceptAllFiles = (field) => {
         setActionAccept('accept')
-        acceptAllFiles({ id: contract?._id})
+        acceptAllFiles({ id: contract?._id , type: getType()})
     };    
     const handleCancel = () => {
         setActionAccept('cancel')
@@ -853,7 +860,7 @@ function ReceiveProjectFiles({
                                         {canAnswerSubmitFile && item.status ==='pending' &&
                                         <div className='grid grid-cols-2 gap-2'>
                                             <button onClick={()=> handleAcceptFiles(item._id)} className="rounded-md  py-1 border-solid bg-green-500 w-full text-[#EB1A40] text-lg font-bold mt-2">
-                                                {acceptFiles_respond?.loading && actionAccept ==='accept'?
+                                                {acceptFiles_respond?.loading && actionAccept ==='accept' && item._id=== field ?
                                                 <Loading size='md'/>
                                                 :
                                                 <span className='text-white font-bold capitalize text-lg'>{t("Accept")}</span>
@@ -959,7 +966,7 @@ function ReceiveProjectFiles({
                                                 <h3 className="capitalize opacity-60 mb-4">{t("number Of Units")}</h3>
                                                 <input placeholder={t("number Of Units")} type="number" min={0} className={"edit app-field"} value={formData["numberOfUnits"] ||   (formData["numberOfUnits"]!=="" ? contract?.projectScale.numberOfUnits:formData["numberOfUnits"])} onChange={handleInputChange} name="numberOfUnits" />
                                             </section>
-                                            {formData?.tools?.length>0 && 
+                                            {/* {formData?.tools?.length>0 && 
                                             <>
                                             <div className='h-divider my-6' />
                                             <section>
@@ -1010,7 +1017,7 @@ function ReceiveProjectFiles({
                                                 ))}
                                             </section>
                                             </>
-                                            }
+                                            } */}
                                         </>
                                     }
                                 </div>

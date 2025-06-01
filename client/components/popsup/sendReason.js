@@ -21,7 +21,7 @@ function SendReason({type='project' , id ='123' ,field, acceptFiles_respond , ac
             return () => clearTimeout(timer2);
             return
         }
-        acceptFiles({ id, field ,type, data:{status:'rejected' , reason }})
+        acceptFiles({ id, field , type , data:{status:'rejected' , reason , cycle:type }})
     };
     useEffect(()=>{
         if(acceptFiles_respond?.error){
