@@ -292,7 +292,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         UpdateFormData("relatedSubCategory" , data.relatedCategory?.[0]?.category?.subCategories?.[0]?._id)
         UpdateFormData("relatedTags" , data?.relatedCategory?.[0]?.category?.subCategories?.[0]?.tags?.map(item=>item?._id))
     }, [data])
-    console.log({data})
     // useEffect(() => {
     //     if (auth.login === false)
     //         router.push({ pathname: "/" });

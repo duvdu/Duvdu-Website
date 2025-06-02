@@ -132,22 +132,33 @@ const AddProducer = ({
     useEffect(() => {
         GetIsLoggedProducer()
     }, [updateProducer_respond?.data , deleteProducer_respond?.data])
+    useEffect(() => {
+        if(producerData)
+        UpdateFormData("subcategory", producerData?.subCategories)
+        UpdateFormData("category", producerData?.category?._id)
+        UpdateFormData("platforms", producerData?.platforms?.map(item=>item._id))
+        UpdateFormData("minBudget", producerData?.minBudget)
+        UpdateFormData("maxBudget", producerData?.maxBudget)
+        UpdateFormData("searchKeywords", producerData?.searchKeywords)
+    }, [producerData])
     const handleUpdate = () => {
-        if (formData.subcategory?.length>0) formData.subcategory = transformKeys(formData.subcategory);
-        if(formData.subcategory?.length === 0) formData.subcategory = null;
-        if (formData.platforms?.length>0){
-            formData.platforms != producerData?.platforms?.map(item=>item._id)
-        }
-
-        if (formData.minBudget || formData.maxBudget) {
-            formData.maxBudget = formData.maxBudget || producerData?.maxBudget
-            formData.minBudget = formData.minBudget || producerData?.minBudget
-        }
+        setValidFormCheck(true)
+        setErrorPopup(true)
+        validateRequiredFields()
+        const isEnable = Object.keys(validateRequiredFields()).length == 0
+        if (!isEnable) {
+            setErrorMsg(validateRequiredFields())
+            return
+        }    
+        else {
+        if(formData.platforms?.length === 0) delete formData.platforms;
         if(formData.subcategory?.length===0) delete formData.subcategory;
+        if(formData.subcategory==null) delete formData.subcategory;
         formData?.subcategory?.map(item=>
             (item.tags?.length===0)? delete item.tags: item.tags
         )
         UpdateProducer(formData);
+        }
     };
 
     const handleDelete = () => {
@@ -162,7 +173,7 @@ const AddProducer = ({
         resetForm();
     };
 
-
+    console.log({formData, producerData})
     const isFormValidForSubmit = () => {
         return (formData.category) &&
             (formData.minBudget) &&
@@ -176,7 +187,7 @@ const AddProducer = ({
         return formData.category ||
             formData.minBudget ||
             formData.maxBudget ||
-            formData.platforms?.length>0 ||
+            // formData.platforms?.length>0 ||
             formData.searchKeywords?.length > 0
             // (formData.subcategory?.length > 0 && validateTags);
 
@@ -207,15 +218,17 @@ const AddProducer = ({
             return
         }    
         else {
+            if(formData.platforms?.length === 0) delete formData.platforms;
             if(formData.subcategory?.length===0) delete formData.subcategory;
             formData?.subcategory?.map(item=>
-                (item.tagsId?.length===0)? delete item.tagsId: item.tagsId
+                (item.tags?.length===0)? delete item.tags: item.tags
             )
             CreateProducer(formData);
         }
     }
     const canDelete = true;
     var convertError = JSON.parse(deleteProducer_respond?.error ?? null)
+
     return (
         <>
             <ErrorPopUp id="image_size_error" errorMsg={deleteProducer_respond?.error} />
@@ -223,7 +236,7 @@ const AddProducer = ({
             <SuccessfullyPosting id={SuccessfullyDeletePopupId} onCancel={toggleDrawer} message="Delete" />
             <SuccessfullyPosting id={SuccessfullyCreatePopupId} onCancel={toggleDrawer} message="Create" />
             <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
-            <Drawer isOpen={true} name={t('add producer')} toggleDrawer={toggleDrawer} padding={false}>
+            <Drawer isOpen={true} name={t(producerData?'edit producer':'add producer')} toggleDrawer={toggleDrawer} padding={false}>
                 {
                 (getIsLoggedProducer_respond?.loading?
                 <DuvduLoading loadingIn={''} type=''/>
@@ -256,20 +269,19 @@ const AddProducer = ({
                             <section className="w-full">
                                 <p className="capitalize opacity-60">{t("Min Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} value={formData.minBudget || producerData?.minBudget || ""} onChange={handleInputChange} name='minBudget' placeholder={t("Ex. 5$")} className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.minBudget || (formData.minBudget ? producerData?.minBudget:formData.minBudget)} onChange={handleInputChange} name='minBudget' placeholder={t("Ex. 5$")} className={"inputStyle1"} />
                                 </div>
+                                <ErrorMessage ErrorMsg={ErrorMsg.minBudget}/>
                             </section>
 
                             <section className="w-full">
                                 <p className="capitalize opacity-60">{t("Max Budget")}</p>
                                 <div className='flex items-center justify-start gap-4'>
-                                    <input type="number" min={0} value={formData.maxBudget || producerData?.maxBudget || ""} onChange={handleInputChange} name='maxBudget' placeholder={t("Ex. 10$")} className={"inputStyle1"} />
+                                    <input type="number" min={0} value={formData.maxBudget || (formData.maxBudget ? producerData?.maxBudget:formData.maxBudget)} onChange={handleInputChange} name='maxBudget' placeholder={t("Ex. 10$")} className={"inputStyle1"} />
                                 </div>
+                                <ErrorMessage ErrorMsg={ErrorMsg.maxBudget}/>
                             </section>
-
                         </div>
-                        <ErrorMessage ErrorMsg={ErrorMsg.maxBudget}/>
-                        <ErrorMessage ErrorMsg={ErrorMsg.minBudget}/>
                         <div>
                             <ListInput
                                 name={'searchKeywords'}
