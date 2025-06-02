@@ -173,7 +173,6 @@ const AddProducer = ({
         resetForm();
     };
 
-    console.log({formData, producerData})
     const isFormValidForSubmit = () => {
         return (formData.category) &&
             (formData.minBudget) &&

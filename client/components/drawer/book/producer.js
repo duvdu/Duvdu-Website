@@ -35,10 +35,10 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
         if (!formData.episodesDuration) errors.episodesDuration = 'Episodes duration is required';
         if (!formData.expectedBudget) {
             errors.expectedBudget = 'expectedBudget is required';
-        } else if (Number(formData.expectedBudget) < Number(data.minBudget)) {
-            errors.expectedBudget = `Expected budget must be greater than minimum budget (${data.minBudget})`;
+        } else if (Number(formData.expectedBudget) < Number(data.minBudget) && Number(formData.expectedBudget) >! Number(data.maxBudget)) {
+            errors.expectedBudget = `Expected budget must be greater than or equal minimum budget (${data.minBudget})`;
         } else if (Number(formData.expectedBudget) > Number(data.maxBudget)) {
-            errors.expectedBudget = `Expected budget must be Less than maximum budget (${data.minBudget})`;
+            errors.expectedBudget = `Expected budget must be Less than or equal maximum budget (${data.maxBudget})`;
         }
         if (!formData.expectedProfits) errors.expectedProfits = 'Expected budget is required';
         // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
