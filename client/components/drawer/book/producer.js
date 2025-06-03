@@ -54,6 +54,7 @@ const ProducerBooking = ({ respond, platforms , GetPlatforms,addprojectState, Up
         setPost_success(false)
         setValidFormCheck(false)
         resetForm()
+        setErrorMsg({})
         if (isOpen)
             toggleDrawer()
     }

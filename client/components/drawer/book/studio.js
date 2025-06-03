@@ -24,6 +24,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
     const [preview, setPreview] = useState(false);
     const [enableBtn, setEnableBtn] = useState(false);
     const [post_success, setPost_success] = useState(false);
+    const [BookingTime , setBookingTime] = useState(null)
     const [attachmentValidation, setAttachmentValidation] = useState(false);
     let dates = formData?.timeDate?.split(':');
     let date = new Date(formData.startDate);
@@ -89,6 +90,15 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         if (StudopBooking_respond?.message === "success")
             setPost_success(true)
     }, [StudopBooking_respond?.message])
+    useEffect(()=>{
+        if(formData.timeDate){
+            const [hours, minutes] = formData?.timeDate?.split(":").map(Number);
+            const period = hours >= 12 ? "PM" : "AM";
+            const hour12 = (hours % 12 === 0 ? 12 : hours % 12);
+            const Time = `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`
+            setBookingTime(Time)
+        }
+    },[formData.timeDate])
 
     function onsubmit() {
         if (!preview) {
@@ -123,10 +133,6 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
         return <Drawer name={data.user.name?.split(' ')[0].length>6?data.user.name?.split(' ')[0].slice(0,6):data.user.name?.split(' ')[0]} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
     }
-    const [hours, minutes] = formData?.timeDate?.split(":").map(Number);
-    const period = hours >= 12 ? "PM" : "AM";
-    const hour12 = (hours % 12 === 0 ? 12 : hours % 12);
-    const BookingTime = `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />
@@ -204,6 +210,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                     </div>
                                 </div>
                             </div>
+                            {BookingTime &&
                             <div className="mt-4">
                                 <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                                     <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
@@ -215,6 +222,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                                     </div>
                                 </div>
                             </div>
+                            }
                             <div className="mt-4">
                                 <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
                                     <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">

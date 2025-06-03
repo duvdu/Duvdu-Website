@@ -30,9 +30,10 @@ function CustomSlider({ minimum = 0, initValue = 0, values, onValueChange }) {
 const Ruler = ({ startIndex, endIndex }) => {
   const step = (endIndex - startIndex) / 10;
   const ruler = Array.from({ length: 11 }, (_, i) => Math.round(i * step + startIndex));
+  const unique = [...new Set(ruler)];
   return (
     <div dir="ltr" className="flex justify-between mt-3">
-      {ruler.map((num) => (
+      {unique.map((num) => (
         <div key={num} className="flex flex-col items-center opacity-20">
           <div className="w-[1px] h-1 bg-black" />
           <span className="text-xs w-0 -translate-x-1">{num}</span>

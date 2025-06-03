@@ -68,10 +68,15 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
             setPreview(false)
         else if (toggleDrawer) {
             resetForm()
+            setValidFormCheck(false)
+            setErrorMsg({})
             toggleDrawer()
         }
-        else
-            resetForm()
+        else{
+            setValidFormCheck(false)
+            setErrorMsg({})
+                resetForm()
+        }
     }
     function OnSucess() {
         BookCopyrights(null)
@@ -79,6 +84,7 @@ const CopyRigtherBooking = ({ bookCopyrights_respond, allstates, addprojectState
         resetForm()
         toggleDrawer()
         setPreview(false)
+        setErrorMsg({})
         setValidFormCheck(false)
         // ontoggleDrawer()
     }
