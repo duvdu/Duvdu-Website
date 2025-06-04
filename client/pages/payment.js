@@ -5,23 +5,32 @@ import ArrowBtn from '../components/elements/arrowBtn';
 import Popup from '../components/elements/popup';
 import SuccessSubscription from '../components/popsup/successSubscription';
 import AppButton from '../components/elements/button';
+import ErrorMessage from '../components/elements/ErrorMessage';
 import AddNewCard from '../components/pages/payment/AddNewCard';
 import { useTranslation } from 'react-i18next';
 import { connect } from "react-redux";
 import { subscribe } from '../redux/action/apis/auth/subscription/subscribe';
 import { checkSubscribe } from '../redux/action/apis/auth/subscription/checkSubscribe';
+import { payment as paymentAPI } from '../redux/action/apis/contracts/pay';
+import SuccessfullyPosting from '../components/popsup/post_successfully_posting';
 import { useRouter } from 'next/router';
 
-const Payment = ({isLogin , checkSubscribe , checkSubscribe_response , subscribe_response , subscribe}) => {
+const Payment = ({isLogin , checkSubscribe , checkSubscribe_response ,paymentAPI ,payment_respond , subscribe_response , subscribe}) => {
     const { t } = useTranslation();
-
-
+    const route = useRouter()
+    const {type , contractId , contractType , price} = route.query
+    console.log({type})
     return (
         <>
             <Layout>
                 <div className='lg:flex gap-6 container'>
                     <LeftSide />
-                    <RightSide isLogin={isLogin} checkSubscribe={checkSubscribe} checkSubscribe_response={checkSubscribe_response} subscribe_response={subscribe_response} subscribe={subscribe} />
+                    {type === 'subscribe' && 
+                    <RightSideSubscription isLogin={isLogin} checkSubscribe={checkSubscribe} checkSubscribe_response={checkSubscribe_response} subscribe_response={subscribe_response} subscribe={subscribe} />
+                    }
+                    {type === 'contract' && 
+                    <RightSideContract isLogin={isLogin} payment_respond={payment_respond} paymentAPI={paymentAPI} />
+                    }
                 </div>
             </Layout>
         </>
@@ -143,8 +152,7 @@ const LeftSide = () => {
     );
 };
 
-
-const RightSide = ({checkSubscribe , checkSubscribe_response , subscribe_response , subscribe ,isLogin}) => {
+const RightSideSubscription = ({checkSubscribe , checkSubscribe_response , subscribe_response , subscribe ,isLogin}) => {
     const { t } = useTranslation();
     const [canSubscribe , setCanSubscribe ] = useState(false)
     const [haveSubscribe , setHaveSubscribe ] = useState(null)
@@ -259,6 +267,77 @@ const RightSide = ({checkSubscribe , checkSubscribe_response , subscribe_respons
     );
 };
 
+const RightSideContract = ({ payment_respond , paymentAPI ,isLogin}) => {
+    const { t } = useTranslation();
+    const route = useRouter()
+    const { contractId , contractType , price} = route.query
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [paymentError ,setPaymentError] = useState(null)
+    useEffect(() => {
+        if (payment_respond?.data || payment_respond?.message) {
+            setPaymentSuccess(true)
+        }
+    }, [payment_respond?.data || payment_respond?.message]);
+    useEffect(()=>{
+        if(payment_respond?.error){
+            const convertPaymentError = JSON.parse(payment_respond?.error ?? null)
+            setPaymentError(convertPaymentError)
+            const timer = setTimeout(() => {
+                setPaymentError(null)
+            },5000)
+            return () => clearTimeout(timer);
+        }
+    },[payment_respond?.error])
+    function subscriber(){
+        paymentAPI({
+            id: contractId,
+            type: contractType
+        })
+    }
+    const Success = () => {
+        route.push('/')
+        setPaymentSuccess(false)
+    }
+    return (
+        <>
+            <SuccessfullyPosting isShow={paymentSuccess} onCancel={Success} message="Payment" />
+            <Popup id='error-message' header={'Error Message'}>
+                <div className='flex h-full flex-col mt-24 items-center'>
+                    <div className='flex gap-2 items-center justify-center mb-4'>
+                        <div className='bg-[#EB1A40] rounded-full h-min  w-7 flex justify-center items-center aspect-square'>
+                            <Icon className='text-white' name={'xmark'} invert={true} />
+                        </div>
+                        <span className='text-center text-lg font-medium opacity-80 text-[#EB1A40]'>{t("payment failed")}</span>
+                    </div>
+
+                    <span className='mb-24 text-center text-lg font-medium opacity-80'>{t("Invalid payment data")}</span>
+                    <AppButton data-popup-dismiss="popup" className={"mb-40 mx-16 md:mx-32 w-52"} >{t("Try Again")}</AppButton>
+                </div>
+            </Popup>
+            <div className='rounded-2xl bg-white dark:bg-[#1A2024] border-[#CFCFCF] dark:border-[#3D3D3D] p-12 h-full my-12 w-full flex-1'>
+                <p className='opacity-60 text-lg font-semibold'>{t("Payment Summary")}</p>
+                <div className='flex font-bold justify-between mt-5'>
+                    <span>{t("Total Amount")}</span>
+                    <span>{price || '100'} {t("EGP")}</span>
+                </div>
+                <section>
+                    <div className="flex justify-center mt-5">
+                        {/* <div data-popup-toggle="popup" data-popup-target="error-message"> */}
+                            <ArrowBtn loading={payment_respond?.loading} onClick={subscriber} className="cursor-pointer lg:w-80 xl:w-96" text={t('Pay Now')} />
+                        {/* </div> */}
+                    </div>
+                    <div className='text-center mt-5'>
+                        {paymentError?.errors && 
+                            <ErrorMessage ErrorMsg={paymentError?.errors[0]?.message}/>
+                        }
+                    </div>
+                </section>
+            </div>
+        </>
+
+    );
+};
+
 
 const Card = ({ isSelected, data, isLast , onClick }) => {
     const { t } = useTranslation();
@@ -293,12 +372,14 @@ const Card = ({ isSelected, data, isLast , onClick }) => {
 const mapStateToProps = (state) => ({
     subscribe_response: state.api.subscribe,
     checkSubscribe_response: state.api.checkSubscribe,
+    payment_respond: state.api.payment,
     isLogin: state.auth.login,
 });
 
 const mapDispatchToProps = {
     subscribe,
     checkSubscribe,
+    paymentAPI,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Payment);
 

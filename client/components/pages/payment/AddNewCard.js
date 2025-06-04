@@ -26,15 +26,15 @@ export default function AddNewCard() {
     return (
         <div className="container mx-auto bg-[#1bb66e19] rounded-2xl p-8 border border-[#CFCFCF]">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <div className='flex items-center justify-center rounded-full bg-green-600 w-6 h-6'>
+                {/* <div className='flex items-center justify-center rounded-full bg-green-600 w-6 h-6'>
                     <Icon name={"whiteCheck"} />
-                </div>
+                </div> */}
                 <span className='w-full'>{t("fill card details")}</span>
                 <Icon name={"visa-logo"} />
                 <Icon name={"visa-word"} />
             </h2>
             <form className="">
-                <div className='flex items-center gap-4 mb-6'>
+                <div className='md:flex items-center gap-4 mb-6'>
                     <label htmlFor="cardNumber" className={`text-base whitespace-nowrap w-72 ${cardNumberError ? 'text-red-500' : ']'}`}>
                         Card number
                         <br />
@@ -43,12 +43,13 @@ export default function AddNewCard() {
                     <input
                         type="text"
                         id="cardNumber"
-                        className={`border border-gray-300 rounded-xl w-full py-2 px-3 text-black focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${cardNumberError ? 'border-red-500' : ''}`}
+                        maxLength={16}
+                        className={`border border-gray-300 rounded-xl w-full text-xl tracking-widest py-2 px-3 text-black focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${cardNumberError ? 'border-red-500' : ''}`}
                         value={cardNumber|| ""}
                         onChange={(e) => setCardNumber(e.target.value)}
                         required
                     />
-                    <div className='w-10'>
+                    {/* <div className='w-10'>
                         {
                             true &&
                             <div className='flex border-2 border-[#CFCFCF] items-center justify-center rounded-full w-6 h-6 p-[1px] aspect-square'>
@@ -62,14 +63,14 @@ export default function AddNewCard() {
                             </div>
                         }
 
-                    </div>
+                    </div> */}
                 </div>
 
-                <div className='flex items-center gap-4 mb-6'>
+                <div className='md:flex items-center justify-between gap-4 mb-6'>
                     <label htmlFor="cardOwner" className={`text-base whitespace-nowrap w-72 ${cardOwnerError ? 'text-red-500' : ']'}`}>
                         Card owner
                         <br />
-                        <span className={`text-xs ${cardOwnerError ? 'text-red-500' : 'text-[#5E5E5E]'}`}>{t("Enter the name on the card")}</span>
+                        <span className={`text-xs ${cardNumberError ? 'text-red-500' : 'text-[#5E5E5E]'}`}>{t("Enter the name on the card")}</span>
                     </label>
                     <input
                         type="text"
@@ -79,45 +80,50 @@ export default function AddNewCard() {
                         onChange={(e) => setCardOwner(e.target.value)}
                         required
                     />
-                    <div className='w-10'></div>
+                    {/* <div className='w-10'></div> */}
                 </div>
 
-                <div className='md:flex items-center gap-4 mb-6'>
-                    <div className='w-full flex justify-between items-center'>
-                        <label htmlFor="expiryDate" className={`text-base whitespace-nowrap w-56 m-0 ${expiryDateError ? 'text-red-500' : ''}`}>
-                            Expiry date
-                            <br />
-                            <span className={`text-xs ${expiryDateError ? 'text-red-500' : 'text-[#5E5E5E]'}`}>{t("Enter the expiration date of the card")}</span>
-                        </label>
-                        <div className='flex items-center gap-2'>
-                            <input
-                                type="text"
-                                id="expiryDate"
-                                className={`w-14 border border-gray-300 rounded-xl py-2 px-3 text-black focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
-                                value={expiryDate0|| ""}
-                                onChange={(e) => setExpiryDate0(e.target.value)}
-                                required
-                            />
-                            <span className='text-2xl'> / </span>
-                            <input
-                                type="text"
-                                id="expiryDate"
-                                className={`w-14 border border-gray-300 rounded-xl py-2 px-3 text-black focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
-                                value={expiryDate1|| ""}
-                                onChange={(e) => setExpiryDate1(e.target.value)}
-                                required
+                <div className='flex gap-4 mb-6'>
+                    <div className=''>
+                        <div className=''>
+                            <label htmlFor="expiryDate" className={`text-base whitespace-nowrap w-56 m-0 ${expiryDateError ? 'text-red-500' : ''}`}>
+                                Expiry date
+                                <br />
+                                <span className={`text-xs ${expiryDateError ? 'text-red-500' : 'text-[#5E5E5E]'}`}>{t("Enter the expiration date of the card")}</span>
+                            </label>
+                            <div className='flex items-center gap-2'>
+                                <input
+                                    type="text"
+                                    id="expiryDate"
+                                    maxLength={2}
+                                    className={`w-14 border border-gray-300 rounded-xl py-2 px-3 text-black focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
+                                    value={expiryDate0|| ""}
+                                    onChange={(e) => setExpiryDate0(e.target.value)}
+                                    required
                                 />
+                                <span className='text-2xl'> / </span>
+                                <input
+                                    type="text"
+                                    id="expiryDate"
+                                    maxLength={2}
+                                    className={`w-14 border border-gray-300 rounded-xl py-2 px-3 text-black focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
+                                    value={expiryDate1|| ""}
+                                    onChange={(e) => setExpiryDate1(e.target.value)}
+                                    required
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className='w-full flex gap-5 items-center justify-between md:justify-start'>
-                            <label htmlFor="expiryDate" className={`text-base flex-2  whitespace-nowrap m-0 ${expiryDateError ? 'text-red-500' : ''}`}>
-                                CVV2
+                        <div className='w-full flex flex-col'>
+                            <label htmlFor="cvv2" className={`text-base flex-2  whitespace-nowrap m-0 ${expiryDateError ? 'text-red-500' : ''}`}>
+                                CVV
                                 <br />
                                 <span className={`text-xs ${expiryDateError ? 'text-red-500' : 'text-[#5E5E5E]'}`}>{t("Security code")}</span>
                             </label>
                             <input
                                 type="text"
-                                id="expiryDate"
+                                id="cvv2"
+                                maxLength={3}
                                 className={`w-14 border border-gray-300 rounded-xl py-2 px-3 text-black focus:outline-none focus:ring-indigo-500 focus:ring-width-2 focus:border-primary focus:border-4 ${expiryDateError ? 'border-red-500' : ''}`}
                                 value={expiryDate2|| ""}
                                 onChange={(e) => setExpiryDate2(e.target.value)}
