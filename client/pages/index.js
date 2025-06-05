@@ -244,7 +244,6 @@ const Home = ({
                                 </div>
                             </div>
                         </h1>
-                        <p className="text-xs lg:text-xl font-bold text-[#263257] dark:text-white opacity-60 text-center lg:mx-20 trap capitalize">{t("consectetur sit amet adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. consectetur sit amet adipiscing elit, sed do.")}</p>
                     </div>
                 </section>
                 
