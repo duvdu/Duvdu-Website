@@ -5,7 +5,7 @@ const nextConfig = {
     ASSETS_URL: "https://duvdu-s3.s3.eu-central-1.amazonaws.com/",
     DEFAULT_PROFILE_PATH: "/assets/imgs/profile/defaultUser.jpg",
     DEFAULT_COVER_PATH: "/assets/imgs/projects/cover.jpeg",
-    MAP_KEY: "AIzaSyD7vp9AFu2PiRWNiPktcrBk9PEMn-dFbQ",
+    MAP_KEY: "AIzaSyD7vp9AFu2PiRWiNPkGtcrBKp9EMm-dFbQ",
   },
 
   async headers() {
