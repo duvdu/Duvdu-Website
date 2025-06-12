@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "com.duvdu.duvdu_app",
+      "package_name": "com.duvdu.duvdu_app",
+      "sha256_cert_fingerprints": [
+        "8F:7F:B8:16:B3:95:40:A1:22:E2:39:62:C0:CD:D9:FC:79:73:80:C8:C4:4D:51:97:F8:FD:C7:A3:1F:E9:69:CB"
+      ]
+    }
+  }
+]
