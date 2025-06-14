@@ -21,12 +21,12 @@ function SetCover({ Publish, oncancel, addprojectState, UpdateFormData, respond,
         if(coverType === 'video'){
             if(file.type.startsWith('video/')){
                 UpdateFormData('cover', file);
-                // UpdateFormData('coverShow', fileUrl);
+                UpdateFormData('coverShow', fileUrl);
             }
         }else{
             if(file.type.startsWith('image/')){
                 UpdateFormData('cover', file);
-                // UpdateFormData('coverShow', fileUrl);
+                UpdateFormData('coverShow', fileUrl);
             }
         }
     };
