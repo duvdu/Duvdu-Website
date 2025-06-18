@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "568MB2Z8U5.com.duvdu.duvduApp",
+        "paths": [
+          "/project/*",
+          "/rentals/*",
+          "/creative/*",
+          "*"
+        ]
+      }
+    ]
+  }
+}
