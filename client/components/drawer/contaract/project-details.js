@@ -394,7 +394,7 @@ function ReceiveProjectFiles({
     const handlePayment = () => {
         setActionAccept('payment')
         const type = getType()
-        router.push(`/payment?type=contract&contractId=${contract?.paymentLink}&contractType=${type}&price=${contract?.totalPrice || '100'}`)
+        router.push(`/payment?type=contract&contractId=${contractId}&contractType=${type}&price=${contract?.totalPrice || '100'}`)
         // payment({ id: contract?.paymentLink, type: type })
     };
 
