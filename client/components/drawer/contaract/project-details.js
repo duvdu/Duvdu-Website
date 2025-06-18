@@ -106,6 +106,7 @@ function ReceiveProjectFiles({
             setPaymentSuccess(true)
             setIsSuccess(true)
         }else if(contractId.paymentStatus==='failed'){
+            setPaymentSuccess(true)
             setIsSuccess(false)
         }
     }, [contractId.paymentStatus]);
