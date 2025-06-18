@@ -240,7 +240,7 @@ function ReceiveProjectFiles({
 
     const handlePayment = () => {
         const type = getType()
-        payment({ id: contractDetails?._id, type: type })
+        payment({ id: contract?.paymentLink, type: type })
     };
 
     const openReview = () => {
