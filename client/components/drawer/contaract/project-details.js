@@ -83,6 +83,7 @@ function ReceiveProjectFiles({
     const status = contract?.status
     const [timeLeft, setTimeLeft] = useState("");
     const [textCopied, setTextCopied] = useState("");
+    const [isSuccess, setIsSuccess] = useState(true);
     const [paymentError ,setPaymentError] = useState(null)
     const [actionError ,setActionError] = useState(null)
     const [resNewDeadlineError ,setResNewDeadlineError] = useState(null)
@@ -98,6 +99,16 @@ function ReceiveProjectFiles({
             {value}
         </span>
     );
+    useEffect(() => {
+        if (contractId.paymentStatus==='success') {
+            getAllContracts()
+            toggleDrawer()
+            setPaymentSuccess(true)
+            setIsSuccess(true)
+        }else if(contractId.paymentStatus==='failed'){
+            setIsSuccess(false)
+        }
+    }, [contractId.paymentStatus]);
     const IsImSp = () => {
         return sp?.username == user?.username
     }
@@ -255,12 +266,10 @@ function ReceiveProjectFiles({
         }   
     },[payment_respond?.error , takeAction_respond?.error , resNewDeadline_respond?.error])
     useEffect(() => {
-        if (payment_respond?.data || payment_respond?.message) {
-            getAllContracts()
-            toggleDrawer()
-            setPaymentSuccess(true)
+        if (payment_respond?.data) {
+            window.location.href = payment_respond?.data?.paymentUrl;
         }
-    }, [payment_respond?.data || payment_respond?.message]);
+    }, [payment_respond?.data]);
     useEffect(() => {
         if (acceptFiles_respond?.data || acceptFiles_respond?.message) {
             getAllContracts()
@@ -394,8 +403,8 @@ function ReceiveProjectFiles({
     const handlePayment = () => {
         setActionAccept('payment')
         const type = getType()
-        router.push(`/payment?type=contract&contractId=${contract?.paymentLink}&contractType=${type}&price=${contract?.totalPrice || '100'}`)
-        // payment({ id: contract?.paymentLink, type: type })
+        // router.push(`/payment?type=contract&contractId=${contract?.paymentLink}&contractType=${type}&price=${contract?.totalPrice || '100'}`)
+        payment({ id: contract?._id, type: type })
     };
 
     const openSendReason = (id) => {
@@ -583,7 +592,7 @@ function ReceiveProjectFiles({
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
             <FunctionUsed onSubmit={(value) => InsertToArray('functions', value)} />
-            <SuccessfullyPosting isShow={paymentSuccess} onCancel={toggleDrawer} message="Payment" />
+            <SuccessfullyPosting isShow={paymentSuccess} isSuccess={isSuccess} onCancel={toggleDrawer} message="Payment" />
             {/* <SuccessfullyPosting isShow={actionSuccess} onCancel={toggleDrawer} message="Action" /> */}
             <SuccessfullyPosting isShow={submitFileSuccess} onCancel={toggleDrawer} message="Submit File" />
             <RatingContract data={contract}/>
