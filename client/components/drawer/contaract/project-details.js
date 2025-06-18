@@ -106,8 +106,8 @@ function ReceiveProjectFiles({
             setPaymentSuccess(true)
             setIsSuccess(true)
         }else if(contractId.paymentStatus==='failed'){
-            setPaymentSuccess(true)
             setIsSuccess(false)
+            setPaymentSuccess(true)
         }
     }, [contractId.paymentStatus]);
     const IsImSp = () => {
