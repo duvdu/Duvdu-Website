@@ -87,6 +87,8 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
             UpdatedData.append('projectScale.current',formData['projectScale.current'])
             UpdatedData.append('projectScale.pricerPerUnit',formData['projectScale.pricerPerUnit'])
         }
+        if((data.showOnHome!==formData.showOnHome))
+            UpdatedData.append('showOnHome',formData.showOnHome)
         if(formData.category && (data.category._id!==formData.category))
             UpdatedData.append('category',formData.category)
         if(formData.subCategory && (data.subCategory!==formData.subCategory))
@@ -327,7 +329,6 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                                     }}
                                                 >
                                                     {data?.attachments.map((item, index) => {
-                                                        console.log({item})
                                                         return <SwiperSlide key={index}>
                                                             <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={data?.cover} />
                                                         </SwiperSlide>

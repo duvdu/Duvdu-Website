@@ -258,7 +258,6 @@ function ReceiveProjectFiles({
         }   
         if(resNewDeadline_respond?.error){
             var convertResNewDeadlineError = JSON.parse(resNewDeadline_respond?.error ?? null)
-            console.log({convertResNewDeadlineError})
             setResNewDeadlineError(convertResNewDeadlineError?.data)
             const timer2 = setTimeout(() => {
                 setResNewDeadlineError(null)
@@ -588,7 +587,6 @@ function ReceiveProjectFiles({
                 });
             };
             
-    console.log({submitFiles:contract?.submitFiles})
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />

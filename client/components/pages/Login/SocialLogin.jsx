@@ -50,7 +50,6 @@ function SocialLogin({ api,setUsername, login_respond, googleLogin, appleLogin, 
             
             // Process the user data
             const userData = processAppleUserData(appleAuthData);
-            console.log({userData, appleAuthData});
             
             // Call the appleLogin action with the processed user data
             appleLogin({

@@ -183,7 +183,6 @@ const AddStudioBooking = ({ CreateStudio, user, auth, respond, categories, GetUs
         GetUserProject({ username: auth?.username });
     }
     const hasErrors = Object.keys(validateRequiredFields()).length > 0;
-    console.log({formData})
     return (
         <>
             <EquipmentAvailable onSubmit={(value) => InsertToArray('equipments', value)} />

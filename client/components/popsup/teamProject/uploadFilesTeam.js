@@ -80,7 +80,6 @@ function CreateTeam({ UpdateFormData, addprojectState  ,GetTeamProjects, CreateT
         setSuccessShow(false)
         GetTeamProjects({ limit: 6, page: 1 })
     };
-    console.log({create_respond})
         const onsubmit = () => {
             const form = new FormData()
     

@@ -11,7 +11,6 @@ const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
     const { t } = useTranslation();
     const [textareavalue, setTextareavalue] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    console.log({respond})
     useEffect(() => {
         if(respond?.message=='success'){
             setOpened(0)

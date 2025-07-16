@@ -115,8 +115,10 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
             UpdatedData.append('subCategoryId',formData.subCategory)
         if (formData.tags)
             formData.tags.forEach((tag, index) => {
-                UpdatedData.append(`tagsId[${index}]`, tag);
+            UpdatedData.append(`tagsId[${index}]`, tag);
             });
+        if((data.showOnHome!==formData.showOnHome))
+            UpdatedData.append('showOnHome',formData.showOnHome)
 
         if (formData.searchKeyWords && !isArrayEqual(formData.searchKeyWords, data.searchKeyWords))
                 formData.searchKeyWords.forEach((searchKeyWords, index) => {
@@ -318,7 +320,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
         }
         setPlayingAudioRef(newAudioRef);
       };
-    console.log({formData})
     return (
         <>
             <AddToolUsed onSubmit={(value) => InsertToArray('tools', value)} />
@@ -394,7 +395,6 @@ const EditProject = ({ UpdateProject ,InsertToArray, data,isOpen, auth,id, updat
                                         }}
                                     >
                                         {data?.attachments.map((item, index) => {
-                                            console.log({item})
                                             return <SwiperSlide key={index}>
                                                 <ProjectCover onAudioPlay={handleAudioPlay} data={item} cover={data?.cover} />
                                             </SwiperSlide>

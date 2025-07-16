@@ -154,7 +154,6 @@ const RightSide = ({ getAllContracts_respond, toggleContractData, user, tabindex
         </>
     }
 
-    console.log({data})
     return (
         <>
             {/* <Clients /> */}

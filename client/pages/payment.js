@@ -19,7 +19,6 @@ const Payment = ({isLogin , checkSubscribe , checkSubscribe_response ,paymentAPI
     const { t } = useTranslation();
     const route = useRouter()
     const {type , contractId , contractType , price} = route.query
-    console.log({type})
     return (
         <>
             <Layout>
@@ -159,7 +158,6 @@ const RightSideSubscription = ({checkSubscribe , checkSubscribe_response , subsc
     const [post_success, setPost_success] = useState(false);
     const [price , setPrice ] = useState(null)
     const router = useRouter()
-    console.log({price})
     function subscriber(){
         subscribe().then(()=>{
             setPost_success(true)

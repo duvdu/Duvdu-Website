@@ -47,7 +47,6 @@ export const performAppleSignIn = () => {
   }
 
   return window.AppleID.auth.signIn().then(response => {
-    console.log({response});
     
     // The response contains authorization object with id_token
     const idToken = response.authorization?.id_token;
@@ -56,7 +55,6 @@ export const performAppleSignIn = () => {
     if (idToken) {
       // Decode the JWT token to get user information
       const decodedToken = decodeJWT(idToken);
-      console.log('Decoded token:', decodedToken);
       
       userData = {
         // 'sub' contains the unique user identifier
@@ -81,7 +79,6 @@ export const performAppleSignIn = () => {
  */
 export const processAppleUserData = (data) => {
   const { user, email, name } = data;
-  console.log({data});
   
   // Get name components or use defaults
   const firstName = name?.firstName || '';

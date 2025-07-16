@@ -5,11 +5,11 @@ import Popup from '../elements/popup';
 import React, { useEffect, useState } from 'react';
 import QRCode from "react-qr-code";
 import { useTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
 
 
-function MYQRCode({value=''}) {
+function MYQRCode({value='',isDark}) {
     const { t } = useTranslation();
-    console.log({value})
     return (
         <>
             <Popup id='QR-code'>
@@ -26,7 +26,8 @@ function MYQRCode({value=''}) {
 
                     <QRCode
                         size={256}
-                        className=''
+                        fgColor={isDark ? '#fff' : '#000'}
+                        bgColor="transparent"
                         value={value}
                     />
                 </div>
@@ -36,4 +37,8 @@ function MYQRCode({value=''}) {
         </>
     );
 }
-export default MYQRCode;
+const mapStateToProps = (state) => ({
+    isDark: state.setting.ISDARK,
+});
+
+export default connect(mapStateToProps, )(MYQRCode);

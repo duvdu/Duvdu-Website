@@ -7,6 +7,10 @@ export const GetProjects = (queryString) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
+      if(!queryString) {
+        dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: null, req: req });
+        return 
+      }
       const response = await mainApiInstance.get(`api/projects?${queryString}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_DATA, payload: response.data.data });

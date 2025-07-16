@@ -291,8 +291,12 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
             <div className="flex flex-col gap-3">
                 <h3 className="font-bold text-xl"> Get <span className="text-primary">{t("duvdu")}</span> on your mobile phone Now! </h3>
                 <div className='flex items-center w-full gap-2'>
-                    <img className='w-1/2 sm:w-1/3 rounded-lg' src="/assets/imgs/theme/tab/android.png" />
-                    <img className='w-1/2 sm:w-1/3 rounded-lg' src="/assets/imgs/theme/tab/IOS.png" />
+                    <a className='w-1/2 sm:w-1/3 rounded-lg'  href="https://play.google.com/store/apps/details?id=com.duvdu.duvdu_app" target="_blank">
+                        <img src="/assets/imgs/theme/tab/android.png" />
+                    </a>
+                    <a className='w-1/2 sm:w-1/3 rounded-lg'  href="https://apps.apple.com/us/app/duvdu/id6743176883" target="_blank">
+                        <img src="/assets/imgs/theme/tab/IOS.png" />
+                    </a>
                 </div>
             </div>
         </div>

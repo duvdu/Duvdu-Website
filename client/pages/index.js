@@ -64,59 +64,139 @@ const Home = ({
         router.push(url);
     };
 
-    // filter 
+    // Optimized pagination state
     const Router = useRouter();
     const searchTerm = Router.query.search;
-    const showLimit = 999;
-    const page = 1;
-    const [limit, setLimit] = useState(showLimit);
+    const showLimit = 9; // Items per page
+    const [currentPage, setCurrentPage] = useState(1);
+    const [paginatedData, setPaginatedData] = useState({}); // Store data by page: { "page1": [...], "page2": [...] }
+    const [allDisplayData, setAllDisplayData] = useState([]); // Combined data for display
+    const [loadingMore, setLoadingMore] = useState(false);
+    const [hasMoreData, setHasMoreData] = useState(true);
+    const [lastRequestParams, setLastRequestParams] = useState(null);
 
-    const { category, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query
-
-    // Extract the path part of the URL
+    const { category, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query;
     const cycle = "project";
 
+    // Function to get current request parameters
+    const getCurrentParams = () => {
+        const params = {
+            limit: showLimit,
+            page: currentPage,
+        };
 
-    useEffect(() => {
-        // if (limit) {
-            const params = {
-                limit: 100,
-                page: page,
+        if (searchTerm?.length > 0) {
+            params.search = searchTerm;
+        }
+
+        if (category) params.category = category;
+        if (subCategory) params.subCategory = subCategory;
+        if (tags) params.tags = tags;
+        if (priceFrom) params.priceFrom = priceFrom;
+        if (priceTo) params.priceTo = priceTo;
+        if (duration) params.duration = duration;
+        if (instant !== undefined) params.instant = instant;
+        if (keywords) params.search = keywords;
+
+        return params;
+    };
+
+    // Function to check if request parameters have changed
+    const haveParamsChanged = (newParams) => {
+        if (!lastRequestParams) return true;
+        
+        const paramsToCompare = ['search', 'category', 'subCategory', 'tags', 'priceFrom', 'priceTo', 'duration', 'instant'];
+        return paramsToCompare.some(param => lastRequestParams[param] !== newParams[param]);
+    };
+
+    // Function to reset pagination data
+    const resetPaginationData = () => {
+        setPaginatedData({});
+        setAllDisplayData([]);
+        setCurrentPage(1);
+        setHasMoreData(true);
+        setLoadingMore(false);
+    };
+
+    // Function to update paginated data
+    const updatePaginatedData = (newData, page) => {
+        const pageKey = `page${page}`;
+        
+        setPaginatedData(prev => {
+            const updated = {
+                ...prev,
+                [pageKey]: newData
             };
-
-            // Add search parameter if search term is defined and not empty
-            if (searchTerm?.length > 0) {
-                params.search = searchTerm;
+            
+            // Update display data by combining all pages in order
+            const combinedData = [];
+            for (let i = 1; i <= page; i++) {
+                const pageData = updated[`page${i}`];
+                if (pageData) {
+                    combinedData.push(...pageData);
+                }
             }
+            setAllDisplayData(combinedData);
+            
+            return updated;
+        });
 
-            // Include the query parameters from the URL if they exist
-            if (category) params.category = category;
-            if (subCategory) params.subCategory = subCategory;
-            if (tags) params.tags = tags;
-            if (priceFrom) params.priceFrom = priceFrom;
-            if (priceTo) params.priceTo = priceTo;
-            if (duration) params.duration = duration;
-            if (instant !== undefined) params.instant = instant;
-            // if (inclusive !== undefined) params.inclusive = inclusive;
-            if (keywords) params.search = keywords;
+        // Check if we have more data
+        setHasMoreData(newData.length === showLimit);
+    };
 
-            // Construct query string from params object
-            const queryString = new URLSearchParams(params).toString();
+    // Main effect for fetching data
+    useEffect(() => {
+        const params = getCurrentParams();
+        const queryString = new URLSearchParams(params).toString();
 
-            // Call GetCopyrights with the constructed query string
-            if(queryString && Router.isReady)
-            GetProjects(queryString)
+        if (queryString && Router.isReady) {
+            // Check if this is a new search/filter (params changed)
+            if (haveParamsChanged(params)) {
+                resetPaginationData();
+                setLastRequestParams(params);
+                
+                // Fetch first page with new params
+                const firstPageParams = { ...params, page: 1 };
+                const firstPageQueryString = new URLSearchParams(firstPageParams).toString();
+                GetProjects(firstPageQueryString);
+            } else {
+                // Check if we already have this page data
+                const pageKey = `page${currentPage}`;
+                if (!paginatedData[pageKey]) {
+                    setLoadingMore(true);
+                    GetProjects(queryString);
+                }
+            }
+        }
+    }, [searchTerm, currentPage, category, subCategory, tags, priceFrom, priceTo, duration, instant, keywords, Router.isReady]);
 
-        // }
-    }, [searchTerm, page, category, subCategory, tags, priceFrom, priceTo, duration, instant, keywords]);
+    // Effect to handle API response
+    useEffect(() => {
+        if (projects?.data && projects.data.length >= 0) {
+            updatePaginatedData(projects.data, currentPage);
+            setLoadingMore(false);
+            GetProjects()
+        }
+    }, [projects?.data, currentPage]);
 
+    // Load More Handler
+    const handleLoadMore = () => {
+        if (hasMoreData && !loadingMore) {
+            setLoadingMore(true)
+            setCurrentPage(prev => prev + 1);
+        }
+    };
 
+    // Reset pagination when filters change
     const handleFilterChange = (selectedFilters) => {
-
+        // Reset pagination state
+        resetPaginationData();
+        
         // Initialize params object
         const params = {
-            limit: limit,
-            page: page,
+            limit: showLimit,
+            page: 1,
         };
 
         selectedFilters.forEach(filter => {
@@ -172,14 +252,12 @@ const Home = ({
             }
         });
 
-        // Update query parameters with selected filters
-        const queryString = new URLSearchParams({
-            ...params,
-        }).toString();
-
+        // Update URL and trigger new request
+        const queryString = new URLSearchParams(params).toString();
+        setLastRequestParams(params);
         // Call GetCopyrights with updated query string
         if(queryString && Router.isReady)
-        GetProjects(queryString)
+        GetProjects(queryString);
 
     };
     function chunkArray(array, size) {
@@ -217,8 +295,13 @@ const Home = ({
       setScrollInterval(null);
     };
     const setParams = (queryString) => {
+        resetPaginationData();
         Router.push(`?${queryString}`, undefined, { scroll: false });
     };
+
+    // Check if we can show more items
+    const canLoadMore = hasMoreData && !loadingMore;
+
     return (
         <>
             <Layout isbodyWhite={true}>
@@ -568,42 +651,59 @@ const Home = ({
                     </div>
                 </section>
                 }</>}
-                {projects && 
+
                 <section className="py-12">
                     <div className='container'>
-                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize">{t("Haven’t found your match yet?")}</h2>
-                        <h4 className="text-center text-xl opacity-60 capitalize mb-5 lg:mb-8">{t("Here’s our latest picks!")}</h4>
+                        <h2 className="text-center text-2xl font-semibold opacity-60 capitalize">{t("Haven't found your match yet?")}</h2>
+                        <h4 className="text-center text-xl opacity-60 capitalize mb-5 lg:mb-8">{t("Here's our latest picks!")}</h4>
                         
                         <Filter cycle={cycle} setSwitchState={setSwitchState} switchState={switchState} setParams={setParams} />
                         <div className="h-5" />
-                        {projects?.loading ?
+                        
+                        {Object.keys(paginatedData).length === 0 && projects?.loading ?
                         <>
                         <DuvduLoading loadingIn={""} type='projects' />
                         <DuvduLoading loadingIn={""} type='projects' />
                         </>:
-                        <SectionProjects inclusive={switchState.priceInclusive} projects={projects?.data} />
-                        }
+                    allDisplayData.length > 0 && 
+                        <SectionProjects inclusive={switchState.priceInclusive} projects={allDisplayData} />
+                    }
+                        
+                        {/* Load More Button */}
+                        {allDisplayData.length > 0 && (canLoadMore || loadingMore) && (
+                            <div className="flex justify-center mt-8">
+                                <button
+                                    onClick={handleLoadMore}
+                                    disabled={loadingMore}
+                                    className="px-8 py-3 bg-[#1A73EB] text-white font-semibold rounded-full hover:bg-[#1557C7] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                >
+                                    {loadingMore ? (
+                                        <>
+                                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                                            {t("Loading...")}
+                                        </>
+                                    ) : (
+                                        t("Load More")
+                                    )}
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </section>
-                }
+                
             </Layout>
-
         </>
     );
 };
 
-
-
 const MenuItem = ({ title, items, onClick }) => (
     items.length > 0 &&
     <li className="py-5">
-
         <div className="cursor-pointer text-[#3E3E3E] dark:text-[#FFFFFFBF] font-semibold text-sm"
             onClick={() => onClick(null)}
         >
             {title}
         </div>
-
         <ul className={"flex flex-wrap gap-2 py-2"}>
             {items.map((item, index) => (
                 <li className='py-1 px-2 border-[1.5px] border-[#00000033] hover:border-primary hover:text-[#3E3E3E] hover dark:border-[#FFFFFF4D] rounded-full' key={index}>
@@ -616,8 +716,6 @@ const MenuItem = ({ title, items, onClick }) => (
     </li>
 );
 
-
-
 const mapStateToProps = (state) => ({
     categories: state.categories,
     homeTreny_respond: state.api.HomeTreny,
@@ -625,7 +723,6 @@ const mapStateToProps = (state) => ({
     popularSub_respond: state.api.popularSub,
     projects: state.api.GetProjects,
     isLogin: state.auth.login,
-
 });
 
 const mapDispatchToProps = {

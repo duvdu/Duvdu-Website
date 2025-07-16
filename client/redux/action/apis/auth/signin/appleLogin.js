@@ -5,7 +5,6 @@ export const appleLogin = ({ username, id, name, email }) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: 'login' });
     try {
-      console.log('Apple login data:', {username, id, name, email});
       
       // Make sure we have a valid ID from Apple
       if (!id) {
