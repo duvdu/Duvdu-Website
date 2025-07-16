@@ -188,6 +188,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         return <Drawer name={data.user.name?.split(' ')[0].length>6?data.user.name?.split(' ')[0].slice(0,6):data.user.name?.split(' ')[0]} img={data.user.img} isOpen={isOpen} toggleDrawer={ontoggleDrawer} className="overflow-scroll">
         </Drawer >
     }
+
     return (
         <>
             <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Booking" secondMessage="You will be answered within 24 hours" />
