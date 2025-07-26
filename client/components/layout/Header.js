@@ -363,7 +363,7 @@ const Header = ({
                                             isLogin === false &&
                                             <div className="header-action-2 flex gap-6 items-center">
                                                 <Link href="/login">
-                                                    <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('Access your space')}</div>
+                                                    <div className="cursor-pointer text-sm font-semibold capitalize hover:text-hover_primary">{t('Sign in')}</div>
                                                 </Link>
                                                 <Link href="/register">
                                                     <div className="cursor-pointer px-5 py-2 rounded-full bg-primary hover:bg-hover_primary text-sm text-white font-semibold capitalize">{t('Join Us')}</div>

@@ -319,7 +319,7 @@ const Home = ({
                                         {
                                             words?.map((i, index) =>
                                                 <div className="h-[50px] lg:h-[120px] flex flex-col justify-center items-center my-2" key={index}>
-                                                    <p className="text-[#1A73EB] font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
+                                                    <p className="text-primary font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl h-full trap capitalize whitespace-nowrap">{t(i)}</p>
                                                 </div>
                                             )
                                         }
@@ -675,7 +675,7 @@ const Home = ({
                                 <button
                                     onClick={handleLoadMore}
                                     disabled={loadingMore}
-                                    className="px-8 py-3 bg-[#1A73EB] text-white font-semibold rounded-full hover:bg-[#1557C7] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                                    className="px-8 py-3 bg-primary text-white font-semibold rounded-full hover:bg-[#1557C7] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                                 >
                                     {loadingMore ? (
                                         <>
@@ -683,7 +683,7 @@ const Home = ({
                                             {t("Loading...")}
                                         </>
                                     ) : (
-                                        t("Load More")
+                                        t("View More")
                                     )}
                                 </button>
                             </div>

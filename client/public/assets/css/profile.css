@@ -102,10 +102,10 @@
     align-items: center;
     gap: 10px;
     border-radius: 100px;
-    border: 1.5px solid #1A73EB;
+    border: 1.5px solid #1c72ea;
     background: rgba(var(--white-rgb), 0.20);
     backdrop-filter: blur(7.5px);
-    color: #1A73EB;
+    color: #1c72ea;
     font-size: 17px;
     font-weight: 700;
     text-transform: capitalize;

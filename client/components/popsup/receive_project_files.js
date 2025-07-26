@@ -16,7 +16,7 @@ function Receive_project_files() {
                         <section>
                             <a href='https://google.drive.com/aislfahe438alljjaislfahe438alljjaislfahe438alljjaislfahe438alljj' target="_blank">
 
-                            <div className="w-full border border-primary bg-[#1a73eb33] rounded-3xl border-black border-opacity-10 mt-4 p-4 text-primary font-bold text-base overflow-hidden overflow-ellipsis" >
+                            <div className="w-full border border-primary bg-[#1c72ea33] rounded-3xl border-black border-opacity-10 mt-4 p-4 text-primary font-bold text-base overflow-hidden overflow-ellipsis" >
                                 https://google.drive.com/aislfahe438alljjaislfahe438alljjaislfahe438alljjaislfahe438alljj
                             </div>
                             </a>

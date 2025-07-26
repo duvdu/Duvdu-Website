@@ -1195,15 +1195,15 @@ function ReceiveProjectFiles({
                                     }
                                     {canAskCancel &&
                                         <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                            <button onClick={openAskForCancel} className="group rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
-                                                <span className='text-[#5666F7] group-hover:text-white font-bold capitalize text-lg'>{t("ask system for cancel")}</span>
+                                            <button onClick={openAskForCancel} className="group rounded-full border-2 border-solid border-primary w-full h-[66px] text-primary hover:bg-hover_primary hover:text-white text-lg font-bold flex items-center justify-center">
+                                                <span className='text-primary group-hover:text-white font-bold capitalize text-lg'>{t("ask system for cancel")}</span>
                                             </button>
                                         </section>
                                     }
                                     {canAskForNewDeadline &&
                                         <section className='flex mx-5 gap-7 mb-10 justify-center'>
-                                            <button onClick={openAskForNewDeadline} className="group rounded-full border-2 border-solid border-[#5666F7] w-full h-[66px] text-[#5666F7] hover:bg-primary hover:text-white text-lg font-bold flex items-center justify-center">
-                                                <span className='text-[#5666F7] group-hover:text-white font-bold capitalize text-lg'>{t("ask client new deadline")}</span>
+                                            <button onClick={openAskForNewDeadline} className="group rounded-full border-2 border-solid border-primary w-full h-[66px] text-primary hover:bg-hover_primary hover:text-white text-lg font-bold flex items-center justify-center">
+                                                <span className='text-primary group-hover:text-white font-bold capitalize text-lg'>{t("ask client new deadline")}</span>
                                             </button>
                                         </section>
                                     }

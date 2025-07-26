@@ -201,7 +201,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                             }
                             <div className="mt-4">
                                 <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
-                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
+                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1c72ea26] dark:border-[#1A2024] border-8 aspect-square">
                                         <Icon className='text-primary' name={"calendar"} />
                                     </div>
                                     <div className="flex gap-2 items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
@@ -213,7 +213,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                             {BookingTime &&
                             <div className="mt-4">
                                 <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
-                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
+                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1c72ea26] dark:border-[#1A2024] border-8 aspect-square">
                                         <Icon className='text-primary' name={"calendar"} />
                                     </div>
                                     <div className="flex gap-2 items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
@@ -225,7 +225,7 @@ const StudioBooking = ({ StudopBooking_respond, addprojectState, UpdateFormData,
                             }
                             <div className="mt-4">
                                 <div className="flex items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">
-                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1A73EB26] dark:border-[#1A2024] border-8 aspect-square">
+                                    <div className="flex items-center justify-center h-full rounded-xl bg-[#1c72ea26] dark:border-[#1A2024] border-8 aspect-square">
                                     <Icon className='text-primary w-6' name={"location-dot"} />
                                     </div>
                                     <div className="flex gap-2 items-center rounded-2xl bg-white dark:bg-[#1A2024] h-16 sm:w-96 p-2 cursor-pointer">

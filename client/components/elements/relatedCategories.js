@@ -38,7 +38,7 @@ const RelatedCategories = ({ className, NeedTranslate = true, categories, querie
                             className="mr-3 w-[250px]"
                             onClick={() => handleNavigation(item._id)}
                         >
-                            <div className="flex flex-col items-center justify-around border hover:border-2 border-[#1A73EBB2] rounded-3xl w-full py-2 cursor-pointer">
+                            <div className="flex flex-col items-center justify-around border hover:border-2 border-[#1c72eaB2] rounded-3xl w-full py-2 cursor-pointer">
                                 <span className="text-primary text-lg font-semibold opacity-80 capitalize my-3">
                                     {item.title}
                                 </span>

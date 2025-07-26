@@ -133,7 +133,7 @@ const LineChart = ({ initialDatapoints,Months, viewRate, isUp }) => {
 
                     const updatedGradientFill = gradientRef.current.createLinearGradient(0, 0, 0, canvas.height * .9);
                     updatedGradientFill.addColorStop(0, '#2074ec');
-                    updatedGradientFill.addColorStop(1, '#1A73EB00');
+                    updatedGradientFill.addColorStop(1, '#1c72ea00');
 
                     chartInstance.data.datasets[0].backgroundColor = updatedGradientFill;
                     chartInstance.update();

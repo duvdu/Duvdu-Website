@@ -24,7 +24,7 @@ const CustomSwitch = ({ onSwitchChange, value, id = '' }) => {
       onChange={handleSwitchChange}
       offColor="#e3eaf0"e
       onColor="#ADD2E9" 
-      onHandleColor="#1a73eb"
+      onHandleColor="#1c72ea"
       offHandleColor="#d1d5db"
       uncheckedIcon={false}
       checkedIcon={false}

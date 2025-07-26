@@ -12,13 +12,13 @@ const Footer = ({isDark}) => {
                     <div className='container flex flex-col gap-5 md:flex-row items-center justify-between'>
                         <p className='text-3xl md:w-1/3 lg:w-1/w'>{t('Got something on your mind? Hit us up now')}</p>
                         <Link href='/contact_us'>
-                            <button className='py-5 px-10 rounded-full text-xl font-semibold text-white bg-[#1A73EB]'>
+                            <button className='py-5 px-10 rounded-full text-xl font-semibold text-white bg-primary hover:bg-hover_primary'>
                                 {t('Leave us a Message')}
                             </button>
                         </Link>
                     </div>
                 </div>
-                <div className='bg-[#263257] py-5'>
+                <div className='bg-[#0b3b99] py-5'>
                     <div className='container flex gap-5 flex-col md:flex-row items-center justify-between'>
                         <div className="logo logo-width-1 ltr:mr-12 rtl:ml-12 cursor-pointer">
                             <Link href="/">

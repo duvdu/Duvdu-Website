@@ -10,7 +10,7 @@ function AppButton({ children, color, contentClassName = "", className = "", sha
       isbuttonred = true
       break;
     case 'bg-[#5666F7]'||'#5666F7':
-      buttonClass = 'bg-[#5666F7]';
+      buttonClass = 'bg-primary hover:bg-hover_primary';
       break;
     default:
       buttonClass = `bg-[${color}]`;

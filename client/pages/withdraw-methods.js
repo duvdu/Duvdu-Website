@@ -50,11 +50,11 @@ function Wallets({isLogin , CreateMethod_respond ,CreateWithdrawMethod , GetWith
                                         <div className="w-10 h-10 p-2 animate-spin aspect-square border-t-2 border-primary rounded-full m-2 mx-auto" />
                                     </div>
                                     :GetMethods_respond?.data?.map((item,i)=>
-                                        <div onClick={()=> handleOpenPopup(item)} className={`border border-[2px] ${item.default?'border-[#1A73EB]':''} cursor-pointer rounded-xl flex items-center justify-between p-4`}>
+                                        <div onClick={()=> handleOpenPopup(item)} className={`border border-[2px] ${item.default?'border-primary':''} cursor-pointer rounded-xl flex items-center justify-between p-4`}>
                                             <div className='flex gap-2 items-center'>
                                                 <div>
                                                     <svg width="36" height="25" viewBox="0 0 36 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect y="0.5" width="36" height="24" rx="2" fill={`${item.default?'#1A73EB':'#B0B0B0'}`}/>
+                                                        <rect y="0.5" width="36" height="24" rx="2" fill={`${item.default?'#1c72ea':'#B0B0B0'}`}/>
                                                         <rect opacity="0.4" x="23" y="4.5" width="8" height="6" fill="black"/>
                                                         <rect opacity="0.4" x="3" y="16.5" width="6" height="4" fill="white"/>
                                                         <rect opacity="0.4" x="11" y="16.5" width="6" height="4" fill="white"/>

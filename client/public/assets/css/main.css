@@ -1156,7 +1156,7 @@ table p {
 
 .header-progress-bar {
   border-radius: 90px;
-  background: #1A73EB80;
+  background: #1c72ea80;
   height: 13px;
 }
 
@@ -2688,8 +2688,8 @@ input[type="time"]::-webkit-calendar-picker-indicator{
   --auth-raduis: 5px;
   --invert: invert(0%);
   --border-color: #D9D9D9;
-  --primary: #1A73EB;
-  --hover_primary: #0E4EA4;
+  --primary: #1c72ea;
+  --hover_primary: #104bbd;
   --white: #fff;
   --white-rgb: 255, 255, 255;
   --black: #000;

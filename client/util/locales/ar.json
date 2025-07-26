@@ -4,6 +4,7 @@
   "New Project": "انشاء مشروع",
   "contracts": "العقود",
   "team projects": "مشاريع الفريق",
+  "Sign in":"تسجيل الدخول",
   "Access Your Space": "الملف الشخصي",
   "Suggestions": "اقتراحات",
   "Let’s connect": "تواصل معانا",
@@ -828,5 +829,7 @@
   "Select method type": "اختر نوع الطريقة",
   "Active method": "الطريقة النشطة",
   "new method": "طريقة جديدة",
+  "Haven't found your match yet?":"لم تجد شريكك بعد؟",
+  "Here's our latest picks!":"إليكم أحدث اختياراتنا!",
   "withdraw methods": "طرق السحب"
 }
