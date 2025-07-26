@@ -24,9 +24,6 @@ function OTP({
     const [counter, setcount] = useState(120);
     const [local_error, setlocal_error] = useState(false);
 
-    useEffect(() => {
-        console.log(resendCode_respond?.code)
-    }, [resendCode_respond?.message])
 
     // useEffect(() => {
     //     if (resendCode_respond) {

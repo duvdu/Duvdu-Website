@@ -4,8 +4,11 @@ import AppButton from '../elements/button';
 import { useTranslation } from 'react-i18next';
 import CustomSwitch from '../elements/switcher';
 import ErrorMessage from '../elements/ErrorMessage';
+import { GetWithdrawMethods } from '../../redux/action/apis/withdraw-methods/get';
+import { connect } from 'react-redux';
+import { ClosePopUp } from '../../util/util';
 
-function CreateNewMethod({ onSbmit, respond }) {
+function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
   const { t } = useTranslation();
 
   const [methodType, setMethodType] = useState('wallet');
@@ -68,6 +71,16 @@ function CreateNewMethod({ onSbmit, respond }) {
         }))
     }
   },[name,number])
+  React.useEffect(()=>{
+    if(respond?.message === 'success'){
+        setName('')
+        setNumber('')
+        setMethodType('wallet')
+        setIsDefault(true)
+        ClosePopUp("create-new-method")
+        GetWithdrawMethods()
+    }
+},[respond])
 
   return (
     <Popup id="create-new-method" header="Create withdraw method">
@@ -139,4 +152,12 @@ function CreateNewMethod({ onSbmit, respond }) {
   );
 }
 
-export default CreateNewMethod;
+const mapStateToProps = (state) => ({
+  isLogin: state.auth.login,
+});
+const mapDispatchToProps = {
+  GetWithdrawMethods,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateNewMethod);
+

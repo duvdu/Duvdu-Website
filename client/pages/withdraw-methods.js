@@ -8,7 +8,6 @@ import Icon from '../components/Icons';
 import CreateNewMethod from '../components/popsup/createnewMethod';
 import { CreateWithdrawMethod } from '../redux/action/apis/withdraw-methods/create';
 import { GetWithdrawMethods } from '../redux/action/apis/withdraw-methods/get';
-import Loading from '../components/elements/loading';
 import WithdrawMethodDetails from '../components/popsup/withdrawMethodDetails';
 import { OpenPopUp } from '../util/util';
 import { useTranslation } from 'react-i18next';
@@ -28,12 +27,6 @@ function Wallets({isLogin , CreateMethod_respond ,CreateWithdrawMethod , GetWith
         setItem(item)
         OpenPopUp('withdraw-method-details')
     }
-    React.useEffect(()=>{
-        if(CreateMethod_respond?.message === 'success'){
-            GetWithdrawMethods()
-            ClosePopUp("create-new-board")
-        }
-    },[])
     return (
         <>
             <WithdrawMethodDetails item={item}/>

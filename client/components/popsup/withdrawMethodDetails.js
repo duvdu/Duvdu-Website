@@ -19,7 +19,6 @@ function WithdrawMethodDetails({ item ,GetWithdrawMethods, DeleteWithdrawMethod 
   const handleRemove = () =>{
     DeleteWithdrawMethod(item?._id)
   }
-  console.log({DeleteWithdrawMethod_respond , makeWithdrawMethodAsDefault_respond})
   useEffect(()=>{
     if(DeleteWithdrawMethod_respond?.message==='success' || makeWithdrawMethodAsDefault_respond?.message==='success'){
       ClosePopUp('withdraw-method-details')
@@ -28,7 +27,6 @@ function WithdrawMethodDetails({ item ,GetWithdrawMethods, DeleteWithdrawMethod 
       makeWithdrawMethodAsDefault(null)
     }
   },[DeleteWithdrawMethod_respond , makeWithdrawMethodAsDefault_respond])
-  console.log({DeleteWithdrawMethod_respond})
   return (
     <Popup id="withdraw-method-details" header="method details">
       <div className="mt-10 w-full md:w-96">
