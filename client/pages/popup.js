@@ -26,6 +26,7 @@ import Formsubmited from '../components/popsup/formsubmited';
 import Reportproject from '../components/popsup/report-project';
 import Verify_account_now from '../components/popsup/verify_account_now';
 import QRScanner from '../components/elements/QRScanner';
+import WithdrawMethodDetails from '../components/popsup/withdrawMethodDetails';
 
 
 
@@ -63,6 +64,7 @@ function Test() {
                         <BTN target='work-hour'> hours work </BTN>
                         <BTN target='project-post'> add post </BTN>
                         <BTN target='verify-account-now'> verify now </BTN>
+                        <BTN target='withdraw-method-details'> WithdrawMethodDetails </BTN>
                     </div>
 
 
@@ -93,6 +95,7 @@ function Test() {
                     <ChooseCategory />
                     <Verify_account_now />
                     {/* <QRScanner /> */}
+                    <WithdrawMethodDetails/>
                     <FaceVerification />
                 </div>
               

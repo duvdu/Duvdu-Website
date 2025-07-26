@@ -120,6 +120,16 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
                         </div>
                         <FaceVerification CloseProfile={CloseProfile} />
                         <Subscription CloseProfile={CloseProfile}/>
+                        <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
+                            <Link href={'/withdraw-methods'}>
+                                <button className="flex items-center gap-3">
+                                    <div className='rounded-md h-14 min-w-14 flex items-center justify-center'>
+                                        <Icon className='w-[18px]' name="wallet" />
+                                    </div>
+                                    <p className="font-semibold"> {t('withdraw methods')}</p>
+                                </button>
+                            </Link>
+                        </div>
                         {
                             showMiddleCard &&
                             <div className="p-6 bg-white dark:bg-[#1A2024] rounded-[45px]">

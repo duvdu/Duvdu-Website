@@ -814,5 +814,19 @@
   "waiting-for-first-payment": "انتظار الدفع الأول",
   "update-after-first-payment": "تحديث بعد الدفع الأول",
   "accepted-with-update": "تغيير الموعد",
-  "other": "اخري"
+  "other": "اخري",
+  "method details": "تفاصيل الطريقة",
+  "method type": "نوع الطريقة",
+  "number": "الرقم",
+  "Number": "الرقم",
+  "default status": "الحالة الافتراضية",
+  "make as default": "تعيين كافتراضي",
+  "wallet": "محفظة",
+  "bank account": "حساب بنكي",
+  "Set as default withdrawal method": "تعيين كطريقة سحب افتراضية",
+  "Create withdraw method": "إنشاء طريقة سحب",
+  "Select method type": "اختر نوع الطريقة",
+  "Active method": "الطريقة النشطة",
+  "new method": "طريقة جديدة",
+  "withdraw methods": "طرق السحب"
 }

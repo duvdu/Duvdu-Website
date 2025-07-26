@@ -355,6 +355,18 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                         <div className='mx-5'>
                         <FaceVerification CloseProfile={() => toggleClick(1)} />
                         <Subscription CloseProfile={() => toggleClick(1)}/>
+                        {isLogin && 
+                        <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
+                            <Link href={'/withdraw-methods'}>
+                                <button className="flex items-center gap-3">
+                                    <div className='rounded-md h-14 min-w-14 flex items-center justify-center'>
+                                        <Icon className='w-[18px]' name="wallet" />
+                                    </div>
+                                    <p className="font-semibold"> {t('withdraw methods')}</p>
+                                </button>
+                            </Link>
+                        </div>
+                        }
                         </div>
                         <DownLoadApp />
                         </>

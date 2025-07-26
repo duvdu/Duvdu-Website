@@ -41,6 +41,7 @@ import { useTranslation } from 'react-i18next';
 import Reviews from "../../../components/pages/stduiosAndProject/review";
 import FaceVerification from "../../elements/FaceVerification";
 import Subscription from "../../elements/Subscription";
+import Link from 'next/link';
 
 function MyProfile({ updateProfile, InsertToArray , GetCopyrights, GetUserProject, projects,GetTaggedProject,copyRights_respond, taggedProjects , UpdateFormData, userReview, userReview_respond, user, updateProfile_respond }) {
     const { t } = useTranslation();
@@ -248,6 +249,18 @@ function MyProfile({ updateProfile, InsertToArray , GetCopyrights, GetUserProjec
                             <div className='h-divider my-7'></div>
                             <div className='ps-5 md:ps-10 '>
                                 <Subscription />
+                            </div>
+                            <div className='ps-5 md:ps-10 '>
+                            <div className="p-3 bg-white dark:bg-[#1A2024] rounded-[15px]">
+                                <Link href={'/withdraw-methods'}>
+                                    <button className="flex items-center gap-3">
+                                        <div className='rounded-md h-14 min-w-14 flex items-center justify-center'>
+                                            <Icon className='w-[18px]' name="wallet" />
+                                        </div>
+                                        <p className="font-semibold"> {t('withdraw methods')}</p>
+                                    </button>
+                                </Link>
+                            </div>
                             </div>
                             <div className='h-divider my-7'></div>
                             <div className='ps-5 md:ps-10 '>
