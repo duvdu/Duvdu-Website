@@ -19,9 +19,11 @@ const setting = (state = initstate, action) => {
                 ...state,
                 ISDARK: false
             };
-
+        case Types.SHOWMESSAGE:
         case Types.SHOWNOTOFICATION:
         case Types.SHOWPROFILE:
+        case Types.SHOWMONEYSEND:
+        case Types.SHOWMONEYRECEIVE:
         case Types.SHOWSETTING:
         case Types.NONEPOPUP:
             return {

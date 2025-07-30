@@ -11,6 +11,10 @@ import ContactUs from "./contactUs";
 import { LogOut } from "../../../redux/action/apis/auth/logout";
 import { useRouter } from "next/router";
 import { updateProfile } from "../../../redux/action/apis/auth/profile/updateprofile";
+import SendMoney from "./sendMoney";
+import ReceiveMoney from "./receiveMoney";
+import TransactionDetails from "../../popsup/TransactionDetails";
+import { ClosePopUp, OpenPopUp } from "../../../util/util";
 
 
 function Setting({
@@ -27,7 +31,7 @@ function Setting({
 
 }) {
     const { t } = useTranslation();
-
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [open, setOpened] = useState(0);
     // Determine mobile view only on client
     const [isMob, setIsMob] = useState(typeof window !== 'undefined' && window.innerWidth < 1024);
@@ -140,11 +144,18 @@ function Setting({
                         subName: 'short delivery time, More money',
                         action: <Switch onSwitchChange={updateInstantState} value={updateProfile_respond?.data?.isAvaliableToInstantProjects != null ? updateProfile_respond?.data?.isAvaliableToInstantProjects : user?.isAvaliableToInstantProjects} />,
                     },
-                    // {
-                    //     img: 'notification-icon.svg',
-                    //     name: 'Notification',
-                    //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
-                    // },
+                    {
+                        img: 'money-sent.svg',
+                        name: 'Money Sent',
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                        onClick: () => setOpened(3)
+                    },
+                    {
+                        img: 'money-receive.svg',
+                        name: 'Money Received',
+                        action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"}  />,
+                        onClick: () => setOpened(4)
+                    },
                     {
                         img: 'world-icon.svg',
                         name: 'Language',
@@ -240,19 +251,33 @@ function Setting({
 
     // On desktop, hide unless setting popup is open
     if (getheaderpopup !== Types.SHOWSETTING && !isMob) return null;
+    const handleTransactionClick = (transaction) => {
+        setSelectedTransaction(transaction);
+        OpenPopUp('transaction-details')
+    };
+
+    const closeDetails = () => {
+        setSelectedTransaction(null);
+        ClosePopUp('transaction-details')
+    };
 
     return (
+        <>
+        <TransactionDetails info={selectedTransaction} id={selectedTransaction?._id}  onClick={closeDetails}/>
         <div className={isMob ? "" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"}>
             <div className={isMob ? "" : "dialog flex flex-col"}>
                 <div className={"overflow-y-scroll rounded-b-[60px] p-3"}>
-                    <div className="p-6 sm:bg-white sm:dark:bg-[#1A2024] w-full lg:w-72 rounded-[45px]">
+                    <div className={`p-6 sm:bg-white sm:dark:bg-[#1A2024] w-full ${open === 3 || open === 4 ? 'lg:w-96' : 'lg:w-72'} rounded-[45px]`}>
                         {open === 0 && <Main />}
                         {open === 1 && <ContactUs setOpened={setOpened} />}
                         {open === 2 && <Language />}
+                        {open === 3 && <SendMoney handleTransactionClick={handleTransactionClick} setOpened={setOpened} />}
+                        {open === 4 && <ReceiveMoney handleTransactionClick={handleTransactionClick} setOpened={setOpened} />}
                     </div>
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

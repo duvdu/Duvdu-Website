@@ -16,7 +16,11 @@ export const SocketProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [newMessages, setNewMessages] = useState([]);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const [unreadCount, setUnreadCount] = useState({
+    notificationsCount:0,
+    messagesCount:0,
+    count:0
+  });
 
   useEffect(() => {
     const socketUrl = process.env.BASE_URL;
@@ -44,13 +48,19 @@ export const SocketProvider = ({ children }) => {
 
     // Notification event handler
     socketInstance.on('notification', (data) => {
-      setUnreadCount((prev) => prev + 1);
+      setUnreadCount((prev) => ({
+        ...prev,
+        notificationsCount: prev.notificationsCount + 1
+      }));
       setNotifications((prev) => [...prev, data]);
     });
 
     // Message event handler
     socketInstance.on('new_message', (data) => {
-      setUnreadCount((prev) => prev + 1);
+      setUnreadCount((prev) => ({
+        ...prev,
+        messagesCount: prev.messagesCount + 1
+      }));
       setNewMessages((prev) => [...prev, data]);
     });
 
@@ -66,7 +76,11 @@ export const SocketProvider = ({ children }) => {
 
   // Reset unread count
   const resetUnreadCount = () => {
-    setUnreadCount(0);
+    setUnreadCount({
+      notificationsCount:0,
+      messagesCount:0,
+      count:0
+    });
   };
 
   // Clear notifications

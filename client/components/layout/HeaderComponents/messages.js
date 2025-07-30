@@ -2,11 +2,15 @@ import { connect } from "react-redux";
 import { useTranslation } from 'react-i18next';
 import * as Types from '../../../redux/constants/actionTypes';
 import { useEffect, useState , useRef } from "react";
+import MessageTile from "../../elements/MessageTile";
 import DuvduLoading from "../../elements/duvduLoading.js";
+import DraggableList from "../../../components/pages/home/dragList";
+import { GetAllMessageInChat } from "../../../redux/action/apis/realTime/messages/getAllMessageInChat";
+
 import Link from 'next/link';
 
 
-function MessageAndNotofication({ getheaderpopup, GetNotifications_resond  }) {
+function Messages({ getheaderpopup,chats , GetAllMessageInChat  , AvailableUserChat_resond , onChoose  }) {
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
@@ -23,9 +27,9 @@ function MessageAndNotofication({ getheaderpopup, GetNotifications_resond  }) {
 
     useEffect(() => {
         setViewAllState(0)
-    }, [getheaderpopup == Types.SHOWNOTOFICATION])
+    }, [getheaderpopup == Types.SHOWMESSAGE])
 
-    if (getheaderpopup != Types.SHOWNOTOFICATION && window.innerWidth > 1024) return
+    if (getheaderpopup != Types.SHOWMESSAGE && window.innerWidth > 1024) return
 
     return (
         <div className={isMob ? " dark:bg-black h-screen" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
@@ -34,16 +38,18 @@ function MessageAndNotofication({ getheaderpopup, GetNotifications_resond  }) {
                     {
                         viewAllState == 0 &&
                         <>
-                            {GetNotifications_resond?.loading?
+                        
+                        {chats?.loading?
                             <DuvduLoading loadingIn={""} type='notification' />
-                            :
-                            <ViewFew Type={'notification'} list={GetNotifications_resond?.data || []} t={t} onViewAll={() => setViewAllState(1)} />
+                        :
+                        <ViewFew Type={'messages'} GetAllMessageInChat={GetAllMessageInChat} AvailableUserChat_resond={AvailableUserChat_resond} onChoose={onChoose} list={chats?.data || []} t={t} onViewAll={() => setViewAllState(2)} />
                         }
                         </>
                     }
+                    
                     {
-                        (viewAllState == 1) &&
-                        <ViewAll Type={'notification'} list={GetNotifications_resond?.data || []} t={t} />
+                        (viewAllState == 2 ) &&
+                        <ViewAll Type={'messages'} list={chats?.data || []} t={t} onChoose={onChoose}/>
                     }
                 </div>
             </div>
@@ -59,12 +65,12 @@ const ViewAll = ({ Type, list, t , onChoose }) =>
         {list.length > 0 ?
             <div className="flex flex-col gap-4 mt-8 overflow-y-scroll">
                 {list.map((tile, index) => (
-                    <NotificationTile t={t} key={index + 'not'} tile={tile} />
+                    <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span></div>}
     </div>
 
-const ViewFew = ({ Type, list, t, onViewAll }) => (
+const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserChat_resond, onChoose }) => (
 
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] p-7">
         <div className="flex items-center justify-between">
@@ -73,10 +79,27 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
                 <div onClick={onViewAll} className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</div>
             }
         </div>
+        {Type === "messages" && AvailableUserChat_resond?.data?.length>0 &&
+        <div className="overflow-auto max-w-64 mt-8 hide-scrollable-container">
+            <div className="flex">
+                <DraggableList>
+                    {AvailableUserChat_resond?.data?.map(item=>
+                        <div key={item._id} className="me-2 flex flex-col items-center gap-1">
+                            <img onClick={()=>{
+                                GetAllMessageInChat(item._id)
+                                onChoose?.()
+                                }} className="w-10 h-10 rounded-full cursor-pointer object-cover object-top" src={item.profileImage} alt="user" />
+                            <div className="font-semibold text-xs">{item.name?.split(' ')[0].length>6?item.name?.split(' ')[0].slice(0,6):item.name?.split(' ')[0]} </div>
+                        </div>
+                    )}
+                </DraggableList>
+            </div>
+        </div>
+        }
         {list.length > 0 ?
-            <div className={`flex flex-col gap-4 mt-4 overflow-y-hidden`}>
+            <div className={`flex flex-col gap-4 ${Type === "messages"?'mt-4':' mt-8'} overflow-y-hidden`}>
                 {list.slice(0, 4).map((tile, index) => (
-                    <NotificationTile t={t} key={index + 'not'} tile={tile} />
+                    Type === 'notification' ? <NotificationTile t={t} key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
                 ))}
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t(`There's No ${Type}`)}</span> </div>}
     </div>
@@ -160,7 +183,11 @@ const NotificationTile = ({ tile , t }) => {
 
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
+    chats: state.api.GetAllChats,
     GetNotifications_resond: state.api.GetNotifications,    
+    AvailableUserChat_resond: state.api.AvailableUserChat,    
 });
-
-export default connect(mapStateToProps)(MessageAndNotofication);
+const mapDispatchToProps = {
+    GetAllMessageInChat
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);

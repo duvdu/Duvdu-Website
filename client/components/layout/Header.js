@@ -25,6 +25,7 @@ import { LogOut } from "../../redux/action/apis/auth/logout";
 import { useRouter } from "next/router";
 import auth from "../../redux/reducer/auth";
 import { useSocket } from "../../util/socketContext";
+import Messages from "./HeaderComponents/messages";
 
 
 // toggleDarkMode
@@ -113,7 +114,11 @@ const Header = ({
     const { socket, notifications, newMessages, unreadCount, resetUnreadCount } = useSocket();
 
     const [width, setWidth] = useState(0);
-    const [countUnRead, setCountUnRead] = useState(0);
+    const [countUnRead, setCountUnRead] = useState({
+        notificationsCount:0,
+        messagesCount:0,
+        count:0
+    });
     const [toast, setToast] = useState(null);
 
     if (api.error && JSON.parse(api.error).status == 423) {
@@ -136,7 +141,7 @@ const Header = ({
     },[isLogin])
     useEffect(()=>{
         if(UnReadNotification_respond?.data?.count)
-            setCountUnRead(UnReadNotification_respond?.data?.count)
+            setCountUnRead(UnReadNotification_respond?.data)
     },[UnReadNotification_respond?.data?.count])
     
     useEffect(() => {
@@ -146,10 +151,14 @@ const Header = ({
                     UnReadNotification()
             })
             GetNotifications()
-            // if(!GetAllChats_respond?.data){
+        }
+        if(getheaderpopup===Types.SHOWMESSAGE){
+            MarkNotificationsAsRead().then(()=>{
+                if(isLogin===true)
+                    UnReadNotification()
+            })
             AvailableUserChat()
             GetAllChats()
-            // }
         }
         if(getheaderpopup===Types.SHOWPROFILE){
             if (!GetBoards_respond)
@@ -159,13 +168,24 @@ const Header = ({
             if(isLogin===true)
                 getMyprofile()
         }
+        if(getheaderpopup===Types.SHOWMONEYSEND){
+            if(isLogin===true)
+                getMyprofile()
+        }
+        if(getheaderpopup===Types.SHOWMONEYRECEIVE){
+            if(isLogin===true)
+                getMyprofile()
+        }
     }, [getheaderpopup , isLogin]);
 
     useEffect(() => {
         if (socket) {
             // Listen for notification events
             socket.on('notification', (data) => {
-                setCountUnRead((prev) => prev + 1);
+                setCountUnRead((prev) => ({
+                    ...prev,
+                    notificationsCount: prev.notificationsCount + 1
+                }));
                 setToast({
                     type: 'notification',
                     id: data.data.sourceUser._id,
@@ -177,7 +197,10 @@ const Header = ({
 
             // Listen for new message events
             socket.on('new_message', (data) => {
-                setCountUnRead((prev) => prev + 1);
+                setCountUnRead((prev) => ({
+                    ...prev,
+                    messagesCount: prev.messagesCount + 1
+                }));
                 setToast({
                     type: 'message',
                     id: data.data.target,
@@ -324,14 +347,28 @@ const Header = ({
                                         
                                             
                                             <div className="header-action-2 flex items-center ">
+                                            {isLogin === true&&
+                                                <div className="header-action-icon-2 z-10 me-6" >
+                                                    <div className="icon-holder cursor-pointer " onClick={() =>
+                                                        SetheaderPopUp(getheaderpopup != Types.SHOWMESSAGE ? Types.SHOWMESSAGE : Types.NONEPOPUP)
+
+                                                    }>
+                                                        {countUnRead.messagesCount > 0 &&
+                                                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead.messagesCount}</span>
+                                                        }
+                                                        <Icon className={"dark:text-[#B3B3B3] "} name={"chat18"} type="far" />
+                                                    </div>
+                                                    <Messages />
+                                                </div>
+                                                }
                                                 {isLogin === true&&
                                                 <div className="header-action-icon-2 z-10" >
                                                     <div className="icon-holder cursor-pointer" onClick={() =>
                                                         SetheaderPopUp(getheaderpopup != Types.SHOWNOTOFICATION ? Types.SHOWNOTOFICATION : Types.NONEPOPUP)
 
                                                     }>
-                                                        {countUnRead > 0 &&
-                                                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead}</span>
+                                                        {countUnRead.notificationsCount > 0 &&
+                                                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead.notificationsCount}</span>
                                                         }
                                                         <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                     </div>
@@ -339,8 +376,9 @@ const Header = ({
                                                 </div>
                                                 }
                                                 
+                                                
                                                 <div className="header-action-icon-2 mx-6 z-50"  >
-                                                    <div className="icon-holder cursor-pointer" onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWSETTING ? Types.SHOWSETTING : Types.NONEPOPUP)}>
+                                                    <div className="icon-holder cursor-pointer " onClick={() => SetheaderPopUp(getheaderpopup != Types.SHOWSETTING ? Types.SHOWSETTING : Types.NONEPOPUP)}>
                                                         <Icon className={"dark:text-[#B3B3B3]"} name={"gear"} />
                                                     </div>
                                                     <Setting />
@@ -402,10 +440,19 @@ const Header = ({
                                 }
                                 <div className="flex lg:hidden items-center justify-center gap-2">
                                     {isLogin === true &&
+                                        <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(6)}>
+                                            <div className='relative'>  
+                                                {countUnRead.messagesCount > 0 &&
+                                                <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead.messagesCount}</span>
+                                                }
+                                                <Icon className="items-center justify-center" name={'chat18'} />
+                                            </div> 
+                                        </div>}
+                                    {isLogin === true &&
                                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => toggleClick(4)}>
                                             <div className='relative'>  
-                                                    {countUnRead > 0 &&
-                                                <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead}</span>
+                                                {countUnRead.notificationsCount > 0 &&
+                                                <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead.notificationsCount}</span>
                                                 }
                                                 <Icon className="items-center justify-center" name={'bell'} />
                                             </div> 

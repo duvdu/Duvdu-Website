@@ -110,7 +110,7 @@ function Profile({ getheaderpopup, api, user, getBoards_respond, fav_respond , S
                                     <Link href={`/creative/${user.username}`} >
                                         <div onClick={CloseProfile} className="flex items-center justify-center py-4 capitalize w-full rounded-full text-center border-2 border-primary cursor-pointer">
                                             <span className="text-primary font-bold text-base">
-                                                {t('Sign in')}
+                                                {t('Access your space')}
                                             </span>
                                         </div>
                                     </Link>

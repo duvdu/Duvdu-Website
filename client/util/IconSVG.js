@@ -15,6 +15,7 @@ const IsincludesSVG = [
   "card",
   "chat",
   "chat24",
+  "chat18",
   "chatOff",
   "check-verify",
   "burger-menu",
@@ -71,6 +72,8 @@ const GetIconSVG = ({ name, className, ...rest }) => {
       return <Chat className={className} {...rest} />
     case "chat24":
       return <Chat24 className={className} {...rest} />
+    case "chat18":
+      return <Chat18 className={className} {...rest} />
     case "chatOff":
       return <ChatOff className={className} {...rest} />
     case "check-verify":
@@ -241,6 +244,14 @@ const Chat24 = ({ className, ...rest }) => (
   <div className={className} {...rest}>
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M11.9257 1.06507C11.528 1.0247 11.1229 1.00391 10.7117 1.00391C5.3481 1.00391 1 4.54349 1 8.90979C1 13.2761 5.3481 16.8157 10.7117 16.8157C11.5501 16.8157 12.3637 16.7292 13.1397 16.5666L16.7816 20.2039V15.1215C18.4165 14.016 19.7304 12.3547 20.2 10.6039M20.2 5.20391C20.2 6.86076 18.8569 8.20391 17.2 8.20391C15.5431 8.20391 14.2 6.86076 14.2 5.20391C14.2 3.54705 15.5431 2.20391 17.2 2.20391C18.8569 2.20391 20.2 3.54705 20.2 5.20391Z" stroke={rest.color?rest.color:"#95999C"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </div>
+);
+
+const Chat18 = ({ className, ...rest }) => (
+  <div className={className} {...rest}>
+    <svg width="18" height="18" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11.9257 1.06507C11.528 1.0247 11.1229 1.00391 10.7117 1.00391C5.3481 1.00391 1 4.54349 1 8.90979C1 13.2761 5.3481 16.8157 10.7117 16.8157C11.5501 16.8157 12.3637 16.7292 13.1397 16.5666L16.7816 20.2039V15.1215C18.4165 14.016 19.7304 12.3547 20.2 10.6039M20.2 5.20391C20.2 6.86076 18.8569 8.20391 17.2 8.20391C15.5431 8.20391 14.2 6.86076 14.2 5.20391C14.2 3.54705 15.5431 2.20391 17.2 2.20391C18.8569 2.20391 20.2 3.54705 20.2 5.20391Z" stroke={'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   </div>
 );

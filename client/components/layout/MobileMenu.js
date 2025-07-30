@@ -18,6 +18,7 @@ import FaceVerification from "../elements/FaceVerification";
 import Subscription from "../elements/Subscription";
 import { UnReadNotification } from "../../redux/action/apis/realTime/notification/unread";
 import { IsPopUpOpen } from "../../util/util";
+import Messages from "./HeaderComponents/messages";
 
 
 const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayout,
@@ -32,7 +33,11 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
  }) => {
     const { t } = useTranslation();
     const [page, setPage] = useState(isToggled);
-    const [countUnRead, setCountUnRead] = useState(0);
+    const [countUnRead, setCountUnRead] = useState({
+        notificationsCount:0,
+        messagesCount:0,
+        count:0
+    });
     const router = useRouter();
     useEffect(() => {
 
@@ -44,7 +49,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
     },[isLogin])
     useEffect(()=>{
         if(UnReadNotification_respond?.data?.count)
-            setCountUnRead(UnReadNotification_respond?.data?.count)
+            setCountUnRead(UnReadNotification_respond?.data)
     },[UnReadNotification_respond?.data?.count])
     useEffect(()=>{
         if(page ===4){
@@ -53,10 +58,14 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                     UnReadNotification()
             })
             GetNotifications()
-            // if(!GetAllChats_respond?.data){
-                AvailableUserChat()
-                GetAllChats()
-            // }
+        }
+        if(page ===6){
+            MarkNotificationsAsRead().then(()=>{
+                if(isLogin)
+                    UnReadNotification()
+            })
+            AvailableUserChat()
+            GetAllChats()
         }
     },[page , isLogin])
     const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)
@@ -85,10 +94,19 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                 <div className="flex items-center justify-center gap-2">
 
                     {isLogin === true &&
+                        <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(6)}>
+                           <div className='relative'>  
+                            {countUnRead.messagesCount > 0 &&
+                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead.messagesCount}</span>
+                            }
+                            <Icon className="items-center justify-center" name={'chat18'} />
+                           </div> 
+                        </div>}
+                    {isLogin === true &&
                         <div className="p-3 size-[50px] rounded-full border border-[#C6C8C9] dark:border-[#FFFFFF33] cursor-pointer flex items-center justify-center" onClick={() => setPage(4)}>
                            <div className='relative'>  
-                                {countUnRead > 0 &&
-                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead}</span>
+                            {countUnRead.notificationsCount > 0 &&
+                            <span className="absolute -right-[7px] -top-[7px] w-4 h-4 flex items-center justify-center rounded-full bg-primary text-white text-[9px] border border-white leading-[0]">{countUnRead.notificationsCount}</span>
                             }
                             <Icon className="items-center justify-center" name={'bell'} />
                            </div> 
@@ -377,6 +395,9 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
 
                     {page == 4 &&
                         <MessageAndNotofication onChoose={() => toggleClick(1)} />
+                    }
+                    {page == 6 &&
+                        <Messages onChoose={() => toggleClick(1)} />
                     }
 
                     {page == 5 &&

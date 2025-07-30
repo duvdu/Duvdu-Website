@@ -831,5 +831,15 @@
   "new method": "طريقة جديدة",
   "Haven't found your match yet?":"لم تجد شريكك بعد؟",
   "Here's our latest picks!":"إليكم أحدث اختياراتنا!",
-  "withdraw methods": "طرق السحب"
+  "withdraw methods": "طرق السحب",
+  "View Attachment": "عرض المرفق",
+  "Method": "الطريقة",
+  "Ticket #": "رقم التذكرة",
+  "Date": "التاريخ",
+  "Status": "الحالة",
+  "Transaction Details": "تفاصيل المعاملة",
+  "Money Sent": "المبلغ المرسل",
+  "Money Received": "المبلغ المستقبل",
+  "Failed to load transactions": "فشل تحميل المعاملات",
+  "No transactions found": "لا يوجد معاملات"
 }

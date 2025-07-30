@@ -26,8 +26,8 @@ function ReportContract({ data, UpdateFormData, resetForm, formData, report_resp
     const validateRequiredFields = () => {
         const errors = {};
 
-        if (!attachmentValidation) errors.attachments = 'Attachment not valid';
-        if (!formData.desc) errors.desc = 'Description must be between 10 and 100 characters';
+        if (!formData.desc) errors.desc = 'Description is required';
+        // if (!attachmentValidation) errors.attachments = 'Attachment not valid';
 
         return errors;
     };
