@@ -6,7 +6,6 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 
 const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond, handleTransactionClick }) => {
     const { t } = useTranslation();
-    const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -49,42 +48,6 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond, handleTra
         }
     }, [page, hasMore, isLoadingMore, ReceiveMoney]);
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric' 
-        });
-    };
-
-    const getStatusColor = (status) => {
-        switch (status) {
-            case 'success':
-                return 'text-green-500';
-            case 'pending':
-                return 'text-yellow-500';
-            case 'denied':
-            case 'failed':
-                return 'text-red-500';
-            default:
-                return 'text-gray-500';
-        }
-    };
-
-    const getStatusIcon = (status) => {
-        switch (status) {
-            case 'success':
-                return 'check-circle';
-            case 'pending':
-                return 'clock';
-            case 'denied':
-            case 'failed':
-                return 'x-circle';
-            default:
-                return 'question-circle';
-        }
-    };
-
     const renderTransactionItem = (transaction) => (
         <div 
             key={transaction._id}
@@ -93,10 +56,10 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond, handleTra
         >
             <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-                    {transaction.createdBy?.profileImage ? (
+                    {transaction.user?.profileImage ? (
                         <img 
-                            src={transaction.createdBy.profileImage} 
-                            alt={transaction.createdBy.name}
+                            src={transaction.user.profileImage} 
+                            alt={transaction.user.name}
                             className="w-full h-full object-cover"
                         />
                     ) : (
@@ -104,24 +67,15 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond, handleTra
                     )}
                 </div>
                 <div>
-                    <p className="font-medium ">{transaction.createdBy?.name || 'Unknown User'}</p>
-                    <p className="text-sm text-gray-500">{formatDate(transaction.createdAt)}</p>
-                    {transaction.status !== 'success' && (
-                        <div className="flex items-center space-x-1 mt-1">
-                            <Icon 
-                                name={getStatusIcon(transaction.status)} 
-                                className={`text-sm ${getStatusColor(transaction.status)}`} 
-                            />
-                            <span className={`text-xs font-medium ${getStatusColor(transaction.status)}`}>
-                                {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
-                            </span>
-                        </div>
-                    )}
+                    <p className="font-medium ">{transaction.user?.name || 'Unknown User'}</p>
+                    <p className="text-sm text-gray-500">
+                        #{transaction.ticketNumber}
+                    </p>
                 </div>
             </div>
             <div className="text-right">
-                <p className={`font-semibold ${transaction.status === 'success' ? 'text-blue-600' : 'text-gray-600'}`}>
-                    +{transaction.fundAmount} {transaction.currency || 'US$'}
+                <p className="font-semibold text-blue-500 text-sm">
+                    +{transaction.amount || transaction.fundAmount} {transaction.currency || 'US$'}
                 </p>
             </div>
         </div>

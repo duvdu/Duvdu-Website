@@ -7,7 +7,7 @@ export const GetComplaint = (id) => {
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.get(`api/contracts/complaints/${id}`);
+      const response = await mainApiInstance.get(`api/contracts/complaints?contract=${id}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_DATA, payload: response.data.data });
       

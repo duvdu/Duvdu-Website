@@ -841,5 +841,9 @@
   "Money Sent": "المبلغ المرسل",
   "Money Received": "المبلغ المستقبل",
   "Failed to load transactions": "فشل تحميل المعاملات",
-  "No transactions found": "لا يوجد معاملات"
+  "No transactions found": "لا يوجد معاملات",
+  "is closed": "مغلق",
+  "yes": "نعم",
+  "no": "لا",
+  "ticket number": "رقم التذكرة"
 }

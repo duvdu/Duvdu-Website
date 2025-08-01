@@ -32,6 +32,7 @@ function Setting({
 }) {
     const { t } = useTranslation();
     const [selectedTransaction, setSelectedTransaction] = useState(null);
+    const [isRefunded, setIsRefunded] = useState(true);
     const [open, setOpened] = useState(0);
     // Determine mobile view only on client
     const [isMob, setIsMob] = useState(typeof window !== 'undefined' && window.innerWidth < 1024);
@@ -251,8 +252,9 @@ function Setting({
 
     // On desktop, hide unless setting popup is open
     if (getheaderpopup !== Types.SHOWSETTING && !isMob) return null;
-    const handleTransactionClick = (transaction) => {
+    const handleTransactionClick = (transaction , isRefunded = true) => {
         setSelectedTransaction(transaction);
+        setIsRefunded(isRefunded);
         OpenPopUp('transaction-details')
     };
 
@@ -263,7 +265,7 @@ function Setting({
 
     return (
         <>
-        <TransactionDetails info={selectedTransaction} id={selectedTransaction?._id}  onClick={closeDetails}/>
+        <TransactionDetails info={selectedTransaction} id={selectedTransaction?._id}  onClick={closeDetails} isRefunded={isRefunded}/>
         <div className={isMob ? "" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"}>
             <div className={isMob ? "" : "dialog flex flex-col"}>
                 <div className={"overflow-y-scroll rounded-b-[60px] p-3"}>
@@ -271,8 +273,8 @@ function Setting({
                         {open === 0 && <Main />}
                         {open === 1 && <ContactUs setOpened={setOpened} />}
                         {open === 2 && <Language />}
-                        {open === 3 && <SendMoney handleTransactionClick={handleTransactionClick} setOpened={setOpened} />}
-                        {open === 4 && <ReceiveMoney handleTransactionClick={handleTransactionClick} setOpened={setOpened} />}
+                        {open === 3 && <SendMoney handleTransactionClick={(transaction) => handleTransactionClick(transaction, false)} setOpened={setOpened} />}
+                        {open === 4 && <ReceiveMoney handleTransactionClick={(transaction) => handleTransactionClick(transaction, true)} setOpened={setOpened} />}
                     </div>
                 </div>
             </div>

@@ -6,127 +6,241 @@ import { useTranslation } from 'react-i18next';
 import Loading from '../elements/loading';
 
 
-function TransactionDetails({onClick,id ,info}) {
+function TransactionDetails({onClick,id ,info , isRefunded = true}) {
     const { t } = useTranslation();
-    const getStatusIcon = (status) => {
-        switch (status) {
-            case 'success':
-                return 'check-circle';
-            case 'pending':
-                return 'clock';
-            case 'denied':
-            case 'failed':
-                return 'exclamation-circle';
-            default:
-                return 'question-circle';
-        }
+    const formatDate = (isoString) => {
+        const date = new Date(isoString);
+
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+      
+        let hours = date.getUTCHours();
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+        hours = hours % 12;
+        hours = hours === 0 ? 12 : hours;
+        const formattedHour = String(hours).padStart(2, '0');
+      
+        return `${year}-${month}-${day} ${formattedHour}:${minutes}${ampm}`;      
     };
-    const getStatusColor = (status) => {
-        switch (status) {
-            case 'success':
-                return 'text-blue-600';
-            case 'pending':
-                return 'text-yellow-600';
-            case 'denied':
-            case 'failed':
-                return 'text-red-600';
-            default:
-                return 'text-gray-600';
-        }
-    };
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric' 
-        });
-    };
-
-
-
-
 
     return (
         <>
             <Popup id={'transaction-details'} header={t('Transaction Details')  } className='w-full h-full text-center z-[100]' onCancel={onClick} >
-                
-                {info && (
-                    <div className="md:w-96 mt-5">
-                        <div className="flex items-center gap-x-4 mb-6">
-                            <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
-                                {info.createdBy?.profileImage || info.user?.profileImage ? (
-                                    <img 
-                                        src={info.createdBy?.profileImage || info.user?.profileImage} 
-                                        alt={info.createdBy?.name || info.user?.username}
-                                        className="w-full h-full object-cover"
-                                    />
-                                ) : (
-                                    <Icon name="user" className="text-gray-500 text-2xl" />
-                                )}
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-lg">{info.createdBy?.name || info.user?.name}</h3>
-                                {info.createdBy?.username || info.user?.username && (
-                                    <p className="text-gray-500">@{info.createdBy?.username || info.user?.username}</p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="space-y-4">
-                            <div className="flex justify-between items-center p-4 bg-gray-50 dark:bg-[#1A2030] rounded-lg">
-                                <span className="text-gray-600">{t('Amount')}</span>
-                                <span className="font-semibold text-lg text-blue-600">
-                                    +{info.fundAmount || info.amount} {info.currency || 'US$'}
+                {!isRefunded ? (
+                    <>
+                    {info && (
+                        <div className="md:w-96 mt-5">
+                            <div className="flex items-center gap-x-4 mb-6">
+                            <section className='flex flex-col gap-4 w-full'>
+                            {info.user.name && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("client info")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                {info.user.name}
                                 </span>
                             </div>
-
-                            <div className="flex justify-between items-center">
-                                <span className="text-gray-600">{t('Status')}</span>
-                                <div className="flex items-center space-x-2">
-                                    <Icon 
-                                        name={getStatusIcon(info.status)} 
-                                        className={`${getStatusColor(info.status)}`} 
-                                    />
-                                    <span className={`font-medium ${getStatusColor(info.status)}`}>
-                                        {info.status.charAt(0).toUpperCase() + info.status.slice(1)}
+                            }
+                            {info.status && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("status")}
                                     </span>
-                                </div>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                {info.status}
+                                </span>
                             </div>
-                            {info.createdAt && (
-                            <div className="flex justify-between items-center">
-                                <span className="text-gray-600">{t('Date')}</span>
-                                <span className="text-gray-900 dark:text-gray-600">{formatDate(info.createdAt)}</span>
+                            }
+                            {info.ticketNumber && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("transaction number")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                {info.ticketNumber}
+                                </span>
                             </div>
-                            )}
-                            {info.ticketNumber && (
-                                <div className="flex justify-between items-center">
-                                    <span className="text-gray-600">{t('Ticket #')}</span>
-                                    <span className="text-gray-900 dark:text-gray-600 font-mono">{info.ticketNumber}</span>
-                                </div>
-                            )}
-
-                            {info.withdrawMethod && (
-                                <div className="flex justify-between items-center">
-                                    <span className="text-gray-600">{t('Method')}</span>
-                                    <span className="text-gray-900 dark:text-gray-600">{info.withdrawMethod.name}</span>
-                                </div>
-                            )}
-
-                            {info.fundAttachment.length > 0 && (
-                                <div className="mt-4">
-                                    <a 
-                                        href={info.fundAttachment}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center justify-center gap-x-2 w-full p-3  text-blue-600 rounded-lg transition-colors"
-                                    >
-                                        <Icon name="file-pdf" className="w-5 h-5" />
-                                        <span>{t('View Attachment')}</span>
-                                    </a>
-                                </div>
-                            )}
+                            }
+                            {info.amount && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("amount")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                    {info.amount} {info.currency ?? 'EGP'}
+                                </span>
+                            </div>
+                            }
+                            {info?.fundedBy?.name && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("refunded by")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                    {info.fundedBy.name}
+                                </span>
+                            </div>
+                            }
+                            {info.fundedAt && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("refunded at")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                    {formatDate(info.fundedAt)}
+                                </span>
+                            </div>
+                            }
+                            {info?.fundingAmount > 0 && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("funding amount")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                    {info.fundingAmount} {info.currency ?? 'EGP'}
+                                </span>
+                            </div>
+                            }
+                               {info.fundAttachment && info.fundAttachment.length > 0 && (
+                                <AppButton className='w-full' onClick={() => window.open(info.fundAttachment, '_blank')}>
+                                    {t('View Attachment')}
+                                </AppButton>
+                                )}
+                               {info.contract&& (
+                                <AppButton className='w-full' onClick={() => window.open(`/contracts?contract=${info.contract}`, '_blank')}>
+                                    {t('View Contract')}
+                                </AppButton>
+                                )}
+    
+                            </section>   
+                            </div>
                         </div>
-                    </div>
+                    )}
+                    </>
+                ) : (
+                    <>
+                    {info && (
+                        <div className="md:w-96 mt-5">
+                            <div className="flex items-center gap-x-4 mb-6">
+                            <section className='flex flex-col gap-4 w-full'>
+                            {info.user?.name && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("client info")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                {info.user.name}
+                                </span>
+                            </div>
+                            }
+                            {info.createdBy?.name && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("transferred by")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                {info.createdBy.name}
+                                </span>
+                            </div>
+                            }
+                            {info.status && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("status")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                {info.status}
+                                </span>
+                            </div>
+                            }
+                            {info.ticketNumber && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("transaction number")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                {info.ticketNumber}
+                                </span>
+                            </div>
+                            }
+                            {info.createdAt && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("transferred date")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                    {formatDate(info.createdAt)}
+                                </span>
+                            </div>
+                            }
+                            {info.withdrawMethod && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("transferred method")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                    {info.withdrawMethod?.name} / {info.withdrawMethod?.number}
+                                </span> 
+                            </div>
+                            }
+                            {info.fundAmount > 0 && 
+                            <div className='flex flex-col gap-2'>
+                                <h2 className={`text-start  capitalize`}>
+                                    <span className='text-[#747688]'>
+                                        {t("amount")}
+                                    </span>
+                                </h2>
+                                <span className={`text-start font-semibold capitalize`}>
+                                    {info.fundAmount} {info.currency ?? 'EGP'}
+                                </span>
+                            </div>
+                            }
+                               {info.fundAttachment && info.fundAttachment.length > 0 && (
+                                <AppButton className='w-full' onClick={() => window.open(info.fundAttachment, '_blank')}>
+                                    {t('View Attachment')}
+                                </AppButton>
+                                )}
+                               {info.contract&& (
+                                <AppButton className='w-full' onClick={() => window.open(`/contracts?contract=${info.contract}`, '_blank')}>
+                                    {t('View Contract')}
+                                </AppButton>
+                                )}
+    
+                            </section>   
+                            </div>
+                        </div>
+                    )}
+                    </>
                 )}
             </Popup>
 

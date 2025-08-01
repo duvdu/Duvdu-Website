@@ -763,20 +763,35 @@ function ReceiveProjectFiles({
                                     </div>
                                 }
                                 </section>   
-                                {complaint && 
+                                {complaint && complaint.length > 0 &&
+                                complaint.map((item, index) => (
                                 <>
                                 <section className='w-full'>
                                     <div>
                                         <h2 className='opacity-60 capitalize mb-3'>{t("contract complaint reasons")}</h2>
                                         <span className='font-semibold max-w-[543px]'>
-                                            {complaint?.desc}
+                                            {item?.desc}
                                         </span>
                                     </div>
                                 </section>   
-                                {complaint?.attachments?.length > 0 &&
+                                <section className='w-full grid md:grid-cols-2'>
+                                    <div>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("ticket number")}</h2>
+                                        <span className='font-semibold max-w-[543px]'>
+                                            {item?.ticketNumber}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("is closed")}</h2>
+                                        <span className='font-semibold max-w-[543px]'>
+                                            {item?.isClosed ? t("yes") : t("no")}
+                                        </span>
+                                    </div>
+                                </section>   
+                                {item?.attachments?.length > 0 &&
                                 <section className='w-full'>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("contract complaint attachments")}</h2>
-                                    {complaint?.attachments.map((attachment, index) =>
+                                    {item?.attachments.map((attachment, index) =>
                                         <div key={index} className='flex gap-3 items-center p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
                                             <Icon key={index} name={'file'} className='size-5' />
                                             <div className='flex flex-col'>
@@ -789,7 +804,7 @@ function ReceiveProjectFiles({
                                 </section>
                                 } 
                                 </>
-                                }
+                                ))}
                                  {/* Project  */}
                                 {(getType() == "project") && 
                                 <>
