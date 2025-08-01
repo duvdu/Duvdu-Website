@@ -18,13 +18,9 @@ import "../public/assets/css/home.css";
 import "../public/assets/css/mood_boards.css";
 import "../public/assets/css/rtl.css";
 import '../util/i18n';
-import { OpenChannel } from "../redux/action/apis/realTime/socket/socket";
-import { getMyprofile } from "../redux/action/apis/auth/profile/getProfile";
-import { GetAllChats } from "../redux/action/apis/realTime/chat/chats";
 import useFcmToken from "../util/hooks/useFcmToken";
 import firebaseApp from '../util/firebase';
 import { getMessaging, onMessage } from 'firebase/messaging';
-import Icon from "../components/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SocketProvider } from "../util/socketContext";
 

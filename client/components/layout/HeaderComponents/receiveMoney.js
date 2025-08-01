@@ -2,15 +2,52 @@ import Icon from "../../Icons";
 import { connect } from "react-redux";
 import { ReceiveMoney } from '../../../redux/action/apis/transactions/ReceiveMoney';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
-const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond , handleTransactionClick }) => {
+const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond, handleTransactionClick }) => {
     const { t } = useTranslation();
     const [selectedTransaction, setSelectedTransaction] = useState(null);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+    const scrollRef = useRef(null);
+    
     useEffect(() => {
-        ReceiveMoney()
-    }, [])
+        // Reset pagination when component mounts
+        setPage(1);
+        setHasMore(true);
+        ReceiveMoney({
+            page: 1,
+            limit: 10
+        });
+    }, []);
 
+    // Check if we can load more data
+    useEffect(() => {
+        if (respond?.pagination) {
+            const { currentPage, totalPages } = respond.pagination;
+            setHasMore(currentPage < totalPages);
+        }
+    }, [respond]);
+
+    const loadMoreData = useCallback(async () => {
+        if (!hasMore || isLoadingMore) return;
+        
+        setIsLoadingMore(true);
+        const nextPage = page + 1;
+        
+        try {
+            await ReceiveMoney({
+                page: nextPage,
+                limit: 10
+            });
+            setPage(nextPage);
+        } catch (error) {
+            console.error('Error loading more data:', error);
+        } finally {
+            setIsLoadingMore(false);
+        }
+    }, [page, hasMore, isLoadingMore, ReceiveMoney]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -20,6 +57,33 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond , handleTr
         });
     };
 
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'success':
+                return 'text-green-500';
+            case 'pending':
+                return 'text-yellow-500';
+            case 'denied':
+            case 'failed':
+                return 'text-red-500';
+            default:
+                return 'text-gray-500';
+        }
+    };
+
+    const getStatusIcon = (status) => {
+        switch (status) {
+            case 'success':
+                return 'check-circle';
+            case 'pending':
+                return 'clock';
+            case 'denied':
+            case 'failed':
+                return 'x-circle';
+            default:
+                return 'question-circle';
+        }
+    };
 
     const renderTransactionItem = (transaction) => (
         <div 
@@ -74,8 +138,8 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond , handleTr
                 </span>
             </div>
             
-            <div className="mt-6">
-                {respond?.loading ? (
+            <div className="mt-6 max-h-[70vh] overflow-y-auto">
+                {respond?.loading && page === 1 ? (
                     <div className="flex items-center justify-center py-8">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                     </div>
@@ -85,9 +149,15 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond , handleTr
                         <p>{t('Failed to load transactions')}</p>
                     </div>
                 ) : respond?.data?.length > 0 ? (
-                    <div className="space-y-3">
-                        {respond.data.map(renderTransactionItem)}
-                    </div>
+                    <ViewAll 
+                        list={respond.data}
+                        renderItem={renderTransactionItem}
+                        isLoadingMore={isLoadingMore}
+                        hasMore={hasMore}
+                        scrollRef={scrollRef}
+                        loadMoreData={loadMoreData}
+                        t={t}
+                    />
                 ) : (
                     <div className="text-center py-8 text-gray-500">
                         <Icon name="inbox" className="text-3xl mb-2" />
@@ -99,6 +169,64 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond , handleTr
         </>
     )
 }
+
+const ViewAll = ({ list, renderItem, isLoadingMore, hasMore, scrollRef, loadMoreData, t }) => {
+    const scrollContainerRef = useRef(null);
+
+    // Intersection Observer for infinite scroll within ViewAll
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
+                    console.log('Loading more transactions in ViewAll (receive)...');
+                    loadMoreData();
+                }
+            },
+            { 
+                threshold: 0.1,
+                root: scrollContainerRef.current // Use the scroll container as root
+            }
+        );
+
+        if (scrollRef.current) {
+            observer.observe(scrollRef.current);
+        }
+
+        return () => {
+            if (scrollRef.current) {
+                observer.unobserve(scrollRef.current);
+            }
+        };
+    }, [hasMore, isLoadingMore, loadMoreData]);
+
+    return (
+        <div 
+            ref={scrollContainerRef}
+            className="space-y-3 min-h-[200px] overflow-y-auto max-h-[60vh]"
+        >
+            {list.map(renderItem)}
+            
+            {/* Loading more indicator */}
+            {isLoadingMore && (
+                <div className="flex items-center justify-center py-4">
+                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
+                </div>
+            )}
+            
+            {/* Intersection observer target */}
+            {hasMore && !isLoadingMore && (
+                <div ref={scrollRef} className="h-10" />
+            )}
+            
+            {/* End of data indicator */}
+            {!hasMore && list.length > 0 && (
+                <div className="flex items-center justify-center py-4 text-gray-500">
+                    <span className="text-sm">{t('No more transactions')}</span>
+                </div>
+            )}
+        </div>
+    );
+};
 
 const mapStateToProps = (state) => ({
     api: state.api,

@@ -5,8 +5,6 @@ import Header from "./Header";
 import MobileMenu from "./MobileMenu";
 import { connect } from "react-redux";
 import { getMyprofile } from "../../redux/action/apis/auth/profile/getProfile";
-import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
-import { GetNotifications, } from "../../redux/action/apis/realTime/notification/getAllNotification";
 import { getCategory } from "../../redux/action/apis/category/getCategories";
 import { init } from "../../redux/action/apis/init/getdata";
 import { useRouter } from "next/router";
@@ -18,6 +16,7 @@ import GoogleAnalytics from "../GoogleAnalytics";
 import FaceVerification from '../popsup/faceVerification';
 import Subscribe from '../popsup/subscribe';
 import { IsPopUpOpen } from "../../util/util";
+import { GetPages } from "../../redux/action/apis/pages/getAll";
 
 
 const Layout = ({
@@ -30,17 +29,14 @@ const Layout = ({
     showTabs = true,
     iSsticky = true,
     getMyprofile,
-    GetAllChats,
-    GetNotifications,
     getCategory,
     getMyprofile_respond,
-    GetAllChats_respond,
-    GetNotifications_respond,
     getCategory_respond,
     logout_respond,
     LogOut,
-    
-    init
+    GetPages,
+    init,
+    pages_respond
 
 }) => {
     const [isToggled, setToggled] = useState(1);
@@ -101,6 +97,10 @@ const Layout = ({
         LogOut(-1)
     }
     }, [logout_respond]);
+    useEffect(() => {
+        if(!pages_respond)
+            GetPages();
+    }, [pages_respond]);
 
 
     return (
@@ -140,21 +140,18 @@ const mapStateToProps = (state) => ({
     login_respond: state.api.login,
     getMyprofile_respond: state.api.getMyprofile,
     categories: state.categories,
-    GetAllChats_respond: state.api.GetAllChats,
-    GetNotifications_respond: state.api.GetNotifications,
     logout_respond: state.api.LogOut,
     getCategory_respond: state.api.getCategory,
     isLogin: state.auth.login,
+    pages_respond: state.api.GetPages,
 });
 
 const mapDispatchToProps = {
-    getMyprofile,
-    GetAllChats,
-    GetNotifications,
-    
+    getMyprofile,    
     LogOut,
     init,
-    getCategory
+    getCategory,
+    GetPages
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

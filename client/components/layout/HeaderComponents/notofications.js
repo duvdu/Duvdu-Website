@@ -1,15 +1,13 @@
 import { connect } from "react-redux";
 import { useTranslation } from 'react-i18next';
-import * as Types from '../../../redux/constants/actionTypes';
+import * as Types from '../../../redux/constants/actionTypes.js';
 import { useEffect, useState , useRef, useCallback } from "react";
-import MessageTile from "../../elements/MessageTile";
 import DuvduLoading from "../../elements/duvduLoading.js";
-import DraggableList from "../../../components/pages/home/dragList";
-
 import Link from 'next/link';
+import { GetNotifications } from "../../../redux/action/apis/realTime/notification/getAllNotification.js";
 
 
-function Messages({ getheaderpopup,chats  , AvailableUserChat_resond , onChoose, GetAllMessageInChat }) {
+function Notifications({ getheaderpopup, GetNotifications_resond, GetNotifications }) {
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
@@ -35,71 +33,66 @@ function Messages({ getheaderpopup,chats  , AvailableUserChat_resond , onChoose,
         // Reset pagination when component mounts
         setPage(1);
         setHasMore(true);
-    }, [getheaderpopup == Types.SHOWMESSAGE]);
+    }, [getheaderpopup == Types.SHOWNOTOFICATION]);
 
     // Check if we can load more data
     useEffect(() => {
-        if (chats?.pagination) {
-            const { currentPage, totalPages } = chats.pagination;
+        if (GetNotifications_resond?.pagination) {
+            const { currentPage, totalPages } = GetNotifications_resond.pagination;
             setHasMore(currentPage < totalPages);
         }
-    }, [chats]);
+    }, [GetNotifications_resond]);
 
-    const loadMoreMessages = useCallback(async () => {
+    const loadMoreNotifications = useCallback(async () => {
         if (!hasMore || isLoadingMore) return;
         
         setIsLoadingMore(true);
         const nextPage = page + 1;
         
         try {
-            // You'll need to implement this API call to load more messages
-            // await GetAllMessageInChat(chatId, nextPage);
+            await GetNotifications({
+                page: nextPage,
+                limit: 10
+            });
             setPage(nextPage);
         } catch (error) {
-            console.error('Error loading more messages:', error);
+            console.error('Error loading more notifications:', error);
         } finally {
             setIsLoadingMore(false);
         }
-    }, [page, hasMore, isLoadingMore]);
+    }, [page, hasMore, isLoadingMore, GetNotifications]);
 
-    if (getheaderpopup != Types.SHOWMESSAGE && window.innerWidth > 1024) return
+    if (getheaderpopup != Types.SHOWNOTOFICATION && window.innerWidth > 1024) return
 
-    console.log({chats})
     return (
         <div className={isMob ? " dark:bg-black h-screen" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
             <div className={isMob ? "" : "dialog dialog-1"}>
-                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2 ps-2 py-4 max-h-[80vh]">
+                <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2 max-h-[80vh]">
                     {
                         viewAllState == 0 &&
                         <>
-                        
-                        {chats?.loading?
+                            {GetNotifications_resond?.loading?
                             <DuvduLoading loadingIn={""} type='notification' />
-                        :
-                        <ViewFew 
-                            Type={'messages'} 
-                            GetAllMessageInChat={GetAllMessageInChat} 
-                            AvailableUserChat_resond={AvailableUserChat_resond} 
-                            onChoose={onChoose} 
-                            list={chats?.data || []} 
-                            t={t} 
-                            onViewAll={() => setViewAllState(2)}
-                        />
+                            :
+                            <ViewFew 
+                                Type={'notification'} 
+                                list={GetNotifications_resond?.data || []} 
+                                t={t} 
+                                onViewAll={() => setViewAllState(1)}
+                            />
                         }
                         </>
                     }
-                    
                     {
-                        (viewAllState == 2 ) &&
+                        (viewAllState == 1) &&
                         <ViewAll 
-                            Type={'messages'} 
-                            list={chats?.data || []} 
-                            t={t} 
-                            onChoose={onChoose}
+                            Type={'notification'} 
+                            list={GetNotifications_resond?.data || []} 
+                            t={t}
                             isLoadingMore={isLoadingMore}
                             hasMore={hasMore}
                             scrollRef={scrollRef}
-                            loadMoreMessages={loadMoreMessages}
+                            loadMoreNotifications={loadMoreNotifications}
                         />
                     }
                 </div>
@@ -108,7 +101,7 @@ function Messages({ getheaderpopup,chats  , AvailableUserChat_resond , onChoose,
     )
 }
 
-const ViewAll = ({ Type, list, t , onChoose, isLoadingMore, hasMore, scrollRef, loadMoreMessages }) => {
+const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNotifications }) => {
     const scrollContainerRef = useRef(null);
 
     // Intersection Observer for infinite scroll within ViewAll
@@ -116,8 +109,8 @@ const ViewAll = ({ Type, list, t , onChoose, isLoadingMore, hasMore, scrollRef, 
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-                    console.log('Loading more messages in ViewAll...');
-                    loadMoreMessages();
+                    console.log('Loading more notifications in ViewAll...');
+                    loadMoreNotifications();
                 }
             },
             { 
@@ -135,7 +128,7 @@ const ViewAll = ({ Type, list, t , onChoose, isLoadingMore, hasMore, scrollRef, 
                 observer.unobserve(scrollRef.current);
             }
         };
-    }, [hasMore, isLoadingMore, loadMoreMessages]);
+    }, [hasMore, isLoadingMore, loadMoreNotifications]);
 
     return (
         <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] sm:dark:bg-[#1A2024] p-7 mt-2 md:mt-0">
@@ -148,7 +141,7 @@ const ViewAll = ({ Type, list, t , onChoose, isLoadingMore, hasMore, scrollRef, 
                     className="flex flex-col gap-4 mt-8 overflow-y-auto max-h-[60vh]"
                 >
                     {list.map((tile, index) => (
-                        <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
+                        <NotificationTile t={t} key={index + 'not'} tile={tile} />
                     ))}
                     
                     {/* Loading more indicator */}
@@ -166,21 +159,20 @@ const ViewAll = ({ Type, list, t , onChoose, isLoadingMore, hasMore, scrollRef, 
                     {/* End of data indicator */}
                     {!hasMore && list.length > 0 && (
                         <div className="flex items-center justify-center py-4 text-gray-500">
-                            <span className="text-sm">{t('No more messages')}</span>
+                            <span className="text-sm">{t('No more notifications')}</span>
                         </div>
                     )}
                 </div>
             ) : (
-                <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> 
-                    <span className="whitespace-nowrap w-64">{t("There's No Messages")}</span>
+                <div className="flex flex-col gap-4 mt-8 overflow-y-hidden">
+                    <span className="whitespace-nowrap w-64">{t("There's No Notifications")}</span>
                 </div>
             )}
         </div>
     );
 };
 
-const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserChat_resond, onChoose }) => (
-
+const ViewFew = ({ Type, list, t, onViewAll }) => (
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] p-7 mt-2 md:mt-0">
         <div className="flex items-center justify-between">
             <h2 className="text-base font-bold capitalize">{t(Type)}</h2>
@@ -188,28 +180,12 @@ const ViewFew = ({ Type, list, t, onViewAll ,GetAllMessageInChat,AvailableUserCh
                 <div onClick={onViewAll} className="underline font-semibold capitalize text-primary cursor-pointer">{t('view all')}</div>
             }
         </div>
-        {Type === "messages" && AvailableUserChat_resond?.data?.length>0 &&
-        <div className="overflow-auto max-w-64 mt-8 hide-scrollable-container">
-            <div className="flex">
-                <DraggableList>
-                    {AvailableUserChat_resond?.data?.map(item=>
-                        <div key={item._id} className="me-2 flex flex-col items-center gap-1">
-                            <img onClick={()=>{
-                                GetAllMessageInChat(item._id)
-                                onChoose?.()
-                                }} className="w-10 h-10 rounded-full cursor-pointer object-cover object-top" src={item.profileImage} alt="user" />
-                            <div className="font-semibold text-xs">{item.name?.split(' ')[0].length>6?item.name?.split(' ')[0].slice(0,6):item.name?.split(' ')[0]} </div>
-                        </div>
-                    )}
-                </DraggableList>
-            </div>
-        </div>
-        }
         {list.length > 0 ?
-            <div className={`flex flex-col gap-4 ${Type === "messages"?'mt-4':' mt-8'} overflow-y-hidden max-h-[50vh] overflow-y-auto`}>
+            <div className={`flex flex-col gap-4 mt-4 overflow-y-hidden max-h-[50vh] overflow-y-auto`}>
                 {list.slice(0, 4).map((tile, index) => (
-                    Type === 'notification' ? <NotificationTile t={t} key={index + 'not'} tile={tile} /> : <MessageTile key={tile._id} message={tile} onChoose={onChoose}/>
+                    <NotificationTile t={t} key={index + 'not'} tile={tile} />
                 ))}
+                
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t(`There's No ${Type}`)}</span> </div>}
     </div>
 );
@@ -222,6 +198,7 @@ const TypeCase = (type) =>{
             return 'link'
     }
 }
+
 const NotificationTile = ({ tile , t }) => {
     const [showAll, setShowAll] = useState(false);
     const [hasMore, setHasMore] = useState(false);
@@ -243,6 +220,7 @@ const NotificationTile = ({ tile , t }) => {
           
     const name = tile.sourceUser?.name?.split(' ')[0];
     const shortName = name?.length > 6 ? name.slice(0, 6) : name || 'DUVDU';
+    
     const NotificationTypeLink = (type , target ,username)=>{
         switch(type){
             case ('new tag'):
@@ -294,8 +272,11 @@ const NotificationTile = ({ tile , t }) => {
 
 const mapStateToProps = (state) => ({
     getheaderpopup: state.setting.headerpopup,
-    chats: state.api.GetAllChats,
-    AvailableUserChat_resond: state.api.AvailableUserChat,    
+    GetNotifications_resond: state.api.GetNotifications,    
 });
 
-export default connect(mapStateToProps)(Messages);
+const mapDispatchToProps = {
+    GetNotifications,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

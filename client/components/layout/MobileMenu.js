@@ -6,7 +6,7 @@ import Search from "../elements/SearchMobile";
 import Menu from '../elements/menu';
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
-import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
+import Notifications from "./HeaderComponents/notofications";
 import Setting from "./HeaderComponents/setting";
 import { useTranslation } from 'react-i18next';
 import { GetAllChats } from "../../redux/action/apis/realTime/chat/chats";
@@ -24,10 +24,8 @@ import Messages from "./HeaderComponents/messages";
 const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayout,
     MarkNotificationsAsRead,
     GetNotifications,
-    GetAllChats_respond,
     GetAllChats,
     AvailableUserChat,
-    getheaderpopup,
     UnReadNotification_respond,
     UnReadNotification
  }) => {
@@ -57,7 +55,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                 if(isLogin)
                     UnReadNotification()
             })
-            GetNotifications()
+            GetNotifications({
+                page: 1,
+                limit: 10
+            })
         }
         if(page ===6){
             MarkNotificationsAsRead().then(()=>{
@@ -65,7 +66,10 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                     UnReadNotification()
             })
             AvailableUserChat()
-            GetAllChats()
+            GetAllChats({
+                page: 1,
+                limit: 10
+            })
         }
     },[page , isLogin])
     const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)
@@ -394,7 +398,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
                     }
 
                     {page == 4 &&
-                        <MessageAndNotofication onChoose={() => toggleClick(1)} />
+                        <Notifications onChoose={() => toggleClick(1)} />
                     }
                     {page == 6 &&
                         <Messages onChoose={() => toggleClick(1)} />

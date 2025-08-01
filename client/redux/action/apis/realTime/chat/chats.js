@@ -1,12 +1,12 @@
 import * as Types from "../../../../constants/actionTypes";
 import { mainApiInstance } from '../../axiosInstances'
 
-export const GetAllChats = () => {
+export const GetAllChats = (params) => {
   const req = "GetAllChats"
   return async dispatch => {
     dispatch({ type: Types.FETCH_DATA_REQUEST, req: req });
     try {
-      const response = await mainApiInstance.get(`api/message`);
+      const response = await mainApiInstance.get(`api/message`, {params});
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: req });
       dispatch({ type: Types.SET_CHATS, payload: response.data.data });
     } catch (error) {

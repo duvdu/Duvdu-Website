@@ -5,9 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { GetPages } from "../../redux/action/apis/pages/getAll";
 const Footer = ({isDark, pages_respond, GetPages , status}) => {
     const { t } = useTranslation();
-    useEffect(() => {
-        GetPages();
-    }, []);
     return (
         <>
             <footer className="main">
@@ -32,33 +29,7 @@ const Footer = ({isDark, pages_respond, GetPages , status}) => {
                                 />
                             </Link>
                         </div>
-                        <div className='flex flex-col md:self-start gap-2'>
-                            <Link href="/about">
-                                <div className="flex items-center gap-2 text-white opacity-60 cursor-pointer">
-                                  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.5303 6.84869C14.8232 6.5558 14.8232 6.08092 14.5303 5.78803L9.75736 1.01506C9.46447 0.722166 8.98959 0.722166 8.6967 1.01506C8.40381 1.30795 8.40381 1.78283 8.6967 2.07572L12.9393 6.31836L8.6967 10.561C8.40381 10.8539 8.40381 11.3288 8.6967 11.6217C8.98959 11.9146 9.46447 11.9146 9.75736 11.6217L14.5303 6.84869ZM0 6.31836L-6.55671e-08 7.06836L14 7.06836L14 6.31836L14 5.56836L6.55671e-08 5.56836L0 6.31836Z" fill="white"/>
-                                    </svg>
-                                    <span className='text-white opacity-60'>{t('About Us')}</span>
-                                </div>
-                            </Link>
-                            <Link href="/contact_us">
-                                <div className="flex items-center gap-2 text-white opacity-60 cursor-pointer">
-                                  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.5303 6.84869C14.8232 6.5558 14.8232 6.08092 14.5303 5.78803L9.75736 1.01506C9.46447 0.722166 8.98959 0.722166 8.6967 1.01506C8.40381 1.30795 8.40381 1.78283 8.6967 2.07572L12.9393 6.31836L8.6967 10.561C8.40381 10.8539 8.40381 11.3288 8.6967 11.6217C8.98959 11.9146 9.46447 11.9146 9.75736 11.6217L14.5303 6.84869ZM0 6.31836L-6.55671e-08 7.06836L14 7.06836L14 6.31836L14 5.56836L6.55671e-08 5.56836L0 6.31836Z" fill="white"/>
-                                    </svg>
-                                    <span className='text-white opacity-60'>{t(`Let's Talk`)}</span>
-                                </div>
-                            </Link>
-                            {/* <Link href="/blog">
-                                <div className="flex items-center gap-2 text-white opacity-60 cursor-pointer">
-                                  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.5303 6.84869C14.8232 6.5558 14.8232 6.08092 14.5303 5.78803L9.75736 1.01506C9.46447 0.722166 8.98959 0.722166 8.6967 1.01506C8.40381 1.30795 8.40381 1.78283 8.6967 2.07572L12.9393 6.31836L8.6967 10.561C8.40381 10.8539 8.40381 11.3288 8.6967 11.6217C8.98959 11.9146 9.46447 11.9146 9.75736 11.6217L14.5303 6.84869ZM0 6.31836L-6.55671e-08 7.06836L14 7.06836L14 6.31836L14 5.56836L6.55671e-08 5.56836L0 6.31836Z" fill="white"/>
-                                    </svg>
-                                    <span className='text-white opacity-60'>{t('Blog')}</span>
-                                </div>
-                            </Link> */}
-                        </div>
-                        <div className='flex flex-col gap-2'>
+                        <div className='grid grid-cols-2 w-full text-center px-28'>
                             {pages_respond?.data?.map((page) => (
                                 <Link href={`/page/${page._id}`}>
                                     <div className="flex items-center gap-2 text-white opacity-60 cursor-pointer">
@@ -69,30 +40,6 @@ const Footer = ({isDark, pages_respond, GetPages , status}) => {
                                     </div>
                                 </Link>
                             ))}
-                            <Link href="/terms_conditions">
-                                <div className="flex items-center gap-2 text-white opacity-60 cursor-pointer">
-                                  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.5303 6.84869C14.8232 6.5558 14.8232 6.08092 14.5303 5.78803L9.75736 1.01506C9.46447 0.722166 8.98959 0.722166 8.6967 1.01506C8.40381 1.30795 8.40381 1.78283 8.6967 2.07572L12.9393 6.31836L8.6967 10.561C8.40381 10.8539 8.40381 11.3288 8.6967 11.6217C8.98959 11.9146 9.46447 11.9146 9.75736 11.6217L14.5303 6.84869ZM0 6.31836L-6.55671e-08 7.06836L14 7.06836L14 6.31836L14 5.56836L6.55671e-08 5.56836L0 6.31836Z" fill="white"/>
-                                    </svg>
-                                    <span className='text-white opacity-60'> {t('Terms & Conditions')}</span>
-                                </div>
-                            </Link>
-                            <Link href="/refund_policy">
-                                <div className="flex items-center gap-2 text-white opacity-60 cursor-pointer">
-                                  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.5303 6.84869C14.8232 6.5558 14.8232 6.08092 14.5303 5.78803L9.75736 1.01506C9.46447 0.722166 8.98959 0.722166 8.6967 1.01506C8.40381 1.30795 8.40381 1.78283 8.6967 2.07572L12.9393 6.31836L8.6967 10.561C8.40381 10.8539 8.40381 11.3288 8.6967 11.6217C8.98959 11.9146 9.46447 11.9146 9.75736 11.6217L14.5303 6.84869ZM0 6.31836L-6.55671e-08 7.06836L14 7.06836L14 6.31836L14 5.56836L6.55671e-08 5.56836L0 6.31836Z" fill="white"/>
-                                    </svg>
-                                    <span className='text-white opacity-60'>{t('Refund Policy')}</span>
-                                </div>
-                            </Link>
-                            <Link href="/privacy_policy">
-                                <div className="flex items-center gap-2 text-white opacity-60 cursor-pointer">
-                                  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.5303 6.84869C14.8232 6.5558 14.8232 6.08092 14.5303 5.78803L9.75736 1.01506C9.46447 0.722166 8.98959 0.722166 8.6967 1.01506C8.40381 1.30795 8.40381 1.78283 8.6967 2.07572L12.9393 6.31836L8.6967 10.561C8.40381 10.8539 8.40381 11.3288 8.6967 11.6217C8.98959 11.9146 9.46447 11.9146 9.75736 11.6217L14.5303 6.84869ZM0 6.31836L-6.55671e-08 7.06836L14 7.06836L14 6.31836L14 5.56836L6.55671e-08 5.56836L0 6.31836Z" fill="white"/>
-                                    </svg>
-                                    <span className='text-white opacity-60'>{t('Privacy Policy')}</span>
-                                </div>
-                            </Link>
                         </div>
                         <div className=" flex gap-x-4">
                             <a href="https://www.instagram.com/duvdu_app?igsh=MWxtM2ZoaTFtajB1Zg==" className="hover:text-blue-500">

@@ -5,7 +5,7 @@ import Menu from '../elements/menu'
 import Icon from "../Icons";
 import { useTranslation } from 'react-i18next';
 import { toggleDarkMode, SetheaderPopUp } from "../../redux/action/setting";
-import MessageAndNotofication from "./HeaderComponents/messageAndNotofication";
+import Notifications from "./HeaderComponents/notofications";
 import Profile from "./HeaderComponents/Profile";
 import Setting from "./HeaderComponents/setting";
 import * as Types from "../../redux/constants/actionTypes";
@@ -150,7 +150,10 @@ const Header = ({
                 if(isLogin===true)
                     UnReadNotification()
             })
-            GetNotifications()
+            GetNotifications({
+                page: 1,
+                limit: 10
+            })
         }
         if(getheaderpopup===Types.SHOWMESSAGE){
             MarkNotificationsAsRead().then(()=>{
@@ -158,7 +161,10 @@ const Header = ({
                     UnReadNotification()
             })
             AvailableUserChat()
-            GetAllChats()
+            GetAllChats({
+                page: 1,
+                limit: 10
+            })
         }
         if(getheaderpopup===Types.SHOWPROFILE){
             if (!GetBoards_respond)
@@ -372,7 +378,7 @@ const Header = ({
                                                         }
                                                         <Icon className={"dark:text-[#B3B3B3] "} name={"bell"} type="far" />
                                                     </div>
-                                                    <MessageAndNotofication />
+                                                    <Notifications />
                                                 </div>
                                                 }
                                                 

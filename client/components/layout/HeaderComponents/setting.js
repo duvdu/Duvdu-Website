@@ -191,10 +191,10 @@ function Setting({
                     // },
 
                 ].map((e, i) => (
-                    <div onClick={e.onClick} className="flex py-3 gap-4 cursor-pointer" key={i}>
+                    <div onClick={e.onClick} className="flex items-center py-3 gap-4 cursor-pointer" key={i}>
                         <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/${e.img}`} />
                         <span className="text-[12px] text-[#4F5E7B] w-full font-semibold">{t(e.name)}</span>
-                        <div className="action rtl:rotate-180"> {e.action} </div>
+                        <div className="action rtl:rotate-180 flex items-center"> {e.action} </div>
                     </div>
                 ))
             }
