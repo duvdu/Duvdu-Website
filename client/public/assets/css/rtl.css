@@ -1,5 +1,6 @@
 /* RTL Styles for Arabic Language */
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap');
 /* Text alignment */
 html[dir="rtl"] {
   text-align: right;
@@ -95,7 +96,19 @@ html[dir="rtl"] .text-right {
 
 /* Font setup for Arabic */
 html[dir="rtl"] {
-  font-family: 'Noto Sans Arabic', 'Noto Kufi Arabic', sans-serif;
+  font-family: "Noto Sans Arabic", "Noto Sans", sans-serif;
+}
+/* Apply Noto Sans for Arabic text */
+[lang="ar"], 
+[lang="ar-*"],
+*:lang(ar),
+*:lang(ar-*) {
+  font-family: "Noto Sans Arabic", "Noto Sans", sans-serif !important;
+}
+
+/* Also apply to elements with Arabic text direction */
+[dir="rtl"] {
+  font-family: "Noto Sans Arabic", "Noto Sans", sans-serif !important;
 }
 
 /* Fix for SVG icons */

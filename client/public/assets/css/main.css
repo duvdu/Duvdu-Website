@@ -44,6 +44,17 @@ TABLE CONTENT
   font-family: 'Cairo';
   src: url('https://fonts.googleapis.com/css2?family=Cairo&display=swap') format('woff2');
 }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+html[dir="rtl"] {
+  font-family: "Noto Sans Arabic", "Noto Sans", sans-serif;
+}
+[lang="ar"] {
+  font-family: "Noto Sans Arabic", "Noto Sans", sans-serif;
+}
+[dir="rtl"] {
+  font-family: "Noto Sans Arabic", "Noto Sans", sans-serif;
+}
 
 /* src/styles/fonts.css */
 @font-face {
@@ -57,7 +68,7 @@ TABLE CONTENT
   font-family: 'trap', 'Cairo', sans-serif;
 }
 
-* {
+html[dir="ltr"] {
   font-family: "Urbanist", 'Cairo', sans-serif;
 }
 
