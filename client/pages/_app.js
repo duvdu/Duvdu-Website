@@ -55,6 +55,7 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         import("../public/assets/js/popupScript");
+        import("../public/assets/js/font-loader");
     }, []);
 
     return (
