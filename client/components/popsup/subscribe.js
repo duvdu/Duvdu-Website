@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import Loading from '../elements/loading';
 import { useRouter } from 'next/router';
 import SuccessSubscription from './successSubscription';
-import { ClosePopUp } from "../../util/util";
 
 function Popup({ isfree=false , isLogin , checkSubscribe , checkSubscribe_response , subscribe_response , subscribe }) {
     const { t } = useTranslation();
@@ -21,14 +20,13 @@ function Popup({ isfree=false , isLogin , checkSubscribe , checkSubscribe_respon
     const [price , setPrice ] = useState(null)
     const router = useRouter();
     function subscriber(){
-        subscribe().then(()=>{
-            setPost_success(true)
-        })
+        subscribe()
     }
-    function navigation(){
-        router.push('/payment?type=subscribe')
-        ClosePopUp('contract_subscription')
-    }
+    useEffect(() => {
+        if (subscribe_response?.data) {
+            window.location.href = subscribe_response?.data?.paymentUrl;
+        }
+    }, [subscribe_response?.data]);
  
     useEffect(()=>{
         if(isLogin===true)
@@ -65,7 +63,7 @@ function Popup({ isfree=false , isLogin , checkSubscribe , checkSubscribe_respon
                         <div className='w-full h-[213px] absolute -translate-y-full verify-linear' />
                          
                         {/* {isfree && canSubscribe ? <StartFree /> : <Subscribe />} */}
-                        <Subscribe price={price} router={router}  subscribe_response={subscribe_response} navigation={navigation} subscriber={subscriber} haveSubscribe={haveSubscribe} canSubscribe={canSubscribe}/>
+                        <Subscribe price={price} subscribe_response={subscribe_response} subscriber={subscriber} haveSubscribe={haveSubscribe} canSubscribe={canSubscribe}/>
                     </div>
                         
                 </div>
@@ -76,30 +74,28 @@ function Popup({ isfree=false , isLogin , checkSubscribe , checkSubscribe_respon
 }
 
 
-const Subscribe = ({canSubscribe , price , haveSubscribe , subscribe_response , subscriber ,navigation , router}) => {  
+const Subscribe = ({canSubscribe , price , haveSubscribe , subscribe_response , subscriber}) => {  
       const { t } = useTranslation();
-    const isNavigate = true;
+
     return (
         <div className='p-7 flex flex-col justify-center items-center'>
             <div className='max-w-[450px] flex flex-col justify-center items-center'>
                 <h1 className='text-primary text-3xl font-extrabold capitalize text-center'>{t("access 5 free contracts")}</h1>
                 <p className='opacity-60 text-lg font-semibold mt-3 text-center'>{t("Subscribe to get access to more amazing projects & clients.")}</p>
                     {canSubscribe ?
-                    <span className='text-primary text-lg capitalize text-center mt-8 mb-4'>
+                    <span className='text-primary text-lg capitalize text-center mt-11 mb-4'>
                     {price}
-                        <span className='opacity-70 text-primary'>{t("EGP /for 5 contracts")}</span>
+                        <span className='opacity-70 text-primary'>{t("EGY /for 5 contracts")}</span>
                     </span>:
-                    <span className='text-primary text-lg capitalize text-center mt-8 mb-4'>
+                    <span className='text-primary text-lg capitalize text-center mt-11 mb-4'>
                         <span className='opacity-70 text-primary'>{t(`Now you have`)} {haveSubscribe} {t('avilable contract')}</span>
                     </span>
                     }  
-                    {canSubscribe && 
-                    
-                    <Button className="w-full mb-7" onClick={isNavigate?navigation:subscriber} shadow={true} shadowHeight={"14"}>
-                     {/* {subscribe_response?.loading?<Loading/>: */}
-                        
+                    {!canSubscribe && 
+                    <Button className="w-full mb-7" onClick={subscriber} shadow={true} shadowHeight={"14"}>
+                        {subscribe_response?.loading?<Loading/>:
                         <span className='text-white font-bold capitalize text-lg'>{t("subscribe now")}</span>
-                         {/* } */}
+                         }
                     </Button>
                     }
             </div>

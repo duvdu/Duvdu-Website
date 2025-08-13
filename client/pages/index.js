@@ -16,6 +16,8 @@ import Filter from "../components/elements/filter";
 import DuvduLoading from "../components/elements/duvduLoading";
 import Icon from "../components/Icons";
 import 'swiper/css/free-mode';
+import { OpenPopUp } from "../util/util";
+import SuccessfullyPosting from "../components/popsup/post_successfully_posting";
 
 // Install modules
 SwiperCore.use([FreeMode]);
@@ -49,6 +51,7 @@ const Home = ({
     const wordsRef = useRef(null);
     const list =  homeTreny_respond?.data || [];
     const router = useRouter();
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
 
     var TheBeststyle = i18n.language == "Arabic" ? {} : {
         backgroundImage: 'url("/assets/imgs/theme/home/circle.png")',
@@ -67,6 +70,20 @@ const Home = ({
     // Optimized pagination state
     const Router = useRouter();
     const searchTerm = Router.query.search;
+    const toggleDrawer = ()=>{
+        setPaymentSuccess(false)
+        OpenPopUp('contract_subscription')
+    }
+    useEffect(() => {
+        if (Router.query.paymentStatus==='success') {
+            setPaymentSuccess(true)
+            setIsSuccess(true)
+        }else if(Router.query.paymentStatus==='failed'){
+            setIsSuccess(false)
+            setPaymentSuccess(true)
+        }
+    }, [Router.query.paymentStatus]);
+
     const showLimit = 9; // Items per page
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedData, setPaginatedData] = useState({}); // Store data by page: { "page1": [...], "page2": [...] }
@@ -304,6 +321,7 @@ const Home = ({
 
     return (
         <>
+            <SuccessfullyPosting isShow={paymentSuccess} isSuccess={isSuccess} onCancel={toggleDrawer} message="Subscription" />
             <Layout isbodyWhite={true}>
             {isLogin===false && 
             <>
