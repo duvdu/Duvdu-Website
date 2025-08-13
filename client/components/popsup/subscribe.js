@@ -91,7 +91,7 @@ const Subscribe = ({canSubscribe , price , haveSubscribe , subscribe_response , 
                         <span className='opacity-70 text-primary'>{t(`Now you have`)} {haveSubscribe} {t('avilable contract')}</span>
                     </span>
                     }  
-                    {!canSubscribe && 
+                    {canSubscribe && 
                     <Button className="w-full mb-7" onClick={subscriber} shadow={true} shadowHeight={"14"}>
                         {subscribe_response?.loading?<Loading/>:
                         <span className='text-white font-bold capitalize text-lg'>{t("subscribe now")}</span>
