@@ -42,7 +42,7 @@ const Home = ({
         instantProject: false,
         priceInclusive: true ,
     });
-
+    const [isSuccess ,setIsSuccess] = useState(false)
     useEffect(() => {
         if(isLogin===false)
         Promise.all([HomeTreny(), HomeDiscover(), popularSub()]);
