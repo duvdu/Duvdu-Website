@@ -30,6 +30,7 @@ const decodeJWT = (token) => {
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
+    console.log({jsonPayload});
     return JSON.parse(jsonPayload);
   } catch (error) {
     console.error('Error decoding JWT:', error);
@@ -47,9 +48,10 @@ export const performAppleSignIn = () => {
   }
 
   return window.AppleID.auth.signIn().then(response => {
-    
+    console.log({response});
     // The response contains authorization object with id_token
     const idToken = response.authorization?.id_token;
+    console.log({idToken});
     let userData = {};
     
     if (idToken) {
@@ -66,6 +68,7 @@ export const performAppleSignIn = () => {
           lastName: ''
         }
       };
+      console.log({userData});
     }
     
     return userData;
