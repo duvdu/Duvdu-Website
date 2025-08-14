@@ -5,9 +5,10 @@ import { useEffect, useState , useRef, useCallback } from "react";
 import DuvduLoading from "../../elements/duvduLoading.js";
 import Link from 'next/link';
 import { GetNotifications } from "../../../redux/action/apis/realTime/notification/getAllNotification.js";
+import { SetheaderPopUp } from "../../../redux/action/setting";
 
 
-function Notifications({ getheaderpopup, GetNotifications_resond, GetNotifications }) {
+function Notifications({ getheaderpopup, GetNotifications_resond, GetNotifications, SetheaderPopUp }) {
     const { t } = useTranslation();
     const [viewAllState, setViewAllState] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
@@ -86,6 +87,7 @@ function Notifications({ getheaderpopup, GetNotifications_resond, GetNotificatio
                     {
                         (viewAllState == 1) &&
                         <ViewAll 
+                            SetheaderPopUp={SetheaderPopUp}
                             Type={'notification'} 
                             list={GetNotifications_resond?.data || []} 
                             t={t}
@@ -101,7 +103,7 @@ function Notifications({ getheaderpopup, GetNotifications_resond, GetNotificatio
     )
 }
 
-const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNotifications }) => {
+const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNotifications , SetheaderPopUp }) => {
     const scrollContainerRef = useRef(null);
 
     // Intersection Observer for infinite scroll within ViewAll
@@ -141,7 +143,7 @@ const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNot
                     className="flex flex-col gap-4 mt-8 overflow-y-auto max-h-[60vh]"
                 >
                     {list.map((tile, index) => (
-                        <NotificationTile t={t} key={index + 'not'} tile={tile} />
+                        <NotificationTile t={t} key={index + 'not'} tile={tile} SetheaderPopUp={SetheaderPopUp} />
                     ))}
                     
                     {/* Loading more indicator */}
@@ -183,7 +185,7 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
         {list.length > 0 ?
             <div className={`flex flex-col gap-4 mt-4 overflow-y-hidden max-h-[50vh] overflow-y-auto`}>
                 {list.slice(0, 4).map((tile, index) => (
-                    <NotificationTile t={t} key={index + 'not'} tile={tile} />
+                    <NotificationTile t={t} key={index + 'not'} tile={tile} SetheaderPopUp={SetheaderPopUp} />
                 ))}
                 
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t(`There's No ${Type}`)}</span> </div>}
@@ -194,12 +196,16 @@ const TypeCase = (type) =>{
     switch(type){
         case ('contract_subscription'):
             return 'popup';
+        case ('transaction'):
+            return 'transaction';
+        case ('funding'):
+            return 'funding';
         default:
             return 'link'
     }
 }
 
-const NotificationTile = ({ tile , t }) => {
+const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
     const [showAll, setShowAll] = useState(false);
     const [hasMore, setHasMore] = useState(false);
     const paragraphRef = useRef(null);
@@ -219,7 +225,7 @@ const NotificationTile = ({ tile , t }) => {
     };
           
     const name = tile.sourceUser?.name?.split(' ')[0];
-    const shortName = name?.length > 6 ? name.slice(0, 6) : name || 'DUVDU';
+    const shortName = name?.length > 6 ? name.slice(0, 6) : name || 'System';
     
     const NotificationTypeLink = (type , target ,username)=>{
         switch(type){
@@ -245,9 +251,30 @@ const NotificationTile = ({ tile , t }) => {
                         {tile.message}
                     </div>
                 </div>
-            </Link>:
+            </Link>:TypeCase(tile.type) === 'popup' ?
             <button data-popup-toggle="popup" data-popup-target={tile.type} className="w-full lg:w-64 flex gap-4 text-start">
                 <div className="cursor-pointer">
+                    <span className="rtl:hidden font-bold">{shortName}</span>
+                    <span className="text-xs opacity-60 mx-2">{tile.title}</span>
+                </div>
+                <div ref={paragraphRef} className={`font-bold text-sm ${!showAll ? 'line-clamp-1' : ''}`}>
+                    {tile.message}
+                </div>
+            </button>
+            :        
+            <button
+                onClick={() => {
+                    if (TypeCase(tile.type) === 'transaction') {
+                        SetheaderPopUp(Types.SHOWMONEYSEND);
+                    } else if (TypeCase(tile.type) === 'funding') {
+                        SetheaderPopUp(Types.SHOWMONEYRECEIVE);
+                    }
+                }}
+                data-popup-toggle="popup"
+                data-popup-target={tile.type}
+                className="w-full lg:w-64 flex flex-col text-start cursor-pointer"
+            >
+                <div className="flex items-center">
                     <span className="rtl:hidden font-bold">{shortName}</span>
                     <span className="text-xs opacity-60 mx-2">{tile.title}</span>
                 </div>
@@ -263,9 +290,15 @@ const NotificationTile = ({ tile , t }) => {
             )}
         </div>
     );
-
     return <div className="w-full lg:w-64 flex gap-4">
+        {tile.sourceUser ?
                 <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" />
+                :
+                <div>
+                    <div className="size-9 rounded-full bg-gray-200 dark:bg-gray-400">
+                    </div>
+                </div>
+                }
                 {content}
             </div>
 };
@@ -277,6 +310,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     GetNotifications,
+    SetheaderPopUp,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

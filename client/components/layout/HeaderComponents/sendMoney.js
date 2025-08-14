@@ -119,8 +119,8 @@ const SendMyMoney = ({ setOpened, SendMoney, user, api, respond, handleTransacti
                 <div onClick={() => setOpened(0)} className='rounded-full header-border h-14 w-14 flex justify-center items-center cursor-pointer'>
                     <Icon className="text-xl size-5" name={'xmark'} />
                 </div>
-                <span className='flex justify-center items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
-                    {t('Money Sent')}
+                <span className='flex justify-center capitalize items-center rounded-full header-border px-7 h-14 text-lg font-medium'>
+                    {t('sent transactions')}
                 </span>
             </div>
             

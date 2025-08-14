@@ -36,6 +36,15 @@ function Setting({
     const [open, setOpened] = useState(0);
     // Determine mobile view only on client
     const [isMob, setIsMob] = useState(typeof window !== 'undefined' && window.innerWidth < 1024);
+    useEffect(() => {
+        if (getheaderpopup === Types.SHOWMONEYSEND) {
+            setOpened(3);
+        } else if (getheaderpopup === Types.SHOWMONEYRECEIVE) {
+            setOpened(4);
+        } else {
+            setOpened(0);
+        }
+    }, [getheaderpopup]);
 
     function handleResize() {
         setIsMob(window.innerWidth < 1024);
@@ -250,8 +259,8 @@ function Setting({
         </>
     )
 
-    // On desktop, hide unless setting popup is open
-    if (getheaderpopup !== Types.SHOWSETTING && !isMob) return null;
+    // On desktop, hide unless one of the allowed setting popups is open
+    if ((getheaderpopup !== Types.SHOWSETTING && getheaderpopup !== Types.SHOWMONEYSEND && getheaderpopup !== Types.SHOWMONEYRECEIVE) && !isMob) return null;
     const handleTransactionClick = (transaction , isRefunded = true) => {
         setSelectedTransaction(transaction);
         setIsRefunded(isRefunded);

@@ -835,6 +835,7 @@
   "Here's our latest picks!":"إليكم أحدث اختياراتنا!",
   "withdraw methods": "طرق السحب",
   "View Attachment": "عرض المرفق",
+  "View Contract": "عرض العقد",
   "Method": "الطريقة",
   "Ticket #": "رقم التذكرة",
   "Date": "التاريخ",
@@ -847,5 +848,17 @@
   "is closed": "مغلق",
   "yes": "نعم",
   "no": "لا",
-  "ticket number": "رقم التذكرة"
+  "ticket number": "رقم التذكرة",
+  "transaction number": "رقم المعاملة",
+  "client info": "تفاصيل العميل",
+  "received transactions": "المعاملات المستقبلة",
+  "sent transactions": "المعاملات المرسلة",
+  "transferred date": "تاريخ التحويل",
+  "transferred method": "طريقة التحويل",
+  "transferred by": "تم التحويل بواسطة",
+  "No more transactions": "لا يوجد معاملات أخرى",
+  "Complaint Number": "رقم الشكوى",
+  "Reporter Name": "اسم المستخدم الذي أبلغ عن الشكوى",
+  "Complaint Reason": "سبب الشكوى",
+  "View": "عرض"
 }

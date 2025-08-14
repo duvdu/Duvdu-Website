@@ -619,7 +619,7 @@ function ReceiveProjectFiles({
                     <DuvduLoading loadingIn={""} type={'contractDetails'}/>:
                     <>
                         <div className='flex flex-col justify-between h-drawer'>
-                            <div className={`flex flex-col justify-start items-center px-0 gap-6 ${canEdit ? 'hidden' : ''}`}>
+                            <div className={`flex flex-col justify-start items-center px-0 gap-5 ${canEdit ? 'hidden' : ''}`}>
                                 <section>
                                     {uiStatus()}
                                 </section>
@@ -674,6 +674,16 @@ function ReceiveProjectFiles({
                                         </div>
                                     </section>
                                     </Link>}
+                                {contract?.ticketNumber &&
+                                <section className='w-full'>
+                                    <div>
+                                        <h2 className='opacity-60 capitalize mb-3'>{t("contract number")}</h2>
+                                        <span className='font-semibold capitalize max-w-[543px]'>
+                                        {contract.ticketNumber}
+                                        </span>
+                                    </div>
+                                </section>
+                                }
                                 <section className='grid md:grid-cols-2 w-full'>
                                 <div>
                                     <h2 className='opacity-60 capitalize mb-3'>{t("status")}</h2>
@@ -745,6 +755,67 @@ function ReceiveProjectFiles({
                                     </div>
                                 </section>
                                 }
+                                {complaint && complaint.length > 0 &&
+                                complaint.map((item, index) => (
+                                <section key={index} className='bg-white dark:bg-[#1A2024] border border-gray-200 dark:border-gray-700 rounded-lg p-4 w-full'>
+                                    <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+                                        <div>
+                                            <h2 className='text-gray-500 dark:text-gray-400 text-sm font-medium mb-2'>{t("Complaint Number")}</h2>
+                                            <span className='text-gray-900 dark:text-white font-semibold'>
+                                                #{item?.ticketNumber}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h2 className='text-gray-500 dark:text-gray-400 text-sm font-medium mb-2'>{t("Status")}</h2>
+                                            <span className={`inline-flex items-center px-3 py-1 rounded-full font-semibold ${
+                                                item?.isClosed 
+                                                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                                                    : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                                            }`}>
+                                                {item?.isClosed ? t("Closed") : t("Open")}
+                                            </span>
+                                        </div>
+                                        <div className='col-span-2'>
+                                            <h2 className='text-gray-500 dark:text-gray-400 text-sm font-medium mb-2'>{t("Reporter Name")}</h2>
+                                            <span className='text-gray-900 dark:text-white font-semibold'>
+                                                {item?.reporterName || t("Not specified")}
+                                            </span>
+                                        </div>
+                                        <div className='col-span-2'>
+                                            <h2 className='text-gray-500 dark:text-gray-400 text-sm font-medium mb-2'>{t("Complaint Reason")}</h2>
+                                            <span className='text-gray-900 dark:text-white font-semibold'>
+                                                {item?.desc || t("No description provided")}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    {item?.attachments?.length > 0 &&
+                                    <div className='mt-6 pt-6 border-t border-gray-200 dark:border-gray-700'>
+                                        <h2 className='text-gray-500 dark:text-gray-400 text-sm font-medium mb-3'>{t("Attachments")}</h2>
+                                        <div className='space-y-3'>
+                                            {item?.attachments.map((attachment, attIndex) =>
+                                                <div key={attIndex} className='flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700'>
+                                                    <Icon name={'file'} className='w-5 h-5 text-gray-500 dark:text-gray-400' />
+                                                    <div className='flex-1 min-w-0'>
+                                                        <p className='text-gray-900 dark:text-white text-sm font-medium truncate'>
+                                                            {attachment.split('/').pop()}
+                                                        </p>
+                                                    </div>
+                                                    <a 
+                                                        href={attachment} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer" 
+                                                        className='text-primary hover:text-primary-dark font-medium text-sm px-3 py-1 rounded-md hover:bg-primary/10 transition-colors'
+                                                    >
+                                                        {t("View")}
+                                                    </a>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    }
+                                </section>
+                                ))}
                                 <section className='grid md:grid-cols-2 w-full'>
                                 {contract_respond?.data?.ref &&
                                     <div>
@@ -763,48 +834,6 @@ function ReceiveProjectFiles({
                                     </div>
                                 }
                                 </section>   
-                                {complaint && complaint.length > 0 &&
-                                complaint.map((item, index) => (
-                                <>
-                                <section className='w-full'>
-                                    <div>
-                                        <h2 className='opacity-60 capitalize mb-3'>{t("contract complaint reasons")}</h2>
-                                        <span className='font-semibold max-w-[543px]'>
-                                            {item?.desc}
-                                        </span>
-                                    </div>
-                                </section>   
-                                <section className='w-full grid md:grid-cols-2'>
-                                    <div>
-                                        <h2 className='opacity-60 capitalize mb-3'>{t("ticket number")}</h2>
-                                        <span className='font-semibold max-w-[543px]'>
-                                            {item?.ticketNumber}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h2 className='opacity-60 capitalize mb-3'>{t("is closed")}</h2>
-                                        <span className='font-semibold max-w-[543px]'>
-                                            {item?.isClosed ? t("yes") : t("no")}
-                                        </span>
-                                    </div>
-                                </section>   
-                                {item?.attachments?.length > 0 &&
-                                <section className='w-full'>
-                                    <h2 className='opacity-60 capitalize mb-3'>{t("contract complaint attachments")}</h2>
-                                    {item?.attachments.map((attachment, index) =>
-                                        <div key={index} className='flex gap-3 items-center p-4 bg-white dark:bg-[#1A2024] rounded-md border border-[#CACACA] dark:border-opacity-25 mt-3'>
-                                            <Icon key={index} name={'file'} className='size-5' />
-                                            <div className='flex flex-col'>
-                                                <span className='text-[#353535] dark:text-white text-[14px] font-medium'> {attachment.split('/').pop()} </span>
-                                                <span className='text-[#989692] text-[12px]'> </span>
-                                                <a href={attachment} target="_blank" rel="noopener noreferrer" className='text-primary font-semibold text-[14px]'>{t("Click to view")}</a>
-                                            </div>
-                                        </div>
-                                    )}
-                                </section>
-                                } 
-                                </>
-                                ))}
                                  {/* Project  */}
                                 {(getType() == "project") && 
                                 <>

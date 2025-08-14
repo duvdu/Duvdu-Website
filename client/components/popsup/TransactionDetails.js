@@ -25,6 +25,7 @@ function TransactionDetails({onClick,id ,info , isRefunded = true}) {
       
         return `${year}-${month}-${day} ${formattedHour}:${minutes}${ampm}`;      
     };
+    
 
     return (
         <>

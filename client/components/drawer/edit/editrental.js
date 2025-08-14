@@ -102,14 +102,22 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                 UpdatedData.append(`searchKeywords[${index}]`, searchKeywords);
             });
     
-        if (formData.cover && (data.name!==formData.name)) {
+        if (formData.cover && (data.cover!==formData.cover)) {
             UpdatedData.append('cover', formData.cover);
+        }
+
+        if (formData.email && (data.email!==formData.email)) {
+            UpdatedData.append('email', formData.email);
         }
 
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
                 const file = formData.attachments[i];
                 UpdatedData.append(`attachments`, file.file);
+        }
+        
+        if (formData.phoneNumber && (data.phoneNumber!==formData.phoneNumber)) {
+            UpdatedData.append('phoneNumber', formData.phoneNumber);
         }
 
         if (formData.audioCover)
@@ -118,7 +126,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                 UpdatedData.append(`audioCover`, file.file);
             }
 
-        if (formData.location && (data.name!==formData.name)) {
+        if (formData.location && (data.location.lat!==formData.location.lat || data.location.lng!==formData.location.lng)) {
             UpdatedData.append('location[lat]', formData.location.lat);
             UpdatedData.append('location[lng]', formData.location.lng);
         };
