@@ -55,7 +55,7 @@ function SocialLogin({ api,setUsername, login_respond, googleLogin, appleLogin, 
             appleLogin({
                 username: userData.username,
                 email: userData.email,
-                name: userData.name,
+                name: userData.username,
                 id: userData.id
             });
         } catch (error) {
