@@ -1161,7 +1161,9 @@ table p {
   background-repeat: no-repeat;
   background-position: center left;
 }
-
+.pac-matched , .pac-item span{
+  color: #000 !important;
+}
 .progress+.progress {
   margin-top: 1rem;
 }

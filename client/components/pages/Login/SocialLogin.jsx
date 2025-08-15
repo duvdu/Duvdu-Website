@@ -47,10 +47,8 @@ function SocialLogin({ api,setUsername, login_respond, googleLogin, appleLogin, 
                 console.error('Invalid Apple authentication data:', appleAuthData);
                 throw new Error('Could not authenticate with Apple. Missing user data.');
             }
-            console.log(appleAuthData);
             // Process the user data
             const userData = processAppleUserData(appleAuthData);
-            console.log({userData});
             // Call the appleLogin action with the processed user data
             appleLogin({
                 username: userData.username,

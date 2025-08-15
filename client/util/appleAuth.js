@@ -30,7 +30,6 @@ const decodeJWT = (token) => {
     const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-    console.log({jsonPayload});
     return JSON.parse(jsonPayload);
   } catch (error) {
     console.error('Error decoding JWT:', error);
@@ -48,27 +47,19 @@ export const performAppleSignIn = () => {
   }
 
   return window.AppleID.auth.signIn().then(response => {
-    console.log({response});
     // The response contains authorization object with id_token
     const idToken = response.authorization?.id_token;
-    console.log({idToken});
     let userData = {};
     
     if (idToken) {
       // Decode the JWT token to get user information
       const decodedToken = decodeJWT(idToken);
-      
       userData = {
         // 'sub' contains the unique user identifier
         user: decodedToken.sub || '',
         email: decodedToken.email || '',
-        // Apple doesn't provide name in the token after first login
-        name: {
-          firstName: '',
-          lastName: ''
-        }
+        name: decodedToken.email.split('@')[0] || ''
       };
-      console.log({userData});
     }
     
     return userData;
@@ -84,14 +75,6 @@ export const processAppleUserData = (data) => {
   const { user, email, name } = data;
   
   // Get name components or use defaults
-  const firstName = name?.firstName || '';
-  const lastName = name?.lastName || '';
-  
-  // Create a full name or use a default
-  const fullName = firstName && lastName 
-    ? `${firstName} ${lastName}` 
-    : (firstName || lastName || 'Apple User');
-  
   // Create a username from email or user ID
   const username = email 
     ? email.split('@')[0] 
@@ -100,7 +83,7 @@ export const processAppleUserData = (data) => {
   return {
     id: user,
     email: email || '',
-    name: fullName,
+    name: name || username || '',
     username: username
   };
 }; 
