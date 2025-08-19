@@ -72,6 +72,7 @@ const Chat = ({ user, respond, GetAllMessageInChat, messages, SendMessages,chat_
     useEffect(() => {
         if (socket) {
             socket.on('new_message', (data) => {
+                console.log({data})
                 setMessagesList((prev) => [...prev, data.message]);
             });
 

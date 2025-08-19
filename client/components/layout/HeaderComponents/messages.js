@@ -5,6 +5,7 @@ import { useEffect, useState , useRef, useCallback } from "react";
 import MessageTile from "../../elements/MessageTile";
 import DuvduLoading from "../../elements/duvduLoading.js";
 import DraggableList from "../../../components/pages/home/dragList";
+import { GetAllMessageInChat } from '../../../redux/action/apis/realTime/messages/getAllMessageInChat';
 
 import Link from 'next/link';
 
@@ -297,5 +298,8 @@ const mapStateToProps = (state) => ({
     chats: state.api.GetAllChats,
     AvailableUserChat_resond: state.api.AvailableUserChat,    
 });
+const mapDispatchToProps = {
+    GetAllMessageInChat
+};
 
-export default connect(mapStateToProps)(Messages);
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);
