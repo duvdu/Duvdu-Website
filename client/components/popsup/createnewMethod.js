@@ -10,8 +10,7 @@ import { ClosePopUp } from '../../util/util';
 import * as withdrawal_methods from '../../util/withdrawal_methods.json'
 function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
   const { t } = useTranslation();
-  const wallets = withdrawal_methods.wallets;
-  const banks = withdrawal_methods.banks;
+  const {wallets , banks} = withdrawal_methods;
   const [methodType, setMethodType] = useState('wallet');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -113,13 +112,19 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
         </div>
 
         <div className="mb-6">
-          <input
-            type="text"
+          <select
             placeholder={t('Name')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="app-field mt-2"
-          />
+          >
+            <option value="">{t(methodType === 'wallet' ? 'Select wallet' : 'Select bank')}</option>
+            {methodType === 'wallet' ? wallets.map((wallet) => (
+              <option key={wallet} value={wallet}>{wallet}</option>
+            )) : banks.map((bank) => (
+              <option key={bank} value={bank}>{bank}</option>
+            ))}
+          </select>
         <ErrorMessage ErrorMsg={ErrorMsg.name}/>
         </div>
 

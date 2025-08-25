@@ -831,6 +831,8 @@
   "Set as default withdrawal method": "تعيين كطريقة سحب افتراضية",
   "Create withdraw method": "إنشاء طريقة سحب",
   "Select method type": "اختر نوع الطريقة",
+  "Select wallet": "اختر المحفظة",
+  "Select bank": "اختر البنك",
   "Active method": "الطريقة النشطة",
   "new method": "طريقة جديدة",
   "Haven't found your match yet?":"لم تجد شريكك بعد؟",
