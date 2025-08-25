@@ -10,7 +10,7 @@ import { OpenPopUp } from "../../../util/util";
 import {DeleteCopyright} from "../../../redux/action/apis/cycles/copywriter/delete";
 import DeletePopup from '../../popsup/DeletePopup';
 
-const CopyRightCard = ({ cardData,DeleteCopyright, className = "", onClick, user , bookButton=true  , isLogin , QueryString}) => {
+const CopyRightCard = ({ cardData,DeleteCopyright,delete_porject_response, className = "", onClick, user , bookButton=true  , isLogin , QueryString}) => {
   const [isOpenEdit, setIsOpenEdit] = React.useState(false);
   const { t } = useTranslation();
  const price = cardData?.price?.toString()
@@ -24,7 +24,7 @@ const CopyRightCard = ({ cardData,DeleteCopyright, className = "", onClick, user
 
   return (
     <>
-    <DeletePopup onClick={()=> DeleteCopyright(cardData?._id)} id={cardData?._id} header={'Delete Copyright'} message={'this copyright?'} />
+    <DeletePopup onClick={()=> DeleteCopyright(cardData?._id)} respond={delete_porject_response} id={cardData?._id} header={'Delete Copyright'} message={'this copyright?'} />
     <EditCopyrights data={cardData} QueryString={QueryString} isOpen={isOpenEdit}  id={cardData?._id} setIsOpenEdit={setIsOpenEdit} />
     <div className={`border border-50 border-solid border-gray-300 dark:border-opacity-40 p-10 h-full flex flex-col gap-5 justify-between ${className}`}>
         <div className='flex justify-between'>

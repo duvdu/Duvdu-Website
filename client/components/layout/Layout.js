@@ -15,8 +15,10 @@ import RegistrationRequired from "../popsup/booking/registrationRequired";
 import GoogleAnalytics from "../GoogleAnalytics";
 import FaceVerification from '../popsup/faceVerification';
 import Subscribe from '../popsup/subscribe';
-import { IsPopUpOpen } from "../../util/util";
+import { ClosePopUp, IsPopUpOpen } from "../../util/util";
 import { GetPages } from "../../redux/action/apis/pages/getAll";
+import DeletePopup from "../popsup/DeletePopup";
+import { DeleteAccount } from "../../redux/action/apis/auth/deleteAccount";
 
 
 const Layout = ({
@@ -36,6 +38,8 @@ const Layout = ({
     LogOut,
     GetPages,
     init,
+    DeleteAccount,
+    deleteAccount_respond,
     pages_respond
 
 }) => {
@@ -101,7 +105,14 @@ const Layout = ({
         if(!pages_respond)
             GetPages();
     }, [pages_respond]);
-
+    const deleteAccount = () => {
+        DeleteAccount();
+    }
+    useEffect(() => {
+        if(deleteAccount_respond?.message) {
+            ClosePopUp('delete-popup-account')
+        }
+    }, [deleteAccount_respond]);
 
     return (
         <>
@@ -120,6 +131,7 @@ const Layout = ({
             <Chat/>
             <ErrorAndLoadingHandling/>
             <RegistrationRequired/>
+            <DeletePopup onClick={()=> deleteAccount()} respond={deleteAccount_respond} id={'account'} header={'Delete Account'} message={'your account?'} />
             {/* {isToggled && <div className="body-overlay-1" onClick={toggleClick}></div>} */}
 
             <Header headerStyle={headerStyle} isToggled={isToggled} toggleClick={toggleClick} fromlayout={{ shortheader: shortheader, iswhite: isbodyWhite, showTabs: showTabs, iSsticky: iSsticky }} />
@@ -143,6 +155,7 @@ const mapStateToProps = (state) => ({
     logout_respond: state.api.LogOut,
     getCategory_respond: state.api.getCategory,
     isLogin: state.auth.login,
+    deleteAccount_respond: state.api.DeleteAccount,
     pages_respond: state.api.GetPages,
 });
 
@@ -151,7 +164,8 @@ const mapDispatchToProps = {
     LogOut,
     init,
     getCategory,
-    GetPages
+    GetPages,
+    DeleteAccount
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

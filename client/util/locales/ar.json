@@ -679,6 +679,8 @@
   "Delete Project": "حذف المشروع",
   "this project?": "هذا المشروع؟",
   "this rental?": "هذا الاستوديو؟",
+  "Delete Account": "حذف الحساب",
+  "your account?": "حسابك؟",
   "Fresh Starter": "مبتدئ",
   "Rising Star": "نجم صاعد",
   "Duvdu Pro": "محترف دفدو",
@@ -860,5 +862,7 @@
   "Complaint Number": "رقم الشكوى",
   "Reporter Name": "اسم المستخدم الذي أبلغ عن الشكوى",
   "Complaint Reason": "سبب الشكوى",
-  "View": "عرض"
+  "View": "عرض",
+  "You can't edit this rental because link In Active Contract": "لا يمكنك تعديل هذه الإيجار لأنه مربوط بعقد فعال",
+  "You can't edit this project because link In Active Contract": "لا يمكنك تعديل هذا المشروع لأنه مربوط بعقد فعال"
 }

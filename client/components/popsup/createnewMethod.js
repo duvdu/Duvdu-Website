@@ -7,10 +7,11 @@ import ErrorMessage from '../elements/ErrorMessage';
 import { GetWithdrawMethods } from '../../redux/action/apis/withdraw-methods/get';
 import { connect } from 'react-redux';
 import { ClosePopUp } from '../../util/util';
-
+import * as withdrawal_methods from '../../util/withdrawal_methods.json'
 function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
   const { t } = useTranslation();
-
+  const wallets = withdrawal_methods.wallets;
+  const banks = withdrawal_methods.banks;
   const [methodType, setMethodType] = useState('wallet');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');

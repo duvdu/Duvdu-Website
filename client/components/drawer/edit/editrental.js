@@ -276,7 +276,7 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                         <SetCover Publish={Publish} respond={update_respond} oncancel={() => setNextstep(1)} />
                     </div>
                     <form className={`${nextstep == 2 && 'hidden'} flex flex-col gap-5 container mx-auto`}>
-                        {data.canEdit && 
+                        {data.canEdit ? 
                         <>
 
                             <div className="my-5">
@@ -418,6 +418,10 @@ const EditRental = ({ UpdateRental, data , Getstudio,user,isOpen,setIsOpenEdit, 
                                     <ErrorMessage ErrorMsg={ErrorMsg.maximum}/>
                                     <ErrorMessage ErrorMsg={ErrorMsg.minimum}/>
                                 </div >
+                            </section>
+                        </>:<>
+                        <section className='flex justify-center gap-3 mt-10'>
+                                <p className='opacity-70 font-bold'>{t("You can't edit this rental because link In Active Contract")}</p>
                             </section>
                         </>}
                             <section className='flex justify-center gap-3 mt-10'>

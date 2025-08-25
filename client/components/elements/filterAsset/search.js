@@ -5,16 +5,16 @@ import FilterHeader from './comman/FilterHeader';
 import FilterInput from './comman/FilterInput';
 import { useTranslation } from 'react-i18next';
 
-const KeywordsFilter = ({ onFiltersApply, onFilterChange,toggleDrawer , clearFilter ,setClearFilter}) => {
+const SearchFilter = ({ onFiltersApply, onFilterChange,toggleDrawer , clearFilter ,setClearFilter}) => {
     const { t } = useTranslation();
     const [filters, setFilters] = useState({
-        keywords: '',
+        search: '',
         // Add other filter values here if needed
     });
     useEffect(()=>{
         if(clearFilter)
             setFilters({
-                keywords: '',
+                search: '',
             })
     },[clearFilter])
 
@@ -39,14 +39,14 @@ const KeywordsFilter = ({ onFiltersApply, onFilterChange,toggleDrawer , clearFil
 
     return (
         <FilterContainer toggleDrawer={toggleDrawer}>
-            <FilterHeader>{t("KeyWords")}</FilterHeader>
+            <FilterHeader>{t("Search")}</FilterHeader>
             <div className='h-6'></div>
             <FilterInput
                 type="text"
-                name="keywords"
-                value={filters.keywords}
-                onChange={handleFilterChange('keywords')}
-                placeholder={t("KeyWords")}
+                name="search"
+                value={filters.search}
+                onChange={handleFilterChange('search')}
+                placeholder={t("Search")}
             />
             <div className='h-12'></div>
             <AppButton onClick={handleApply} className='hidden md:block h-[60px]' contentClassName='text-base'>
@@ -57,4 +57,4 @@ const KeywordsFilter = ({ onFiltersApply, onFilterChange,toggleDrawer , clearFil
     );
 };
 
-export default KeywordsFilter;
+export default SearchFilter;
