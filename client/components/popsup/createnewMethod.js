@@ -14,6 +14,7 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
   const [methodType, setMethodType] = useState('wallet');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [iban, setIban] = useState('');
   const [isDefault, setIsDefault] = useState(true);
   const [ErrorMsg, setErrorMsg] = useState({});
   const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
@@ -55,6 +56,9 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
         number,
         default:isDefault
     }
+    if(methodType === 'bank'){
+        data.iban = iban
+    }
     onSbmit?.(data);
   };
   useEffect(()=>{
@@ -75,6 +79,7 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
     if(respond?.message === 'success'){
         setName('')
         setNumber('')
+        setIban('')
         setMethodType('wallet')
         setIsDefault(true)
         ClosePopUp("create-new-method")
@@ -113,12 +118,12 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
 
         <div className="mb-6">
           <select
-            placeholder={t('Name')}
+            placeholder={t(methodType === 'wallet' ? 'Wallet Name' : 'Bank Account Name')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="app-field mt-2"
           >
-            <option value="">{t(methodType === 'wallet' ? 'Select wallet' : 'Select bank')}</option>
+            <option value="">{t(methodType === 'wallet' ? 'Wallet Name' : 'Bank Account Name')}</option>
             {methodType === 'wallet' ? wallets.map((wallet) => (
               <option key={wallet} value={wallet}>{i18n.language == "Arabic" ? wallet.split('| ')[1] : wallet.split('| ')[0]}</option>
             )) : banks.map((bank) => (
@@ -131,14 +136,26 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
         <div className="mb-6">
           <input
             type="number"
-            placeholder={t('Number')}
+            placeholder={t(methodType === 'wallet' ? 'Wallet Number' : 'Bank Account Number')}
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             className="app-field mt-2"
           />
           <ErrorMessage ErrorMsg={ErrorMsg.number}/>
         </div>
-
+        {methodType === 'bank' && (
+        <div className="mb-6">
+          <input
+            type="number"
+            placeholder={t('IBAN')}
+            value={iban}
+            onChange={(e) => setIban(e.target.value)}
+            className="app-field mt-2"
+          />
+            <ErrorMessage ErrorMsg={ErrorMsg.iban}/>
+          </div>
+        )}
+            
         <div className="mb-8 flex items-center justify-between">
           <label className="flex items-center gap-2 cursor-pointer">
             <CustomSwitch value={isDefault} onSwitchChange={(checked) => setIsDefault(!checked)} />

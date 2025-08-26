@@ -866,5 +866,10 @@
   "Complaint Reason": "سبب الشكوى",
   "View": "عرض",
   "You can't edit this rental because link In Active Contract": "لا يمكنك تعديل هذه الإيجار لأنه مربوط بعقد فعال",
-  "You can't edit this project because link In Active Contract": "لا يمكنك تعديل هذا المشروع لأنه مربوط بعقد فعال"
+  "You can't edit this project because link In Active Contract": "لا يمكنك تعديل هذا المشروع لأنه مربوط بعقد فعال",
+  "IBAN": "رقم الحساب البنكي",
+  "Wallet Name": "اسم المحفظة",
+  "Bank Account Name": "اسم الحساب البنكي",
+  "Wallet Number": "رقم المحفظة",
+  "Bank Account Number": "رقم الحساب البنكي"
 }
