@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 function Wallets({isLogin , CreateMethod_respond ,CreateWithdrawMethod , GetWithdrawMethods , GetMethods_respond }) {
     const [item, setItem] = React.useState(null)
-    const { t } = useTranslation();
+    const { t  , i18n } = useTranslation();
     const route = useRouter()
     React.useEffect(()=>{
         if(isLogin === false)
@@ -63,7 +63,7 @@ function Wallets({isLogin , CreateMethod_respond ,CreateWithdrawMethod , GetWith
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div><Icon name={"angle-right"} className={"mr-2 w-2"} /></div>
+                                            <div><Icon name={i18n.language == "Arabic" ? "angle-left" : "angle-right"} className={"mr-2 w-2"} /></div>
                                         </div>
                                     )}
                                 </div>

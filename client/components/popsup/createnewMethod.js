@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { ClosePopUp } from '../../util/util';
 import * as withdrawal_methods from '../../util/withdrawal_methods.json'
 function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
-  const { t } = useTranslation();
+  const { t  , i18n } = useTranslation();
   const {wallets , banks} = withdrawal_methods;
   const [methodType, setMethodType] = useState('wallet');
   const [name, setName] = useState('');
@@ -120,9 +120,9 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
           >
             <option value="">{t(methodType === 'wallet' ? 'Select wallet' : 'Select bank')}</option>
             {methodType === 'wallet' ? wallets.map((wallet) => (
-              <option key={wallet} value={wallet}>{wallet}</option>
+              <option key={wallet} value={wallet}>{i18n.language == "Arabic" ? wallet.split('| ')[1] : wallet.split('| ')[0]}</option>
             )) : banks.map((bank) => (
-              <option key={bank} value={bank}>{bank}</option>
+              <option key={bank} value={bank}>{i18n.language == "Arabic" ? bank.split('| ')[1] : bank.split(' |')[0]}</option>
             ))}
           </select>
         <ErrorMessage ErrorMsg={ErrorMsg.name}/>
