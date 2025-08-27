@@ -28,11 +28,16 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
                 }))    
         }
         if(methodType==='bank'){
-            if(number.length < 15)
+            if(!number)
                 return setErrorMsg((e)=>({
                     ...e,
-                    number: 'number must be bank account number'
+                    number: 'number is required'
                 }))    
+            if(!iban)
+                return setErrorMsg((e)=>({
+                    ...e,
+                    iban: 'IBAN is required'
+                }))
         }
       }
       if(!name || ! number){
