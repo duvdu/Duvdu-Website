@@ -61,6 +61,14 @@ function WithdrawMethodDetails({ item ,GetWithdrawMethods, DeleteWithdrawMethod 
               </span>
           </div>
           }
+          {item?.iban && 
+          <div>
+              <h2 className='opacity-60 capitalize mb-1'>{t("IBAN")}</h2>
+              <span className='font-semibold capitalize max-w-[543px]'>
+              {item?.iban}
+              </span>
+          </div>
+          }
           <div>
               <h2 className='opacity-60 capitalize mb-1'>{t("default status")}</h2>
               <span className='font-semibold capitalize max-w-[543px]'>
