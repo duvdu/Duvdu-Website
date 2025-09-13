@@ -13,7 +13,7 @@ import InsuranceFilter from './filterAsset/InsuranceFilter';
 import Icon from '../Icons';
 import Drawer from './drawer';
 import AppButton from './button';
-import KeywordsFilter from './filterAsset/keywords';
+import SearchFilter from './filterAsset/search';
 import PlatformFilter from './filterAsset/Platforms';
 
 // Utility function to find filter name by value
@@ -38,7 +38,7 @@ const RenderFilterComponent = ({ value, categories,platforms, cycle, handleSelec
         case 7:
             return <InsuranceFilter onFiltersApply={filters => handleSelect(7, filters.insurance, true)} clearFilter={clearFilter} setClearFilter={setClearFilter} onFilterChange={filters => handleSelect(7, filters.insurance)} toggleDrawer={toggleDrawer} />;
         case 8:
-            return <KeywordsFilter onFiltersApply={filters => handleSelect(8, filters.keywords, true)} clearFilter={clearFilter} setClearFilter={setClearFilter} onFilterChange={filters => handleSelect(8, filters.keywords)} toggleDrawer={toggleDrawer} />;
+            return <SearchFilter onFiltersApply={filters => handleSelect(8, filters.search, true)} clearFilter={clearFilter} setClearFilter={setClearFilter} onFilterChange={filters => handleSelect(8, filters.search)} toggleDrawer={toggleDrawer} />;
         case 9:
             return <PlatformFilter platforms={platforms?.data} clearFilter={clearFilter} setClearFilter={setClearFilter} cycle={cycle} onSelect={platform => handleSelect(9, platform, true)} onFilterChange={platform => handleSelect(9, platform)} toggleDrawer={toggleDrawer} />;
         default:
@@ -85,7 +85,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
               case 'Insurance':
                 newFilters[7] = value;
                 break;
-              case 'keywords':
+              case 'search':
                 newFilters[8] = value;
                 break;
               case 'Platforms':
@@ -111,7 +111,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
     if (cycle === "copy-rights" || cycle === "project") {
         filterData.push({ value: 6, name: "Duration" });
     }
-    filterData.push({ value: 8, name: "KeyWords" },);
+    filterData.push({ value: 8, name: "Search" },);
     if (cycle === "producer") {
         filterData.push({ value: 9, name: "Platforms" });
     }
@@ -243,10 +243,10 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
                         params.inclusive = filter.data;
                     }
                     break;
-                case "KeyWords":
+                case "Search":
                     // Handle the case where filter.data might be undefined
                     if (filter.data) {
-                        params.keywords = filter.data;
+                        params.search = filter.data;
                     }
                     break;
                 default:

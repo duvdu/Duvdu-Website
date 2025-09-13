@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Icon from "../Icons";
 
-const SelectDate = ({ onChange, value }) => {
+const SelectDate = ({ onChange, value, isInstant = true }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(value ? new Date(value) : null);
     const [isExpanded, setIsExpanded] = useState(false);
+    useEffect(() => {
+        if (isInstant === false) {
+            setCurrentDate(new Date(new Date().setDate(new Date().getDate() + 1)));
+        }
+    }, [isInstant]);
 
     useEffect(() => {
         setCurrentDate(new Date()); // Ensure the current date is set when the component mounts
@@ -27,7 +32,7 @@ const SelectDate = ({ onChange, value }) => {
         lastDay.setHours(10, 0, 0, 0); 
         const startDay = firstDay.getDay();
         const totalDays = lastDay.getDate();
-        const tomorrow = new Date();
+        const tomorrow = isInstant?  new Date():new Date(new Date().setDate(new Date().getDate() + 1));
         tomorrow.setHours(10, 0, 0, 0); 
         tomorrow.setDate(tomorrow.getDate());
         const tomorrowTime = tomorrow.getTime();

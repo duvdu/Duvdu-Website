@@ -12,13 +12,21 @@ import { GetWithdrawMethods } from '../../redux/action/apis/withdraw-methods/get
 
 function WithdrawMethodDetails({ item ,GetWithdrawMethods, DeleteWithdrawMethod , DeleteWithdrawMethod_respond , makeWithdrawMethodAsDefault_respond , makeWithdrawMethodAsDefault }) {
   const { t } = useTranslation(); 
-
+  const [error, setError] = useState('')
   const handleMakeAsDefault = () => {
     makeWithdrawMethodAsDefault(item?._id)
   };
   const handleRemove = () =>{
     DeleteWithdrawMethod(item?._id)
   }
+  useEffect(()=>{
+    if(DeleteWithdrawMethod_respond?.error){
+      setError(JSON.parse(DeleteWithdrawMethod_respond?.error)?.data?.errors[0]?.message)
+      setTimeout(()=>{
+      setError('')
+    },3000)
+    }
+  },[DeleteWithdrawMethod_respond?.error])
   useEffect(()=>{
     if(DeleteWithdrawMethod_respond?.message==='success' || makeWithdrawMethodAsDefault_respond?.message==='success'){
       ClosePopUp('withdraw-method-details')
@@ -53,6 +61,14 @@ function WithdrawMethodDetails({ item ,GetWithdrawMethods, DeleteWithdrawMethod 
               </span>
           </div>
           }
+          {item?.iban && 
+          <div>
+              <h2 className='opacity-60 capitalize mb-1'>{t("IBAN")}</h2>
+              <span className='font-semibold capitalize max-w-[543px]'>
+              {item?.iban}
+              </span>
+          </div>
+          }
           <div>
               <h2 className='opacity-60 capitalize mb-1'>{t("default status")}</h2>
               <span className='font-semibold capitalize max-w-[543px]'>
@@ -62,6 +78,9 @@ function WithdrawMethodDetails({ item ,GetWithdrawMethods, DeleteWithdrawMethod 
 
         </div>
         <div className='flex flex-col gap-3'>
+          <div className='text-center'>
+            <ErrorMessage ErrorMsg={error}/>
+          </div>
           {!item?.default && 
           <AppButton onClick={handleMakeAsDefault} className="w-full">
             {makeWithdrawMethodAsDefault_respond?.loading ? (

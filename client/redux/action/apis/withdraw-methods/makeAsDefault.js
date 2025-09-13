@@ -13,7 +13,7 @@ export const makeWithdrawMethodAsDefault = (id) => {
         return
       }
   
-      const response = await mainApiInstance.put(`api/users/withdraw/${id}`);
+      const response = await mainApiInstance.patch(`api/users/withdraw/${id}`);
       dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: {
         message:'success'
      }, req: req });

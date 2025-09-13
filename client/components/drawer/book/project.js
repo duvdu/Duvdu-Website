@@ -29,7 +29,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const [post_success, setPost_success] = useState(false);
     const [creatives, setCreatives] = useState([]);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
-
+    const isInstant = data?.user?.isAvaliableToInstantProjects
     function calculateTotalPrice() {
         // Extract project scale information from formdata
         const numberOfUnits = formData['projectScale[numberOfUnits]'];
@@ -249,12 +249,12 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("appointment Date")}</h3>
-                                <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} />
+                                <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} isInstant={isInstant}/>
                                 <ErrorMessage ErrorMsg={ErrorMsg.appointmentDate}/>
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("Start Date")}</h3>
-                                <SelectDate onChange={(value) => UpdateFormData('startDate', value)} />
+                                <SelectDate onChange={(value) => UpdateFormData('startDate', value)} isInstant={isInstant}/>
                                 <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
                             </section>
                             <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>

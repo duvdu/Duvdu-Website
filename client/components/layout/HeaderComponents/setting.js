@@ -194,6 +194,14 @@ function Setting({
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                         onClick: () => setOpened(1)
                     },
+                    {
+                        img: 'delete-icon.svg',
+                        name: 'Delete Account',
+                        login: true,
+                        color: 'text-[#eb1a40]',
+                        action: '',
+                        onClick: () => OpenPopUp('delete-popup-account')
+                    },
                     // {
                     //     img: 'about-icon.svg',
                     //     name: 'About',
@@ -203,7 +211,7 @@ function Setting({
                 ].map((e, i) => (
                     <div onClick={e.onClick} className="flex items-center py-3 gap-4 cursor-pointer" key={i}>
                         <img icon='icon' className="icon size-6" src={`/assets/imgs/theme/${e.img}`} />
-                        <span className="text-[12px] text-[#4F5E7B] w-full font-semibold">{t(e.name)}</span>
+                        <span className={`text-[12px] ${e.color ? e.color : 'text-[#4F5E7B]'} w-full font-semibold`}>{t(e.name)}</span>
                         <div className="action rtl:rotate-180 flex items-center"> {e.action} </div>
                     </div>
                 ))

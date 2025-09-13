@@ -7,13 +7,14 @@ import ErrorMessage from '../elements/ErrorMessage';
 import { GetWithdrawMethods } from '../../redux/action/apis/withdraw-methods/get';
 import { connect } from 'react-redux';
 import { ClosePopUp } from '../../util/util';
-
+import * as withdrawal_methods from '../../util/withdrawal_methods.json'
 function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
-  const { t } = useTranslation();
-
+  const { t  , i18n } = useTranslation();
+  const {wallets , banks} = withdrawal_methods;
   const [methodType, setMethodType] = useState('wallet');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [iban, setIban] = useState('');
   const [isDefault, setIsDefault] = useState(true);
   const [ErrorMsg, setErrorMsg] = useState({});
   const egyptianPhoneRegex = /^01[0-2,5]{1}[0-9]{8}$/;
@@ -27,11 +28,16 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
                 }))    
         }
         if(methodType==='bank'){
-            if(number.length < 15)
+            if(!number)
                 return setErrorMsg((e)=>({
                     ...e,
-                    number: 'number must be bank account number'
+                    number: 'number is required'
                 }))    
+            if(!iban)
+                return setErrorMsg((e)=>({
+                    ...e,
+                    iban: 'IBAN is required'
+                }))
         }
       }
       if(!name || ! number){
@@ -55,6 +61,9 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
         number,
         default:isDefault
     }
+    if(methodType === 'bank'){
+        data.iban = iban
+    }
     onSbmit?.(data);
   };
   useEffect(()=>{
@@ -75,6 +84,7 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
     if(respond?.message === 'success'){
         setName('')
         setNumber('')
+        setIban('')
         setMethodType('wallet')
         setIsDefault(true)
         ClosePopUp("create-new-method")
@@ -112,27 +122,45 @@ function CreateNewMethod({ onSbmit, respond ,GetWithdrawMethods }) {
         </div>
 
         <div className="mb-6">
-          <input
-            type="text"
-            placeholder={t('Name')}
+          <select
+            placeholder={t(methodType === 'wallet' ? 'Wallet Name' : 'Bank Account Name')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="app-field mt-2"
-          />
+          >
+            <option value="">{t(methodType === 'wallet' ? 'Wallet Name' : 'Bank Account Name')}</option>
+            {methodType === 'wallet' ? wallets.map((wallet) => (
+              <option key={wallet} value={wallet}>{i18n.language == "Arabic" ? wallet.split('| ')[1] : wallet.split('| ')[0]}</option>
+            )) : banks.map((bank) => (
+              <option key={bank} value={bank}>{i18n.language == "Arabic" ? bank.split('| ')[1] : bank.split(' |')[0]}</option>
+            ))}
+          </select>
         <ErrorMessage ErrorMsg={ErrorMsg.name}/>
         </div>
 
         <div className="mb-6">
           <input
             type="number"
-            placeholder={t('Number')}
+            placeholder={t(methodType === 'wallet' ? 'Wallet Number' : 'Bank Account Number')}
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             className="app-field mt-2"
           />
           <ErrorMessage ErrorMsg={ErrorMsg.number}/>
         </div>
-
+        {methodType === 'bank' && (
+        <div className="mb-6">
+          <input
+            type="number"
+            placeholder={t('IBAN')}
+            value={iban}
+            onChange={(e) => setIban(e.target.value)}
+            className="app-field mt-2"
+          />
+            <ErrorMessage ErrorMsg={ErrorMsg.iban}/>
+          </div>
+        )}
+            
         <div className="mb-8 flex items-center justify-between">
           <label className="flex items-center gap-2 cursor-pointer">
             <CustomSwitch value={isDefault} onSwitchChange={(checked) => setIsDefault(!checked)} />
