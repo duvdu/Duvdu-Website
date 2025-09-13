@@ -366,7 +366,7 @@ const Home = ({
                                     modules={[Autoplay, Navigation, EffectFade, Pagination]}
                                     spaceBetween={10}
                                     slidesPerView={1.2}
-                                    loop={true}
+                                    loop={list?.length > 3}
                                     pagination={{
                                         clickable: true,
                                         el: '.swiper-pagination',
@@ -391,7 +391,7 @@ const Home = ({
 
                                         }}                                    
                                     >
-                                    {list &&list?.map((data, index) => {
+                                    {list &&list.length>0 &&list?.map((data, index) => {
                                         return <SwiperSlide key={index}>                                                            
                                             <Link href={data.cycle ? `/${data.cycle}?category=${data._id}` : ''} >
                                                 <div
@@ -453,7 +453,7 @@ const Home = ({
                                modules={[Autoplay, Navigation, EffectFade, Pagination]}
                                spaceBetween={10}
                                slidesPerView={2.1}
-                               loop={true}
+                               loop={homeDiscover_respond?.data?.[0]?.subCategories?.length > 4}
                                pagination={{
                                    clickable: true,
                                    el: '.swiper-pagination',
