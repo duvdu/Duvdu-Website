@@ -19,7 +19,12 @@ export const CreateTicket = ({ message, username, phoneNumber }) => {
             });
             dispatch({ type: Types.FETCH_DATA_SUCCESS, payload: response.data, req: 'CreateTicket' });
         } catch (error) {
-            dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: 'CreateTicket' });
+            console.log({error});
+            if(error.response.status === 404){
+                dispatch({ type: Types.FETCH_DATA_FAILURE, payload: 'Token Expired', req: 'CreateTicket' });
+            }else{
+                dispatch({ type: Types.FETCH_DATA_FAILURE, payload: JSON.stringify(error.response), req: 'CreateTicket' });
+            }
         }
     };
 };

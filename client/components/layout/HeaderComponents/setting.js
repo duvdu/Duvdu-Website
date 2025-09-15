@@ -237,13 +237,13 @@ function Setting({
                                     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
                                     onClick: () => setOpened(2)
                                 },
-                                {
-                                    img: 'chat-icon.svg',
-                                    name: 'Let’s connect',
-                                    login: false,
-                                    action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
-                                    onClick: () => setOpened(1)
-                                },
+                                // {
+                                //     img: 'chat-icon.svg',
+                                //     name: 'Let’s connect',
+                                //     login: true,
+                                //     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
+                                //     onClick: () => setOpened(1)
+                                // },
                                 // {
                                 //     img: 'about-icon.svg',
                                 //     name: 'About',

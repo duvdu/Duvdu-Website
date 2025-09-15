@@ -6,6 +6,7 @@ import Loading from './loading';
 import Button from './button';
 import SuccessfullyPosting from "../popsup/post_successfully_posting";
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from './ErrorMessage';
 
 const ContactUs = ({ CreateTicket, user, api, respond }) => {
     const [post_success, setPost_success] = useState(false);
@@ -16,6 +17,8 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
         number: '',
         message: ''
     });
+    console.log({respond:respond?.error});
+    var convertError = respond?.error === 'Token Expired' ? respond?.error : JSON.parse(respond?.error ?? null)?.data?.errors[0]?.message
 
     useEffect(() => {
         if (user) {
@@ -42,6 +45,14 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
     };
 
     const handleSubmit = () => {
+        if(!formData.username || formData.username.length < 3){
+            setErrorMessage(t('Full Name must be at least 3 characters long.'));
+            return;
+        }
+        if(!formData.number){
+            setErrorMessage(t('Phone Number must be at least 10 characters long.'));
+            return;
+        }
         if (formData.message.length < 20) {
             setErrorMessage(t('contact_us.error_short_message'));
             return;
@@ -116,6 +127,9 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
                                         className='app-field !h-48'
                                         required
                                     />
+                                </div>
+                                <div className='text-center'>
+                                    <ErrorMessage ErrorMsg={convertError}/>
                                 </div>
 
                                 <div className='text-center'>
