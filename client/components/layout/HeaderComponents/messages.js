@@ -65,7 +65,6 @@ function Messages({ getheaderpopup,chats  , AvailableUserChat_resond , onChoose,
 
     if (getheaderpopup != Types.SHOWMESSAGE && window.innerWidth > 1024) return
 
-    console.log({chats})
     return (
         <div className={isMob ? " dark:bg-black h-screen" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
             <div className={isMob ? "" : "dialog dialog-1"}>
@@ -117,7 +116,6 @@ const ViewAll = ({ Type, list, t , onChoose, isLoadingMore, hasMore, scrollRef, 
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-                    console.log('Loading more messages in ViewAll...');
                     loadMoreMessages();
                 }
             },

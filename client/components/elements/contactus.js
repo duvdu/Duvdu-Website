@@ -17,7 +17,6 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
         number: '',
         message: ''
     });
-    console.log({respond:respond?.error});
     var convertError = respond?.error === 'Token Expired' ? respond?.error : JSON.parse(respond?.error ?? null)?.data?.errors[0]?.message
 
     useEffect(() => {

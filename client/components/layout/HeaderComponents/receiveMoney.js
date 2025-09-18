@@ -132,7 +132,6 @@ const ViewAll = ({ list, renderItem, isLoadingMore, hasMore, scrollRef, loadMore
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-                    console.log('Loading more transactions in ViewAll (receive)...');
                     loadMoreData();
                 }
             },

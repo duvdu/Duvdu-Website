@@ -30,15 +30,12 @@ const SendMyMoney = ({ setOpened, SendMoney, user, api, respond, handleTransacti
     }, [respond]);
 
     const loadMoreData = useCallback(async () => {
-        console.log('loadMoreData called:', { hasMore, isLoadingMore, page });
         if (!hasMore || isLoadingMore) {
-            console.log('loadMoreData early return:', { hasMore, isLoadingMore });
             return;
         }
         
         setIsLoadingMore(true);
         const nextPage = page + 1;
-        console.log('Loading page:', nextPage);
         
         try {
             await SendMoney({
@@ -46,7 +43,6 @@ const SendMyMoney = ({ setOpened, SendMoney, user, api, respond, handleTransacti
                 limit: 10
             });
             setPage(nextPage);
-            console.log('Page loaded successfully:', nextPage);
         } catch (error) {
             console.error('Error loading more data:', error);
         } finally {

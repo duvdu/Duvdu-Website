@@ -45,7 +45,6 @@
         
         // Add timeout for Google Fonts
         const timeout = setTimeout(function() {
-            console.log('Google Fonts timeout, using local fonts');
             applyArabicFont();
         }, 3000); // 3 second timeout
         
@@ -56,7 +55,6 @@
         
         link.onerror = function() {
             clearTimeout(timeout);
-            console.log('Google Fonts failed to load, using local fonts');
             applyArabicFont();
         };
         

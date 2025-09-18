@@ -7,18 +7,21 @@ import { useState, useEffect } from 'react';
 import { errorConvertedMessage } from '../../../util/util';
 import Loading from '../../elements/loading';
 
-const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
+const ContactUs = ({ setOpened, CreateTicket, user , isLogin, api,respond }) => {
     const { t } = useTranslation();
     const [textareavalue, setTextareavalue] = useState("");
+    const [username, setUsername] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     useEffect(() => {
         if(respond?.message=='success'){
             setOpened(0)
             setTextareavalue("")
+            setUsername("")
+            setPhoneNumber("")
             CreateTicket({message:''})
         }
     }, [respond?.message])
-    
 
     const handleSendMessage = () => {
         if (textareavalue.length < 20) {
@@ -28,8 +31,8 @@ const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
 
         setErrorMessage("");
         CreateTicket({
-            username: user.username,
-            phoneNumber: user.phoneNumber.number,
+            username: isLogin ? user.username : username,
+            phoneNumber: isLogin ? user.phoneNumber.number : phoneNumber,
             message: textareavalue,
         });
     }
@@ -43,7 +46,25 @@ const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
                     {t('contact us')}
                 </span>
             </div>
-            <div className="capitalize opacity-60 mt-8">{t('your message')}</div>
+            {!isLogin && (
+                <>
+            <div className="capitalize opacity-60 mt-4">{t('name')}</div>
+            <input
+                className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 px-4 py-2 w-full"
+                placeholder={t('name')}
+                onChange={(event) => {
+                    setUsername(event.target.value)
+                }} />
+            <div className="capitalize opacity-60 mt-4">{t('phone number')}</div>
+            <input
+                className="bg-[#9999991A] rounded-3xl border-black border-opacity-10 px-4 py-2 w-full"
+                placeholder={t('phone number')}
+                onChange={(event) => {
+                    setPhoneNumber(event.target.value)
+                }} />
+                </>
+            )}
+            <div className="capitalize opacity-60 mt-4">{t('your message')}</div>
             <textarea
                 placeholder={t("start typing...")}
                 className="bg-[#9999991A] rounded-3xl h-48 border-none mt-5"
@@ -65,6 +86,7 @@ const ContactUs = ({ setOpened, CreateTicket, user, api,respond }) => {
 const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.CreateTicket,
+    isLogin: state.auth.login,
     user: state.user.profile
 });
 

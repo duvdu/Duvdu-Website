@@ -111,7 +111,6 @@ const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNot
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-                    console.log('Loading more notifications in ViewAll...');
                     loadMoreNotifications();
                 }
             },
