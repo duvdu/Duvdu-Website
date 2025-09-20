@@ -9,10 +9,13 @@ import { useRouter } from 'next/router';
 import { CheckUsernameExists , CheckEmailExists , CheckPhoneExists } from "../../redux/action/apis/auth/signin/CheckUsernameExists";
 import { validatePassword } from "../../util/util";
 import { useTranslation } from 'react-i18next';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import SocialLogin from "../../components/pages/Login/SocialLogin";
 
 
 const Register = ({ signup, api, respond, userExists , emailExists , phoneExists, CheckUsernameExists , CheckEmailExists , CheckPhoneExists }) => {
     const { t } = useTranslation();
+    const [username, setUsername] = useState('');
     const [isUsernameExists, setIsUsernameExists] = useState(userExists?.isExists);
     const [isEmailExists, setIsEmailExists] = useState(emailExists?.isExists);
     const [isPhoneExists, setIsPhoneExists] = useState(phoneExists?.isExists);
@@ -38,6 +41,7 @@ const Register = ({ signup, api, respond, userExists , emailExists , phoneExists
     const [lastCheckedEmail, setLastCheckedEmail] = useState(''); // State to track the last checked username
     const [lastCheckedPhone, setLastCheckedPhone] = useState(''); // State to track the last checked username
     const router = useRouter();
+    const clientId = "475213071438-mn7lcjd3sdq0ltsv92n04pr97ipdhe9g.apps.googleusercontent.com";
     // change status of @username icon
     useEffect(() => {
         if (api.req === "CheckUsernameExists" && api.loading) {
@@ -388,6 +392,14 @@ const Register = ({ signup, api, respond, userExists , emailExists , phoneExists
                     <span>{t("Already have an account?") + " "}</span>
                     <Link href="/login">{t("Log in")}</Link>
                 </div>
+                <div className="flex items-center">
+                <div className="border-t border-black opacity-20 w-full my-4"></div>
+                    <p className="px-4 font-bold my-10 ">{t("OR")}</p>
+                    <div className="border-t border-black opacity-20 w-full my-4"></div>
+                </div>
+                <GoogleOAuthProvider clientId={clientId}>
+                <SocialLogin setUsername={setUsername}/>
+                </GoogleOAuthProvider>
             </form>
         </Auth>
     );

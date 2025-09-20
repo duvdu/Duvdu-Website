@@ -131,8 +131,8 @@ function AddPhoneNumber({ LogOut, api, respond_addPhone, addPhone, username, get
                     <div className="flex w-full justify-center">
                         <Icon name={"done"} className="mb-9" />
                     </div>
-                    <h1 className="auth-title mb-2">{t("number changed")}</h1>
-                    <p>{t("Your phone number has been changed successfully")}</p>
+                    <h1 className="auth-title mb-2">{t("number added")}</h1>
+                    <p>{t("Your phone number has been added successfully")}</p>
                 </div>
                 <div className="mb-4 relative">
                     <Link href={"/"}>
