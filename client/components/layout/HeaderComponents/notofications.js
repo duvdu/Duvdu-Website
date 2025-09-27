@@ -293,9 +293,10 @@ const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
         {tile.sourceUser ?
                 <img className="size-9 rounded-full object-cover object-top" src={tile.sourceUser?.profileImage} alt="user" />
                 :
-                <div>
-                    <div className="size-9 rounded-full bg-gray-200 dark:bg-gray-400">
-                    </div>
+                <div className="size-9 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800">
+                    <img className="size-6"
+                    src={"/assets/imgs/theme/system.svg"}
+                    alt="user" />
                 </div>
                 }
                 {content}

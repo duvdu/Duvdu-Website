@@ -16,7 +16,7 @@ const BookTeam = ({ team,current, unit , onChange ,pricerPerUnit, mainremovable 
             <div key={i} className="flex">
                 <div key={i} className="team-padge">
                     {item.profileImage&& <img className='object-cover object-top rounded-full aspect-square' src={item.profileImage} alt="user" />}
-                    <span className="mx-3">{item.name}</span>
+                    <span className="mx-3">{item.name?.split(' ')[0].length>6?item.name?.split(' ')[0].slice(0,6):item.name?.split(' ')[0]}</span>
                     {pricerPerUnit && <span className="mx-3">{current} {unit}s {pricerPerUnit*current} EGP</span>}
                 </div>
                 

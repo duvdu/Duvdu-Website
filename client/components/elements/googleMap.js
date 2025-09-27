@@ -249,7 +249,7 @@ const GoogleMap = ({
                     className={inputclass || "inputStyle1"}
                     ref={inputRef}
                     value={address}
-                    placeholder="Search for a location..."
+                    placeholder={isreadOnly ? "" : "Search for a location..."}
                     onChange={(e) => {
                         if (!isreadOnly) {
                             setAddress(e.target.value);

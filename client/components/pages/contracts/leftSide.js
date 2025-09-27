@@ -57,11 +57,15 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
     useEffect(() => {
         const _data = respond?.data?.filter(value => activeIndex == 0 ? value.sp.username == user?.username : value.sp.username != user?.username)
         const _datasp = respond?.data?.filter(value => value.sp.username == user?.username)
-        const pendingsp = _datasp?.filter(data => handleStatus(data.contract.status) == 0)
         const _datacl = respond?.data?.filter(value => value.sp.username != user?.username)
+        const pendingsp = _datasp?.filter(data => handleStatus(data.contract.status) == 0)
+        const checkoutsp = _datasp?.filter(data => handleStatus(data.contract.status) == 2)
+        const ongoingsp = _datasp?.filter(data => handleStatus(data.contract.status) == 1)
         const pendingcl = _datacl?.filter(data => handleStatus(data.contract.status) == 0)
-        setSPPending(pendingsp?.length)
-        setCLPending(pendingcl?.length)
+        const checkoutcl = _datacl?.filter(data => handleStatus(data.contract.status) == 2)
+        const ongoingcl = _datacl?.filter(data => handleStatus(data.contract.status) == 1)
+        setSPPending(pendingsp?.length + checkoutsp?.length + ongoingsp?.length)
+        setCLPending(pendingcl?.length + checkoutcl?.length + ongoingcl?.length)
         setData(_data)
     }, [activeIndex, respond?.data])
 
