@@ -29,6 +29,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     const [post_success, setPost_success] = useState(false);
     const [creatives, setCreatives] = useState([]);
     const [attachmentValidation, setAttachmentValidation] = useState(false);
+    const [appointmentTime, setAppointmentTime] = useState(null);
+    const [startTime, setStartTime] = useState(null);
     const isInstant = data?.user?.isAvaliableToInstantProjects
     function calculateTotalPrice() {
         // Extract project scale information from formdata
@@ -75,6 +77,8 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         // if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
         if (!formData.appointmentDate) errors.appointmentDate = 'Appointment date is required';
         if (!formData.startDate) errors.startDate = 'Start date is required';
+        if (!formData.appointmentTime) errors.appointmentTime = 'Appointment time is required';
+        if (!formData.startTime) errors.startTime = 'Start time is required';
         return errors;
     };
     const CheckNext=()=>{
@@ -129,6 +133,26 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
     }, [creatives.length])
 
     useEffect(() => {
+        if (formData.appointmentTime) {
+            const [hours, minutes] = formData.appointmentTime.split(":").map(Number);
+            const period = hours >= 12 ? "PM" : "AM";
+            const hour12 = (hours % 12 === 0 ? 12 : hours % 12);
+            const time = `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`;
+            setAppointmentTime(time);
+        }
+    }, [formData.appointmentTime]);
+
+    useEffect(() => {
+        if (formData.startTime) {
+            const [hours, minutes] = formData.startTime.split(":").map(Number);
+            const period = hours >= 12 ? "PM" : "AM";
+            const hour12 = (hours % 12 === 0 ? 12 : hours % 12);
+            const time = `${hour12}:${minutes.toString().padStart(2, '0')} ${period}`;
+            setStartTime(time);
+        }
+    }, [formData.startTime]);
+
+    useEffect(() => {
         // UpdateFormData('totalPrice', data.projectBudget)
         if (data.creatives) {
             setCreatives([{ ...data.user, removable: true }])
@@ -155,12 +179,26 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
         if (submit)
             submit()
         const form = new FormData()
-        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments', 'tools', 'functions' ,'location'])
+        UpdateKeysAndValues(formData, (key, value) => form.append(key, value), ['attachments', 'tools', 'functions' ,'location', 'appointmentTime' , 'appointmentDate' ,'startDate', 'startTime'])
         if (formData.attachments)
             for (let i = 0; i < formData.attachments.length; i++) {
                 const file = formData.attachments[i];
                 form.append(`attachments`, file.file);
             }
+        
+        // Handle appointment date with time
+        if (formData.appointmentDate && formData.appointmentTime) {
+            let [datePart, _] = formData.appointmentDate.split('T');
+            let appointmentDateTime = `${datePart}T${formData.appointmentTime}:00.000Z`;
+            form.append('appointmentDate', appointmentDateTime);
+        }
+        
+        // Handle start date with time
+        if (formData.startDate && formData.startTime) {
+            let [datePart, _] = formData.startDate.split('T');
+            let startDateTime = `${datePart}T${formData.startTime}:00.000Z`;
+            form.append('startDate', startDateTime);
+        }
 
         if (formData.functions)
             for (var i = 0; i < formData.functions.length; i++) {
@@ -249,13 +287,21 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("appointment Date")}</h3>
-                                <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} isInstant={isInstant}/>
+                                <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} isInstant={isInstant} dateType="appointment"/>
+                                <div className='flex items-center justify-center w-full mt-2'>
+                                    <input type='time' name="appointmentTime" value={formData.appointmentTime || ""} onChange={handleInputChange} className="bg-[#9999991A] rounded-full border-black border-opacity-10 px-5 py-5 w-1/2 text-[25px]"/>
+                                </div>
                                 <ErrorMessage ErrorMsg={ErrorMsg.appointmentDate}/>
+                                <ErrorMessage ErrorMsg={ErrorMsg.appointmentTime}/>
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("Start Date")}</h3>
-                                <SelectDate onChange={(value) => UpdateFormData('startDate', value)} isInstant={isInstant}/>
+                                <SelectDate onChange={(value) => UpdateFormData('startDate', value)} isInstant={isInstant} dateType="start"/>
+                                <div className='flex items-center justify-center w-full mt-2'>
+                                    <input type='time' name="startTime" value={formData.startTime || ""} onChange={handleInputChange} className="bg-[#9999991A] rounded-full border-black border-opacity-10 px-5 py-5 w-1/2 text-[25px]"/>
+                                </div>
                                 <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
+                                <ErrorMessage ErrorMsg={ErrorMsg.startTime}/>
                             </section>
                             <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>
                                 <div className="flex justify-center w-full">
@@ -302,7 +348,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                             </div>
                                             <div className="flex flex-col ps-5 w-full">
                                                 <span className="font-normal text-base capitalize">{t("Appointment Date")}</span>
-                                                <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')}</span>
+                                                <span className="text-[#747688] text-xs">{dateFormat(formData.appointmentDate, 'd mmmm , yyyy')} : {appointmentTime}</span>
                                             </div>
                                         </div>
                                     </section>
@@ -314,7 +360,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                             </div>
                                             <div className="flex flex-col ps-5 w-full">
                                                 <span className="font-normal text-base capitalize">{t("Start Date")}</span>
-                                                <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'd mmmm , yyyy')}</span>
+                                                <span className="text-[#747688] text-xs">{dateFormat(formData.startDate, 'd mmmm , yyyy')} : {startTime}</span>
                                             </div>
                                         </div>
                                     </section>

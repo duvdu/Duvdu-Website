@@ -1,19 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import Icon from "../Icons";
 
-const SelectDate = ({ onChange, value, isInstant = true }) => {
+const SelectDate = ({ onChange, value, isInstant = true, dateType = 'appointment' }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(value ? new Date(value) : null);
     const [isExpanded, setIsExpanded] = useState(false);
-    useEffect(() => {
-        if (isInstant === false) {
-            setCurrentDate(new Date(new Date().setDate(new Date().getDate() + 1)));
+    
+    // Calculate minimum selectable date based on isInstant and dateType
+    const getMinimumDate = () => {
+        const today = new Date();
+        today.setHours(10, 0, 0, 0);
+        
+        if (isInstant) {
+            // For instant projects: appointment from today, start from tomorrow
+            if (dateType === 'appointment') {
+                return today;
+            } else { // start date
+                const tomorrow = new Date(today);
+                tomorrow.setDate(today.getDate() + 1);
+                return tomorrow;
+            }
+        } else {
+            // For non-instant projects: appointment from tomorrow, start from day after tomorrow
+            if (dateType === 'appointment') {
+                const tomorrow = new Date(today);
+                tomorrow.setDate(today.getDate() + 1);
+                return tomorrow;
+            } else { // start date
+                const dayAfterTomorrow = new Date(today);
+                dayAfterTomorrow.setDate(today.getDate() + 2);
+                return dayAfterTomorrow;
+            }
         }
-    }, [isInstant]);
-
+    };
+    
     useEffect(() => {
-        setCurrentDate(new Date()); // Ensure the current date is set when the component mounts
-    }, []);
+        const minDate = getMinimumDate();
+        setCurrentDate(minDate);
+    }, [isInstant, dateType]);
 
     useEffect(() => {
         if (value) {
@@ -32,10 +56,8 @@ const SelectDate = ({ onChange, value, isInstant = true }) => {
         lastDay.setHours(10, 0, 0, 0); 
         const startDay = firstDay.getDay();
         const totalDays = lastDay.getDate();
-        const tomorrow = isInstant?  new Date():new Date(new Date().setDate(new Date().getDate() + 1));
-        tomorrow.setHours(10, 0, 0, 0); 
-        tomorrow.setDate(tomorrow.getDate());
-        const tomorrowTime = tomorrow.getTime();
+        const minimumDate = getMinimumDate();
+        const minimumTime = minimumDate.getTime();
     
         // Add leading empty dates for days before the first day of the month
         for (let i = 0; i < startDay; i++) {
@@ -46,11 +68,27 @@ const SelectDate = ({ onChange, value, isInstant = true }) => {
         for (let i = 1; i <= totalDays; i++) {
             const date = new Date(year, month, i);
             date.setHours(10, 0, 0, 0); // Set hour to 10 AM for each date
-            if (date.getTime() >= tomorrowTime) {
+            if (date.getTime() >= minimumTime) {
                 dates.push(date);
             } else {
                 dates.push(null);
             }
+        }
+    
+        // Add dates from next month to fill the grid (up to 6 weeks = 42 days)
+        const nextMonth = month === 11 ? 0 : month + 1;
+        const nextYear = month === 11 ? year + 1 : year;
+        let nextMonthDay = 1;
+        
+        while (dates.length < 42) {
+            const nextDate = new Date(nextYear, nextMonth, nextMonthDay);
+            nextDate.setHours(10, 0, 0, 0);
+            if (nextDate.getTime() >= minimumTime) {
+                dates.push(nextDate);
+            } else {
+                dates.push(null);
+            }
+            nextMonthDay++;
         }
     
         return dates;
@@ -66,12 +104,13 @@ const SelectDate = ({ onChange, value, isInstant = true }) => {
         const newDate = new Date(currentDate);
         newDate.setMonth(currentDate.getMonth() + change);
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const tomorrow = new Date(today);
-        tomorrow.setDate(today.getDate() + 1);
-
-        if (newDate >= today) {
+        // Check if the new month has any valid dates
+        const testYear = newDate.getFullYear();
+        const testMonth = newDate.getMonth();
+        const testDates = getMonthDates(testYear, testMonth);
+        const hasValidDates = testDates.some(date => date !== null);
+        
+        if (hasValidDates) {
             setCurrentDate(newDate);
         }
     };
@@ -79,7 +118,8 @@ const SelectDate = ({ onChange, value, isInstant = true }) => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const monthDates = getMonthDates(year, month);
-    const firstFiveNonNullDates = monthDates.filter(date => date !== null).slice(0, 7);
+    const availableDates = monthDates.filter(date => date !== null);
+    const firstSevenNonNullDates = availableDates.slice(0, 7);
 
     return (
         <div className="flex flex-col gap-2 items-center date-selector">
@@ -121,24 +161,20 @@ const SelectDate = ({ onChange, value, isInstant = true }) => {
                 </div>
             ) : (
                 <div className="flex justify-around gap-3 w-full overflow-auto">
-                    {firstFiveNonNullDates.map((date, index) =>
-                        date ? (
-                            <div
-                                key={index}
-                                className={`border-[1.5px] border-[#F7F8F8] dark:border-gray-600 rounded-xl px-3 flex flex-col justify-center items-center aspect-square w-12 h-12 cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
-                                onClick={() => handleDateClick(date)}
-                            >
-                                <span className="font-semibold text-xs text-[#263257] dark:text-white">
-                                    {date.getDate()} 
-                                </span>
-                                <span className="font-medium text-xs text-[#8A96BC]">
-                                    {date.toLocaleDateString('en-US', { weekday: 'short' })}
-                                </span>
-                            </div>
-                        ) : (
-                            <div key={index} className='size-4 bg-white dark:bg-black' ></div>
-                        )
-                    )}
+                    {firstSevenNonNullDates.map((date, index) => (
+                        <div
+                            key={index}
+                            className={`border-[1.5px] border-[#F7F8F8] dark:border-gray-600 rounded-xl px-3 flex flex-col justify-center items-center aspect-square w-12 h-12 cursor-pointer ${selectedDate && selectedDate.toDateString() === date.toDateString() ? 'bg-blue-200' : ''}`}
+                            onClick={() => handleDateClick(date)}
+                        >
+                            <span className="font-semibold text-xs text-[#263257] dark:text-white">
+                                {date.getDate()} 
+                            </span>
+                            <span className="font-medium text-xs text-[#8A96BC]">
+                                {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                            </span>
+                        </div>
+                    ))}
                 </div>
             )}
             <div className="flex justify-center rounded-full p-1 shadow arrow-icon cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
