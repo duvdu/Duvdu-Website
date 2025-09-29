@@ -24,7 +24,11 @@ function Popup({ isfree=false , isLogin , checkSubscribe , checkSubscribe_respon
     }
     useEffect(() => {
         if (subscribe_response?.data) {
-            window.location.href = subscribe_response?.data?.paymentUrl;
+            if(subscribe_response?.data?.paymentUrl){
+                window.location.href = subscribe_response?.data?.paymentUrl;
+            }else{
+                checkSubscribe()
+            }
         }
     }, [subscribe_response?.data]);
  
@@ -85,7 +89,7 @@ const Subscribe = ({canSubscribe , price , haveSubscribe , subscribe_response , 
                     {canSubscribe ?
                     <span className='text-primary text-lg capitalize text-center mt-11 mb-4'>
                     {price}
-                        <span className='opacity-70 text-primary'>{t("EGY /for 5 contracts")}</span>
+                        <span className='opacity-70 text-primary'> {t("EGY /for 5 contracts")}</span>
                     </span>:
                     <span className='text-primary text-lg capitalize text-center mt-11 mb-4'>
                         <span className='opacity-70 text-primary'>{t(`Now you have`)} {haveSubscribe} {t('avilable contract')}</span>
