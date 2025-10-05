@@ -263,7 +263,7 @@ const Filter = ({ hideSwitch = false, categories,platforms, cycle, onFilterChang
 
     };
     const clearAllQueries = () => {    
-        const clearRouter = `?category=${router.query.category}`
+        const clearRouter = router.route === '/' ? `/` : `?category=${router.query.category}`
         router.push(router.query.category?clearRouter:router.pathname, undefined , { shallow: true });
         setClearFilter(true)
     };

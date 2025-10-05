@@ -91,7 +91,6 @@ const Home = ({
     const [loadingMore, setLoadingMore] = useState(false);
     const [hasMoreData, setHasMoreData] = useState(true);
     const [lastRequestParams, setLastRequestParams] = useState(null);
-
     const { category, subCategory, tags, priceFrom, priceTo, duration, instant, inclusive, keywords } = Router.query;
     const cycle = "project";
 
@@ -312,7 +311,7 @@ const Home = ({
       setScrollInterval(null);
     };
     const setParams = (queryString) => {
-        resetPaginationData();
+        // resetPaginationData();
         Router.push(`?${queryString}`, undefined, { scroll: false });
     };
 
