@@ -14,10 +14,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { GetTaggedProject } from "../../redux/action/apis/auth/profile/getUserProjects";
 import { AcceptInvitation } from "../../redux/action/apis/cycles/projects/acceptInvitation";
-import RelatedCategories from "../../components/elements/relatedCategories";
 import DuvduLoading from "../../components/elements/duvduLoading";
 import EmptyComponent from "../../components/pages/contracts/emptyComponent";
-import SuccessfullyPosting from "../../components/popsup/post_successfully_posting";
+import Popup from "../../components/elements/popup";
 
 const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,AcceptInvitation, GetTaggedProject, isLogin }) => {
     const { t } = useTranslation();
@@ -44,7 +43,26 @@ const Projects = ({ projectInvitations_respond , acceptInvitation_respond ,Accep
 
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <Popup id={"project-invitations"} className={post_success ? 'show' : '' } onCancel={toggleDrawer}>
+                <div className="flex flex-col justify-center w-full sm:w-[604px] h-full my-14">
+                    <div className="heading_s1 mb-[88px] text-center">
+                        <div className="flex w-full justify-center">
+                            {isAccept ? 
+                            <Icon name={"done"} className="mb-9" />
+                            :<Icon name={"x"} className="mb-9" />
+                            }
+                        </div>
+                        {isAccept ? 
+                        <h1 className="text-3xl font-semibold my-5">{t(`Successfully Tagged`)}</h1>
+                        :<h1 className="text-3xl font-semibold my-5">{t(`Tag declined`)}</h1>
+                        }
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <button onClick={toggleDrawer} className="rounded-full border-2 border-solid border-primary w-[345px] h-[83px] text-primary text-lg font-bold">{t("Close")}</button>
+                    </div>
+                </div>
+            </Popup>
+
             <Layout isbodyWhite={true} iSsticky={!searchTerm}>
                 <section className="my-12">
                     <div className="container mb-30">
