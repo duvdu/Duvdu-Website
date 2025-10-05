@@ -10,9 +10,10 @@ import { useTranslation } from 'react-i18next';
 import Icon from '../../Icons';
 import CategorySelection from '../../drawer/create/assets/projectCategorySelection';
 
-function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
+function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond  , addprojectState}) {
     const { t } = useTranslation();
-
+    console.log({addprojectState})
+    const data = addprojectState?.formData;
     const [creatives, setCreatives] = useState([]);
     const [searchTo, setSearchTo] = useState(null);
     const [_searchTo, _setSearchTo] = useState(null);
@@ -46,6 +47,10 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
             setSelectedCreativeId(null);
         };
     }, []);
+    
+    useEffect(() => {
+        setError({ name: '', category: '' });
+    }, [formData]);
 
     useEffect(() => {
         if (FindUser_respond?.message === "success") {
@@ -108,6 +113,10 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
 
         if (!formData.category) {
             setError(prev => ({ ...prev, category: 'Category selection is required.' }));
+            return;
+        }
+        if(data?.creatives?.some(item=>item._id === formData._id)) {
+            setError(prev => ({ ...prev, name: 'This user is already added.' }));
             return;
         }
 
@@ -271,7 +280,8 @@ function AddOtherCreatives({ onSubmit, FindUser, FindUser_respond }) {
 }
 
 const mapStateToProps = (state) => ({
-    FindUser_respond: state.api.FindUser
+    FindUser_respond: state.api.FindUser,
+    addprojectState: state.addproject
 });
 
 const mapDispatchToProps = {
