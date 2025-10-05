@@ -284,11 +284,12 @@ function ReceiveProjectFiles({
         }
     }, [acceptAllFiles_respond?.data || acceptAllFiles_respond?.message]);
     useEffect(() => {
-        if (report_respond?.data || report_respond?.message) {
+        if (report_respond?.message === 'success') {
             toggleDrawer()
             ClosePopUp('report-contract')
+            getAllContracts()
         }
-    }, [report_respond?.data || report_respond?.message]);
+    }, [report_respond?.message]);
 
     useEffect(() => {
         if (getType() == "producer") {
@@ -787,6 +788,20 @@ function ReceiveProjectFiles({
                                                 {item?.desc || t("No description provided")}
                                             </span>
                                         </div>
+                                        {item?.state.length > 0 && item?.state.some(feedback => !feedback.isSystem) && (
+                                        <div className='col-span-2'>
+                                            <h2 className='text-gray-500 dark:text-gray-400 text-sm font-medium mb-2'>{t("Feedback")}</h2>
+                                                {item?.state.map((feedback, feedbackIndex) => 
+                                                    (!feedback.isSystem) &&
+                                                    (
+                                                        <div key={feedbackIndex} className='text-gray-900 flex items-center gap-1 dark:text-white font-semibold'>
+                                                            <Icon name={"file"} className="mx-1 size-4 text-[#666666] dark:text-[#B3B3B3]" />
+                                                            {feedback.feedback}
+                                                        </div>
+                                                    )
+                                                )}
+                                        </div>
+                                        )}
                                     </div>
                                     
                                     {item?.attachments?.length > 0 &&

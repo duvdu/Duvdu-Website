@@ -873,5 +873,7 @@
   "Wallet Name": "اسم المحفظة",
   "Bank Account Name": "اسم الحساب البنكي",
   "Wallet Number": "رقم المحفظة",
-  "Bank Account Number": "رقم الحساب البنكي"
+  "Bank Account Number": "رقم الحساب البنكي",
+  "Feedback": "التعليق",
+  "contract number": "رقم العقد"
 }

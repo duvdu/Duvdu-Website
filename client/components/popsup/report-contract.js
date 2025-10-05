@@ -35,7 +35,7 @@ function ReportContract({ data, UpdateFormData, resetForm, formData, report_resp
         resetForm()
     };
     useEffect(() => {
-        if (report_respond?.data)
+        if (report_respond?.message === 'success')
             setPost_success(true)
     }, [report_respond?.message])
     function onsubmit() {
@@ -56,15 +56,11 @@ function ReportContract({ data, UpdateFormData, resetForm, formData, report_resp
     }
 
 
-    useEffect(() => {
-        if (report_respond?.data?.createdAt)
-            ClosePopUp("report-contract")
-    }, [report_respond?.data?.createdAt])
     var convertError = JSON.parse(report_respond?.error ?? null)
     const isEnable = Object.keys(validateRequiredFields()).length == 0
     return (
         <>
-                    <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Report" />
+        <SuccessfullyPosting isShow={post_success} onCancel={OnSucess} message="Report" />
             <Popup id='report-contract' className={'w-full lg:w-[942px] '} header={'Report contract'} onCancel={handlereset}>
                 <section className='mt-6'>
                     <span className='font-semibold text-2xl capitalize'>{t("what happened ?")}</span>

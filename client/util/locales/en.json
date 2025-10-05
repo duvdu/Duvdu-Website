@@ -875,5 +875,7 @@
   "Wallet Name": "Wallet Name",
   "Bank Account Name": "Bank Account Name",
   "Wallet Number": "Wallet Number",
-  "Bank Account Number": "Bank Account Number"
+  "Bank Account Number": "Bank Account Number",
+  "Feedback": "Feedback",
+  "contract number": "contract number"
 }

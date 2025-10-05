@@ -97,7 +97,11 @@ const SelectDate = ({ onChange, value, isInstant = true, dateType = 'appointment
 
     const handleDateClick = (date) => {
         setSelectedDate(date);
-        if (onChange) onChange(date.toISOString());
+        // Use current time instead of fixed 10:00:00 time
+        const now = new Date();
+        const selectedDateWithCurrentTime = new Date(date);
+        selectedDateWithCurrentTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+        if (onChange) onChange(selectedDateWithCurrentTime.toISOString());
     };
 
     const handleScroll = (change) => {

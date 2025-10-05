@@ -195,11 +195,11 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
 
                 {
                     [
-                        {
-                            url: '/dashboard',
-                            icon: 'dashboard',
-                            name: 'Performance Hub',
-                        },
+                        // {
+                        //     url: '/dashboard',
+                        //     icon: 'dashboard',
+                        //     name: 'Performance Hub',
+                        // },
                         {
                             url: '/contracts',
                             icon: 'contracts',

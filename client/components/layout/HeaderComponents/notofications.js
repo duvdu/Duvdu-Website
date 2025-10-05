@@ -232,6 +232,8 @@ const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
                 return '/project/projectInvitations';
             case ('new_follower'):
                 return `/creative/${username}`
+            case ('newFavorite'):
+                return '/save/favorites'
             default:
                 return `/contracts?contract=${target}`
         }
@@ -244,9 +246,9 @@ const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
                 <div className='cursor-pointer'>
                     <div className="cursor-pointer">
                         <span className="rtl:hidden font-bold">{shortName}</span>
-                        <span className="text-xs opacity-60 mx-2">{tile.title}</span>
+                        <span className="text-xs mx-2">{tile.title}</span>
                     </div>
-                    <div ref={paragraphRef} className={`font-bold text-sm ${!showAll ? 'line-clamp-1' : ''}`}>
+                    <div ref={paragraphRef} className={`opacity-60 text-xs ${!showAll ? 'line-clamp-1' : ''}`}>
                         {tile.message}
                     </div>
                 </div>

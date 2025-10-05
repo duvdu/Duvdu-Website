@@ -64,8 +64,8 @@ const LeftSide = ({ getAllContracts, respond, api, toggleContractData, user, Rig
         const pendingcl = _datacl?.filter(data => handleStatus(data.contract.status) == 0)
         const checkoutcl = _datacl?.filter(data => handleStatus(data.contract.status) == 2)
         const ongoingcl = _datacl?.filter(data => handleStatus(data.contract.status) == 1)
-        setSPPending(pendingsp?.length + checkoutsp?.length + ongoingsp?.length)
-        setCLPending(pendingcl?.length + checkoutcl?.length + ongoingcl?.length)
+        setSPPending((pendingsp?.length ?? 0) +(checkoutsp?.length ?? 0)+(ongoingsp?.length ?? 0))
+        setCLPending((pendingcl?.length ?? 0) +(checkoutcl?.length ?? 0)+(ongoingcl?.length ?? 0))
         setData(_data)
     }, [activeIndex, respond?.data])
 

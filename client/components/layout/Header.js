@@ -312,7 +312,7 @@ const Header = ({
                                 <div className="header-right">
                                     {fromlayout.showTabs && isLogin === true &&
                                         <div className="header-tabs">
-                                            <div className="">
+                                            {/* <div className="">
                                                 <Link href="/dashboard">
                                                     <div className="header-link">
                                                         <Icon name={"dashboard"} className="mx-1 text-[#666666] dark:text-[#B3B3B3]" />
@@ -322,7 +322,7 @@ const Header = ({
                                                     </div>
                                                 </Link>
 
-                                            </div>
+                                            </div> */}
 
                                             <Link href="/contracts">
                                                 <div className="header-link">
