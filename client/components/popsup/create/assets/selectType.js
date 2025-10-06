@@ -40,18 +40,18 @@ function PostPopup({auth}) {
                             "value": "project",
                             "url": "project"
                         },
-                        {
-                            "value": "copy right",
-                            "url": "copyrights-permits"
-                        },
-                        {
-                            "value": "rental",
-                            "url": "rental"
-                        },
-                        {
-                            "value": "producer",
-                            "url": "add-producer"
-                        },
+                        // {
+                        //     "value": "copy right",
+                        //     "url": "copyrights-permits"
+                        // },
+                        // {
+                        //     "value": "rental",
+                        //     "url": "rental"
+                        // },
+                        // {
+                        //     "value": "producer",
+                        //     "url": "add-producer"
+                        // },
                     ]
                         .map((item, index) => (
                             <li

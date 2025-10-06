@@ -264,12 +264,17 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("appointment Date")}</h3>
-                                <SelectDate onChange={(value) => UpdateFormData('appointmentDate', value)} isInstant={isInstant} dateType="appointment"/>
+                                <SelectDate onChange={(value) => {
+                                    UpdateFormData('appointmentDate', value)
+                                    if (formData.startDate && new Date(formData.startDate).getTime() < new Date(value).getTime()) {
+                                        UpdateFormData('startDate', value)
+                                    }
+                                }} isInstant={isInstant} dateType="appointment"/>
                                 <ErrorMessage ErrorMsg={ErrorMsg.appointmentDate}/>
                             </section>
                             <section className="my-11">
                                 <h3 className="capitalize opacity-60 mb-4">{t("Start Date")}</h3>
-                                <SelectDate onChange={(value) => UpdateFormData('startDate', value)} isInstant={isInstant} dateType="start"/>
+                                <SelectDate onChange={(value) => UpdateFormData('startDate', value)} isInstant={isInstant} dateType="start" minDate={formData.appointmentDate}/>
                                 <ErrorMessage ErrorMsg={ErrorMsg.startDate}/>
                             </section>
                             <section className={`left-0 bottom-0 sticky w-full flex flex-col gap-7 py-6 z-10`}>

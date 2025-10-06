@@ -245,20 +245,20 @@ const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
             <Link href={NotificationTypeLink(tile.type, tile.target, tile.sourceUser?.username)}>
                 <div className='cursor-pointer'>
                     <div className="cursor-pointer">
-                        <span className="rtl:hidden font-bold">{shortName}</span>
-                        <span className="text-xs mx-2">{tile.title}</span>
+                        {/* <span className="rtl:hidden font-bold">{shortName}</span> */}
+                        <span className="text-xs font-semibold">{tile.title}</span>
                     </div>
                     <div ref={paragraphRef} className={`opacity-60 text-xs ${!showAll ? 'line-clamp-1' : ''}`}>
                         {tile.message}
                     </div>
                 </div>
             </Link>:TypeCase(tile.type) === 'popup' ?
-            <button data-popup-toggle="popup" data-popup-target={tile.type} className="w-full lg:w-64 flex gap-4 text-start">
+            <button data-popup-toggle="popup" data-popup-target={tile.type} className="flex flex-col justify-center text-start">
                 <div className="cursor-pointer">
-                    <span className="rtl:hidden font-bold">{shortName}</span>
-                    <span className="text-xs opacity-60 mx-2">{tile.title}</span>
+                    {/* <span className="rtl:hidden font-bold">{shortName}</span> */}
+                    <span className="text-xs font-semibold">{tile.title}</span>
                 </div>
-                <div ref={paragraphRef} className={`font-bold text-sm ${!showAll ? 'line-clamp-1' : ''}`}>
+                <div ref={paragraphRef} className={`opacity-60 text-xs ${!showAll ? 'line-clamp-1' : ''}`}>
                     {tile.message}
                 </div>
             </button>
@@ -276,8 +276,8 @@ const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
                 className="w-full lg:w-64 flex flex-col text-start cursor-pointer"
             >
                 <div className="flex items-center">
-                    <span className="rtl:hidden font-bold">{shortName}</span>
-                    <span className="text-xs opacity-60 mx-2">{tile.title}</span>
+                    {/* <span className="rtl:hidden font-bold">{shortName}</span> */}
+                    <span className="text-xs opacity-60">{tile.title}</span>
                 </div>
                 <div ref={paragraphRef} className={`font-bold text-sm ${!showAll ? 'line-clamp-1' : ''}`}>
                     {tile.message}

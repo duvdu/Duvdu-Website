@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Icon from "../Icons";
 
-const SelectDate = ({ onChange, value, isInstant = true, dateType = 'appointment' }) => {
+const SelectDate = ({ onChange, value, isInstant = true, dateType = 'appointment', minDate = null }) => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(value ? new Date(value) : null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -17,7 +17,7 @@ const SelectDate = ({ onChange, value, isInstant = true, dateType = 'appointment
                 return today;
             } else { // start date
                 const tomorrow = new Date(today);
-                tomorrow.setDate(today.getDate() + 1);
+                tomorrow.setDate(today.getDate());
                 return tomorrow;
             }
         } else {
@@ -28,16 +28,25 @@ const SelectDate = ({ onChange, value, isInstant = true, dateType = 'appointment
                 return tomorrow;
             } else { // start date
                 const dayAfterTomorrow = new Date(today);
-                dayAfterTomorrow.setDate(today.getDate() + 2);
+                dayAfterTomorrow.setDate(today.getDate() + 1);
                 return dayAfterTomorrow;
             }
         }
     };
     
+    // Apply external minDate override when provided
+    const getEffectiveMinimumDate = () => {
+        const baseMin = getMinimumDate();
+        if (!minDate) return baseMin;
+        const externalMin = new Date(minDate);
+        externalMin.setHours(10, 0, 0, 0);
+        return externalMin.getTime() > baseMin.getTime() ? externalMin : baseMin;
+    };
+    
     useEffect(() => {
-        const minDate = getMinimumDate();
-        setCurrentDate(minDate);
-    }, [isInstant, dateType]);
+        const min = getEffectiveMinimumDate();
+        setCurrentDate(min);
+    }, [isInstant, dateType, minDate]);
 
     useEffect(() => {
         if (value) {
@@ -56,7 +65,7 @@ const SelectDate = ({ onChange, value, isInstant = true, dateType = 'appointment
         lastDay.setHours(10, 0, 0, 0); 
         const startDay = firstDay.getDay();
         const totalDays = lastDay.getDate();
-        const minimumDate = getMinimumDate();
+        const minimumDate = getEffectiveMinimumDate();
         const minimumTime = minimumDate.getTime();
     
         // Add leading empty dates for days before the first day of the month

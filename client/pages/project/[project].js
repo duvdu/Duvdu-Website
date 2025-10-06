@@ -83,11 +83,11 @@ const Projects = ({
     }, [project_respond?.data?.category?._id]);
     const toggleDrawer = () => {
         if (auth.login){
-            if(!user.faceRecognition){
-                OpenPopUp("face-verification");
-            }else{
+            // if(!user.faceRecognition){
+            //     OpenPopUp("face-verification");
+            // }else{
                 setIsOpen(!isOpen);
-            }
+            // }
         }
         else{
             OpenPopUp("registration-required");
