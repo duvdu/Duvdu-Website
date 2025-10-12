@@ -306,7 +306,7 @@ const Header = ({
                                             src={isDark ?
                                                 i18n.language == "Arabic" ? "/assets/imgs/theme/dark-logo-ar.svg" : "/assets/imgs/theme/dark-logo.svg" :
                                                 i18n.language == "Arabic" ? "/assets/imgs/theme/logo-ar.svg" : "/assets/imgs/theme/logo.svg"}
-                                            className="max-h-9  cursor-pointer"
+                                            className="min-w-32 max-h-9  cursor-pointer"
                                             alt="main logo"
                                         />
                                     </Link>
@@ -431,7 +431,7 @@ const Header = ({
                                                 src={isDark ?
                                                     i18n.language == "Arabic" ? "/assets/imgs/theme/dark-logo-ar.svg" : "/assets/imgs/theme/dark-logo.svg" :
                                                     i18n.language == "Arabic" ? "/assets/imgs/theme/logo-ar.svg" : "/assets/imgs/theme/logo.svg"}
-                                                className="min-w-32 max-h-9"
+                                                className="min-w-32 max-h-9  cursor-pointer"
                                                 alt="main logo"
                                             />
                                         </div>
