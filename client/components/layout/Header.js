@@ -303,8 +303,10 @@ const Header = ({
                                 <div className="logo logo-width-1 ltr:mr-12 rtl:ml-12 cursor-pointer">
                                     <Link href="/">
                                         <img
-                                            src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                            className="min-h-9 cursor-pointer"
+                                            src={isDark ?
+                                                i18n.language == "Arabic" ? "/assets/imgs/theme/dark-logo-ar.svg" : "/assets/imgs/theme/dark-logo.svg" :
+                                                i18n.language == "Arabic" ? "/assets/imgs/theme/logo-ar.svg" : "/assets/imgs/theme/logo.svg"}
+                                            className="max-h-9  cursor-pointer"
                                             alt="main logo"
                                         />
                                     </Link>
@@ -426,8 +428,10 @@ const Header = ({
                                     <Link href="/">
                                         <div className="cursor-pointer">
                                             <img
-                                                src={isDark ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                                className="min-w-32"
+                                                src={isDark ?
+                                                    i18n.language == "Arabic" ? "/assets/imgs/theme/dark-logo-ar.svg" : "/assets/imgs/theme/dark-logo.svg" :
+                                                    i18n.language == "Arabic" ? "/assets/imgs/theme/logo-ar.svg" : "/assets/imgs/theme/logo.svg"}
+                                                className="min-w-32 max-h-9"
                                                 alt="main logo"
                                             />
                                         </div>

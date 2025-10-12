@@ -6,10 +6,12 @@ import DuvduLoading from "../../elements/duvduLoading.js";
 import Link from 'next/link';
 import { GetNotifications } from "../../../redux/action/apis/realTime/notification/getAllNotification.js";
 import { SetheaderPopUp } from "../../../redux/action/setting";
+import Icon from "../../Icons.js";
 
 
 function Notifications({ getheaderpopup, GetNotifications_resond, GetNotifications, SetheaderPopUp }) {
     const { t } = useTranslation();
+    const [notificationDetails, setNotificationDetails] = useState(null);
     const [viewAllState, setViewAllState] = useState(0);
     const [isMob, setIsMob] = useState(window.innerWidth < 1024);
     const [page, setPage] = useState(1);
@@ -69,6 +71,9 @@ function Notifications({ getheaderpopup, GetNotifications_resond, GetNotificatio
         <div className={isMob ? " dark:bg-black h-screen" : "cart-dropdown-wrap ltr:right-0 rtl:left-0 account-dropdown active"} >
             <div className={isMob ? "" : "dialog dialog-1"}>
                 <div className="overflow-y-scroll rounded-b-[60px] flex flex-col justify-between gap-2 max-h-[80vh]">
+                    {notificationDetails && viewAllState == 3 && (
+                            <NotificationDetails notificationDetails={notificationDetails} t={t} setViewAllState={setViewAllState} />
+                    )}
                     {
                         viewAllState == 0 &&
                         <>
@@ -79,7 +84,9 @@ function Notifications({ getheaderpopup, GetNotifications_resond, GetNotificatio
                                 Type={'notification'} 
                                 list={GetNotifications_resond?.data || []} 
                                 t={t} 
+                                setNotificationDetails={setNotificationDetails}
                                 onViewAll={() => setViewAllState(1)}
+                                setViewAllState={setViewAllState}
                             />
                         }
                         </>
@@ -95,6 +102,8 @@ function Notifications({ getheaderpopup, GetNotifications_resond, GetNotificatio
                             hasMore={hasMore}
                             scrollRef={scrollRef}
                             loadMoreNotifications={loadMoreNotifications}
+                            setNotificationDetails={setNotificationDetails}
+                            setViewAllState={setViewAllState}
                         />
                     }
                 </div>
@@ -103,7 +112,7 @@ function Notifications({ getheaderpopup, GetNotifications_resond, GetNotificatio
     )
 }
 
-const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNotifications , SetheaderPopUp }) => {
+const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNotifications , SetheaderPopUp , setNotificationDetails , setViewAllState }) => {
     const scrollContainerRef = useRef(null);
 
     // Intersection Observer for infinite scroll within ViewAll
@@ -142,7 +151,7 @@ const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNot
                     className="flex flex-col gap-4 mt-8 overflow-y-auto max-h-[60vh]"
                 >
                     {list.map((tile, index) => (
-                        <NotificationTile t={t} key={index + 'not'} tile={tile} SetheaderPopUp={SetheaderPopUp} />
+                        <NotificationTile setNotificationDetails={setNotificationDetails} setViewAllState={setViewAllState} t={t} key={index + 'not'} tile={tile} SetheaderPopUp={SetheaderPopUp} />
                     ))}
                     
                     {/* Loading more indicator */}
@@ -173,7 +182,7 @@ const ViewAll = ({ Type, list, t, isLoadingMore, hasMore, scrollRef, loadMoreNot
     );
 };
 
-const ViewFew = ({ Type, list, t, onViewAll }) => (
+const ViewFew = ({ Type, list, t, onViewAll , setNotificationDetails , setViewAllState }) => (
     <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] p-7 mt-2 md:mt-0">
         <div className="flex items-center justify-between">
             <h2 className="text-base font-bold capitalize">{t(Type)}</h2>
@@ -184,12 +193,71 @@ const ViewFew = ({ Type, list, t, onViewAll }) => (
         {list.length > 0 ?
             <div className={`flex flex-col gap-4 mt-4 overflow-y-hidden max-h-[50vh] overflow-y-auto`}>
                 {list.slice(0, 4).map((tile, index) => (
-                    <NotificationTile t={t} key={index + 'not'} tile={tile} SetheaderPopUp={SetheaderPopUp} />
+                    <NotificationTile setNotificationDetails={setNotificationDetails} setViewAllState={setViewAllState} t={t} key={index + 'not'} tile={tile} SetheaderPopUp={SetheaderPopUp} />
                 ))}
                 
             </div> : <div className="flex flex-col gap-4 mt-8 overflow-y-hidden"> <span className="whitespace-nowrap w-64">{t(`There's No ${Type}`)}</span> </div>}
     </div>
 );
+
+const NotificationDetails = ({ notificationDetails , t , setViewAllState }) => {
+    const convertTime = (timestamp) => {
+        const utcDate = new Date(timestamp);
+
+        // convert to local time (browser timezone)
+        const localDate = new Date(utcDate);
+
+        // format
+        const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+        };
+
+        // format with Intl.DateTimeFormat
+        const formatted = new Intl.DateTimeFormat('en-GB', options).format(localDate);
+        return formatted;
+    };
+    return (
+        <div className="w-auto rounded-[45px] border-[#00000026] bg-white dark:bg-[#1A2024] sm:dark:bg-[#1A2024] p-7 mt-2 md:mt-0">
+            <div className={'flex gap-3 mb-5'} >
+                <div className='flex justify-center items-center rounded-full border px-4 cursor-pointer aspect-square' onClick={() => setViewAllState(0)}>
+                    <Icon className='w-5 h-5 text-black dark:text-white rtl:rotate-180' name={'angle-left'} />
+                </div>
+                <div className='flex rounded-full border font-medium items-center'>
+                    <span className='capitalize mx-5 text-lg whitespace-nowrap'>{t('notification details')}</span>
+                </div>
+            </div>
+            {notificationDetails.title &&
+            <div className="mb-3">
+                <h2 className='opacity-60 capitalize'>{t("title")}</h2>
+                <span className='text-sm font-semibold'>
+                {notificationDetails.title}
+                </span>
+            </div>
+            }
+            {notificationDetails.message &&
+            <div className="mb-3">
+                <h2 className='opacity-60 capitalize'>{t("message")}</h2>
+                <span className='text-sm font-semibold'>
+                {notificationDetails.message}
+                </span>
+            </div>
+            }
+            {notificationDetails.createdAt &&
+            <div className="mb-3">
+                <h2 className='opacity-60 capitalize'>{t("createdAt")}</h2>
+                <span className='text-sm font-semibold'>
+                {convertTime(notificationDetails.createdAt)}
+                </span>
+            </div>
+            }
+        </div>
+    );
+}
 
 const TypeCase = (type) =>{
     switch(type){
@@ -199,12 +267,14 @@ const TypeCase = (type) =>{
             return 'transaction';
         case ('funding'):
             return 'funding';
+        case ('system'):
+            return 'system';
         default:
             return 'link'
     }
 }
 
-const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
+const NotificationTile = ({ tile , t, SetheaderPopUp , setNotificationDetails , setViewAllState }) => {
     const [showAll, setShowAll] = useState(false);
     const [hasMore, setHasMore] = useState(false);
     const paragraphRef = useRef(null);
@@ -228,6 +298,8 @@ const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
     
     const NotificationTypeLink = (type , target ,username)=>{
         switch(type){
+            case ('project'):
+                return `/project/${target}`;
             case ('new tag'):
                 return '/project/projectInvitations';
             case ('new_follower'):
@@ -262,12 +334,19 @@ const NotificationTile = ({ tile , t, SetheaderPopUp }) => {
                     {tile.message}
                 </div>
             </button>
-            :        
+            : TypeCase(tile.type) === 'system' ?
+            <button onClick={() => {
+                setNotificationDetails(tile);
+                setViewAllState(3);
+            }} className="w-full lg:w-64 flex flex-col text-start cursor-pointer">
+                <span className="text-xs opacity-60">{tile.title}</span>
+            </button>
+            :       
             <button
                 onClick={() => {
                     if (TypeCase(tile.type) === 'transaction') {
                         SetheaderPopUp(Types.SHOWMONEYSEND);
-                    } else if (TypeCase(tile.type) === 'funding') {
+                } else if (TypeCase(tile.type) === 'funding') {
                         SetheaderPopUp(Types.SHOWMONEYRECEIVE);
                     }
                 }}

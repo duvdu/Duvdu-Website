@@ -21,7 +21,7 @@ import { IsPopUpOpen } from "../../util/util";
 import Messages from "./HeaderComponents/messages";
 
 
-const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayout,
+const MobileMenu = ({ isToggled, isDark, toggleClick, categories, isLogin, user,fromlayout,
     MarkNotificationsAsRead,
     GetNotifications,
     GetAllChats,
@@ -29,7 +29,7 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
     UnReadNotification_respond,
     UnReadNotification
  }) => {
-    const { t } = useTranslation();
+    const { t , i18n} = useTranslation();
     const [page, setPage] = useState(isToggled);
     const [countUnRead, setCountUnRead] = useState({
         notificationsCount:0,
@@ -74,20 +74,17 @@ const MobileMenu = ({ isToggled, toggleClick, categories, isLogin, user,fromlayo
     },[page , isLogin])
     const togglePage = () => setPage(prev => prev == 2 ? 3 : 2)
     const Header = ({ onClose, toggleOpenSearch, openSearch }) => {
-        const [isDarkMode, setIsDarkMode] = useState(true);
-        useEffect(() => {
-            isDarkMode = localStorage.getItem('darkMode') === 'true';
-            setIsDarkMode(isDarkMode)
-        }, [])
 
         return <div className="container">
             <div className="flex items-center py-2">
                 <div className="flex justify-start w-full">
                     <Link href="/">
                         <a>
-                            <img key={isDarkMode}
-                                src={isDarkMode ? "/assets/imgs/theme/dark-logo.svg" : "/assets/imgs/theme/logo.svg"}
-                                className="w-32"
+                            <img key={isDark}
+                                src={isDark ? 
+                                    i18n.language == "Arabic" ? "/assets/imgs/theme/dark-logo-ar.svg" : "/assets/imgs/theme/dark-logo.svg" :
+                                    i18n.language == "Arabic" ? "/assets/imgs/theme/logo-ar.svg" : "/assets/imgs/theme/logo.svg"}
+                                className="w-32 max-h-9"
                                 alt="main logo"
                             />
                         </a>
@@ -420,6 +417,7 @@ const mapStateToProps = (state) => ({
     GetAllChats_respond: state.api.GetAllChats,
     UnReadNotification_respond: state.api.UnReadNotification,
     getheaderpopup: state.setting.headerpopup,
+    isDark: state.setting.ISDARK,
 
 });
 
