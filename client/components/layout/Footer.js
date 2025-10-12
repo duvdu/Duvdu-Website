@@ -75,7 +75,7 @@ const Footer = ({isDark, pages_respond, GetPages , status}) => {
                             </a>
                         </div>
                     </div>
-                    <p className='text-center text-white mt-5'>© Copyright main street company 2025</p>
+                    <p className='text-center text-white mt-5'>ⓒ 2025 Main Street Company. All rights reserved.</p>
                 </div>
             </footer>
         </>
