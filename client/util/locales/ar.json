@@ -729,7 +729,7 @@
     "message": "رسالتك",
     "send": "إرسال الرسالة",
     "error_short_message": "يجب أن تكون الرسالة على الأقل 20 حرفًا.",
-    "success_message": "تم إرسال التذكرة بنجاح",
+    "Successfully Send Ticket": "تم إرسال التذكرة",
     "talk_title": "طرق التواصل",
     "email": "البريد الإلكتروني",
     "phone": "رقم الهاتف"

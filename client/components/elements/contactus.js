@@ -8,9 +8,9 @@ import SuccessfullyPosting from "../popsup/post_successfully_posting";
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from './ErrorMessage';
 
-const ContactUs = ({ CreateTicket, user, api, respond }) => {
+const ContactUs = ({ CreateTicket, user, api, respond, isLogin }) => {
     const [post_success, setPost_success] = useState(false);
-    const { t } = useTranslation();
+    const { t , i18n } = useTranslation();
     const [errorMessage, setErrorMessage] = useState("");
     const [formData, setFormData] = useState({
         username: '',
@@ -19,15 +19,24 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
     });
     var convertError = respond?.error === 'Token Expired' ? respond?.error : JSON.parse(respond?.error ?? null)?.data?.errors[0]?.message
 
+
     useEffect(() => {
-        if (user) {
+        if (isLogin) {
+            if(user) {
             setFormData({
                 username: user?.name || '',
-                number: user?.phoneNumber?.number || '',
+                    number: user?.phoneNumber?.number || '',
+                    message: ''
+                });
+            } 
+        }else{
+            setFormData({
+                username: '',
+                number: '',
                 message: ''
             });
         }
-    }, [user]);
+    }, [user , isLogin]);
 
     useEffect(() => {
         if (respond?.message === 'success') {
@@ -67,12 +76,14 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
 
     const toggleDrawer = () => {
         setPost_success(false);
-        if (user) {
+        if (isLogin) {
+            if(user) {
             setFormData({
                 username: user?.name || '',
                 number: user?.phoneNumber?.number || '',
                 message: ''
             });
+            }
         } else {
             setFormData({
                 username: '',
@@ -84,7 +95,7 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
 
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message={t("contact_us.success_message")} />
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message={"Send Ticket"} />
             <Layout>
                 <div className='container py-10'>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-8 items-center'>
@@ -100,7 +111,7 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
                                         onChange={handleChange}
                                         placeholder={t("contact_us.full_name")}
                                         className='app-field'
-                                        disabled={user?.username}
+                                        disabled={isLogin}
                                         required
                                     />
                                 </div>
@@ -109,10 +120,11 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
                                     <input
                                         type="tel"
                                         name="number"
+                                        dir={i18n.language==='Arabic'?'rtl':'ltr'}
                                         value={formData.number}
                                         onChange={handleChange}
                                         placeholder={t("contact_us.phone_number")}
-                                        disabled={user?.phoneNumber?.number}
+                                        disabled={isLogin}
                                         className='app-field'
                                     />
                                 </div>
@@ -145,7 +157,7 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
                                 <div className="flex flex-col md:flex-row items-center gap-4">
                                     <div className="flex items-center gap-2">
                                         <strong className="text-sm text-gray-700">📞 {t("contact_us.phone")}:</strong>
-                                        <a href="tel:+201282221544" className="text-sm text-blue-600 hover:underline">
+                                        <a dir={'ltr'} href="tel:+201282221544" className="text-sm text-blue-600 hover:underline">
                                             +20 128 222 1544
                                         </a>
                                     </div>
@@ -177,6 +189,7 @@ const ContactUs = ({ CreateTicket, user, api, respond }) => {
 const mapStateToProps = (state) => ({
     api: state.api,
     respond: state.api.CreateTicket,
+    isLogin: state.auth.login,
     user: state.user.profile
 });
 

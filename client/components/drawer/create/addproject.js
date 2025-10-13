@@ -210,6 +210,9 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                 errors.maximum = 'Maximum should be not equal to minimum';
             }
         }
+        if(categoryDetails?.media === 'audio'){
+            if(!formData.audioCover || !formData.audioCover.length) errors.audioCover = 'Audio cover is required';
+        }
 
         return errors;
     };

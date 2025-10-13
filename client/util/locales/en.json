@@ -42,7 +42,7 @@
     "message": "Your Message",
     "send": "Send Message",
     "error_short_message": "Your message must be at least 20 characters long.",
-    "success_message": "Successfully Send Ticket",
+    "Successfully Send Ticket": "Successfully Send Ticket",
     "talk_title": "Let's Talk",
     "email": "Email",
     "phone": "Phone"

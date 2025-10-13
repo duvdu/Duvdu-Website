@@ -192,7 +192,7 @@ function Setting({
                         name: 'Let’s connect',
                         login: false,
                         action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
-                        onClick: () => setOpened(1)
+                        onClick: () => router.push("/contact_us")
                     },
                     {
                         img: 'delete-icon.svg',
@@ -242,7 +242,7 @@ function Setting({
                                     name: 'Let’s connect',
                                     login: true,
                                     action: <Icon className="text-[#4F5E7B] opacity-40 w-2" name={"angle-right"} />,
-                                    onClick: () => setOpened(1)
+                                    onClick: () => router.push("/contact_us")
                                 },
                                 // {
                                 //     img: 'about-icon.svg',
