@@ -267,10 +267,18 @@ const TypeCase = (type) =>{
             return 'transaction';
         case ('funding'):
             return 'funding';
-        case ('system'):
-            return 'system';
+        case ('project'):
+            return 'link';
+        case ('new tag'):
+            return 'link';
+        case ('new_follower'):
+            return 'link';
+        case ('newFavorite'):
+            return 'link';
+        case ('contract'):
+            return 'link';
         default:
-            return 'link'
+            return 'details';
     }
 }
 
@@ -334,12 +342,15 @@ const NotificationTile = ({ tile , t, SetheaderPopUp , setNotificationDetails , 
                     {tile.message}
                 </div>
             </button>
-            : TypeCase(tile.type) === 'system' ?
+            : TypeCase(tile.type) === 'details' ?
             <button onClick={() => {
                 setNotificationDetails(tile);
                 setViewAllState(3);
-            }} className="w-full lg:w-64 flex flex-col text-start cursor-pointer">
-                <span className="text-xs opacity-60">{tile.title}</span>
+            }} className="flex flex-col justify-center text-start">
+                <span className="text-xs font-semibold">{tile.title}</span>
+                <div ref={paragraphRef} className={`opacity-60 text-xs ${!showAll ? 'line-clamp-1' : ''}`}>
+                    {tile.message}
+                </div>
             </button>
             :       
             <button
@@ -352,7 +363,7 @@ const NotificationTile = ({ tile , t, SetheaderPopUp , setNotificationDetails , 
                 }}
                 data-popup-toggle="popup"
                 data-popup-target={tile.type}
-                className="w-full lg:w-64 flex flex-col text-start cursor-pointer"
+                className="flex flex-col justify-center text-start"
             >
                 <div className="flex items-center">
                     {/* <span className="rtl:hidden font-bold">{shortName}</span> */}
