@@ -3,7 +3,7 @@ import Switch from 'react-switch'; // Importing react-switch
 
 let globalValue = {};
 
-const CustomSwitch = ({ onSwitchChange, value, id = '' }) => {
+const CustomSwitch = ({ onSwitchChange, value,loading = null, id = '' }) => {
   const [isFreedom, setIsFreedom] = useState(globalValue[id]);
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const CustomSwitch = ({ onSwitchChange, value, id = '' }) => {
       height={20}
       width={50}
       handleDiameter={28}
+      disabled={loading}
     />
   );
 };

@@ -36,6 +36,7 @@ function Setting({
     const [open, setOpened] = useState(0);
     // Determine mobile view only on client
     const [isMob, setIsMob] = useState(typeof window !== 'undefined' && window.innerWidth < 1024);
+    const [instantLocal, setInstantLocal] = useState(false);
     useEffect(() => {
         if (getheaderpopup === Types.SHOWMONEYSEND) {
             setOpened(3);
@@ -45,6 +46,15 @@ function Setting({
             setOpened(0);
         }
     }, [getheaderpopup]);
+
+    useEffect(() => {
+        const serverValue = updateProfile_respond?.data?.isAvaliableToInstantProjects;
+        if (serverValue !== undefined && serverValue !== null) {
+            setInstantLocal(!!serverValue);
+            return;
+        }
+        setInstantLocal(!!user?.isAvaliableToInstantProjects);
+    }, [user?.isAvaliableToInstantProjects, updateProfile_respond?.data?.isAvaliableToInstantProjects]);
 
     function handleResize() {
         setIsMob(window.innerWidth < 1024);
@@ -75,11 +85,11 @@ function Setting({
     }
 
     function updateInstantState(checked) {
+        setInstantLocal(checked)
         const data = new FormData();
         data.append('isAvaliableToInstantProjects', checked)
         updateProfile(data, false)
     }
-
     const Language = () => {
         const { i18n } = useTranslation();
 
@@ -145,14 +155,14 @@ function Setting({
                         img: 'mode-icon.svg',
                         name: 'Dark mode',
                         login: false,
-                        action: <Switch value={isDark} onSwitchChange={() => { toggle() }} />,
+                        action: <Switch id={"dark_mode"} value={isDark} onSwitchChange={() => { toggle() }} />,
                     },
                     {
                         img: 'power-icon.svg',
                         name: 'Instant projects',
                         login: false,
                         subName: 'short delivery time, More money',
-                        action: <Switch onSwitchChange={updateInstantState} value={updateProfile_respond?.data?.isAvaliableToInstantProjects != null ? updateProfile_respond?.data?.isAvaliableToInstantProjects : user?.isAvaliableToInstantProjects} />,
+                        action: <Switch id="instant_projects" loading={updateProfile_respond?.loading} onSwitchChange={updateInstantState} value={instantLocal} />,
                     },
                     {
                         img: 'money-sent.svg',
