@@ -76,6 +76,7 @@ const ContactUs = ({ CreateTicket, user, api, respond, isLogin }) => {
 
     const toggleDrawer = () => {
         setPost_success(false);
+        CreateTicket({message:null})
         if (isLogin) {
             if(user) {
             setFormData({
