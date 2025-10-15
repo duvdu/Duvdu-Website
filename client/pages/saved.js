@@ -91,7 +91,7 @@ const Saved = ({
                             <div className={`absolute bottom-0 w-full h-1/3 rounded-b-[50px]  ${isFav?'gradient2':'gradient1`'}`} />
                             <div className={`boards-info projects-name flex items-center gap-2 ${isFav && '!text-[#263257] dark:!text-white'}`}>
                                 {isFav && <Icon className='hidden dark:block' name={"favorites"} />}
-                                {isFav && <Icon className='block dark:hidden w-full' name={"favorite"} />}
+                                {isFav && <Icon className='block dark:hidden' name={"favorite"} />}
                                 {t(title)}
                             </div>
                         </div>

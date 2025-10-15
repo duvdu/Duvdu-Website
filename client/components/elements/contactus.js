@@ -155,13 +155,13 @@ const ContactUs = ({ CreateTicket, user, api, respond, isLogin }) => {
                             <div className='mt-10'>
                                 <h2 className="text-lg font-semibold mb-2">{t("contact_us.talk_title")}</h2>
                                 <div className="flex flex-col md:flex-row items-center gap-4">
-                                    <div className="flex items-center gap-2">
+                                    {/* <div className="flex items-center gap-2">
                                         <strong className="text-sm text-gray-700">📞 {t("contact_us.phone")}:</strong>
                                         <a dir={'ltr'} href="tel:+201282221544" className="text-sm text-blue-600 hover:underline">
                                             +20 128 222 1544
                                         </a>
                                     </div>
-                                    <div className="hidden md:inline-block w-px h-5 bg-gray-300"></div>
+                                    <div className="hidden md:inline-block w-px h-5 bg-gray-300"></div> */}
                                     <div className="flex items-center gap-2">
                                         <strong className="text-sm text-gray-700">✉️ {t("contact_us.email")}:</strong>
                                         <a href="mailto:info@duvdu.com" className="text-sm text-blue-600 hover:underline">
