@@ -308,7 +308,7 @@ const MobileMenu = ({ isToggled, isDark, toggleClick, categories, isLogin, user,
     const DownLoadApp = () =>
         <div className="grad-card bg-gradient-to-b from-[#D5D5D5] dark:from-black to-transparent border-50 p-6 mx-5">
             <div className="flex flex-col gap-3">
-                <h3 className="font-bold text-xl"> Get <span className="text-primary">{t("duvdu")}</span> on your mobile phone Now! </h3>
+                <h3 className="font-bold text-xl">{t("Get duvdu on your mobile phone Now!")}</h3>
                 <div className='flex items-center w-full gap-2'>
                     <a className='w-1/2 sm:w-1/3 rounded-lg'  href="https://play.google.com/store/apps/details?id=com.duvdu.duvdu_app" target="_blank">
                         <img src="/assets/imgs/theme/tab/android.png" />

@@ -577,6 +577,7 @@
   "File Size:": "File Size:",
   "Error Fields:": "Error Fields:",
   "on your mobile phone Now!": "on your mobile phone Now!",
+  "Get duvdu on your mobile phone Now!": "Get duvdu on your mobile phone Now!",
   "my clients": "My Projects",
   "my bookings": "My Bookings",
   "Error Messages:": "Error Messages:",
@@ -877,5 +878,7 @@
   "Wallet Number": "Wallet Number",
   "Bank Account Number": "Bank Account Number",
   "Feedback": "Feedback",
-  "contract number": "Contract Number"
+  "contract number": "Contract Number",
+  "Invite": "Invite",
+  "Are you sure you want to delete this Collection?": "Are you sure you want to delete this Collection?"
 }
