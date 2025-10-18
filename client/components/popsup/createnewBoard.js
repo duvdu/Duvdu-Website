@@ -58,7 +58,7 @@ function createnewBoard({onSbmit , loading}) {
                                     <div className='rounded-full p-4 cursor-pointer flex justify-center items-center bg-[#F5F5F5]'>
                                         <Icon name={"add-file"} className='size-6' />
                                     </div>
-                                    <span className="text-primary text-sm font-bold mt-3">Click to {prev ? 'Change' : 'Upload'}</span>
+                                    <span className="text-primary text-sm font-bold mt-3">{prev ? t("Click to Change") : t("Click to Upload")}</span>
                                 </div>
                                 {renderMediaPreview()}
                             </label>

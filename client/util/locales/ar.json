@@ -523,7 +523,7 @@
   "registration required": "التسجيل مطلوب",
   "Delete Bookmark": "حذف الملف",
   "Delete Copyright": "حذف حقوق الطبع والنشر",
-  "Edit Bookmark Title": "تعديل عنوان الملف",
+  "Edit Bookmark Title": "تعديل الملف",
   "Followers": "المتابعون",
   "followers": "المتابعون",
   "Follow": "متابعة",
@@ -880,5 +880,8 @@
   "Feedback": "التعليق",
   "contract number": "رقم الحجز",
   "Invite": "اضف",
-  "Are you sure you want to delete this Collection?": "يرجى تأكد أمر المحو"
+  "Are you sure you want to delete this Collection?": "يرجى تأكد أمر المحو",
+  "Click to Change": "تغيير الغلاف",
+  "Click to Upload": "إضافة غلاف",
+  "Upload cover photo": "إضافة غلاف"
 }

@@ -882,5 +882,8 @@
   "Feedback": "Feedback",
   "contract number": "Contract Number",
   "Invite": "Invite",
-  "Are you sure you want to delete this Collection?": "Are you sure you want to delete this Collection?"
+  "Are you sure you want to delete this Collection?": "Are you sure you want to delete this Collection?",
+  "Click to Change": "Change cover",
+  "Click to Upload": "Add cover",
+  "Upload cover photo": "Add cover"
 }

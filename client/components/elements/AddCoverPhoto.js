@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { handleFileUpload, handleRemoveEvent } from '../../util/util';
 import Icon from '../Icons';
+import { useTranslation } from 'react-i18next';
 
 function AddCoverPhoto({ UpdateFormData, header,initalValue }) {
     const [cover, setCover] = useState(initalValue);
-
+    const { t } = useTranslation();
     const coverUpload = (e) => {
         const uploadedFile = handleFileUpload(e);
         if(!uploadedFile) return
@@ -29,7 +30,7 @@ function AddCoverPhoto({ UpdateFormData, header,initalValue }) {
                             <div className='rounded-full p-4 bg-[#F5F5F5] cursor-pointer'>
                                 <Icon name={"add-file"} className='w-6 h-6' />
                             </div>
-                            <span className="text-primary text-sm">{header || "Upload cover photo"}</span>
+                            <span className="text-primary text-sm">{header || t("Upload cover photo")}</span>
                         </>
                     )}
                 </div>
