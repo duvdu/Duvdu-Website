@@ -346,7 +346,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <span className='mx-2' key={i}>
                                     <span><strong>{t("tool :")}</strong> {e.name} </span>
                                     <br />
-                                    <span> <strong>{t("price :")}</strong> {e.unitPrice} $ </span>
+                                    <span> <strong>{t("price :")}</strong> {e.unitPrice} {t('egp_currency')} </span>
                                 </span>
                             ))}
                             remove={(value) => removeFromArray('tools', value)}
@@ -363,7 +363,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
                                 <span className='mx-2' key={i}>
                                     <span><strong>{t("function :")}</strong> {e.name} </span>
                                     <br />
-                                    <span> <strong>{t("price :")}</strong> {e.unitPrice} $ </span>
+                                    <span> <strong>{t("price :")}</strong> {e.unitPrice} {t('egp_currency')} </span>
                                 </span>
                             )}
                             remove={(value) => removeFromArray('functions', value)}
