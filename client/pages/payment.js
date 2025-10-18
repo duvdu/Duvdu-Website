@@ -250,7 +250,7 @@ const RightSideSubscription = ({checkSubscribe , checkSubscribe_response , subsc
                 </span>
                 <div className='flex font-bold justify-between mt-5'>
                     <span>{t("Total Amount")}</span>
-                    <span>{price} {t("EGP")}</span>
+                    <span>{price} {t('egp_currency')}</span>
                 </div>
                 <section>
                     <div className="flex justify-center mt-5">
@@ -316,7 +316,7 @@ const RightSideContract = ({ payment_respond , paymentAPI ,isLogin}) => {
                 <p className='opacity-60 text-lg font-semibold'>{t("Payment Summary")}</p>
                 <div className='flex font-bold justify-between mt-5'>
                     <span>{t("Total Amount")}</span>
-                    <span>{price || '100'} {t("EGP")}</span>
+                    <span>{price || '100'} {t('egp_currency')}</span>
                 </div>
                 <section>
                     <div className="flex justify-center mt-5">

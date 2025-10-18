@@ -1172,7 +1172,7 @@ function ReceiveProjectFiles({
                                             {payment_respond?.loading && actionAccept==='payment' ? 
                                                 <Loading/>
                                                 :
-                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now 10%")}<br/>{contract?.firstPaymentAmount} {'EGP'}</span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now 10%")}<br/>{contract?.firstPaymentAmount} {t('egp_currency')}</span>
                                                 }
 
                                             </Button>
@@ -1191,7 +1191,7 @@ function ReceiveProjectFiles({
                                                 {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
-                                                    <span className='text-white font-bold capitalize text-lg flex items-center justify-center p-2'>{t("Pay Now remain ( 90 % )")} <br/> {contract?.secondPaymentAmount} {'EGP'}</span>
+                                                    <span className='text-white font-bold capitalize text-lg flex items-center justify-center p-2'>{t("Pay Now remain ( 90 % )")} <br/> {contract?.secondPaymentAmount} {t('egp_currency')}</span>
                                                 }
                                             </Button>
                                             <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>
@@ -1209,7 +1209,7 @@ function ReceiveProjectFiles({
                                                 {payment_respond?.loading && actionAccept==='payment' ? 
                                                     <Loading/>
                                                     :
-                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 100 % )")}<br/>{contract?.totalPrice} {'EGP'}</span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Pay Now remain ( 100 % )")}<br/>{contract?.totalPrice} {t('egp_currency')}</span>
                                                 }
                                             </Button>
                                         </div>
@@ -1221,7 +1221,7 @@ function ReceiveProjectFiles({
                                             {payment_respond?.loading && actionAccept==='payment' ? 
                                                 <Loading/>
                                                 :
-                                                <span className='text-white font-bold capitalize text-lg'>{t("Check Out")}<br/>{contract?.totalPrice} {'EGP'}</span>
+                                                <span className='text-white font-bold capitalize text-lg'>{t("Check Out")}<br/>{contract?.totalPrice} {t('egp_currency')}</span>
                                             }
                                             </Button>
                                             <button className="rounded-full border-2 border-solid border-[#EB1A40] w-full h-[66px] text-[#EB1A40] text-lg font-bold mt-2" onClick={handleRefuse}>

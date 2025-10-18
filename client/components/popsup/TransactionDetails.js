@@ -80,7 +80,7 @@ function TransactionDetails({onClick,id ,info , isRefunded = true}) {
                                     </span>
                                 </h2>
                                 <span className={`text-start font-semibold capitalize`}>
-                                    {info.amount} {info.currency ?? 'EGP'}
+                                    {info.amount} {info.currency ?? t('egp_currency')}
                                 </span>
                             </div>
                             }
@@ -116,7 +116,7 @@ function TransactionDetails({onClick,id ,info , isRefunded = true}) {
                                     </span>
                                 </h2>
                                 <span className={`text-start font-semibold capitalize`}>
-                                    {info.fundingAmount} {info.currency ?? 'EGP'}
+                                    {info.fundingAmount} {info.currency ?? t('egp_currency')}
                                 </span>
                             </div>
                             }
@@ -222,7 +222,7 @@ function TransactionDetails({onClick,id ,info , isRefunded = true}) {
                                     </span>
                                 </h2>
                                 <span className={`text-start font-semibold capitalize`}>
-                                    {info.fundAmount} {info.currency ?? 'EGP'}
+                                    {info.fundAmount} {info.currency ?? t('egp_currency')}
                                 </span>
                             </div>
                             }
