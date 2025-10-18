@@ -173,19 +173,19 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
     const validateRequiredFields = () => {
         const errors = {};
 
-        if (!formData.category) errors.category = 'Category is required';
-        // if (!formData.subCategoryId) errors.subCategory = 'Subcategory is required';
-        // if (!formData.tagsId || !formData.tagsId.length) errors.tags = 'Tags are required';
-        // if (!formData.tools || !formData.tools.length) errors.tools = 'Tools is required';
-        // if (!formData.functions || !formData.functions.length) errors.functions = 'Functions is required';
-        // if (!formData.creatives || !formData.creatives.length) errors.creatives = 'Creatives is required';
-        if (!formData.name) errors.title = 'Title is required';
-        if (!formData.description) errors.description = 'Description is required';
-        if (!formData.address) errors.address = 'Address is required';
-        if (!formData.duration) errors.duration = 'Duration is required';
-        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = 'Attachment is required';
-        if (!formData.location?.lat || !formData.location?.lng) errors.location = 'Location is required';
-        // if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeyWords = 'Search keywords are required';
+        if (!formData.category) errors.category = t('Category is required');
+        // if (!formData.subCategoryId) errors.subCategory = t('Subcategory is required');
+        // if (!formData.tagsId || !formData.tagsId.length) errors.tags = t('Tags are required');
+        // if (!formData.tools || !formData.tools.length) errors.tools = t('Tools is required');
+        // if (!formData.functions || !formData.functions.length) errors.functions = t('Functions is required');
+        // if (!formData.creatives || !formData.creatives.length) errors.creatives = t('Creatives is required');
+        if (!formData.name) errors.title = t('Title is required');
+        if (!formData.description) errors.description = t('Description is required');
+        if (!formData.address) errors.address = t('Address is required');
+        if (!formData.duration) errors.duration = t('Duration is required');
+        if (!attachmentValidation || (!formData.attachments || !formData.attachments?.length)) errors.attachments = t('Attachment is required');
+        if (!formData.location?.lat || !formData.location?.lng) errors.location = t('Location is required');
+        // if (!formData.searchKeyWords || !formData.searchKeyWords.length) errors.searchKeyWords = t('Search keywords are required');
         const minimum = parseFloat(formData['projectScale[minimum]']);
         const current = parseFloat(formData['projectScale[current]']);
         const maximum = parseFloat(formData['projectScale[maximum]']);
@@ -195,23 +195,23 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             !formData['projectScale[minimum]'] || 
             !formData['projectScale[current]'] || 
             !formData['projectScale[maximum]']) {
-            errors.projectScale = 'Project Scale is required';
+            errors.projectScale = t('Project Scale is required');
         } else {
             if (minimum <= 0) {
-                errors.minimum = 'Minimum should be greater than 0';
+                errors.minimum = t('Minimum should be greater than 0');
             }
             if (current < minimum) {
-                errors.current = 'Current should be greater than or equal to minimum';
+                errors.current = t('Current should be greater than or equal to minimum');
             }
             if (maximum < current) {
-                errors.maximum = 'Maximum should be greater than or equal to current';
+                errors.maximum = t('Maximum should be greater than or equal to current');
             }
             if (maximum == minimum) {
-                errors.maximum = 'Maximum should be not equal to minimum';
+                errors.maximum = t('Maximum should be not equal to minimum');
             }
         }
         if(categoryDetails?.media === 'audio'){
-            if(!formData.audioCover || !formData.audioCover.length) errors.audioCover = 'Audio cover is required';
+            if(!formData.audioCover || !formData.audioCover.length) errors.audioCover = t('Audio cover is required');
         }
 
         return errors;
@@ -281,7 +281,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
             pathname: `/creative/${auth.username}`,
         })
     }
-    const AudioIndex = categories.indexOf(categories.map(item=> item.title).includes('Audio'))
+    const AudioIndex = categories.indexOf(categories.map(item=> item.title).includes(t('Audio')))
     const AudioId =  (AudioIndex===-1 ? categories[categories.length -1] : categories[AudioIndex])?._id
     const CreatedSuccessfully = ()=>{
         setNextstep(1)
@@ -291,7 +291,7 @@ const AddPost = ({ CreateProject, auth, respond, UpdateFormData, addprojectState
 
     return (
         <>
-            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message="Creating" />
+            <SuccessfullyPosting isShow={post_success} onCancel={toggleDrawer} message={t('Creating')} />
             <PopupErrorMessage errorPopup={errorPopup} CloseToast={()=>setErrorPopup(false)} ErrorMsg={Object.values(validateRequiredFields())[0]}/>
             <Drawer isOpen={true} name={t('add project')} toggleDrawer={toggleDrawer}>
                 <div className={nextstep == 1 && 'hidden'}>
