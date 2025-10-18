@@ -358,7 +358,7 @@ const ProjectBooking = ({ respond, addprojectState, UpdateFormData, BookProject,
                                     </div>
                                     <div className="w-full flex px-8 justify-between">
                                         <span className="text-2xl opacity-50 font-semibold">{t("Total Amount")}</span>
-                                        <span className="text-2xl font-bold">${calculateTotalPrice()}</span>
+                                        <span className="text-2xl font-bold">{calculateTotalPrice()} {t('egp_currency')}</span>
                                     </div>
                                     <div className="flex justify-center">
                                         <ArrowBtn loading={respond?.loading} onClick={CheckNext} className="cursor-pointer w-full sm:w-96" text='Appointment Now' />
