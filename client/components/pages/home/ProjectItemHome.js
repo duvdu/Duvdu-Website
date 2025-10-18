@@ -260,7 +260,7 @@ const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', i
                                 {i18n.language !== "Arabic" ? (
                                     <>
                                         <span className="text-xs opacity-60 font-semibold">
-                                            from {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} L.E
+                                            from {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} {t('egp_currency')}
                                         </span>
                                         {cardData?.projectScale?.unit && (
                                             <span className="text-xs ml-1 opacity-60 font-semibold">
@@ -271,7 +271,7 @@ const ProjectItemHome = ({ cardData: initialCardData, isbig, type = 'project', i
                                 ) : (
                                     <>
                                         <span className="text-xs opacity-60 font-semibold">
-                                         {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} ج.م </span>
+                                         {cardData?.projectBudget || cardData?.projectScale?.pricerPerUnit} {t('egp_currency')} </span>
                                         {cardData?.projectScale?.unit && (
                                             <span className="text-xs ml-1 opacity-60 font-semibold">
                                                 لكل {t(cardData?.projectScale?.unit)}

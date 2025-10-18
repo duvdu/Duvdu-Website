@@ -54,7 +54,7 @@ export default function CopywriterView({contract , canUpdateData}){
                 </span>
             </h2>
             <span className={`${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'} font-semibold capitalize max-w-[543px]`}>
-            {contract.totalPrice} {t('EGP')}
+            {contract.totalPrice} {t('egp_currency')}
             </span>
         </div>
         }
@@ -76,7 +76,7 @@ export default function CopywriterView({contract , canUpdateData}){
         <div>
             <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("First Payment")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
-            {contract.firstPaymentAmount} {t('EGP')}
+            {contract.firstPaymentAmount} {t('egp_currency')}
             </span>
         </div>
         }
@@ -84,7 +84,7 @@ export default function CopywriterView({contract , canUpdateData}){
         <div>
             <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Second Payment")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
-            {contract.secondPaymentAmount} {t('EGP')}
+            {contract.secondPaymentAmount} {t('egp_currency')}
             </span>
         </div>
         }

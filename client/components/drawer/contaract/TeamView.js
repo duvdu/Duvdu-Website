@@ -58,7 +58,7 @@ export default function TeamView({contract}){
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("price per hour")}</h2>
             <span className='font-semibold max-w-[543px]'>
-            {contract.hourPrice} {t('EGP')}
+            {contract.hourPrice} {t('egp_currency')}
             </span>
         </div>
         }
@@ -66,7 +66,7 @@ export default function TeamView({contract}){
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Total Amount")}</h2>
             <span className='font-semibold max-w-[543px]'>
-            {contract.totalAmount} {t('EGP')}
+            {contract.totalAmount} {t('egp_currency')}
             </span>
         </div>
         }
@@ -74,7 +74,7 @@ export default function TeamView({contract}){
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
-            {contract.totalPrice} {t('EGP')}
+            {contract.totalPrice} {t('egp_currency')}
             </span>
         </div>
         }

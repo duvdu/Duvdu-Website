@@ -16,6 +16,7 @@ import DuvduLoading from './duvduLoading';
 
 import Link from 'next/link';
 import DeleteBoard from '../popsup/DeleteBoard';
+import { useTranslation } from 'react-i18next';
 
 const ProjectCard = ({
   cardData,
@@ -25,6 +26,7 @@ const ProjectCard = ({
   SwapProjectToFav,
   swapProjectToFav_respond,
 }) => {
+  const { t } = useTranslation();
   const Router = useRouter();
   const boardId = Router.query.boardId;
   const [soundIconName, setSoundIconName] = useState('volume-xmark');
@@ -252,11 +254,11 @@ const ProjectId = cardData.details._id
                       {/* {i18n.language !== "Arabic" ? ( */}
                       {type=='project'?
                           <span className="text-xs opacity-60 font-semibold">
-                          { cardData?.details?.projectScale?.pricerPerUnit * cardData?.details?.projectScale?.current} L.E
+                          { cardData?.details?.projectScale?.pricerPerUnit * cardData?.details?.projectScale?.current} t('egp_currency')
                           </span>
                           :
                           <span className="text-xs opacity-60 font-semibold">
-                          { cardData?.details?.projectScale?.pricerPerUnit} L.E
+                          { cardData?.details?.projectScale?.pricerPerUnit} t('egp_currency')
                           </span>
 
                   }
@@ -270,7 +272,7 @@ const ProjectId = cardData.details._id
         <p className='text-xl opacity-70 font-medium my-1'>{cardData.details.name || cardData.details.title}</p>
         {/* {(cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit) &&
           <>
-            <span className='text-xl font-bold'>{cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit}{t('EGP')}</span>
+            <span className='text-xl font-bold'>{cardData.details.projectBudget || cardData.details.projectScale?.pricerPerUnit}{t('egp_currency')}</span>
             {(cardData.details.projectScale?.unit) &&
               <span className='text-xl ml-2 opacity-60'>
                 per {cardData.details.projectScale?.unit}

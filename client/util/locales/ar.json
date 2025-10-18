@@ -860,7 +860,7 @@
   "ticket number": "رقم التذكرة",
   "transaction number": "رقم المعاملة",
   "client info": "تفاصيل العميل",
-  "received transactions": "المحصله المعاملات ",
+  "received transactions": "المعاملات المحصله",
   "sent transactions": "  المعاملات المدفوعه",
   "transferred date": "تاريخ التحويل",
   "transferred method": "طريقة التحويل",
@@ -883,5 +883,6 @@
   "Are you sure you want to delete this Collection?": "يرجى تأكد أمر المحو",
   "Click to Change": "تغيير الغلاف",
   "Click to Upload": "إضافة غلاف",
-  "Upload cover photo": "إضافة غلاف"
+  "Upload cover photo": "إضافة غلاف",
+  "egp_currency": "ج.م"
 }

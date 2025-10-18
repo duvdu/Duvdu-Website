@@ -88,7 +88,7 @@ export default function ProducerView({contract , canUpdateData}){
         <div>
             <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Episode budget")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
-            {contract.expectedBudget} {t('EGP')}
+            {contract.expectedBudget} {t('egp_currency')}
             </span>
         </div>
         }
@@ -96,7 +96,7 @@ export default function ProducerView({contract , canUpdateData}){
         <div>
             <h2 className={`${canUpdateData ? '':'opacity-60'} capitalize mb-3`}>{t("Episode profits")}</h2>
             <span className='font-semibold max-w-[543px]'>
-            {contract.expectedProfits} {t('EGP')}
+            {contract.expectedProfits} {t('egp_currency')}
             </span>
         </div>
         }

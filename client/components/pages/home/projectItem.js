@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 
 const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type = 'project', isLogin, swapProjectToFav_respond, SwapProjectToFav, enbablelove = false }) => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [soundIconName, setSoundIconName] = useState('volume-xmark');
     const [isMuted, setIsMuted] = useState(false);
     const [Duration, setDuration] = useState(0);
@@ -256,14 +256,14 @@ const ProjectItem = ({ cardData: initialCardData,inclusive, className = "", type
                                 {type=='project'?
                                     (inclusive?
                                     <span className="text-xs opacity-60 font-semibold">
-                                    { inclusivePrice} L.E
+                                    { inclusivePrice} {t('egp_currency')}
                                     </span>:
                                     <span className="text-xs opacity-60 font-semibold">
-                                    { cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current} L.E
+                                    { cardData?.projectScale?.pricerPerUnit * cardData?.projectScale?.current} {t('egp_currency')}
                                     </span>)
                                     :
                                     <span className="text-xs opacity-60 font-semibold">
-                                    { cardData?.projectScale?.pricerPerUnit} L.E
+                                    { cardData?.projectScale?.pricerPerUnit} {t('egp_currency')}
                                     </span>
         
                             }

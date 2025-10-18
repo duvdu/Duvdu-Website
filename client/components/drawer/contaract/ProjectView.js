@@ -54,7 +54,7 @@ export default function ProjectView({contract , canUpdateData}){
                 </span>
             </h2>
             <span className={`${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'} font-semibold capitalize max-w-[543px]`}>
-            {contract.totalPrice} {t('EGP')}
+            {contract.totalPrice} {t('egp_currency')}
             </span>
         </div>
         }
@@ -114,7 +114,7 @@ export default function ProjectView({contract , canUpdateData}){
                     </span>
                 </h2>
                 <span className={`${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'} font-semibold capitalize max-w-[543px]`}>
-                {contract.firstPaymentAmount} {t('EGP')}
+                {contract.firstPaymentAmount} {t('egp_currency')}
                 </span>
             </div>
             }
@@ -126,7 +126,7 @@ export default function ProjectView({contract , canUpdateData}){
                     </span>
                 </h2>
                 <span className={`${canUpdateData && 'bg-[#ffeb3b] dark:bg-[#ffeb3b6e]'} font-semibold capitalize max-w-[543px]`}>
-                {contract.secondPaymentAmount} {t('EGP')}
+                {contract.secondPaymentAmount} {t('egp_currency')}
                 </span>
             </div>
             }

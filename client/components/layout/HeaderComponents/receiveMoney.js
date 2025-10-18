@@ -75,7 +75,7 @@ const ReceiveMyMoney = ({ setOpened, ReceiveMoney, user, api, respond, handleTra
             </div>
             <div className="text-right">
                 <p className="font-semibold text-blue-500 text-sm">
-                    +{transaction.amount || transaction.fundAmount} {transaction.currency || 'US$'}
+                    +{transaction.amount || transaction.fundAmount} {transaction.currency || t('egp_currency')}
                 </p>
             </div>
         </div>

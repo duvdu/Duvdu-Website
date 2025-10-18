@@ -189,7 +189,7 @@ const FavCard = ({
           </div>
         </div>
         <p className='text-xl opacity-70 font-medium my-4'>{cardData.title}</p>
-        <div className='text-xl font-bold'>{cardData.projectBudget}{t('EGP')}</div>
+        <div className='text-xl font-bold'>{cardData.projectBudget}{t('egp_currency')}</div>
       </div>
     </>
   );

@@ -84,11 +84,11 @@ const CopyRightCard = ({ cardData,DeleteCopyright,delete_porject_response, class
       <div className='flex justify-between'>
         <div>
           <p className='text-sm capitalize opacity-50 leading-8'>{t("pricing")}</p>
-          <span className='text-3xl lg:text-[2.5rem] font-medium'>{(price?.length>5 ? price.slice(0,5): price)|| 0} {price?.length>5?'':t('EGP')}</span>
+          <span className='text-3xl lg:text-[2.5rem] font-medium'>{(price?.length>5 ? price.slice(0,5): price)|| 0} {price?.length>5?'':t('egp_currency')}</span>
           {price?.length>5 && 
           <>
           <br/>
-          <span className='text-3xl lg:text-[2.5rem] font-medium'>{price.slice(5,-1)} {t('EGP')}</span>
+          <span className='text-3xl lg:text-[2.5rem] font-medium'>{price.slice(5,-1)} {t('egp_currency')}</span>
           </>}
         </div>
         <div className='w-[1px] bg-black opacity-15' />

@@ -198,7 +198,7 @@ const Details = ({ data , type='project' ,DeleteTaggedCreative ,DeleteProject,De
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
                                     <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080] dark:border-[#d1d1d1] dark:text-white`}>
-                                    {tool.value} {tool.isPrice?t('EGP'):''}
+                                    {tool.value} {tool.isPrice?t('egp_currency'):''}
                                 </div>
                             ))}
                             </div>
@@ -220,7 +220,7 @@ const Details = ({ data , type='project' ,DeleteTaggedCreative ,DeleteProject,De
                             <div key={i} className="flex gap-2">
                                 {toolGroup.map((tool, j) => (
                                     <div key={j} className={` text-[#404040] font-medium  rounded-3xl py-2 px-4 bg-transparant border-[1px] border-[#00000080] dark:border-[#d1d1d1] dark:text-white`}>
-                                        {tool.value} {tool.isPrice?t('EGP'):''}
+                                        {tool.value} {tool.isPrice?t('egp_currency'):''}
                                     </div>
                                 ))}
                             </div>
@@ -271,10 +271,10 @@ const Details = ({ data , type='project' ,DeleteTaggedCreative ,DeleteProject,De
             <h3 className="capitalize opacity-50 font-medium mt-5">{t("project scale")}</h3>
             {data?.projectScale?.current ? 
             <div>
-                <span className="capitalize font-semibold mt-4">{data?.projectScale?.current} {data?.projectScale?.unit} {(data?.projectScale?.current * data?.projectScale?.pricerPerUnit)} {t('EGP')}</span>
+                <span className="capitalize font-semibold mt-4">{data?.projectScale?.current} {data?.projectScale?.unit} {(data?.projectScale?.current * data?.projectScale?.pricerPerUnit)} {t('egp_currency')}</span>
             </div>:
             <div>
-                <span className="capitalize font-semibold mt-4">{data?.projectScale?.pricerPerUnit} {t('EGP')} per {data?.projectScale?.unit}</span>
+                <span className="capitalize font-semibold mt-4">{data?.projectScale?.pricerPerUnit} {t('egp_currency')} per {data?.projectScale?.unit}</span>
             </div>
             }
             <h3 className="capitalize opacity-50 font-medium mt-5">{t("description")}</h3>

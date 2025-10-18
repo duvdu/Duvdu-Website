@@ -49,7 +49,7 @@ export default function RentalView({contract}){
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("Total Price")}</h2>
             <span className='font-semibold capitalize max-w-[543px]'>
-            {contract.totalPrice} {t('EGP')}
+            {contract.totalPrice} {t('egp_currency')}
             </span>
         </div>
         }
@@ -57,7 +57,7 @@ export default function RentalView({contract}){
         <div>
             <h2 className='opacity-60 capitalize mb-3'>{t("insurance")}</h2>
             <span className='font-semibold max-w-[543px]'>
-            {contract.insurance} {t('EGP')}
+            {contract.insurance} {t('egp_currency')}
             </span>
         </div>
         }
