@@ -383,7 +383,7 @@
   "14 December, 2021": "14 ديسمبر، 2021",
   "Tuesday, 4:00PM - 9:00PM": "الثلاثاء، 4:00 مساءً - 9:00 مساءً",
   "Gala Convention Center": "مركز جالا للمؤتمرات",
-  "₹6,699.0": "₹6,699.0",
+  "₹6,699.0": "6,699 {egp_currency}",
   "payment successful": "تم الدفع بنجاح",
   "The creative will confirm in 24 hours. & if not, unitPrice will be refunded immediately": "سيؤكد المبدع خلال 24 ساعة. وإذا لم يفعل، سيتم استرداد سعر الوحدة على الفور",
   "terms and conditions": "الشروط والأحكام",
