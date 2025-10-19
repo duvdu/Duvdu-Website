@@ -301,7 +301,7 @@ const MobileMenu = ({ isToggled, isDark, toggleClick, categories, isLogin, user,
                 <div onClick={onClose} className="flex justify-center items-center w-full aspect-[3.1] rounded-full border border-[#00000033] text-primary text-sm font-semibold cursor-pointer">{t("log-in")}</div>
             </Link>
             <Link href="/register">
-                <div onClick={onClose} className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm cursor-pointer">{t("register")}</div>
+                <div onClick={onClose} className="flex justify-center items-center w-full aspect-[3.1] rounded-full bg-primary text-white font-semibold text-sm cursor-pointer">{t("Join Us")}</div>
             </Link>
         </div>
 
